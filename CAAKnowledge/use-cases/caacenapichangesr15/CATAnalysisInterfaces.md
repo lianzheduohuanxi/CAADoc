@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "CATAnalysisInterfaces Framework Modifications in V5R15"
 category: "use-case"
 module: "CAACenAPIChangesR15"
@@ -6,15 +7,15 @@ version: "V5R15"
 tags: ["CATISamBasicComponent", "CATISpecObject", "CATISamAnalysisModelFactory"]
 source_file: "Doc/online/CAACenAPIChangesR15/CATAnalysisInterfaces.htm"
 converted: "2026-05-11T17:33:51.055882"
----
+```
 
+---
 | 
 # CAA C++ API Modifications
 
 | 
 ##  CATAnalysisInterfaces Framework Modifications in V5R15 
 
-  
 * * *
 
 **Entity|  SP| Modification| To Do** | CATAnalysisInterfaces/Public/CATISamBasicComponent.h/CATISamBasicComponent/SetValue  

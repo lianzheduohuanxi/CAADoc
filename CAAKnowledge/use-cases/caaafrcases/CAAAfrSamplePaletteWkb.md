@@ -1,10 +1,13 @@
 ---
+```vbscript
 title: "Using the "Tools Palette" Toolbar for a Workbench"
 category: "use case"
 module: "CAAAfrUseCases"
 tags: ["CAAAfrGeoCreationWkb_Palette", "CAAAfrGeoCreationWkb", "CATIAfrPaletteOptions", "CAAEAfrPaletteOptions", "CAAAfrPaletteOptions", "CAAGeometry", "CAAAfrEltCountHeader", "CAAAfrEltCountHdr", "CATIAfrCmdPaletteOptions", "CAAApplicationFrame"]
 source_file: "Doc/online/CAAAfrUseCases/CAAAfrSamplePaletteWkb.htm"
 converted: "2026-05-11T17:17:55.792002"
+```
+
 ---
 # 3D PLM Enterprise Architecture
 
@@ -17,7 +20,7 @@ converted: "2026-05-11T17:17:55.792002"
 _How to implement CATIAfrPaletteOptions_  
 ---|---|---  
 Use Case  
-  
+
 * * *
 ### Abstract
 
@@ -53,19 +56,24 @@ CAAAfrPaletteOptions is a use case of the CAAApplicationFrame.edu framework that
 
 CAAAfrPaletteOptions is the implementation of the _CATIAfrPaletteOptions_ on a workbench of the CAAGeometry document [2]. It enables us to display a specific toolbar, the "Tools Palette" toolbar. This toolbar contains, like the other toolbars defined in workbench or Add-in [3], command header instances. In the use case, there is a command header displaying the count of points and lines created in the CAAGeometry document. Fig.1 Tools Palette 
 ---  
-  
+
+CAAAfrPaletteOptions is the implementation of the _CATIAfrPaletteOptions_ on a workbench of the CAAGeometry document [2]. It enables us to display a specific toolbar, the "Tools Palette" toolbar. This toolbar contains, like the other toolbars defined in workbench or Add-in [3], command header instances. In the use case, there is a command header displaying the count of points and lines created in the CAAGeometry document. Fig.1 Tools Palette
 This header is a customized command header. Its graphic representation is not a check button with an icon, but two _CATDlgEditor_ class instances. Refer to the CAAAfrEltCountHeader use case [4] for complete details about this specific header. 
 
 Now, if you launch the Cuboid command from the Solids Toolbar, you can see on the above picture, [Fig.2], that new options are added. This command also uses  Tools Palette options for its scenario [1].
 
 Fig.2 Cuboid Command ![](images/CAAAfrSamplePaletteWkbWithCmd.jpg)  
+
 ---  
-  
+
+Now, if you launch the Cuboid command from the Solids Toolbar, you can see on the above picture, [Fig.2], that new options are added. This command also uses  Tools Palette options for its scenario [1].
+Fig.2 Cuboid Command ![](images/CAAAfrSamplePaletteWkbWithCmd.jpg)
 Once the Cuboid command is completed, the Tools Palette is restored, and contains the two editors again.
 
 [Top]
 #### How to Launch CAAAfrPaletteOptions
 
+Once the Cuboid command is completed, the Tools Palette is restored, and contains the two editors again.
 See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)" use case for a detailed description of how this use case should be launched. 
 
 Then, in the window where you run the mkrun command, do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following:
@@ -85,15 +93,19 @@ Then, in the window where you run the mkrun command, do not type the module name
 
 The CAAAfrPaletteOptions use case is made of a single class,_CAAEAfrPaletteOptions_ , located in the CAAAfrPaletteOptions.m module of the CAAApplicationFrame.edu framework:
 
+The CAAAfrPaletteOptions use case is made of a single class,_CAAEAfrPaletteOptions_ , located in the CAAAfrPaletteOptions.m module of the CAAApplicationFrame.edu framework:
 Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrPaletteOptions.m\`  
----|---  
+
+The CAAAfrPaletteOptions use case is made of a single class,_CAAEAfrPaletteOptions_ , located in the CAAAfrPaletteOptions.m module of the CAAApplicationFrame.edu framework:
+Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrPaletteOptions.m\`
 Unix | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrPaletteOptions.m/`  
-  
+
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
 ### Step-by-Step
 
+where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 There are two logical steps in CAAAfrPaletteOptions:
 
   1. Creating the Header File
@@ -103,91 +115,125 @@ There are two logical steps in CAAAfrPaletteOptions:
 #### Creating the Header File
 
 Here is the CAAEAfrPaletteOptions.h file
-    
+
     #include "CATBaseUnknown.h"    
     #include "CATListOfCATCommandHeader.h"       
-    
+
+Here is the CAAEAfrPaletteOptions.h file
     class CAAEAfrPaletteOptions: public CATBaseUnknown
+
     {
+class CAAEAfrPaletteOptions: public CATBaseUnknown
       CATDeclareClass;
-    
+
       public:
-    
+
         CAAEAfrPaletteOptions();
         virtual ~CAAEAfrPaletteOptions();
-     
+
         CATLISTP(CATCommandHeader) **GetPaletteOptions**();
-    
-    
+
       private:
         CAAEAfrPaletteOptions(const CAAEAfrPaletteOptions &iObjectToCopy);
         CAAEAfrPaletteOptions & operator = (const CAAEAfrPaletteOptions &iObjectToCopy);
-         
+
     };  
-  
+
 ---  
-  
+
 The _CAAEAfrPaletteOptions_ class derives from _CATBaseUnkown_. The `GetPaletteOptions` method is the only one method of the _CATIAfrPaletteOptions_ interface. The `CATDeclareClass` macro declares that the _CAAEAfrPaletteOptions_ class belongs to a component. Note that the copy constructor and the assignment operator are set as private, and are not implemented in the source file. This prevents the compiler from creating them as public without you know.
 
 [Top]
 #### Creating the Source File
 
 Here is the CAAEAfrPaletteOptions.cpp file
-    
-    
+
     ...
     #include <TIE_CATIAfrPaletteOptions.h>
+Here is the CAAEAfrPaletteOptions.cpp file
     TIE_CATIAfrPaletteOptions(CAAEAfrPaletteOptions);
-    
+
     CATImplementClass(CAAEAfrPaletteOptions, 
+
                       **DataExtension** , 
+```vbscript
+TIE_CATIAfrPaletteOptions(CAAEAfrPaletteOptions);
+CATImplementClass(CAAEAfrPaletteOptions,
                       CATBaseUnknown, 
+```
+
                       **CAAAfrGeoCreationWkb_Palette**);
-    
+
+```vbscript
+CATImplementClass(CAAEAfrPaletteOptions,
+CATBaseUnknown,
     CAAEAfrPaletteOptions::CAAEAfrPaletteOptions():CATBaseUnknown(){}
-    
+
     CAAEAfrPaletteOptions::~CAAEAfrPaletteOptions(){}
+```
+
     ...  
-  
+
 ---  
-  
+
 The _CAAEAfrPaletteOptions_ class states that it implements the _CATIAfrPaletteOptions_ interface thanks to the `TIE_CATIAfrPaletteOptions` macro. The `CATImplementClass` macro declares that the _CAAEAfrPaletteOptions_ class is a data extension, thanks to the `DataExtension` keyword, that extends `CAAAfrGeoCreationWkb_Palette`. The third argument must always be set as _CATBaseUnknown_ or _CATNull_ for any kind of extension. 
 
 `CAAAfrGeoCreationWkb_Palette`: is the concatenation of the internal name of the workbench + "_`Palette"`. This interface can be only implemented on your workbench. You cannot implement it on a Dassault System workbench. The internal name of the workbench is the third argument of the `NewAccess` macro when the first argument is `CATCmdWorkbench` [5].
-    
-    
+
     ...
     NewAccess(**CATCmdWorkbench** ,pCAAAfrGeoCreationWkb,CAAAfrGeoCreationWkb);  
-  
+
 ---  
-  
+
 Now, lets us see the `GetPaletteOptions` implementation.
-    
-    
+
     ...
+Now, lets us see the `GetPaletteOptions` implementation.
     CATLISTP(CATCommandHeader) CAAEAfrPaletteOptions::GetPaletteOptions()
+
     {
+```vbscript
+CATLISTP(CATCommandHeader) CAAEAfrPaletteOptions::GetPaletteOptions()
         CATLISTP(CATCommandHeader) TheListToReturn ;
-    
+
         CATCommandHeader *pMyCommand = NULL ;
         HRESULT rc= ::**CATAfrGetCommandHeader**("CAAAfrEltCountHdr",pMyCommand);
-    
+
         if ( FAILED(rc) || ( NULL ==pMyCommand) )
+```
+
         {
+CATCommandHeader *pMyCommand = NULL ;
+HRESULT rc= ::**CATAfrGetCommandHeader**("CAAAfrEltCountHdr",pMyCommand);
+if ( FAILED(rc) || ( NULL ==pMyCommand) )
             pMyCommand = new **CAAAfrEltCountHeader**("CAAAfrEltCountHdr");
+
         } 
-    
+
+```vbscript
+if ( FAILED(rc) || ( NULL ==pMyCommand) )
+pMyCommand = new **CAAAfrEltCountHeader**("CAAAfrEltCountHdr");
         if ( NULL != pMyCommand)
+```
+
         {
+pMyCommand = new **CAAAfrEltCountHeader**("CAAAfrEltCountHdr");
+if ( NULL != pMyCommand)
            TheListToReturn.**Append**(pMyCommand);
+
         }
-    
+
+```vbscript
+if ( NULL != pMyCommand)
+TheListToReturn.**Append**(pMyCommand);
         return TheListToReturn ;
+```
+
     }
     ...  
-  
+
 ---  
-  
+
 The goal of this method is to append command header instances into the returned list. The most important thing, is to take care of the instantiation. This method is called each time one enters in the concerned workbench. So before instantiating the command header class, check that the instantiation does not already exist. Refer to the "Command Header Management" section of the technical article about the command header [6] to understand the life cycle of a command header instance. 
 
 To do the check, use _CATAfrGetCommandHeader_ , the global function which returns an instance associated with the current editor. (The _CATFrmEditor_ class instance associated with the document). If no instance, i.e  `pMyCommand` the second argument of the global function is NULL, then you can create the command header instance.
@@ -212,14 +258,14 @@ This use case has explained how to implement the _CATIAfrPaletteOptions_ interfa
 [5] | [Creating a Workbench](CAAAfrSampleWorkbench.md)  
 [6] | [The Command Headers](../CAAAfrTechArticles/CAAAfrCommandHeaders.md)  
 [Top]  
-  
+
 * * *
 ### History
 
 Version: **1** [Feb 2004] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2004, Dassault Systmes. All rights reserved._

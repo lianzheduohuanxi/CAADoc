@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "CATAnalysisBase Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR7"
@@ -6,11 +7,14 @@ version: "V5R7"
 tags: ["CATICharacCollector"]
 source_file: "Doc/online/CAACenAPIChangesR7/CATAnalysisBaseSP.htm"
 converted: "2026-05-11T17:33:51.940436"
----
+```
 
+---
+tags: ["CATICharacCollector"]
+source_file: "Doc/online/CAACenAPIChangesR7/CATAnalysisBaseSP.htm"
+converted: "2026-05-11T17:33:51.940436"
 CAA API Modifications|  CATAnalysisBase  |   
----|---|---  
-  
+
 * * *
 
 **Entity|  SP| Modification| To Do** | CATAnalysisBase/Protected/CATAnalysisCharacCollector.h/CATAnalysisCharacCollector/Stream| 3| INDM| Check that you don't use it  

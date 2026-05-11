@@ -1,13 +1,19 @@
 ---
+```vbscript
 title: "CAAAniPreproOnPublish.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CATISamImportDefine", "CAAAniPreproOnPublish", "CAAScdAniUseCases"]
 source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproOnPublishSource.htm"
 converted: "2026-05-11T17:31:51.829358"
----
+```
 
+---
+tags: ["CATIA", "CATISamImportDefine", "CAAAniPreproOnPublish", "CAAScdAniUseCases"]
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproOnPublishSource.htm"
+converted: "2026-05-11T17:31:51.829358"
     Language="VBSCRIPT"
+
 ```vbscript
     ' COPYRIGTH DASSAULT SYSTEMES 2000
     ' ***********************************************************************
@@ -25,19 +31,26 @@ converted: "2026-05-11T17:31:51.829358"
     ' ***********************************************************************
 ```
 
-    
-```vbscript
     Sub CATMain()
+
 ```vbscript
     ' ----------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
         sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
 
+```vbscript
+' -----------------------------------------------------------
+' Optional: allows to find the sample wherever it's installed
+sDocPath=CATIA.SystemService.Environ("CATDocView")
         If(Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+```
+
 ```vbscript
         Err.Raise 9999,,"No Doc Path Defined"
         End If
+```
+
 ```vbscript
     ' ----------------------------------------------------------- 
     ' Get the collection of documents in session
@@ -55,30 +68,30 @@ converted: "2026-05-11T17:31:51.829358"
     ' We call the Import on CATAnalysisImport which implements CATISamImportDefine
 ```
 
-    
-```
-
-    
 ```vbscript
         Set analysisManager1 = TheAnalysisDocument.Analysis
-    
+
 ```
 
-    
 ```vbscript
         Dim arrayOfVariantOfShort1(0)
         analysisManager1.ImportDefineFile (sDocPath & sSep & "online" & sSep & "CAAScdAniUseCases" & sSep & "samples" & sSep & "AnalysisMechfeat.CATPart"),
-    
+
 ```
 
-    
     				       "CATAnalysisImport", arrayOfVariantOfShort1
     ' _____________________________________________________________________________________
+```vbscript
+' _____________________________________________________________________________________
     ' Reframe All.
+```
+
 ```vbscript
       Set specsAndGeomWindow1 = CATIA.ActiveWindow
       Set viewer3D1 = specsAndGeomWindow1.ActiveViewer
       viewer3D1.Reframe 
+```
+
 ```vbscript
     ' _____________________________________________________________________________________
     ' Scan the analysis document:  Retrieve the Pointed documents to extract the reference for pre-processing
@@ -86,19 +99,18 @@ converted: "2026-05-11T17:31:51.829358"
         CATIA.SystemService.Print analysisLinkedDocuments1.Name
 ```
 
-    
-```
-
 ```vbscript
        If (analysisLinkedDocuments1.Count <> 1 ) Then
           Err.Raise 9999,,"NbDoc Li NE 1"
        End If
+```
+
 ```vbscript
     ' _____________________________________________________________________________________
     ' Retrieve the CATPart Document and associated publications for pre-processing.
        Set TheDoc = analysisLinkedDocuments1.Item(1)
        CATIA.SystemService.Print TheDoc.FullName
-    
+
       Set product1 = TheDoc.Product
       Set publications1 = product1.Publications
       Set publication1 = publications1.Item("Bottomface")
@@ -109,11 +121,11 @@ converted: "2026-05-11T17:31:51.829358"
     ' Create a Static Case in the current analysis model.
       Set analysisModels1 = analysisManager1.AnalysisModels
       Set analysisModel1 = analysisModels1.Item(1)
-    
+
       Set analysisCases1 = analysisModel1.AnalysisCases
       Set analysisCase1 = analysisCases1.Add()
       Set analysisSets1 = analysisCase1.AnalysisSets
-    
+
       Set analysisSet1 = analysisSets1.Add("RestraintSet", catAnalysisSetIn)
       Set analysisSet2 = analysisSets1.Add("LoadSet", catAnalysisSetIn)
       Set analysisSet3 = analysisCase1.AddSolution("StaticSet")
@@ -123,15 +135,27 @@ converted: "2026-05-11T17:31:51.829358"
       Set analysisEntity1 = analysisEntities1.Add("SAMClamp")
 ```
 
+```vbscript
+' Create clamp boundary.
+Set analysisEntities1 = analysisSet1.AnalysisEntities
+Set analysisEntity1 = analysisEntities1.Add("SAMClamp")
       analysisEntity1.AddSupportFromPublication product1, publication1
+```
+
 ```vbscript
     ' _____________________________________________________________________________________
     ' Create Slider boundary.
       Set analysisEntity2 = analysisEntities1.Add("SAMSurfaceSlider")
 ```
 
+```vbscript
+' _____________________________________________________________________________________
+' Create Slider boundary.
+Set analysisEntity2 = analysisEntities1.Add("SAMSurfaceSlider")
       analysisEntity2.AddSupportFromPublication product1, publication2
       analysisEntity2.AddSupportFromPublication product1, publication3
+```
+
 ```vbscript
     ' _____________________________________________________________________________________
     ' Create Pressure.
@@ -139,21 +163,21 @@ converted: "2026-05-11T17:31:51.829358"
       Set analysisEntity3 = analysisEntities2.Add("SAMPressure")
 ```
 
-    
-```
-
       analysisEntity3.AddSupportFromPublication product1, publication4
       analysisEntity3.SetValue "SAMPressureMag","", 0, 0, 0, 500.
     ' _____________________________________________________________________________________
     ' Define a global sensor measuring the maximum value of VonMises criterion.
+
 ```vbscript
       Set dimension1 = analysisManager1.Parameters.CreateDimension("Maximum value of VonMises criterion", "PRESSURE", 0.000000)
       Set formula1 = analysisManager1.Relations.CreateFormula("Maximum value of VonMises criterion","",dimension1,"misesmax(`Finite Element Model.1\Static Case Solution.1` ) ")
     ' _____________________________________________________________________________________
     ' Launch Computation.
       analysisCase1.Compute
-    
+
       CATIA.SystemService.Print " Mises Max Computed " & dimension1.ValueAsString
+```
+
 ```vbscript
     ' _____________________________________________________________________________________
     ' Create corresponding image.
@@ -164,6 +188,10 @@ converted: "2026-05-11T17:31:51.829358"
       outputPath=CATIA.SystemService.Environ("CATTemp")
 ```
 
+```vbscript
+' _____________________________________________________________________________________
+' Export data from image.
+outputPath=CATIA.SystemService.Environ("CATTemp")
         If(Not CATIA.FileSystem.FolderExists(outputPath)) Then
         Err.Raise 9999,,"No Output Path Defined"
         End If
@@ -179,12 +207,7 @@ converted: "2026-05-11T17:31:51.829358"
       analysisImage1.Update
     '------------------------------- END   END   END   ----------------------------
       CATIA.DisplayFileAlerts = False
-    
+
 ```
 
-```vbscript
     End Sub
-    
-```
-
-```

@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "Dialog Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR10"
@@ -6,11 +7,14 @@ version: "V5R10"
 tags: []
 source_file: "Doc/online/CAACenAPIChangesR10/Dialog.htm"
 converted: "2026-05-11T17:33:50.142698"
----
+```
 
+---
+tags: []
+source_file: "Doc/online/CAACenAPIChangesR10/Dialog.htm"
+converted: "2026-05-11T17:33:50.142698"
 CAA C++ API Modifications|  Dialog  |   
----|---|---  
-  
+
 * * *
 
 **Entity|  SP| Modification| To Do** | Dialog/Protected/CATDialog.h/CATDialog/SetIconType| GA| INDM| Check that you don't use it  

@@ -1,15 +1,23 @@
 ---
+```vbscript
 title: "Mathematics"
 category: "use cases"
 module: "CAACgmBase"
 tags: ["CATIA"]
 source_file: "Doc/online/CAACgmBase/CAACgmMathematicsHome.htm"
 converted: "2026-05-11T17:33:47.833418"
----
+```
 
+---
+tags: ["CATIA"]
+source_file: "Doc/online/CAACgmBase/CAACgmMathematicsHome.htm"
+converted: "2026-05-11T17:33:47.833418"
 Geometric Modeler |  Mathematics  
----|---  
+
+converted: "2026-05-11T17:33:47.833418"
+Geometric Modeler |  Mathematics
 Technical Articles  
+
 ---  
 [CGM Overview](../CAACgmTechArticles/CAACgmOverview.md) | A first glance at CATIA Geometric Modeler  
 [Top]  
@@ -22,13 +30,17 @@ Quick Reference
 [Where to Find What](../CAACgmQuickRefs/CAACgmIndex.md) | The index of the resources used in the use cases  
 [Frequently Asked Questions](../CAACgmQuickRefs/CAACgmFaq.md) | To help you to answer your questions  
 [The Mathematical Constants](../CAACgmQuickRefs/CAACgmConstant.md) | Description  
+Quick Reference
 AdvancedMathematics Framework Reference | Interface and class reference for AdvancedMathematics  
 Mathematics Framework Reference | Interface and class reference for Mathematics  
+
 [Top]  
+AdvancedMathematics Framework Reference | Interface and class reference for AdvancedMathematics
+Mathematics Framework Reference | Interface and class reference for Mathematics
 History Version: **1** [Jan 2000] | Document created  
----|---  
+
 [Top]  
-  
+
 * * *
 
 _Copyright 2000, Dassault Systmes. All rights reserved._

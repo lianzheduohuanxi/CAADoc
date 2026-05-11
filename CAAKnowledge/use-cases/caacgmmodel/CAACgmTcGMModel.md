@@ -1,18 +1,21 @@
 ---
+```vbscript
 title: "GM Model"
 category: "use-case"
 module: "CAACgmModel"
 tags: []
 source_file: "Doc/online/CAACgmModel/CAACgmTcGMModel.htm"
 converted: "2026-05-11T17:33:48.096075"
+```
+
 ---
 # GM Model  
-  
+
 ---  
 The GM Model component provides you with all the services to create and manage a basic GM model. With GM Model, you can create your own function, create and manage geometric and topological objects, manage their life cycle, browse them by using tessellation API and performs measures and analysis on them. The major part of this component is made up of geometric operators.
 
 * * *  
-  
+
 ---  
 In this section:
     * [Advanced Mathematics](CAACgmTcAmtAdvancedMathematics.md) describes how to create your own mathematical functions.

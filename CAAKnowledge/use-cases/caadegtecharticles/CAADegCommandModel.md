@@ -1,16 +1,23 @@
 ---
+```vbscript
 title: "The CAA Command Model"
 category: "use-case"
 module: "CAADegTechArticles"
 tags: []
 source_file: "Doc/online/CAADegTechArticles/CAADegCommandModel.htm"
 converted: "2026-05-11T17:33:49.754845"
----
+```
 
+---
+tags: []
+source_file: "Doc/online/CAADegTechArticles/CAADegCommandModel.htm"
+converted: "2026-05-11T17:33:49.754845"
 3D PLM Enterprise Architecture |  User Interface - Frame |  The CAA Command Model _Understanding commands and how they work_  
----|---|---  
+
+converted: "2026-05-11T17:33:49.754845"
+3D PLM Enterprise Architecture |  User Interface - Frame |  The CAA Command Model _Understanding commands and how they work_
 Technical Article  
-  
+
 * * *
 
 Abstract This article introduces the commands as the key objects allowing for CAA application interactivity. 
@@ -22,7 +29,7 @@ Abstract This article introduces the commands as the key objects allowing for CA
     * **In Short**
     * **References**  
 ---  
-  
+
 * * *
 
 Why Commands? The high-level interactivity proposed by CAA requires that the basic interactive mechanisms be processed efficiently and consistently. These interactive mechanisms make it possible to: 
@@ -53,7 +60,9 @@ These dialog commands are available to the end user through menu items in the me
     * Commands seen by the end user, but either 
       * Not seen as commands, such as a control in a dialog box, or a dialog box part of a state command
       * Implicitly handled using the object direct manipulation, such as manipulators.
+These dialog commands are available to the end user through menu items in the menu bar, icons or combos in toolbars, or menu items in objects' contextual menus. They are triggered thanks to a command starter that stands for the command behind the push item in the menu bar or push button featuring an icon in a toolbar. This command starter is associated with a command header that holds the command class name and the shared library or DLL containing the command executable code. As soon as the end user clicks the push item or icon, the link is made with the corresponding command starter that requests the command header to load the appropriate shared library or DLL and instantiates the command class.
 One-shot Commands These are commands that are run from their beginning to their end from a single user interaction, with no means to stop them. Their dialog is limited to selecting the push item or the icon in a toolbar that represent them, and can display a confirmation dialog before proceeding. Dialog Box Commands These are commands that appear to the end user as a dialog box. The dialog box is the command itself, rather than being part of another command. The dialog sequence is limited to entering parameter values, or selecting options, and clicking push buttons such as OK, Apply, or Cancel. State Dialog Commands These are commands modeled as state machines. They can have several states. Each state lets the end user select objects, enter parameters, or choose options. Transitions depend on conditions set on what the end user selects, enters, or chooses. If these conditions are met, transitions trigger actions when skipping to the next state to progress to the command completion. Dialog boxes can be used to allow for parameter or option input. [Top] The Command Tree Structure At run time, most of the CAA commands make a tree structure. Each command is usually created with a parent command (or father command), either passed as a parameter in the command class constructor, or using the _CATCommand_ base class constructor, or possibly set or reset using the _CATCommand_ `SetFather` method. This parent has itself a parent, and so on up to the root of the tree named the command selector, a specific command that manages the availability and life cycle of dialog commands. Commands created without a parent, that is with a NULL parent, have automatically the command selector as parent. The figure below is a view of a CAA session as its command tree structure. Fig.1: The Command Tree Structure ![](images/CAAAfrUnderstandingLayout9.jpg)  
+
 ---  
 This figure shows that:
     * At the top of the command tree, there is a _CATCommandSelector_ class instance created by the V5 application. It is the parent of commands with NULL as parent if there is no current editor. 
@@ -70,18 +79,24 @@ The dialog command seen by the end user and that is currently running is named t
  **Shared** : The active command is run in the shared mode. Other commands can be deactivated on the command stack If any, they are all shared commands, except the lower command that may be exclusive.  
 A dialog command known by the command selector, that is created either as exclusive or shared, is managed by the command selector using the three methods `Activate`, `Desactivate`, and `Cancel`. As a general rule, these methods do the following: 
     * `Activate` is called when the dialog command takes the focus, if it is set as an exclusive or shared command. This happens in three cases:
+A dialog command known by the command selector, that is created either as exclusive or shared, is managed by the command selector using the three methods `Activate`, `Desactivate`, and `Cancel`. As a general rule, these methods do the following:
       1. The command is just selected by the end user. The command class is instantiated and the dialog starts from the beginning
       2. The command is a state dialog command in repeat mode. Each time the command completes, it resumes from the beginning
       3. The command restarts at the state that was current when a shared command took the focus from it.
+
 `Activate` can be used to create temporary objects that are needed from the beginning, either because they help the end user to perform the command, such as the outline of the created object, or a rubber band that follows the mouse, both known as interactive objects and added to the set of interactive objects (ISO), or construction objects that can be helpful.
     * `Desactivate` is called when a shared command takes the focus from the active command. The active command becomes inactive, is frozen in its current state and put in the command stack. When the shared command will complete, the frozen command will be reactivated from its current state using the `Activate` method. `Desactivate` should hide temporary objects created by `Activate`, or by the action methods, such as a dialog box, or temporary interactive objects that should be removed from the ISO. Some objects should be deleted, such as the rubber band, that will never be restored as it were since it follows the mouse.
     * `Cancel` is called when the command completes if it is a state dialog command, or when an exclusive command takes the focus and requests the command to be deleted. When the command completes, the focus is given to the default command (usually Select). `Cancel` must delete or release temporary objects created by the command, possibly after having removed them from the ISO.
+2. The command is a state dialog command in repeat mode. Each time the command completes, it resumes from the beginning
+3. The command restarts at the state that was current when a shared command took the focus from it.
 The following table shows a summary of when these methods are called, and what they should contain, depending on the command type and running mode. Command Type | Possible Running Modes | Activate | Desactivate | Cancel  
----|---|---|---|---  
+
+The following table shows a summary of when these methods are called, and what they should contain, depending on the command type and running mode. Command Type | Possible Running Modes | Activate | Desactivate | Cancel
 One shot | Exclusive | Called when the end user selects the command. Should contain the body of the command and should request the command destruction (*) when the job completes | Called when a shared command takes the focus. Should never be called if `Activate` includes a request to delete the command, since in this case, the command completes before the end user can select another command. Otherwise, should hide its temporary objects. | Called when an exclusive command takes the focus. Never called if `Activate` includes a request to delete the command. Otherwise, should do a clean up of  the command temporary objects ans request the command destruction (*)  
 Undefined | Never called | Never called | Never called  
 Dialog box | Exclusive or Shared | Called when the end user selects the command or when the command takes the focus again after being put on the command stack by a shared command. Shows the dialog box by default. The dialog box creation should be made in the constructor. | Called when a shared command takes the focus. Hides the dialog box by default | Called when an exclusive command takes the focus. Hides the dialog box box by default. Should request its destruction (*)  
 State dialog command | Exclusive or Shared | Called as soon as the end user selects the command or when the command takes the focus again after being put on the command stack by a shared command. Should not contain the body of the command, since this is the role of the BuildGraph method, but can contain the creation of interactive objects that can be useful to the command. | Called when a shared command takes the focus. Should hide its temporary objects, such as dialog boxes, and delete interactive objects | Called when an exclusive command takes the focus, or when the command completes. The command is automatically deleted  
+
 * Requesting a command destruction is made using the `RequestDelayedDestruction` method. [Top]
 
 * * *
@@ -97,13 +112,13 @@ References [1] | [Making Your Dialog Commands Available](../CAAAfrTechArticles/C
 [4] | [Getting Started with State Dialog Commands](CAADegGettingStarted.md)  
 [5] | [Understanding the Application Frame Layout](../CAAAfrTechArticles/CAAAfrLayoutV5.md)  
 [Top]  
-  
+
 * * *
 
 History Version: **1** [Nov 2001] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2001, Dassault Systmes. All rights reserved._

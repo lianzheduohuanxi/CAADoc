@@ -1,10 +1,13 @@
 ---
+```vbscript
 title: "Analysis Set Automation Objects"
 category: "use-case"
 module: "CAAScdAniTechArticles"
 tags: []
 source_file: "Doc/online/CAAScdAniTechArticles/CAAAniTocAnalysisSet.htm"
 converted: "2026-05-11T17:31:51.975342"
+```
+
 ---
 # Analysis Set Automation Objects
 
@@ -34,7 +37,7 @@ converted: "2026-05-11T17:31:51.975342"
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/animport.gif)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/anexport.gif)  
 ---  
-  
+
 **Legend**
 
 ![](../CAAScrAutomationImages/images/yellbox.gif) Collection  
@@ -61,17 +64,25 @@ The **AnalysisSet** object aggregates five collections:
 ![](../CAAScrAutomationImages/images/yellbox.gif)The **BasicComponents** collection includes **BasicComponent** objects. The **BasicComponent** object is dedicated to support the physical data that defines the parameters of an Analysis set or an Analysis entity.
 
 The **AnalysisImport** and **AnalysisExport** objects can be retrieved from the **AnalysisSet** object thanks to the `GetItem` method. Here is an example with **AnalysisImport**.
-    
-    
+
 ```vbscript
     Dim set As AnalysisSet
+```
+
     ...
+```vbscript
+Dim set As AnalysisSet
     Dim anImport As AnalysisImport
     Set anImport = set.GetItem("AnalysisImport")
 
 ```
 
+```vbscript
+Dim anImport As AnalysisImport
+Set anImport = set.GetItem("AnalysisImport")
 Change `AnalysisImport` to `AnalysisExport` to get an **AnalysisExport** object.
+
+```
 
 [Top]
 
@@ -79,10 +90,9 @@ Change `AnalysisImport` to `AnalysisExport` to get an **AnalysisExport** object.
 ### References
 
 [1] | [The Physical Types for Structural Analysis](CAAAniPreprocessingFeatures.md)  
-```
 
 [Top]  
-  
+
 * * *
 
 _Copyright 1994-2003, Dassault Systmes. All rights reserved._

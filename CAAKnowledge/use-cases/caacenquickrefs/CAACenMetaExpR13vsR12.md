@@ -1,19 +1,25 @@
 ---
+```vbscript
 title: "Changes to ENOVIA LCA Metadata in V5R13 Compared with V5R12"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: []
 source_file: "Doc/online/CAACenQuickRefs/CAACenMetaExpR13vsR12.htm"
 converted: "2026-05-11T17:33:46.738859"
----
+```
 
+---
+tags: []
+source_file: "Doc/online/CAACenQuickRefs/CAACenMetaExpR13vsR12.htm"
+converted: "2026-05-11T17:33:46.738859"
 CAA V5 Encyclopedia |  Changes to ENOVIA LCA Metadata in V5R13 Compared with V5R12  
----|---  
-  
+
 * * *
 
+CAA V5 Encyclopedia |  Changes to ENOVIA LCA Metadata in V5R13 Compared with V5R12
 Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Object Inheritance | Attribute | Type | Inherited | Alias | Short Role | Role  
----|---|---|---|---|---|---|---|---|---|---|---|---|---|---  
+
+Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Object Inheritance | Attribute | Type | Inherited | Alias | Short Role | Role
 3 | 3 | 0 | New attribute | CONFIG |   | CFGABLE_OBJECT | Class |   | V_project | Simple of String |   | V_project | The product name |    
 3 | 3 | 0 | New attribute | CONFIG |   | EFF_MOD | Class |   | V_project | Simple of String |   | V_project | The modification name |    
 3 | 3 | 0 | New attribute | CONFIG |   | SPECIFICATION | Class |   | V_project | Simple of String |   | V_project | The specification name |    
@@ -374,6 +380,7 @@ Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Obj
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | C_process | Inverse of WFProcess.C_activities (Simple) | Inherited | C_process |   |    
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | C_Linked1 | Inverse of AFLLink.C_action1 (Set) | Inherited | C_Linked1 |   |    
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | C_Linked2 | Inverse of AFLLink.C_action2 (Set) | Inherited | C_Linked2 |   |    
+
 [Top]
 
 * * *
@@ -381,7 +388,7 @@ Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Obj
 History Version: **1** [Nov 2003] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 1994-2003, Dassault Systmes. All rights reserved._

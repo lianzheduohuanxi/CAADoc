@@ -1,10 +1,13 @@
 ---
+```vbscript
 title: "The Versioning of the Topological Operators"
 category: "use-case"
 module: "CAATopTechArticles"
 tags: []
 source_file: "Doc/online/CAATopTechArticles/TopoVersioning.htm"
 converted: "2026-05-11T17:31:50.815757"
+```
+
 ---
 # Geometric Modeler
 
@@ -17,7 +20,7 @@ converted: "2026-05-11T17:31:50.815757"
 _Migration principles_  
 ---|---|---  
 Technical Article  
-  
+
 * * *
 ### Abstract
 
@@ -34,9 +37,8 @@ The topological operators create new bodies from input bodies, depending on an i
   * **In Short**
   * **References**
 
-  
 ---  
-  
+
 * * *
 ### Principle
 
@@ -53,23 +55,24 @@ The class that manages the operator versioning is the _CATSoftwareConfiguration_
   * Tests whether a configuration is supported by the current software.
 
 To create an open configuration (a configuration for the current software level), use the default constructor. Notice that you must use the `new` operator. 
-    
-    
+
+To create an open configuration (a configuration for the current software level), use the default constructor. Notice that you must use the `new` operator.
     _//_ _Defines an open configuration for the operator_
     CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration();  
-  
+
 ---  
-  
+
+_//_ _Defines an open configuration for the operator_
+CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration();
 If you use feature applications, please refer to their documentation to see how to retrieve the configuration associated with a given feature.
 
 The configuration must be released after use in the following way:
-    
-    
+
     _//_ _Releases the configuration after the deletion of the operators_
     pConfig->**Release**();  
-  
+
 ---  
-  
+
 [Top]
 #### The CATTopData Class
 
@@ -79,21 +82,28 @@ Once created, the configuration instance is given to the topological operator to
   * A pointer to the journal [1] of the operator. This pointer can be `NULL` : in this case, the journal is not filled.
 
 We give here an example for creating a `CATTopSkin` operator, that is fully commented in _Overview of the topological operators_ [2]. 
-    
-    
+
+We give here an example for creating a `CATTopSkin` operator, that is fully commented in _Overview of the topological operators_ [2].
     _// defines the data of the operator: configuration + journal_
     CATTopData topdata(pConfig,NULL);
     _// now creates the operator_
     CATTopSkin * pSkinOp = **::CATCreateTopSkin** (piGeomFactory,_// the pointer to the factory for the creation of the result_
+
                                                **& topdata**,_// the topological data_
+_// defines the data of the operator: configuration + journal_
+CATTopData topdata(pConfig,NULL);
+_// now creates the operator_
+CATTopSkin * pSkinOp = **::CATCreateTopSkin** (piGeomFactory,_// the pointer to the factory for the creation of the result_
                                                piPlane,
                                                nbPCurves, 
                                                aPCurves,
                                                aLimits,
                                                aOrientations);  
-  
+
 ---  
-  
+
+aLimits,
+aOrientations);
 All the operators are based on the same frame: the pointer to the factory for the creation of the resulting body is the first argument, the not `NULL` pointer to the topological data containing the configuration and the journal is the second argument. 
 
 [Top]
@@ -106,44 +116,47 @@ As now an operator must know the configuration software on which it must run, th
 
 Deprecated Signature | New Signature  
 ---|---  
-      
-    
+
     **CATHybOperator*
+Deprecated Signature | New Signature
     CreateHybSkinAssembly**(CATGeoFactory* iFactory,
                           ListPOfCATBody* iBodiesToAssemble,
                           CATCGMJournalList* iJournal)
-    
+
     **CATHybOperator*
+CreateHybSkinAssembly**(CATGeoFactory* iFactory,
+ListPOfCATBody* iBodiesToAssemble,
+CATCGMJournalList* iJournal)
     CreateHybWireAssembly**(CATGeoFactory* iFactory,
                           ListPOfCATBody* iBodiesToAssemble,
                           CATCGMJournalList* iJournal)
 
 | 
-    
-    
+
     **CATHybAssemble*
     CATCreateTopAssemble**(CATGeoFactory* iFactory,
                          CATTopData* iData,
                          ListPOfCATBody* iBodiesToAssemble)  
-      
-    
+
     **CATHybOperator*
+CATTopData* iData,
+ListPOfCATBody* iBodiesToAssemble)
     CreateHybIntersect**(CATGeoFactory* iFactory,
                        CATBody* iBody1ToIntersect,
                        CATBody* iBody2ToIntersect,
                        CATCGMJournalList* iReport)
 
 | 
-    
-    
+
     **CATHybIntersect*
     CATCreateTopIntersect**(CATGeoFactory* iFactory,
                           CATTopData* iData,
                           CATBody* iBody1ToIntersect,
                           CATBody* iBody2ToIntersect)  
-      
-    
+
     **CATHybOperator*
+CATBody* iBody1ToIntersect,
+CATBody* iBody2ToIntersect)
     CreateHybProject**(CATGeoFactory* iFactory,
                      CATBody* iBodyToProject,
                      CATBody* iBodySupport,
@@ -151,17 +164,17 @@ Deprecated Signature | New Signature
                      CATCGMJournalList* iJournal)
 
 | 
-    
-    
+
     **CATHybProject*
     CATCreateTopProject**(CATGeoFactory* iFactory,
                         CATTopData* iData,
                         CATBody* iBodyToProject,
                         CATBody* iBodySupport,
                         CATMathDirection* iDirection)  
-      
-    
+
     **CATHybOperator*
+CATBody* iBodySupport,
+CATMathDirection* iDirection)
     CreateHybSplit**(CATGeoFactory* iFactory,
                    CATBody* iBodyToSplit,
                    short iSideToKeep,
@@ -170,8 +183,7 @@ Deprecated Signature | New Signature
                    CATCGMJournalList* iJournal)
 
 | 
-    
-    
+
     **CATHybSplit*
     CATCreateTopSplit**(CATGeoFactory* iFactory,
                       CATTopData* iData,
@@ -179,9 +191,10 @@ Deprecated Signature | New Signature
                       short iSideToKeep,
                       CATBody* iSplittingBody,
                       CATBody* iCuttingBody)  
-      
-    
+
     **CATHybOperator*
+CATBody* iSplittingBody,
+CATBody* iCuttingBody)
     CreateHybTrim**(CATGeoFactory* iFactory,
                   CATBody* iFirstBodyToCut,
                   short iFirstSideToKeep,
@@ -191,8 +204,7 @@ Deprecated Signature | New Signature
                   CATCGMJournalList* iJournal)
 
 | 
-    
-    
+
     **CATHybTrim*
     CATCreateTopTrim**(CATGeoFactory* iFactory,
                      CATTopData* iData,
@@ -201,166 +213,192 @@ Deprecated Signature | New Signature
                      CATBody* iSecondBodyToCut,
                      short iSecondSideToKeep,
                      CATBody* iCuttingBody)  
-      
-    
+
     CATDistanceMinBodyBody * **CreateDistanceMinTopo**(CATGeoFactory *iFactory,
                           CATBody *iBody1,
                           CATBody *iBody2,
                           CATSkillValue iMode=BASIC)
 
 | 
-    
-    
+
+CATSkillValue iMode=BASIC)
     CATDistanceMinBodyBody * **CATCreateDistanceMinTopo**(CATGeoFactory *iFactory,
                      CATTopData *iData,
                      CATBody *iBody1,
                      CATBody *iBody2,
                      CATSkillValue iMode=BASIC)  
-      
-    
+
     CATDynBoolean*
+
     **CATDynCreateBoolean**(CATGeoFactory* iFactory,
+CATSkillValue iMode=BASIC)
+CATDynBoolean*
                         CATDynBooleanType iOperation,
                         CATBody* iPart,
                         CATBody* iTool,
                         CATCGMJournalList* iJournal)
 
 | 
-    
-    
+
+CATCGMJournalList* iJournal)
     CATDynBoolean*
+
     **CATCreateDynBoolean**(CATGeoFactory* iFactory,
+CATDynBoolean*
                         CATTopData* iData,
                         CATDynBooleanType iOperation,
                         CATBody* iPart,
                         CATBody* iTool)  
-      
-    
+
     CATDynChamfer*
+
     **CATDynCreateChamfer**(CATGeoFactory* Container,
+CATBody* iTool)
+CATDynChamfer*
                         CATBody* iPart,
                         CATCGMJournalList* iJournal)
 
 | 
-    
-    
+
+CATCGMJournalList* iJournal)
     CATDynChamfer*
+
     **CATCreateDynChamfer**(CATGeoFactory* Container,
+CATDynChamfer*
                         CATTopData* iData,
                         CATBody* iPart)  
-      
-    
+
     CATDynDraft*
+
     **CATDynCreateDraft**(CATGeoFactory* iContainer,
+CATBody* iPart)
+CATDynDraft*
                       CATBody* iPart,
                       const CATDynDraftType iType,
                       CATCGMJournalList* iJournal)
 
 | 
-    
-    
+
+CATCGMJournalList* iJournal)
     CATDynDraft*
+
     **CATCreateDynDraft**(CATGeoFactory* iContainer,
+CATDynDraft*
                       CATTopData* iData,
                       CATBody* iPart,
                       const CATDynDraftType iType)  
-      
-    
+
     CATDynFillet*
+
     **CATDynCreateFillet**(CATGeoFactory* iContainer,
+const CATDynDraftType iType)
+CATDynFillet*
                       CATBody* iPart,
                       CATCGMJournalList* iJournal)
 
 | 
-    
-    
+
+CATCGMJournalList* iJournal)
     CATDynFillet*
+
     **CATCreateDynFillet**(CATGeoFactory* iContainer,
+CATDynFillet*
                        CATTopData* iData,
                        CATBody* iPart)  
-      
-    
+
     CATDynShell*
+
     **CATDynCreateShell**(CATGeoFactory* iForResultingBody,
+CATBody* iPart)
+CATDynShell*
                       CATBody* iBody,
                       CATLength iInternal,
                       CATLength iExternal,
                       CATCGMJournalList* iJournal)
 
 | 
-    
-    
+
+CATCGMJournalList* iJournal)
     CATDynShell* **CATCreateDynShell**(CATGeoFactory * iFactory,
                       CATTopData * iTopData,
                       CATBody * iBody,
                       CATLength iInternal,
                       CATLength iExternal)  
-      
-    
+
     CATDynSplit* **CATDynCreateSplit**(CATGeoFactory* iFactory,
                       CATBody* iBody,
                       CATDynSplitType iSplitType,
                       CATCGMJournalList* iJournal)
 
 | 
-    
-    
+
+CATCGMJournalList* iJournal)
     CATDynSplit*
+
     **CATCreateDynSplit**(CATGeoFactory* iFactory,
+CATDynSplit*
                       CATTopData* iData,
                       CATBody* iBody,
                       CATDynSplitType iSplitType)  
-      
-    
+
     **CATThick::CATThick**(CATBody* iBody,
+CATBody* iBody,
+CATDynSplitType iSplitType)
                CATCGMJournalList* iJournal)
 
 | 
-    
-    
+
     **CATDynThickness*
     CATCreateDynThickness**(CATGeoFactory* iContainer,
                           CATTopData* iTopData,
                           CATBody* iPart)  
-      
-    
+
     CATDynTransformation*
+
     **CATDynCreateTransformation**(CATGeoFactory* iFactory,
+CATBody* iPart)
+CATDynTransformation*
                                CATBody* iBodytoTransform,
                                CATCGMJournalList* iJournal)
 
 | 
-    
-    
+
+CATCGMJournalList* iJournal)
     CATDynTransformation*
+
     **CATCreateDynTransformation**(CATGeoFactory* iFactory,
+CATDynTransformation*
                                CATTopData* iData,
                                CATBody* iBodytoTransform)  
-  
+
   | 
-    
-    
+
+CATBody* iBodytoTransform)
     CATSkinExtrapol*
+
     **CATCreateSkinExtrapol**(CATGeoFactory* iFactory,
+CATSkinExtrapol*
                           CATTopData* iTopData,
                           CATBody * iSkin)  
-      
-    
+
     **CATSkinOperator::CATSkinOperator**(
+CATTopData* iTopData,
+CATBody * iSkin)
           CATGeoFactory* iFactory,
           CATTopData* iData,
           CATSurface* iSurface)
 
 | 
-    
-    
+
+CATSurface* iSurface)
     CATTopSkin* **CATCreateTopSkin**(CATGeoFactory* iFactory,
                      CATTopData* iData,
                      CATSurface* iSurface,
                      const CATSurLimits* iLims)  
-      
-    
+
     **CATSkinOperator::CATSkinOperator**(
+CATSurface* iSurface,
+const CATSurLimits* iLims)
           CATGeoFactory* iFactory,
           int iNbPcurves,
           CATPCurve** iPcurves,
@@ -371,19 +409,22 @@ Deprecated Signature | New Signature
           CATCGMJournalList* iJournal)
 
 | 
-    
-    
+
+CATCGMJournalList* iJournal)
     CATTopSkin*
+
     **CATCreateTopSkin**(CATGeoFactory* iFactory,
+CATTopSkin*
                      CATTopData* iData,
                      CATSurface* iSurface,
                      int iNbPcurves,
                      CATPCurve** iPcurves,
                      CATCrvLimits* iLimits,
                      short* iOrientations)  
-      
-    
+
     **CATSolidCuboid::CATSolidCuboid**(
+CATCrvLimits* iLimits,
+short* iOrientations)
           CATGeoFactory* iFactory,
           const CATMathPoint& iPt1,
           const CATMathPoint& iPt2,
@@ -392,8 +433,7 @@ Deprecated Signature | New Signature
           CATCGMJournalList *iJournal)
 
 | 
-    
-    
+
     **CATSolidCuboid*
     CATCreateSolidCuboid**(CATGeoFactory* iFactory,
                          CATTopData* iData,
@@ -401,9 +441,10 @@ Deprecated Signature | New Signature
                          const CATMathPoint& iPt2,
                          const CATMathPoint& iPt3,
                          const CATMathPoint& iPt4)  
-      
-    
+
     **CATSolidCylinder::CATSolidCylinder**(
+const CATMathPoint& iPt3,
+const CATMathPoint& iPt4)
           CATGeoFactory* iFactory,
           const CATMathPoint& iFirstPointOnAxis,
           const CATMathPoint& iSecondPointOnAxis,
@@ -411,17 +452,17 @@ Deprecated Signature | New Signature
           CATCGMJournalList* iJournal)
 
 | 
-    
-    
+
     **CATSolidCylinder*
     CATCreateSolidCylinder**(CATGeoFactory* iFactory,
                            CATTopData* iData,
                            const CATMathPoint& iFirstPointOnAxis,
                            const CATMathPoint& iSecondPointOnAxis,
                            const CATMathPoint& iPointOnSurface)  
-      
-    
+
     **CATSolidCylinder::CATSolidCylinder**(
+const CATMathPoint& iSecondPointOnAxis,
+const CATMathPoint& iPointOnSurface)
           CATGeoFactory* iFactory,
           const CATMathPoint& iFirstPointOnAxis,
           const CATMathPoint& iSecondPointOnAxis,
@@ -429,17 +470,17 @@ Deprecated Signature | New Signature
           CATCGMJournalList* iJournal)
 
 | 
-    
-    
+
     **CATSolidCylinder*
     CATCreateSolidCylinder**(CATGeoFactory* iFactory,
                            CATTopData* iData,
                            const CATMathPoint& iFirstPointOnAxis,
                            const CATMathPoint& iSecondPointOnAxis,
                            double iRadius)  
-      
-    
+
     **CATSolidPyramid::
+const CATMathPoint& iSecondPointOnAxis,
+double iRadius)
           CATSolidPyramid**(CATGeoFactory* iFactory,
           const CATMathPoint& iPt1,
           const CATMathPoint& iPt2,
@@ -448,8 +489,7 @@ Deprecated Signature | New Signature
           CATCGMJournalList* iJournal)
 
 | 
-    
-    
+
     **CATSolidPyramid*
     CATCreateSolidPyramid**(CATGeoFactory* iFactory,
                           CATTopData* iData,
@@ -457,41 +497,42 @@ Deprecated Signature | New Signature
                           const CATMathPoint& iPt2,
                           const CATMathPoint& iPt3,
                           const CATMathPoint& iTop)  
-      
-    
+
     **CATSolidPyramid::CATSolidPyramid**(
+const CATMathPoint& iPt3,
+const CATMathPoint& iTop)
           CATGeoFactory* iFactory,
           CATFace* iBase,
           const CATMathPoint& iTop,
           CATCGMJournalList *iJournal)
 
 | 
-    
-    
+
     **CATSolidPyramid*
     CATCreateSolidPyramid**(CATGeoFactory* iFactory,
                           CATTopData* iData,
                           CATFace* iBase,
                           const CATMathPoint& iTop)  
-      
-    
+
     **CATSolidSphere::CATSolidSphere**(
+CATFace* iBase,
+const CATMathPoint& iTop)
           CATGeoFactory* iFactory,
           const CATMathPoint& iCenter,
           double iRadius,
           CATCGMJournalList* iJournal)
 
 | 
-    
-    
+
     **CATSolidSphere*
     CATCreateSolidSphere**(CATGeoFactory* iFactory,
                          CATTopData* iData,
                          const CATMathPoint& iCenter,
                          double iRadius)  
-      
-    
+
     **CATSolidTorus::CATSolidTorus**(
+const CATMathPoint& iCenter,
+double iRadius)
           CATGeoFactory* iFactory,
           const CATMathAxis& iAxis,
           const CATMathPoint& iMajor,
@@ -499,31 +540,32 @@ Deprecated Signature | New Signature
           CATCGMJournalList *iJournal)
 
 | 
-    
-    
+
     **CATSolidTorus*
     CATCreateSolidTorus**(CATGeoFactory* iFactory,
                         CATTopData* iData,
                         const CATMathAxis& iAxis,
                         const CATMathPoint& iMajor,
                         const CATMathPoint& iMinor)  
-      
-    
+
     **CATThick::CATThick**(
+const CATMathPoint& iMajor,
+const CATMathPoint& iMinor)
           CATBody* iBody,
           CATCGMJournalList* iJournal)
 
 | 
-    
-    
+
     **CATDynThickness*
     CATCreateDynThickness**(CATGeoFactory* iFactory,
                           CATTopData* iTopData,
                           CATBody* iPart)  
-      
-    
+
     CATTopCorner*
+
     **CreateTopOpCorner**(CATGeoFactory* iFactory,
+CATBody* iPart)
+CATTopCorner*
                       CATBody * iCurve1,
                       CATBody * iCurve2,
                       CATBody * iSupport,
@@ -531,19 +573,23 @@ Deprecated Signature | New Signature
                       CATCGMJournalList* iJournalList)
 
 | 
-    
-    
+
+CATCGMJournalList* iJournalList)
     CATTopCorner*
+
     **CATCreateTopCorner**(CATGeoFactory* iFactory,
+CATTopCorner*
                        CATTopData* iTopData,
                        CATBody* iCurve1,
                        CATBody* iCurve2,
                        CATBody* iSupport,
                        double iRadius)  
-      
-    
+
     CATTopDevelop*
+
     **CreateTopOpDevelop**(CATGeoFactory* iFactory,
+double iRadius)
+CATTopDevelop*
                        CATBody* iWire,
                        CATBody* iWireSupport,
                        CATBody* iTargetSupport,
@@ -552,20 +598,24 @@ Deprecated Signature | New Signature
                        CATCGMJournalList *iReport)
 
 | 
-    
-    
+
+CATCGMJournalList *iReport)
     CATTopDevelop*
+
     **CATCreateTopDevelop**(CATGeoFactory* iFactory,
+CATTopDevelop*
                         CATTopData* iData,
                         CATBody* iWire,
                         CATBody* iWireSupport,
                         CATBody* iTargetSupport,
                         CATSurTo2DGlobalMapping* iMappingIn,
                         CATSurTo2DGlobalMapping* iMappingOut)  
-      
-    
+
     CATTopParallel*
+
     **CreateTopOpAllParallel**(CATGeoFactory* iFactory,
+CATSurTo2DGlobalMapping* iMappingOut)
+CATTopParallel*
                            CATBody* iCurve,
                            CATBody* iSupport,
                            CATDistanceTool* iDistance,
@@ -573,18 +623,22 @@ Deprecated Signature | New Signature
                            CATLaw** iMappingLaws)
 
 | 
-    
-    
+
+CATLaw** iMappingLaws)
     CATTopParallel*
+
     **CATCreateTopParallel**(CATGeoFactory* iFactory,
+CATTopParallel*
                          CATTopData* iData,
                          CATBody* iCurve,
                          CATBody* iSupport,
                          CATDistanceTool* iDistance)  
-      
-    
+
     CATTopPrism*
+
     **CATTopCreatePrism**(CATGeoFactory* iFactory,
+CATDistanceTool* iDistance)
+CATTopPrism*
                       CATBody* iProfileBody,
                       CATMathDirection* iDirection,
                       CATLength iStartOffset,
@@ -592,17 +646,18 @@ Deprecated Signature | New Signature
                       CATCGMJournalList* iJournal)
 
 | 
-    
-    
+
+CATCGMJournalList* iJournal)
     CATTopPrism*
+
     **CATCreateTopPrism**(CATGeoFactory* iFactory,
+CATTopPrism*
                       CATTopData* iData,
                       CATBody* iProfileBody,
                       CATMathDirection* iDirection,
                       CATLength iStartOffset,
                       CATLength iEndOffset)  
-      
-    
+
     CATTopRevol* **CATTopCreateRevol**(CATGeoFactory* iFactory,
                       CATBody* iProfile,
                       CATMathAxis* iAxis,
@@ -611,24 +666,25 @@ Deprecated Signature | New Signature
                       CATCGMJournalList* iJournal)
 
 | 
-    
-    
+
+CATCGMJournalList* iJournal)
     CATTopRevol* **CATCreateTopRevol**(CATGeoFactory* iFactory,
                       CATTopData* iData,
                       CATBody* iProfile,
                       CATMathAxis* iAxis,
                       CATAngle iStartAngle,
                       CATAngle iEndAngle)  
-  
+
   | 
-    
-    
+
+CATAngle iEndAngle)
     CATTopSimplify* **CATCreateTopSimplify**(CATGeoFactory* iFactory,
                          CATTopData* iData,
                         CATBody* iBodyToSimplify)  
-      
-    
+
     **CATVertexOperator::CATVertexOperator**(
+CATTopData* iData,
+CATBody* iBodyToSimplify)
           CATGeoFactory* iFactory,
           CATPoint* iPoint,
           CATBody* iTargetBody=NULL,
@@ -636,15 +692,15 @@ Deprecated Signature | New Signature
           CATCGMJournalList* iJournal)
 
 | 
-    
-    
+
     **CATTopVertex*
     CATCreateTopVertex**(CATGeoFactory* iFactory,
                        CATTopData* iData,
                        CATPoint* iPoint)  
-      
-    
+
     **CATWireOperator::CATWireOperator**(
+CATTopData* iData,
+CATPoint* iPoint)
           CATGeoFactory* iFactory,
           int iNbCurves,
           CATCurve** iCurves,
@@ -655,8 +711,7 @@ Deprecated Signature | New Signature
           CATCGMJournalList *iJournal)
 
 | 
-    
-    
+
     **CATTopWire*
     CATCreateTopWire**(CATGeoFactory* iFactory,
                      CATTopData* iData,
@@ -664,32 +719,33 @@ Deprecated Signature | New Signature
                      CATCurve** iCurves,
                      CATCrvLimits* iLimits,
                      short* iOrientations)  
-  
+
 [Top]
 #### AdvancedTopologicalOpe
 
 Deprecated Signature | New Signature  
 ---|---  
-      
-    
+
+Deprecated Signature | New Signature
     CATThickenOp*
+
     **CATCreateThickenOp**(CATGeoFactory* iFactory,
+CATThickenOp*
                        CATBody* iBody,
                        double iOffset1,
                        double iOffset2,
                        CATCGMJournalList* iJournal)
 
 | 
-    
-    
+
+CATCGMJournalList* iJournal)
     CATThickenOp*
     CATCreateThickenOp(CATGeoFactory* iFactory,
                        CATTopData* iTopData,
                        CATBody* iBody,
                        double iOffset1,
                        double iOffset2)  
-      
-    
+
     CATTopologicalBlend* **CreateTopologicalBlend**(CATGeoFactory* iFactory,
                            const CATBody* iWire1,
                            const CATBody* iWire2,
@@ -699,34 +755,39 @@ Deprecated Signature | New Signature
                            CATCGMJournalList* iJournal);
 
 | 
-    
-    
+
+CATCGMJournalList* iJournal);
     CATTopologicalBlend*
+
     **CATCreateTopologicalBlend**(CATGeoFactory* iFactory,
+CATTopologicalBlend*
                               CATTopData* iTopData,
                               const CATBody* iWire1,
                               const CATBody* iWire2,
                               const CATBody* iSupport1,
                               const CATBody* iSupport2)  
-      
-    
+
     CATTopologicalBlend*
+
     **CreateTopologicalBlend**(CATGeoFactory* iFactory,
+const CATBody* iSupport2)
+CATTopologicalBlend*
                            const CATBody* iWire1,
                            const CATBody* iWire2,
                            CATSkillValue iMode,
                            CATCGMJournalList* iJournal)
 
 | 
-    
-    
+
+CATCGMJournalList* iJournal)
     CATTopologicalBlend*
+
     **CATCreateTopologicalBlend**(CATGeoFactory* iFactory,
+CATTopologicalBlend*
                               CATTopData* iTopData,
                               const CATBody* iWire,
                               const CATBody* iSupport )  
-      
-    
+
     CATTopologicalBlendCurve* **CreateTopologicalBlendCurve**(CATGeoFactory* iFactory,
                                 CATBody* iWire1,
                                 CATBody* iWireParam1,
@@ -738,17 +799,18 @@ Deprecated Signature | New Signature
                                 CATSkillValue iMode)
 
 | 
-    
-    
+
+CATSkillValue iMode)
     CATTopologicalBlendCurve*
+
     **CATCreateTopologicalBlendCurve**(CATGeoFactory* iFactory,
+CATTopologicalBlendCurve*
                                    CATTopData* iData,
                                    CATBody* iWire1,
                                    CATBody* iWireParam1,
                                    CATBody* iWire2,
                                    CATBody* iWireParam2)  
-      
-    
+
     CATTopologicalFill* **CreateTopologicalFill**(CATGeoFactory* iFactory,
                           const long iNumberOfWires,
                           const CATBody** iArrayOfWires,
@@ -756,15 +818,14 @@ Deprecated Signature | New Signature
                           CATCGMJournalList *iJournal)
 
 | 
-    
-    
+
+CATCGMJournalList *iJournal)
     CATTopologicalFill* **CATCreateTopologicalFill**(CATGeoFactory* iFactory,
                              CATTopData* iTopData,
                              const long iNumberOfWires,
                              const CATBody** iArrayOfWires,
                              CATSkillValue iMode)  
-      
-    
+
     CATTopologicalFill* **CreateTopologicalFill**(CATGeoFactory* iFactory,
                           const long iNumberOfWires,
                           const CATBody** iBodyWires,
@@ -773,16 +834,15 @@ Deprecated Signature | New Signature
                           CATCGMJournalList* iJournal)
 
 | 
-    
-    
+
+CATCGMJournalList* iJournal)
     CATTopologicalFill* **CATCreateTopologicalFill**(CATGeoFactory* iFactory,
                              CATTopData* iTopData,
                              const long iNumberOfWires,
                              const CATBody** iBodyWires,
                              const CATBody** iBodySupports,
                              CATSkillValue iMode)  
-      
-    
+
     CATTopologicalFilletBlend* **CreateTopologicalFilletBlend**(CATGeoFactory* iFactory,
                                  const CATBody* iBodySupport1,
                                  const CATBody* iBodySupport2,
@@ -795,8 +855,8 @@ Deprecated Signature | New Signature
                                  CATCGMJournalList* iReport)
 
 | 
-    
-    
+
+CATCGMJournalList* iReport)
     CATTopologicalFilletBlend* **CATCreateTopologicalFilletBlend**(CATGeoFactory* iFactory,
                                     CATTopData* iTopData,
                                     const CATBody* iBodySupport1,
@@ -806,8 +866,7 @@ Deprecated Signature | New Signature
                                     double iRadius,
                                     const CATDomain* iDomainSupport1,
                                     const CATDomain* iDomainSupport2)  
-      
-    
+
     CATTopologicalMatch* **CreateTopologicalMatch**(CATGeoFactory* iFactory,
                            CATBody** iWire1,
                            CATBody** iWire2,
@@ -818,8 +877,8 @@ Deprecated Signature | New Signature
                            CATCGMJournalList* iJournal)
 
 | 
-    
-    
+
+CATCGMJournalList* iJournal)
     CATTopologicalMatch* **CATCreateTopologicalMatch**(CATGeoFactory* iFactory,
                               CATTopData* iTopData,
                               CATBody** iWire1,
@@ -828,8 +887,7 @@ Deprecated Signature | New Signature
                               CATBody* iSupport1,
                               CATBody** iSupport2,
                               CATSkillValue iMode)  
-      
-    
+
     CATTopologicalMatch* **CreateTopologicalMatchBoth**(CATGeoFactory* iFactory,
                                CATBody* iWire1,
                                CATBody* iWire2,
@@ -839,8 +897,8 @@ Deprecated Signature | New Signature
                                CATCGMJournalList* iJournal)
 
 | 
-    
-    
+
+CATCGMJournalList* iJournal)
     CATTopologicalMatch* **CATCreateTopologicalMatchBoth**(CATGeoFactory* iFactory,
                                   CATTopData* iTopData,
                                   CATBody* iWire1,
@@ -848,8 +906,7 @@ Deprecated Signature | New Signature
                                   CATBody* iSupport1,
                                   CATBody* iSupport2,
                                   CATSkillValue iMode)  
-      
-    
+
     CATTopSweep* **CATTopCreateSweep**(CATGeoFactory* iGeoFactory,
                       CATBody* iCenterBody,
                       CATGeometry* iCenterSupport,
@@ -858,23 +915,25 @@ Deprecated Signature | New Signature
                       CATCGMJournalList* iJournal)
 
 | 
-    
-    
+
+CATCGMJournalList* iJournal)
     CATTopSweep*
+
     **CATCreateTopSweep**(CATGeoFactory* iGeoFactory,
+CATTopSweep*
                       CATTopData* iData,
                       CATBody* iCenterBody,
                       CATGeometry* iCenterSupport,
                       CATBody* iSpineBody,
                       CATBody* iProfile)  
-  
+
 [Top]
 #### BasicTopologicalOpe
 
 Deprecated Signature | New Signature  
 ---|---  
-      
-    
+
+Deprecated Signature | New Signature
     CATTopHelixOperator* **CATCreateTopHelixOperator**(CATGeoFactory* iFactory,
                               CATBody* iHelixAxis,
                               long iHelixAxisOrientation,
@@ -886,8 +945,8 @@ Deprecated Signature | New Signature
                               CATCGMJournalList* iJournal)
 
 | 
-    
-    
+
+CATCGMJournalList* iJournal)
     CATTopHelixOperator*
     CATCreateTopHelixOperator(CATGeoFactory* iFactory,
                               CATTopData* iTopData,
@@ -898,8 +957,7 @@ Deprecated Signature | New Signature
                               CATAngle iEndAngle,
                               CATLength iPitch,
                               long iTrigoOrientation)  
-      
-    
+
     CATTopSweep* **CATTopCreateSweep**(CATGeoFactory* iFactory,
                       CATBody* iCenterBody,
                       CATGeometry* iCenterSupport,
@@ -908,8 +966,8 @@ Deprecated Signature | New Signature
                       CATCGMJournalList* iJournal)
 
 | 
-    
-    
+
+CATCGMJournalList* iJournal)
     CATTopLineOperator*
     CATCreateTopLineOperatorNormalToShell(
                               CATGeoFactory* iFactory,
@@ -917,10 +975,12 @@ Deprecated Signature | New Signature
                               CATBody* iOriginPoint,
                               CATBody* iShellOfPoint,
                               double iLength)  
-      
-    
+
     CATTopLineOperator*
+
     **CATCreateTopLineOperatorAngledTangentToWire**(
+double iLength)
+CATTopLineOperator*
                       CATGeoFactory* iFactory,
                       CATBody* iOriginPoint,
                       CATBody* iCurve,
@@ -930,8 +990,8 @@ Deprecated Signature | New Signature
                       CATCGMJournalList* iJournal)
 
 | 
-    
-    
+
+CATCGMJournalList* iJournal)
     CATTopLineOperator*
     CATCreateTopLineOperatorAngledTangentToWire(
                               CATGeoFactory* iFactory,
@@ -941,10 +1001,12 @@ Deprecated Signature | New Signature
                               CATBody* iShellOfCurve,
                               double iLength,
                               CATAngle iAngle)  
-      
-    
+
     CATTopLineOperator*
+
     **CATCreateTopLineOperatorTangentToWire**(
+CATAngle iAngle)
+CATTopLineOperator*
                       CATGeoFactory* iFactory,
                       CATBody* iOriginPoint,
                       CATBody* iCurve,
@@ -952,8 +1014,8 @@ Deprecated Signature | New Signature
                       CATCGMJournalList* iJournal)
 
 | 
-    
-    
+
+CATCGMJournalList* iJournal)
     CATTopLineOperator*
     CATCreateTopLineOperatorTangentToWire(
                               CATGeoFactory* iFactory,
@@ -961,10 +1023,12 @@ Deprecated Signature | New Signature
                               CATBody* iOriginPoint,
                               CATBody* iCurve,
                               double iLength)  
-      
-    
+
     CATTopLineOperator*
+
     **CATCreateTopLineOperatorFromDirection**(
+double iLength)
+CATTopLineOperator*
                       CATGeoFactory* iFactory,
                       CATBody* iOriginPoint,
                       const CATMathVector& iDirection,
@@ -972,8 +1036,8 @@ Deprecated Signature | New Signature
                       CATCGMJournalList* iJournal)
 
 | 
-    
-    
+
+CATCGMJournalList* iJournal)
     CATTopLineOperator*
     CATCreateTopLineOperatorFromDirection(
                               CATGeoFactory* iFactory,
@@ -981,38 +1045,41 @@ Deprecated Signature | New Signature
                               CATBody* iOriginPoint,
                               const CATMathVector& iDirection,
                               double iLength)  
-      
-    
+
     CATTopLineOperator*
+
     **CATCreateTopLineOperatorFromPoints**(
+double iLength)
+CATTopLineOperator*
                       CATGeoFactory* iFactory,
                       CATBody* iOriginPoint,
                       CATBody* iSecondPoint,
                       CATCGMJournalList* iJournal)
 
 | 
-    
-    
+
+CATCGMJournalList* iJournal)
     CATTopLineOperator*
     CATCreateTopLineOperatorFromPoints(
                               CATGeoFactory* iFactory,
                               CATTopData* iTopData,
                               CATBody* iOriginPoint,
                               CATBody* iSecondPoint)  
-      
-    
+
     CATTopPointOperator*
+
     **CATCreateTopPointOperator**(CATGeoFactory * iFactory,
+CATBody* iSecondPoint)
+CATTopPointOperator*
                               CATCGMJournalList* iJournal)
 
 | 
-    
-    
+
+CATCGMJournalList* iJournal)
     CATTopPointOperator*
     CATCreateTopPointOperator(CATGeoFactory* iFactory,
                               CATTopData* iTopData)  
-      
-    
+
     CATTopSplineOperator* **CATCreateTopSplineOperator**(CATGeoFactory* iFactory,
                                long iNbpts,
                                CATBody** iListOfPoints,
@@ -1022,8 +1089,8 @@ Deprecated Signature | New Signature
                                CATCGMJournalList* iJournal)
 
 | 
-    
-    
+
+CATCGMJournalList* iJournal)
     CATTopSplineOperator*
     CATCreateTopSplineOperator(CATGeoFactory* iFactory,
                                CATTopData* iTopData,
@@ -1032,26 +1099,26 @@ Deprecated Signature | New Signature
                                const CATMathVector* iTangents,
                                const CATMathVector* iCurvatures,
                                const long* iImposition)  
-  
+
 [Top]
 #### Case of the Journal
 
+const long* iImposition)
 If you directly create a CATCGMJournalList, you must now give the software configuration that must be use.
 
 Deprecated Signature | New Signature  
----|---  
-      
-    
+
+Deprecated Signature | New Signature
     CATCGMJournalList::CATCGMJournalList
            (CATCGMJournalList* ioList)
 
 | 
-    
-    
+
+(CATCGMJournalList* ioList)
     CATCGMJournalList::CATCGMJournalList
           (CATSoftwareConfiguration* iConfig,
            CATCGMJournalList* ioList)  
-  
+
 [Top]
 
 * * *
@@ -1069,14 +1136,14 @@ Deprecated Signature | New Signature
 ---|---  
 [2] | [Overview of the Topological Operators](../CAATopUseCases/CAATopOverview.md)  
 [Top]  
-  
+
 * * *
 ### History
 
 Version: **1** [Oct 2000] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2000, Dassault Systmes. All rights reserved._

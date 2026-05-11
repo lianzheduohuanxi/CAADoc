@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "NewTopologicalObjects Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR7"
@@ -6,11 +7,14 @@ version: "V5R7"
 tags: []
 source_file: "Doc/online/CAACenAPIChangesR7/NewTopologicalObjects.htm"
 converted: "2026-05-11T17:33:52.177019"
----
+```
 
+---
+tags: []
+source_file: "Doc/online/CAACenAPIChangesR7/NewTopologicalObjects.htm"
+converted: "2026-05-11T17:33:52.177019"
 CAA API Modifications|  NewTopologicalObjects  |   
----|---|---  
-  
+
 * * *
 
 **Entity|  Modification| To Do** | NewTopologicalObjects/Protected/CATBody.h/CATBody/GetNbDomains| MHBDM| The method is now on the parent class CATTopObject-> BT compatible (recompile)  

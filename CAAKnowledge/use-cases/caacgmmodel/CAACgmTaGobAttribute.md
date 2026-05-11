@@ -1,13 +1,16 @@
 ---
+```vbscript
 title: "The Management of Foreign Data"
 category: "use-case"
 module: "CAACgmModel"
 tags: ["CATICGMObject", "CATICGMDomainBinder", "CATICGMObjects", "CATIA", "CATIForeignSurface"]
 source_file: "Doc/online/CAACgmModel/CAACgmTaGobAttribute.htm"
 converted: "2026-05-11T17:33:47.890093"
+```
+
 ---
 # The Management of Foreign Data  
-  
+
 ---  
 Technical Article  
 ## Abstract
@@ -29,7 +32,6 @@ The geometric attributes are a quick way to add data on CGM objects. Moreover, t
   * In Short
   * References
 
-  
 ---  
 ## CGM Attributes
 ### Definition
@@ -51,8 +53,7 @@ Fig. 1: The Objects Involved in the Attribute Mechanisms ![Foreign](images/CAACg
 ### Characterization
 
 An attribute is characterized by a class name, an application name and a version number. The application name is a logical name for the physical load module that contains the attribute class. The mapping between the logical and physical names is realized through the _static query implementation_ as precisely described in the Object Modeler documentation. What you need to know here is that you have to create a header that contains the physical name, a source that declares the mapping and a line into a dictionary. The header is as follows:
-    
-    
+
     //-----------------------------------------------------------------------------
     //         header XXX.h for the physical load name (XXX)
     //-----------------------------------------------------------------------------
@@ -67,8 +68,7 @@ An attribute is characterized by a class name, an application name and a version
     #endif
 
 The source is:
-    
-    
+
     //-----------------------------------------------------------------------------
     //         source MyApplicationName.cpp for the mapping
     //  logical load name (MyApplicationName) - physical load name (XXX)
@@ -78,86 +78,113 @@ The source is:
     **AppDef(MyApplicationName)** ;
 
 The dictionary `MyApplicationName.dico` contains the following line:
-    
-    
+
+The dictionary `MyApplicationName.dico` contains the following line:
     MyApplicationName        CATICGMDomainBinder        libXXX
 
 Now, you have to declare the mapping in your attribute class by the mean of the macro `CATCGMDeclareAttribute`, as showed in the header example ` MyAttributeClass.h` below, and the macro `CATCGMImplAttribute`, as in the code example for a persistent (or streamable) `MyAttributeClass.cpp`:
-    
+
     #ifndef MyAttributeClass_H
     #define MyAttributeClass_H
+Now, you have to declare the mapping in your attribute class by the mean of the macro `CATCGMDeclareAttribute`, as showed in the header example ` MyAttributeClass.h` below, and the macro `CATCGMImplAttribute`, as in the code example for a persistent (or streamable) `MyAttributeClass.cpp`:
     class CATCGMAttributeDef;
     class CATCGMStream;
     class CATICGMObject;
     class CATCGMContainer;
+
     #include "CATCGMStreamAttribute.h"
     #include "XXX.h"
-    
+
     //-----------------------------------------------------------------------------
     // case of a streamable attribute
     class ExportedByXXX MyAttributeClass : public CATCGMStreamAttribute
     {
       **CATCGMDeclareAttribute**(MyAttributeClass, CATCGMStreamAttribute);
+class ExportedByXXX MyAttributeClass : public CATCGMStreamAttribute
       public :
       virtual void Stream(CATCGMStream & ioStream);
       virtual void UnStream(CATCGMStream & iStream);
+
     // own methods..
+public :
+virtual void Stream(CATCGMStream & ioStream);
+virtual void UnStream(CATCGMStream & iStream);
       void SetValue(long iVal);
       void GetValue (long & oVal);
       protected :
+
     // useful- returns 1 if TRUE 0 otherwise
+void SetValue(long iVal);
+void GetValue (long & oVal);
+protected :
         virtual long Compare(const CATCGMAttribute &iOtherAttribute);
+
     };
     // useful
+protected :
+virtual long Compare(const CATCGMAttribute &iOtherAttribute);
     ExportedByXXX void CastTo(CATCGMAttribute * iMyAttribute, MyAttributeClass * & oMyAttribute);
+
     #endif
 
 The corresponding source `MyAttributeClass.cpp` is:
-    
+
     #include "CATCGMAttrId.h"
     #include "MyAttributeClass.h"
     #include "CATBaseUnknown.h"
     #include "CATCGMStream.h"
-    
+
     void CastTo(CATCGMAttribute * curattr, MyAttributeClass * & retour)
     {
+void CastTo(CATCGMAttribute * curattr, MyAttributeClass * & retour)
       retour =NULL;
       if (curattr ->IsATypeOf(UAIDPtr(MyAttributeClass)))
         retour = (MyAttributeClass *) curattr;
+
     }
     // declaration of the class, the application and the version.
     **CATCGMImplAttribute**(MyAttributeClass,CATCGMStreamAttribute,MyApplication,1);
-    
+
     void MyAttributeClass::Stream(CATCGMStream & Str)
     {Str.WriteLong(streamedvalue);}
-    
+
     void MyAttributeClass::UnStream(CATCGMStream & Str)
     {Str.ReadLong(streamedvalue);}
-    
+
     void MyAttributeClass::SetValue(long val)
     { streamedvalue=val;}
-    
+
     void MyAttributeClass::GetValue (long & val)
     { val = streamedvalue;}
-    
+
+void MyAttributeClass::GetValue (long & val)
     long MyAttributeClass::Compare(const CATCGMAttribute & NewAttr)
+
     {
+void MyAttributeClass::GetValue (long & val)
+long MyAttributeClass::Compare(const CATCGMAttribute & NewAttr)
       long idef = 0;
       MyAttributeClass * newattr;
       CastTo((MyAttributeClass *)&NewAttr, newattr);
       if (streamedvalue== newattr->streamedvalue)
         idef=1;
       return idef;
+
     }
 ### Management
 
+idef=1;
+return idef;
 Once defined, an attribute can be used by a CATICGMObject. Hence, the `CATICGMObject::PutAttribute` method allows a CATICGMObject to point to an attribute.
 
 Now, the attributes can be read (`CATICGMObject::GetAttribute`) or released (`CATICGMObject::ReleasedAttribute`). If a CATICGMObject releases an attribute that is no more used, the attribute is deleted.
 
 A CATICGMObject may point several attributes of different classes; conversely, an attribute may be pointed by several CATICGMObjects of the same container (a container is a set that contains objects). If a CATICGMObject is deleted, the attribute(s) that it points is(are) also deleted if this(these) attribute(s) is(are) no more pointed by any other CATICGMObjects.
+
 ### Stream and Unstream
 
+Now, the attributes can be read (`CATICGMObject::GetAttribute`) or released (`CATICGMObject::ReleasedAttribute`). If a CATICGMObject releases an attribute that is no more used, the attribute is deleted.
+A CATICGMObject may point several attributes of different classes; conversely, an attribute may be pointed by several CATICGMObjects of the same container (a container is a set that contains objects). If a CATICGMObject is deleted, the attribute(s) that it points is(are) also deleted if this(these) attribute(s) is(are) no more pointed by any other CATICGMObjects.
 The stream and unstream mechanisms allow you to translate a (persistent) object into a sequence of bytes and vice et versa. To unstream a file (at the File/Read operation for example), the unstream process uses the mapping between the application name and the load module name to load the right physical load module. If the load module is not found during the unstream process, the attribute is copied and referenced by the the CATICGMObject, but not seen, so that the model can be read and the data are not lost, but not usable too.
 
 To write the stream and unstream methods for your own attribute, take into account that: 
@@ -173,50 +200,63 @@ To write the stream and unstream methods for your own attribute, take into accou
 First described the application name through the dictionary and the corresponding header file.
 
 The header of a new attribute class can be as as follows:
-    
+
     #ifndef UserNonPersistentAttr_H_
     #define UserNonPersistentAttr_H_
     #include "XXX.h"
     #include "CATCGMAttribute.h"
-    
+
     class ExportedByXXX UserNonPersistentAttr : public CATCGMAttribute
     {
+class ExportedByXXX UserNonPersistentAttr : public CATCGMAttribute
     public :
     CATCGMDeclareAttribute(UserNonPersistentAttr,CATCGMAttribute);
     UserNonPersistentAttr();
     UserNonPersistentAttr(const UserNonPersistentAttr&);
     UserNonPersistentAttr& operator=(const UserNonPersistentAttr&);
     virtual ~UserNonPersistentAttr();
-    
+
     };
     #endif
 
 The source file is then:
-    
+
     #include "UserNonPersistentAttr.h"
+The source file is then:
     CATCGMImplAttribute(UserNonPersistentAttr,CATCGMAttribute,NoAppDef,1);
+
     //
+The source file is then:
+CATCGMImplAttribute(UserNonPersistentAttr,CATCGMAttribute,NoAppDef,1);
     UserNonPersistentAttr::UserNonPersistentAttr() :
     CATCGMAttribute()
+
     {
     }
     //
+UserNonPersistentAttr::UserNonPersistentAttr() :
+CATCGMAttribute()
     UserNonPersistentAttr::UserNonPersistentAttr(const UserNonPersistentAttr&)
+
     {
     }
     //
+UserNonPersistentAttr::UserNonPersistentAttr(const UserNonPersistentAttr&)
     UserNonPersistentAttr& UserNonPersistentAttr::operator=(const UserNonPersistentAttr&)
+
     {
     return *this;
     }
     //
+UserNonPersistentAttr& UserNonPersistentAttr::operator=(const UserNonPersistentAttr&)
+return *this;
     UserNonPersistentAttr::~UserNonPersistentAttr()
+
     {
     }
 
 To use it:
-    
-    
+
     //Creates a UserNonPersistentAttr
     UserNonPersistentAttr * pMyAttr=new UserNonPersistentAttr();
     //
@@ -224,30 +264,41 @@ To use it:
     piLine->PutAttribute(pMyAttr);
     //
     // Gets it from the line
+piLine->PutAttribute(pMyAttr);
     UserNonPersistentAttr * pRetrievedAttr=
         (UserNonPersistentAttr*) piLine->GetAttribute(UAIDPtr(UserNonPersistentAttr))
+
     // 
     //Releases it from the line if no more needed
+UserNonPersistentAttr * pRetrievedAttr=
+(UserNonPersistentAttr*) piLine->GetAttribute(UAIDPtr(UserNonPersistentAttr))
     piLine->ReleaseAttribute(pRetrievedAttr);
+
 ## The Introduction of a Foreign Surface Class
 
+piLine->ReleaseAttribute(pRetrievedAttr);
 CATIA Geometric Modeler offers a large variety of surfaces (CATSurface interface) from elementary surfaces to Nurbs surfaces, and from sampled surfaces to procedural surfaces. All the capabilities of these surfaces are described in the [2] paper.
 
 You may need to introduce your own surface classes, either you want to have a special interface for existing CATSurfaces (for example, you want to have a class for Bezier surface, that is a specific case of CATNurbsSurface), or you have developed own methods that are optimized for a given type of surfaces.
 
 This section describes the way to introduce foreign surfaces in CGM. Once introduced, they can be handled as any CATSurface: thus, they can be used, for example, by the geometric operators or as the geometric support of topological faces as any CATSurface. All CATSurface must be C2 continuous (at least twice differentiable). So does your own surfaces.
+
 ### Base Principle
 
+You may need to introduce your own surface classes, either you want to have a special interface for existing CATSurfaces (for example, you want to have a class for Bezier surface, that is a specific case of CATNurbsSurface), or you have developed own methods that are optimized for a given type of surfaces.
+This section describes the way to introduce foreign surfaces in CGM. Once introduced, they can be handled as any CATSurface: thus, they can be used, for example, by the geometric operators or as the geometric support of topological faces as any CATSurface. All CATSurface must be C2 continuous (at least twice differentiable). So does your own surfaces.
 The base principle is to involve an attribute class called CATForeignSurfaceData and the interface CATIForeignSurface in a bi-directional relashionship: the CATIForeignSurface is a void shell, that is filled by the CATForeignSurfaceData, as attribute of CATIForeignSurface. 
 
   * CATIForeignSurface retrieves the CATForeignSurfaceData attribute through a `GetAttribute` method, called here `GetData`.
   * CATForeignSurfaceData can ask for its reference by the `GetReference` method.
 
+The base principle is to involve an attribute class called CATForeignSurfaceData and the interface CATIForeignSurface in a bi-directional relashionship: the CATIForeignSurface is a void shell, that is filled by the CATForeignSurfaceData, as attribute of CATIForeignSurface.
 You only have to derive your own attribute class from CATForeignSurfaceData, and overload the pure virtual (at least) methods.
 
 Fig. 2: The Mechanism of Introduction of a Foreign Surface ![Foreign](images/CAACgmGobForeign2.gif) | CGM offers two objects that are bi-directionally linked. CATIForeignSurface and CATForeignSurfaceData. To introduce your own surface object, you have to derive CATForeignSurfaceData, and overload the methods to fit the properties of your object. Then, a CATIForeignSurface object that have a MySurfaceData object as data is handled as any CATSurface by CGM, and with the behavior you have given it.  
----|---  
-  
+
+You only have to derive your own attribute class from CATForeignSurfaceData, and overload the pure virtual (at least) methods.
+Fig. 2: The Mechanism of Introduction of a Foreign Surface ![Foreign](images/CAACgmGobForeign2.gif) | CGM offers two objects that are bi-directionally linked. CATIForeignSurface and CATForeignSurfaceData. To introduce your own surface object, you have to derive CATForeignSurfaceData, and overload the methods to fit the properties of your object. Then, a CATIForeignSurface object that have a MySurfaceData object as data is handled as any CATSurface by CGM, and with the behavior you have given it.
 CATForeignSurfaceData is a CATCGMStreamAttribute. Hence, it globally owns the same properties as its father, except that: 
 
   * A CATForeignSurfaceData cannot be pointed by several CATIForeignSurface, and a CATIForeignSurface cannot point several CATForeignSurfaceData (although it can points other CATCGMAttribute that are not CATForeignSurfaceData).
@@ -296,12 +347,19 @@ Hence, the main methods of the CATForeignSurfaceData are:
 
 This class manages the evaluators that are used by the surface evaluators. There are already CATMathLinearXY, CATMathFunctionXY, CATMathPolynomXY are kind of CATMathFunctionXY that are already provided in CGM.
 
+This class manages the evaluators that are used by the surface evaluators. There are already CATMathLinearXY, CATMathFunctionXY, CATMathPolynomXY are kind of CATMathFunctionXY that are already provided in CGM.
 If needed however, you may derive your own class of function to fit your object behavior, and overload at least the evaluator `Eval` of the value of the function.
 
 The evaluation of the first and second derivatives may be approximated by default. So do the interval evaluators. It is however strongly recommended to overload the first derivatives evaluation, the best being to also write the second derivatives evaluation. If you overload the interval evaluators you will increase the CPU performances.
+
 ### How to Proceed
 
+```vbscript
+If needed however, you may derive your own class of function to fit your object behavior, and overload at least the evaluator `Eval` of the value of the function.
+The evaluation of the first and second derivatives may be approximated by default. So do the interval evaluators. It is however strongly recommended to overload the first derivatives evaluation, the best being to also write the second derivatives evaluation. If you overload the interval evaluators you will increase the CPU performances.
 This section summarizes the steps for the integration of your own surface class.
+
+```
 
     * Analyze the need of a new type of CATMathFunctionXY. If needed: 
       * Create your own class `MyFunctionXY` of function of two variables, by derivation of CATMathFunctionXY.
@@ -327,6 +385,7 @@ CATCGMStreamAttribute | one or more CATICGMObject of the same container | yes
 A file is readable, even if the attribute class load module is not found  
 CATForeignSurfaceData | only one CATIForeignSurface, that points only one CATForeignSurfaceData | yes  
 A file is not readable if the attribute class load module is not found  
+
 ## References
 
 [1] | [The Curves of CATIA Geometric Modeler](CAACgmTaGobCurves.md)  

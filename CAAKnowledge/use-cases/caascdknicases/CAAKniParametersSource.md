@@ -1,17 +1,25 @@
 ---
+```vbscript
 title: "CAAKniParameters.CATScript"
 category: "use-case"
 module: "CAAScdKniUseCases"
 tags: ["CATIA", "CAAKniParameters", "CAAScdKniUseCases"]
 source_file: "Doc/online/CAAScdKniUseCases/CAAKniParametersSource.htm"
 converted: "2026-05-11T17:31:51.987316"
----
+```
 
+---
+tags: ["CATIA", "CAAKniParameters", "CAAScdKniUseCases"]
+source_file: "Doc/online/CAAScdKniUseCases/CAAKniParametersSource.htm"
+converted: "2026-05-11T17:31:51.987316"
     Option Explicit
     ' COPYRIGHT DASSAULT SYSTEMES 2001
+
 ```vbscript
     Dim Language as String
     Language="VBScript"
+```
+
 ```vbscript
     ' ***********************************************************************
     '   Purpose:      This macro:
@@ -46,11 +54,8 @@ converted: "2026-05-11T17:31:51.987316"
     ' ***********************************************************************
 ```
 
-    
-```
-
-```vbscript
     Sub CATMain()
+
 ```vbscript
         ' ----------------------------------------------------------- 
         ' Optional: allows to find the sample wherever it's installed
@@ -66,8 +71,13 @@ converted: "2026-05-11T17:31:51.987316"
 ```
 
     		"online\CAAScdKniUseCases\samples\KwrMacroHiddenParam.CATPart")
+```vbscript
+Dim sFilePath
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
         Dim oDoc As Document
         set oDoc = CATIA.Documents.Open(sFilePath)
+```
+
 ```vbscript
      ' Set the CATIA popup file alerts to False
      ' It prevents to stop the macro at each alert during its execution
@@ -112,10 +122,13 @@ converted: "2026-05-11T17:31:51.987316"
                  "'" : HiddenNumber = HiddenNumber + 1 : oParams.Item(i).Value = "true"
              end if
            end if 
-    
+
+```vbscript
+end if
+end if
+        Next
 ```
 
-        Next
 ```vbscript
         ' Display the list of hidden parameters.
         ' The parameter names, values and comments
@@ -124,12 +137,16 @@ converted: "2026-05-11T17:31:51.987316"
         ' parameters and to re-run the macro.
 ```
 
-    
+```vbscript
+' Ask you to modify interactively the status of the
+' parameters and to re-run the macro.
         strRel2 = "NOW, SHOW THE HIDDEN PARAMETERS" &_ 
         vbCrLf & vbCrLf & "IN THE f(x) DIALOG BOX," &_
         vbCrLf & "  1 ) RIGHT-CLICK THE PARAMETER VALUE FIELD " &_
         vbCrLf & "  2 ) SELECT THE SHOW COMMAND FROM THE CONTEXTUAL MENU" &_
         vbCrLf & vbCrLf & "THEN RE-RUN THE MACRO "
+```
+
 ```vbscript
         If (HiddenNumber > 0) Then
            MsgBox strRel1  
@@ -137,21 +154,13 @@ converted: "2026-05-11T17:31:51.987316"
         Else 
            MsgBox "There are no hidden parameters in this document"
         End If
-    
+
 ```
 
+MsgBox "There are no hidden parameters in this document"
+End If
     Else 
        MsgBox "The active document must be a CATPart"
     End If
-    
-```
 
-```vbscript
     End Sub
-    
-```
-
-    
-    
-
-```

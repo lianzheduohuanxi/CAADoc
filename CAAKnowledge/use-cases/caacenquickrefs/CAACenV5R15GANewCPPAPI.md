@@ -1,15 +1,19 @@
 ---
+```vbscript
 title: "New C++ Authorized APIs in CAA V5R15 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATISchAppToolsOptionsData", "CATIMfgPrismaticReworkArea", "CATIBlock", "CATIMfResultManagement", "CATIDegreesOfFreedom", "CATIEwrRouteSegment", "CATISPMProcessAccess", "CATISchAppCmdInfo", "CATICATALOGWorkshopAddin", "CATIMfgMachinableGeomMngt", "CATIMfgToolAxis", "CATIMfgTPEExtraVisu", "CATIMfgMultiAxisFlankContouring", "CATIMfgUserReverseMachiningConditions", "CATIPspLightPart", "CATIPrtProceduralView", "CATIMmiTemporaryVisProperties", "CATIMfExtremity", "CATIDimCst2", "CATICfgSpecExpression"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R15GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.243440"
----
+```
 
+---
+tags: ["CATISchAppToolsOptionsData", "CATIMfgPrismaticReworkArea", "CATIBlock", "CATIMfResultManagement", "CATIDegreesOfFreedom", "CATIEwrRouteSegment", "CATISPMProcessAccess", "CATISchAppCmdInfo", "CATICATALOGWorkshopAddin", "CATIMfgMachinableGeomMngt", "CATIMfgToolAxis", "CATIMfgTPEExtraVisu", "CATIMfgMultiAxisFlankContouring", "CATIMfgUserReverseMachiningConditions", "CATIPspLightPart", "CATIPrtProceduralView", "CATIMmiTemporaryVisProperties", "CATIMfExtremity", "CATIDimCst2", "CATICfgSpecExpression"]
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R15GANewCPPAPI.htm"
+converted: "2026-05-11T17:33:47.243440"
 CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R15 GA  
----|---  
-  
+
 * * *
 
 The following are the new CAA V5R15 GA C++ Authorized APIs, compared with CAA V5R14 at GA level.
@@ -431,7 +435,7 @@ The following are the new CAA V5R15 GA C++ Authorized APIs, compared with CAA V5
 History Version: **1** [Jan 2005] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 1994-2005, Dassault Systmes. All rights reserved._

@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "MechanicalModeler Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR11"
@@ -6,11 +7,14 @@ version: "V5R11"
 tags: ["CATIBloc", "CATIAncestry", "CATICst", "CATICstFactory", "CATIShapeFeatureProperties", "CATICstData"]
 source_file: "Doc/online/CAACenAPIChangesR11/MechanicalModeler.htm"
 converted: "2026-05-11T17:33:50.444615"
----
+```
 
+---
+tags: ["CATIBloc", "CATIAncestry", "CATICst", "CATICstFactory", "CATIShapeFeatureProperties", "CATICstData"]
+source_file: "Doc/online/CAACenAPIChangesR11/MechanicalModeler.htm"
+converted: "2026-05-11T17:33:50.444615"
 CAA C++ API Modifications |  MechanicalModeler |   
----|---|---  
-  
+
 * * *
 
 ** Entity | SP | Modification | To Do** | MechanicalModeler/Protected/CATDimMath.h | GA | FHBD | Moved into another framework, see [V5R11 split of MechanicalModeler](../CAACenQuickRefs/CAACenWhatsNew.htm#MecModSplitR11)  

@@ -1,13 +1,16 @@
 ---
+```vbscript
 title: "About the Model Size and Infinite"
 category: "use-case"
 module: "CAACgmModel"
 tags: ["CATIA"]
 source_file: "Doc/online/CAACgmModel/CAACgmTaGobModelSizeAndInfinite.htm"
 converted: "2026-05-11T17:33:47.947121"
+```
+
 ---
 # About the Model Size and Infinite  
-  
+
 ---  
 Technical Article  
 ## Abstract
@@ -22,14 +25,16 @@ Here are the values of the model size and infinite:
 
   | Until V5R13 | From V5R14  
 ---|---|---  
+Here are the values of the model size and infinite:
 Model Size | [-100 meters, + 100 meters]  
 on each coordinate  | [-1000 meters, + 1000 meters]  
 on each coordinate  
 Model infinite (10 x model size) | [-1000 meters, + 1000 meters]  
 on each coordinate | [-10000 meters, + 10000 meters]  
 on each coordinate  
-  
+
 The validity of geometric objects depend on their location within the limits defined by the model size and infinite. The validity rules are explained below.
+
 ## The Rules
 ### Rule 1
 
@@ -40,6 +45,7 @@ The authorized infinite objects the user can create are: the planes, lines, half
 
 ![Rule 2](images/CAACgmGobinfinite0.gif)
 
+The authorized infinite objects the user can create are: the planes, lines, half-lines and points. The visualization of such objects is always reframed at most to the model size. The parts of the infinite object that are not in the model size are not seen by the user.
 _Should an infinite object necessarily fit in the "infinite"?_
 
 No. An infinite object does not necessarily exactly fit in the model infinite. Usually, its larger coordinates are between half and twice the model infinite. 
@@ -48,18 +54,21 @@ When a plane is not parallel to canonical planes, it is usually not possible to 
 
 **Note** : at creation, infinite lines fit in the model infinite.
 
+When a plane is not parallel to canonical planes, it is usually not possible to relimit it exactly in the model infinite. When such an infinite plane is created, its half-dimension with the model infinite is determined. Thus a part of it is in the infinite, while a part of it is outside the infinite.
 _Are transformations of infinite objects valid?  
 _Transformation of infinite objects are valid provided their origins remain within the model size.
 
 ![Rule 2 Examples](images/CAACgmGobinfinite1.gif)
 ### Rule 3
 
+_Transformation of infinite objects are valid provided their origins remain within the model size.
 The mathematical definition of an object should be in the model infinite.
 
 _An example: the circle arc_
 
 ![Rule 3](images/CAACgmGobinfinite2.gif)
 
+_An example: the circle arc_
 The mathematical definition of the circle consists of a radius which must be smaller than the infinite and a center which must be in the infinite.
 
 On the left-hand side figure, the created arc circle (in blue) is in the model size, the mathematical circle (in dashed green) is in the infinite (Rule 4). This model is valid.
@@ -73,6 +82,7 @@ On the second figure, the model (the circle arc in blue) is in the model size bu
 ![Rule 3 Example](images/CAACgmGobinfinite3.gif)
 ### Rule 4
 
+On the second figure, the model (the circle arc in blue) is in the model size but the mathematical definition does not fit in the infinite.
 The origin of planes and lines should be in the model size.
 
 _An example: the infinite line_

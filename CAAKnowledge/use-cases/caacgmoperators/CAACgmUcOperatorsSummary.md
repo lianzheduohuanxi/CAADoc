@@ -1,16 +1,26 @@
 ---
+```vbscript
 title: "GMOperators List of Use Cases"
 category: "use-case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsDraftCreation", "CAAGMOperatorsCompatible", "CAAGMOperatorsBodyExtremum", "CAAGMOperatorsShellOrientation", "CAAGMOperatorsCornerCreation", "CAAGMOperatorsSilhouette", "CAAGMOperatorsFaceReplaceSurface", "CAAGMOperatorsPattern", "CAAGMOperatorsCheckForPart", "CAAGMOperatorsNurbsSurfMultiPatch", "CAAGMOperatorsProgressBar", "CAAGMOperatorsAllFillets", "CAAGMOperatorsCheckGnOK", "CAAGMOperatorsExtractFace", "CAAGMOperatorsInDegree", "CAAGMOperatorsProperties", "CAAGMOperatorsBoundaryCreation", "CAAGMOperatorsWireAssembly", "CAAGMOperatorsIntersectShellShell"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcOperatorsSummary.htm"
 converted: "2026-05-11T17:33:49.012195"
----
+```
 
+---
+tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsDraftCreation", "CAAGMOperatorsCompatible", "CAAGMOperatorsBodyExtremum", "CAAGMOperatorsShellOrientation", "CAAGMOperatorsCornerCreation", "CAAGMOperatorsSilhouette", "CAAGMOperatorsFaceReplaceSurface", "CAAGMOperatorsPattern", "CAAGMOperatorsCheckForPart", "CAAGMOperatorsNurbsSurfMultiPatch", "CAAGMOperatorsProgressBar", "CAAGMOperatorsAllFillets", "CAAGMOperatorsCheckGnOK", "CAAGMOperatorsExtractFace", "CAAGMOperatorsInDegree", "CAAGMOperatorsProperties", "CAAGMOperatorsBoundaryCreation", "CAAGMOperatorsWireAssembly", "CAAGMOperatorsIntersectShellShell"]
+source_file: "Doc/online/CAACgmOperators/CAACgmUcOperatorsSummary.htm"
+converted: "2026-05-11T17:33:49.012195"
 GMOperators List of Use Cases   
+
 ---  
+converted: "2026-05-11T17:33:49.012195"
+GMOperators List of Use Cases
 The use cases illustrating the GMOperatorsInterfaces capabilities are delivered in CAAGMOperatorsInterfaces.edu  Table.1  CAAGMOperatorsInterfaces.edu: List of Use Cases Module | Purpose | Article  
----|---|---  
+
+GMOperators List of Use Cases
+The use cases illustrating the GMOperatorsInterfaces capabilities are delivered in CAAGMOperatorsInterfaces.edu  Table.1  CAAGMOperatorsInterfaces.edu: List of Use Cases Module | Purpose | Article
 CAAGMOperators2DBoxComputation.m | Compute the CATMathBox2D of a Cell. |  [Computing the CATMathBox2D of a Cell](CAACgmUcMathBox2D.md)  
 CAAGMOperatorsAdvancedRemoveFace.m | Remove a set of faces from a body. |  [Removing a Set of Faces from a Body](CAACgmUcAdvRemoveFace.md)  
 CAAGMOperatorsAllFillets.m | Create various kinds of fillets.  |  [Fillets](CAACgmUcTopAllFillets.md)  
@@ -66,4 +76,3 @@ CAAGMOperatorsTangExtrapol.m |  Extrapolate a wire (tangency and curvature). |  
 CAAGMOperatorsWireAssembly.m  | Create a non-manifold wire. |  [ Creating a Non-Manifold Wire](CAACgmUcTopNonManifoldWire.md)  
 CAAGMOperatorsTessBody.m  | Tessellate a body |  [Tessellating a body](../CAACgmModel/CAACgmUcTesBody.md)  
     History Version: **1** [Nov 2011] | Document created  
----|---

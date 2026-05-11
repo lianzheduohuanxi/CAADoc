@@ -1,10 +1,13 @@
 ---
+```vbscript
 title: "Creating a Surface Machining Operation StartUp"
 category: "use case"
 module: "CAASmiUseCases"
 tags: ["CATIM3xFeature", "CAAUserOperationCatalog", "CAASmgOperation", "CAASmgMachiningFeature", "CAAApproachDistance", "CAASmgOperationWithMASU", "CATIMfgMachiningFeature", "CAAStep", "CAASurfaceMachiningItf", "CAASmiUserOperationCatalog", "CAASmgOperationSU", "CAAISmiUserMachFeature", "CAAOffset", "CAAToolAngle", "CAASmgOperationWithMA"]
 source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationCatalog.htm"
 converted: "2026-05-11T17:31:51.254402"
+```
+
 ---
 #  Machining
 
@@ -17,7 +20,7 @@ converted: "2026-05-11T17:31:51.254402"
 _Define your own surface machining operation StartUp and store it in a library_  
 ---|---|---  
 Use Case   
-  
+
 * * *
 ###  Abstract
 
@@ -32,9 +35,8 @@ This article discusses the CAASmiUserOperationCatalog use case and explains how 
   * In Short
   * References
 
-  
 ---  
-  
+
 * * *
 ###  What You Will Learn With This Use Case
 
@@ -65,13 +67,12 @@ CAASmiUserOperationCatalog enables the customer to generate a new catalog contai
 ####  How to Launch CAASmiUserOperationCatalog
 
 To launch CAASmiUserOperationCatalog, you will need to set up the runtime environment and then execute the CATfctEditorAssistant tool as indicated.
-    
-    
+
     $ mkrun -c sh
     $ cd _your_workspace_root_
     $ # Make sure that no previous catalog exists in the runtime view, including in the concatenation
     $ rm _OS_directory_ //resources/graphic/CAAUserOperationCatalog.CATfct
-    
+
     $ # Create empty catalog in the runtime view and empty osm (the absolute path for the catalog is MANDATORY)$
     $ **CATfctEditorAssistant -create-new-catalog -catalog-name $PWDb >/_OS_directory_ /r/resources/graphic/CAAUserOperationCatalog.CATfct
         -with-client-id CLIENT -using-template delmia**
@@ -81,12 +82,12 @@ To launch CAASmiUserOperationCatalog, you will need to set up the runtime enviro
     $ # Updage the empty calalog Note that the upgraded catalog will be output in the current directory
     $ **CATfctEditorAssistant -update-catalog -catalog-name CAAUserOperationCatalog.CATfct
         -with-client-id CLIENT -with-osm CAAUserOperationCatalog.osm**
-    
+
     $ # the mkrun shell
     $ exit   
-  
+
 ---  
-  
+
 To have more explanation on the usage of the CATFctEditorAssistant tool, please refer to the Creating Startups in Catalogs use case.
 
 [Top]
@@ -101,6 +102,7 @@ where `InstallRootDirectory` is the root directory of your CAA installation.
 [Top]
 ###  Step-by-Step
 
+where `InstallRootDirectory` is the root directory of your CAA installation.
 There are five logical steps in CAAUserOperationCatalog for the creation of a new activities catalog:
 
   1. Creating a new activities catalog 
@@ -110,21 +112,22 @@ There are five logical steps in CAAUserOperationCatalog for the creation of a ne
 
 ###  Creating a new activities catalog
 
+3. Adding strategy parameters to the startup
+4. Upgrading the activities catalog
 To create a catalog, run the CATfctEditorAssistant with the **-create-new-catalog** option and the **-using-template** option. This option with the "delmia" argument allows to create a specific "process" container named _SPPLibCont_ that will contain the activities startup.
-    
-    
+
     CATfctEditorAssistant -create-new-catalog -catalog-name CAAUserOperationCatalog.CATfct -with-client-id CLIENT -using-template delmia  
-  
+
 ---  
-  
+
+CATfctEditorAssistant -create-new-catalog -catalog-name CAAUserOperationCatalog.CATfct -with-client-id CLIENT -using-template delmia
 Once the above command has been executed, you will find two new files:
 
   1. CAAUserOperationCatalog.CATfct 
   2. CAAUserOperationCatalog.osm 
 
 Both files represent the same version of an empty catalog with a root container. The only difference is that the `.osm` file is readable while the `.CATfct` catalog is not:
-    
-    
+
     /**
     * Copyright Dassault Systemes 2006
     * delmia.osm catalog skeleton
@@ -133,24 +136,23 @@ Both files represent the same version of an empty catalog with a root container.
     document `CAAUserOperationCatalog.CATfct` {
     	history("xxx","","xxxx-xx-xx 12:38",0., xxxxxxxxxx-xxxx-xxxx-xxxxxxxxxxxxxxxx)
     	check_revision(xxxxxxxxxx-xxxx-xxxx-xxxxxxxxxxxxxxxx)
-    	
+
     	container `SPPLibCont` #root #isa(SPPLibCont) #uuid(xxxxxxxxxx-xxxx-xxxx-xxxxxxxxxxxxxxxx) {
-    		
+
     // insert here your startups
-    
+
     	}
     }  
-  
+
 ---  
-  
+
 [Top]
 ###  Creating a startup in this Catalog
 
 To define the startup of a new User Defined Operation, the new startup must derive from the startup "MfgUserDefinedMO" which is defined in the ManufacturingActivities.feat catalog. In the new catalog, we create a new startup of type "CAASmgOperation". 
 
 This is done with the following lines in CAAUserOperationCatalog.osm:
-    
-    
+
             ...
     		// User Startup deriving from MfgUserDefinedMO
     		// --------------------------------------------------
@@ -158,21 +160,25 @@ This is done with the following lines in CAAUserOperationCatalog.osm:
     			AuthorizedItems=["CATIMfgMachiningFeature","CAAISmiUserMachFeature"]
     			Representation="I_CAASmgOperation"		
     			synchronize()
+
     		}
-    		
+
     		// Second user Startup deriving from MfgUserDefinedMO
     		// --------------------------------------------------
+```vbscript
+synchronize()
     		feature CAASmgOperationWithMASU MfgUserDefinedMO@`ManufacturingActivities.feat` #startup #isa(CAASmgOperationWithMA) {
     			AuthorizedItems=["CATIMfgMachiningFeature","CATIM3xFeature"]
     			Representation="I_CAASmgOperationWithMA"		
-    				
+
     			synchronize()
+```
+
     		}
             ...
-      
-  
+
 ---  
-  
+
 Note that the "AuthorizedItems" attribute holds a list of string so that it is possible to add several type of features.
 
 The call to the `synchronize` method is necessary to be sure that any modification on the mother startup MfgUserDefinedMO is propagated on the new startup.
@@ -181,8 +187,7 @@ The call to the `synchronize` method is necessary to be sure that any modificati
 ###  Adding Strategy Parameters to the startup
 
 Then we add four new strategy parameters "CAAStep", "CAAToolAngle", "CAAApproachDistance" and "Box Offset" to the startup.
-    
-    
+
             ...
     		// User Startup deriving from MfgUserDefinedMO
     		// --------------------------------------------------
@@ -190,29 +195,36 @@ Then we add four new strategy parameters "CAAStep", "CAAToolAngle", "CAAApproach
     			AuthorizedItems=["CATIMfgMachiningFeature","CAAISmiUserMachFeature"]
     			Representation="I_CAASmgOperation"		
     			synchronize()
-    		    
+
     			// Use behavior defined on MfgParameter to create new Strategy parameters on new user startup
+AuthorizedItems=["CATIMfgMachiningFeature","CAAISmiUserMachFeature"]
+Representation="I_CAASmgOperation"
+synchronize()
     			this->StrategyParameters->AddStrategyParameter(CAAStep,LENGTH,10.)
     			this->StrategyParameters->AddStrategyParameter(CAAToolAngle,ANGLE,2.0)	
     			this->StrategyParameters->AddStrategyParameter(CAAApproachDistance,LENGTH,20.)	
+
     		}
-    		
+
     		// Second user Startup deriving from MfgUserDefinedMO
     		// --------------------------------------------------
+this->StrategyParameters->AddStrategyParameter(CAAApproachDistance,LENGTH,20.)
     		feature CAASmgOperationWithMASU MfgUserDefinedMO@`ManufacturingActivities.feat` #startup #isa(CAASmgOperationWithMA) {
     			AuthorizedItems=["CATIMfgMachiningFeature","CATIM3xFeature"]
     			Representation="I_CAASmgOperationWithMA"		
-    				
+
     			synchronize()
-    		    
+
     			// Use behavior defined on MfgParameter to create new Strategy parameters on new user startup
+Representation="I_CAASmgOperationWithMA"
+synchronize()
     			this->StrategyParameters->AddStrategyParameter(`Box Offset`,LENGTH,0.0)	
+
     		}
             ...
-      
-  
+
 ---  
-  
+
 The AddStrategyParameteris a method to be called on the StrategyParameters feature that creates a new literal feature and adds it to the strategy block of parameters. It takes 3 input arguments:
 
   * a **name** : this is the name of the attribute that will contain the strategy parameter to be created
@@ -224,12 +236,12 @@ It can be regular types (`String, Integer, Real, Boolean`) or magnitudes (`LENGT
 ###  Upgrading the activities catalog
 
 Now that the OSM file has been updated with the required startup and attributes, you can use CATfctEditorAssistant to create the corresponding catalog. This is done by upgrading the empty catalog created previously. This catalog must be in the runtime view.
-    
-    
+
     CATfctEditorAssistant -update-catalog -catalog-name CAAUserOperationCatalog.CATfct -with-client-id CLIENT -with-osm CAAUserOperationCatalog.osm  
-  
+
 ---  
-  
+
+CATfctEditorAssistant -update-catalog -catalog-name CAAUserOperationCatalog.CATfct -with-client-id CLIENT -with-osm CAAUserOperationCatalog.osm
 Keep in mind that CATfctEditorAssitant will look up the catalog in the run-time view but will output to the location specified on the command-linee.
 
 Note that the catalog can be upgraded as many times as necessary using the same methodology. First you modify the osm file then you launch the CATFctEditorAssistant with the appropriate arguments.
@@ -248,11 +260,15 @@ For this user defined activity we authorized a "CATIMfgMachiningFeature" machini
 
 ```
 
+```vbscript
+For this user defined activity we authorized a "CATIMfgMachiningFeature" machining feature, which is a standard machining feature defined in the Manufacturing.feat catalog.
 We also add several strategy parameters on this startup in several steps to illustrate the upgrade mechanism.
 
 This use case has demonstrated how to create Operations StartUps in the newly created "CAAUserOperationCatalog.CATFct library. It derives from the late type "MfgUserDefinedMO" as every user defined operation should do it.
 
 This StartUp will later be used in the next use case [3].
+
+```
 
 [Top]
 
@@ -264,16 +280,14 @@ This StartUp will later be used in the next use case [3].
 [2]  |  [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 [3]  |  [Customizing the Surface Machining Operation Editor](CAASmiUserOperationUI.md)  
 [Top]   
-  
+
 * * *
 ###  History
 
 Version: **1** [Mar 2002]  |  Document created   
 ---|---  
 [Top]   
-  
+
 * * *
 
 _Copyright 2002, Dassault Systmes. All rights reserved._
-
- 

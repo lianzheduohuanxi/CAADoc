@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "ObjectModelerBase Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR8"
@@ -6,11 +7,14 @@ version: "V5R8"
 tags: ["CATICatalogManager"]
 source_file: "Doc/online/CAACenAPIChangesR8/ObjectModelerBaseSP.htm"
 converted: "2026-05-11T17:33:52.667418"
----
+```
 
+---
+tags: ["CATICatalogManager"]
+source_file: "Doc/online/CAACenAPIChangesR8/ObjectModelerBaseSP.htm"
+converted: "2026-05-11T17:33:52.667418"
 CAA C++ API Modifications|  ObjectModelerBase  |   
----|---|---  
-  
+
 * * *
 
 **Entity|  SP| Modification| To Do** | ObjectModelerBase/Protected/CATDocument.h/CATDocument/CATDocument| 1| MHBDM|   

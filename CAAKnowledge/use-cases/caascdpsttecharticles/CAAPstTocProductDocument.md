@@ -1,10 +1,13 @@
 ---
+```vbscript
 title: "Product Document Automation Objects"
 category: "use-case"
 module: "CAAScdPstTechArticles"
 tags: ["CATIA", "CATIAFixTogethers"]
 source_file: "Doc/online/CAAScdPstTechArticles/CAAPstTocProductDocument.htm"
 converted: "2026-05-11T17:31:52.343589"
+```
+
 ---
 # Product Document Automation Objects
 
@@ -29,7 +32,7 @@ converted: "2026-05-11T17:31:52.343589"
 ![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/matmanager.gif)  
 ![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/posmat.gif)  
 ---  
-  
+
 **Legend**
 
 ![](../CAAScrAutomationImages/images/yellbox.gif) Collection  
@@ -41,12 +44,14 @@ converted: "2026-05-11T17:31:52.343589"
 
 The **ProductDocument** object aggregates, or includes, a product tree structure starting with a single product, named the root product, which includes a collection of products. Each of the products of this collection can itself include a collection of products, and so forth.
 
+The **ProductDocument** object aggregates, or includes, a product tree structure starting with a single product, named the root product, which includes a collection of products. Each of the products of this collection can itself include a collection of products, and so forth.
 Each product is positioned in the 3D space thanks to the **Position** object which represents the product's 3D-axis system expressed with respect to the assembly's 3D-axis system. The **Move** object allows the object moving. Constraints can be set to constrain the product's position and move.
 
 The following diagram shows such a tree structure for a (simple) car.
 
 ![](images/baspp3-2.gif)
 
+The following diagram shows such a tree structure for a (simple) car.
 A given product, such as the cylinder head or the gear box, is in fact a product component of a product reference. This product reference is neither accessible using macros nor from interactive commands. It is nevertheless created when you create a product component. Products that appear duplicated, such as the wheels, can be product components pointing to the same product reference. In this example, the LeftRearWheel and RightRearWheel objects can be two product components of a single wheel product reference. Creating references enables consistency management. When a modification is brought to a product, such as its part number, or its master shape representation which we'll see below, the modification is brought through a component to the reference, and is propagated to all the components which point to this reference.
 
 The root product is retrieved by the **ProductDocument** object using its **Product** property. Each product, starting with the root product, may include a **Products** collection which gathers all the products just below this product in the product tree structure. This collection is built using the **AddNewProduct** , **AddComponent** and **AddExternalComponent** methods:
@@ -58,8 +63,9 @@ The root product is retrieved by the **ProductDocument** object using its **Prod
 Each product reference can have a master shape representation which defines its geometry, material properties, and so forth, and used to display or print it, and maybe more, for example to analyze or manufacture it. This is optional, but is often required to represent actual products. This master shape representation is shared by all the components pointing to this product reference, and can be a CATIA Version 4 model, a CATIA Version 5 part, a VRML file, or whatever format supported by CATIA Version 5. The methods **AddMasterShapeRepresentation** , **RemoveMasterShapeRepresentation** , and **GetMasterShapeRepresentation** manage the master shape representation.
 
 Each product component in the tree structure is positioned in the space according to the position of its own 3D-axis system with respect to the product document's 3D axis-system, this position being possibly determined according to positioning constraints relative to the product above it in the tree structure. This means that each product component is positioned with respect to the root product according to a cascading position combination from the root product to the current product across the product tree structure. Its position can be set or retrieved using the **Position** property, whatever the constraints applied. The **Move** property allows a movable object retrieval to move the product as required by a move operation while ensuring that the positioning constraints are matched. The movable object returned is the product object itself, meaning that a product is movable, but with some other applications, this could be different. For example, the movable object returned from an edge in a pad is the whole pad, since the edge cannot be moved alone and is linked to the other edges and faces in the pad. The actual move is performed using the **Apply** method. This method takes a table with twelve items as input which define the move. This table contains the move matrix elements and has the following structure, assuming that `M` is the table identifier:
-    
-    
+
+Each product reference can have a master shape representation which defines its geometry, material properties, and so forth, and used to display or print it, and maybe more, for example to analyze or manufacture it. This is optional, but is often required to represent actual products. This master shape representation is shared by all the components pointing to this product reference, and can be a CATIA Version 4 model, a CATIA Version 5 part, a VRML file, or whatever format supported by CATIA Version 5. The methods **AddMasterShapeRepresentation** , **RemoveMasterShapeRepresentation** , and **GetMasterShapeRepresentation** manage the master shape representation.
+Each product component in the tree structure is positioned in the space according to the position of its own 3D-axis system with respect to the product document's 3D axis-system, this position being possibly determined according to positioning constraints relative to the product above it in the tree structure. This means that each product component is positioned with respect to the root product according to a cascading position combination from the root product to the current product across the product tree structure. Its position can be set or retrieved using the **Position** property, whatever the constraints applied. The **Move** property allows a movable object retrieval to move the product as required by a move operation while ensuring that the positioning constraints are matched. The movable object returned is the product object itself, meaning that a product is movable, but with some other applications, this could be different. For example, the movable object returned from an edge in a pad is the whole pad, since the edge cannot be moved alone and is linked to the other edges and faces in the pad. The actual move is performed using the **Apply** method. This method takes a table with twelve items as input which define the move. This table contains the move matrix elements and has the following structure, assuming that `M` is the table identifier:
     M(0)=Ux M(3)=Vx M(6)=Wx M(9)=Tx
     M(1)=Uy M(4)=Vy M(7)=Wy M(10)=Ty
     M(2)=Uz M(5)=Vz M(8)=Wz M(11)=Tz
@@ -74,29 +80,39 @@ The first nine items represent an axis rotation, and the last three a translatio
 ![](images/baspp3-4.gif)
 
 The two collections of **Constraint** and **FixTogether** objects can be retrieved from the root product object using its `Connections` method. For example, assuming `product1` is the root product, the **FixTogethers** collection can be retrieved as follows.
-    
-    
+
 ```vbscript
     Dim fixTogethers1 As FixTogethers
     Set fixTogethers1 = product1.Connections("CATIAFixTogethers")
 
 ```
 
+```vbscript
+Dim fixTogethers1 As FixTogethers
+Set fixTogethers1 = product1.Connections("CATIAFixTogethers")
 The **AssemblyConvertor** , **MaterialManager** , and **PositionedMaterial** objects can be retrieved from the root product using its `GetItem` method, with  the "BillOfMaterial", "CATMatManagerVBExt", and "CATMaterialVBExt" strings as argument respectively. Here is an example to retrieve the **MaterialManager** object from the **Product** object. 
-    
-    
+
+```
+
 ```vbscript
     Dim oRootProduct As Product
+```
+
     ...
+```vbscript
+Dim oRootProduct As Product
     Dim oMatManager As MaterialManager
     Set oMatManager = oRootProduct.GetItem("CATMatManagerVBExt")
 
 ```
 
+```vbscript
+Dim oMatManager As MaterialManager
+Set oMatManager = oRootProduct.GetItem("CATMatManagerVBExt")
 Note that the **MaterialManager** and the **PositionedMaterial** objects can be retrieved the same way from the **Part** object.
+
+```
 
 * * *
 
 _Copyright © 1999-2013, Dassault Systèmes. All rights reserved._
-
-```

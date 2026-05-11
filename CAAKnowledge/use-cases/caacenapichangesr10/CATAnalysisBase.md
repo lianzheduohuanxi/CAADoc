@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "CATAnalysisBase Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR10"
@@ -6,11 +7,14 @@ version: "V5R10"
 tags: ["CATICharacCollector"]
 source_file: "Doc/online/CAACenAPIChangesR10/CATAnalysisBase.htm"
 converted: "2026-05-11T17:33:50.108419"
----
+```
 
+---
+tags: ["CATICharacCollector"]
+source_file: "Doc/online/CAACenAPIChangesR10/CATAnalysisBase.htm"
+converted: "2026-05-11T17:33:50.108419"
 CAA C++ API Modifications|  CATAnalysisBase  |   
----|---|---  
-  
+
 * * *
 
 **Entity|  SP| Modification| To Do** | CATAnalysisBase/Protected/CATAnalysisCharacCollector.h/CATAnalysisCharacCollector/GetDefinition| GA| MHBDM|   

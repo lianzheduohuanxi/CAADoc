@@ -1,13 +1,19 @@
 ---
+```vbscript
 title: "CAASchCreateSchDocument2.CATScript"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CATIA", "CAASchCreateSchDocument2"]
 source_file: "Doc/online/CAAScdSchUseCases/CAASchCreateSchDocument2Source.htm"
 converted: "2026-05-11T17:31:51.347682"
----
+```
 
+---
+tags: ["CATIA", "CAASchCreateSchDocument2"]
+source_file: "Doc/online/CAAScdSchUseCases/CAASchCreateSchDocument2Source.htm"
+converted: "2026-05-11T17:31:51.347682"
     Option Explicit
+
 ```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2004
     ' *****************************************************************************
@@ -19,15 +25,14 @@ converted: "2026-05-11T17:31:51.347682"
     ' *****************************************************************************
 ```
 
-    
-```vbscript
     Sub CATMain()
+
 ```vbscript
         ' ------------------------------------------------------------------------- 
         ' Optional: allows to find the sample wherever it's installed
         dim sSavePath As String 
         sSavePath=CATIA.SystemService.Environ("CATSavePath")
-    
+
         If (Not CATIA.FileSystem.FolderExists(sSavePath)) Then
 ```
 
@@ -35,12 +40,16 @@ converted: "2026-05-11T17:31:51.347682"
           Err.Raise 9999,sSavePath,"No Path for saving document"
         End If
         ' ------------------------------------------------------------------------- 
-    
+
         Dim strMessage As String
-    
+
 ```
 
+```vbscript
+Dim strMessage As String
         strMessage = _
+```
+
           "--------------------------------------------------------------------" & vbCr
         strMessage = strMessage & _
           "Output traces from CAASchCreateSchDocument2.CATScript" & vbCrLf
@@ -54,6 +63,8 @@ converted: "2026-05-11T17:31:51.347682"
         Dim objSchDoc As Document
         Set objSchDoc = CATIA.Documents.Add ("CATProduct")
         '
+```
+
 ```vbscript
         ' Find the top node of the schematic object tree - schematic root.
         Dim objPrdRoot As Product
@@ -69,8 +80,6 @@ converted: "2026-05-11T17:31:51.347682"
 ```
 
     	             "SampleOutput_SchDoc02.CATProduct")
-    
-```
 
 ```vbscript
         If ( Not ( objSchDoc Is Nothing ) ) Then
@@ -79,11 +88,13 @@ converted: "2026-05-11T17:31:51.347682"
             Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
             objPrdRoot.PartNumber = strRootName
           End If
-    
+
 ```
 
 ```vbscript
           If ( Not ( objSchRoot Is Nothing ) ) Then
+```
+
 ```vbscript
              '---------------------------------------------------------------------
              ' Regular CATProduct is a 3D document and is associated with a 3D
@@ -97,15 +108,19 @@ converted: "2026-05-11T17:31:51.347682"
              '---------------------------------------------------------------------
 ```
 
+```vbscript
+' behavior to the document,
+' by saving the document and re-opening it again.
+'---------------------------------------------------------------------
              objSchDoc.SaveAs strDocName
-    
+
 ```
 
              objSchDoc.Close
-    
+
 ```vbscript
              Set objSchDoc = CATIA.Documents.Open (strDocName)
-    
+
              Set objPrdRoot = Nothing
              Set objSchRoot = Nothing
              If ( Not ( objSchDoc Is Nothing ) ) Then
@@ -114,6 +129,8 @@ converted: "2026-05-11T17:31:51.347682"
                    Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
                 End If
              End If
+```
+
 ```vbscript
              '---------------------------------------------------------------------
              ' Set the drawing standard if needed 
@@ -121,6 +138,10 @@ converted: "2026-05-11T17:31:51.347682"
              If ( Not ( objSchRoot Is Nothing ) ) Then
 ```
 
+```vbscript
+' Set the drawing standard if needed
+'---------------------------------------------------------------------
+If ( Not ( objSchRoot Is Nothing ) ) Then
                 objSchRoot.SetDrawingStandard catISO
                 strMessage = strMessage & "drawing standard set to catISO" & vbCr
                 Dim std As CatDrawingStandard
@@ -128,36 +149,25 @@ converted: "2026-05-11T17:31:51.347682"
                 strMessage = strMessage & "drawing standard = " & std & vbCr
              End If
              'objSchDoc.SaveAs strDocName
-    
+
 ```
 
 ```vbscript
            End If  '----If ( Not ( objSchRoot Is Nothing )...
-    
+
 ```
 
-    
 ```vbscript
         End If
-    
+
 ```
 
-     
+```vbscript
+End If
         strMessage = strMessage & _
+```
+
           "--------------------------------------------------------------------" & vbCr
         MsgBox strMessage
-    
-```vbscript
+
     End Sub
-    
-```
-
-    
-    
-    
-    
-    
-    
-    
-
-```

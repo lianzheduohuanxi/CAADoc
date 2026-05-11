@@ -1,13 +1,19 @@
 ---
+```vbscript
 title: "CAAPriPad.CATScript"
 category: "use-case"
 module: "CAAScdPriUseCases"
 tags: ["CAAScdPriUseCases", "CATIA", "CAAPriPad"]
 source_file: "Doc/online/CAAScdPriUseCases/CAAPriPadSource.htm"
 converted: "2026-05-11T17:31:51.226971"
----
+```
 
+---
+tags: ["CAAScdPriUseCases", "CATIA", "CAAPriPad"]
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriPadSource.htm"
+converted: "2026-05-11T17:31:51.226971"
     Option Explicit
+
 ```vbscript
     ' COPYRIGTH DASSAULT SYSTEMES 2001
     ' ***********************************************************************
@@ -18,14 +24,10 @@ converted: "2026-05-11T17:31:51.226971"
     '   Locales:      English 
     '   CATIA Level:  V5R7 
     ' ***********************************************************************
-    
+
 ```
 
-    
-```vbscript
     Sub CATMain()
-    
-```
 
 ```vbscript
         ' ----------------------------------------------------------- 
@@ -36,9 +38,13 @@ converted: "2026-05-11T17:31:51.226971"
 
 ```vbscript
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+```
+
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
         End If
+```
+
 ```vbscript
         ' ----------------------------------------------------------- 
         ' Open the Part document 
@@ -47,8 +53,6 @@ converted: "2026-05-11T17:31:51.226971"
 ```
 
                      "\online\CAAScdPriUseCases\samples\CAAPriPad.CATPart")
-    
-```
 
 ```vbscript
     ' ------------
@@ -59,6 +63,8 @@ converted: "2026-05-11T17:31:51.226971"
 ```vbscript
     Dim oPart As Part
     Set oPart = oDoc.Part
+```
+
 ```vbscript
     ' ------------
     ' Get the part body in the part
@@ -75,52 +81,81 @@ converted: "2026-05-11T17:31:51.226971"
     ' ------------
 ```
 
+```vbscript
+' ------------
+' Create the pad with a default first limit
+' ------------
     MsgBox "Click OK to create the pad."
     Dim oPad As Pad
     Set oPad = oPart.ShapeFactory.AddNewPad  ( oSketch, 20.000000 ) 
+```
+
 ```vbscript
     ' ------------
     ' Update the part
     ' ------------
 ```
 
+```vbscript
+' ------------
+' Update the part
+' ------------
     oPart.Update 
+```
+
 ```vbscript
     ' ------------
     ' Define the pad first limit
     ' ------------
 ```
 
+```vbscript
+' ------------
+' Define the pad first limit
+' ------------
     MsgBox "Click OK to set the pad first limit to 40mm."
     oPad.FirstLimit.Dimension.Value = 40.000000
+```
+
 ```vbscript
     ' ------------
     ' Update the part
     ' ------------
 ```
 
+```vbscript
+' ------------
+' Update the part
+' ------------
     oPart.Update 
+```
+
 ```vbscript
     ' ------------
     ' Define the pad to be symmetric relative to the sketch plane
     ' ------------
 ```
 
+```vbscript
+' ------------
+' Define the pad to be symmetric relative to the sketch plane
+' ------------
     MsgBox "Click OK to mirror the extrusion offset."
     oPad.IsSymmetric = True
+```
+
 ```vbscript
     ' ------------
     ' Update the part
     ' ------------
 ```
 
-    oPart.Update 
-    
-```
-
 ```vbscript
-    End Sub
-    
-```
+' ------------
+' Update the part
+' ------------
+    oPart.Update 
 
 ```
+
+    End Sub

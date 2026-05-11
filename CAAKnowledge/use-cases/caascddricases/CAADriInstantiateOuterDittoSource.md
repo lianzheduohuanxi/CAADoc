@@ -1,13 +1,19 @@
 ---
+```vbscript
 title: "CAADriInstantiateOuterDitto.CATScript"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CAADriInstantiateOuterDitto", "CAADriInstantiateDittoTarget", "CAADriInstantiateDittoSource", "CATIA", "CAAScdDriUseCases"]
 source_file: "Doc/online/CAAScdDriUseCases/CAADriInstantiateOuterDittoSource.htm"
 converted: "2026-05-11T17:31:51.092771"
----
+```
 
+---
+tags: ["CAADriInstantiateOuterDitto", "CAADriInstantiateDittoTarget", "CAADriInstantiateDittoSource", "CATIA", "CAAScdDriUseCases"]
+source_file: "Doc/online/CAAScdDriUseCases/CAADriInstantiateOuterDittoSource.htm"
+converted: "2026-05-11T17:31:51.092771"
     Option Explicit
+
 ```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2003
     ' ***********************************************************************
@@ -20,13 +26,14 @@ converted: "2026-05-11T17:31:51.092771"
     ' ***********************************************************************
 ```
 
-    
-```vbscript
     Sub CATMain()
         ' Set the CATIA popup file alerts to False
         ' It prevents to stop the macro at each alert during its execution
+
 ```vbscript
         CATIA.DisplayFileAlerts = False
+```
+
 ```vbscript
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String 
@@ -56,6 +63,10 @@ converted: "2026-05-11T17:31:51.092771"
         ' Clear the selection
 ```
 
+```vbscript
+Dim oSelectionSource As Selection
+Set oSelectionSource = oDrawingSource.Selection
+' Clear the selection
         oSelectionSource.Clear
         ' Add the ditto to be duplicated in the selection
         oSelectionSource.Add oDitto
@@ -63,6 +74,8 @@ converted: "2026-05-11T17:31:51.092771"
         oSelectionSource.Copy
         ' Clear the selection
         oSelectionSource.Clear
+```
+
 ```vbscript
         ' Open the drawing document where the ditto will be instantiated
         Dim oDrawingTarget As DrawingDocument
@@ -70,14 +83,25 @@ converted: "2026-05-11T17:31:51.092771"
 ```
 
                  "\online\CAAScdDriUseCases\samples\CAADriInstantiateDittoTarget.CATDrawing")
+```vbscript
+Dim oDrawingTarget As DrawingDocument
+Set oDrawingTarget = CATIA.Documents.Open(sDocPath & _
         CATIA.ActiveWindow.ActiveViewer.Reframe
+```
+
 ```vbscript
         ' Retrieve the sheet where the ditto will be instantiated
         Dim oSheetTarget As DrawingSheet
         Set oSheetTarget = oDrawingTarget.Sheets.Item("Sheet.1")
 ```
 
+```vbscript
+' Retrieve the sheet where the ditto will be instantiated
+Dim oSheetTarget As DrawingSheet
+Set oSheetTarget = oDrawingTarget.Sheets.Item("Sheet.1")
         oSheetTarget.Activate
+```
+
 ```vbscript
         ' Retrieve the view where the ditto will be instantiated
         Dim oViewTarget As DrawingView
@@ -94,6 +118,10 @@ converted: "2026-05-11T17:31:51.092771"
         ' Clear the selection
 ```
 
+```vbscript
+Dim oSelectionTarget As Selection
+Set oSelectionTarget = oDrawingTarget.Selection
+' Clear the selection
         oSelectionTarget.Clear
         ' Add the view in the selection, where the ditto will be instantiated
         oSelectionTarget.Add oViewTarget
@@ -101,6 +129,8 @@ converted: "2026-05-11T17:31:51.092771"
         oSelectionTarget.Paste
         ' Clear the selection
         oSelectionTarget.Clear
+```
+
 ```vbscript
         ' Retrieve the drawing components collection of the target drawing view
         Dim o2DComponents As DrawingComponents
@@ -110,8 +140,14 @@ converted: "2026-05-11T17:31:51.092771"
         Set o2DComponent = o2DComponents.Item("DrwDetail.1")
 ```
 
+```vbscript
+' Retrieve the ditto and define its location
+Dim o2DComponent As DrawingComponent
+Set o2DComponent = o2DComponents.Item("DrwDetail.1")
         o2DComponent.X = iDittoCoordinates(0)
         o2DComponent.Y = iDittoCoordinates(1)
+```
+
 ```vbscript
         ' Retrieve the modifiable text of the ditto
         Dim oText As DrawingText
@@ -121,7 +157,13 @@ converted: "2026-05-11T17:31:51.092771"
         ReturnValue = InputBox("Enter a value", "", "New Value For Text")
 ```
 
+```vbscript
+' Modify the modifiable text value
+Dim ReturnValue As String
+ReturnValue = InputBox("Enter a value", "", "New Value For Text")
         oText.Text = ReturnValue
+```
+
 ```vbscript
         ' Clear the variables
         Set oText = Nothing
@@ -138,12 +180,4 @@ converted: "2026-05-11T17:31:51.092771"
         Set oDrawingSource = Nothing
 ```
 
-        
-```
-
-```vbscript
     End Sub
-    
-```
-
-```

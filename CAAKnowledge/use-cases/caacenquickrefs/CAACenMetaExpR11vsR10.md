@@ -1,19 +1,25 @@
 ---
+```vbscript
 title: "Changes to ENOVIA LCA Metadata in V5R11 Compared with V5R10"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: []
 source_file: "Doc/online/CAACenQuickRefs/CAACenMetaExpR11vsR10.htm"
 converted: "2026-05-11T17:33:46.563961"
----
+```
 
+---
+tags: []
+source_file: "Doc/online/CAACenQuickRefs/CAACenMetaExpR11vsR10.htm"
+converted: "2026-05-11T17:33:46.563961"
 CAA V5 Encyclopedia |  Changes to ENOVIA LCA Metadata in V5R11 Compared with V5R10  
----|---  
-  
+
 * * *
 
+CAA V5 Encyclopedia |  Changes to ENOVIA LCA Metadata in V5R11 Compared with V5R10
 Status | Domain | Domain Inheritance | Object | Type | Object Inheritance | Attribute | Type  
----|---|---|---|---|---|---|---  
+
+Status | Domain | Domain Inheritance | Object | Type | Object Inheritance | Attribute | Type
 New attribute | CONFIG |   | MOD_GROUP | Class |   | C511_XEFF_LIST | Oid/Set  
 Domain inheritance change | GRAPH | from <TEMPLAT> to <> |   |   |   |   |    
 Object inheritance change | GRAPH |   | GIMaster | Class | from <VPMTPObjectMaster> to <> |   |    
@@ -178,6 +184,7 @@ Deleted attribute | VPMWFL | ACTION | WFApprovalActivity | Class | WFManualActiv
 Deleted object | VPMWFL | ACTION | WFTransition | Class | AFLOrientedLink |   |    
 Deleted object | VPMWFL | ACTION | WFInlineBlock | Class | WFTransRestriction |   |    
 Object inheritance change | DOCDIR | TEMPLAT | VPMDocumentIteration | Class | from <VPMTPObject> to <> |   |    
+
 [Top]
 
 * * *
@@ -185,7 +192,7 @@ Object inheritance change | DOCDIR | TEMPLAT | VPMDocumentIteration | Class | fr
 History Version: **1** [Jul 2003] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 1994-2003, Dassault Systmes. All rights reserved._

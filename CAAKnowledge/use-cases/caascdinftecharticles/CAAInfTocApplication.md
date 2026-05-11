@@ -1,13 +1,16 @@
 ---
+```vbscript
 title: "Infrastructure Automation Objects"
 category: "use-case"
 module: "CAAScdInfTechArticles"
 tags: ["CATIA"]
 source_file: "Doc/online/CAAScdInfTechArticles/CAAInfTocApplication.htm"
 converted: "2026-05-11T17:31:52.485667"
+```
+
 ---
 # Infrastructure Automation Objects
- 
+
  [ ![Application object](../CAAScrAutomationImages/images/applong.gif)](CAAInfObjApplication.md)  
  ---  
  ![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/docs.gif)  
@@ -64,19 +67,19 @@ converted: "2026-05-11T17:31:52.485667"
 ![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/sysserv.gif)  
 ![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/sysconf.gif)  
 ![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/sendto.gif)![](../CAAScrAutomationImages/images/astrix.gif)  
-   
+
  **Legend**
- 
+
  ![](../CAAScrAutomationImages/images/yellbox.gif) Collection  
 ![](../CAAScrAutomationImages/images/purpbox.gif) Abstract object  
 ![](../CAAScrAutomationImages/images/bluebox.gif) Object
- 
+
  ![right arrow](../CAAScrAutomationImages/images/rtarrow.gif) Click arrow to expand chart.
- 
+
  ![](../CAAScrAutomationImages/images/astrix.gif)  Requires a _CATIA - PPR xPDM Gateway 1_ Product license
- 
+
  [Top]
- 
+
  * * *
- 
+
  _Copyright 1994-2004, Dassault Systmes. All rights reserved._

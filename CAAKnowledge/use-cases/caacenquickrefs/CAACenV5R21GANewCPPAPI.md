@@ -1,15 +1,19 @@
 ---
+```vbscript
 title: "New C++ Authorized APIs in CAA V5R21 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIPspDefinePhysicalPart", "CATICGMRemoveFace", "CATIFmtMeshDomain", "CATIMfgCCPCustom", "CATIMfgMultiAxisCurveMachiningAuxDrive", "CATIMfg5AxisSpiralMilling", "CATICGMRemoveFacesInShell", "CATIPDMUEOnCancel", "CATIFmtCustomVisualization", "CATIMfgCustomizeCSOFilter", "CATIFmtMesher", "CATIFmtSelectedElement", "CATICGMObjectsLoad", "CATIFmtMeshPartOutput", "CATIFmtTrapSelector", "CATICGMRemoveEdge", "CATIUExitPVRCommands", "CATICGMThickSurfacePlus", "CATIPDMCharacteristicScm", "CATIFmtMesh"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R21GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.505618"
----
+```
 
+---
+tags: ["CATIPspDefinePhysicalPart", "CATICGMRemoveFace", "CATIFmtMeshDomain", "CATIMfgCCPCustom", "CATIMfgMultiAxisCurveMachiningAuxDrive", "CATIMfg5AxisSpiralMilling", "CATICGMRemoveFacesInShell", "CATIPDMUEOnCancel", "CATIFmtCustomVisualization", "CATIMfgCustomizeCSOFilter", "CATIFmtMesher", "CATIFmtSelectedElement", "CATICGMObjectsLoad", "CATIFmtMeshPartOutput", "CATIFmtTrapSelector", "CATICGMRemoveEdge", "CATIUExitPVRCommands", "CATICGMThickSurfacePlus", "CATIPDMCharacteristicScm", "CATIFmtMesh"]
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R21GANewCPPAPI.htm"
+converted: "2026-05-11T17:33:47.505618"
 CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R21 GA  
----|---  
-  
+
 * * *
 
 The following are the new CAA V5R21 GA C++ Authorized APIs, compared with CAA V5R20 at GA level.
@@ -367,7 +371,7 @@ The following are the new CAA V5R21 GA C++ Authorized APIs, compared with CAA V5
 History Version: **1** [Mar 2011] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright © 1999-2011, Dassault Systèmes. All rights reserved._  

@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "VPMDesktopServices Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR9"
@@ -6,11 +7,14 @@ version: "V5R9"
 tags: []
 source_file: "Doc/online/CAACenAPIChangesR9/VPMDesktopServices.htm"
 converted: "2026-05-11T17:33:52.997902"
----
+```
 
+---
+tags: []
+source_file: "Doc/online/CAACenAPIChangesR9/VPMDesktopServices.htm"
+converted: "2026-05-11T17:33:52.997902"
 CAA C++ API Modifications|  VPMDesktopServices  |   
----|---|---  
-  
+
 * * *
 
 **Entity|  SP| Modification| To Do** | VPMDesktopServices/Protected/VPMIQAttribute.h/VPMIQAttribute/VPMIQAttribute| GA| MHBDM|   

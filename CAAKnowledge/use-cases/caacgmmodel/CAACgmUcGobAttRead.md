@@ -1,13 +1,16 @@
 ---
+```vbscript
 title: "Reading an Attribute"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CATICGMContainer", "CAAGMModelAttributeRead", "CAADoc", "CATICGMObject", "CAAGMModelAttribute", "CAAGMModelInterfaces", "CAAGMModelAttributeCreation", "CAAGMModelAttributeManagement", "CAAAttributeManagement"]
 source_file: "Doc/online/CAACgmModel/CAACgmUcGobAttRead.htm"
 converted: "2026-05-11T17:33:48.354122"
+```
+
 ---
 # Reading an Attribute  
-  
+
 ---  
 Use Case  
 ## Abstract
@@ -33,6 +36,7 @@ CAAGMModelAttributeRead is a use case of the CAAGMModelInterfaces.edu framework 
 This use case loads a file and scans the geometry to search for the attributes of a given type (CAAGMModelAttributeManagement) on a geometry of a given type (PLineType). 
 ### How to Launch CAAGMModelAttributeRead
 
+This use case loads a file and scans the geometry to search for the attributes of a given type (CAAGMModelAttributeManagement) on a geometry of a given type (PLineType).
 To launch CAAGMModelAttributeRead, you will need to set up the build time environment, then compile CAAGMModelAttributeRead.m and CAAGMModelAttribute.m along with their prerequisites, set up the run time environment, and then execute the use case [2].
 
 You must type CAAGMModelAttributeRead with an argument to execute the use case.
@@ -46,11 +50,15 @@ The CAAGMModelAttributeRead use case is made of a main named CAAGMModelAttribute
 
 `InstallRootFolder\CAADoc\CAAGMModelInterfaces.edu\CAAGMModelAttributeRead.m\`
 
+The CAAGMModelAttributeRead use case is made of a main named CAAGMModelAttributeRead.cpp located in the CAAGMModelAttributeRead.m module of the CAAGMModelInterfaces.edu framework:
 where `InstallRootFolder` [2] is the folder where the API CD-ROM is installed.
 
 The use case uses a class defined in the CAAGMModelAttribute.m module.
+
 ## Step-by-Step
 
+where `InstallRootFolder` [2] is the folder where the API CD-ROM is installed.
+The use case uses a class defined in the CAAGMModelAttribute.m module.
 The main program peforms the following steps:
 
     * Loading the File to Be Read
@@ -59,10 +67,12 @@ The main program peforms the following steps:
 ### Loading the File to Be Read
 
 The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject (and the curves and surfaces in particular). In this use case, the factory is defined by reading a NCGM file that was previously stored,  the global function `::CATLoadCGMContainer` must be used to retrieve the factory.
-    
+
     CATGeoFactory* piGeomFactory = ::CATLoadCGMContainer(filetoread);
 ### Looping through the Geometry
 
+The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject (and the curves and surfaces in particular). In this use case, the factory is defined by reading a NCGM file that was previously stored,  the global function `::CATLoadCGMContainer` must be used to retrieve the factory.
+CATGeoFactory* piGeomFactory = ::CATLoadCGMContainer(filetoread);
 Here are the step to follow in order to read specific attributes in a geometry.
 
     1. Scan the geometry by using the CATICGMContainer::Next method.
@@ -70,69 +80,106 @@ Here are the step to follow in order to read specific attributes in a geometry.
     3. For each geometry, retrieve the CATICGMObject by using the CATGeometry::FindObjectFromTag method.
     4. For each CATICGMObject, retrieve the appropriate attribute by using the CATICGMObject ::GetAttribute method.
     5. Use the GetValue method applied to the retrieved attribute to read the attribute value.
-    
+
     // (b) --- Loop through the geometry
     //
     ...
+5. Use the GetValue method applied to the retrieved attribute to read the attribute value.
     for (piCurG = piGeomFactory->Next(NULL,CATPLineType);
     piCurG != NULL;
     piCurG = piGeomFactory->Next(piCurG)) 
+
       {
         // Find the PLine from its persistent tag
         //
+piCurG != NULL;
+piCurG = piGeomFactory->Next(piCurG))
         curtag = piCurG->GetPersistentTag();
         CATICGMObject * piCGMObj = piGeomFactory->FindObjectFromTag(curtag);
         if (piCGMObj == NULL)
+
     	{
+curtag = piCurG->GetPersistentTag();
+CATICGMObject * piCGMObj = piGeomFactory->FindObjectFromTag(curtag);
+if (piCGMObj == NULL)
     	  cout << "No object with the specified tag" <<endl;
     			return 1;
+
     	}
-    
+
         // Retrieve the CATCGMAttribute from its identifier
         //
+return 1;
         CATCGMAttribute * piActAttr = piCGMObj->
         GetAttribute(UAIDPtr(CAAGMModelAttributeManagement));
-    
+
         // No searched attribute found on the PLine 
         //
+CATCGMAttribute * piActAttr = piCGMObj->
+GetAttribute(UAIDPtr(CAAGMModelAttributeManagement));
        if (NULL == piActAttr)
+
     	{
+```vbscript
+if (NULL == piActAttr)
                 cout << "------------------------------------------------- " << endl;
     	   cout << "PLine with no CAAGMModelAttributeManagement attribute " << endl;
+```
+
     	}
-    
+
         // The searched attribute found on the Pline
         //
+cout << "PLine with no CAAGMModelAttributeManagement attribute " << endl;
         else
+
     	{
+else
     	   cout << "------------------------------------------------- " << endl;
     	   cout << "PLine with CAAGMModelAttributeManagement attribute    " << endl; 
-    		
+
                 CAAGMModelAttributeManagement * iPersAttr = NULL;
     	   iPersAttr = (CAAGMModelAttributeManagement *) piActAttr;
-    
+
                 // Retrieve the attribute value 
                 // See the CAAAttributeManagement module
     	   //
+iPersAttr = (CAAGMModelAttributeManagement *) piActAttr;
     		if (iPersAttr)
+
     		{
+```vbscript
+if (iPersAttr)
     			long oPersval;
     	          	iPersAttr->GetValue(oPersval);
+```
+
     		}
+```vbscript
+if (iPersAttr)
+long oPersval;
+iPersAttr->GetValue(oPersval);
     			else return 1;
                		cout << "----------------------------------- " << endl;		
+```
+
     		}
     	}
       }
 ### Closing the Input File and the CGM Container
 
 The use case ends with the closure of the file and the CGM container (done by the `::CATCloseCGMContainer` global function).
-    
+
+The use case ends with the closure of the file and the CGM container (done by the `::CATCloseCGMContainer` global function).
     filetoread.close();
     CATCloseCGMContainer(piGeomFactory);
+
 ## In Short
 
+filetoread.close();
+CATCloseCGMContainer(piGeomFactory);
 The use case illustrates how to read attributes.
+
 ## References
 
 [1] | [Creating an Attribute](CAACgmUcGobAttCreation.md)  

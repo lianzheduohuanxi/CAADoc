@@ -1,12 +1,14 @@
 ---
+```vbscript
 title: "CAAAniMeshOctTriangle.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniMeshOctTriangle", "CAAScdAniUseCases"]
 source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshOctTriangleSource.htm"
 converted: "2026-05-11T17:31:51.679720"
----
+```
 
+---
 ```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2000
     ' ***********************************************************************
@@ -25,18 +27,19 @@ converted: "2026-05-11T17:31:51.679720"
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
 
-    
 ```vbscript
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+```
+
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
         End If
     ' ----------------------------------------------------------- 
-    
+
 ```
 
-```vbscript
     Sub CATMain()
+
 ```vbscript
     'Open the analysis document
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Surface.CATAnalysis")
@@ -57,9 +60,6 @@ converted: "2026-05-11T17:31:51.679720"
     Set Publications = Product.Publications
     Set pubSurf = Publications.Item("Round Hole.1")
     Set pubEdge = Publications.Item("Edge")
-```
-
-    
 ```
 
     ' Add the new Octree Triangle part to the list of mesh parts
@@ -84,22 +84,23 @@ converted: "2026-05-11T17:31:51.679720"
     octreePart.SetGlobalSpecification "InteriorSizeValue", "5.0 mm"
     octreePart.SetGlobalSpecification "MinJacobian", 0.3
     octreePart.SetGlobalSpecification "MaxAttempts", 2
+```
+
 ```vbscript
     ' Add the domain specifications as local specifications and assign it attributes
     Set meshspecs1 = octreePart.AnalysisMeshLocalSpecifications
     Set spec1 = meshspecs1.Add("MSHLocalMeshSize")
 ```
 
+```vbscript
+' Add the domain specifications as local specifications and assign it attributes
+Set meshspecs1 = octreePart.AnalysisMeshLocalSpecifications
+Set spec1 = meshspecs1.Add("MSHLocalMeshSize")
     spec1.SetAttribute "MSHMeshSizeMag", "1.0 mm"
     spec1.AddSupportFromPublication "ConnectorList", Product, pubEdge
     'Update mesh part
     octreePart.Update
-    
+
 ```
 
-```vbscript
     End Sub
-    
-```
-
-```

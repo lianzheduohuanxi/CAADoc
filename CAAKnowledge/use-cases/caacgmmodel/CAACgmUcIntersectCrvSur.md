@@ -1,13 +1,16 @@
 ---
+```vbscript
 title: "Intersecting a Curve and a Surface"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGMModelInterfaces", "CATICGMIntersectionCrvSur", "CAAGMModelGeometryCreation", "CAAGMModelIntersectionOpe"]
 source_file: "Doc/online/CAACgmModel/CAACgmUcIntersectCrvSur.htm"
 converted: "2026-05-11T17:33:48.452515"
+```
+
 ---
 # Intersecting a Curve and a Surface  
-  
+
 ---  
 Use Case  
 ## Abstract
@@ -22,49 +25,65 @@ A curve and a surface can be intersected by using the CATICGMIntersectionCrvSur 
 Use CATICGMIntersectionCrvSur. This operator is created by using the CATCGMCreateIntersection global function. 
 ## Use Case Description
 
+Use CATICGMIntersectionCrvSur. This operator is created by using the CATCGMCreateIntersection global function.
 The CAAGMModelIntersectionOpe.m module in CAAGMModelInterfaces.edu illustrates how to intersect a curve and a surface. This use case constructs its input data and requires the CAAGMModelGeometryCreation.m module. You have to specify this module in your Imakefile.mk file.  If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md).
 
 With the input data below:
 
 Fig.1 Intersection:  Input data are a curve and a surface ![Intersect Curve and Surface](images/CGM_intersect_crvSur_0.png) 
----|---  
-  
+
+With the input data below:
+Fig.1 Intersection:  Input data are a curve and a surface ![Intersect Curve and Surface](images/CGM_intersect_crvSur_0.png)
 and the code below:
-    
+
     CATICGMIntersectionCrvSur * pPtCrvSur =:: CATCGMCreateIntersection(
     		piGeomFactory,
     		pConfig,
     		piNurbsCurve, 
     		piTabulatedCyl1); 
+
     ...
+piGeomFactory,
+pConfig,
+piNurbsCurve,
+piTabulatedCyl1);
     CATLONG32 nbOfPoints = pPtCrvSur->GetNumberOfPoints();
     cout   << "NumberOfPoints "   << nbOfPoints   << endl;
     CATPointOnSurface * Pt1= NULL;
     if(nbOfPoints)
+
         {
+CATLONG32 nbOfPoints = pPtCrvSur->GetNumberOfPoints();
+cout   << "NumberOfPoints "   << nbOfPoints   << endl;
+CATPointOnSurface * Pt1= NULL;
+if(nbOfPoints)
     	while(pPtCrvSur->NextPoint())
+
      	{
     	     // Retrieve the resulting points 
                  // 4 points are expected 
+```vbscript
+while(pPtCrvSur->NextPoint())
                  Pt1 = pPtCrvSur->GetPointOnSurface();
     	     CATMathPoint p;
+```
+
     	     ...
+Pt1 = pPtCrvSur->GetPointOnSurface();
+CATMathPoint p;
     	     Pt1->GetMathPoint(p);
     	     cout   << "X="   << p.GetX()   << endl;
     	     cout   << "Y="   << p.GetY()   << endl;
                  cout   << "Z="   << p.GetZ()   << endl;
+
     	     ...
     	} 
-    				
-          
+
     ---  
-    
-    
-    
-    
+
     returns 
-    
-    
+
+returns
     NumberOfPoints 4
     X=20
     Y=0
@@ -80,6 +99,7 @@ and the code below:
     Z=0
 
 on the standard output.  Fig.2 Intersection:  Output data are four points ![Intersect Curve and Surface](images/CGM_intersect_crvSur_2.png)  
+
 ---  
 ## References
 

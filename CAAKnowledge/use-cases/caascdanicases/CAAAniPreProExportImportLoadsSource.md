@@ -1,12 +1,14 @@
 ---
+```vbscript
 title: "CAAAniPreProExportImportLoads.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CAAAniPreProExportImportLoads", "CATIA", "CAAScdAniUseCases", "CATIAAnalysisManager"]
 source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProExportImportLoadsSource.htm"
 converted: "2026-05-11T17:31:51.802920"
----
+```
 
+---
 ```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2000
     '***********************************************************************
@@ -19,24 +21,25 @@ converted: "2026-05-11T17:31:51.802920"
     '   Locales:      English 
     '   CATIA Level:  V5R17
     ' ***********************************************************************
-    
+
 ```
 
-    
-```vbscript
     Sub CATMain()
+
 ```vbscript
     ' ----------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     sOut = CATIA.SystemService.Environ("CATTemp")
-    
+
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 
 ```vbscript
     Err.Raise 9999,,"No Doc Path Defined"
     End If
+```
+
 ```vbscript
     ' ----------------------------------------------------------- 
     ' Open the CATAnalysis Document
@@ -56,9 +59,6 @@ converted: "2026-05-11T17:31:51.802920"
     Set analysisSet1 = analysisSets1.Item("Static Case Solution.1", catAnalysisSetSearchAll)
 ```
 
-    
-```
-
     'Search for the Analysis Manager in the document
 ```vbscript
     Set selection1 = analysisDocument1.Selection
@@ -69,6 +69,8 @@ converted: "2026-05-11T17:31:51.802920"
     'Get the AnalysisExport interface from analysis set
     Set analysisExport =  analysisSet1.GetItem("AnalysisExport")
     analysisSet1.Update
+```
+
 ```vbscript
     'Define Array
     safeArray = Array()
@@ -81,28 +83,30 @@ converted: "2026-05-11T17:31:51.802920"
               fullPath = sout + sSep + "ComputedLoads"+ CStr(i) + ".CATAnalysisExport" 
 ```
 
+```vbscript
+Set manager = selection1.FindObject("CATIAAnalysisManager")
+'Export the computed loads
+fullPath = sout + sSep + "ComputedLoads"+ CStr(i) + ".CATAnalysisExport"
               analysisExport.Export  fullPath, "ComputedLoads", array, manager
-    
+
               Set analysisModel = manager.AnalysisModels.Item(1)
               Set analysisCases = analysisModel.AnalysisCases         
+```
+
 ```vbscript
               'Import Loads  
               Set preProCase = analysisCases.Item("Preprocessing Case.1")  
               Set importCase =  preProCase.GetItem("AnalysisImport")
 ```
 
-              importCase.ImportForce preProCase, fullPath, manager, NOTHING
-     
-```
-
-    
-    Next
-    
-    
-    
 ```vbscript
-    End Sub
-    
-```
+'Import Loads
+Set preProCase = analysisCases.Item("Preprocessing Case.1")
+Set importCase =  preProCase.GetItem("AnalysisImport")
+              importCase.ImportForce preProCase, fullPath, manager, NOTHING
 
 ```
+
+    Next
+
+    End Sub

@@ -1,13 +1,19 @@
 ---
+```vbscript
 title: "CAAArrCreateRun.CATScript"
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CATIA", "CAAArrCreateRun"]
 source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateRunSource.htm"
 converted: "2026-05-11T17:31:51.571552"
----
+```
 
+---
+tags: ["CATIA", "CAAArrCreateRun"]
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateRunSource.htm"
+converted: "2026-05-11T17:31:51.571552"
     Option Explicit
+
 ```vbscript
     '// COPYRIGHT DASSAULT SYSTEMES  2000
     '******************************************************************************
@@ -20,12 +26,11 @@ converted: "2026-05-11T17:31:51.571552"
     ' CATIA Level:   V5R6
     ' Locale     :   English
     '******************************************************************************
-    
+
 ```
 
-    
-```vbscript
     Sub CATMain()
+
 ```vbscript
        ' On Error Resume Next
        '----------------------------------------------
@@ -37,6 +42,8 @@ converted: "2026-05-11T17:31:51.571552"
        Dim objRootProd       As Product
        Set objProdDoc      = CATIA.Documents.Add("Product")
        Set objRootProd     = objProdDoc.Product
+```
+
 ```vbscript
        '----------------------------------------------
        'Retrieving Root Product's Relative Axis and Position Information
@@ -53,113 +60,113 @@ converted: "2026-05-11T17:31:51.571552"
        Dim objArrRun             As ArrangementRun
 ```
 
-    
-```
-
+```vbscript
        dblRunPoints(0)   =  300.0
        dblRunPoints(1)   =  100.0
        dblRunPoints(2)   =  0.0
-    
+
        dblRunPoints(3)   =  441.42
        dblRunPoints(4)   =  158.58
        dblRunPoints(5)   =  1.25
-    
+
        dblRunPoints(6)   =  500.0
        dblRunPoints(7)   =  300.0
        dblRunPoints(8)   =  2.5
-    
+
        dblRunPoints(9)   =  441.42
        dblRunPoints(10)  =  441.42
        dblRunPoints(11)  =  3.75
-    
+
        dblRunPoints(12)   =  300.0
        dblRunPoints(13)  =  500.0
        dblRunPoints(14)  =  5.0
-    
+
        dblRunPoints(15)  =   158.58
        dblRunPoints(16)  =  441.42
        dblRunPoints(17)  =  6.25
-    
+
        dblRunPoints(18)  =  100.0
        dblRunPoints(19)  =  300.0
        dblRunPoints(20)  =  7.5 
-    
+
        dblRunPoints(21)  =  158.58
        dblRunPoints(22)  =  158.58
        dblRunPoints(23)  =  8.75
-    
+
        dblRunPoints(24)  =  300.0
        dblRunPoints(25)  =  100.0
        dblRunPoints(26)  =  10
-    
+
        dblRunPoints(27)   =  441.42
        dblRunPoints(28)   =  158.58
        dblRunPoints(29)   =  11.25
-    
+
        dblRunPoints(30)   =  500.0
        dblRunPoints(31)   =  300.0
        dblRunPoints(32)   =  12.5
-    
+
        dblRunPoints(33)   =  441.42
        dblRunPoints(34)  =  441.42
        dblRunPoints(35)  =  13.75
-    
+
        dblRunPoints(36)   =  300.0
        dblRunPoints(37)  =  500.0
        dblRunPoints(38)  =  15.0
-    
+
        dblRunPoints(39)  =   158.58
        dblRunPoints(40)  =  441.42
        dblRunPoints(41)  =  16.25
-    
+
        dblRunPoints(42)  =  100.0
        dblRunPoints(43)  =  300.0
        dblRunPoints(44)  =  17.5  
-    
+
        dblRunPoints(45)  =  158.58
        dblRunPoints(46)  =  158.58
        dblRunPoints(47)  =  18.75
-    
+
        dblRunPoints(48)  =  300.0
        dblRunPoints(49)  =  100.0
        dblRunPoints(50)  =  20
-    
+
        dblRunPoints(51)   =  441.42
        dblRunPoints(52)   =  158.58
        dblRunPoints(53)   =  21.25
-    
+
        dblRunPoints(54)   =  500.0
        dblRunPoints(55)   =  300.0
        dblRunPoints(56)   =  22.5
-    
+
        dblRunPoints(57)   =  441.42
        dblRunPoints(58)  =  441.42
        dblRunPoints(59)  =  23.75
-    
+
        dblRunPoints(60)   =  300.0
        dblRunPoints(61)  =  500.0
        dblRunPoints(62)  =  25.0
-    
+
        dblRunPoints(63)  =   158.58
        dblRunPoints(64)  =  441.42
        dblRunPoints(65)  =  26.25
-    
+
        dblRunPoints(66)  =  100.0
        dblRunPoints(67)  =  300.0
        dblRunPoints(68)  =  27.5 
-    
+
        dblRunPoints(69)  =  158.58
        dblRunPoints(70)  =  158.58
        dblRunPoints(71)  =  28.75
-    
+
        dblRunPoints(72)  =  300.0
        dblRunPoints(73)  =  100.0
        dblRunPoints(74)  =  30
-    
+
        dblMathDirection(0) = 1.0
        dblMathDirection(1) = 0.0
        dblMathDirection(2) = 0.0
-    
+
+```
+
 ```vbscript
        Set objArrRun             = objArrProd.ArrangementRuns.AddRun(objMove,dblRunPoints, dblMathDirection)
        '----------------------------------------------
@@ -167,6 +174,8 @@ converted: "2026-05-11T17:31:51.571552"
        objArrRun.SectionType     = CatArrangementRouteSectionRound
        objArrRun.SectionDiameter = 10.0
        objArrRun.VisuMode        = CatArrangementRouteVisuModeSolid
+```
+
 ```vbscript
        '----------------------------------------------
        ' Define Bend Radius of Nodes
@@ -174,16 +183,13 @@ converted: "2026-05-11T17:31:51.571552"
        For intK = 1 To objArrRun.ArrangementNodes.Count
 ```
 
+```vbscript
+' Define Bend Radius of Nodes
+Dim intK As Integer
+For intK = 1 To objArrRun.ArrangementNodes.Count
          objArrRun.ArrangementNodes.Item(intK).BendRadius = 10.0
        Next
-    
+
 ```
 
-```vbscript
     End Sub 
-    
-```
-
-    
-
-```

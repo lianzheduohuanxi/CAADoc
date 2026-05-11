@@ -1,17 +1,25 @@
 ---
+```vbscript
 title: "CAAKniDesignTable.CATScript"
 category: "use-case"
 module: "CAAScdKniUseCases"
 tags: ["CAAScdKniUseCases", "CATIA", "CAAKniDesignTable"]
 source_file: "Doc/online/CAAScdKniUseCases/CAAKniDesignTableSource.htm"
 converted: "2026-05-11T17:31:51.978836"
----
+```
 
+---
+tags: ["CAAScdKniUseCases", "CATIA", "CAAKniDesignTable"]
+source_file: "Doc/online/CAAScdKniUseCases/CAAKniDesignTableSource.htm"
+converted: "2026-05-11T17:31:51.978836"
     Option Explicit
     ' COPYRIGHT DASSAULT SYSTEMES 2001
+
 ```vbscript
     Dim Language as String
     Language="VBScript"
+```
+
 ```vbscript
     ' ***********************************************************************
     '   Purpose:      This macro:
@@ -40,11 +48,8 @@ converted: "2026-05-11T17:31:51.978836"
     ' ***********************************************************************
 ```
 
-    
-```
-
-```vbscript
     Sub CATMain()
+
 ```vbscript
         ' ----------------------------------------------------------- 
         ' Optional: allows to find the sample wherever it's installed
@@ -60,8 +65,13 @@ converted: "2026-05-11T17:31:51.978836"
 ```
 
     		"online\CAAScdKniUseCases\samples\KwrMacro0.CATPart")
+```vbscript
+Dim sFilePath
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
         Dim oDoc As Document
         set oDoc = CATIA.Documents.Open(sFilePath)
+```
+
 ```vbscript
      ' Set the CATIA popup file alerts to False
      ' It prevents to stop the macro at each alert during its execution
@@ -90,8 +100,14 @@ converted: "2026-05-11T17:31:51.978836"
         if (oFileSys.FileExists(sFolderPath) = False) then 
 ```
 
+```vbscript
+' if it does not exist a message box is displayed
+' if it exists the design table is created in the document
+if (oFileSys.FileExists(sFolderPath) = False) then
             MsgBox sFolderPath & " doesn't exist" 
         else
+```
+
 ```vbscript
             ' Retrieve the collection object which contains
             ' all the document relations.
@@ -107,10 +123,14 @@ converted: "2026-05-11T17:31:51.978836"
               if oRelations.Item(i).Name  = "DesignTable.1" then
 ```
 
+```vbscript
+Dim i As Integer
+For i = 1 To oRelations.Count
+if oRelations.Item(i).Name  = "DesignTable.1" then
               oRelations.Remove oRelations.Item(i).Name 
               end if
             Next
-    
+
 ```
 
 ```vbscript
@@ -131,6 +151,8 @@ converted: "2026-05-11T17:31:51.978836"
            Set oDesignTable = oRelations.CreateDesignTable("DesignTable.1","",_
                                                         False,_
                                                        sFolderPath) 
+```
+
 ```vbscript
            ' Retrieve the collection object which contains
            ' all the part bodies
@@ -155,6 +177,10 @@ converted: "2026-05-11T17:31:51.978836"
                    ' Creates two associations
 ```
 
+```vbscript
+Dim Pad2 As AnyObject
+Set Pad2 = oPartBody.Shapes.Item("Pad.1")
+' Creates two associations
                    oDesignTable.AddAssociation Pad2.FirstLimit.Dimension, "A"
                    oDesignTable.AddAssociation Pad2.SecondLimit.Dimension, "B"
                    ' Apply the third configuration of the design table 
@@ -163,6 +189,8 @@ converted: "2026-05-11T17:31:51.978836"
                  else 
                    msgbox "no shapes"
                  end if
+```
+
 ```vbscript
                 ' Add a new row
                 ' A new row is added to the design table each time the
@@ -170,25 +198,32 @@ converted: "2026-05-11T17:31:51.978836"
                 ' A limit of 10 rows is specified
 ```
 
+```vbscript
+' A new row is added to the design table each time the
+' macro is replayed on the document
+' A limit of 10 rows is specified
                 msgbox oDesignTable.ConfigurationsNb
                 If (oDesignTable.ConfigurationsNb < 10) Then
                   oDesignTable.AddNewRow()
                 else 
                   msgbox "configuration number = 10"
                 end if
-    
+
 ```
 
+msgbox "configuration number = 10"
+end if
               else
                 msgbox "A PartBody feature is required"
               end if 
-    
+
            Exit For
            Next
           ' Update the document
+
 ```vbscript
           CATIA.ActiveDocument.Part.Update 
-    
+
 ```
 
 ```vbscript
@@ -196,12 +231,7 @@ converted: "2026-05-11T17:31:51.978836"
     else 
         MsgBox "The active document must be a CATPart"
     End If
-    
+
 ```
 
-```vbscript
     End Sub
-    
-```
-
-```

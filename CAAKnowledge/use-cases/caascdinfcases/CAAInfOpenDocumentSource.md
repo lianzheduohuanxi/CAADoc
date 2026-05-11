@@ -1,13 +1,19 @@
 ---
+```vbscript
 title: "CAAInfOpenDocument.CATScript"
 category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CAAScdInfUseCases", "CAAInfOpenDocument", "CATIA", "CAAInfReadDocument"]
 source_file: "Doc/online/CAAScdInfUseCases/CAAInfOpenDocumentSource.htm"
 converted: "2026-05-11T17:31:52.383997"
----
+```
 
+---
+tags: ["CAAScdInfUseCases", "CAAInfOpenDocument", "CATIA", "CAAInfReadDocument"]
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfOpenDocumentSource.htm"
+converted: "2026-05-11T17:31:52.383997"
 Option Explicit
+
 ```vbscript
      ' COPYRIGHT DASSAULT SYSTEMES 2001
      ' *****************************************************************************
@@ -19,20 +25,21 @@ Option Explicit
      '   Locales:        English 
      '   CATIA Level:  V5R7 
      ' *****************************************************************************
-     
+
 ```
 
-     
-```vbscript
      Sub CATMain()
          ' -----------------------------------------------------------------------------------------------
          ' Optional: allows to find the sample wherever it may be installed
+
 ```vbscript
          Dim sDocPath As String
          sDocPath=CATIA.SystemService.Environ("CATDocView")
          If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
            Err.Raise 9999,,"No Doc Path Defined"
          End If
+```
+
 ```vbscript
          ' ------------------------------------------------------------------------------------------------ 
          'Open the document and add it as the last item of the collection of documents.
@@ -43,16 +50,12 @@ Option Explicit
 ```
 
             "online\CAAScdInfUseCases\samples\CAAInfReadDocument.CATPart")
+```vbscript
+Dim sFilePath
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
          Dim iPartDoc As Document
          Set iPartDoc = CATIA.Documents.Open(sFilePath)
-        
+
 ```
 
-```vbscript
      End Sub
-     
-```
-
-     
-
-```

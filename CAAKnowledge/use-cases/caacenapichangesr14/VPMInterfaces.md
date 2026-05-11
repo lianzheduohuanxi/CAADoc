@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "VPMInterfaces Framework Modifications in V5R14"
 category: "use-case"
 module: "CAACenAPIChangesR14"
@@ -6,11 +7,14 @@ version: "V5R14"
 tags: []
 source_file: "Doc/online/CAACenAPIChangesR14/VPMInterfaces.htm"
 converted: "2026-05-11T17:33:51.001603"
----
+```
 
+---
+tags: []
+source_file: "Doc/online/CAACenAPIChangesR14/VPMInterfaces.htm"
+converted: "2026-05-11T17:33:51.001603"
 CAA C++ API Modifications|  VPMInterfaces Framework Modifications in V5R14 |   
----|---|---  
-  
+
 * * *
 
 **Entity|  SP| Modification| To Do** | VPMInterfaces/Public/CATListOfVPMIWflActivity.h| GA| [FHBD ](CAACenAPIChangeDetail.htm#Abstract)| moved to ENOVInterfaces, should have no impact but IdentityCards and Imakefiles of client code may have to be updated accordingly.  

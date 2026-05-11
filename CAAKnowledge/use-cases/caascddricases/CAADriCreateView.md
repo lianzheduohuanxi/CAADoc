@@ -1,21 +1,24 @@
 ---
+```vbscript
 title: "Creating a Front View in a new Drawing Document"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CATIA", "CAADriCreateView", "CAAScdDriUseCases"]
 source_file: "Doc/online/CAAScdDriUseCases/CAADriCreateView.htm"
 converted: "2026-05-11T17:31:51.042883"
+```
+
 ---
 ## Generative Drafting
 
 | 
 ## Creating a Front View in a new Drawing Document  
-  
-  
+
 * * *
 
   This macro shows you how to create views in Drawing documents. It retrieves a part document, creates a _DrawingDocument_ and a front view of the part document.    
 ---|---  
+This macro shows you how to create views in Drawing documents. It retrieves a part document, creates a _DrawingDocument_ and a front view of the part document.
   CAADriCreateView is launched in CATIA [1]. No open document is needed. [CAADriCreateView.CATScript](CAADriCreateViewSource.md) is located in the CAAScdDriUseCases module. [Execute macro](macros/CAADriCreateView.CATScript) (Windows only).    
   CAADriCreateView includes four steps:
 
@@ -27,13 +30,14 @@ converted: "2026-05-11T17:31:51.042883"
 #### Prolog
 
 | 
-    
-    
+
       ...
         ' Open the Part document 
 ```vbscript
         Dim oPartToDraw As PartDocument
         Set oPartToDraw = CATIA.Documents.Open(sDocPath & _
+```
+
                  "\online\CAAScdDriUseCases\samples\Cube.CATPart")
 ```vbscript
         ' Create a drawing document: it becomes the active document.
@@ -42,22 +46,21 @@ converted: "2026-05-11T17:31:51.042883"
 ```
 
       ...  
-  
-```
-
-```
 
 ---  
-  
+
 Open the part document to draw and create a new _[DrawingDocument](../CAAScdDriTechArticles/CAADriObjDrawingDocument.md)_. The part document is fetched in the documentation installation path, this path has already been stored in the `sDocPath` variable.
 #### Creating a New View in the Active Sheet
-    
-    
+
       ...
+Open the part document to draw and create a new _[DrawingDocument](../CAAScdDriTechArticles/CAADriObjDrawingDocument.md)_. The part document is fetched in the documentation installation path, this path has already been stored in the `sDocPath` variable.
       ' Retrieve the active sheet
+
 ```vbscript
         Dim oSheet As DrawingSheet
         Set oSheet = oDrawing.Sheets.ActiveSheet
+```
+
 ```vbscript
         ' Create a view called "Front View" in this sheet
         Dim oFrontView As DrawingView
@@ -65,19 +68,16 @@ Open the part document to draw and create a new _[DrawingDocument](../CAAScdDriT
 ```
 
       ...  
-  
-```
-
-```
 
 ---  
-  
+
 The new [_DrawingView_](../CAAScdDriTechArticles/CAADriObjDrawingView.md) is created in the active _[DrawingSheet](../CAAScdDriTechArticles/CAADriObjDrawingSheet.md)_ that is found on the [_DrawingSheets_](../CAAScdDriTechArticles/CAADriObjDrawingSheets.md) collection aggregated by the _DrawingDocument_ object.
 #### Set its Parameters to Make it a Generative Front View
-    
-    
+
     ...
+The new [_DrawingView_](../CAAScdDriTechArticles/CAADriObjDrawingView.md) is created in the active _[DrawingSheet](../CAAScdDriTechArticles/CAADriObjDrawingSheet.md)_ that is found on the [_DrawingSheets_](../CAAScdDriTechArticles/CAADriObjDrawingSheets.md) collection aggregated by the _DrawingDocument_ object.
         ' Retrieve it generative behavior
+
 ```vbscript
         Dim oFrontViewGB As DrawingViewGenerativeBehavior
         Set oFrontViewGB = oFrontView.GenerativeBehavior
@@ -88,26 +88,29 @@ The new [_DrawingView_](../CAAScdDriTechArticles/CAADriObjDrawingView.md) is cre
         ' Position the View in the Sheet
         oFrontView.x = 300
         oFrontView.y = 150
-      ...  
-  
 ```
 
-```
+      ...  
 
 ---  
-  
+
 The generative behavior is provided by the _DrawingViewGenerativeBehavior_ object aggregated by the _DrawingView_. We need to define the document to draw by valuating the `Document` attribute of the generative behavior. We then define which projection plane in this document will be used to draw the front view (here XY) and then the position of this view in its parent _Sheet_.
 #### Epilog
-    
-    
+
     ...
+The generative behavior is provided by the _DrawingViewGenerativeBehavior_ object aggregated by the _DrawingView_. We need to define the document to draw by valuating the `Document` attribute of the generative behavior. We then define which projection plane in this document will be used to draw the front view (here XY) and then the position of this view in its parent _Sheet_.
        ' Update the view
         oFrontViewGB.Update   
-  
+
 ---  
-  
+
+```vbscript
+' Update the view
+oFrontViewGB.Update
 Update the now completely defined generative behavior.  
-  
+
+```
+
 ![](../CAAScrBase/images/aendtask.gif)
 
 [Top]

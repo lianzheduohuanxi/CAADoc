@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "PartInterfaces Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR7"
@@ -6,11 +7,14 @@ version: "V5R7"
 tags: ["CATIPrtFactory", "CATIDraft", "CATISweep", "CATICircPatt", "CATIRectPatt", "CATIPrtToPattern", "CATIPrtManageFeatBuild"]
 source_file: "Doc/online/CAACenAPIChangesR7/PartInterfaces.htm"
 converted: "2026-05-11T17:33:52.210420"
----
+```
 
+---
+tags: ["CATIPrtFactory", "CATIDraft", "CATISweep", "CATICircPatt", "CATIRectPatt", "CATIPrtToPattern", "CATIPrtManageFeatBuild"]
+source_file: "Doc/online/CAACenAPIChangesR7/PartInterfaces.htm"
+converted: "2026-05-11T17:33:52.210420"
 CAA API Modifications |  PartInterfaces |   
----|---|---  
-  
+
 * * *
 
 ** Entity | Modification | To Do** | PartInterfaces/Protected/CATICircPatt.h/CATICircPatt/GetSensa | MRTHC | [CATBoolean Migration](../CAACenQuickRefs/CAACenWhatsNew.htm#CATBoolean).No Impact  

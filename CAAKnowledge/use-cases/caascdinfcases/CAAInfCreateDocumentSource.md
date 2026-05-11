@@ -1,13 +1,19 @@
 ---
+```vbscript
 title: "CAAInfCreateDocument.CATScript"
 category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CATIA", "CAAInfCreateDocument"]
 source_file: "Doc/online/CAAScdInfUseCases/CAAInfCreateDocumentSource.htm"
 converted: "2026-05-11T17:31:52.356061"
----
+```
 
+---
+tags: ["CATIA", "CAAInfCreateDocument"]
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfCreateDocumentSource.htm"
+converted: "2026-05-11T17:31:52.356061"
     Option Explicit
+
 ```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2001
     ' *****************************************************************************
@@ -18,12 +24,11 @@ converted: "2026-05-11T17:31:52.356061"
     '   Locales:        English 
     '   CATIA Level:  V5R7 
     ' *****************************************************************************
-    
+
 ```
 
-    
-```vbscript
     Sub CATMain()
+
 ```vbscript
         'Create a new part document.
         'Add the new document to the end of the collection of documents.
@@ -34,14 +39,7 @@ converted: "2026-05-11T17:31:52.356061"
 ```vbscript
         Dim oNewPartDoc As Document
         Set oNewPartDoc = CATIA.Documents.Add("Part")
-       
+
 ```
 
-```vbscript
     End Sub
-    
-```
-
-    
-
-```

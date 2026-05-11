@@ -1,13 +1,19 @@
 ---
+```vbscript
 title: "Untitled"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAScdAniUseCases"]
 source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproSource.htm"
 converted: "2026-05-11T17:31:51.851825"
----
+```
 
+---
+tags: ["CATIA", "CAAScdAniUseCases"]
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproSource.htm"
+converted: "2026-05-11T17:31:51.851825"
     Option Explicit
+
 ```vbscript
     ' COPYRIGTH DASSAULT SYSTEMES 2000
     ' ***********************************************************************
@@ -21,14 +27,10 @@ converted: "2026-05-11T17:31:51.851825"
     '   Locales:      English 
     '   CATIA Level:  V5R6 
     ' ***********************************************************************
-    
+
 ```
 
-    
-```vbscript
     Sub CATMain()
-    
-```
 
 ```vbscript
         ' ----------------------------------------------------------- 
@@ -39,9 +41,13 @@ converted: "2026-05-11T17:31:51.851825"
 
 ```vbscript
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+```
+
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
         End If
+```
+
 ```vbscript
         ' ----------------------------------------------------------- 
         ' Get the collection of documents in session
@@ -96,7 +102,13 @@ converted: "2026-05-11T17:31:51.851825"
         Set analysisEntity = anEntities.Add("SAMClamp")
 ```
 
+```vbscript
+' Define an Analysis Entity on the set in order to Fix the referencebound of the Part
+Dim analysisEntity As AnalysisEntity
+Set analysisEntity = anEntities.Add("SAMClamp")
         analysisEntity.AddSupportFromProduct product1, referenceBound
+```
+
 ```vbscript
         '_____________________________________________________________________________________
         ' To work with the AnalysisSet of the collection that is typed for Load condition
@@ -108,20 +120,21 @@ converted: "2026-05-11T17:31:51.851825"
        ' Valuate the momentum value and assign it to the reference
 ```
 
+```vbscript
+' Define an Analysis Entity on the set in order to assign a pressure the referenceLoad of the Part
+Set analysisEntity = anEntities.Add("SAMMoment")
+' Valuate the momentum value and assign it to the reference
         analysisEntity.SetValue "SAMMomentVector","", 1, 1, 1, 100000.
         analysisEntity.SetValue "SAMMomentVector","", 2, 1, 1, 0.
         analysisEntity.SetValue "SAMMomentVector","", 3, 1, 1, 0.
-    
+
 ```
 
+analysisEntity.SetValue "SAMMomentVector","", 2, 1, 1, 0.
+analysisEntity.SetValue "SAMMomentVector","", 3, 1, 1, 0.
         analysisEntity.AddSupportFromProduct product1, referenceLoad
         '_____________________________________________________________________________________
         ' Launch the computation of the Case
         MyCase.Compute
-    
-```vbscript
-    End Sub
-    
-```
 
-```
+    End Sub

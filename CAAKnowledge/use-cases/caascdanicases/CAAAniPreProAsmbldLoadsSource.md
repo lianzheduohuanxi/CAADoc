@@ -1,12 +1,14 @@
 ---
+```vbscript
 title: "CAAAniPreProAsmbldLoads.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CAAAniPreProAsmbldLoads", "CATIA", "CATIAAnalysisSet", "CAAScdAniUseCases"]
 source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProAsmbldLoadsSource.htm"
 converted: "2026-05-11T17:31:51.781967"
----
+```
 
+---
 ```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2000
     ' ***********************************************************************
@@ -20,17 +22,16 @@ converted: "2026-05-11T17:31:51.781967"
     '   Locales:      English 
     '   CATIA Level:  V5R16
     ' ***********************************************************************
-    
+
 ```
 
-    
-```vbscript
     Sub CATMain()
+
 ```vbscript
     ' ----------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     sDocPath=CATIA.SystemService.Environ("CATDocView")
-    
+
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 
@@ -38,19 +39,30 @@ converted: "2026-05-11T17:31:51.781967"
     Err.Raise 9999,,"No Doc Path Defined"
     End If
     ' ----------------------------------------------------------- 
-    
+
 ```
 
+```vbscript
+End If
+' -----------------------------------------------------------
     ' Open the CATAnalysis Document
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Assembled_Loads_Solutions.CATAnalysis")
-```vbscript
-    Set analysisDocument1 = CATIA.Documents.Open(sFilePath)
-    
 ```
 
+```vbscript
+    Set analysisDocument1 = CATIA.Documents.Open(sFilePath)
+
+```
+
+```vbscript
+Set analysisDocument1 = CATIA.Documents.Open(sFilePath)
     'Retrieve the Analysis Manageer from tha analysis document
+```
+
 ```vbscript
     Set analysisManager1 = analysisDocument1.Analysis
+```
+
 ```vbscript
     'Retrieve the product document from the linked document
     Set analysisLinkedDocuments1 = analysisManager1.LinkedDocuments
@@ -81,7 +93,13 @@ converted: "2026-05-11T17:31:51.781967"
     Set selection1 = analysisDocument1.Selection
 ```
 
+```vbscript
+Set basicComponent1 = basicComponents1.GetItem("SAMLoadP.1")
+'Search and select
+Set selection1 = analysisDocument1.Selection
     selection1.Search "Name=*Load*,all"
+```
+
 ```vbscript
     'Retrieve the analysis manager object from the analysis document
     Set documents1 = CATIA.Documents
@@ -90,26 +108,27 @@ converted: "2026-05-11T17:31:51.781967"
     'Go through the selections and find out the the analysis set
     'create a reference from the analysis set and add it to the basic component
     For i =1 To selection1.Count
-    
+
              Set analysisSet = selection1.FindObject("CATIAAnalysisSet")
               Set entity =   analysisSet.AnalysisEntities.Item(1)
               IF ( entity.Type = "SAMLoadAssembly") Then 'DO NOTHING
 ```
 
+```vbscript
+Set analysisSet = selection1.FindObject("CATIAAnalysisSet")
+Set entity =   analysisSet.AnalysisEntities.Item(1)
+IF ( entity.Type = "SAMLoadAssembly") Then 'DO NOTHING
                ELSE 
                   Set Reference =analysisManager2.CreateReferenceFromObject(analysisSet)
                   basicComponent1.AddSupportFromProduct product2, Reference
             END IF
-           
+
 ```
 
+basicComponent1.AddSupportFromProduct product2, Reference
+END IF
     Next
     'Update the analysis set
     analysisSet1.Update
-    
-```vbscript
-    End Sub
-    
-```
 
-```
+    End Sub

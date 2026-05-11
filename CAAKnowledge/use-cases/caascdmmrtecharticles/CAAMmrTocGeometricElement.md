@@ -1,10 +1,13 @@
 ---
+```vbscript
 title: "Geometric Element Automation Objects"
 category: "use-case"
 module: "CAAScdMmrTechArticles"
 tags: []
 source_file: "Doc/online/CAAScdMmrTechArticles/CAAMmrTocGeometricElement.htm"
 converted: "2026-05-11T17:31:51.147648"
+```
+
 ---
 # Geometric Element Automation Objects
 
@@ -22,7 +25,7 @@ converted: "2026-05-11T17:31:51.147648"
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/axis2d.gif)  
 ![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/line2d.gif)  
 ---  
-  
+
 **Legend**
 
 ![](../CAAScrAutomationImages/images/yellbox.gif) Collection  

@@ -1,15 +1,19 @@
 ---
+```vbscript
 title: "New C++ Authorized APIs in CAA V5-6R2016 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIVpmAFLActionServices", "CATIUserExitLoginTracker", "CATIMfgElementaryMotion", "CAACompositesItf", "CATICGMRecognizeFeatures", "CATIDftDatumTarget", "CATICciCompositesParametersMSSImportExport", "CATIDftCoordDimension", "CATIA", "CATICGMTopSilhOperator"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R26GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.574475"
----
+```
 
+---
+tags: ["CATIVpmAFLActionServices", "CATIUserExitLoginTracker", "CATIMfgElementaryMotion", "CAACompositesItf", "CATICGMRecognizeFeatures", "CATIDftDatumTarget", "CATICciCompositesParametersMSSImportExport", "CATIDftCoordDimension", "CATIA", "CATICGMTopSilhOperator"]
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R26GANewCPPAPI.htm"
+converted: "2026-05-11T17:33:47.574475"
 CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5-6R2016 GA  
----|---  
-  
+
 * * *
 
 The following are the new CAA V5-6R2016 GA C++ Authorized APIs, compared with CAA V5-6R2015 at GA level.
@@ -91,7 +95,7 @@ The following are the new CAA V5-6R2016 GA C++ Authorized APIs, compared with CA
 History Version: **1** [Sep 2015] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright © 1999-2014, Dassault Systèmes. All rights reserved._  

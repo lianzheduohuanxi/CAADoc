@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "DraftingInterfaces Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR8"
@@ -6,11 +7,14 @@ version: "V5R8"
 tags: ["CATIDftArrow", "CATIView", "CATIGenerSpec", "CATIDrwDimDimension", "CATIDrwSubText", "CATIDrwAnnotationFactory", "CATIDftGenGeom", "CATIDrwAreaFill"]
 source_file: "Doc/online/CAACenAPIChangesR8/DraftingInterfacesSP.htm"
 converted: "2026-05-11T17:33:52.507721"
----
+```
 
+---
+tags: ["CATIDftArrow", "CATIView", "CATIGenerSpec", "CATIDrwDimDimension", "CATIDrwSubText", "CATIDrwAnnotationFactory", "CATIDftGenGeom", "CATIDrwAreaFill"]
+source_file: "Doc/online/CAACenAPIChangesR8/DraftingInterfacesSP.htm"
+converted: "2026-05-11T17:33:52.507721"
 CAA C++ API Modifications|  DraftingInterfaces  |   
----|---|---  
-  
+
 * * *
 
 **Entity|  SP| Modification| To Do** | DraftingInterfaces/Protected/CATIDftGenGeom.h/CATIDftGenGeom/SetUnderlyingGeometry| 1| INDM| Check that you don't use it  

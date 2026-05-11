@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "DraftingInterfaces Framework Modifications in V5R18"
 category: "use-case"
 module: "CAACenAPIChangesR18"
@@ -6,13 +7,14 @@ version: "V5R18"
 tags: ["CATIDrwThread", "CATIDrwAnnotationFactory", "CATIDrwThread_var"]
 source_file: "Doc/online/CAACenAPIChangesR18/DraftingInterfaces.htm"
 converted: "2026-05-11T17:33:51.472913"
+```
+
 ---
 # CAA C++ API Modifications  
-  
+
 | 
 ##  DraftingInterfaces Framework Modifications in V5R18 
 
-  
 * * *
 
 **Entity|  SP| Modification| To Do** | DraftingInterfaces/Public/CATIDrwAnnotationFactory.h/CATIDrwAnnotationFactory/CreateDrwThread  

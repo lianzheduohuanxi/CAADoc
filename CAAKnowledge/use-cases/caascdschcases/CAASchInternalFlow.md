@@ -1,27 +1,33 @@
 ---
+```vbscript
 title: "Managing Internal Flow in a Schematic Reference Component"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CATIASchCompFlow", "CAADoc", "CAASchInternalFlow", "CATIASchComponent", "CAAScdSchUseCases", "CATIA", "CAASchAppBase", "CAASCHEDUApp", "CAASchPlatformModeler", "CATIASchAppConnector", "CAASCH_Detail02", "CAASchAppUtilities"]
 source_file: "Doc/online/CAAScdSchUseCases/CAASchInternalFlow.htm"
 converted: "2026-05-11T17:31:51.390076"
+```
+
 ---
 ## Schematics Platform Modeler
 
 | 
 ## Managing Internal Flow in a Schematic Reference Component  
-  
-  
+
 * * *
 
  This macro shows you how to manage internal flow objects aggregated under a Schematic reference component. This includes the following.
 
+This macro shows you how to manage internal flow objects aggregated under a Schematic reference component. This includes the following.
   1. Adding an internal flow object to the reference component.
   2. Querying for a list of existing internal flow objects.
   3. Removing an internal flow object from the reference component.
 
 In order for the instance of a Schematic reference component to be capable of being inserted into a route, the reference component must have at least one compatible internal flow object. An internal flow object references two connectors of the reference component. Through their connector positions, the orientation of the instance in the route is defined. This macro opens the CAASCH_Detail02.CATProduct document. The following screen shot shows an internal flow of a Schematic reference component. Notice the two connectors (in this case - Connector.1 and Connector.2) that must be defined. ![](images/CAASchInternalFlow_01.jpg)  
----|---  
+
+2. Querying for a list of existing internal flow objects.
+3. Removing an internal flow object from the reference component.
+In order for the instance of a Schematic reference component to be capable of being inserted into a route, the reference component must have at least one compatible internal flow object. An internal flow object references two connectors of the reference component. Through their connector positions, the orientation of the instance in the route is defined. This macro opens the CAASCH_Detail02.CATProduct document. The following screen shot shows an internal flow of a Schematic reference component. Notice the two connectors (in this case - Connector.1 and Connector.2) that must be defined. ![](images/CAASchInternalFlow_01.jpg)
  CAASchInternalFlow is launched in CATIA [1]. No open document is needed.Special environment must be available to successfully run this macro:
 
   * Prerequisites:
@@ -41,6 +47,7 @@ In order for the instance of a Schematic reference component to be capable of be
 [ CAASchInternalFlow.CATScript ](CAASchInternalFlowSource.md)is located in the CAAScdSchUseCases module. [Execute macro](macros/CAASchInternalFlow.CATScript) (Windows only).  
  CAASchInternalFlow includes the following steps:
 
+CAASchInternalFlow includes the following steps:
   1. Prolog
   2. Add an internal flow object to the Schematic reference component
   3. Query for a list of existing internal flow objects of a Schematic reference component
@@ -48,26 +55,35 @@ In order for the instance of a Schematic reference component to be capable of be
 
 #### Prolog
 
+3. Query for a list of existing internal flow objects of a Schematic reference component
+4. Remove an internal flow objects from the Schematic reference component
 The macro first loads CAASCH_Detail02.CATProduct. |     ...  
     ' Open main schematic P&ID design document (for new component instances created here)  
+
 ```vbscript
     Dim sFilePath  
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _  
+```
+
             "online\CAAScdSchUseCases\samples\CAASCH_Detail02.CATProduct")  
-  
+
+```vbscript
+Dim sFilePath
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
     Dim objSchDoc As Document  
     Set objSchDoc = CATIA.Documents.Open(sFilePath)  
-    ...  
 ```
 
-```
+    ...  
 
 ---  
-  
+
 Next, the macro acquires the schematic root object from the document. The schematic root is the top node of the object instance tree in a schematic document.
 
     ...  
+Next, the macro acquires the schematic root object from the document. The schematic root is the top node of the object instance tree in a schematic document.
     ' Find the top node of the schematic object tree - schematic root.  
+
 ```vbscript
     Dim objPrdRoot As Product  
     Dim objSchRoot As SchematicRoot  
@@ -77,13 +93,12 @@ Next, the macro acquires the schematic root object from the document. The schema
         Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")  
       End If  
     End If  
-    ...  
 ```
 
-```
+    ...  
 
 ---  
-  
+
 The SchematicRoot interface provides the GetRefComponents method to find a list of all the Schematic reference component in the model. The macro takes the first one in the list and specifically requests for the SchComponent interface on the first member.
 
     ...  
@@ -95,17 +110,16 @@ The SchematicRoot interface provides the GetRefComponents method to find a list 
 
 ```vbscript
        Set objLCompRefs = objSchRoot.GetRefComponents  
-  
+
 ```
 
 ```vbscript
        If ( Not ( objLCompRefs Is Nothing ) ) Then  
-  
+
           Set objCompRef = objLCompRefs.Item (1,"CATIASchComponent")  
-    ...  
 ```
 
-```
+    ...  
 
 ---  
 #### Add an internal flow object to the Schematic reference component
@@ -114,13 +128,12 @@ The macro calls the GetInterface method to get a handle on the reference compone
 
 ```vbscript
               Set objCompFlow = objSchRoot.GetInterface ( _  
-                "CATIASchCompFlow",objCompRef)  
 ```
 
-```
+                "CATIASchCompFlow",objCompRef)  
 
 ---  
-  
+
 Next, the macro get a list of all connectors of the Schematic Component.
 ```vbscript
              '-----------------------------------------------------------------  
@@ -132,13 +145,12 @@ Next, the macro get a list of all connectors of the Schematic Component.
     ...  
 ```vbscript
              Set objLCntr = objCntbl.AppListConnectors (objLFilter)  
-    ...  
 ```
 
-```
+    ...  
 
 ---  
-  
+
 Method CreateListOfObject is called to create a list of connectors containing the first and the second connectors. This list is used as input to the AddInternalFlow method to add an internal flow object to the reference component..
 
     ...  
@@ -161,25 +173,30 @@ Method CreateListOfObject is called to create a list of connectors containing th
              Dim objLCntr1 As SchListOfObjects  
              Dim objLCntr2 As SchListOfObjects  
              Dim objLFlow As SchListOfObjects  
-  
+
 ```
 
+```vbscript
+Dim objLCntr2 As SchListOfObjects
+Dim objLFlow As SchListOfObjects
              intNbCntr = objLCntr.Count  
+```
+
 ```vbscript
              Set objLCntr1 = objSchTempListFact.CreateListOfObjects  
              Set objLCntr2 = objSchTempListFact.CreateListOfObjects  
-  
+
              Set objCntr1 = Nothing  
              Set objCntr2 = Nothing  
              Set objCntr3 = Nothing  
-  
+
 ```
 
 ```vbscript
              If ( intNbCntr > 0 ) Then Set objCntr1 = objLCntr.Item(1,"CATIASchAppConnector")  
              If ( intNbCntr > 1 ) Then Set objCntr2 = objLCntr.Item(2,"CATIASchAppConnector")  
              If ( intNbCntr > 2 ) Then Set objCntr3 = objLCntr.Item(3,"CATIASchAppConnector")  
-  
+
              Set objFlow1 = Nothing  
              If ( Not objLCntr1 Is Nothing ) Then  
                 If ( Not ( objCntr1 Is Nothing ) And _  
@@ -187,13 +204,12 @@ Method CreateListOfObject is called to create a list of connectors containing th
                    objLCntr1.Append (objCntr1)  
                    objLCntr1.Append (objCntr2)  
                    Set objFlow1 = objCompFlow.AddInternalFlow (objLCntr1)  
-    ...  
 ```
 
-```
+    ...  
 
 ---  
-  
+
 Similarly, the macro creates a second list of connectors containing the first and the third connectors. This list is used as input to the AddInternalFlow method to add the second internal flow object to the reference component.
 
     ...  
@@ -205,10 +221,9 @@ Similarly, the macro creates a second list of connectors containing the first an
                    objLCntr2.Append (objCntr1)  
                    objLCntr2.Append (objCntr3)  
                    Set objFlow2 = objCompFlow.AddInternalFlow (objLCntr2)  
-    ...  
 ```
 
-```
+    ...  
 
 ---  
 #### Query for a list of existing internal flow objects of a Schematic reference component
@@ -223,10 +238,9 @@ Similarly, the macro creates a second list of connectors containing the first an
 
 ```vbscript
                   Set objLFlow = objCompFlow.ListInternalFlows  
-    ...  
 ```
 
-```
+    ...  
 
 ---  
 #### Remove an internal flow objects from the Schematic reference component
@@ -234,19 +248,26 @@ Similarly, the macro creates a second list of connectors containing the first an
     ...  
 ```vbscript
                 If ( Not ( objFlow2 Is Nothing ) ) Then  
+```
+
 ```vbscript
                    '-----------------------------------------------------------------  
                    ' Remove "Flow 2" from the reference component  
                    '-----------------------------------------------------------------  
 ```
 
+```vbscript
+'-----------------------------------------------------------------
+' Remove "Flow 2" from the reference component
+'-----------------------------------------------------------------
                    objCompFlow.RemoveInternalFlow objFlow2  
                 End If  
-    ...  
 ```
 
+    ...  
+
 ---  
-  
+
 [Top]
 
 * * *
@@ -264,7 +285,7 @@ This use case shows how to manage internal flow objects of a Schematic reference
 [1] | [ Replaying a Macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2001, Dassault Systmes. All rights reserved._

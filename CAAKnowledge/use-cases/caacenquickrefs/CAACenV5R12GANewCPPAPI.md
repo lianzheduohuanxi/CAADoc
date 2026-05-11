@@ -1,15 +1,19 @@
 ---
+```vbscript
 title: "New C++ Authorized APIs in CAA V5R12 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATINT32", "CATIAVPMVDAImport", "CATIMeasurablePoint", "CATIElbFactory", "CATIRepeatableCommand", "CATIMfgNavigateMachinableFeatView", "CATIIniSearchDimensionCriterion", "CATIIniSearchIntegerCriterion", "CATIIniSearchRealCriterion", "CATIMfgTPMultipleMotionSynchro", "CATIPspPhysicalProduct", "CATIIniSearchStringCriterion", "CATIPspAttribute", "CATIPspSpatial", "CATITPSViewFactory", "CATIMeasurableCircle", "CATIMf3DAxisSystemManager", "CATISamSupportFilter", "CATIPspCntrFlow", "CATIMfgNavigateActivityView"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R12GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.111006"
----
+```
 
+---
+tags: ["CATINT32", "CATIAVPMVDAImport", "CATIMeasurablePoint", "CATIElbFactory", "CATIRepeatableCommand", "CATIMfgNavigateMachinableFeatView", "CATIIniSearchDimensionCriterion", "CATIIniSearchIntegerCriterion", "CATIIniSearchRealCriterion", "CATIMfgTPMultipleMotionSynchro", "CATIPspPhysicalProduct", "CATIIniSearchStringCriterion", "CATIPspAttribute", "CATIPspSpatial", "CATITPSViewFactory", "CATIMeasurableCircle", "CATIMf3DAxisSystemManager", "CATISamSupportFilter", "CATIPspCntrFlow", "CATIMfgNavigateActivityView"]
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R12GANewCPPAPI.htm"
+converted: "2026-05-11T17:33:47.111006"
 CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R12 GA  
----|---  
-  
+
 * * *
 
 The following are the new CAA V5R12 GA C++ Authorized APIs, compared with CAA V5R11 at GA level.
@@ -320,7 +324,7 @@ The following are the new CAA V5R12 GA C++ Authorized APIs, compared with CAA V5
 History Version: **1** [Jul 2003] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 1994-2003, Dassault Systmes. All rights reserved._

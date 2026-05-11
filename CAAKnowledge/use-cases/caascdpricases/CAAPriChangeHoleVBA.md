@@ -1,17 +1,19 @@
 ---
+```vbscript
 title: "Changing the Hole Parameters (catvba Version)"
 category: "use-case"
 module: "CAAScdPriUseCases"
 tags: ["CAAScdPriUseCases", "CATIA", "CAAPriChangeHole", "CAAPriChangeHoleModule", "CATIAHole", "CAAPriChangeHoleForm"]
 source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangeHoleVBA.htm"
 converted: "2026-05-11T17:31:51.207011"
+```
+
 ---
 ## Part Design
 
 | 
 ## Changing the Hole Parameters (catvba Version)  
-  
-  
+
 * * *
 
  This macro is dedicated for Windows only, and it is the catvba version of [Changing the Hole Parameters](CAAPriChangeHole.md).  
@@ -32,9 +34,9 @@ It modifies the _Hole_ object from its methods and properties, and updates the p
   * Reference in the application the catvba project: [CAAPriChangeHole.catvba](macros/CAAPriChangeHole.catvba).
   * The text file [CAAPriChangeHole.txt](macros/CAAPriChangeHole.txt) is located in the CAAScdPriUseCases module.
 
-  
  CAAPriChangeHole includes the following steps: 
 
+CAAPriChangeHole includes the following steps:
   1. Prolog
   2. Reading the Hole Parameters
   3. Looking for the Hole Object in the Selection
@@ -42,9 +44,10 @@ It modifies the _Hole_ object from its methods and properties, and updates the p
 
 #### Prolog
 
+3. Looking for the Hole Object in the Selection
+4. Applying the Hole Parameters
 Load the CAAPriChangeHole.CATPart that contains three holes. ![](images/CAAPriChangeHole01.gif) Select one or several holes as shown. Selection is allowed from the specification tree or from the geometry. ![](images/CAAPriChangeHole02.gif) Run the macro. 
-    
-    
+
     ...
 ```vbscript
     ' ------------
@@ -54,37 +57,40 @@ Load the CAAPriChangeHole.CATPart that contains three holes. ![](images/CAAPriCh
 
 ```vbscript
     Set oPartDocument = CATIA.ActiveDocument
-    ...  
-  
 ```
 
-```
+    ...  
 
 ---  
-  
+
 Once the macro has been started, the `oCATIAFileSys`, `oFile`, `oTextSteam` and `oPartDocument `variables are declared to receive the instance of the CATIA file system, the file, the text stream and the part document.
 #### Reading the Hole Parameters
-    
-    
+
     ...
+Once the macro has been started, the `oCATIAFileSys`, `oFile`, `oTextSteam` and `oPartDocument `variables are declared to receive the instance of the CATIA file system, the file, the text stream and the part document.
     If oPartDocument.Selection.Count = 0 Then
+
 ```vbscript
         ' ------------
         ' The selection content is empty, the macro ends
         ' ------------
 ```
 
+```vbscript
+' ------------
+' The selection content is empty, the macro ends
+' ------------
         MsgBox "Select the holes you wish to transform before running the macro.", vbOKOnly, "Warning"
+```
+
     ...
-      
-  
+
 ---  
-  
+
 The selection content is tested, if empty a warning message appears and the macro ends:
 
 ![](images/CAAPriChangeHole06.gif)
-    
-    
+
     ...
     Else
 ```vbscript
@@ -94,17 +100,20 @@ The selection content is tested, if empty a warning message appears and the macr
         ' ------------
 ```
 
+```vbscript
+' The selection content is not empty
+' Show the dialog box
+' ------------
         frmCAAPriChangeHole.Show
     End If
-    ...  
-  
 ```
 
+    ...  
+
 ---  
-  
+
 Otherwise, the macro shows the dialog box.
-    
-    
+
     ...
 ```vbscript
     ' ------------
@@ -118,6 +127,8 @@ Otherwise, the macro shows the dialog box.
 
 ```vbscript
     Set oCATIAFileSys = CATIA.FileSystem
+```
+
 ```vbscript
     ' ------------
     ' Get the file containing the hole parameters
@@ -131,12 +142,18 @@ Otherwise, the macro shows the dialog box.
     Select Case oLine
 ```
 
+```vbscript
+Set oTextSteam = oFile.OpenAsTextStream("ForReading")
+oLine = oTextSteam.ReadLine
+Select Case oLine
         Case "Millimeter"
             oUnit = 1
         Case "Inch"
             oUnit = 25.4
     End Select
     oRow = 0
+```
+
 ```vbscript
     ' ------------
     ' Read the hole parameters
@@ -147,20 +164,22 @@ Otherwise, the macro shows the dialog box.
         For i = 0 To 12
 ```
 
+```vbscript
+oLine = oTextSteam.ReadLine
+iArray = Split(oLine, iDelimiter)
+For i = 0 To 12
             mfgDescription.TextMatrix(oRow, i) = iArray(i)
         Next i
         oRow = oRow + 1
     Loop
     oTextSteam.Close
     cmdOk.Enabled = True
-    ...  
-  
 ```
 
-```
+    ...  
 
 ---  
-  
+
 The macro reads the hole parameters contained in the CAAPriChangeHole.txt file:
 
   * The first line contains the unit name
@@ -174,8 +193,7 @@ A dialog box appears and asks you to select the desired hole parameters (field n
 
 ![](images/CAAPriChangeHole07.gif)
 #### Looking for the Hole Object in the Selection
-    
-    
+
     ...
 ```vbscript
     ' ------------
@@ -184,36 +202,40 @@ A dialog box appears and asks you to select the desired hole parameters (field n
     iRow = mfgDescription.RowSel
 ```
 
+```vbscript
+' Get the description you wish, by default pre-select the first description
+' ------------
+iRow = mfgDescription.RowSel
     CAAPriChangeHoleForm.Hide
+```
+
     ...  
-  
+
 ---  
-  
+
 When the OK button is clicked, the selected row description is retrieved in `iRow` , and the dialog box is hidden.
-    
-    
+
     ...
+When the OK button is clicked, the selected row description is retrieved in `iRow` , and the dialog box is hidden.
     iHoleInSelection = True
+
 ```vbscript
     ' ------------
     ' Loop on the selection content, we expect to find a hole
     ' ------------
 ```
 
-```vbscript
     Do While iHoleInSelection = True
         iHoleInSelection = CatObjectExistsInSelection(oPartDocument.Selection, "CATIAHole", oHole)
         If iHoleInSelection = True Then
+
     ...  
-  
-```
 
 ---  
-  
+
 On each hole object found in the selection, the desired hole parameters are applied.
 #### Applying the Hole Parameters
-    
-    
+
     ...
 ```vbscript
             ' ------------
@@ -222,26 +244,37 @@ On each hole object found in the selection, the desired hole parameters are appl
             Select Case mfgDescription.TextMatrix(iRow, 5)
 ```
 
+```vbscript
+' Get the hole limit
+' ------------
+Select Case mfgDescription.TextMatrix(iRow, 5)
                 Case "UpToNext"
                     oHole.BottomLimit.LimitMode = catUpThruNextLimit
+```
+
 ```vbscript
                     ' ------------
                     ' Update the part when set the hole limit to "UpToNext"
                     ' ------------
 ```
 
+```vbscript
+' ------------
+' Update the part when set the hole limit to "UpToNext"
+' ------------
                     oPartDocument.Part.Update
                 Case Else
                     oHole.BottomLimit.LimitMode = catOffsetLimit
                     oHole.BottomLimit.Dimension.Value = CDbl(mfgDescription.TextMatrix(iRow, 5)) * oUnit
             End Select
+```
+
     ...  
-  
+
 ---  
-  
+
 The hole limit is applied.
-    
-    
+
     ...
 ```vbscript
             ' ------------
@@ -249,21 +282,28 @@ The hole limit is applied.
             ' ------------
 ```
 
+```vbscript
+' ------------
+' Get the hole diameter and its tolerances
+' ------------
             oHole.Diameter.Value = CDbl(mfgDescription.TextMatrix(iRow, 2))
             oHole.Diameter.MaximumTolerance = (CDbl(mfgDescription.TextMatrix(iRow, 3)) - _
                                                CDbl(mfgDescription.TextMatrix(iRow, 2))) * oUnit
             oHole.Diameter.MinimumTolerance = (CDbl(mfgDescription.TextMatrix(iRow, 4)) - _
                                                CDbl(mfgDescription.TextMatrix(iRow, 2))) * oUnit
+```
+
     ...  
-  
+
 ---  
-  
+
 The hole diameter and its tolerances are applied.
-    
-    
+
     ...
 ```vbscript
             Set oParameters = oPartDocument.Part.Parameters.SubList(oHole, True)
+```
+
 ```vbscript
             ' ------------
             ' Set the hole parameter
@@ -271,21 +311,22 @@ The hole diameter and its tolerances are applied.
             If ParameterExists("Hole_Description", oParameters) = True Then
 ```
 
+```vbscript
+' Set the hole parameter
+' ------------
+If ParameterExists("Hole_Description", oParameters) = True Then
                 oParameters.Item("Hole_Description").ValuateFromString (mfgDescription.TextMatrix(iRow, 0))
             Else
                 oParameters.CreateString "Hole_Description", mfgDescription.TextMatrix(iRow, 0)
             End If
-    ...  
-  
 ```
 
-```
+    ...  
 
 ---  
-  
+
 The hole parameter is created if needed, else updated.
-    
-    
+
     ...
 ```vbscript
             ' ------------
@@ -294,6 +335,10 @@ The hole parameter is created if needed, else updated.
             Select Case mfgDescription.TextMatrix(iRow, 1)
 ```
 
+```vbscript
+' Get the hole type
+' ------------
+Select Case mfgDescription.TextMatrix(iRow, 1)
                 Case "Simple"
                     oHole.Type = catSimpleHole
                 Case "Counterbored"
@@ -305,13 +350,14 @@ The hole parameter is created if needed, else updated.
                     oHole.HeadDiameter.MinimumTolerance = (CDbl(mfgDescription.TextMatrix(iRow, 11)) - _
                                                            CDbl(mfgDescription.TextMatrix(iRow, 9))) * oUnit
             End Select
+```
+
     ...  
-  
+
 ---  
-  
+
 The hole type is applied. In case of counterbored, tolerances are applied on the spot facing diameter.
-    
-    
+
     ...
 ```vbscript
             ' ------------
@@ -320,9 +366,15 @@ The hole type is applied. In case of counterbored, tolerances are applied on the
             Select Case mfgDescription.TextMatrix(iRow, 6)
 ```
 
+```vbscript
+' Get the hole thread definition
+' ------------
+Select Case mfgDescription.TextMatrix(iRow, 6)
                 Case "Yes"
                     If oHole.Diameter.Value < oHole.ThreadDiameter.Value And _
                        oHole.BottomLimit.Dimension.Value > oHole.ThreadDepth.Value Then
+```
+
 ```vbscript
                         ' ------------
                         ' Update the part when hole diameter is smaller than tread diameter
@@ -330,6 +382,10 @@ The hole type is applied. In case of counterbored, tolerances are applied on the
                         ' -----------
 ```
 
+```vbscript
+' Update the part when hole diameter is smaller than tread diameter
+' and hole limit is greater than thread depth, before apply new values
+' -----------
                         oPartDocument.Part.Update
                     End If
                     oHole.ThreadingMode = catThreadedHoleThreading
@@ -338,16 +394,15 @@ The hole type is applied. In case of counterbored, tolerances are applied on the
                 Case "No"
                     oHole.ThreadingMode = catSmoothHoleThreading
             End Select
-    
+
 ```
 
     ...  
-  
+
 ---  
-  
+
 The hole thread definition is applied.
-    
-    
+
     ...
 ```vbscript
                     ' ------------
@@ -355,17 +410,23 @@ The hole thread definition is applied.
                     ' ------------
 ```
 
+```vbscript
+' ------------
+' Update the part
+' ------------
                     oPartDocument.Part.Update
+```
+
     ...  
-  
+
 ---  
-  
+
 The part is updated, the parameter is displayed.
 
 ![](images/CAAPriChangeHole03.gif)
 
 ![](images/CAAPriChangeHole04.gif)  
-  
+
 ![](../CAAScrBase/images/aendtask.gif)
 
 [Top]
@@ -383,7 +444,7 @@ This use case has shown you how to read data from a file text, find the desired 
 [1] | [Replaying a macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2004, Dassault Systmes. All rights reserved._

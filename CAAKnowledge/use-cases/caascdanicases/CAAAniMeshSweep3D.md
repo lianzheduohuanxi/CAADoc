@@ -1,21 +1,24 @@
 ---
+```vbscript
 title: "Creating Sweep 3D Mesh Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniMeshSweep3D", "CAAScdAniUseCases"]
 source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSweep3D.htm"
 converted: "2026-05-11T17:31:51.713621"
+```
+
 ---
 ## Analysis Modeler
 
 | 
 ## Creating Sweep 3D Mesh Parts  
-  
-  
+
 * * *
 
   This use case shows you how to create sweep 3D mesh parts.  The macro opens an Analysis document and creates Sweep 3D mesh. A surface mesh must exist and it may or may not be associated with geometry. If the surface mesh is associated with geometry, this geometry can be face or a set of connected faces. The sweep 3D mesh generates hexahedron elements and wedge elements from the surface mesh. In this macro the mesh is created on a surface mesh part. Values are assigned to the global specifications associated with this mesh part. This scenario requires "FEM Solid (FMD) product". ![](images/Sweep3D.gif)    
 ---|---  
+This use case shows you how to create sweep 3D mesh parts.  The macro opens an Analysis document and creates Sweep 3D mesh. A surface mesh must exist and it may or may not be associated with geometry. If the surface mesh is associated with geometry, this geometry can be face or a set of connected faces. The sweep 3D mesh generates hexahedron elements and wedge elements from the surface mesh. In this macro the mesh is created on a surface mesh part. Values are assigned to the global specifications associated with this mesh part. This scenario requires "FEM Solid (FMD) product". ![](images/Sweep3D.gif)
   CAAAniMeshSweep3D is launched in CATIA [1]. No open document is needed. [CAAAniMeshSweep3D.catvbs](CAAAniMeshSweep3DSource.md) is located in the CAAScdAniUseCases module. [Execute macro](macros/CAAAniMeshSweep3D.catvbs) (Windows only).    
   CAAAniMeshSweep3D includes the following steps:
 
@@ -27,22 +30,24 @@ converted: "2026-05-11T17:31:51.713621"
 #### Prolog
 
 | 
-    
-    
+
     ...
-    
+
 ```vbscript
     ' ----------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
 
-    
 ```vbscript
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+```
+
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
         End If
+```
+
 ```vbscript
     ' ----------------------------------------------------------- 
     ' Open the Analysis document 
@@ -50,26 +55,21 @@ converted: "2026-05-11T17:31:51.713621"
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```
 
-    
-```
-
-    
     ...  
-  
-```
 
 ---  
-  
+
 Open the Analysis document. The Analysis document is retrieved in the documentation installation path, this path has already been stored in the `sDocPath` variable. In the collection of documents, two documents can be retrieved; the Analysis document and the Part document. 
 #### **Extracting the Reference Object from the Part Document for   Meshing**
-    
-    
+
     ...
-    
+
     ' Retrieve the analysis Manager 
 ```vbscript
     Set oAnalysisManagar = oAnalysisDocument.Analysis
     Set oAnalysisSet = oAnalysisManagar.AnalysisSets
+```
+
 ```vbscript
     ' Retrieve the part document and product
     Set oAnalysisLinkedDocuments = oAnalysisManagar.LinkedDocuments
@@ -86,33 +86,25 @@ Open the Analysis document. The Analysis document is retrieved in the documentat
     Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
 ```
 
-    
-```
-
     ...  
-  
-```
 
 ---  
-  
+
 According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. 
 
 The extraction of pre-defined geometrical arena is done by using the Reference interface. This is equivalent to the selection of a B-Rep element inside the interactive applications.
 #### Creating Mesh Part and Assigning Values to its Attributes
-    
-    
+
     ...
-    
+
     'Add Sweep 3D mesh part to the list of mesh parts
 ```vbscript
     Set sweep3D = oAnalysisMeshParts.Add ("MSHPartSweep3D") 
     'Add support from the published body
     sweep3D.AddSupportFromPublication product, pubBody
-    
+
 ```
 
-    
-    
     sweep3D.SetSpecificationFromPublication "Top", product, pubTopFace, 0
     sweep3D.SetSpecificationFromPublication "Bottom", product, pubBotFace, 0
     'Set the global specification
@@ -122,30 +114,24 @@ The extraction of pre-defined geometrical arena is done by using the Reference i
     sweep3D.SetGlobalSpecification "DistributionType", "Arithmetic"
     sweep3D.SetGlobalSpecification "Ratio", 5.0
     sweep3D.SetGlobalSpecification "CaptureTol", 1.0
-    
+
     sweep3D.Update
+
     ...  
-  
-```
 
 ---  
 #### Epilog
-    
-    
+
     ...
 
-```vbscript
 End Sub 
-    
-```
 
-    
     ...  
-  
+
 ---  
-  
+
 To run the macro interactively CATDocView environment variable must be defined.  
-  
+
 ![](../CAAScrBase/images/aendtask.gif)
 
 [Top]
@@ -163,15 +149,7 @@ This use case has shown how to create mesh parts and how to assign other mesh pa
 [1] |  [Replaying a Macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2001, Dassault Systmes. All rights reserved._
-
- 
-
- 
-
- 
-
- 

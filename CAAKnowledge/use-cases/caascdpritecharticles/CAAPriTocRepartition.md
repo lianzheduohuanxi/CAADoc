@@ -1,10 +1,13 @@
 ---
+```vbscript
 title: "Repartition Automation Objects"
 category: "use-case"
 module: "CAAScdPriTechArticles"
 tags: []
 source_file: "Doc/online/CAAScdPriTechArticles/CAAPriTocRepartition.htm"
 converted: "2026-05-11T17:31:51.239439"
+```
+
 ---
 # Repartition Automation Objects
 
@@ -12,9 +15,9 @@ converted: "2026-05-11T17:31:51.239439"
 ![](../CAAScrAutomationImages/images/parderim.gif)![](../CAAScrAutomationImages/images/arepart.gif)  
 ![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/lrepart.gif)  
 ![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/urepart.gif)  
-  
+
 ---  
-  
+
 **Legend**
 
 ![](../CAAScrAutomationImages/images/yellbox.gif) Collection  

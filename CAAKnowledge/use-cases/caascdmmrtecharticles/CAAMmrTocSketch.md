@@ -1,10 +1,13 @@
 ---
+```vbscript
 title: "Sketch Automation Objects"
 category: "use-case"
 module: "CAAScdMmrTechArticles"
 tags: []
 source_file: "Doc/online/CAAScdMmrTechArticles/CAAMmrTocSketch.htm"
 converted: "2026-05-11T17:31:51.158125"
+```
+
 ---
 # Sketch Automation Objects
 

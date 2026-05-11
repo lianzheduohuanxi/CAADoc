@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "CAA Authorized APIs Replacing ProtectedInterfaces"
 category: "use-case"
 module: "CAACenAPIChangesR22"
@@ -6,6 +7,8 @@ version: "V5R22"
 tags: ["CATIDOMElement", "CATIDrwSectionCallout", "CATIKinMechanism", "CATIBuildPath", "CATIMfgPrismaticReworkArea", "CATIMfResultManagement", "CATINewStream", "CATIDegreesOfFreedom", "CATILiteralsRoot", "CATIAfrCommandHeaderRep", "CATICkeFunctionFactory", "CATIEwrRouteSegment", "CATIArrNode", "CATIUuid", "CATIDOMText", "CATIRouNode", "CATIMfgActivityContainer", "CATIMfPartExtReferences", "CATISysCacheSettingAtt", "CATIDoF"]
 source_file: "Doc/online/CAACenAPIChangesR22/CAACenAuditReplacingAPIs.htm"
 converted: "2026-05-11T17:33:51.731104"
+```
+
 ---
 # CAA V5 Encyclopedia
 
@@ -18,11 +21,14 @@ converted: "2026-05-11T17:33:51.731104"
 _Mapping reported ProtectedInterfaces to CAA Authorized APIs_  
 ---|---|---  
 Technical Article  
-  
+
 * * *
 
+Technical Article
 If you were using ... | Use instead ...  
----|---  
+
+```vbscript
+If you were using ... | Use instead ...
 AdvancedTopologicalOpe | CATCreateSimilarCurve | AdvancedTopologicalOpe |  CATCreateTopSimilarCurve  
 AnalysisMeshingModel | CATMSHSupportManager | AnalysisMeshingModel |  CATIMSHAssociativity  
 ApplicationFrame | CATAfrDialogStdRep | ApplicationFrame |  CATIAfrCommandHeaderRep  
@@ -79,12 +85,15 @@ XMLParser | DOM_Node | XMLParser |  CATIDOMNode
 XMLParser | DOM_NodeList | XMLParser |  CATIDOMNodeList  
 XMLParser | DOM_Text | XMLParser |  CATIDOMText  
 XMLParser | DOMString | System |  CATUnicodeString  
-  
+
 Some L0 interfaces are also temporarily provided to solve the following errors:
 
 If you were using ... | Use instead ...  
----|---  
+```
+
+Some L0 interfaces are also temporarily provided to solve the following errors:
+If you were using ... | Use instead ...
 CATCloudEditorInterfaces | CATICldFactory | CATCloudEditorInterfaces | CATICldCAAFactory and CATICLDGeom  
 CATPDMBaseInterfaces | CATILCADocEnvServices | VPMInterfaces | ENOVIUERunInteropServerCode  
-  
+
 _Copyright 1994-2005, Dassault Systmes. All rights reserved._

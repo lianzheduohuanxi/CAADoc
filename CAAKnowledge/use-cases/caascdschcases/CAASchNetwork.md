@@ -1,25 +1,27 @@
 ---
+```vbscript
 title: "Creating a Schematic Network Object"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAADoc", "CATIAProduct", "CATIASchNetworkAnalysis", "CAAScdSchUseCases", "CATIA", "CAASchAppBase", "CAASCHEDUApp", "CAASchNetwork", "CAASchPlatformModeler", "CAASCH_Network01", "CAASchAppUtilities"]
 source_file: "Doc/online/CAAScdSchUseCases/CAASchNetwork.htm"
 converted: "2026-05-11T17:31:51.405039"
+```
+
 ---
 ## Schematics Platform Modeler
 
 | 
 ## Creating a Schematic Network Object  
-  
-  
+
 * * *
 
  This macro shows you how to create a schematic network object.Given a list of independent objects, this macros shows how to create a Schematic network for each member in the list. The network will include the member itself and all the objects that are connected to it. This macro opens the CAASCH_Network01.CATProduct document. ![](images/CAASchNetwork_01.jpg) Through special naming convention (i.e. the word "network" embedded in the instance name), the macro knows to include the following Schematic component instances in the input list.
 
+This macro shows you how to create a schematic network object.Given a list of independent objects, this macros shows how to create a Schematic network for each member in the list. The network will include the member itself and all the objects that are connected to it. This macro opens the CAASCH_Network01.CATProduct document. ![](images/CAASchNetwork_01.jpg) Through special naming convention (i.e. the word "network" embedded in the instance name), the macro knows to include the following Schematic component instances in the input list.
   1. V-082_network_scale_instance.
   2. V_084_network instance (the control valve in the screen shot).
 
-  
  CAASchNetwork is launched in CATIA [1]. No open document is needed.Special environment must be available to successfully run this macro:
 
   * Prerequisites:
@@ -39,33 +41,43 @@ converted: "2026-05-11T17:31:51.405039"
 [ CAASchNetwork.CATScript ](CAASchNetworkSource.md)is located in the CAAScdSchUseCases module. [Execute macro](macros/CAASchNetwork.CATScript) (Windows only).  
  CAASchNetwork includes the following steps:
 
+CAASchNetwork includes the following steps:
   1. Prolog
   2. Create a list of network objects using the SchBaseFactory interface
   3. Query the member of the list of network objects
 
 #### Prolog
 
+2. Create a list of network objects using the SchBaseFactory interface
+3. Query the member of the list of network objects
 The macro first loads CAASCH_Network01.CATProduct. |     ...  
     ' -------------------------------------------------------------------------    
     ' Open the schematic document   
+
 ```vbscript
     Dim sFilePath  
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _  
+```
+
             "online\CAAScdSchUseCases\samples\CAASCH_Network01.CATProduct")  
-  
+
+```vbscript
+Dim sFilePath
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
     Dim objSchDoc As Document  
     Set objSchDoc = CATIA.Documents.Open(sFilePath)  
-    ...  
 ```
 
-```
+    ...  
 
 ---  
-  
+
 Next, the macro acquires the schematic root object from the document. The schematic root is the top node of the object instance tree in a schematic document.
 
     ...  
+Next, the macro acquires the schematic root object from the document. The schematic root is the top node of the object instance tree in a schematic document.
     ' Find the top node of the schematic object tree - schematic root.  
+
 ```vbscript
     Dim objPrdRoot As Product  
     Dim objSchRoot As SchematicRoot  
@@ -75,10 +87,9 @@ Next, the macro acquires the schematic root object from the document. The schema
         Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")  
       End If  
     End If  
-    ...  
 ```
 
-```
+    ...  
 
 ---  
 #### Create a list of network objects using the SchBaseFactory interface
@@ -97,7 +108,7 @@ This macro provides a private Find2ComponentInst function which searches for 2 c
 ```vbscript
        Set objSchBaseFact = objSchRoot.GetSchBaseFactory   
        Set objSchTempListFact = objSchRoot.GetTemporaryListFactory  
-  
+
 ```
 
 ```vbscript
@@ -105,32 +116,38 @@ This macro provides a private Find2ComponentInst function which searches for 2 c
             Not ( objSchTempListFact Is Nothing ) ) Then  
           Set objLCntbl_g = objSchTempListFact.CreateListOfObjects  
           Set objLGRR_g = objSchTempListFact.CreateListOfObjects  
-  
+
 ```
 
 ```vbscript
           If ( Not ( objLCntbl_g Is Nothing )  And _  
                Not ( objLGRR_g Is Nothing ) ) Then  
+```
+
 ```vbscript
              '-----------------------------------------------------------------  
              ' The following "Sub" will populate objLCntbl_g and objLGRR_g  
              '-----------------------------------------------------------------  
 ```
 
+```vbscript
+'-----------------------------------------------------------------
+' The following "Sub" will populate objLCntbl_g and objLGRR_g
+'-----------------------------------------------------------------
              Find2ComponentInst objSchRoot  
-  
+
              Set objLNetWork = objSchBaseFact.CreateNetwork (objLCntbl_g, _  
                objLGRR_g)  
-    ...  
 ```
 
-```
+    ...  
 
 ---  
 #### Query the member of the list of network objects
 
 Each network object in the list contains the following information.
 
+Each network object in the list contains the following information.
   1. The input object itself.
   2. A list of Schematic component instances that are directly or indirectly connected to the input object. This list of connected component instances can be retrieved using the ListNetworkObjects method.
   3. The listing procedure is recursive, and it will stop when the connected object is a Schematic route. This Schematic route (known as the "extremity") will be stored in a separate list. This list of "extremity" objects can be retrieved using the ListExtremityObjects method.
@@ -144,7 +161,9 @@ The macro first find out the number of network objects in the output list. Then,
     ...  
 ```vbscript
     If (  Not ( objLNetWork Is Nothing ) ) Then  
-  
+
+```
+
 ```vbscript
        Dim intNbNet As Integer  
        Dim intNetIndex As Integer  
@@ -154,10 +173,15 @@ The macro first find out the number of network objects in the output list. Then,
        Dim objLNetMember As SchListOfObjects  
        Dim objMemPrd As Product  
        Dim strName As String  
-  
+
 ```
 
+```vbscript
+Dim objMemPrd As Product
+Dim strName As String
        intNbNet = objLNetWork.Count  
+```
+
     ...  
 ```vbscript
        '-----------------------------------------------------------------------  
@@ -167,56 +191,56 @@ The macro first find out the number of network objects in the output list. Then,
 
 ```vbscript
        For intNetIndex = 1 To intNbNet   
-  
+
 ```
 
+```vbscript
+For intNetIndex = 1 To intNbNet
          intNbMember = 0  
+```
+
 ```vbscript
          Set objLNetMember = Nothing  
-  
+
          Set objSchNet = objLNetWork.Item (intNetIndex,"CATIASchNetworkAnalysis")  
+```
+
 ```vbscript
          '---------------------------------------------------------------------  
          '  Get the members of the list of connectables.  
          '---------------------------------------------------------------------  
          If ( Not ( objSchNet Is Nothing ) ) Then  
-  
-            Set objLNetMember = objSchNet.ListNetworkObjects  
-```
 
-  
+            Set objLNetMember = objSchNet.ListNetworkObjects  
 ```
 
 ```vbscript
          End If    
-  
+
 ```
 
 ```vbscript
          If ( Not ( objLNetMember Is Nothing ) ) Then  
-  
+
 ```
 
             intNbMember = objLNetMember.Count  
-  
+
     ...  
-  
-```vbscript
-            For intMemIndex = 1 To intNbMember  
-  
-              Set objMemPrd = objLNetMember.Item (intMemIndex,"CATIAProduct")  
-    ...  
-  
-```
 
 ```vbscript
-            Next '--- For intMemIndex  
-  
+            For intMemIndex = 1 To intNbMember  
+
+              Set objMemPrd = objLNetMember.Item (intMemIndex,"CATIAProduct")  
 ```
+
+    ...  
+
+            Next '--- For intMemIndex  
 
 ```vbscript
          End If '--- If ( Not ( objLNetMember Is Nothing ) ...  
-  
+
 ```
 
 ```vbscript
@@ -227,52 +251,45 @@ The macro first find out the number of network objects in the output list. Then,
 
 ```vbscript
          If ( Not ( objSchNet Is Nothing ) ) Then  
-  
+
             Set objLNetMember = objSchNet.ListExtremityObjects  
-  
+
 ```
 
 ```vbscript
          End If    
-  
+
 ```
 
 ```vbscript
          If ( Not ( objLNetMember Is Nothing ) ) Then  
-  
+
 ```
 
             intNbMember = objLNetMember.Count  
     ...  
-  
-```vbscript
-            For intMemIndex = 1 To intNbMember  
-  
-              Set objMemPrd = objLNetMember.Item (intMemIndex,"CATIAProduct")  
-              strName = ""  
-    ...  
-  
-```
 
 ```vbscript
-            Next '--- For intMemIndex  
-  
+            For intMemIndex = 1 To intNbMember  
+
+              Set objMemPrd = objLNetMember.Item (intMemIndex,"CATIAProduct")  
+              strName = ""  
 ```
+
+    ...  
+
+            Next '--- For intMemIndex  
 
 ```vbscript
          End If '--- If ( Not ( objLNetMember Is Nothing ) ...  
-  
+
 ```
 
-```vbscript
        Next '--- For intNetIndex  
     End If '--- If ( Not ( objLNetWork Is Nothing ) ...  
-```
-
-```
 
 ---  
-  
+
 [Top]
 
 * * *
@@ -290,7 +307,7 @@ This use case shows how to create a Schematic network object. Furthermore, it il
 [1] | [ Replaying a Macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2001, Dassault Systmes. All rights reserved._

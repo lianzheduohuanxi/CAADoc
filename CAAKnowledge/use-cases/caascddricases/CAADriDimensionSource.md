@@ -1,16 +1,18 @@
 ---
+```vbscript
 title: "CAADriDimension.CATScript"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CATIA", "CAADriDimension"]
 source_file: "Doc/online/CAAScdDriUseCases/CAADriDimensionSource.htm"
 converted: "2026-05-11T17:31:51.059350"
----
+```
 
+---
 ```vbscript
     Dim Language as String
     Language="VBScript"
-    
+
 ```
 
 ```vbscript
@@ -36,9 +38,8 @@ converted: "2026-05-11T17:31:51.059350"
     '---------------------------------------------------------------------------
 ```
 
-    
-```vbscript
     Sub CATMain()
+
 ```vbscript
         ' Set the CATIA popup file alerts to False
         ' It prevents to stop the macro at each alert during its execution
@@ -75,20 +76,19 @@ converted: "2026-05-11T17:31:51.059350"
     Set SheetToRestore = DrwSheets.ActiveSheet
 ```
 
-    
-```
-
 ```vbscript
     For numsheet = 1 To DrwSheets.Count
-    
+
        Set CurrentSheet = DrwSheets.Item(numsheet)
        ' Active Currentsheet
        CurrentSheet.Activate
        ' Clear the selection
        DrwSelect.Clear
-       
+
        Dim DrwViews As DrawingViews
        Set DrwViews = CurrentSheet.Views
+```
+
 ```vbscript
        'Read the current view to restore it at the end of the macro
        Dim ViewToRestore As DrawingView
@@ -99,42 +99,37 @@ converted: "2026-05-11T17:31:51.059350"
        Dim CurrentView As DrawingView
 ```
 
-       
-```
-
 ```vbscript
        For numview = 1 To DrwViews.Count
-       
+
           Set CurrentView = DrwViews.Item(numview)
           'Active the current view
           CurrentView.Activate
+```
+
 ```vbscript
     '---------------------------------------------------------------------------
     '4/ Scan all the texts of the current view
     '---------------------------------------------------------------------------
-    
+
           Dim Texts As DrawingTexts
           Set Texts = CurrentView.Texts
 ```
 
-             
-```
-
 ```vbscript
           For numtxt = 1 To Texts.Count
-             
+
              Dim CurrentText As DrawingText
              Set CurrentText = Texts.Item(numtxt)
+```
+
 ```vbscript
     '---------------------------------------------------------------------------
     '5/ Scan all the leaders of the current text
     '---------------------------------------------------------------------------
-                   
+
              Dim Leaders As DrawingLeaders
              Set Leaders = CurrentText.Leaders
-```
-
-     
 ```
 
 ```vbscript
@@ -144,6 +139,8 @@ converted: "2026-05-11T17:31:51.059350"
                 ' Manage error on HeadTarget method when
                 ' no element is pointed by the text leader.
                 On Error Resume Next
+```
+
 ```vbscript
                 ' Get object pointed on the leader
                 Set ElemDispatch = Nothing
@@ -167,7 +164,13 @@ converted: "2026-05-11T17:31:51.059350"
                    Dim oLowTolD As Double
 ```
 
+```vbscript
+Dim oLowTolS As String
+Dim oUpTolD As Double
+Dim oLowTolD As Double
                    PointedDim.GetTolerances oTolType, oTolName, oUpTolS, oLowTolS, oUpTolD, oLowTolD, oDisplayMode
+```
+
 ```vbscript
                    ' Read dimension frame type
                    Dim TypeFrame As CatDimFrame
@@ -179,35 +182,39 @@ converted: "2026-05-11T17:31:51.059350"
                    If oTolType <> 0 Or TypeFrame <> catFraRectangle Then
 ```
 
+```vbscript
+'---------------------------------------------------------------------------
+' If dimension does not respect the criteria text leader object is highlighted
+If oTolType <> 0 Or TypeFrame <> catFraRectangle Then
                       DrwSelect.Add CurrentText
                       DrwSelect.VisProperties.SetRealColor 255, 0, 0, 0
                       DrwSelect.VisProperties.SetRealWidth 6, 1
                    End If
-                 
+
 ```
 
 ```vbscript
                 End If
              Next
-    
+
 ```
 
+```vbscript
+End If
+Next
           Next
         'Restore the view
         ViewToRestore.Activate
-    
+
        Next
-    
+
+```
+
 ```vbscript
      Next 
     'Restore the Drawing Document sheet
     SheetToRestore.Activate
-       
+
 ```
 
-```vbscript
     End Sub
-    
-```
-
-```

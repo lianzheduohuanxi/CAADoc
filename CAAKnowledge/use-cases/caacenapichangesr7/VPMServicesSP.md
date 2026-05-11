@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "VPMServices Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR7"
@@ -6,11 +7,14 @@ version: "V5R7"
 tags: []
 source_file: "Doc/online/CAACenAPIChangesR7/VPMServicesSP.htm"
 converted: "2026-05-11T17:33:52.338229"
----
+```
 
+---
+tags: []
+source_file: "Doc/online/CAACenAPIChangesR7/VPMServicesSP.htm"
+converted: "2026-05-11T17:33:52.338229"
 CAA API Modifications|  VPMServices  |   
----|---|---  
-  
+
 * * *
 
 **Entity|  SP| Modification| To Do** | VPMServices/Protected/CATVpmInfo.h/CATVpmInfo/CATVpmInfo| 1| INDM| Check that you don't use it  

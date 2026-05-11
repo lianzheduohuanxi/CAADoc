@@ -1,15 +1,19 @@
 ---
+```vbscript
 title: "New C++ Authorized APIs in CAA V5R18 SP3"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIIniSearchJapaneseNameCriterion", "CATIMfgCatalogServices", "CATIIniSearchJapaneseGraphNameCriterion", "CATIA", "CATIOmbContainerLinksUpdateStatus", "CATIMmiInternalCopyWithLink"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R18SP3NewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.394923"
----
+```
 
+---
+tags: ["CATIIniSearchJapaneseNameCriterion", "CATIMfgCatalogServices", "CATIIniSearchJapaneseGraphNameCriterion", "CATIA", "CATIOmbContainerLinksUpdateStatus", "CATIMmiInternalCopyWithLink"]
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R18SP3NewCPPAPI.htm"
+converted: "2026-05-11T17:33:47.394923"
 CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R18 SP3  
----|---  
-  
+
 * * *
 
 The following are the new CAA V5R18 SP3 C++ Authorized APIs, compared with CAA V5R18 at SP2 level.
@@ -42,7 +46,7 @@ The following are the new CAA V5R18 SP3 C++ Authorized APIs, compared with CAA V
 History Version: **1** [Dec 2007] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright © 1999-2007, Dassault Systèmes. All rights reserved._  

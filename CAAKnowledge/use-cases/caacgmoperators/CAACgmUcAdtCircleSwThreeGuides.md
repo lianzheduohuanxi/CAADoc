@@ -1,16 +1,25 @@
 ---
+```vbscript
 title: "Creating a Circle Sweep with Three Guides"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsCircleSweepThreeGuidesUse", "CAAAdtCircleSweepThreeGuides", "CAADoc", "CAAGMOperatorsCircleSweepThreeGuideswith", "CAAGMOperatorsCircleSweepThreeGuidesis", "CAAGMModelGemBrowser", "CAAGMOperatorsCircleSweepThreeGuidesCode", "CAAGMOperatorsCircleSweepThreeGuides", "CATICGMFrFTopologicalSweep", "CAAGMOperatorsCircleSweepThreeGuidesDo"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtCircleSwThreeGuides.htm"
 converted: "2026-05-11T17:33:48.810459"
----
+```
 
+---
+tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsCircleSweepThreeGuidesUse", "CAAAdtCircleSweepThreeGuides", "CAADoc", "CAAGMOperatorsCircleSweepThreeGuideswith", "CAAGMOperatorsCircleSweepThreeGuidesis", "CAAGMModelGemBrowser", "CAAGMOperatorsCircleSweepThreeGuidesCode", "CAAGMOperatorsCircleSweepThreeGuides", "CATICGMFrFTopologicalSweep", "CAAGMOperatorsCircleSweepThreeGuidesDo"]
+source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtCircleSwThreeGuides.htm"
+converted: "2026-05-11T17:33:48.810459"
 Creating a Circle Sweep with Three Guides  
+
 ---  
+converted: "2026-05-11T17:33:48.810459"
+Creating a Circle Sweep with Three Guides
 Use Case  
 Abstract The CATICGMFrFTopologicalSweep operator enables you to create sweeps. This use case explains how to create a circle sweep with three guides.
+
     * What You Will Learn With This Use Case
     * The CAAGMOperatorsCircleSweepThreeGuides Use Case
       * What Does CAAGMOperatorsCircleSweepThreeGuidesDo?
@@ -22,9 +31,13 @@ Abstract The CATICGMFrFTopologicalSweep operator enables you to create sweeps. T
 ---  
 What You Will Learn With This Use Case In this use case, you learn how to use the CATICGMFrFTopologicalSweep operator to create circle sweeps with three guides. ![Swept Surface definition Dialog Box](images/CAACgmAdtcirclesweep3guides.gif) | CATICGMFrFTopologicalSweep is to be used according to the general scheme of topological operators. If need be, you can take a look at "Overview of the Topological Operators" [1] for more information.  
 ---|---  
+What You Will Learn With This Use Case In this use case, you learn how to use the CATICGMFrFTopologicalSweep operator to create circle sweeps with three guides. ![Swept Surface definition Dialog Box](images/CAACgmAdtcirclesweep3guides.gif) | CATICGMFrFTopologicalSweep is to be used according to the general scheme of topological operators. If need be, you can take a look at "Overview of the Topological Operators" [1] for more information.
 The CAAGMOperatorsCircleSweepThreeGuidesUse Case CAAGMOperatorsCircleSweepThreeGuidesis a use case of the CAAGMOperatorsInterfaces.edu framework that illustrates the GMOperatorsInterfaces framework capabilities. ![Circle Sweep](images/CAACgmAdtcirclesweep3guidesresult.gif) | The circle sweep which is created by this use case looks something like this:  
----|---  
+
+What You Will Learn With This Use Case In this use case, you learn how to use the CATICGMFrFTopologicalSweep operator to create circle sweeps with three guides. ![Swept Surface definition Dialog Box](images/CAACgmAdtcirclesweep3guides.gif) | CATICGMFrFTopologicalSweep is to be used according to the general scheme of topological operators. If need be, you can take a look at "Overview of the Topological Operators" [1] for more information.
+The CAAGMOperatorsCircleSweepThreeGuidesUse Case CAAGMOperatorsCircleSweepThreeGuidesis a use case of the CAAGMOperatorsInterfaces.edu framework that illustrates the GMOperatorsInterfaces framework capabilities. ![Circle Sweep](images/CAACgmAdtcirclesweep3guidesresult.gif) | The circle sweep which is created by this use case looks something like this:
 What Does CAAGMOperatorsCircleSweepThreeGuidesDo ? The use case:
+
     * Creates the curves making up the wires to be used as guides.
     * Creates a CATICGMFrFTopologicalSweep operator instance.
     * Runs the CATICGMFrFTopologicalSweep and retrieve the resulting body.
@@ -33,7 +46,8 @@ What Does CAAGMOperatorsCircleSweepThreeGuidesDo ? The use case:
     * Creating a CATICGMFrFTopologicalSweep Operator Instance
     * Running the operator and retrieving the resulting body (common to all operators - not discussed below).
 Creating the Three Guides The curves to be used in the wire are CATSpline that are simply created from the geometry factory. See [3] for information on how to create a spline. Creating a CATICGMFrFTopologicalSweep Operator Instance The CATICGMFrFTopologicalSweep operator is created by the CATCGMCreateFrFTopologicalCircleSweep global function. The three guides are passed in the form of a list as the third argument of the function.
-    
+
+Creating the Three Guides The curves to be used in the wire are CATSpline that are simply created from the geometry factory. See [3] for information on how to create a spline. Creating a CATICGMFrFTopologicalSweep Operator Instance The CATICGMFrFTopologicalSweep operator is created by the CATCGMCreateFrFTopologicalCircleSweep global function. The three guides are passed in the form of a list as the third argument of the function.
     CATLISTP(CATGeometry) guides0;
     CATGeometry * guideGeom1 = (CATGeometry*)pWireBody1 ;
     CATGeometry * guideGeom2 = (CATGeometry*)pWireBody2 ;
@@ -41,10 +55,13 @@ Creating the Three Guides The curves to be used in the wire are CATSpline that a
     guides0.Append(guideGeom1);
     guides0.Append(guideGeom3);
     guides0.Append(guideGeom2);
-        
+
     // (a) - Creation of the sweep operator
     //
+guides0.Append(guideGeom3);
+guides0.Append(guideGeom2);
     CATICGMFrFTopologicalSweep * pSweepOpe = CATCGMCreateFrFTopologicalCircleSweep(piGeomFactory, 
+
             &topdata, &guides0);
 
 In Short The CATICGMFrFTopologicalSweep operator allows you to create sweeps. This use case is an example of how to create a circle sweep with three guides. References [1] | [Overview of the Topological Operators](CAACgmUcTopOverview.md)  

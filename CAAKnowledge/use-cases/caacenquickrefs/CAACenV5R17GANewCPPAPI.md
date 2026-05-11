@@ -1,15 +1,19 @@
 ---
+```vbscript
 title: "New C++ Authorized APIs in CAA V5R17 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIMfgCopyOperation", "CATIPrdTransactionalEventMgt", "CATITPSConsumable", "CATI2DLMainWkbAddin", "CATInstantCollabDesignCAAItf", "CATIMfgUndoManager", "CATI2DLBackWkbAddin", "CATIColMergeContextRole", "CATIAVPMVDAAlternatePart", "CATImmIdentifierAcquisitionAgent", "CATIColMergeable", "CATIImmNavAddin", "CATISamAnalysisGeneralSettingAtt", "CATIMfgMultiAxisAlgorithm", "CATIAApplicationFrame", "CATIPDMUEDocumentName", "CATIColSharable", "CATIPrtUIFactory", "CATIAV4Interfaces", "CATIEhfUIPArrangeJunction"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R17GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.294353"
----
+```
 
+---
+tags: ["CATIMfgCopyOperation", "CATIPrdTransactionalEventMgt", "CATITPSConsumable", "CATI2DLMainWkbAddin", "CATInstantCollabDesignCAAItf", "CATIMfgUndoManager", "CATI2DLBackWkbAddin", "CATIColMergeContextRole", "CATIAVPMVDAAlternatePart", "CATImmIdentifierAcquisitionAgent", "CATIColMergeable", "CATIImmNavAddin", "CATISamAnalysisGeneralSettingAtt", "CATIMfgMultiAxisAlgorithm", "CATIAApplicationFrame", "CATIPDMUEDocumentName", "CATIColSharable", "CATIPrtUIFactory", "CATIAV4Interfaces", "CATIEhfUIPArrangeJunction"]
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R17GANewCPPAPI.htm"
+converted: "2026-05-11T17:33:47.294353"
 CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R17 GA  
----|---  
-  
+
 * * *
 
 The following are the new CAA V5R17 GA C++ Authorized APIs, compared with CAA V5R16 at GA level.
@@ -163,7 +167,7 @@ The following are the new CAA V5R17 GA C++ Authorized APIs, compared with CAA V5
 History Version: **1** [Apr 2006] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright © 1999-2006, Dassault Systèmes. All rights reserved._  

@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "DialogEngine Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR8"
@@ -6,11 +7,14 @@ version: "V5R8"
 tags: []
 source_file: "Doc/online/CAACenAPIChangesR8/DialogEngine.htm"
 converted: "2026-05-11T17:33:52.476839"
----
+```
 
+---
+tags: []
+source_file: "Doc/online/CAACenAPIChangesR8/DialogEngine.htm"
+converted: "2026-05-11T17:33:52.476839"
 CAA C++ API Modifications|  DialogEngine  |   
----|---|---  
-  
+
 * * *
 
 **Entity|  SP| Modification| To Do** | DialogEngine/Protected/CATAcquisitionFilter.h/CATAcquisitionFilter/~CATAcquisitionFilter| GA| INDM| Check that you don't use it  

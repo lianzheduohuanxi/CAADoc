@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "ENOVInterfaces Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR8"
@@ -6,11 +7,14 @@ version: "V5R8"
 tags: ["CATIEnovDDManager", "CATIEnovCMManager"]
 source_file: "Doc/online/CAACenAPIChangesR8/ENOVInterfacesSP.htm"
 converted: "2026-05-11T17:33:52.549807"
----
+```
 
+---
+tags: ["CATIEnovDDManager", "CATIEnovCMManager"]
+source_file: "Doc/online/CAACenAPIChangesR8/ENOVInterfacesSP.htm"
+converted: "2026-05-11T17:33:52.549807"
 CAA C++ API Modifications|  ENOVInterfaces  |   
----|---|---  
-  
+
 * * *
 
 **Entity|  SP| Modification| To Do** | ENOVInterfaces/Protected/CATIEnovCMManager.h/CATIEnovCMManager/inEcoEffectivity| 1| MHBDM|   

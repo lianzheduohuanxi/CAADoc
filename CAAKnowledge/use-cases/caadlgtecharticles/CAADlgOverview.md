@@ -1,10 +1,13 @@
 ---
+```vbscript
 title: "Dialog Overview"
 category: "concept"
 module: "CAADlgTechArticles"
 tags: ["CATInteractiveApplication"]
 source_file: "Doc/online/CAADlgTechArticles/CAADlgOverview.htm"
 converted: "2026-05-11T17:17:56.063492"
+```
+
 ---
 # 3D PLM Enterprise Architecture
 
@@ -17,7 +20,7 @@ converted: "2026-05-11T17:17:56.063492"
 _A first glance at dialog windows and boxes_  
 ---|---|---  
 Technical Article  
-  
+
 * * *
 ### Abstract
 
@@ -39,9 +42,8 @@ This article introduces the Dialog framework architecture and components.
     * Menu Items
   * **References**
 
-  
 ---  
-  
+
 * * *
 ### Overview
 
@@ -62,6 +64,7 @@ Below are the Dialog Framework classes used in dialog windows and arranged in a 
 
 The Dialog framework includes two main class types: 
 
+The Dialog framework includes two main class types:
   1. The **containers** to contain and arrange component objects. The containers can be visible or not, and do not react themselves to the user interactions, except for repositioning and resizing. They are **windows** , **boxes** , **bars** and **menus**
   2. The **components** which are atom objects to fill the containers. Most of them are sensitive to user interactions: they are **controls** and **menu items**. Some others are used to separate or name other controls: they are the **indicators**.
 
@@ -183,11 +186,11 @@ The progress indicator gives feedback about a task completion rate.
 [Top]
 ##### Control to Trigger an Action
 
+The progress indicator gives feedback about a task completion rate.
 The push button: class [CATDlgPushButton](../CAADlgQuickRefs/CAADlgCATDlgPushButton.md)
 
  The push button is the only control dedicated to execute an action, such as trigger a command, display help, cancel or quit the window. Use the push button whenever you want to execute an action as soon as the user has pushed on the push button.  
----|---  
-  
+
 [Top]
 ##### Controls to Set Options
 
@@ -222,6 +225,7 @@ On this picture, the three types of combos available are displayed from left to 
     * The standard combo
     * The option style combo, which is very near of the drop down combo with a Motif style. It is replaced by a drop down combo with Windows.
 
+On this picture, the three types of combos available are displayed from left to right:
 Drop down and standard combos allow for keyboard text entry if required.
 
 Use the combo whenever you want to select in a list and possibly key in a character string.
@@ -261,7 +265,7 @@ Use the combo whenever you want to select in a list and possibly key in a charac
 [3] | [Assigning Resources to a Dialog Box](CAADlgResources.md)  
 [4] | [Arranging Dialog Objects](CAADlgObjectLayout.md)  
 [Top]  
-  
+
 [Top]
 
 * * *
@@ -271,7 +275,7 @@ Version: **1** [Jan 2000] | Document created
 ---|---  
 Version: **2** [Fev 2003] | Document updated  
 [Top]  
-  
+
 * * *
 
 _Copyright 2000, Dassault Systmes. All rights reserved._

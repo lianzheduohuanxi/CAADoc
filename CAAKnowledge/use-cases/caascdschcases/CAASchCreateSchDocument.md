@@ -1,21 +1,24 @@
 ---
+```vbscript
 title: "Creating a Schematic Document from an Existing Document"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAAScdSchUseCases", "CATIA", "CAASchCreateSchDocument", "CAASchSCH_Detail01", "CAASCH_Detail01"]
 source_file: "Doc/online/CAAScdSchUseCases/CAASchCreateSchDocument.htm"
 converted: "2026-05-11T17:31:51.340196"
+```
+
 ---
 ## Schematics Platform Modeler
 
 | 
 ## Creating a Schematic Document from an Existing Document  
-  
-  
+
 * * *
 
  This macro shows you how to create a new schematic document from an opened document.This macro opens the document CAASchSCH_Detail01.CATProduct. From the root object of this document, the macro obtains a handle on the current CNEXT session. The macro creates a new schematic document and add it to this session.  
 ---|---  
+This macro shows you how to create a new schematic document from an opened document.This macro opens the document CAASchSCH_Detail01.CATProduct. From the root object of this document, the macro obtains a handle on the current CNEXT session. The macro creates a new schematic document and add it to this session.
  CAASchCreateSchDocument is launched in CATIA [1]. No open document is needed. [ CAASchCreateSchDocument.CATScript ](CAASchCreateSchDocumentSource.md)is located in the CAAScdSchUseCases module. [Execute macro](macros/CAASchCreateSchDocument.CATScript) (Windows only).  
  CAASchCreateSchDocument includes the following steps:
 
@@ -26,26 +29,35 @@ converted: "2026-05-11T17:31:51.340196"
 
 #### Prolog
 
+3. Create a new schematic document
+4. Set the drawing standard
 The macro first loads CAASCH_Detail01.CATProduct. |     ...  
     ' Open the schematic document    
+
 ```vbscript
     Dim sFilePath  
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _  
+```
+
             "online\CAAScdSchUseCases\samples\CAASCH_Detail01.CATProduct")  
-  
+
+```vbscript
+Dim sFilePath
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
     Dim objSchDoc As Document  
     Set objSchDoc = CATIA.Documents.Open(sFilePath)  
-    ...  
 ```
 
-```
+    ...  
 
 ---  
-  
+
 Next, the macro acquires the schematic root object from the document. The schematic root is the top node of the object instance tree in a schematic document.
 
     ...  
+Next, the macro acquires the schematic root object from the document. The schematic root is the top node of the object instance tree in a schematic document.
     ' Find the top node of the schematic object tree - schematic root.  
+
 ```vbscript
     Dim objPrdRoot As Product  
     Dim objSchRoot As SchematicRoot  
@@ -55,10 +67,9 @@ Next, the macro acquires the schematic root object from the document. The schema
         Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")  
       End If  
     End If  
-    ...  
 ```
 
-```
+    ...  
 
 ---  
 #### Get a the current CNEXT session
@@ -72,13 +83,11 @@ Using the GeSchematicSession method, a handle on the SchSession interface can be
        '-----------------------------------------------------------------------  
 ```
 
-  
 ```vbscript
        Set objSchSession = objSchRoot.GetSchematicSession  
-    ...  
 ```
 
-```
+    ...  
 
 ---  
 #### Create a new schematic document
@@ -92,7 +101,13 @@ Using the GeSchematicSession method, a handle on the SchSession interface can be
          bInteractive = false  
 ```
 
+```vbscript
+'---------------------------------------------------------------------
+'bInteractive = true
+bInteractive = false
          objSchSession.CreateDocument "CATProduct",bInteractive,objSchDocNew  
+```
+
     ...  
 ---  
 #### Set the drawing standard of the drafting viewer in the schematic document
@@ -102,16 +117,18 @@ A schematic document has a drafting viewer embedded in it. The drawing standard 
     ...  
 ```vbscript
          If ( Not ( objSchDocNew Is Nothing ) ) Then  
-  
+
+```
+
 ```vbscript
             Set objPrdRoot = Nothing  
             Set objSchRoot = Nothing  
-  
+
             Set objPrdRoot = objSchDocNew.Product   
             If ( Not ( objPrdRoot Is Nothing ) ) Then  
                Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")  
             End If  
-  
+
 ```
 
 ```vbscript
@@ -122,13 +139,12 @@ A schematic document has a drafting viewer embedded in it. The drawing standard 
                std = objSchRoot.GetDrawingStandard  
                strMessage = strMessage & "drawing standard = " & std & vbCr  
             End If  
-    ...  
 ```
 
-```
+    ...  
 
 ---  
-  
+
 [Top]
 
 * * *
@@ -146,7 +162,7 @@ This use case shows how to create a schematic document from the root of an exist
 [1] | [ Replaying a Macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2001, Dassault Systmes. All rights reserved._

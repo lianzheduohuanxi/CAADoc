@@ -1,16 +1,23 @@
 ---
+```vbscript
 title: "Summary of Commands Around mkmk"
 category: "use-case"
 module: "CAABtlQuickRefs"
 tags: []
 source_file: "Doc/online/CAABtlQuickRefs/CAABtlMANMkThemIx.htm"
 converted: "2026-05-11T17:33:49.950844"
----
+```
 
+---
+tags: []
+source_file: "Doc/online/CAABtlQuickRefs/CAABtlMANMkThemIx.htm"
+converted: "2026-05-11T17:33:49.950844"
 RADE |  Multi-Workspace Application Builder |  Summary of Commands Around mkmk _Links to the mkmk family commands_  
----|---|---  
+
+converted: "2026-05-11T17:33:49.950844"
+RADE |  Multi-Workspace Application Builder |  Summary of Commands Around mkmk _Links to the mkmk family commands_
 Quick Reference  
-  
+
 * * *
 
 [](CAABtlMANMkmk.md)Mkmk being the main Code Builder tool, there exist others tools to manage either the prerequisites between frameworks or the frameworks themselves. These command are provided with mkmk so they are available as soon as [your path](../CAABtlTechArticles/CAABtlMkmk.htm#My first compilation!) has been updated to access mkmk. The commands to describe the prerequisites links are:
@@ -31,7 +38,7 @@ The commands to prepare a runtime environment are:
 History Version: **1** [Mar 2000] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2000, Dassault Systmes. All rights reserved._

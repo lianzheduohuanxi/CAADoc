@@ -1,15 +1,19 @@
 ---
+```vbscript
 title: "New C++ Authorized APIs in CAA V5R13 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATINT32", "CATIElbMountingEquipment", "CATITPSCaptureList", "CATITPSSetVisu", "CATIEhfFlatteningParameters", "CATIEhiMultiBranchable", "CATIStructurePlate", "CATIBatchElementsCAA", "CATIAVPMVDAValidateAttributeChg", "CATIStructureObject", "CATISchGRRRoute2", "CATIEhiBranchable", "CATIMfgToolAssembly3DVisuCustom", "CATIMfgActivitySyntax", "CATIPDMUEReadMode", "CATIniInputDescriptionAdaptor", "CATISysSettingController", "CATImplementSettingCtrl", "CATIMfgToolAssemblyEditorCustom", "CATIBatchCAA"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R13GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.138016"
----
+```
 
+---
+tags: ["CATINT32", "CATIElbMountingEquipment", "CATITPSCaptureList", "CATITPSSetVisu", "CATIEhfFlatteningParameters", "CATIEhiMultiBranchable", "CATIStructurePlate", "CATIBatchElementsCAA", "CATIAVPMVDAValidateAttributeChg", "CATIStructureObject", "CATISchGRRRoute2", "CATIEhiBranchable", "CATIMfgToolAssembly3DVisuCustom", "CATIMfgActivitySyntax", "CATIPDMUEReadMode", "CATIniInputDescriptionAdaptor", "CATISysSettingController", "CATImplementSettingCtrl", "CATIMfgToolAssemblyEditorCustom", "CATIBatchCAA"]
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R13GANewCPPAPI.htm"
+converted: "2026-05-11T17:33:47.138016"
 CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R13 GA  
----|---  
-  
+
 * * *
 
 The following are the new CAA V5R13 GA C++ Authorized APIs, compared with CAA V5R12 at GA level.
@@ -241,7 +245,7 @@ The following are the new CAA V5R13 GA C++ Authorized APIs, compared with CAA V5
 History Version: **1** [Nov 2003] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 1994-2003, Dassault Systmes. All rights reserved._

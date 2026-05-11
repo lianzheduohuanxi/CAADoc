@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "CATAnalysisResources Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR8"
@@ -6,11 +7,14 @@ version: "V5R8"
 tags: []
 source_file: "Doc/online/CAACenAPIChangesR8/CATAnalysisResources.htm"
 converted: "2026-05-11T17:33:52.432237"
----
+```
 
+---
+tags: []
+source_file: "Doc/online/CAACenAPIChangesR8/CATAnalysisResources.htm"
+converted: "2026-05-11T17:33:52.432237"
 CAA C++ API Modifications|  CATAnalysisResources  |   
----|---|---  
-  
+
 * * *
 
 **Entity|  SP| Modification| To Do** | CATAnalysisResources/Protected/CATECharacCollector.h/CATECharacCollector/Update| GA| MHBDM|  New optionnal argument with compatible default value (No Change)  

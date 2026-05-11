@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "MechanicalModelerUI Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR10"
@@ -6,11 +7,14 @@ version: "V5R10"
 tags: []
 source_file: "Doc/online/CAACenAPIChangesR10/MechanicalModelerUI.htm"
 converted: "2026-05-11T17:33:50.212738"
----
+```
 
+---
+tags: []
+source_file: "Doc/online/CAACenAPIChangesR10/MechanicalModelerUI.htm"
+converted: "2026-05-11T17:33:50.212738"
 CAA C++ API Modifications|  MechanicalModelerUI  |   
----|---|---  
-  
+
 * * *
 
 **Entity|  SP| Modification| To Do** | MechanicalModelerUI/Protected/CATMMUIPanelStateCmd.h/CATMMUIPanelStateCmd/OkAction| GA| MRTHC|   

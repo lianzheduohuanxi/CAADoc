@@ -1,10 +1,13 @@
 ---
+```vbscript
 title: "The Mesh Parts and their Attributes"
 category: "use-case"
 module: "CAAScdAniTechArticles"
 tags: []
 source_file: "Doc/online/CAAScdAniTechArticles/CAAAniMeshPartsAndAttributes.htm"
 converted: "2026-05-11T17:31:51.914774"
+```
+
 ---
 # Analysis Solution
 
@@ -17,7 +20,7 @@ converted: "2026-05-11T17:31:51.914774"
 _All the mesh parts you can use_  
 ---|---|---  
 Technical Article  
-  
+
 * * *
 ### Abstract
 
@@ -45,17 +48,20 @@ This article describes the Mesh Parts and their Attributes available in Advanced
   * **Nodes to Nodes Connection Mesh**
   * **Node Interface Mesh**
 
-     
 ---  
-  
+
 * * *
 
 Top]
 ####  ![](images/I_MshTetP2.gif)Octree Tetrahedron Mesh                                    [_use case_   ](../CAAScdAniUseCases/CAAAniMeshOctTetra.md) 
 
+Top]
 Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning  
----|---|---|---|---  
+
+Top]
+Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning
 MSHPartOctree3D | SizeValue        | Double |   | The required size of the mesh, it is an objective, the octree mesher will try to reach the nearest possible value  
+
   | AbsoluteSagValue | Double |   | Specifies the maximum absolute sag accepted this is active when the AbsoluteSag attribute is valuated to 2  
   | ElementOrder | Integer | 1,2 | Specifies the degree of the element 1 for linear 2 for parabolic  
   | MaxInteriorSize | Double |   | Specifies the value of the imposed interior size for 3D mesh when the InteriorSize attribute is active  
@@ -82,16 +88,16 @@ ConnectorList |   |   | Defines the support of the local specification
 MSHLocalMeshDistribution |   |   |   | This specification is used in order to impose a mesh distribution on edges of geometry  
 MSHNumberOdEdges | Double |   | Defines the number of mesh edges  
 ConnectorList |   |   | Defines the support of the local specification  
-  
+
 [Top]
 ####  ![](images/I_MshGHS3DP2.gif)Tetrahedron Filler Mesh                                    _[_use case_](../CAAScdAniUseCases/CAAAniMeshTetraFiller.md)_
 
+ConnectorList |   |   | Defines the support of the local specification
 Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning  
----|---|---|---|---  
+
 MHSPartGHS3D | ElementOrder  | Integer | 1,2 | Specifies the type of element linear(1) or parabolic(2)  
   | Propagation | Double | >1 | Factor which lets you dilute mesh elements inside solid   
-  
- 
+
 ####  ![](images/I_MshSweep3DP2.gif)**Sweep 3D Mesh                                     [_use case_](../CAAScdAniUseCases/CAAAniMeshSweep3D.md)**
 
 Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning  
@@ -107,7 +113,7 @@ MSHPartSweep3D |  ElementOrder   | Integer | 1,2 | Specifies the type of elem
   | Smoothing | Integer |   |    
   | Top |   |   | This geometrical support specifies the top face  
   | Bottom |   |   | This geometrical support specifies the bottom face  
-  
+
 [Top]
 ####  ![](images/I_MshAdvancedSurfMesherP2.gif)**Advanced Surface Mesh                         [_use case_](../CAAScdAniUseCases/CAAAniMeshAdvSurf.md)**
 
@@ -183,12 +189,13 @@ MSHMeshDomain |   |   |   | This specification is used in order to specify a 
 Method | String | FrontalTria,  FrontalQuad, HalfBead, MappedFree, Mapped, MappedTria, Bead | Type of the mesh to be created  
 Size | Double |   | Defines the required mesh size  
 Supports |   |   | Must represent the connex set of faces  
-  
+
 [Top]
 ####  ![](images/I_MshBasicSurfMesherP2.gif)**Surface Mesh                                            [_use case_](../CAAScdAniUseCases/CAAAniMeshBasicSurf.md)**
 
+Supports |   |   | Must represent the connex set of faces
 Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning  
----|---|---|---|---  
+
 MSHPartBasicSurf | GlobalMethod | Integer | 1,2 | triangle(2), quadrangle(1)  
   | ElementOrder | Integer | 1,2 | Attribute which specifies the type of the element the user wants to create linear(1), parabolic(2)  
   | QuadsOnly | Integer | 1,2 | Set(2) and unset(2) the quads only option  
@@ -216,12 +223,13 @@ Tolerance | Double |   | The approximate distance of the curve from specified g
 MSHTopProjectPoint | ConnectorList |   |   | Specify the point which is to be projected  
 Tolerance | Double |   | The approximate distance of the point from the specified geometry  
 Project | Boolean | 0,1 | Specifies whether the point is to be projected on the geometry(1) or not (0)  
-  
+
 [Top]
 #### ![](images/I_MshTr3P2.gif)**Octree Triangle Mesh                                     [_use case_](../CAAScdAniUseCases/CAAAniMeshOctTriangle.md)**
 
+Project | Boolean | 0,1 | Specifies whether the point is to be projected on the geometry(1) or not (0)
 Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning  
----|---|---|---|---  
+
 MSHPartOctree2D | SizeValue | Double |   | The required size of the mesh, it is an objective the octree mesher will try to reach the neares possible value  
   | AbsoluteSagValue | Double |   | Specifies the maximum absolute sag accepted this is active when the AbsoluteSag attribute is active  
   | ElementOrder | Integer | 1,2 | Specifies the degree of the element 1 for linear 2 for parabolic  
@@ -250,12 +258,13 @@ ConnectorList |   |   | Defines the support of the local specification
 MSHLocalMeshDistribution |   |   |   | This specification is used in order to impose a mesh distribution on edges of geometry  
 MSHNumberOdEdges | Double |   | Defines the number of mesh edges  
 ConnectorList |   |   | Defines the support of the local specification  
-  
+
 [Top]
 #### ![](images/I_MshBarP2.gif)**Beam Mesh                                                 [_use case_](../CAAScdAniUseCases/CAAAniMesh1D.md)**
 
+ConnectorList |   |   | Defines the support of the local specification
 Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning  
----|---|---|---|---  
+
 MSHPart1D | SizeValue | Double |   | Sets the global mesh size  
   | AbsoluteSag | Integer | 1,2 | Sets the element sag  
   | AbsoluteSagValue | Double |   | Minimum distance between the mesh elements and the geometry. Useful for curve-type geometry  
@@ -268,8 +277,6 @@ LocalSpecification |   |   |   |  
 MSHTopProjectPoint | ConnectorList |   |   | Specify the point which is to be projected  
 Tolerance | Double |   | The approximate distance of the point from the specified geometry  
 Project | Boolean | 0,1 | Specifies whether the point is to be projected on the geometry(1) or not (0)  
-  
- 
 
 [Top]
 #### ![](images/I_MshTranslateP2.gif)**Translation Mesh                                         [_use case_](../CAAScdAniUseCases/CAAAniMeshTranslation.md)**
@@ -283,7 +290,7 @@ MSHPartTranslation | Direction | ConnectorList |   | Specifies the direction of
   | 2 | Condense the nodes of transformed mesh part and all the neighboring mesh parts  
   | Tolerance | Double |   | Specifies the tolerance of condensation  
   | NbCopies | Integer |   | Specifies the number of copies  
-  
+
 [Top]
 
 ![](images/I_MshRotateP2.gif)**Rotation Mesh                                             [_use case_](../CAAScdAniUseCases/CAAAniMeshRotation.md)**
@@ -297,10 +304,8 @@ MSHPartRotation | Direction | ConnectorList |   | Specifies the direction of tr
   | 2 | Condense the nodes of transformed mesh part and all the neighboring mesh parts  
   | Tolerance | Double |   | Specifies the tolerance of condensation  
   | NbCopies | Integer |   | Specifies the number of copies  
-  
-[Top]
 
- 
+[Top]
 
 ![](images/I_MshSymmetryP2.gif)**Symmetry Mesh                                         [_use case_](../CAAScdAniUseCases/CAAAniMeshSymmetry.md)**
 
@@ -311,10 +316,8 @@ MSHPartSymmetry | Direction | ConnectorList |   | Lets you select the plane of 
   | 1 | Condense the nodes of the transformed and parent mesh part.  
   | 2 | Condense the nodes of transformed mesh part and all the neighboring mesh parts  
   | NbCopies | Integer |   | Specifies the number of copies  
-  
-[Top]
 
- 
+[Top]
 
 ![](images/I_MshExtrTranslationP2.gif)**Extrude with Translation                                 [_use case_](../CAAScdAniUseCases/CAAAniMeshExtrudeTrans.md)**
 
@@ -325,6 +328,7 @@ MSHPartExtrTranslation | Direction |   |   | Selects the direction of extrusio
   | Tolerance | Double |   | The user defined tolerance for condensation  
   | Length | Double |   | Minimum distance between the mesh elements and the geometry. Useful for curve-type geometry  
   | Length1 | Double |   | The distance up to which you want to extrude  
+MSHPartExtrTranslation | Direction |   |   | Selects the direction of extrusion an axis or a line is specified
 Distribution | Type | Integer |   | Type of distribution Uniform Arithmetic Geometric  
 NbNodes | Integer |   | Number of layers you want to insert  
 Symmetric | Integer |   | Whether the extruded mesh is symmetric(2) or not(1)  
@@ -333,7 +337,7 @@ Size2 | Double |  
 Ratio | Real |   | The ratio of size 1 and size2  
 AbsoluteSag | Double |   | Absolute sag value  
 RelativeSag | Double |   | Relative sag value  
-  
+
 [Top]
 
 ![](images/I_MshExtrRotationP2.gif)**Extrude with Rotation                                       [_use case_](../CAAScdAniUseCases/CAAAniMeshExtrudeRot.md)**
@@ -345,6 +349,7 @@ MSHPartExtrTranslation | Direction |   |   | Specifies the axis of extrusion b
   | Angle1 | Double |   | The angle up to which you want to extrude  
   | Condensation | Integer | 1,2 | If activated(2), this option lets you condense nodes of the extruded mesh part and other mesh parts with a user-defined tolerance. (1) will deactivate the option  
   | Tolerance | Double |   | The user defined tolerance for condensation  
+MSHPartExtrTranslation | Direction |   |   | Specifies the axis of extrusion by rotation.
 Distribution | Type | Integer |   | Type of distribution Uniform Arithmetic Geometric  
 NbNodes | Integer |   | Number of layers you want to insert  
 Symmetric | Integer |   | Whether the extruded mesh is symmetric or not  
@@ -353,12 +358,8 @@ Size2 | Double |  
 Ratio | Real |   | The ratio of size 1 and size2  
 AbsoluteSag | Double |   | Absolute sag value  
 RelativeSag | Double |   | Relative sag value  
-  
- 
 
 [Top]
-
- 
 
 ![](images/I_MshExtrSymmetryP2.gif)**Extrude with Symmetry                                 [_use case_](../CAAScdAniUseCases/CAAAniMeshExtrudeSymm.md)**
 
@@ -367,6 +368,8 @@ Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning
 MSHPartExtrTranslation | Direction |   |   | Specifies the plane of symmetry.  
   | Condensation | Integer |   | If activated, this option lets you condense nodes of the extruded mesh part and other mesh parts with a user-defined tolerance.   
   | Tolerance | Double |   | The user defined tolerance for condensation  
+Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning
+MSHPartExtrTranslation | Direction |   |   | Specifies the plane of symmetry.
 Distribution | Type | Integer |   | Type of distribution Uniform Arithmetic Geometric  
 NbNodes | Integer |   | Number of layers you want to insert  
 Symmetric | Integer |   | Whether the extruded mesh is symmetric or not  
@@ -375,10 +378,8 @@ Size2 | Double |  
 Ratio | Real |   | The ratio of size 1 and size2  
 AbsoluteSag | Double |   | Absolute sag value  
 RelativeSag | Double |   | Relative sag value  
-  
-[Top]
 
- 
+[Top]
 
 ![](images/I_MshExtrSpineP2.gif)**Extrude along a Spine                                 [_use case_](../CAAScdAniUseCases/CAAAniMeshExtrudeSpine.md)**
 
@@ -399,36 +400,40 @@ Size2 | Double |  
 Ratio | Real |   | The ratio of size 1 and size2  
 AbsoluteSag | Double |   | Absolute sag value  
 RelativeSag | Double |   | Relative sag value  
-  
-[Top]
 
- 
+[Top]
 
 ![](images/I_MshCoatingP2.gif)**Coating 1D Mesh                                                             [_use case_](../CAAScdAniUseCases/CAAAniMeshCoating1D.md)**
 
 Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning  
 ---|---|---|---|---  
+Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning
 MSHPart1DCoating | ExtractionType | Integer | 1-6 | Specifies the Type of extraction. All Edges(1), Boundary Edges(2), Internal Edges(3), Constrained Edges(4), Non Constrained Edges(5), None(6)  
-**LocalSpecifications** |   |   |   |    
-MSHCoatingLocalSpecification | ConnectorList |   |   | Specifies the edges you want to include or exclude  
-  | LocalExtractionType | Integer | 1,2 | Specifies whether you want to include (1) or exclude (2) the edge  
-  
-[Top]
 
- 
+**LocalSpecifications** |   |   |   |    
+Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning
+MSHPart1DCoating | ExtractionType | Integer | 1-6 | Specifies the Type of extraction. All Edges(1), Boundary Edges(2), Internal Edges(3), Constrained Edges(4), Non Constrained Edges(5), None(6)
+MSHCoatingLocalSpecification | ConnectorList |   |   | Specifies the edges you want to include or exclude  
+
+  | LocalExtractionType | Integer | 1,2 | Specifies whether you want to include (1) or exclude (2) the edge  
+
+[Top]
 
 ![](images/I_MshCoating2DP2.gif)**Coating 2D Mesh                                                             [_use case_](../CAAScdAniUseCases/CAAAniMeshCoating2D.md)**
 
 Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning  
 ---|---|---|---|---  
+Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning
 MSHPart2DCoating | ExtractionType | Integer | 1,2 | Specifies the Type of extraction. Boundary Faces(1), None(2)  
-**LocalSpecifications** |   |   |   |    
-MSHCoatingLocalSpecification | ConnectorList |   |   | Specifies the faces you want to include or exclude  
-  | LocalExtractionType | Integer | 1,2 | Specifies whether you want to include (1) or exclude (2) the edge  
-  
-[Top]
 
- 
+**LocalSpecifications** |   |   |   |    
+Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning
+MSHPart2DCoating | ExtractionType | Integer | 1,2 | Specifies the Type of extraction. Boundary Faces(1), None(2)
+MSHCoatingLocalSpecification | ConnectorList |   |   | Specifies the faces you want to include or exclude  
+
+  | LocalExtractionType | Integer | 1,2 | Specifies whether you want to include (1) or exclude (2) the edge  
+
+[Top]
 
 ![](images/I_MshWeldSpotP2.gif)**Spot Welding Connection Mesh                             [_use case_](../CAAScdAniUseCases/CAAAniMeshSpotWelding.md)**
 
@@ -439,10 +444,8 @@ MSHPartConnWeldSpot | MiddleCombination | Integer |   | Decides how the connect
   | MaximalGap | Double |   | Specifies the radius value of a sphere which has the welding spot as center. It must be an intersection between each face and the solid thus defined  
   | SpotDiameter | Double |   | Specifies the sport diameter for the hexahedron  
   | StopUpdateOnError | Integer | 1,2 | Stop the update mesh process (2), do not stop(1)  
-  
-[Top]
 
- 
+[Top]
 
 ![](images/I_MshWeldSeamP2.gif)**Seam Welding Connection Mesh                                 [_use case_](../CAAScdAniUseCases/CAAAniMeshSeamWelding.md)**
 
@@ -454,7 +457,7 @@ MSHPartConnWeldSeam | MiddleCombination | Integer  |   | Decides how the conne
   | MeshStep | Double |   | Specifies the mesh progression along the welding seam  
   | Width | Double |   | Specifies the width of the hexahedron  
   | StopUpdateOnError | Integer | 1,2 | Stop the update mesh process (2), do not stop(1)  
-  
+
 [Top]
 
 ![](images/I_MshWeldSurfP2.gif)**Surface Welding Connection Mesh                             [_use case_](../CAAScdAniUseCases/CAAAniMeshSurfaceWelding.md)**
@@ -465,10 +468,8 @@ MSHPartConnWeldSurf | MaximalGap | Double |   | Specifies the radius value of a
   | MeshStep | Double |   | Specifies the mesh progression along the welding seam  
   | StopUpdateOnError | Integer | 1,2 | Stop the update mesh process (2), do not stop(1)  
   | MiddleCombination | Integer | 10 | Decides how the connection is modeled Hexahedron  
-  
-[Top]
 
- 
+[Top]
 
 ![](images/I_MshPointPointP2.gif)**Nodes to Nodes Connection Mesh                             _[ _use case_](../CAAScdAniUseCases/CAAAniMeshNodesToNodesConnection.md)_**
 
@@ -477,10 +478,8 @@ Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning
 MSHPartConnPointPoint | MiddleCombination | Integer | 13, 12 | How the connection mesh is modeled Rigid(13), DOF Equal(12)  
   | Tolerance | Double |   | Specifies the distance between nodes to be connected  
   | StopUpdateOnError | Integer |   | Stop the update mesh process (2), do not stop(1)  
-  
-[Top]
 
- 
+[Top]
 
 ![](images/I_MshHalfPointP2.gif)**Node Interface Mesh                                                 [_use case_](../CAAScdAniUseCases/CAAAniMeshNodesInterface.md)**
 
@@ -489,14 +488,8 @@ Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning
   | MiddleCombination | Integer | 1 | How the mesh is modeled Spring(1)  
   | Tolerance | Double |   | Specifies the distance between nodes to be connected  
   | StopUpdateOnError | Integer | 1, 2 | Stop the update mesh process (2), do not stop(1)  
-  
+
 [Top]
-
- 
-
- 
-
- 
 
 [Top]
 
@@ -506,7 +499,7 @@ Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning
 Version: **1** [Mar 2001] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2000, Dassault Systmes. All rights reserved._

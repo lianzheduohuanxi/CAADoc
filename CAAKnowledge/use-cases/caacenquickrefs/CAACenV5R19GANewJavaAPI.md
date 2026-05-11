@@ -1,15 +1,19 @@
 ---
+```vbscript
 title: "New Java Authorized APIs in CAA V5R19 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIA"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R19GANewJavaAPI.htm"
 converted: "2026-05-11T17:33:47.436445"
----
+```
 
+---
+tags: ["CATIA"]
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R19GANewJavaAPI.htm"
+converted: "2026-05-11T17:33:47.436445"
 CAA V5 Encyclopedia |  New Java Authorized APIs in CAA V5R19 GA  
----|---  
-  
+
 * * *
 
 The following are the new CAA V5R19 GA Java Authorized APIs, compared with CAA V5R18 at GA level.
@@ -48,7 +52,7 @@ The following are the new CAA V5R19 GA Java Authorized APIs, compared with CAA V
 History Version: **1** [Mar 2008] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright © 1999-2008, Dassault Systèmes. All rights reserved._  

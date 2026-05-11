@@ -1,16 +1,23 @@
 ---
+```vbscript
 title: "The Workbench Code Builder mkmk"
 category: "use-case"
 module: "CAABtlTechArticles"
 tags: []
 source_file: "Doc/online/CAABtlTechArticles/CAABtlMkmk.htm"
 converted: "2026-05-11T17:33:46.154216"
----
+```
 
+---
+tags: []
+source_file: "Doc/online/CAABtlTechArticles/CAABtlMkmk.htm"
+converted: "2026-05-11T17:33:46.154216"
 RADE |  Multi-Workspace Application Builder |  The Workbench Code Builder mkmk _Principles - What does it do for CAA developers?_  
----|---|---  
+
+converted: "2026-05-11T17:33:46.154216"
+RADE |  Multi-Workspace Application Builder |  The Workbench Code Builder mkmk _Principles - What does it do for CAA developers?_
 Technical Article  
-  
+
 * * *
 
 Abstract mkmk is a tool that is used to build programs from source files. CAA source files are managed and delivered in components which structure respects a particular organization (we call it the CAA FileTree). This paper has been written to explain the main features of mkmk (and related tools) and what files and directories any mkmk user should be aware of in order to be efficient in the use of this tool.
@@ -33,7 +40,6 @@ Abstract mkmk is a tool that is used to build programs from source files. CAA so
   * **References**
   * **In Short**
 
-  
 ---  
 What does mkmk for you? Developing is more interesting than building Before being able to see the result of what he has written, the developer must build his program with the appropriate compiler and linker. This is not a simple task especially when one must take into account various locations of source files, multiple operating systems, several languages, multiple compilers with different and numerous options and so on. Those who have experienced makefiles management know the problem... With mkmk, the Workbench proposes a single tool to compile and link applications wherever the user is working and whatever the [programming language(s) used](../CAABtlQuickRefs/CAABtlMANMkmk.md). Hiding operating system  specifics mkmk offers the same independence from the development platforms as CNext components: they offer the same interfaces and methods no matter whether you're writing code for NT or Unix platforms. It's the same with mkmk:
 
@@ -58,6 +64,7 @@ One can consider that users think of component organization and dependencies whi
 
   * **IdentityCard.h** [1]: associated with each framework and gives the name of the prerequisite framework(s)
   * **Imakefile.mk** [2]: associated with each module and explains what must be produced from this module  
+One can consider that users think of component organization and dependencies while mkmk translates their meaning into concrete information on files and directories. For example, a user needing services offered by framework X to implement his own framework will just declare that X is a prerequisite framework for him, then mkmk will find the related libraries (regarding the current operating system) and header files which are needed for compilation. Two special files are strongly related to frameworks and modules and are analyzed by mkmk:
 (executable, shared library, archive, etc.)
 
 Supporting distributed data Concurrent engineering is mainly supported by the WSManager that allows people to share and integrate data in workspaces. However, WSManager commands are used to copy files into a workspace and it is not a good idea to have copies of all frameworks in every workspaces. To avoid this situation the user can set up a special path by specifying one or several workspace root directories where mkmk will look in to find prerequisite frameworks.
@@ -68,10 +75,14 @@ Supporting distributed data Concurrent engineering is mainly supported by the WS
 
 Principles of use mkmk and the CAA FileTree The aim of this section is to explain where to find mkmk special files and what directories and files are managed by the tool. ![](images/FileTree13.gif) Note that you must have one IdentityCard.h file per framework and one Imakefile.mk file per module.If your framework does not need any external service, its identity card will be empty, otherwise it will contain references to the corresponding frameworks. The minimum required for the Imakefile.mk file is to contain the type of data which must be produced from the container module: consult the [Imakefile.mk](CAABtlMANIdCard.md) article to learn its syntax. As said before, mkmk recognizes frameworks and modules inside the CAA FileTree, it means that you can run mkmk in any directory (somewhere under the root directory) and it will build what corresponds to this level.    How to start with mkmk _My first program!_ Before to compile a program with mkmk, some things must exist. Here is the smallest file tree you can have if you use mkmk, Our example consists in a single source file just to say "_Hello World_ ". ![](images/FileTree15.gif) _My first compilation!_ The first thing to know is where is mkmk. Considering that mkmk has been installed under <mkmk> directory, you should execute the following command to set up your path: **Unix platform** | **NT platform**  
 ---|---  
+Principles of use mkmk and the CAA FileTree The aim of this section is to explain where to find mkmk special files and what directories and files are managed by the tool. ![](images/FileTree13.gif) Note that you must have one IdentityCard.h file per framework and one Imakefile.mk file per module.If your framework does not need any external service, its identity card will be empty, otherwise it will contain references to the corresponding frameworks. The minimum required for the Imakefile.mk file is to contain the type of data which must be produced from the container module: consult the [Imakefile.mk](CAABtlMANIdCard.md) article to learn its syntax. As said before, mkmk recognizes frameworks and modules inside the CAA FileTree, it means that you can run mkmk in any directory (somewhere under the root directory) and it will build what corresponds to this level.    How to start with mkmk _My first program!_ Before to compile a program with mkmk, some things must exist. Here is the smallest file tree you can have if you use mkmk, Our example consists in a single source file just to say "_Hello World_ ". ![](images/FileTree15.gif) _My first compilation!_ The first thing to know is where is mkmk. Considering that mkmk has been installed under <mkmk> directory, you should execute the following command to set up your path: **Unix platform** | **NT platform**
 Open a shell window | Open a DOS window  
 Enrich your shell path  
+
 `_._ _< mkmk>_` Ask your tools administrator to get the exact installation path. | Enrich your DOS environment  
 `_< mkmk>_` On NT, the exact installation path may be given under UNC format (`//machine/shared_name/...`)  
+Open a shell window | Open a DOS window
+Enrich your shell path
 Once your path has been updated, next commands are the same no matter _whether you're working on NT or on UNIX_ (AIX, HP-UX, SunOS operating systems). The first compilation should be global to be sure to build all what is needed: in the example below, we go under the framework we want to build and run mkmk with option -a to compile all what can be find under it.
 
 > `_$ cd <workspace_root_directory>/Hello  
@@ -97,6 +108,8 @@ If an interface uses a lower level header, an error message is displayed. Exampl
 # make-ERROR: MyFW/PublicInterfaces/NameOfTheInterface.h_ 2 - If an interface uses an header from another framework, it must be a direct prerequisite framework. If an interface uses interfaces from a non direct prerequisite an error message is displayed. Example: _/WS/MyFW/PublicInterfaces/NameOfTheInterface.h cannot use /WS/PrereqFW/PublicInterfaces\UsedInterface.h as include since it is in framework [PrereqFW] which is not a direct prerequisite  
 # make-ERROR: MyFW/PublicInterfaces/NameOfTheInterface.h_ _**Those new messages have no effect on the build time process. There is only new messages in the output of the command.**_ mkmk compilation phases When you run mkmk (whether to compile a framework or a module), the compilation goes through four main steps. These steps can be controlled using specific mkmk [ options](../CAABtlQuickRefs/CAABtlMANMkmk.htm#Usage).
 
+```vbscript
+If an interface uses a lower level header, an error message is displayed. Example: _/WS/MyFW/PublicInterfaces/NameOfTheInterface.h file PUBLIC cannot use /WS/MyFW/ProtectedInterfaces/UsedInterface.h as include since it is PROTECTED.
   1. Identity Card compilation  
 mkmk processes the (container) framework Identity Card
   2. Header list generation  
@@ -108,6 +121,8 @@ two passes for shared libraries, to successfully build a series of them
 
 Note about step 4:  
 two passes are needed when several libraries must be produced from a framework because they may call each others, so they are first built (standalone) and then missing symbols are resolved. If you decide to build shared libraries one by one, you may encounter some "unresolved symbols" problems, in such cases, run mkmk on the whole framework, all modules will be treated in the right order. How to access prerequisite frameworks Prerequisite frameworks are frameworks which services are used by your own frameworks, by the way you need:
+
+```
 
   * at build time, to access the corresponding header files (compilation) and libraries (link),
   * at run time: to access the corresponding (shared) libraries.
@@ -148,13 +163,13 @@ References [1] | [The Identity Card Special File](CAABtlMANIdCard.md)
 [4] | [Support of type libraries import in C++ sources for Windows](CAABtlMANtlb.md)  
 [5] | [Summary of Commands Around mkmk](../CAABtlQuickRefs/CAABtlMANMkThemIx.md)  
 [Top]  
-  
+
 * * *
 
 History Version: **1** [Mar 2000] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2000, Dassault Systmes. All rights reserved._

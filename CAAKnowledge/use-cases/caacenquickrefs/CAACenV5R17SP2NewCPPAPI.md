@@ -1,15 +1,19 @@
 ---
+```vbscript
 title: "New C++ Authorized APIs in CAA V5R17 SP2"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIA"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R17SP2NewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.317649"
----
+```
 
+---
+tags: ["CATIA"]
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R17SP2NewCPPAPI.htm"
+converted: "2026-05-11T17:33:47.317649"
 CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R17 SP2  
----|---  
-  
+
 * * *
 
 The following are the new CAA V5R17 SP2 C++ Authorized APIs, compared with CAA V5R17 at SP1 level.
@@ -26,7 +30,7 @@ The following are the new CAA V5R17 SP2 C++ Authorized APIs, compared with CAA V
 History Version: **1** [Oct 2006] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright © 1999-2006, Dassault Systèmes. All rights reserved._  

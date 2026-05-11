@@ -1,10 +1,13 @@
 ---
+```vbscript
 title: "Constructing Graphic Representations in Batch Mode"
 category: "use case"
 module: "CAAVisUseCases"
 tags: ["CATI3DGeoVisu", "CATIPrtContainer", "CAAGviVisuBatchuse", "CAAGviVisuBatch", "CAAVisuBatch", "CAAGeometryVisualization"]
 source_file: "Doc/online/CAAVisUseCases/CAAVisSampleVisuBatch.htm"
 converted: "2026-05-11T17:31:52.235473"
+```
+
 ---
 # 3D PLM Enterprise Architecture
 
@@ -17,7 +20,7 @@ converted: "2026-05-11T17:31:52.235473"
 _How to use the CATVisManager in batch mode_  
 ---|---|---  
 Use Case  
-  
+
 * * *
 ### Abstract
 
@@ -43,7 +46,7 @@ CAAGviVisuBatch is a use case of the CAAGeometryVisualization.edu framework that
 
 CAAGviVisuBatch constructs the graphic representations associated with the MechanicalPart (`Part1`) of the following Model: _Fig.1 The CAAVisuBatch Part Document_ 
 ---  
-  
+
 [Top]
 #### How to Launch CAAGviVisuBatch
 
@@ -61,15 +64,19 @@ where `InputPart` is the complete path of a Part document. You can use the follo
 
 The CAAGviVisuBatch use case is made of a single file, _CAAGviVisuBatch.cpp_ , located in the CAAGviVisuBatch.m module of the CAAGeometryVisualization.edu framework:
 
+The CAAGviVisuBatch use case is made of a single file, _CAAGviVisuBatch.cpp_ , located in the CAAGviVisuBatch.m module of the CAAGeometryVisualization.edu framework:
 Windows | `InstallRootDirectory\CAAGeometryVisualization.edu\CAAGviVisuBatch.m\`  
----|---  
+
+The CAAGviVisuBatch use case is made of a single file, _CAAGviVisuBatch.cpp_ , located in the CAAGviVisuBatch.m module of the CAAGeometryVisualization.edu framework:
+Windows | `InstallRootDirectory\CAAGeometryVisualization.edu\CAAGviVisuBatch.m\`
 Unix | `InstallRootDirectory/CAAGeometryVisualization.edu/CAAGviVisuBatch.m/`  
-  
+
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
 ### Step-by-Step
 
+where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 There are seven logical steps in CAAGviVisuBatch:
 
   1. Prolog
@@ -83,44 +90,45 @@ There are seven logical steps in CAAGviVisuBatch:
 [Top]
 #### Prolog
 
+7. Epilog
 CAAGviVisuBatch begins by creating a session, and opening a Part document. Next it retrieves the root container of this Part as a pointer to _CATIPrtContainer_ , `pISpecContainer.` This is the usual sequence for loading a Part document. 
 
 Thanks to  the `GetPart` method on the root container we retrieve the Mechanical Part. This part is handled by the smart pointer `spSpecObjectOnMechanicalPart`.
+
 #### Creates a Path with the MechanicalPart feature of the Part Document
-    
-    
+
     ...
      **CATPathElement** * pRootObjectPath = new CATPathElement(spSpecObjectOnMechanicalPart);       
     ...  
-  
+
 ---  
-  
+
 In this use case, the _CATPathElement_ is built with the root feature of the Part Document. This feature is the MechanicalPart feature, those called Part1 in the specification tree. Refer to the Mechanical Modeler articles. But anyhow, you can create this path with any feature of the model. 
 #### Retrieves the unique CATVisManager Instance 
-    
-    
+
     ...
      **CATVisManager** * pVisManager = CATVisManager::**GetVisManager**();   
     ...  
-  
+
 ---  
-  
+
 There is only one instance of the _CATVisManager_ class in a session. The `GetVisManager` static method enables you to retrieve it.
 #### Attaches the Root Model to  the CATVisManager
-    
-    
+
     ...
+There is only one instance of the _CATVisManager_ class in a session. The `GetVisManager` static method enables you to retrieve it.
         list<IID> ListIVisu3d;
         IID * pIIDInf = new IID(IID_CATI3DGeoVisu) ;
         ListIVisu3d.**fastadd**(pIIDInf);
-    
+
         CAT3DViewpoint * pVP = new **CAT3DViewpoint**();
-        
+
         rc = pVisManager->**AttachTo** ( pRootObjectPath, pVP, ListIVisu3d);
+
     ...  
-  
+
 ---  
-  
+
 On the _CATVisManager_ you attach to the _CATVisManager_ :
 
   * The Path of the root model to build, p`RootObjectPath, `
@@ -129,39 +137,47 @@ On the _CATVisManager_ you attach to the _CATVisManager_ :
 
 ![](../CAAIcons/images/warning.gif)The `AttachTo` method constructs the graphic representations. 
 #### Retrieves the Graphic Representation of the MechanicalPart feature
-    
-    
+
     ...
         **CATI3DGeoVisu** * pIVisuOnRoot =NULL ;    
         rc = spSpecObjectOnMechanicalPart->QueryInterface(IID_CATI3DGeoVisu,
+rc = spSpecObjectOnMechanicalPart->QueryInterface(IID_CATI3DGeoVisu,
                                                               (void **) & pIVisuOnRoot);
+
         ...
+rc = spSpecObjectOnMechanicalPart->QueryInterface(IID_CATI3DGeoVisu,
+(void **) & pIVisuOnRoot);
            CATRep * pRep = pIVisuOnRoot->**GiveRep**();
            if ( NULL != pRep )
+
            {
+(void **) & pIVisuOnRoot);
+CATRep * pRep = pIVisuOnRoot->**GiveRep**();
+if ( NULL != pRep )
               CAT3DRep * p3DRep = (CAT3DRep *) pRep;
-    
+
               CAT3DBoundingSphere pBe = p3DRep->GetBoundingElement();
+
               ...
-    
+
     ...  
-  
+
 ---  
-  
+
 After the `AttachTo` method, it is possible to retrieve the graphic representations (rep) of an element thanks to the `GiveRep` method of the _CATI3DGeoVisu_ interface. In this use case, the rep of the MechanicalPart feature (the root) is asked. 
 #### Detaches the Root Model from the CATVisManager
-    
-    
+
     ...
      rc = pVisManager->**DetachFrom**(pVP,0) ;
-    
-    
+
+rc = pVisManager->**DetachFrom**(pVP,0) ;
      pVP->Release();
      pVP = NULL ;
+
     ...  
-  
+
 ---  
-  
+
 When the graphic representations are useless, you should detach the root model from the _CATVisManager_. With the `DetachFrom` method with only the viewpoint, all the root models and the list of interfaces attached with this viewpoint will be detached too. (The same root model can be attached with different viewpoints and with different interfaces)
 
 [Top]
@@ -184,14 +200,14 @@ This use case explains how to use the CATVisManager to create the graphic repres
 [1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
 [Top]  
-  
+
 * * *
 ### History
 
 Version: **1** [Fev 2003] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2003, Dassault Systmes. All rights reserved._

@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "MecModInterfaces Framework Modifications in V5R18"
 category: "use-case"
 module: "CAACenAPIChangesR18"
@@ -6,13 +7,14 @@ version: "V5R18"
 tags: ["CATIMfBRep", "CATIMmiPartInfrastructureSettingAtt"]
 source_file: "Doc/online/CAACenAPIChangesR18/MecModInterfaces.htm"
 converted: "2026-05-11T17:33:51.487243"
+```
+
 ---
 # CAA C++ API Modifications  
-  
+
 | 
 ##  MecModInterfaces Framework Modifications in V5R18 
 
-  
 * * *
 
 **Entity|  SP| Modification| To Do** | MecModInterfaces/Public/CATIMfBRep.h/CATIMfBRep/UpdateSupport  

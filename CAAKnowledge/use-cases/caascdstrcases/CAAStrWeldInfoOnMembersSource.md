@@ -1,12 +1,14 @@
 ---
+```vbscript
 title: "CAAStrWeldInfoOnMembers.CATScript"
 category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CATIA", "CATIASfmMember", "CAAStrWeldInfoOnMembers"]
 source_file: "Doc/online/CAAScdStrUseCases/CAAStrWeldInfoOnMembersSource.htm"
 converted: "2026-05-11T17:31:50.911084"
----
+```
 
+---
 ```vbscript
     '//============================================================================
     '// COPYRIGHT DASSAULT SYSTEMES 2013
@@ -18,40 +20,45 @@ converted: "2026-05-11T17:31:50.911084"
     '//============================================================================
 ```
 
-    
-```vbscript
     Sub CATMain()
-    
+
 ```vbscript
     Dim ObjPart As Part
     Set ObjPart = CATIA.ActiveDocument.Part
-       
+
     Dim FactoryObj As SfmFactory
     Set FactoryObj = ObjPart.GetCustomerFactory("SfmFactory")
-      
+
     Dim ManagerObj As SfmManager
     Set ManagerObj = FactoryObj.GetManager
+```
+
 ```vbscript
     'RETRIEVING THE SUPERMembers
     Dim SuperMembers As References
     Set SuperMembers = ManagerObj.GetSuperMembers
-    
+
     Dim SuperMember1 As SfmMember
     Set SuperMember1 = SuperMembers.Item(1)
     'Retrieving The Split Members
     Dim SplitMembers As References
     Set SplitMembers = SuperMember1.SplitProfiles
-    
+
     Dim SplitMember1 As Reference
     Set SplitMember1 = SplitMembers.Item(1)
-    
+
     Set SelctionObj = CATIA.ActiveDocument.Selection
     'DECK Member
 ```
 
+```vbscript
+Set SelctionObj = CATIA.ActiveDocument.Selection
+'DECK Member
     SelctionObj.Add SplitMember1
     Dim DeckMember1 As SfmMember
     Set DeckMember1 = SelctionObj.FindObject("CATIASfmMember")
+```
+
 ```vbscript
     'Retrieving Super Plates
     Dim SuperPlates As References
@@ -62,46 +69,47 @@ converted: "2026-05-11T17:31:50.911084"
     'Retrieving the SplitPlates of SuperPlate1
     Dim OperatingSplitPlateRefs As References
     Set OperatingSplitPlateRefs = SuperPlate1.SplitPlates
-    
+
     Dim OperatingSplitPlate As Reference
     Set OperatingSplitPlate = OperatingSplitPlateRefs.Item(1)
 ```
 
-    
-```
-
-    
 ```vbscript
     Dim WeldsUC1 As SfmWelds
     Set WeldsUC1 = DeckMember1.GetWelds(OperatingSplitPlate)
-    
+
     Dim WeldUC1 As SfmWeld
     Set WeldUC1 = WeldsUC1.Item(1)
-    
+
 ```
 
+```vbscript
+Dim WeldUC1 As SfmWeld
+Set WeldUC1 = WeldsUC1.Item(1)
     ustrWeldTypeUC1 = WeldUC1.WeldType
     ustrAddedMaterialUC1 = WeldUC1.AddedMaterial
     ustrFitUpUC1 = WeldUC1.FitUp
     ustrEdgePrepUC1 = WeldUC1.EdgePreparation
-    
+
+```
+
 ```vbscript
     Dim WeldsUC2 As SfmWelds
     Set WeldsUC2 = DeckMember1.GetWelds(Nothing)
-    
+
     Dim WeldUC2 As SfmWeld
     Set WeldUC2 = WeldsUC2.Item(1)
-    
+
 ```
 
+```vbscript
+Dim WeldUC2 As SfmWeld
+Set WeldUC2 = WeldsUC2.Item(1)
     ustrWeldTypeUC2 = WeldUC2.WeldType
     ustrAddedMaterialUC2 = WeldUC2.AddedMaterial
     ustrFitUpUC2 = WeldUC2.FitUp
     ustrEdgePrepUC2 = WeldUC2.EdgePreparation
-    
-```vbscript
-    End Sub
-    
-```
 
 ```
+
+    End Sub

@@ -1,15 +1,19 @@
 ---
+```vbscript
 title: "New C++ Authorized APIs in CAA V5-6R2013 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATICGMHybTrim", "CATITPSThreadGeometrySpecification", "CATICGMHybIntersect", "CATIMmiUseDatumFactory", "CATIMmiUseSolidInsertion", "CATIMmiMechanicalFeature_var", "CATITPSAssociatedTextVisu", "CATIMmiUseCharacteristicExtremity", "CATITPSTextVisu", "CATIVpmLightVersion", "CATIMmiUseStructureAnalyse", "CATIMmiUseMfBRep", "CATIMmiUseREdge", "CATICGMDynAdvancedFillet", "CATIMmiBRepScanServices", "CATIStrPPGExecLogSettingAtt", "CATICGMDynAdvancedDraft", "CATICGMTopExtrude", "CATICGMTopExtractFace", "CATIMmiUsePrtPart"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R23GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.535004"
----
+```
 
+---
+tags: ["CATICGMHybTrim", "CATITPSThreadGeometrySpecification", "CATICGMHybIntersect", "CATIMmiUseDatumFactory", "CATIMmiUseSolidInsertion", "CATIMmiMechanicalFeature_var", "CATITPSAssociatedTextVisu", "CATIMmiUseCharacteristicExtremity", "CATITPSTextVisu", "CATIVpmLightVersion", "CATIMmiUseStructureAnalyse", "CATIMmiUseMfBRep", "CATIMmiUseREdge", "CATICGMDynAdvancedFillet", "CATIMmiBRepScanServices", "CATIStrPPGExecLogSettingAtt", "CATICGMDynAdvancedDraft", "CATICGMTopExtrude", "CATICGMTopExtractFace", "CATIMmiUsePrtPart"]
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R23GANewCPPAPI.htm"
+converted: "2026-05-11T17:33:47.535004"
 CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5-6R2013 GA  
----|---  
-  
+
 * * *
 
 The following are the new CAA V5-6R2013 GA C++ Authorized APIs, compared with CAA V5-6R2012 at GA level.
@@ -211,7 +215,7 @@ The following are the new CAA V5-6R2013 GA C++ Authorized APIs, compared with CA
 History Version: **1** [Sep 2012] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright © 1999-2012, Dassault Systèmes. All rights reserved._  

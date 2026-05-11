@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "ObjectSpecsModeler Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR7"
@@ -6,11 +7,14 @@ version: "V5R7"
 tags: ["CATISpecObject", "CATISpecAttribute", "CATISpecUpdate", "CATIAttrBehavior", "CATISpecAttrAccess"]
 source_file: "Doc/online/CAACenAPIChangesR7/ObjectSpecsModeler.htm"
 converted: "2026-05-11T17:33:52.197265"
----
+```
 
+---
+tags: ["CATISpecObject", "CATISpecAttribute", "CATISpecUpdate", "CATIAttrBehavior", "CATISpecAttrAccess"]
+source_file: "Doc/online/CAACenAPIChangesR7/ObjectSpecsModeler.htm"
+converted: "2026-05-11T17:33:52.197265"
 CAA API Modifications|  ObjectSpecsModeler  |   
----|---|---  
-  
+
 * * *
 
 **Entity|  Modification| To Do** | ObjectSpecsModeler/Protected/CATIAttrBehavior.h/CATIAttrBehavior/GetRequestedBehavior| MHBDM|   

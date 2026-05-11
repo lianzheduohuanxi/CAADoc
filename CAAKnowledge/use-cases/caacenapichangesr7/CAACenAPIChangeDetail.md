@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "Detail Of API Changes"
 category: "api-changes"
 module: "CAACenAPIChangesR7"
@@ -6,17 +7,19 @@ version: "V5R7"
 tags: ["CAA2Usage", "CAA2Level"]
 source_file: "Doc/online/CAACenAPIChangesR7/CAACenAPIChangeDetail.htm"
 converted: "2026-05-11T17:33:51.920474"
----
+```
 
+---
 |  |  Detail Of V5R7 API Changes _What changes in the API compared with CAA V5R6_  
 ---|---|---  
 Technical Article  
-  
+
 * * *
 
 Abstract This article presents by frameworks the detail of CAA resources modified in V5R7 and how to modify your code accordingly. Each modification is listed for a resource (file, class, method) with a classification. They will generally be detected by a recompilation of the code. Most of the time, signature modifications are obvious. Check in the framework detail how to replace deleted entities. Possibly impacting modifications are highlighted in red.  
 | Classification | Meaning  
 ---|---  
+Abstract This article presents by frameworks the detail of CAA resources modified in V5R7 and how to modify your code accordingly. Each modification is listed for a resource (file, class, method) with a classification. They will generally be detected by a recompilation of the code. Most of the time, signature modifications are obvious. Check in the framework detail how to replace deleted entities. Possibly impacting modifications are highlighted in red.
 LHC | @CAA2Level Has Changed: a L1 file is no more L1.  
 UHC | @CAA2Usage Has Changed: usage has changed for a more restricted usage. For example a class tagged as derivable is not derivable anymore.  
 CHBD | Class Has Been Deleted  
@@ -26,12 +29,13 @@ MHBDM | Method Has Been Deleted or Modified
 MRTHC | Method Returned Type Has Changed  
 NPVM | New Pure Virtual Method. A new pure virtual method has been added on a derivable class or on an interface to be implemented without an adapter.   
 INDM | Method is no more documented. It does not break your code in any way but means that you are not supposed to use it anymore. Check that you don't use it or look for replacement informations.    
-   
-  
+
 * * *
 
+INDM | Method is no more documented. It does not break your code in any way but means that you are not supposed to use it anymore. Check that you don't use it or look for replacement informations.
 AnalysisMeshingModel | [R7GA vs R6GA](AnalysisMeshingModel.md) | [R7SP vs R7GA](AnalysisMeshingModelSP.md)  
----|---|---  
+
+AnalysisMeshingModel | [R7GA vs R6GA](AnalysisMeshingModel.md) | [R7SP vs R7GA](AnalysisMeshingModelSP.md)
 ApplicationFrame | [R7GA vs R6GA](ApplicationFrame.md) | [R7SP vs R7GA](ApplicationFrameSP.md)  
 BasicTopologicalOpe |  | [R7SP vs R7GA](BasicTopologicalOpeSP.md)  
 CATAnalysisBase | [R7GA vs R6GA](CATAnalysisBase.md) | [R7SP vs R7GA](CATAnalysisBaseSP.md)  
@@ -73,19 +77,21 @@ VPMInterfaces | [R7GA vs R6GA](VPMInterfaces.md) | [R7SP vs R7GA](VPMInterfacesS
 VPMXBom | [R7GA vs R6GA](VPMXBom.md) |   
 VPMServices |  | [R7SP vs R7GA](VPMServicesSP.md)  
 Visualization | [R7GA vs R6GA](Visualization.md) | [R7SP vs R7GA](VisualizationSP.md)  
-  
+
 * * *
 
+VPMServices |  | [R7SP vs R7GA](VPMServicesSP.md)
+Visualization | [R7GA vs R6GA](Visualization.md) | [R7SP vs R7GA](VisualizationSP.md)
 References [1] | [Migration to CATBoolean](../CAACenQuickRefs/CAACenWhatsNew.htm#CATBoolean)  
----|---  
+
 [Top]  
-  
+
 * * *
 
 History Version: **1** [May 2001] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2001, Dassault Systmes. All rights reserved._

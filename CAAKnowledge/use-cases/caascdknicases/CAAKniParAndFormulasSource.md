@@ -1,17 +1,25 @@
 ---
+```vbscript
 title: "CAAKniParAndFormulas.CATScript"
 category: "use-case"
 module: "CAAScdKniUseCases"
 tags: ["CATIA", "CAAKniSamplePartR13", "CAAKniParAndFormulas", "CAAScdKniUseCases"]
 source_file: "Doc/online/CAAScdKniUseCases/CAAKniParAndFormulasSource.htm"
 converted: "2026-05-11T17:31:51.992811"
----
+```
 
+---
+tags: ["CATIA", "CAAKniSamplePartR13", "CAAKniParAndFormulas", "CAAScdKniUseCases"]
+source_file: "Doc/online/CAAScdKniUseCases/CAAKniParAndFormulasSource.htm"
+converted: "2026-05-11T17:31:51.992811"
     Option Explicit
     ' COPYRIGHT DASSAULT SYSTEMES 2001
+
 ```vbscript
     Dim Language as String
     Language="VBScript"
+```
+
 ```vbscript
     ' ***********************************************************************
     '   Purpose:      This macro:
@@ -38,11 +46,8 @@ converted: "2026-05-11T17:31:51.992811"
     ' ***********************************************************************
 ```
 
-    
-```
-
-```vbscript
     Sub CATMain()
+
 ```vbscript
      ' Set the CATIA popup file alerts to False
      ' It prevents to stop the macro at each alert during its execution
@@ -64,8 +69,13 @@ converted: "2026-05-11T17:31:51.992811"
 ```
 
     		"online\CAAScdKniUseCases\samples\CAAKniSamplePartR13.CATPart")
+```vbscript
+Dim sFilePath
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
         Dim oDoc As Document
         set oDoc = CATIA.Documents.Open(sFilePath)
+```
+
 ```vbscript
     ' Set the CATIA popup file alerts to False
     ' It prevents to stop the macro at each alert during its execution
@@ -94,9 +104,15 @@ converted: "2026-05-11T17:31:51.992811"
               if (oParameters.Item(i).Name = "SphereRadius") then
 ```
 
+```vbscript
+Dim i As Integer
+For i = 1 to oParameters.Count
+if (oParameters.Item(i).Name = "SphereRadius") then
                 oParameters.Remove "SphereRadius"  
               end if
             Next
+```
+
 ```vbscript
             ' Create the ProjectId parameter
             ' This parameter is a string type parameter 
@@ -126,10 +142,16 @@ converted: "2026-05-11T17:31:51.992811"
             ' been performed above.
 ```
 
+```vbscript
+' already named SphereRadius exists in the document
+' This is why a search for a SphereRadius parameter has
+' been performed above.
             oSphereRadius.Rename "SphereRadius"
             oSphereRadius.Value = 50 
             ' Display the minum tolerance for "SphereRadius"
             msgbox "Min Tolerance for the LENGTH parameter " & oSphereRadius.MinimumTolerance
+```
+
 ```vbscript
             ' Create a Volume type parameter 
             ' Its name is SphereVolume
@@ -143,7 +165,7 @@ converted: "2026-05-11T17:31:51.992811"
             ' method - The formula expression is passed as the fourth argument.
             ' Note that the Extract function is provided by the Knowledge Advisor
             ' string function dictionary 
-     
+
             Dim oFormula1 As Formula
             Set oFormula1 = oRelations.CreateFormula("Formula1", "", oString2,_
 ```
@@ -185,9 +207,12 @@ converted: "2026-05-11T17:31:51.992811"
 ```
 
                         "   " & oRelations.Item(i).Value
+```vbscript
+For i = 1 to oRelations.Count
+ostrRel = ostrRel & vbCrLf & oRelations.Item(i).Name &_
             Next
             MsgBox ostrRel       
-       
+
             Dim ostrPar As String
             For i = 1 to oParameters.Count
               ostrPar = ostrPar & vbCrLf & oParameters.Item(i).Name 
@@ -195,14 +220,15 @@ converted: "2026-05-11T17:31:51.992811"
             MsgBox ostrPar       
     ' Update the document
     CATIA.ActiveDocument.Part.Update 
-    
+
 ```
 
+```vbscript
+' Update the document
+CATIA.ActiveDocument.Part.Update
     else 
        MsgBox "The active document must be a CATPart"
     End If
     End Sub
-    
-```
 
 ```

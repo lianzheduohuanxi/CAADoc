@@ -1,10 +1,13 @@
 ---
+```vbscript
 title: "Parameters Automation Objects"
 category: "use-case"
 module: "CAAScdKniTechArticles"
 tags: []
 source_file: "Doc/online/CAAScdKniTechArticles/CAAKniTocParameter.htm"
 converted: "2026-05-11T17:31:52.006491"
+```
+
 ---
 # Parameters Automation Objects
 
@@ -30,9 +33,9 @@ converted: "2026-05-11T17:31:52.006491"
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/listprm.gif)  
 ![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/list.gif)  
 ![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/featgen.gif)  
-  
+
 ---  
-  
+
 **Legend**
 
 ![](../CAAScrAutomationImages/images/yellbox.gif) Collection  

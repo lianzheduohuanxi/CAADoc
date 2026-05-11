@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "Visualization Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR9"
@@ -6,11 +7,14 @@ version: "V5R9"
 tags: ["CATIndicateEvent", "CATIndicator", "CATIndicationSegment"]
 source_file: "Doc/online/CAACenAPIChangesR9/Visualization.htm"
 converted: "2026-05-11T17:33:52.991419"
----
+```
 
+---
+tags: ["CATIndicateEvent", "CATIndicator", "CATIndicationSegment"]
+source_file: "Doc/online/CAACenAPIChangesR9/Visualization.htm"
+converted: "2026-05-11T17:33:52.991419"
 CAA C++ API Modifications |  Visualization |   
----|---|---  
-  
+
 * * *
 
 ** Entity | SP | Modification | To Do** | Visualization/Protected/CAT2DAnnotationTextGP.h | GA | FHBD | [Split Visualization/VisualizationBase](../CAACenQuickRefs/CAACenWhatsNew.htm#VisuSplit)   

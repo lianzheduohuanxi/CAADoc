@@ -1,16 +1,25 @@
 ---
+```vbscript
 title: "Scanning an Edge Curve"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAATopEdgeCurve", "CATICGMContainer", "CAADoc", "CAAGMModelScanEdgeCurve", "CATICGMObject", "CAAGMModelInterfaces", "CAACGMModelScanEdgeCurve", "CATIntCurve", "CAAScanEdgeCurve"]
 source_file: "Doc/online/CAACgmModel/CAACgmUcTobEdgeCurve.htm"
 converted: "2026-05-11T17:33:48.549132"
----
+```
 
+---
+tags: ["CAATopEdgeCurve", "CATICGMContainer", "CAADoc", "CAAGMModelScanEdgeCurve", "CATICGMObject", "CAAGMModelInterfaces", "CAACGMModelScanEdgeCurve", "CATIntCurve", "CAAScanEdgeCurve"]
+source_file: "Doc/online/CAACgmModel/CAACgmUcTobEdgeCurve.htm"
+converted: "2026-05-11T17:33:48.549132"
 Scanning an Edge Curve  
+
 ---  
+converted: "2026-05-11T17:33:48.549132"
+Scanning an Edge Curve
 Use Case  
 Abstract Between the topology and the geometry, there are intermediate objects that are used by the geometric modeler to group objects with similar function. Such objects are created to join various pieces of geometry before covering them by topology. Given two faces with a common edge, the edge curve is the object which is built from the two Pcurves defining the common side. The CATEdge topological object is then created from this edge curve. In short, this is the way an edge (a topological object) is constructed from the geometry. In this use case, no edge and no topology is created, this is the opposite which is done. From the topology (an edge), the underlying geometry is retrieved and analyzed.
+
     * What You Will Learn With This Use Case
     * The CAAGMModelScanEdgeCurve Use Case
       * What Does CAAGMModelScanEdgeCurve Do?
@@ -33,27 +42,36 @@ To manipulate an edge curve, you must:
     3. Retrieve the CATCurve making up the edge curve by using the CATEdgeCurveIterator operator.
 
 The CAACGMModelScanEdgeCurve Use Case CAACGMModelScanEdgeCurve is a use case of the CAAGMModelInterfaces.edu framework that illustrates how to use the CATEdgeCurveIterator which is delivered in GeometricObjects.  What Does CAACGMModelScanEdgeCurve Do? The CAACGMModelScanEdgeCurve use case:
+
     * Loads the container and retrieves the edge to be scanned.
     * Retrieves the edge curve from to edge to be analyzed and scans this edge curve.
     * Writes the model and closes the factory. Note that, in this use case the output model is the same as the input model.
+The CAACGMModelScanEdgeCurve Use Case CAACGMModelScanEdgeCurve is a use case of the CAAGMModelInterfaces.edu framework that illustrates how to use the CATEdgeCurveIterator which is delivered in GeometricObjects.  What Does CAACGMModelScanEdgeCurve Do? The CAACGMModelScanEdgeCurve use case:
 How to Launch CAACGMModelScanEdgeCurve  To launch CAACGMModelScanEdgeCurve, you will need to set up the build time environment, then compile CAACGMModelScanEdgeCurve .m along with its prerequisites, set up the run time environment, and then execute the use case [1]. CAACGMModelScanEdgeCurve `e:/edgeCurve1.NCGM" e:/output file.NCGM` where `edgeCurve1.NCGM` is an input file delivered in the CAAGMModelInterfaces.edu/FunctionTests/InputData file. Where to Find the CAACGMModelScanEdgeCurve Code The CAACGMModelScanEdgeCurve use case is made of a main named CAAScanEdgeCurve.cpp located in the CAACGMModelScanEdgeCurve .m module of the CAAGMModelInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMModelInterfaces.edu\CAACGMModelScanEdgeCurve.m\` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. Step-by-Step There are three main steps in CAATopEdgeCurve.cpp: 
     1. Loading the Container and Retrieving the Edge to Be Scanned
     2. Analyzing the Edge Contents
     3. Writing the Model and Closing the Factory
 Loading the Container and Retrieving the Edge to Be Scanned The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject (and the curves and surfaces in particular). In this use case, the factory is defined by reading a NCGM file that was previously stored,  the global function `::CATLoadCGMContainer` must be used to retrieve the factory. The edge is retrieved by using the CATICGMContainer::FindObjectFromTag method. 1857 is the edge tag.
-    
+
     CATGeoFactory* piGeomFactory = CATLoadCGMContainer(filetoread);
+
     ...
+3. Writing the Model and Closing the Factory
+Loading the Container and Retrieving the Edge to Be Scanned The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject (and the curves and surfaces in particular). In this use case, the factory is defined by reading a NCGM file that was previously stored,  the global function `::CATLoadCGMContainer` must be used to retrieve the factory. The edge is retrieved by using the CATICGMContainer::FindObjectFromTag method. 1857 is the edge tag.
+CATGeoFactory* piGeomFactory = CATLoadCGMContainer(filetoread);
     CATICGMObject * piCGMObj1 = piGeomFactory->FindObjectFromTag( 1857 );
 
 Here is the input model. The edge to be analyzed is highlighted. ![Edge Curve](images/CAACgmTobedgecurve.gif) Analyzing the Edge Contents There are three steps:
     1. Retrieve the edge curve.
     2. Retrieve the "ref curve" from the edge curve.
     3. Scan the edge curve.
-    
+
     ...
     // (a) - retrieve the edge curve from the edge
+2. Retrieve the "ref curve" from the edge curve.
+3. Scan the edge curve.
     CATEdgeCurve * pEdgeCurve = piEdge->GetCurve(&OriECrvVsEdge);
+
     //
     // (b) - retrieve the "ref curve"
     //
@@ -86,22 +104,35 @@ Here is the input model. The edge to be analyzed is highlighted. ![Edge Curve](i
     CATEdgeCurveIterator Iterator(pEdgeCurve);   // create the iterator
     Iterator.SetLeafScan(0);                     
     Iterator.SetRepetitions(0);
+
     ...
 
+CATEdgeCurveIterator Iterator(pEdgeCurve);   // create the iterator
+Iterator.SetLeafScan(0);
+Iterator.SetRepetitions(0);
 The edge curve which is scanned is itself made up of two edge curves. If you need to retrieve only the underlying CATCurves and not the possible edge curves which are making up the initial edge curve, you can specify the 1 option in SetLeafScan, otherwise you get all the objects at all levels under the edge curve. Writing the Model and Closing the Factory To save the model in a file, the `::CATSaveCGMContainer` global function is used. Notice that in the use case, the save is conditioned by an input parameter representing the file inside which the model must be saved. The use case ends with the closure of the geometry factory, done by the ` ::CATCloseCGMContainer` global function.
-    
+
     if(1==toStore)
+
      {
     #ifdef _WINDOWS_SOURCE
+The edge curve which is scanned is itself made up of two edge curves. If you need to retrieve only the underlying CATCurves and not the possible edge curves which are making up the initial edge curve, you can specify the 1 option in SetLeafScan, otherwise you get all the objects at all levels under the edge curve. Writing the Model and Closing the Factory To save the model in a file, the `::CATSaveCGMContainer` global function is used. Notice that in the use case, the save is conditioned by an input parameter representing the file inside which the model must be saved. The use case ends with the closure of the geometry factory, done by the ` ::CATCloseCGMContainer` global function.
+if(1==toStore)
        ofstream filetowrite(pfileName, ios::binary ) ;
+
     #else
+```vbscript
+if(1==toStore)
+ofstream filetowrite(pfileName, ios::binary ) ;
        ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;
+```
+
     #endif
-    
+
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
        filetowrite.close();
      }	
-    
+
     //
     // Close the container
     //

@@ -1,13 +1,19 @@
 ---
+```vbscript
 title: "CAADriCreateView.CATScript"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CATIA", "CAADriCreateView", "CAAScdDriUseCases"]
 source_file: "Doc/online/CAAScdDriUseCases/CAADriCreateViewSource.htm"
 converted: "2026-05-11T17:31:51.043880"
----
+```
 
+---
+tags: ["CATIA", "CAADriCreateView", "CAAScdDriUseCases"]
+source_file: "Doc/online/CAAScdDriUseCases/CAADriCreateViewSource.htm"
+converted: "2026-05-11T17:31:51.043880"
     Option Explicit
+
 ```vbscript
     ' COPYRIGTH DASSAULT SYSTEMES 2000
     ' ***********************************************************************
@@ -18,14 +24,10 @@ converted: "2026-05-11T17:31:51.043880"
     '   Locales:      English 
     '   CATIA Level:  V5R6 
     ' ***********************************************************************
-    
+
 ```
 
-    
-```vbscript
     Sub CATMain()
-    
-```
 
 ```vbscript
         ' ----------------------------------------------------------- 
@@ -36,9 +38,13 @@ converted: "2026-05-11T17:31:51.043880"
 
 ```vbscript
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+```
+
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
         End If
+```
+
 ```vbscript
         ' ----------------------------------------------------------- 
         ' Open the Part document 
@@ -63,6 +69,10 @@ converted: "2026-05-11T17:31:51.043880"
         ' Declare the part to draw in this front view
 ```
 
+```vbscript
+Dim oFrontViewGB As DrawingViewGenerativeBehavior
+Set oFrontViewGB = oFrontView.GenerativeBehavior
+' Declare the part to draw in this front view
         oFrontViewGB.Document = oPartToDraw
         ' Define this view as a front view, with the XY plane (in oPartToDraw) as projection plane 
         oFrontViewGB.DefineFrontView 1, 0, 0, 0, 1, 0
@@ -71,14 +81,7 @@ converted: "2026-05-11T17:31:51.043880"
         oFrontView.y = 150
         ' Update the view
         oFrontViewGB.Update 
-    
+
 ```
 
-```vbscript
     End Sub
-    
-```
-
-    
-
-```

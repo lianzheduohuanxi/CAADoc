@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "Print Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR7"
@@ -6,11 +7,14 @@ version: "V5R7"
 tags: ["CATIPrinterManager"]
 source_file: "Doc/online/CAACenAPIChangesR7/Print.htm"
 converted: "2026-05-11T17:33:52.222046"
----
+```
 
+---
+tags: ["CATIPrinterManager"]
+source_file: "Doc/online/CAACenAPIChangesR7/Print.htm"
+converted: "2026-05-11T17:33:52.222046"
 CAA API Modifications|  Print  |   
----|---|---  
-  
+
 * * *
 
 **Entity|  Modification| To Do** | Print/Protected/CATIPrinterManager.h/CATIPrinterManager/IsExtendedOptionsSupport| NPVM| Implement it when entity is implemented or inherited  

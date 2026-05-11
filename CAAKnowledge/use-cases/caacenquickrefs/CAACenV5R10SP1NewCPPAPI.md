@@ -1,15 +1,19 @@
 ---
+```vbscript
 title: "New C++ Authorized APIs in CAA V5R10 SP1"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIMSHSelectedNode", "CATIMSHSelectedFace", "CATInitBatchOnHost", "CATICst_var", "CATIMfgMacroMotionsGeomMapping", "CATIPDMUnixNTMapping", "CATIRSur", "CATIMfgMacrosTabPage", "CATIAVPMBOProductClass", "CATIMSHSelectedEdge", "CATIBRepAccess"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R10SP1NewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.042281"
----
+```
 
+---
+tags: ["CATIMSHSelectedNode", "CATIMSHSelectedFace", "CATInitBatchOnHost", "CATICst_var", "CATIMfgMacroMotionsGeomMapping", "CATIPDMUnixNTMapping", "CATIRSur", "CATIMfgMacrosTabPage", "CATIAVPMBOProductClass", "CATIMSHSelectedEdge", "CATIBRepAccess"]
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R10SP1NewCPPAPI.htm"
+converted: "2026-05-11T17:33:47.042281"
 CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R10 SP1  
----|---  
-  
+
 * * *
 
 The following are the new CAA V5R10 SP1 C++ Authorized APIs, compared with CAA V5R10 at GA level.
@@ -56,7 +60,7 @@ The following are the new CAA V5R10 SP1 C++ Authorized APIs, compared with CAA V
 History Version: **1** [Nov 2002] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2002, Dassault Systmes. All rights reserved._

@@ -1,16 +1,23 @@
 ---
+```vbscript
 title: "The Imakefile.mk Special File"
 category: "use-case"
 module: "CAABtlTechArticles"
 tags: []
 source_file: "Doc/online/CAABtlTechArticles/CAABtlMANimakefile.htm"
 converted: "2026-05-11T17:33:46.091758"
----
+```
 
+---
+tags: []
+source_file: "Doc/online/CAABtlTechArticles/CAABtlMANimakefile.htm"
+converted: "2026-05-11T17:33:46.091758"
 RADE |  Multi-Workspace Application Builder |  The Imakefile.mk Special File _How to control the compilation of programs_  
----|---|---  
+
+converted: "2026-05-11T17:33:46.091758"
+RADE |  Multi-Workspace Application Builder |  The Imakefile.mk Special File _How to control the compilation of programs_
 Technical Article  
-  
+
 * * *
 
 Abstract The **Imakefile.mk** file is a text file which must be defined for each module in a framework and whose purpose is to describe what must be produced (by [mkmk](CAABtlMkmk.md)) from this module. The aim of this paper is to explain how to start with this file and secondly how to use advanced features. Before to start building your program, we advise you to read both the first part of this paper (including few samples) and the use of [mkmk](CAABtlMkmk.md).
@@ -28,7 +35,6 @@ Abstract The **Imakefile.mk** file is a text file which must be defined for each
     * Variables interpreted by mkmk
   * **In Short**
 
-  
 ---  
 Why this kind of file? Every module should be associated with a **Imakefile.mk** file before attempt to build with the CAA Workbench Code Builder mkmk. The Imakefile.mk contains make-like macros which are used at compilation time and build time. So the Imakefile.mk syntax must comply to the global syntax of makefiles. Like explained in [mkmk](CAABtlMkmk.htm#Hide operating system specificities) paper, our environment proposes the same compiler for all operating systems where CNext can be run. This is a convenient way for developers to build their programs since they do not have to learn how to use different compilers and how to write (and keep up to date) makefiles. However all cannot be done by mkmk and users must explain at least what they want to generate. Few samples Here are the most basic samples of Imakefile.mk files you could have to write regarding the type of data to generate. Location ![](images/FileTree17.gif) How to build a shared library The type of result is specified by a variable named `_BUILT_OBJECT_TYPE_`. The most basic Imakefile.mk contains just one line:
 
@@ -61,12 +67,13 @@ The Imakefile.mk syntax proposes a set of keyword (one per language) to add such
 
 Syntax and variables Syntax rules
 
+Syntax and variables Syntax rules
   1. A variable can be defined from a previously defined variable. 
-         
+
          _VAR2=$(VAR1)_
 
   2. The makefile syntax does not allow to define a variable from itself. Definition such as the following ones are not allowed: 
-         
+
          _VAR1=val1 val2_
          _VAR1=$(VAR1) val3_
 
@@ -123,7 +130,7 @@ optional
 >   2. The s1 symbol moves from m1 (library1) to m2 (library2).
 >   3. So library3 must be rebuilt to be correct at the execution time.
 > 
-  
+
 > ---|---  
 > This macro must be included always in Fortran modules and never in other modules for performance reasons. With C++ programs it is not necessary to force the rebuild.
 
@@ -151,7 +158,7 @@ optional
 > express grammar | `_LOCAL_CKMFLAGS_`  
 > yacc grammar (on UNIX only) | `_LOCAL_YFLAGS_`  
 > lex grammar (on UNIX only) | `_LOCAL_LFLAGS_`  
-  
+
 optional
 
 > `_LOCAL_LDFLAGS_`= additive link-time options
@@ -182,64 +189,34 @@ optional
 >     ---  
 >     
 >       
-    
-    
+
       [Top]
-      
-    
+
     * * *
-    
-    
-      
+
       In Short
-      
-    
-    
-        
+
         * Mkmk needs an Imakefile.mk file for every module.
-    
-        
+
         * The minimum required is to specify what to built (cf macro _BUILT_OBJECT_TYPE_).
-    
-        
+
         * You can expressed specific sections for all (supported) operating
               systems;
-    
-        
+
         * You can add your own preprocessing variables as well as external
               libraries.
-    
-      
-    
+
       [Top
-      
-    
+
     * * *
-    
-    
-      
+
       History
-      
-        
+
           Version: **1** [Mar 2000]
           | Document created
-          
-    
-        
+
           [Top]
-          
-    
-      
-      
-    
+
     * * *
-    
-    
-      
+
       _Copyright  2000, Dassault Systmes. All rights reserved._
-      
-    
-    
-    
-    
-    

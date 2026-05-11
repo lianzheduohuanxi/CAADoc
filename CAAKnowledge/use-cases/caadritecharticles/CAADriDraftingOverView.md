@@ -1,10 +1,13 @@
 ---
+```vbscript
 title: "Drafting Modeler Overview"
 category: "concept"
 module: "CAADriTechArticles"
 tags: ["CATISketchEditor", "CATIDftDrawing", "CATIABase", "CATIADrawingComponent", "CATIDrwAnnotationFactory", "CATI2DWFFactory", "CATIGenerSpec", "CATIDrwAnnotation", "CATIDrwAddIn", "CATI2Dxxx", "CATIDrwFactory", "CATIView", "CATIDftMultiSheet", "CATIDrwAnnotationComponent", "CATIDftGenViewFactory", "CATI2DConstraintFactory", "CAADraftingInterfaces", "CATISketch", "CATIDftSheet"]
 source_file: "Doc/online/CAADriTechArticles/CAADriDraftingOverView.htm"
 converted: "2026-05-11T17:31:51.038395"
+```
+
 ---
 # Mechanical Design
 
@@ -17,7 +20,7 @@ converted: "2026-05-11T17:31:51.038395"
 _Describing the foundations of the Drafting Modeler_  
 ---|---|---  
 Technical Article  
-  
+
 * * *
 ### Abstract
 
@@ -36,9 +39,8 @@ This article discusses the Drafting modeler foundations.  
   * **References**
   * **In Short**
 
-  
 ---  
-  
+
 * * *
 ### Drafting Modeler Overview
 
@@ -46,15 +48,19 @@ The Drafting application is in relation with several domains. The Drafting model
 
 ![](images/DraftingEcosystem.gif)  
 ---  
+The Drafting application is in relation with several domains. The Drafting modeler enables you to automate tasks linked to these domains. See below the added value of the Drafting modeler.
 Main domains linked to the Drafting application    
+
 ![](images/DraftingAddedValue.gif)  
+Main domains linked to the Drafting application
 Added value of the Drafting modeler    
-  
+
 The Drafting modeler manages geometry, constraint, annotation, dress-up and structuring objects (Sheet, View, Detail Sheet, Ditto). All elements created by the Drafting modeler are fully integrated in the Drawing document. That means, they will recognized by internal mechanism such as sketcher picking assistant, dimensioning, associative orientation and positioning and  constraints.
 
   The Drafting workbench is loaded and the current drawing sheet (Sheet.1) opens. The drawing specification tree is displayed to the left of the sheet. This tree shows aggregations between structuring objects. "Front View" view  of "Sheet.1" sheet is the active view of the active sheet: That means all elements created by indication will be aggregated on this view. At the top of the document, a tab page manages the active sheet.      
----|---  
-  
+
+The Drafting modeler manages geometry, constraint, annotation, dress-up and structuring objects (Sheet, View, Detail Sheet, Ditto). All elements created by the Drafting modeler are fully integrated in the Drawing document. That means, they will recognized by internal mechanism such as sketcher picking assistant, dimensioning, associative orientation and positioning and  constraints.
+The Drafting workbench is loaded and the current drawing sheet (Sheet.1) opens. The drawing specification tree is displayed to the left of the sheet. This tree shows aggregations between structuring objects. "Front View" view  of "Sheet.1" sheet is the active view of the active sheet: That means all elements created by indication will be aggregated on this view. At the top of the document, a tab page manages the active sheet.
 A drawing document is a collection of sheets, along with information on the drafting standard (ISO, ANSI, ASME and JIS).
 
 The sheet corresponds to the paper space, where the following elements are positioned:
@@ -71,8 +77,6 @@ The view may contain:
   * **Annotations** : All elements containing text information: dimensions, texts, roughness symbols, welding symbols.
   * **Dress up** : Area fill axis lines, center lines, arrows, threads.
 
- 
-
 [Top]
 ### Drafting Product Prerequisites
 
@@ -81,6 +85,7 @@ The drafting application is managed by two products:
   * Interactive drafting product that addresses 2D design and drawing production requirements.
   * Generative drafting product that provides functionalities to generate drawings from 3D parts and assembly definitions.
 
+The drafting application is managed by two products:
 These two products are prerequisite to develop an application based on Drafting modeler.
 
 Two frameworks contain the drafting modeler API:
@@ -106,6 +111,7 @@ The following steps are necessary to complete the drawing creation:
   * Import a drawing standard [[1](../CAADriUseCases/CAADriStructure.htm#Step3)].
   * Get the available format from the standard and apply it to the first sheet [[1](../CAADriUseCases/CAADriStructure.htm#Step4)].
 
+The following steps are necessary to complete the drawing creation:
 The _CATIDrwFactory_ interface implemented on drawing container enables you to create views or sheets and any objects which are not aggregated by a view. for example sheet, view, pattern, detail or relations.
 
 _Note: To create a sheet, it is better to use`the AddSheet` method of the CATIDftDrawing interface to take into account the sheet page manager [[1](../CAADriUseCases/CAADriStructure.htm#Step5)]._
@@ -114,8 +120,9 @@ A sheet aggregates views and a view aggregates all objects instantiated in it. T
 
 ![](images/StructuringObjectUML.gif)  
 ---  
+A sheet aggregates views and a view aggregates all objects instantiated in it. There is always an active view in a sheet. To create objects directly in a sheet, the main view of the sheet has to be activated.
 This figure shows the UML diagram of drafting structuring objects.  
-  
+
 A view inherits from sketch to manages 2D geometry and 2D constraints. Two kinds of geometry coexist in a view:
 
   * 2D geometry: geometry managed by the CAA sketcher modeler.
@@ -126,21 +133,21 @@ Two kinds of interfaces allow to get information on geometry:
   * IDMxxx interfaces: these interfaces are implemented by 2D geometry as well as generative geometry.
   * CATI2Dxxx interfaces: these interfaces are only available with 2D geometry.
 
- 
-
 [Top]
 
- 
 ### Drafting 2D Compoment Objects 
 
 A 2D component is a re-usable set of geometry and annotations. This component is located in a sheet and can be edited like a view. This is why this component is called Detail View. The 2D component can be instantiated several times, each instance providing a component with a specific orientation, position and scale. The detail view can be either in the same drawing as the CATDrawing of the corresponding instances or in a separate CATDrawing.
 
+A 2D component is a re-usable set of geometry and annotations. This component is located in a sheet and can be edited like a view. This is why this component is called Detail View. The 2D component can be instantiated several times, each instance providing a component with a specific orientation, position and scale. The detail view can be either in the same drawing as the CATDrawing of the corresponding instances or in a separate CATDrawing.
 The Catalog Browser command allows to instantiate a ditto from an external CATDrawing document _CATDrawing1_ in a new Drawing document _CATDrawing2._ To do that, a special copy of _Detail Ref_ is created (_Detail Ref2_) and an instance of this copy (Ditto Inst 1). _Detail Ref2_ Detail is a **_no accessible local reference_** of the Reference Detail (Detail Ref)._See figure 1._
 
 _Figure 1_  
+
 ---  
 ![](images/detailditto.jpg)  
-  
+
+_Figure 1_
 Detail Ref 2 can not be directly modified. Only Detail Ref can be modified. When you instantiate for the second time the ditto (from Detail Ref) , in the new CATDrawing _CATDrawing 2_ , a new instance of the “copied” detail (Detail Ref2) is created (Ditto Inst 2).
 
 No object can be modified in Ditto instance except Text modifiable in instance.
@@ -148,37 +155,48 @@ No object can be modified in Ditto instance except Text modifiable in instance.
 **_Text modifiable in instance:_**
 
 A modifiable text in instance is a text with a specific attribute to inform the system to duplicate the text when a ditto is instantiated. See under the way to access to modifiable objects in instance:
-    
-    
+
     // GetModifiableObjects method allows to retrieve texts modifiable in ditto piDitto
-    
-    
+
     CATIADrawingComponent * piMyDrawComp = NULL;
     HRESULT rc = piMyDitto -> QueryInterface (IID_CATIADrawingComponent,(void**)&piMyDrawComp);
     if ( SUCCEEDED(rc) )
+
     {
+CATIADrawingComponent * piMyDrawComp = NULL;
+HRESULT rc = piMyDitto -> QueryInterface (IID_CATIADrawingComponent,(void**)&piMyDrawComp);
+if ( SUCCEEDED(rc) )
       long Count = 0;
       piMyDrawComp -> GetModifiableObjectsCount (Count);
       for ( int Idx = 1; Idx<=Count; Idx++ )
+
       {
+long Count = 0;
+piMyDrawComp -> GetModifiableObjectsCount (Count);
+for ( int Idx = 1; Idx<=Count; Idx++ )
         CATVariant Variant;
         rc = BuildVariant ((long)Idx, Variant);
         if ( SUCCEEDED(rc) )
+
         {
+CATVariant Variant;
+rc = BuildVariant ((long)Idx, Variant);
+if ( SUCCEEDED(rc) )
           CATIABase * piABase = NULL;
           rc = piMyDrawComp -> GetModifiableObject (Variant, **piABase**);
           if ( SUCCEEDED(rc) )
+
          {  
-  
+
 ---  
-  
+
 [Top]
 
- 
 ### Drafting 2D Geometry Objects 
 
 These objects are created by using 2D wire frame factory defined in SketcherInterface framework. A pointer on _CATI2DWFFactory_ interface may be obtained by using a `QueryInterface` on the view [[1](../CAADriUseCases/CAADriStructure.htm#Step7)].
 
+These objects are created by using 2D wire frame factory defined in SketcherInterface framework. A pointer on _CATI2DWFFactory_ interface may be obtained by using a `QueryInterface` on the view [[1](../CAADriUseCases/CAADriStructure.htm#Step7)].
 Notes:
 
   1. The view has to be activated to deal with 2D geometry. When a view is activated, associated sketch is in open edition, so geometry may be created.
@@ -192,6 +210,7 @@ These objects are created by using 2D constraint factory defined in SketcherInte
 [Top]
 ### Drafting Annotation objects 
 
+These objects are created by using 2D constraint factory defined in SketcherInterface framework. A pointer on _CATI2DConstraintFactory_ interface may be obtained by using a `QueryInterface` on the view. In this factory  CreateConstraint method allows to create constraint in the view.
 These objects are created by using drawing annotation factory. A pointer on _CATIDrwAnnotationFactory_ interface may be obtained by using a ` QueryInterface` on the view [[2](../CAADriUseCases/CAADriCreateDim.htm#Step5)]. All the annotations inherit from AnnotationComponent object which inherits from Annotation object. _CATIDrwAnnotation_ interface manages associative position and associative orientation between annotations or annotation and geometry. CATIDrwAnnotationComponent is dedicated to manage global informations relative to the annotation text.
 
 When an annotation is modified feature has to be rebuild to get the result [[3](../CAADriUseCases/CAADriDimDressup.htm#References)].
@@ -199,7 +218,7 @@ When an annotation is modified feature has to be rebuild to get the result [[3](
 ![](images/AnnotationObjectUML.gif)  
 ---  
                           This figure shows the UML diagram of annotation objects    
-  
+
 [Top]
 ### Drafting Dress-up objects 
 
@@ -208,6 +227,7 @@ These objects are created by using drawing annotation factory. A pointer on _CAT
 [Top]
 ### Drafting Generative Views
 
+These objects are created by using drawing annotation factory. A pointer on _CATIDrwAnnotationFactory_ interface may be obtained by using a ` QueryInterface` on the view. Sometime these elements require geometry to be created. The Center Line Creation sample explains how to create center line from 2D geometry or Generative Geometry [[4](../CAADriUseCases/CAADriCenterLine.md)].
 These views are created  from 3D data coming from Product or Part type documents. To create a Generative Front View, a view with makeUp first has to be created, then the view typed by using the SetViewType method defined in _CATIView_ interface. The SetDoc method allows to create a link between the Generative View and the 3D document. At last, define a projection plane in the view using the SetProjectionPlane  method of the _CATIGenerSpec_ interface. A pointer to _CATIGenerSpec_ interface may be retrieved from _CATIView_ interface by using GetGenerSpec method. As any view, a Generative View has to be aggregated to a sheet by using AddView method on _CATIDftSheet_ interface. To get the result of a 3D projection in the view, call the Update method on _CATIView_ interface.
 
 Particular Generative views may be easily created by using the following interface: _CATIDftGenViewFactory_ interface. This interface is implemented by the sheet object:
@@ -215,8 +235,6 @@ Particular Generative views may be easily created by using the following interfa
   1. CreateViewFrom3D: To Create a generative Drawing View from TPS view. (TPS view is a 3D view created in Functional, Tolerancing and Annotation workbench) [[5](../CAADriUseCases/CAADriCreateViewFrom3D.md)].
   2. CreateSectionView: To create a section from a parent view and a profile defined in the parent view.
   3. CreateStandAloneSectionView: To create a section view with a cutting profile associative to 3D element. This 3D element may be a a Planar Face, a 3D Sketch [[6](../CAADriUseCases/CAADriCreateSectionFrom3DSketch.md)] or Plane[[7](../CAADriUseCases/CAADriCreateSectionFromPlane.md)]  . The cutting profile is associative to the 3D element.
-
- 
 
 [Top]
 ### Drafting Generated Objects 
@@ -226,13 +244,12 @@ These objects are automatically created when a Generative View is created or upd
 [Top]
 ### Additional Notions
 
+These objects are automatically created when a Generative View is created or updated. Generative Geometry is defined from 3D Document and associated on it. Generative Geometry can not be edited, only graphic properties may be modified  [[8](../CAADriUseCases/CAADriGenGeomAccess.htm#References)].
 The _CATIDrwAddIn_ interface enables you to add a new command in drafting workbench. Interactive commands defined in CAADraftingInterfaces.edu framework have been plugged in a toolbar [[9](../CAAAfrUseCases/CAAAfrSampleAddin.md)].
 
 The _CATIDftMultiSheet_ interface, implemented by the sheet enables to keep an interactive command active when the active sheet is changing [[10](../CAADriUseCases/CAADriMultiSheetCmd.md)].
 
 [Top]
-
- 
 
 * * *
 ### References
@@ -249,7 +266,7 @@ The _CATIDftMultiSheet_ interface, implemented by the sheet enables to keep an i
 [9] |  [ Creating an Add-in](../CAAAfrUseCases/CAAAfrSampleAddin.md)  
 [10] |  [Create a Multisheet Interactive Command](../CAADriUseCases/CAADriMultiSheetCmd.md)  
 [Top]  
-  
+
 * * *
 ### In Short
 
@@ -263,7 +280,7 @@ This article has explained the foundations of the Drafting Modeler.
 Version: **1** [Mar 2004] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2004, Dassault Systmes. All rights reserved._

@@ -1,23 +1,30 @@
 ---
+```vbscript
 title: "DialogEngine Programmer's Guide"
 category: "use-case"
 module: "CAADegTechArticles"
 tags: []
 source_file: "Doc/online/CAADegTechArticles/CAADegProgrammerGuide.htm"
 converted: "2026-05-11T17:33:49.859894"
----
+```
 
+---
+tags: []
+source_file: "Doc/online/CAADegTechArticles/CAADegProgrammerGuide.htm"
+converted: "2026-05-11T17:33:49.859894"
 3D PLM Enterprise Architecture |  User Interface - Commands |  DialogEngine Programmer's Guide _Programming step-by-step_  
----|---|---  
+
+converted: "2026-05-11T17:33:49.859894"
+3D PLM Enterprise Architecture |  User Interface - Commands |  DialogEngine Programmer's Guide _Programming step-by-step_
 Technical Article  
-  
+
 * * *
 
 Abstract This article is the state dialog command programmer's guide. Organized as a step-by-step, it deals with all you can do to program your state dialog command. 
     * **Creating a State Dialog Command**
     * **In Short**.  
 ---  
-  
+
 * * *
 
 Creating a State Dialog Command Once you have designed your state dialog command and you have drawn its statechart diagram, you can go on with creating the command class. To do this, follow these steps: 
@@ -38,7 +45,7 @@ In Short A dialog state command is a dialog command designed as a state machine,
 History Version: **1** [Jan 2000] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2000, Dassault Systmes. All rights reserved._

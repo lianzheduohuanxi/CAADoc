@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "TopologicalOperators Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR7"
@@ -6,11 +7,14 @@ version: "V5R7"
 tags: []
 source_file: "Doc/online/CAACenAPIChangesR7/TopologicalOperatorsSP.htm"
 converted: "2026-05-11T17:33:52.263561"
----
+```
 
+---
+tags: []
+source_file: "Doc/online/CAACenAPIChangesR7/TopologicalOperatorsSP.htm"
+converted: "2026-05-11T17:33:52.263561"
 CAA API Modifications|  TopologicalOperators  |   
----|---|---  
-  
+
 * * *
 
 **Entity|  SP| Modification| To Do** | TopologicalOperators/Protected/CATBodyFreezeMode.h| 3| FHBD| Moved in NewTopologicalObjects to allow a widest use. It's now included in CATTopOperator.h. No impact (if you use this header, the new framework is already in your IC prerequisites).  

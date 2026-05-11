@@ -1,10 +1,13 @@
 ---
+```vbscript
 title: "Boundary Automation Objects"
 category: "use-case"
 module: "CAAScdMmrTechArticles"
 tags: []
 source_file: "Doc/online/CAAScdMmrTechArticles/CAAMmrTocBoundary.htm"
 converted: "2026-05-11T17:31:51.145153"
+```
+
 ---
 # Boundary Automation Objects
 
@@ -24,7 +27,7 @@ converted: "2026-05-11T17:31:51.145153"
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parderim.gif)![](../CAAScrAutomationImages/images/faceplan.gif)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/facecyl.gif)  
 ---  
-  
+
 **Legend**
 
 ![](../CAAScrAutomationImages/images/yellbox.gif) Collection  

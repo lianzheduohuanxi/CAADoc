@@ -1,17 +1,19 @@
 ---
+```vbscript
 title: "Creating a Schematic Component Instance (Placement)"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAADoc", "CAASCH_Sample", "CAASCH_RouteForPlacement2", "CAAScdSchUseCases", "CATIA", "CAASchAppBase", "CAASCHEDUApp", "CAASchPlaceComponent", "CAASchPlatformModeler", "CATIASchComponent2", "CAASchAppUtilities"]
 source_file: "Doc/online/CAAScdSchUseCases/CAASchPlaceComponent.htm"
 converted: "2026-05-11T17:31:51.433971"
+```
+
 ---
 ## Schematics Platform Modeler
 
 | 
 ## Creating a Schematic Component Instance (Placement)  
-  
-  
+
 * * *
 
  This macro shows you how to create a component instance in a 2D viewer of a Schematic document. It also shows how to create an instance and connect that to an existing one at the same time.To create a Schematic component instance, its reference component needs to be identified. This use case illustrates how to specify that reference based on a Schematic component catalog. ![](images/CAASchPlaceComponent_01.jpg) In this use case, the "Blocking Valve" and the "Control Valve" component references will be used.  
@@ -35,48 +37,67 @@ converted: "2026-05-11T17:31:51.433971"
 [CAASchPlaceComponent.CATScript ](CAASchPlaceComponentSource.md) is located in the CAAScdSchUseCases module. [Execute macro](macros/CAASchPlaceComponent.CATScript) (windows only).  
  CAASchPlaceComponent includes the following steps:
 
+CAASchPlaceComponent includes the following steps:
   1. Prolog
   2. Place a Schematic component instance in free space (not connected to any other object).
   3. Place a Schematic component instance and connect it to instance created in previous step.
 
 #### Prolog
 
+2. Place a Schematic component instance in free space (not connected to any other object).
+3. Place a Schematic component instance and connect it to instance created in previous step.
 The macro first loads two documents: CAASCH_Sample.catalog and CAASCH_RouteForPlacement2.CATProduct.  | 
-    
-    
+
         ...
+The macro first loads two documents: CAASCH_Sample.catalog and CAASCH_RouteForPlacement2.CATProduct.  |
         ' ------------------------------------------------------------------------- 
         ' Open the schematic document 
+
 ```vbscript
         Dim sCtlgFilePath
         sCtlgFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
-                "online\CAAScdSchUseCases\samples\CAASCH_Sample.catalog")
-    
-        Dim objSchCtlgDoc As Document
-        Set objSchCtlgDoc = CATIA.Documents.Open(sCtlgFilePath)
-    
 ```
 
+                "online\CAAScdSchUseCases\samples\CAASCH_Sample.catalog")
+
+```vbscript
+Dim sCtlgFilePath
+sCtlgFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+        Dim objSchCtlgDoc As Document
+        Set objSchCtlgDoc = CATIA.Documents.Open(sCtlgFilePath)
+
+```
+
+```vbscript
+Dim objSchCtlgDoc As Document
+Set objSchCtlgDoc = CATIA.Documents.Open(sCtlgFilePath)
         ' Open main schematic P&ID design document (for new component instances created here)
+```
+
 ```vbscript
         Dim sFilePath
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+```
+
                 "online\CAAScdSchUseCases\samples\CAASCH_RouteForPlacement2.CATProduct")
-    
+
+```vbscript
+Dim sFilePath
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
         Dim objSchDoc As Document
         Set objSchDoc = CATIA.Documents.Open(sFilePath)
-        ...  
-  
 ```
 
-```
+        ...  
 
 ---  
-  
+
 Next, the macro acquires the schematic root object from the document. The schematic root is the top node of the object instance tree in a schematic document.
 
     ...  
+Next, the macro acquires the schematic root object from the document. The schematic root is the top node of the object instance tree in a schematic document.
     ' Find the top node of the schematic object tree - schematic root.  
+
 ```vbscript
     Dim objPrdRoot As Product  
     Dim objSchRoot As SchematicRoot  
@@ -86,10 +107,9 @@ Next, the macro acquires the schematic root object from the document. The schema
         Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")  
       End If  
     End If  
-    ...  
 ```
 
-```
+    ...  
 
 ---  
 #### Place a Schematic component instance in free space (not connected to any other object).
@@ -105,6 +125,8 @@ The SchematicRoot interface provides the GetCompSymbolFromCatalog method to retr
 
 ```vbscript
        Set objSchGRRCtlg = objSchRoot.GetCompSymbolFromCatalog ("Blocking Valve",objSchCtlgDoc)  
+```
+
     ...  
 ```vbscript
          '---------------------------------------------------------------------  
@@ -115,12 +137,9 @@ The SchematicRoot interface provides the GetCompSymbolFromCatalog method to retr
 ```
 
     ...  
-```
-
-```
 
 ---  
-  
+
 Method PlaceInSpace is then called to create a new instance of the "Blocking Valve" reference component in the design document. Note that the placement position and orientation are defined by a 6-words double-array (db6Array) which is an input to the method.
 ```vbscript
     '--------------------------------------------------------------------------  
@@ -139,6 +158,8 @@ Method PlaceInSpace is then called to create a new instance of the "Blocking Val
     db6Array(3)=1.0  
     db6Array(4)=145.0  
     db6Array(5)=130.0  
+```
+
 ```vbscript
            '-------------------------------------------------------------------  
            ' Place an instance of the catalog reference in an empty space in    
@@ -150,19 +171,21 @@ Method PlaceInSpace is then called to create a new instance of the "Blocking Val
 ```
 
     ...  
+```vbscript
+Set objSchComp2Ref = objSchRoot.GetInterface ("CATIASchComponent2",objSchCntblRef)
+If ( Not ( objSchComp2Ref Is Nothing ) ) Then
               objSchComp2Ref.PlaceInSpace objSchGRRCtlg,db6Array,objSchDoc,objSchCompInstA  
-    ...  
-  
 ```
+
+    ...  
 
 ```vbscript
            End If    
          End If  
        End If  
-    ...  
 ```
 
-```
+    ...  
 
 ---  
 #### Place a Schematic component instance and connect it to instance created in previous step
@@ -172,6 +195,8 @@ As in previous step, the macro find the reference component from the catalog by 
     ...  
 ```vbscript
        Set objSchGRRCVCtlg = objSchRoot.GetCompSymbolFromCatalog ("Control Valve",objSchCtlgDoc)  
+```
+
     ...  
 ```vbscript
          '---------------------------------------------------------------------  
@@ -182,12 +207,9 @@ As in previous step, the macro find the reference component from the catalog by 
 ```
 
     ...  
-```
-
-```
 
 ---  
-  
+
 Unlike previous step, instead of specifying a placement position, the macro obtains the SchComponent interface from the "Blocking Valve" component instance (created in previous step) and creates an Control Valve component instance by calling the PlaceOnComponentWithInfo method of the interface. 
 
 In the comment section of the following code segments, instance A refers to "Blocking Valve" instance that was created in previous step and instance B refers to "Control Valve" instance the macro is about to create.
@@ -227,23 +249,27 @@ In the comment section of the following code segments, instance A refers to "Blo
               ' -- step 2   
               objSchCompatInstA.IsTargetOKForPlace objSchGRRCompInstA, _  
                 objCompRefPlaceInfo, objCompatInfo, bYesCompat  
-  
+
               Dim db2Pt(2) As CATSafeArrayVariant  
               '-- 6.50 is the relative x coordinate of the right connector  
               '-- from the symbol origin of the "Blocking Valve" instance.  
               db2Pt(0) = 145.0 + 6.50  
               db2Pt(1) = 130.0  
-  
+
 ```
 
 ```vbscript
               If ( bYesCompat ) Then  
+```
+
     ...  
+```vbscript
+If ( bYesCompat ) Then
                  bFindAllSolutions = false  
                  ' -- step 3   
                  objSchCompatInstA.GetBestFitPlaceInfo db2Pt, objCompatInfo, _  
                    objFinalPlaceInfo, bFindAllSolutions  
-  
+
 ```
 
 ```vbscript
@@ -251,13 +277,12 @@ In the comment section of the following code segments, instance A refers to "Blo
                     ' -- step 4   
                     Set objSchCompInstB = objSchCompCVRef.PlaceOnComponentWithInfo _  
                       (objFinalPlaceInfo)  
-    ...  
 ```
 
-```
+    ...  
 
 ---  
-  
+
 [Top]
 
 * * *
@@ -275,7 +300,7 @@ This use case shows how to create component instances. A message logging the sta
 [1] | [ Replaying a Macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2001, Dassault Systmes. All rights reserved._

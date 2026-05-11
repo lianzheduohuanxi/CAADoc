@@ -1,15 +1,19 @@
 ---
+```vbscript
 title: "New C++ Authorized APIs in CAA V5-6R2014 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATICGMPersistentOperator", "CATICGMAdvancedRemoveFaceOpe", "CATISpecObject", "CATIMmiMechanicalSet", "CATIOsmExtensionFactory", "CATIProviders", "CATISpecAttribute", "CATIWflUserExit", "CATIDescendants", "CATIReplace", "CATITPSSetGlobalCopy", "CATITPSOrientedLinearDimension", "CATIVpmLightNavigationServices", "CATIMmiViewServices", "CATIConnector", "CATIMfgLatheMultiTurSpiMachineMgt", "CATISpecUpdate", "CATIClientContainer", "CATISpecAttribute_var", "CATIUpdateProvider"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R24GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.553018"
----
+```
 
+---
+tags: ["CATICGMPersistentOperator", "CATICGMAdvancedRemoveFaceOpe", "CATISpecObject", "CATIMmiMechanicalSet", "CATIOsmExtensionFactory", "CATIProviders", "CATISpecAttribute", "CATIWflUserExit", "CATIDescendants", "CATIReplace", "CATITPSSetGlobalCopy", "CATITPSOrientedLinearDimension", "CATIVpmLightNavigationServices", "CATIMmiViewServices", "CATIConnector", "CATIMfgLatheMultiTurSpiMachineMgt", "CATISpecUpdate", "CATIClientContainer", "CATISpecAttribute_var", "CATIUpdateProvider"]
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R24GANewCPPAPI.htm"
+converted: "2026-05-11T17:33:47.553018"
 CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5-6R2014 GA  
----|---  
-  
+
 * * *
 
 The following are the new CAA V5-6R2014 GA C++ Authorized APIs, compared with CAA V5-6R2013 at GA level.
@@ -208,7 +212,7 @@ The following are the new CAA V5-6R2014 GA C++ Authorized APIs, compared with CA
 History Version: **1** [Dec 2013] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright © 1999-2013, Dassault Systèmes. All rights reserved._  

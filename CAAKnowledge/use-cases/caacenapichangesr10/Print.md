@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "Print Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR10"
@@ -6,11 +7,14 @@ version: "V5R10"
 tags: ["CATIPrinterManager", "CATIPrintable", "CATIPrintables"]
 source_file: "Doc/online/CAACenAPIChangesR10/Print.htm"
 converted: "2026-05-11T17:33:50.250769"
----
+```
 
+---
+tags: ["CATIPrinterManager", "CATIPrintable", "CATIPrintables"]
+source_file: "Doc/online/CAACenAPIChangesR10/Print.htm"
+converted: "2026-05-11T17:33:50.250769"
 CAA C++ API Modifications |  Print |   
----|---|---  
-  
+
 * * *
 
 ** Entity | SP | Modification | To Do** | Print/Protected/CATIPrintable.h | GA | FHBD | [Split Print/PrintBase](../CAACenQuickRefs/CAACenWhatsNew.htm#PrintSplit)  

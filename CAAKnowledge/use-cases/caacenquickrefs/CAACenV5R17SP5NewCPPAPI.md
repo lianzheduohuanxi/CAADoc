@@ -1,15 +1,19 @@
 ---
+```vbscript
 title: "New C++ Authorized APIs in CAA V5R17 SP5"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATImmENOVIAProvider", "CATIPLMIdentificator", "CAACompositesItf", "CATICciCompositesWorkbenchAddin", "CATIA"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R17SP5NewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.342636"
----
+```
 
+---
+tags: ["CATImmENOVIAProvider", "CATIPLMIdentificator", "CAACompositesItf", "CATICciCompositesWorkbenchAddin", "CATIA"]
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R17SP5NewCPPAPI.htm"
+converted: "2026-05-11T17:33:47.342636"
 CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R17 SP5  
----|---  
-  
+
 * * *
 
 The following are the new CAA V5R17 SP5 C++ Authorized APIs, compared with CAA V5R17 at SP4 level.
@@ -36,7 +40,7 @@ The following are the new CAA V5R17 SP5 C++ Authorized APIs, compared with CAA V
 History Version: **1** [Apr 2007] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright © 1999-2007, Dassault Systèmes. All rights reserved._  

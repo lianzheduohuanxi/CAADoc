@@ -1,12 +1,14 @@
 ---
+```vbscript
 title: "CAAAniPostProBasicReport.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniPostProBasicReport", "CAAScdAniUseCases"]
 source_file: "Doc/online/CAAScdAniUseCases/CAAAniPostProBasicReportSource.htm"
 converted: "2026-05-11T17:31:51.743555"
----
+```
 
+---
 ```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2000
     ' ***********************************************************************
@@ -17,71 +19,69 @@ converted: "2026-05-11T17:31:51.743555"
     '   Locales:      English 
     '   CATIA Level:  V5R16
     ' ***********************************************************************
-    
+
 ```
 
-    
-```vbscript
     Sub CATMain()
     ' ----------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
-    
+
       sDocPath=CATIA.SystemService.Environ("CATDocView")
       sOut = CATIA.SystemService.Environ("CATTemp")
-    
+
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
         End If
     ' ----------------------------------------------------------- 
-    
+
 ```
 
+```vbscript
+End If
+' -----------------------------------------------------------
     ' Open the CATAnalysis Document
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis")
-```vbscript
-    Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
-    
-    Set fileSystem1 = CATIA.FileSystem
-    Set folder1 = fileSystem1.GetFolder(sOut)
-    
 ```
 
-    
-    
+```vbscript
+    Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+
+    Set fileSystem1 = CATIA.FileSystem
+    Set folder1 = fileSystem1.GetFolder(sOut)
+
+```
+
 ```vbscript
     Set oAnalysisManager = oAnalysisDocument.Analysis
-    
+
     Set oAnalysisModels = oAnalysisManager.AnalysisModels
     Set oAnalysisModel = oAnalysisModels.Item(1)
     Set oAnalysisPostManager = oAnalysisModel.PostManager
-    
+
     Set oAnalysisCases = oAnalysisModel.AnalysisCases
     Set oAnalysisCase = oAnalysisCases.Item(1)
-    
+
 ```
 
+```vbscript
+Set oAnalysisCases = oAnalysisModel.AnalysisCases
+Set oAnalysisCase = oAnalysisCases.Item(1)
     oAnalysisPostManager.AddExistingCaseForReport oAnalysisCase
-    
-    
+
     'basic report on frequency case saved in folder1, title=test1, no image added
     '===============================================
     oAnalysisPostManager.BuildReport folder1, "Test1", False
-    
-    
+
     'basic report on frequency case saved in folder1, title=test2, add created images
     '=================================================
     oAnalysisPostManager.BuildReport folder1, "test2", True
-    
-    
-    
+
     'basic report on frequency case saved in folder1, title=test3, no image added (old method)
     '======================================================
     oAnalysisPostManager.ExtractHTMLReport folder1, "test3"
-    
-```vbscript
-    End Sub
-    
-```
 
 ```
+
+    End Sub

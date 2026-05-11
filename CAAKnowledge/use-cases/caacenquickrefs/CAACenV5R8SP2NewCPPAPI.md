@@ -1,15 +1,19 @@
 ---
+```vbscript
 title: "New C++ Authorized APIs in CAA V5R8 SP2"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIFunctActionsGroup", "CATIFunctActionsGroups", "CATIFunctMultiRepMgr", "CATIFunctVariant", "CATIFunctScript", "CATIMfgTPModification", "CATIFunctFacet", "CATIFunctAction", "CATIFunctAssociation", "CATIKnowledgeAdvisorAddin", "CATIFunctActions", "CATIMfgFeedAndSpeedTabPage", "CATIVpmSCLogin", "CATIValue", "CATIFunctAssociations", "CATIDftElementWithStandard", "CATIFunctVariants", "CATIEdiAssemblyConnector", "CATIMfgTPMultipleMotionWithProfileData", "CATIFunctDescription"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R8SP2NewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.646130"
----
+```
 
+---
+tags: ["CATIFunctActionsGroup", "CATIFunctActionsGroups", "CATIFunctMultiRepMgr", "CATIFunctVariant", "CATIFunctScript", "CATIMfgTPModification", "CATIFunctFacet", "CATIFunctAction", "CATIFunctAssociation", "CATIKnowledgeAdvisorAddin", "CATIFunctActions", "CATIMfgFeedAndSpeedTabPage", "CATIVpmSCLogin", "CATIValue", "CATIFunctAssociations", "CATIDftElementWithStandard", "CATIFunctVariants", "CATIEdiAssemblyConnector", "CATIMfgTPMultipleMotionWithProfileData", "CATIFunctDescription"]
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R8SP2NewCPPAPI.htm"
+converted: "2026-05-11T17:33:47.646130"
 CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R8 SP2  
----|---  
-  
+
 * * *
 
 The following are the new CAA V5R8 SP2 C++ Authorized APIs, compared with CAA V5R8 at SP1 level.
@@ -121,7 +125,7 @@ The following are the new CAA V5R8 SP2 C++ Authorized APIs, compared with CAA V5
 History Version: **1** [Mar 2002] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2002, Dassault Systmes. All rights reserved._

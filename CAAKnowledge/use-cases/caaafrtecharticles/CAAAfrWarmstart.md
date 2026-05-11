@@ -1,10 +1,13 @@
 ---
+```vbscript
 title: "Warm Start Incremental Backup"
 category: "use-case"
 module: "CAAAfrTechArticles"
 tags: ["CATIContainer", "CATIdent", "CAAMyCommand", "CATInit"]
 source_file: "Doc/online/CAAAfrTechArticles/CAAAfrWarmstart.htm"
 converted: "2026-05-11T17:17:55.951704"
+```
+
 ---
 # 3D PLM Enterprise Architecture
 
@@ -17,7 +20,7 @@ converted: "2026-05-11T17:17:55.951704"
 _Principles and CAA Integration_  
 ---|---|---  
 Technical Article  
-  
+
 * * *
 ### Abstract
 
@@ -39,9 +42,8 @@ This article first presents principles and mechanisms for warm start incremental
   * **In Short**
   * **References**
 
-  
 ---  
-  
+
 * * *
 ### Incremental Warm Start Principles
 
@@ -52,6 +54,7 @@ To resolve these problems the incremental warm start has been created. Its objec
   * No CPU over cost perceptible for the end user,
   * No loss of interactions.
 
+To resolve these problems the incremental warm start has been created. Its objectives are:
 All open documents are copied in a temporary directory, and all modifications since the document was opened are logged in a log file. These operations involve a minimum inconvenience for the end user when opening documents (direct copy without loading), and the logging of document modifications at each interaction is not perceptible. 
 
 Regarding the restore behavior:
@@ -87,12 +90,15 @@ Fig.1 Activation through Tools/Options ![](images/CAAAfrWarmStartTOEntoure.jpg)
 The aim of this section is first to give an internal description of the data which allow us to support the incremental warm start, and then to explain how this data is used during a session. 
 #### Backup Data
 
+The aim of this section is first to give an internal description of the data which allow us to support the incremental warm start, and then to explain how this data is used during a session.
 Data to do an incremental backup is stored in the CNext02.roll directory located in the `CATTemp` environment variable which is by default:
 
 Unix | : | $HOME/CATTemp  
----|---|---  
+
+Data to do an incremental backup is stored in the CNext02.roll directory located in the `CATTemp` environment variable which is by default:
+Unix | : | $HOME/CATTemp
 Windows | : | DriveName/Documents and Settings\LogonName\Local Settings\Application Data\DassaultSystemes\CATTemp  
-  
+
 CNext02.roll contains:
 
   * **Documents**  
@@ -103,20 +109,24 @@ CNext02.roll contains:
 
 This file contains all modifications on the documents since they were copied to CNext02.roll. Moreover, it contains opening and closure orders on documents. 
 
+This file contains all modifications on the documents since they were copied to CNext02.roll. Moreover, it contains opening and closure orders on documents.
 Fig.2 shows how operations in this file are grouped in lots. Each lot is a "transaction" done on a document. The ith transaction can concern a document, and the i+1th another one. 
 
 It should be noted that this file can reach a great size if the end user works a long time without saving documents.
 
   * A **Undoredo.log  **file
 
+It should be noted that this file can reach a great size if the end user works a long time without saving documents.
 The Autosave.log file stores operations without taking into account the undo or redo commands that the end user can do. Take the following example: the end user creates a point, and then cancels the operation. The creation is stored in the Autosave.log file, but not the reverse operation. It is the role of the Undoredo.log file to keep the "track" of transactions.
 
 The Undoredo.log file, smaller than the Autosave.log file, contains information on each transaction contained in the Autosave.log file. It also keeps track of the last closed (or validated) transaction. An opened transaction is a no validated transaction, and therefore not replayed at the restoration stage. It is detailed in the Transaction section.
 
 Fig.2 Warm start Data Diagram ![](images/CAAAfrWarmStartDiagram.jpg)  
+
 ---  
 #### Activation,  Deactivation,  Re-initialization Mechanisms
 
+Fig.2 Warm start Data Diagram ![](images/CAAAfrWarmStartDiagram.jpg)
 Now that backup data is described, we can explained how it is used according to end user interactions.
 
   1. **The session is opened in "Incremental backup"** **mode** \- Fig.1
@@ -145,6 +155,7 @@ The Autosave.log and Undoredo.log files cannot be deleted, since there is one di
 
 (*) A re-initialization includes the destruction of the Autosave.log and Undoredo.log files and a copy from their original location of all loaded documents.
 
+The Autosave.log and Undoredo.log files cannot be deleted, since there is one dirty file left in memory. As long as there remains dirty documents in memory, a unique save is not sufficient to re-initialize (*) the warm start.
   7. **Save All**
 
 In this case, the re-initialization is possible. The Autosave.log and Undoredo.log files are deleted and the document copies are brought up to date. 
@@ -154,8 +165,11 @@ In this case, the re-initialization is possible. The Autosave.log and Undoredo.l
 All data contained in the CNext02.roll directory are deleted. The end user is informed by the following message that the incremental warm start is deactivated:
 
 Fig.3 Warm Start Deactivation Message From a Command. ![](images/CAAAfrWarmStartCommandKO.jpg)  
+
 ---  
-  
+
+All data contained in the CNext02.roll directory are deleted. The end user is informed by the following message that the incremental warm start is deactivated:
+Fig.3 Warm Start Deactivation Message From a Command. ![](images/CAAAfrWarmStartCommandKO.jpg)
 If the end user saves all the opened documents (Save All command) and leaves the no warm start compliant command, the warm start will be reactivated. As long as it is not done, the CNext02.roll directory stays empty. 
 
   9. Save All has been done, modifications are done, and **a document which is not warm start compliant is opened** (A Process document for example) 
@@ -163,23 +177,24 @@ If the end user saves all the opened documents (Save All command) and leaves the
 The incremental warm start is deactivated, and the CNext02.roll directory is emptied The end user is informed by the following message:
 
 Fig.4 Warm start Deactivation Message From a Workbench. ![](images/CAAAfrWarmStartWBKO.jpg)  
----  
-  
 
+---  
+
+Fig.4 Warm start Deactivation Message From a Workbench. ![](images/CAAAfrWarmStartWBKO.jpg)
   10. **A warm start compliant workbench is activated**
 
 Since the documents in memory are not saved, the following message appears:
 
 ![](images/CAAAfrWarmStartWBOK.jpg)  
 ---  
-  
+
+Since the documents in memory are not saved, the following message appears:
 Once all the documents are saved, the warm start is re-activated.
 
 However, if all documents are saved before the warm start compliant workbench activation, the following message appears: 
 
 ![](images/CAAAfrWarmStartWBOK1.jpg)  
 ---  
-  
 
   11. **Closing a document** when the warm start is still active
 
@@ -196,12 +211,14 @@ To understand at which moment a transaction is closed, the type of the executed 
 
 **Command Class Type** | **Transaction Closure Time**  
 ---|---  
+To understand at which moment a transaction is closed, the type of the executed command [2] must be distinguished:
 CATStateCommand   | When the command is ended  
 CATDlgDialog or CATCommand  | When the next command will open a new transaction (*)  
-  
+
 (*) For CAA commands, it can be only a state command since the transactional mechanism is not opened, and only the state commands open natively a transaction when they are activated. 
 ##### Here is the particular case of the Copy and Cut Command. 
 
+CATDlgDialog or CATCommand  | When the next command will open a new transaction (*)
   1. ##### Clipboard not kept
 
 Suppose that the end user launches the Cut or the Copy command, if the application crashes before or during the paste command, after the warm start, the Paste command will be not possible. The reason is that the Cut and Copy commands copy the selected object in the clipboard which cannot be restored by the warm start feature.     
@@ -238,6 +255,7 @@ You have nothing to do. By default, a workbench is not warm start compliant, so 
 Once you have created a command [5], you should check its integration in the warm start mechanism. This section explains you which commands are concerned, and if any, how you can use the _CATOmbWarmStartServices_ class to activate, deactivate the warm start, or validate a transaction. Commands which create applicative container, or use non V5 documents, end this section. 
 #### **What are Commands to Take Into Account?**
 
+Once you have created a command [5], you should check its integration in the warm start mechanism. This section explains you which commands are concerned, and if any, how you can use the _CATOmbWarmStartServices_ class to activate, deactivate the warm start, or validate a transaction. Commands which create applicative container, or use non V5 documents, end this section.
 Any command which modifies a V5 document, launched from a command header [6] or not, is concerned by the warm start. However, these two following cases can be excluded:
 
   1. Undefined command
@@ -247,9 +265,13 @@ For recall, an undefined command is a command which is not seen by the focus man
 
 ```
 
+```vbscript
+For recall, an undefined command is a command which is not seen by the focus manager [2]. It means that such command are never activated, deactivated or killed by this object. An example is the Search command [7]. These commands should not be concerned by the warm start, because they should not contain operations on document. Two commands should not work on the same object at the same time.
   2. Command launched from a no warm start document
 
 Please note that if today the document does not support warm start, one day it could do it. If now, you can exclude the command, it is only because the warm start will be first deactivated by the workbench of the document.
+
+```
 
 #### Why and How to Deactivate the Warm Start?
 
@@ -281,50 +303,73 @@ If one of the operations which follow is carried out in the command, the warm st
     * Document creation by the `NewFrom` method of the _CATDocumentServices_ class
 
 To deactivate the warm start, you should use the `Deactivate` method of the _CATOmbWarmStartServices_ class _._ This call must be done in the command activation. Here is an code example:
-    
-    
+
     class CAAMyCommand : public CATCommand
     {
           ...
              CATStatusChangeRC **Activate**( CATCommand *iCmd,CATNotification *iNotif);
           ...
     }  
-  
+
 ---  
-  
+
 _CAAMyCommand_ derives from CATCommand, but it can be _CATStateCommand_ or _CATDlgDialog._ The unique common point is that the command is shared or exclusive. The `Activate` method is called by the focus manager once the command is activated or reactivated after a deactivation by a shared command. In the two cases the deactivated state is tested, because the command which has interrupted the _CAAMyCommand_ command might have reactivated the warm start.
-    
-    
+
+_CAAMyCommand_ derives from CATCommand, but it can be _CATStateCommand_ or _CATDlgDialog._ The unique common point is that the command is shared or exclusive. The `Activate` method is called by the focus manager once the command is activated or reactivated after a deactivation by a shared command. In the two cases the deactivated state is tested, because the command which has interrupted the _CAAMyCommand_ command might have reactivated the warm start.
     CATStatusChangeRC CAAMyCommand::Activate( CATCommand *iCmd,CATNotification *iNotif)
+
     {
+_CAAMyCommand_ derives from CATCommand, but it can be _CATStateCommand_ or _CATDlgDialog._ The unique common point is that the command is shared or exclusive. The `Activate` method is called by the focus manager once the command is activated or reactivated after a deactivation by a shared command. In the two cases the deactivated state is tested, because the command which has interrupted the _CAAMyCommand_ command might have reactivated the warm start.
+CATStatusChangeRC CAAMyCommand::Activate( CATCommand *iCmd,CATNotification *iNotif)
        CATBoolean WarmStartActivationState = FALSE ;
        HRESULT rc = CATOmbWarmStartServices::**IsActive**(WarmStartActivationState );
        if ( SUCCEEDED(rc) && (TRUE == WarmStartActivationState) )
+
        {
+CATBoolean WarmStartActivationState = FALSE ;
+HRESULT rc = CATOmbWarmStartServices::**IsActive**(WarmStartActivationState );
+if ( SUCCEEDED(rc) && (TRUE == WarmStartActivationState) )
           CATUnicodeString WarningMessageToDisplay ;
           rc = **CATOmbWarmStartServices** ::**Deactivate**(WarningMessageToDisplay);
           if (SUCCEEDED(rc) && (0 != WarningMessageToDisplay.GetLengthInChar()) )
+
           {
+CATUnicodeString WarningMessageToDisplay ;
+rc = **CATOmbWarmStartServices** ::**Deactivate**(WarningMessageToDisplay);
+if (SUCCEEDED(rc) && (0 != WarningMessageToDisplay.GetLengthInChar()) )
              CATApplicationFrame *pFrame = CATApplicationFrame::**GetFrame**();
              if ( (NULL != pFrame ) && ( NULL != pFrame->**GetMainWindow**() ))
+
              {
+```vbscript
+if (SUCCEEDED(rc) && (0 != WarningMessageToDisplay.GetLengthInChar()) )
+CATApplicationFrame *pFrame = CATApplicationFrame::**GetFrame**();
+if ( (NULL != pFrame ) && ( NULL != pFrame->**GetMainWindow**() ))
                 CATDlgNotify * pNotify = new **CATDlgNotify**(
                                             pFrame->GetMainWindow(),
+```
+
                                             "AutoSaveId",
+```vbscript
+if ( (NULL != pFrame ) && ( NULL != pFrame->**GetMainWindow**() ))
+CATDlgNotify * pNotify = new **CATDlgNotify**(
+pFrame->GetMainWindow(),
                                       CATDlgNfyInformation|CATDlgNfyOK|CATDlgWndModal) ;
-                                            
+
                 CATUnicodeString NotifyWindowTitle= "....";
                 pNotify->**DisplayBlocked**(WarningMessageToDisplay,NotifyWindowTitle);
-                
+
                 pNotify->**RequestDelayedDestruction();**
                 pNotify = NULL ;
+```
+
              }
           }
        }
     }  
-  
+
 ---  
-  
+
 Before deactivating the warm start, you can test that it is not already deactivated. The `Deactivate` method returns a message that you should display to inform the end user. This message, Fig.4, is displayed through a _[CATDlgNotify](../CAADlgQuickRefs/CAADlgCATDlgNotify.md)_ class instance: 
 
   * The dialog parent of the _CATDlgNotify_ class instance is the object returned by the `GetMainWindow` method of the _CATApplicationFrame_ class. Refer to the technical article entitled "Understanding the Application Frame Layout " for complete details about the dialog parent of a dialog box. [8]
@@ -335,19 +380,19 @@ The `DisplayBlocked` method usage avoids setting a callback to close the window
 
 ```vbscript
 For the title of the window, you can set for example the command's NLS name. If the command is activated from a command header [6], this NLS name is the title of the command header instance [9]. 
-    
+
 ```
 
-    
     ...
           CATUnicodeString NotifyWindowTitle= "CommandClassName";
           CATString CatalogName="xxx";
           CATString MessageKey = "xxx.yyy.**Title** ";
           CATMsgCatalog::**BuildMessage**(CatalogName,MessageKey,NULL,0,NotifyWindowTitle);
+
     ...  
-  
+
 ---  
-  
+
 where 
 
   * `CommandClassName` is the name of the command class. 
@@ -358,45 +403,68 @@ where 
 
 If the command saves or closes one or several documents, it can try to activate or re-initialize the warm start. The activation will succeed if the following conditions are met:
 
+```vbscript
+If the command saves or closes one or several documents, it can try to activate or re-initialize the warm start. The activation will succeed if the following conditions are met:
   1. Warm Start option is activated, Fig.1 
   2. Command is launched from a workbench which authorizes the warm start,
   3. All documents in session are saved, or not dirty. If you close or save all the loaded documents, this last condition is of course always true. 
 
 The `Activate` method of the _CATOmbWarmStartServices_ class enables you to try to reactivate the warm start. This call must be done just after the last closure or saving. Here is a piece of code:
-    
-    
+
           CATUnicodeString WarningMessageToDisplay ;
           rc = **CATOmbWarmStartServices** ::**Activate**(WarningMessageToDisplay);
           if (SUCCEEDED(rc) && (0 != WarningMessageToDisplay.GetLengthInChar()) )
+```
+
           {
+CATUnicodeString WarningMessageToDisplay ;
+rc = **CATOmbWarmStartServices** ::**Activate**(WarningMessageToDisplay);
+if (SUCCEEDED(rc) && (0 != WarningMessageToDisplay.GetLengthInChar()) )
              CATApplicationFrame *pFrame = CATApplicationFrame::**GetFrame**();
              if ( (NULL != pFrame ) && ( NULL != pFrame->**GetMainWindow**() ))
+
              {
+```vbscript
+if (SUCCEEDED(rc) && (0 != WarningMessageToDisplay.GetLengthInChar()) )
+CATApplicationFrame *pFrame = CATApplicationFrame::**GetFrame**();
+if ( (NULL != pFrame ) && ( NULL != pFrame->**GetMainWindow**() ))
                 CATDlgNotify * pNotify = new **CATDlgNotify**(
                                             pFrame->GetMainWindow(),
+```
+
                                             "AutoSaveId",
+```vbscript
+if ( (NULL != pFrame ) && ( NULL != pFrame->**GetMainWindow**() ))
+CATDlgNotify * pNotify = new **CATDlgNotify**(
+pFrame->GetMainWindow(),
                                             CATDlgNfyInformation|CATDlgNfyOK|CATDlgWndModal) ;
-                                            
+
                 CATUnicodeString NotifyWindowTitle= "....";
                 pNotify->**DisplayBlocked**(WarningMessageToDisplay,NotifyWindowTitle);
-                
+
                 pNotify->**RequestDelayedDestruction();**
                 pNotify = NULL ;
+```
+
              }
           }
        }
     }  
-  
+
 ---  
-  
+
 Refer to the previous section for details. 
 #### Why and How to Commit a Transaction?
 
+Refer to the previous section for details.
 Normally the operations inside a command are validated at the end of the command for a state command, or at the activation of the next state command for the others type of commands. That means that as long as the validation is not made, if the V5 session is broken, the last operations will be not replayed at the backup. However, you can force this validation during a command if it is necessary.
 
 The `CommitTransaction` method of the _CATOmbWarmStartServices_ class enables you to do so. This call must be done just after the last validated operation.  
+
 #### Commands Creating Applicative Container
 
+Normally the operations inside a command are validated at the end of the command for a state command, or at the activation of the next state command for the others type of commands. That means that as long as the validation is not made, if the V5 session is broken, the last operations will be not replayed at the backup. However, you can force this validation during a command if it is necessary.
+The `CommitTransaction` method of the _CATOmbWarmStartServices_ class enables you to do so. This call must be done just after the last validated operation.
 The method to create an applicative container is the _CATCreateApplicativeContainer_ global function [10]. Once the applicative container is created you have in this order to:
 
   1. Call its initialization through the `Init` method of the _CATInit_ interface [11]
@@ -408,38 +476,54 @@ You call it only if the container implements the _CATInit_ interface. Inside thi
 This call enables the application to initialize the undo/redo and the transactional mechanism on the container. This call must always be called **after** the container initialization. If you do it before the operations done in the `Init` method will be stored in the backup data. So when the document will be reloaded, the operations in the `Init` method will be executed twice: first by the warm start restoration and a second time, by the automatically call to the `Init` method. 
 
 Here is an extract of code to create an applicative container inside a command: 
-    
-    
+
     ...
+Here is an extract of code to create an applicative container inside a command:
     CATBaseUnknown * pAppliContainer = NULL;
     CATDocument *pDocument = ... ;
     CATIdent AppliContainerType = "....";
     CATIdent AppliContainerSuperType = "....";
     CATUnicodeString AppliContainerIdentifier = "...";
-    
+
     HRESULT rc = ::**CATCreateApplicativeContainer**(&pAppliContainer,
                            pDocument , 
                            AppliContainerType, 
                            IID_CATIContainer,  
                            AppliContainerSuperType, 
                            AppliContainerIdentifier); 
-                           
+
     if ( SUCCEEDED(rc) && (NULL !=pAppliContainer) )
+
     {                    
+AppliContainerSuperType,
+AppliContainerIdentifier);
+if ( SUCCEEDED(rc) && (NULL !=pAppliContainer) )
        CATIContainer * pIContainer =  (CATIContainer *) pAppliContainer ;
-              
+
        **CATInit** * pInitOnApplicativeContainer = NULL ;                    
+```vbscript
+if ( SUCCEEDED(rc) && (NULL !=pAppliContainer) )
+CATIContainer * pIContainer =  (CATIContainer *) pAppliContainer ;
        rc = pIContainer->QueryInterface(IID_CATInit, (void**) & pInitOnApplicativeContainer);     
        if ( SUCCEEDED(rc) )
+```
+
        {
+rc = pIContainer->QueryInterface(IID_CATInit, (void**) & pInitOnApplicativeContainer);
+if ( SUCCEEDED(rc) )
           pInitOnApplicativeContainer->**Init**(FALSE);
           pInitOnApplicativeContainer->Release(); 
           pInitOnApplicativeContainer = NULL ;
+
        }
+pInitOnApplicativeContainer->**Init**(FALSE);
+pInitOnApplicativeContainer->Release();
+pInitOnApplicativeContainer = NULL ;
        rc ::**CATOmbPerformAfterContainerCreation**(pIContainer);
+
     }
     ...                   
-  
+
 ---  
 #### **Commands Using Non V5 Documents**
 
@@ -472,14 +556,14 @@ However, some operations on data are not re-playable. If the warm start is not s
 [10] | Creating Features in Applicative Container  
 [11] | Creating New Features "From Scratch" in a Product Document  
 [Top]  
-  
+
 * * *
 ### History
 
 Version: **1** [Sep 2003] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2003, Dassault Systmes. All rights reserved._

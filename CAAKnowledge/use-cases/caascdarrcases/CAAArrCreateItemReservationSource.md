@@ -1,13 +1,19 @@
 ---
+```vbscript
 title: "CAAArrCreateItemReservation.CATScript"
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CAAArrCreateItemReservation", "CATIA"]
 source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateItemReservationSource.htm"
 converted: "2026-05-11T17:31:51.552087"
----
+```
 
+---
+tags: ["CAAArrCreateItemReservation", "CATIA"]
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateItemReservationSource.htm"
+converted: "2026-05-11T17:31:51.552087"
     Option Explicit
+
 ```vbscript
     '// COPYRIGHT DASSAULT SYSTEMES  2000
     '******************************************************************************
@@ -20,12 +26,11 @@ converted: "2026-05-11T17:31:51.552087"
     ' CATIA Level:   V5R6
     ' Locale     :   English
     '******************************************************************************
-    
+
 ```
 
-    
-```vbscript
     Sub CATMain()
+
 ```vbscript
        ' On Error Resume Next
        '----------------------------------------------
@@ -37,6 +42,8 @@ converted: "2026-05-11T17:31:51.552087"
        Dim objRootProd       As Product
        Set objProdDoc      = CATIA.Documents.Add("Product")
        Set objRootProd     = objProdDoc.Product
+```
+
 ```vbscript
        '----------------------------------------------
        'Retrieving Root Product's Relative Axis and Position Information
@@ -46,39 +53,43 @@ converted: "2026-05-11T17:31:51.552087"
        Set objPosition  = objRootProd.Position
 ```
 
-    
+       '----------------------------------------------
+```vbscript
+'----------------------------------------------
+       ' Get ArrangementProduct
 ```
 
-       '----------------------------------------------
-       ' Get ArrangementProduct
 ```vbscript
        Dim objArrProd        As ArrangementProduct
        Set objArrProd   = objRootProd.GetTechnologicalObject("ArrangementProduct")
-    
+
 ```
 
+```vbscript
+Dim objArrProd        As ArrangementProduct
+Set objArrProd   = objRootProd.GetTechnologicalObject("ArrangementProduct")
        '----------------------------------------------
        ' Create Item Reservation under the Root Product
+```
+
 ```vbscript
        Dim dblItemResPos(11)  As Double
        Dim objItemRes     As ArrangementItemReservation
-    
+
 ```
 
+```vbscript
+Dim dblItemResPos(11)  As Double
+Dim objItemRes     As ArrangementItemReservation
        objPosition.GetComponents dblItemResPos
+```
+
 ```vbscript
        Set objItemRes      = objArrProd.ArrangementItemReservations.AddItemReservation(objMove, dblItemResPos, 200.0, 500.0, 200.0, 500.0, 0.0, 0.0)
        '----------------------------------------------
        ' Change Properties of ArrangementItemReservation
        objItemRes.VisuMode = CatArrangementItemReservationVisuModeFlat
-    
+
 ```
 
-```vbscript
     End Sub 
-    
-```
-
-    
-
-```

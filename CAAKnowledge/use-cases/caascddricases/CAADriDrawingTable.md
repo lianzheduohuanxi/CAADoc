@@ -1,23 +1,25 @@
 ---
+```vbscript
 title: "Creating a Drawing Table"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CATIA", "CAADriDrawingtable", "CAADriDrawingTable", "CAADriUseCases"]
 source_file: "Doc/online/CAAScdDriUseCases/CAADriDrawingTable.htm"
 converted: "2026-05-11T17:31:51.064833"
----
+```
 
+---
 | 
 ## Interactive Drafting
 
 | 
 ## Creating a Drawing Table  
-  
-  
+
 * * *
 
   This macro shows you how to create a drawing table in Drawing document. This macro creates a new drawing document. In the active view of the document we create a drawing table and specify merged cells, row sizes then column size.  
 ---|---  
+This macro shows you how to create a drawing table in Drawing document. This macro creates a new drawing document. In the active view of the document we create a drawing table and specify merged cells, row sizes then column size.
   CAADriDrawingTable is launched in CATIA [1]. No open document is needed. [CAADriDrawingTable.CATScript](CAADriDrawingTableSource.md) is located in the CAADriUseCases module.  [Execute macro](macros/CAADriDrawingTable.CATScript) (Windows only).    
   CAADriDrawingtable includes five steps:
 
@@ -32,103 +34,112 @@ converted: "2026-05-11T17:31:51.064833"
 #### Prolog
 
 | 
-    
-    
+
       ...
         ' Set the CATIA popup file alerts to False
+```vbscript
+' Set the CATIA popup file alerts to False
         ' It prevents to stop the macro at each alert during its execution
+```
+
 ```vbscript
         CATIA.DisplayFileAlerts = False
-      ...  
-  
 ```
 
-```
+      ...  
 
 ---  
-  
+
 The CATIA prompts are disabled thanks to the `DisplayFileAlerts` property of the _Application_ object set to `False`.
 #### Creating and Specifying a New Drawing Document
-    
-    
+
       ...
+The CATIA prompts are disabled thanks to the `DisplayFileAlerts` property of the _Application_ object set to `False`.
         ' Create a new drawing document
+
 ```vbscript
         Set oDrwDocument = CATIA.Documents.Add("Drawing")
         ' Set the drawing document standard
         oDrwDocument.Standard = catISO
-      ...  
-  
 ```
 
-```
+      ...  
 
 ---  
-  
+
 A new drawing document is created and its standard is set to ISO.
 #### Retrieving and Defining the Sheet
-    
-    
+
     ...
+A new drawing document is created and its standard is set to ISO.
         ' Retrieve the drawing document's sheets collection
+
 ```vbscript
         Set oDrwSheets = oDrwDocument.Sheets
+```
+
 ```vbscript
         ' Retrieve the active sheet
         Set oDrwSheet = oDrwSheets.ActiveSheet
         ' Set the sheet properties
 ```
 
+```vbscript
+' Retrieve the active sheet
+Set oDrwSheet = oDrwSheets.ActiveSheet
+' Set the sheet properties
         oDrwSheet.PaperSize = catPaperA4
         oDrwSheet.Orientation = catPaperLandscape
         oDrwSheet.Scale2 = 1
-      ...  
-  
 ```
 
-```
+      ...  
 
 ---  
-  
+
 The sheets collection is retrieved from the `oDrwDocument` object using the `Sheets` method.  
 The sheet object is retrieved from the `oDrwSheets` collection using the `ActiveSheet` method.  
 The `oDrwSheet` properties set are A4 format, landscape orientation and 1:1 scale.
+
 #### Retrieving and Defining the View
-    
-    
+
     ...
+The `oDrwSheet` properties set are A4 format, landscape orientation and 1:1 scale.
         ' Retrieve the active view of the sheet
+
 ```vbscript
         Set oDrwView = oDrwSheet.Views.ActiveView
-      ...  
-  
 ```
 
-```
+      ...  
 
 ---  
-  
+
 The view object is retrieved from the `oDrwSheet` object using the `ActiveView` method.
 #### Creating the Drawing Table
-    
-    
+
       ...
+The view object is retrieved from the `oDrwSheet` object using the `ActiveView` method.
         ' Retrieve the view's tables collection
+
 ```vbscript
         Set oDrwTables = oDrwView.Tables
         ' Create a new drawing table
         Set oDrwTable = oDrwTables.Add(107, 70, 9, 9, 5, 20)
-    
+
 ```
 
+```vbscript
+' Create a new drawing table
+Set oDrwTable = oDrwTables.Add(107, 70, 9, 9, 5, 20)
         ' Set the drawing table's name
         oDrwTable.Name = "Title Block"
-      ...  
-  
 ```
 
+      ...  
+
 ---  
-  
+
 The tables collection is retrieved from the `oDrwView` object using the `Tables` method.  
 The table object is created from the `oDrwTables` collection using the `Add` method:
 
@@ -140,20 +151,19 @@ The table object is created from the `oDrwTables` collection using the `Add` met
 
 ![](images/img007.gif)
 #### Defining the Drawing Table Update
-    
-    
+
       ...
         ' Do not update drawing table modifications
         oDrwTable.ComputeMode = CatTableComputeOFF
       ...  
-  
+
 ---  
-  
+
 The `CatTableComputeOFF` enumerate allows you to modify the drawing table without update visualization.
 #### Modifying the Drawing Table
-    
-    
+
       ...
+The `CatTableComputeOFF` enumerate allows you to modify the drawing table without update visualization.
         ' Merge drawing table's cells
         oDrwTable.MergeCells 1, 1, 2, 2
         oDrwTable.MergeCells 1, 3, 1, 7
@@ -194,10 +204,12 @@ The `CatTableComputeOFF` enumerate allows you to modify the drawing table withou
         oDrwTable.SetColumnSize 9, 15
         ' Update drawing table modifications
         oDrwTable.ComputeMode = CatTableComputeON
+
       ...  
-  
+
 ---  
-  
+
+oDrwTable.ComputeMode = CatTableComputeON
 The table's cells are merged using the `MergeCells` method.  
 Row and column sizes are modified using the `SetRowSize` and `SetColumnSize` methods.  
 The `CatTableComputeON` enumerate allows you to update drawing table visualization.
@@ -217,7 +229,7 @@ The `CatTableComputeON` enumerate allows you to update drawing table visualizati
 ![](images/img011.gif)
 
 > End of the macro.  
-  
+
 ![](../CAAScrBase/images/aendtask.gif)
 
 [Top]

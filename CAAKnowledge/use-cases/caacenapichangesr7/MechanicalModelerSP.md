@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "MechanicalModeler Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR7"
@@ -6,11 +7,14 @@ version: "V5R7"
 tags: ["CATIMfBRep", "CATIMechanicalImport", "CATIMfPointOnEdge", "CATIMfRsur", "CATIMfScopeAccess", "CATIShapeFeatureBody", "CATIMfBRepFactory", "CATInterfaceObject"]
 source_file: "Doc/online/CAACenAPIChangesR7/MechanicalModelerSP.htm"
 converted: "2026-05-11T17:33:52.156957"
----
+```
 
+---
+tags: ["CATIMfBRep", "CATIMechanicalImport", "CATIMfPointOnEdge", "CATIMfRsur", "CATIMfScopeAccess", "CATIShapeFeatureBody", "CATIMfBRepFactory", "CATInterfaceObject"]
+source_file: "Doc/online/CAACenAPIChangesR7/MechanicalModelerSP.htm"
+converted: "2026-05-11T17:33:52.156957"
 CAA API Modifications |  MechanicalModeler |   
----|---|---  
-  
+
 * * *
 
 ** Entity | SP | Modification | To Do** | MechanicalModeler/Protected/CATDimTempCst.h/CATDimTempCst/CATDimTempCst | 1 | MHBDM | [CATBoolean Migration](../CAACenQuickRefs/CAACenWhatsNew.htm#CATBoolean).No Impact  

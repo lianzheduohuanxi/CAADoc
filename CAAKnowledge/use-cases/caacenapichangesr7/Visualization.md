@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "Visualization Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR7"
@@ -6,11 +7,14 @@ version: "V5R7"
 tags: ["CATIVisPropertiesAbstract", "CATIVisu"]
 source_file: "Doc/online/CAACenAPIChangesR7/Visualization.htm"
 converted: "2026-05-11T17:33:52.273482"
----
+```
 
+---
+tags: ["CATIVisPropertiesAbstract", "CATIVisu"]
+source_file: "Doc/online/CAACenAPIChangesR7/Visualization.htm"
+converted: "2026-05-11T17:33:52.273482"
 CAA API Modifications|  Visualization  |   
----|---|---  
-  
+
 * * *
 
 **Entity|  Modification| To Do** | Visualization/Protected/CAT2DAnnotationTextGP.h/CAT2DAnnotationTextGP/CAT2DAnnotationTextGP| MHBDM|  no impact  

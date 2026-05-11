@@ -1,13 +1,16 @@
 ---
+```vbscript
 title: "Analyzing the Parameters of a Point on a Curve"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAADoc", "CAAGMModelAnalysisOpe", "CAAGMModelGemBrowser", "CAAGMModelInterfaces", "CATICGMLocalAnalysis1Db", "CATICGMLocalAnalysis1D"]
 source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelAnalysisOpe.htm"
 converted: "2026-05-11T17:33:48.237061"
+```
+
 ---
 # Analyzing the Parameters of a Point on a Curve  
-  
+
 ---  
 Use Case  
 ## Abstract
@@ -34,6 +37,7 @@ CAAGMModelAnalysisOpe is a use case of the CAAGMModelInterfaces.edu framework.
 ---|---  
 ### How to Launch CAAGMModelAnalysisOpe 
 
+This use case creates the input data to be passed to the CATICGMLocalAnalysis1D operator (a circle with a radius of 50mm), creates the operator and performs the geometric analyzes. The result can be optionally saved into an NCGM container and displayed using the CAAGMModelGemBrowser use case [3].
 To launch CAAGMModelAnalysisOpe, you will need to set up the build time environment, then compile CAAGMModelAnalysisOpe.m along with its prerequisites, set up the run time environment, and then execute the use case [4].
 
 If you simply type CAAGMModelAnalysisOpe with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example:
@@ -50,61 +54,91 @@ The CAAGMModelAnalysisOpe use case is made of a main named CAAGMModelAnalysisOpe
 where `InstallRootFolder` [4] is the folder where the API CD-ROM is installed.
 ## Step-by-Step
 
+where `InstallRootFolder` [4] is the folder where the API CD-ROM is installed.
 The initial step which consists in creating the geometry factory as well as the last step which consists in writing the model and closing the factory are described in [1]. The coding steps dedicated to the CATICGMLocalAnalysis1D operator are explained below: 
 
     1. Creating the Geometry Factory [1].
     2. Creating the Curve and the point to be analyzed
     3. Creating and Using the CATICGMLocalAnalysis1D operator
     4. Writing the Model and Closing the Factory [1].
+
 ### Creating the Curve and the Point to Be Analyzed
-    
+
     // a - Create a circle
     //
+4. Writing the Model and Closing the Factory [1].
     const double epsilon=1e-6;
     CATMathPlane plane;
     double radius = 50.;
     CATCircle * pCircle = piGeomFactory->CreateCircle(radius, plane);
+
     ...
+const double epsilon=1e-6;
+CATMathPlane plane;
+double radius = 50.;
+CATCircle * pCircle = piGeomFactory->CreateCircle(radius, plane);
     CATCrvParam paramcircle = pCircle->CreateParam(0.);
 
 The geometry is created by the `CATGeoFactory` with the CreateCircle method. No geometric point is created, the point to be analyzed is specified by its parameter.
+
 ### Creating and Using the CATICGMLocalAnalysis1D Operator
 
+CATCrvParam paramcircle = pCircle->CreateParam(0.);
+The geometry is created by the `CATGeoFactory` with the CreateCircle method. No geometric point is created, the point to be analyzed is specified by its parameter.
 The CATCGMCreateLocalAnalysis1D global function is used to create the operator.b> The normals, curvature and torsion are then analyzed and compared with the expected values which are round values easy to check for a circle. 
-    
+
     CATICGMLocalAnalysis1D * pAnalysisCircle =:: **CATCGMCreateLocalAnalysis1D**(pConfig,pCircle,paramcircle); 
+
     ...
     // c - Retrieve the main normal and the binormal and check 
     // that the angle between them must be equal to PI/2
     //
+CATICGMLocalAnalysis1D * pAnalysisCircle =:: **CATCGMCreateLocalAnalysis1D**(pConfig,pCircle,paramcircle);
     CATMathVector mainnormal = pAnalysisCircle->GetMainNormal();
     CATMathVector binormal = pAnalysisCircle->GetBiNormal();
+
     ...
     // d - Retrieve the curvature and check that it is equal to 1
     //
+CATMathVector mainnormal = pAnalysisCircle->GetMainNormal();
+CATMathVector binormal = pAnalysisCircle->GetBiNormal();
     double curvature = pAnalysisCircle->GetCurvature();
     cout << "curvature " << fabs(curvature*radius) << endl;
+
     ...
     // e - Retrieve the torsion and check that it is equal to 0
     //
+double curvature = pAnalysisCircle->GetCurvature();
+cout << "curvature " << fabs(curvature*radius) << endl;
     double torsion = pAnalysisCircle->GetTorsion(); 
     cout << "torsion " << fabs(torsion) << endl;
+
     ...
     // f - Test whether the specified point is regular
     //
+double torsion = pAnalysisCircle->GetTorsion();
+cout << "torsion " << fabs(torsion) << endl;
     CATLONG32 regular = pAnalysisCircle->IsARegularParam();
     cout << "IsARegularParam " << regular << endl;
+
     ...
 
+CATLONG32 regular = pAnalysisCircle->IsARegularParam();
+cout << "IsARegularParam " << regular << endl;
 Here are the messages on the standard output:
-    
+
     angle main norma - bi normal 1.5708
     curvature 1
     torsion 0
     IsARegularParam 1
+
 ## In Short
 
+curvature 1
+torsion 0
+IsARegularParam 1
 CATICGMLocalAnalysis1Db> is a geometric operator which follows the same scheme as all geometric operators: it is a transient object and its execution does not modify the input operands. It must be operated within a single container. Its purpose is to analyze the parameters (derivatives) on a point on a curve.
+
 ## References
 
 [1] | [An Introduction to Geometric Modeler Use Cases](CAACgmUcGMModelUseCaseOverw.md)  

@@ -1,16 +1,23 @@
 ---
+```vbscript
 title: "What's New?"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CAAGMOperatorsInterfaces", "CATInteractiveInterfaces", "CATINavigateObject", "CATINavigateProvider", "CATINavigContainer", "CAAOsmNovel", "CATIGraphNode", "CAAAniCatalog", "CATInterfaceEvents", "CATIRedrawEvent", "CATICstFactory", "CATIntersectionOrientation", "CATIPrintable", "CATIBloc", "CATINavigateFilter", "CAAOsmCatalogSU", "CATIMfgStartupFactories", "CATIPrinterManager", "CATINavigElement", "CATIA"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenWhatsNew.htm"
 converted: "2026-05-11T17:33:47.787486"
----
+```
 
+---
+tags: ["CAAGMOperatorsInterfaces", "CATInteractiveInterfaces", "CATINavigateObject", "CATINavigateProvider", "CATINavigContainer", "CAAOsmNovel", "CATIGraphNode", "CAAAniCatalog", "CATInterfaceEvents", "CATIRedrawEvent", "CATICstFactory", "CATIntersectionOrientation", "CATIPrintable", "CATIBloc", "CATINavigateFilter", "CAAOsmCatalogSU", "CATIMfgStartupFactories", "CATIPrinterManager", "CATINavigElement", "CATIA"]
+source_file: "Doc/online/CAACenQuickRefs/CAACenWhatsNew.htm"
+converted: "2026-05-11T17:33:47.787486"
 CAA V5 Encyclopedia |  |  What's New? _News in CAA V5-6R2017 C++ and Java_  
----|---|---  
+
+converted: "2026-05-11T17:33:47.787486"
+CAA V5 Encyclopedia |  |  What's New? _News in CAA V5-6R2017 C++ and Java_
 Technical Article  
-  
+
 * * *
 
 Abstract Some enhancements or maintenance reasons require changes regarding tools or methodologies. This article lists them, and points to the corresponding documentation. 
@@ -143,9 +150,8 @@ Abstract Some enhancements or maintenance reasons require changes regarding tool
     * The Versioning of the Topological Operators
   * **References**
 
-  
 ---  
-  
+
 * * *
 
 CAA V5-6R2018 News The following is new with V5-6R2018. RADE Nothing new. New V5-6R2018 Authorized APIs The following Authorized APIs are available from CAA V5-6R2018 onwards:
@@ -253,31 +259,29 @@ Methods related to feature catalogs in CATAnalysisInterfaces/PublicInterfaces/CA
   * Methods allowing you to retrieve and instantiate startups, are replaced with the methods of the CATOsmSUHandler class.
 
 Deprecation of Feature Modeler syntax to identify startups extensions Starting with 3DEXPERIENCER2015x and V5-6R2015, identification of startups extensions using only their late type is deprecated in the API. One of the following syntaxes should now be used for startup identification:
-    
-    
+
       "`StartUpIdentifier`@`Catalog.CATfct`"
       "`StartUpIdentifier`#<number>@`Catalog.CATfct`"
       "Ou???????-????-????-????????????????@`Catalog.CATfct`"
-    
 
 An example of modification can be found in the Working with Feature Extensions Use Case, the folowing line:
-    
-    
+
             // 6-1- Instantiate the "CAAOsmNovel" StartUp Facade
+An example of modification can be found in the Working with Feature Extensions Use Case, the folowing line:
             CATUnicodeString NovelStartUpType("**CAAOsmNovel** ");
             CATFmStartUpFacade NovelStartUpFacade(MyCredential,NovelStartUpType);
-    
 
 has been changed to:
-    
-    
+
             // 6-1- Instantiate the "CAAOsmNovel" StartUp Facade
+has been changed to:
             CATUnicodeString NovelStartUpType("**`CAAOsmNovel`@`CAAOsmCatalogSU.CATfct`** ");
             CATFmStartUpFacade NovelStartUpFacade(MyCredential,NovelStartUpType);
-    
 
 This modification impacts the behavior of the following method: Framework | Release | Class | Method  
----|---|---|---  
+
+CATFmStartUpFacade NovelStartUpFacade(MyCredential,NovelStartUpType);
+This modification impacts the behavior of the following method: Framework | Release | Class | Method
 ObjectSpecsLegacy | V5-6R2015x | CATIOsmExtendable | AddExtension  
 RemoveExtension  
 QueryExtension  
@@ -286,6 +290,7 @@ FeatureModelerExt | V5-6R2015x
 GetExtension  
 CATFmStartUpFacade | CATFmStartUpFacade  
 BindTo  
+
 [Top] ENOVIA LCA Metadata V5-6R2015 Changes No metadata change in V5-6R2015. [Top] CAA V5-6R2015 Encyclopedia News The following enhancements are available in the CAA Encyclopedia from CAA V5-6R2015 onwards: New articles in V5-6R2015 modelers or RADE tools:
 
   * In 3D PLM Enterprise Architecture
@@ -488,8 +493,10 @@ Deprecated APIs can be found in:
   * For C++, in  CAA C++ API Deprecated Index that lists the C++ APIs deprecated in V5R19 and V5R20. These APIs remain supported in V5R20. Check that you do not use these APIs, or plan to migrate your applications.
   * For Java, in CAA Java API Deprecated Index that lists the Java APIs deprecated in V5R19 and V5R20. These APIs remain supported in V5R20. Check that you do not use these APIs, or plan to migrate your applications.
 
+Deprecated APIs can be found in:
 New Geometric Modeler layer and Rearchitecture of Geometric Modeler frameworks  A new geometric modeler interfaces layer, coming from the upcoming CAA V6 architecture, is delivered in V5R20. The goal is to minimize the code size at installation and manage to load the code which is strictly necessary for the achievement of some identified scenarios (open a model, perform measures on it ...). This new layer allows an application to load dynamically the dlls which are strictly needed for the execution of a given scenario. There is no need to migrate to these new interfaces. CAA developers intending to switch to V6, may consider this new delivery as a way to gradually migrate to V6 architecture while still in a V5 environment. For those, the necessary information is provided in the [New Geometric Modeler Interfaces Layer](CAACenGobInterfacesMigration.md) article. A consequence of this delivery is that some interfaces have also been moved from AdvancedTopologicalOpe, BasicTopologicalOpe, FreeFormOperators, GeometricObjects, GeometricOperators, NewTopologicalObjects and TopologicalOperators frameworks into existing frameworks and the newly created GMModelInterfaces, GMOperatorsInterfaces, NewTopologicalObjects, TopologicalOperators and TopologicalOperatorsLight frameworks. Modules using the moved Authorized APIs should have the listed module added to their `LINK_WITH` statement of their Imakefile.mk file and add the listed framework as a prerequisite in the IdentityCard of their frameworks.  The CAA Multi-Workspace Application Builder - mkmk (MAB) automatically takes this modification into account and only displays a WARNING, but adding the right framework and module to the IdentityCards and Imakefile.mk is highly recommended. Authorized API | Framework | Module  
----|---|---  
+
+New Geometric Modeler layer and Rearchitecture of Geometric Modeler frameworks  A new geometric modeler interfaces layer, coming from the upcoming CAA V6 architecture, is delivered in V5R20. The goal is to minimize the code size at installation and manage to load the code which is strictly necessary for the achievement of some identified scenarios (open a model, perform measures on it ...). This new layer allows an application to load dynamically the dlls which are strictly needed for the execution of a given scenario. There is no need to migrate to these new interfaces. CAA developers intending to switch to V6, may consider this new delivery as a way to gradually migrate to V6 architecture while still in a V5 environment. For those, the necessary information is provided in the [New Geometric Modeler Interfaces Layer](CAACenGobInterfacesMigration.md) article. A consequence of this delivery is that some interfaces have also been moved from AdvancedTopologicalOpe, BasicTopologicalOpe, FreeFormOperators, GeometricObjects, GeometricOperators, NewTopologicalObjects and TopologicalOperators frameworks into existing frameworks and the newly created GMModelInterfaces, GMOperatorsInterfaces, NewTopologicalObjects, TopologicalOperators and TopologicalOperatorsLight frameworks. Modules using the moved Authorized APIs should have the listed module added to their `LINK_WITH` statement of their Imakefile.mk file and add the listed framework as a prerequisite in the IdentityCard of their frameworks.  The CAA Multi-Workspace Application Builder - mkmk (MAB) automatically takes this modification into account and only displays a WARNING, but adding the right framework and module to the IdentityCards and Imakefile.mk is highly recommended. Authorized API | Framework | Module
 AdvancedTopologicalOpe/PublicInterfaces/CATCreateSketchGeodesic.h | TopologicalOperatorsLight | AdvTopoSketchLight  
 AdvancedTopologicalOpe/PublicInterfaces/CATCreateTopExtrapolWireOpe.h | TopologicalOperators | AdvTopoSketch  
 AdvancedTopologicalOpe/PublicInterfaces/CATCreateTopGeodesicDistanceTool.h | TopologicalOperatorsLight | AdvTopoSketchLight  
@@ -588,6 +595,7 @@ TopologicalOperators/PublicInterfaces/CATTopSkin.h | TopologicalOperatorsLight |
 TopologicalOperators/PublicInterfaces/CATTopVertex.h | TopologicalOperatorsLight | PrimitivesLight  
 TopologicalOperators/PublicInterfaces/CATTopWire.h | TopologicalOperatorsLight | PrimitivesLight  
 TopologicalOperators/PublicInterfaces/CreateDistanceMinTopo.h | TopologicalOperatorsLight | AnalysisToolsLight  
+
 [Top] ENOVIA LCA Metadata V5R20 Changes In the PRODUCT package, the length of the V_instance_ID attribute in the classes VPMAssemblyRelation and VPMItemInstance  changes from 40 to 80. [Top] CAA V5R20 Encyclopedia News The following enhancements are available in the CAA Encyclopedia from CAA V5R20 onwards: New articles in V5R20 modelers or RADE tools:
 
   * V5R20GA 
@@ -632,8 +640,10 @@ Deprecated APIs can be found in:
   * For C++, in  CAA C++ API Deprecated Index that lists the C++ APIs deprecated in V5R18 and V5R19. These APIs remain supported in V5R19. Check that you do not use these APIs, or plan to migrate your applications.
   * For Java, in CAA Java API Deprecated Index that lists the Java APIs deprecated in V5R18 and V5R19. These APIs remain supported in V5R19. Check that you do not use these APIs, or plan to migrate your applications.
 
+Deprecated APIs can be found in:
 Split of the ObjectModelerBase framework Some interfaces have been moved from  ObjectModelerBase into the new  ObjectModelerSystem and  ObjectModelerNavigator  frameworks. Modules using the moved Authorized APIs should have the listed module added to their `LINK_WITH `statement of their Imakefile.mk file and add the listed framework as a prerequisite in the IdentityCard of their frameworks.  The CAA Multi-Workspace Application Builder - mkmk (MAB) automatically takes this modification into account and only displays a WARNING, but adding the right framework and module to the IdentityCards and Imakefile.mk is highly recommended. Authorized API | Framework | Module  
----|---|---  
+
+Split of the ObjectModelerBase framework Some interfaces have been moved from  ObjectModelerBase into the new  ObjectModelerSystem and  ObjectModelerNavigator  frameworks. Modules using the moved Authorized APIs should have the listed module added to their `LINK_WITH `statement of their Imakefile.mk file and add the listed framework as a prerequisite in the IdentityCard of their frameworks.  The CAA Multi-Workspace Application Builder - mkmk (MAB) automatically takes this modification into account and only displays a WARNING, but adding the right framework and module to the IdentityCards and Imakefile.mk is highly recommended. Authorized API | Framework | Module
 booleanDef.h | ObjectModelerSystem | CATOMY  
 CATIGraphLink.h | ObjectModelerNavigator | CATObjectModelerNavigator  
 CATIGraphNode.h | ObjectModelerNavigator | CATObjectModelerNavigator  
@@ -658,6 +668,7 @@ sequence.h | ObjectModelerSystem | CATOMY
 sequence_CATBaseUnknown_ptr.h | ObjectModelerSystem | CATOMY  
 sequence_CORBAAny.h | ObjectModelerSystem | CATOMY  
 sequence_octet.h | ObjectModelerSystem | CATOMY  
+
 [Top] ENOVIA LCA Metadata V5R19 Changes [PRODUCT](../CAADocMetadata/DefWithImages/PRODUCT/PRODUCT_Definitions.md) package: in the [VPMItemInstance](../CAADocMetadata/DefWithImages/PRODUCT/VPMItemInstance.md) class, the following attributes are changed:
 
   * Relationship [V_parent_PRC](../CAADocMetadata/DefWithImages/PRODUCT/VPMItemInstance.htm#V_parent_PRC): the Visibility is now Public instead of Private, and the AccessMode is Read instead of ReadWrite
@@ -886,7 +897,6 @@ The new [Machining Algorithms](../CAASmaBase/CAASmaHome.md) modeler appears in t
 
 [Top] Reminder of CAA V5R16 News The following is new with CAA V5R16. In order to help customers' and partners' applications comply with the CAA V5 usage rules described in the CAA Encyclopedia, our offering is refined by better aligning the CAA build time media content with the CAA Encyclopedia content. Thus, starting with V5R15, non-CAA Authorized APIs previously located in the ProtectedInterfaces folders are no longer available from the CAA build time media. While enriching the CAA Authorized APIs offering with new CAA APIs matching new needs, we will continue to deliver with CAA RADE a more and more secure development environment by protecting CAA applications from the risks of using non-CAA Authorized APIs.As a reminder, CAA RADE tools prevent the usage of undocumented resources located in ProtectedInterfaces starting with V5R12. In some cases, the CAA RADE tools may not have detected all uses of the non-CAA authorized APIs. To ensure that all non-CAA Authorized APIs have been detected, CAA RADE V5R15 provides a new audit tool. Launch it before attempting to build your CAA applications. Please refer to the following [ article](../CAACenAPIChanges/CAACenHowToAuditProtectedUsage.md) for further information on how to use this audit tool. Please contact your local support if you need assistance.  
 ---  
- 
 
   * **CATIA** , **DELMIA** , and **DMU** solutions run on the **Windows** operating system in **64-bit** mode starting with V5R16. As a reminder, **CATIA** and **DELMIA** solutions run on the **AIX** operating system in **64-bit** mode starting with V5R15, and the **DMU** solution run on the **AIX** operating system in **64-bit** mode starting with V5R14. If you are interested with **64-bit** , [ CAA V5 C++ 64-bit Operating System Support](../CAADocTechArticles/CAADoc64bit.md) gives you tips to, and helps you prepare your applications to build and run using 64-bit operating systems
   * [Web services](../CAACenWeb/CAACenWSHome.md)
@@ -950,7 +960,6 @@ Deprecated APIs can be found in:
 
 [Top] Reminder of CAA V5R15 News The following is new with CAA V5R15. In order to help customers' and partners' applications comply with the CAA V5 usage rules described in the CAA Encyclopedia, our offering is refined by better aligning the CAA build time media content with the CAA Encyclopedia content. Thus, starting with V5R15, non-CAA Authorized APIs previously located in the ProtectedInterfaces folders are no longer available from the CAA build time media. While enriching the CAA Authorized APIs offering with new CAA APIs matching new needs, we will continue to deliver with CAA RADE a more and more secure development environment by protecting CAA applications from the risks of using non-CAA Authorized APIs.As a reminder, CAA RADE tools prevent the usage of undocumented resources located in ProtectedInterfaces starting with V5R12. In some cases, the CAA RADE tools may not have detected all uses of the non-CAA authorized APIs. To ensure that all non-CAA Authorized APIs have been detected, CAA RADE V5R15 provides a new audit tool. Launch it before attempting to build your CAA applications. Please refer to the following [ article](../CAACenAPIChanges/CAACenHowToAuditProtectedUsage.md) for further information on how to use this audit tool. Please contact your local support if you need assistance.  
 ---  
- 
 
   * Deprecated global function **CATGitGSMGeom** of the GSMInterfaces framework is now removed. If you are still using it, please read the [ following article](../CAAGsiQuickRefs/CAAGsiCATIGitGSMGeom.md) to know what to do
   * **CATIA** , **DELMIA** , and **DMU** solutions run on the **AIX** operating system in **64-bit** mode in V5R15. If you are interested with **64-bit** , [ CAA V5 C++ 64-bit Operating System Support](../CAADocTechArticles/CAADoc64bit.md) gives you tips to, and helps you prepare your applications to build and run using 64-bit operating systems
@@ -1067,7 +1076,6 @@ As a reminder, all metadata changes, whether metadata is exposed or not, are des
 
 [Top] Reminder of CAA V5R14 News The following is new with CAA V5R14. **Warning** : The location of the CAA Authorized APIs have changed from V5R12 onwards. This has impacts on your applications. Refer to [ CAA Authorized APIs](../CAADocTechArticles/CAADocAPIInPublic.md) to know about this.  
 ---  
- 
 
   * The **Mechanical Modeler** introduces novelties. This has impacts on all applications that rely on it, especially applications developed on top of **Part Design** and **GSD**. Refer to [ this article](../CAAMmrTechArticles/CAAMmrOGSAndHybridBodyImpact2.md) which explains their consequences in your application.
   * The **CGM** modeler provides services to prevent CAA developers from creating non-C2 entities as such entities are not supported by the modeler. These services are listed in the table below together with the deprecated services they are replacing. _If you are using one or more services mentionned in the "Deprecated" column,_ _you must migrate your application._ Framework | Deprecated | To be used from V5R14  
@@ -1084,6 +1092,7 @@ GeometricObjects | CATPSpline::SetOnePoint | CATPSpline::ReplaceOnePoint
 GeometricObjects | CATPSpline::SetOneTangent | CATPSpline::ReplaceOneTangent  
 GeometricObjects | CATPSpline::SetOneParameter | CATPSpline::ReplaceOneParameter  
 The new CATMathNurbsSurfaceTools.h and CATMathNurbsCurveTools.h in the GeometricOperators framework can be used to deal with mathematical non-C2 Nurbs entities, to evaluate them, and to break them into C2 model entities.
+
   * If you are interested with **64-bit** , [ CAA V5 C++ 64-bit Operating System Support](../CAADocTechArticles/CAADoc64bit.md) gives you tips to, and helps you prepare your applications to build and run using 64-bit operating systems
   * mkmk checks that smart pointers of non-authorized interfaces are not used in your applications, and prevents them from linking whenever such a smart pointer is found.
 
@@ -1207,27 +1216,35 @@ As a reminder, all metadata changes, whether metadata is exposed or not, are des
 
 [Top] Reminder of CAA V5R13 News The following is new with CAA V5R13. **Warning** : The location of the CAA Authorized APIs have changed. This has impacts on your applications. Refer to [ CAA Authorized APIs](../CAADocTechArticles/CAADocAPIInPublic.md) to know about this.  
 ---  
-  
+
   * **BOA** (Basic Object Adapter) is an Object Modeler new exposed way to implement your interfaces by C++ deriving the implementation class from the interface. The BOA get rids of the TIE, and thus may be useful to save memory for strongly called interfaces on numerous V5 components. Only one interface per C++ class can be implemented using the BOA. More information in [ Creating Components](../CAASysTechArticles/CAASysCreatingComponent.md).  
 
   * **OGS** (Ordered Geometric Set)  
 The Mechanical Modeler introduces novelties in surfacic bodies. First, the **Open_Body** feature is renamed to **Geometrical Set** , and then a surfacic body can be now ordered. Most of the technical articles of the Mechanical Modeler are updated to take into account the Ordered Geometrical Set. But the main document is the technical article entitled [ Ordered Geometrical Set](../CAAMmrTechArticles/CAAMmrOGS.md) which details this new kind of surfacic bodies and explains the consequences, in term of code, of this creation.  
 
   * **SCM** (Source Code Manager)  
+The Mechanical Modeler introduces novelties in surfacic bodies. First, the **Open_Body** feature is renamed to **Geometrical Set** , and then a surfacic body can be now ordered. Most of the technical articles of the Mechanical Modeler are updated to take into account the Ordered Geometrical Set. But the main document is the technical article entitled [ Ordered Geometrical Set](../CAAMmrTechArticles/CAAMmrOGS.md) which details this new kind of surfacic bodies and explains the consequences, in term of code, of this creation.
 The SCM product working with Oracle databases has new tablespaces. The SCM tables are now stored in four tablespaces (scm_tbs0, scm_tbs0, scm_tbs0, scm_tbs0) instead of one and the SCM indexes are also stored in four tablespaces (scm_idx0, scm_idx1, scm_idx2, scm_idx3).  
-  
+
 SCM V5R13 with Oracle databases runs without changes, but **before installing SCM V5R14** , upgrade your databases with the new tablespace architecture.  
-  
+
 The steps for this migration are: 
     1. Backup the database
     2. Export the database
     3. Generate the SQL programs for creating tablespaces and the Oracle account for the SCM administrator using the adl_admin_site command  
+
 `adl_admin_site -init_db -db SID -db_user adl -db_type dept -db_size ? -target_dir /tmp`
+The steps for this migration are:
+1. Backup the database
+2. Export the database
+3. Generate the SQL programs for creating tablespaces and the Oracle account for the SCM administrator using the adl_admin_site command
     4. Create the tablespaces by executing InitInstanceDept.sql
     5. Import the database  
 
   * The documentation home pages of the V5 solutions and products are modified in V5R13. If you have integrated your application help and documentation, refer to [ Contextual Help](../CAAAfrTechArticles/CAAAfrHelpOnLine.md) to know what to do.
 
+4. Create the tablespaces by executing InitInstanceDept.sql
+5. Import the database
 New V5R13 Modelers The following modelers are available from CAA V5R13 onwards:
 
   * [ Structure](../CAAStrBase/CAAStrHome.md)
@@ -1436,8 +1453,10 @@ Deprecated APIs can be found in:
 
   * For C++, in [Deprecated C++ APIs in CAA V5R9 Removed from CAA V5R11](CAACenV5R11Deprecated.md). These APIs are no longer suported in V5R11
 
+Deprecated APIs can be found in:
 Move of the LiteralFeatures Framework The Authorized APIs that were up to now supplied with the LiteralFeatures framework are moved to the KnowledgeInterfaces framework. Before rebuilding your applications that use these Authorized APIs, make sure that the KnowledgeInterfaces framework is declared in the IdentityCard.h files of your frameworks. Split of the MechanicalModeler framework Some interfaces have been moved from  MechanicalModeler into the new  ConstraintModeler and  ConstraintModelerInterfaces  frameworks. Modules using the moved Authorized APIs should have the listed module added to their `LINK_WITH `statement of their Imakefile.mk file and add the listed framework as a prerequisite in the IdentityCard of their frameworks.  The CAA Multi-Workspace Application Builder - mkmk (MAB) automatically takes this modification into account and only displays a WARNING, but adding the right framework and module to the IdentityCards and Imakefile.mk is highly recommended. **Authorized API** |  **Framework** |  **Module**  
----|---|---  
+
+Move of the LiteralFeatures Framework The Authorized APIs that were up to now supplied with the LiteralFeatures framework are moved to the KnowledgeInterfaces framework. Before rebuilding your applications that use these Authorized APIs, make sure that the KnowledgeInterfaces framework is declared in the IdentityCard.h files of your frameworks. Split of the MechanicalModeler framework Some interfaces have been moved from  MechanicalModeler into the new  ConstraintModeler and  ConstraintModelerInterfaces  frameworks. Modules using the moved Authorized APIs should have the listed module added to their `LINK_WITH `statement of their Imakefile.mk file and add the listed framework as a prerequisite in the IdentityCard of their frameworks.  The CAA Multi-Workspace Application Builder - mkmk (MAB) automatically takes this modification into account and only displays a WARNING, but adding the right framework and module to the IdentityCards and Imakefile.mk is highly recommended. **Authorized API** |  **Framework** |  **Module**
 CATDimMath.h.h | ConstraintModeler | CATConstraintModeler  
 CATDimTempCst.h | ConstraintModeler | CATConstraintModeler  
 CATDimVisualizationAdapter.h | ConstraintModeler | CATConstraintModeler  
@@ -1568,28 +1587,28 @@ Deprecated APIs can be found in:
   * For C++, in  CAA C++ API Deprecated Index
   * For Java, in CAA Java API Deprecated Index
 
+Deprecated APIs can be found in:
 Split of the Print Framework Following the split of the Visualization framework in V5R9, the Print framework has been split into two frameworks and some CAA Authorized API Authorized APIs have been moved to the new PrintBase framework. Modules using the moved Authorized APIs should have the CATPrtBase module added to their `LINK_WITH `statement of their Imakefile.mk file and add the PrintBase framework as a prerequisite in the IdentityCard of their frameworks. The CAA Multi-Workspace Application Builder - mkmk (MAB) automatically takes this modification into account and only displays a WARNING, but adding the PrintBase framework to the IdentityCard is highly recommended.
 
   1. _IdentityCard_ : if one of your frameworks uses interfaces like _CATIPrintable_ , _CATIPrinterManager_ , etc., which are now exposed by PrintBase, add PrintBase as a protected prerequisite as follows: 
-         
+
          AddPrereqComponent("PrintBase", Protected);
 
   2. _Imakefile_ : modules using the moved Authorized APIs of the Print framework should have the CATPrintBase module added to their `LINK_WITH` statement of their Imakefile.mk 
-         
+
          LINK_WITH = CATPrintBase
 
 Move of TTRS Modeler CAA Authorized APIs Before V5R10 the TTRS modeler Authorized APIs were located in the MecModInterface and MechanicalModeler frameworks. From V5R10 onwards, they are now in the framework  CATTTRSInterfaces. The CAA Multi-Workspace Application Builder - mkmk (MAB) does **NOT** take this modification into account. To be able to build their applications on V5R10, the clients of the TTRS modeler must do the following modifications: 
 
   1. _IdentityCard_ : if one of your frameworks uses interfaces like _CATITTRS_ , _CATMathRGE_ , etc., which are now exposed by  CATTTRSInterfaces, add  CATTTRSInterfaces as protected prerequisite as follows: 
-         
+
          AddPrereqComponent("CATTTRSInterfaces", Protected);
 
   2. _Imakefile_ : modules using the moved Authorized APIs of the TTRS modeler should have the CATTTRSItf and CATTTRSUUID modules added to their `LINK_WITH` statement of their Imakefile.mk 
-         
+
          LINK_WITH = CATTTRSItf \
                      CATTTRSUUID
 
-  
 to avoid runtime stability problems during V5R10, insert those modules **before** the reference to the CATMecModInterfaces module (that may even have become useless).
 
 [Top] CAA V5R10 Encyclopedia News The following enhancements are available in the CAA Encyclopedia from CAA V5R10 onwards:
@@ -1894,11 +1913,12 @@ References [1] |  Sun Java Packages for Windows and Solaris
 [3] |  HP Java Package for HP-UX  
 [4] |  SGI Java Package for Irix  
 [Top]  
-  
+
 * * *
 
 History Version: **14** [Apr 2008] | V5R19 Update  
 ---|---  
+History Version: **14** [Apr 2008] | V5R19 Update
 Version: **13** [Apr 2007] | V5R18 Update  
 Version: **12** [Apr 2006] | V5R17 Update  
 Version: **11** [Jun 2005] | V5R16 Update  
@@ -1912,9 +1932,11 @@ Version: **4** [Jun 2002] | V5R9 Update
 Version: **3** [Dec 2001] | V5R8 Update  
 Version: **2** [May 2001] | V5R7 Update  
 Version: **1** [Nov 2000] | Document created  
+
 [Top]  
-  
+
 * * *
 
+Version: **1** [Nov 2000] | Document created
 _Copyright © 1999-20016, Dassault Systèmes. All rights reserved._  
 Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.md) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.md) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.md)

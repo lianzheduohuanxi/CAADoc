@@ -1,13 +1,19 @@
 ---
+```vbscript
 title: "CAAAniPreproOnVirtual.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniPreproOnVirtual", "CATISamImportDefine", "CAAScdAniUseCases"]
 source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproOnVirtualSource.htm"
 converted: "2026-05-11T17:31:51.840341"
----
+```
 
+---
+tags: ["CATIA", "CAAAniPreproOnVirtual", "CATISamImportDefine", "CAAScdAniUseCases"]
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproOnVirtualSource.htm"
+converted: "2026-05-11T17:31:51.840341"
     Language="VBSCRIPT"
+
 ```vbscript
     ' COPYRIGTH DASSAULT SYSTEMES 2000
     ' ***********************************************************************
@@ -24,19 +30,20 @@ converted: "2026-05-11T17:31:51.840341"
     ' ***********************************************************************
 ```
 
-    
-```vbscript
     Sub CATMain()
     ' ----------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
-    
+
       sDocPath=CATIA.SystemService.Environ("CATDocView")
       sSep=CATIA.SystemService.Environ("ADL_ODT_SLASH")
-    
+
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
         End If
+```
+
 ```vbscript
     ' ----------------------------------------------------------- 
     ' Get the collection of documents in session
@@ -54,31 +61,32 @@ converted: "2026-05-11T17:31:51.840341"
     ' and link the analysis to a Part Document
 ```
 
-    
-```
-
     ' We call the Import on CATAnalysisImport which implements CATISamImportDefine
-        
+
 ```vbscript
         Set analysisManager1 = TheAnalysisDocument.Analysis
-    
+
 ```
 
-    
 ```vbscript
         Dim arrayOfVariantOfShort1(0)
         analysisManager1.ImportDefineFile (sDocPath & sSep  & "online" & sSep & "CAAScdAniUseCases" & sSep & "samples" & sSep  & "FlangeForVirtualUsage.CATPart"),
-    
+
 ```
 
-    
     				       "CATAnalysisImport", arrayOfVariantOfShort1 
     ' _____________________________________________________________________________________
+```vbscript
+' _____________________________________________________________________________________
     ' Reframe All.
+```
+
 ```vbscript
       Set specsAndGeomWindow1 = CATIA.ActiveWindow
       Set viewer3D1 = specsAndGeomWindow1.ActiveViewer
       viewer3D1.Reframe 
+```
+
 ```vbscript
     ' _____________________________________________________________________________________
     ' Scan the analysis document:  Retrieve the Pointed documents to extract the reference for preprocessing
@@ -86,30 +94,29 @@ converted: "2026-05-11T17:31:51.840341"
         CATIA.SystemService.Print analysisLinkedDocuments1.Name
 ```
 
-    
-```
-
 ```vbscript
        If (analysisLinkedDocuments1.Count <> 1 ) Then
           Err.Raise 9999,,"NbDoc Li NE 1"
        End If
+```
+
 ```vbscript
     ' _____________________________________________________________________________________
     ' Retrieve the CATPart Document and associated collection of publications for preprocessing.
        Set TheDoc = analysisLinkedDocuments1.Item(1)
        CATIA.SystemService.Print TheDoc.FullName
-    
+
        Set product1 = TheDoc.Product
        Set publications1 = product1.Publications
     ' _____________________________________________________________________________________
     ' Create a Modal Case in the current analysis model.
        Set analysisModels1 = analysisManager1.AnalysisModels
        Set analysisModel1 = analysisModels1.Item(1)
-    
+
        Set analysisCases1 = analysisModel1.AnalysisCases
        Set analysisCase1 = analysisCases1.Add()
        Set analysisSets1 = analysisCase1.AnalysisSets
-    
+
        Set analysisSet1 = analysisSets1.Add("RestraintSet", catAnalysisSetIn)
        Set analysisSet2 = analysisSets1.Add("MassSet", catAnalysisSetIn)
        Set analysisSet3 = analysisCase1.AddSolution("FrequencySet")
@@ -117,81 +124,81 @@ converted: "2026-05-11T17:31:51.840341"
     ' _____________________________________________________________________________________
     ' Create a property set from the Analysis Model to create some Rigid Virtal Parts
        Set analysisSets2 = analysisModel1.AnalysisSets
-    
+
        Set analysisSet4 = analysisSets2.ItemByType("PropertySet")
        Set analysisEntities1 = analysisSet4.AnalysisEntities
-    
+
        Set analysisEntity1 = analysisEntities1.Add("SAMVirPartRigid")
        Set publication1 = publications1.Item("SmallHole")
 ```
 
+```vbscript
+Set analysisEntity1 = analysisEntities1.Add("SAMVirPartRigid")
+Set publication1 = publications1.Item("SmallHole")
        analysisEntity1.AddSupportFromPublication product1, publication1
-    
+
        Set analysisEntity2 = analysisEntities1.Add("SAMVirPartRigid")
        Set publication2 = publications1.Item("SmallHole1")
        analysisEntity2.AddSupportFromPublication product1, publication2
-    
+
        Set analysisEntity3 = analysisEntities1.Add("SAMVirPartRigid")
        Set publication3 = publications1.Item("SmallHole3")
        analysisEntity3.AddSupportFromPublication product1, publication3
-    
+
        Set analysisEntity4 = analysisEntities1.Add("SAMVirPartRigid")
        Set publication4 = publications1.Item("SmallHole2")
        analysisEntity4.AddSupportFromPublication product1, publication4
     ' _____________________________________________________________________________________
     ' Clamp the Rigid Virtal Parts
-    
+
        Set analysisEntities2 = analysisSet1.AnalysisEntities
        Set analysisEntity5 = analysisEntities2.Add("SAMClamp")
        Set reference1 = analysisManager1.CreateReferenceFromObject(analysisEntity4)
        analysisEntity5.AddSupportFromReference reference1, reference1
-    
+
        Set analysisEntity6 = analysisEntities2.Add("SAMClamp")
        Set reference2 = analysisManager1.CreateReferenceFromObject(analysisEntity3)
        analysisEntity6.AddSupportFromReference reference2, reference2
-    
+
        Set analysisEntity7 = analysisEntities2.Add("SAMClamp")
        Set reference3 = analysisManager1.CreateReferenceFromObject(analysisEntity2)
        analysisEntity7.AddSupportFromReference reference3, reference3
-    
+
        Set analysisEntity8 = analysisEntities2.Add("SAMClamp")
        Set reference4 = analysisManager1.CreateReferenceFromObject(analysisEntity1)
        analysisEntity8.AddSupportFromReference reference4, reference4
     ' _____________________________________________________________________________________
     ' Distribute some Masses on top of the Part
-    
+
        Set analysisEntities3 = analysisSet2.AnalysisEntities
        Set analysisEntity9 = analysisEntities3.Add("SAMDistributedMass")
        Set publication5 = publications1.Item("TopFace")
        analysisEntity9.AddSupportFromPublication product1, publication5
-    
+
        Set basicComponents1 = analysisEntity9.BasicComponents
        Set basicComponent1 = basicComponents1.GetItem("SAMMassMag")
        basicComponent1.SetValue "", 0, 0, 0, 25.000000
-    
+
 ```
 
+```vbscript
+Set basicComponent1 = basicComponents1.GetItem("SAMMassMag")
+basicComponent1.SetValue "", 0, 0, 0, 25.000000
     ' _____________________________________________________________________________________
     ' Read the Value of the Mass
+```
+
 ```vbscript
       CATIA.SystemService.Print " Mass Applied of the Part: " & basicComponent1.GetValue ("",0,0,0)
     ' _____________________________________________________________________________________
     ' Launch Computation.
       analysisCase1.Compute
+```
+
 ```vbscript
     '------------------------------- END   END   END   ----------------------------
       CATIA.DisplayFileAlerts = False
     '  TheAnalysisDocument.Close
 ```
 
-    
-```
-
-```vbscript
     End Sub
-    
-```
-
-    
-
-```

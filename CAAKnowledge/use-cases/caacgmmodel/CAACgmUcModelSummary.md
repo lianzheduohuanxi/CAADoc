@@ -1,19 +1,25 @@
 ---
+```vbscript
 title: "GMOperators List of Use Cases"
 category: "use-case"
 module: "CAACgmModel"
 tags: ["CAAGMModelPositionOpe", "CAAGMModelConvertSurfaceToC2", "CAAGMModelScanEdgeCurve", "CAAGMModelAnalysisOpe", "CAAGMModelTesMProcMain", "CAAGMModelEdgeCurveComputation", "CAAGMModelAttributeRead", "CAAGMModelConeCreation", "CAAGMModelConfusionOpe", "CAAGMModelNurbs", "CAAGMModelConvertCurveToC2", "CAAGMModelCreation", "CAAGMModelAttribute", "CAAGMModelDistanceMinOpe", "CAAGMModelGemBrowser", "CAAGMModelIntersectionOpe", "CAAGMModelTetra", "CAAGMModelGeometryCreation", "CAAGMModelIntersect", "CAAGMModelSmartDuplicator"]
 source_file: "Doc/online/CAACgmModel/CAACgmUcModelSummary.htm"
 converted: "2026-05-11T17:33:48.471605"
+```
+
 ---
 # GMModel List of Use Cases  
-  
+
 ---  
-  
+
 The use cases illustrating the GMModelInterfaces capabilities are delivered in CAAGMModelInterfaces.edu 
 
+The use cases illustrating the GMModelInterfaces capabilities are delivered in CAAGMModelInterfaces.edu
 Table.1  CAAGMModelInterfaces.edu: List of Use Cases Module | Purpose | Article  
----|---|---  
+
+The use cases illustrating the GMModelInterfaces capabilities are delivered in CAAGMModelInterfaces.edu
+Table.1  CAAGMModelInterfaces.edu: List of Use Cases Module | Purpose | Article
 CAAGMModelAnalysisOpe.m | Compute the normal, curvature and torsion of point on a curve or surface.  |  [Analyzing the Parameters of a Point on a Curve ](CAACgmUcGMModelAnalysisOpe.md) - [Analyzing the Parameters of a Point on a Surface ](CAACgmUcGMModelAnalysisOpe2.md)  
 CAAGMModelAttribute.m (V6) |  Implement an attribute.  |  [Creating an attribute](CAACgmUcGobAttCreation.md)  
 CAAGMModelAttributeCreation.m (V6) | Create an attribute. |  [Creating an attribute](CAACgmUcGobAttCreation.md)  
@@ -28,7 +34,12 @@ CAAGMModelConvertToCanonic.m | Convert a CATCurve to a CATLine. |  [ Extracting 
 CAAGMModelCreation.m (V6) | Create a Foreign Surface |  [Creating Foreign Surfaces](CAACgmUcGobForeign.md)  
 CAAGMModelCylinderCreation.m (V6) | Create a Cylinder |  [Creating a Cylinder](CAACgmUcCylinderCreation.md)  
 CAAGMModelDistanceMinOpe.m  
+
 | Compute the minimum distance between a point and a surface, a point and a curve, two curves. |  [Computing the Minimum Distance between Two Geometries ](CAACgmUcGMModelDistanceMin.md)  
+CAAGMModelConvertToCanonic.m | Convert a CATCurve to a CATLine. |  [ Extracting the Canonical Representation of a Curve](CAACgmUcGMModelConvertToCanonic.md)
+CAAGMModelCreation.m (V6) | Create a Foreign Surface |  [Creating Foreign Surfaces](CAACgmUcGobForeign.md)
+CAAGMModelCylinderCreation.m (V6) | Create a Cylinder |  [Creating a Cylinder](CAACgmUcCylinderCreation.md)
+CAAGMModelDistanceMinOpe.m
 CAAGMModelEdgeCurveComputation.m | Create an edge curve. |  [Creating or Computing an Edge Curve](CAACgmUcEdgeCurveCreation.md)  
 CAAGMModelForeign.m (V6) | Create a foreign mathematical function. |  [Foreign Mathematical Functions](CAACgmUcAmtForeign.md)  
 CAAGMModelGemBrowser.m (V6) | Browse an NCGM file. |  [Browsing the Geometry Container](CAACgmUcGemBrowser.md)  
@@ -50,4 +61,3 @@ CAAGMModelTetra.m | Use topological objects. |  [Using Topological Objects](CAAC
 CAAGMModelTorusCreation.m (V6) | Create a Torus |  [Creating a Torus](CAACgmUcTorusCreation.md)  
 CAAGMModelVolumeCreation.m | Create a volume from scratch. | Defines a function which is used in CAAGMModelPositionOpe.m to create a volume. For more information, you can refer to [Using Topological Objects](CAACgmUcTobTetra.md) which is quite similar.  
 History Version: **1** [Nov 2011] | Document created  
----|---

@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "MecModInterfaces Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR7"
@@ -6,11 +7,14 @@ version: "V5R7"
 tags: ["CATIDimForwards", "CATIDimCst", "CATIBRepAccess", "CATIREdge"]
 source_file: "Doc/online/CAACenAPIChangesR7/MecModInterfacesSP.htm"
 converted: "2026-05-11T17:33:52.171535"
----
+```
 
+---
+tags: ["CATIDimForwards", "CATIDimCst", "CATIBRepAccess", "CATIREdge"]
+source_file: "Doc/online/CAACenAPIChangesR7/MecModInterfacesSP.htm"
+converted: "2026-05-11T17:33:52.171535"
 CAA API Modifications |  MecModInterfaces |   
----|---|---  
-  
+
 * * *
 
 ** Entity | SP | Modification | To Do** | MecModInterfaces/Protected/CATIBRepAccess.h/CATIBRepAccess/IsValid | 3 | MRTHC | [CATBoolean Migration](../CAACenQuickRefs/CAACenWhatsNew.htm#CATBoolean).No Impact  

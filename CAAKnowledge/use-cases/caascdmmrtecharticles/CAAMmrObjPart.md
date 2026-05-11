@@ -1,17 +1,19 @@
 ---
+```vbscript
 title: "Part Object"
 category: "use-case"
 module: "CAAScdMmrTechArticles"
 tags: []
 source_file: "Doc/online/CAAScdMmrTechArticles/CAAMmrObjPart.htm"
 converted: "2026-05-11T17:31:51.142657"
+```
+
 ---
 # Part Object
 
+source_file: "Doc/online/CAAScdMmrTechArticles/CAAMmrObjPart.htm"
+converted: "2026-05-11T17:31:51.142657"
 See Also | UseCases |  Properties |  Methods  
----|---|---|---  
-  
- 
 
 ![](../CAAScrAutomationImages/images/partdoc.gif)[![](../CAAScrAutomationImages/images/uparrow.gif)](../CAAScdInfTechArticles/CAAInfTocApplication.md)  
 ![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/partlong.gif)  
@@ -32,7 +34,7 @@ See Also | UseCases |  Properties |  Methods
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/hsfact.gif)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/annotsets.gif)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/usrsurfs.gif)  
-  
+
 Represents a Part.
 
 * * *

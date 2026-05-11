@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "ObjectModelerBase Framework Modifications in V5R19"
 category: "use-case"
 module: "CAACenAPIChangesR19"
@@ -6,15 +7,15 @@ version: "V5R19"
 tags: ["CATIGraphLink", "CATINavigNodeCtrl", "CATINavigateFilter", "CATINavigateObject", "CATINavigateProvider", "CATINavigContainer", "CATInterfaceEvents", "CATIRedrawEvent", "CATINavigElement", "CATIGraphNode", "CATINavigModify"]
 source_file: "Doc/online/CAACenAPIChangesR19/ObjectModelerBase.htm"
 converted: "2026-05-11T17:33:51.584721"
----
+```
 
+---
 | 
 # CAA C++ API Modifications
 
 | 
 ##  ObjectModelerBase Framework Modifications in V5R19 
 
-  
 * * *
 
 **Entity|  SP| Modification| To Do** | ObjectModelerBase/Public/CATInterfaceEvents.h| GA| [FHBD ](CAACenAPIChangeDetail.htm#Abstract)| Moved into the ObjectModelerSystem framework. Update your client frameworks IdentityCard.h and Imakefile.mk files accordingly.  

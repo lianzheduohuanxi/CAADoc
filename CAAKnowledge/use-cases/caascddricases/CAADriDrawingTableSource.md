@@ -1,13 +1,19 @@
 ---
+```vbscript
 title: "CAADriDrawingTable.CATScript"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CATIA", "CAADriDrawingTable"]
 source_file: "Doc/online/CAAScdDriUseCases/CAADriDrawingTableSource.htm"
 converted: "2026-05-11T17:31:51.067330"
----
+```
 
+---
+tags: ["CATIA", "CAADriDrawingTable"]
+source_file: "Doc/online/CAAScdDriUseCases/CAADriDrawingTableSource.htm"
+converted: "2026-05-11T17:31:51.067330"
     Option Explicit
+
 ```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2002
     ' ***********************************************************************
@@ -20,13 +26,14 @@ converted: "2026-05-11T17:31:51.067330"
     ' ***********************************************************************
 ```
 
-    
-```vbscript
     Sub CATMain()
         ' Set the CATIA popup file alerts to False
         ' It prevents to stop the macro at each alert during its execution
+
 ```vbscript
         CATIA.DisplayFileAlerts = False
+```
+
 ```vbscript
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String 
@@ -46,7 +53,13 @@ converted: "2026-05-11T17:31:51.067330"
         ' Set the drawing document standard
 ```
 
+```vbscript
+' Create a new drawing document
+Set oDrwDocument = CATIA.Documents.Add("Drawing")
+' Set the drawing document standard
         oDrwDocument.Standard = catISO
+```
+
 ```vbscript
         ' Retrieve the drawing document's sheets collection
         Set oDrwSheets = oDrwDocument.Sheets
@@ -55,9 +68,15 @@ converted: "2026-05-11T17:31:51.067330"
         ' Set the sheet properties
 ```
 
+```vbscript
+' Retrieve the active sheet
+Set oDrwSheet = oDrwSheets.ActiveSheet
+' Set the sheet properties
         oDrwSheet.PaperSize = catPaperA4
         oDrwSheet.Orientation = catPaperLandscape
         oDrwSheet.Scale2 = 1
+```
+
 ```vbscript
         ' Retrieve the active view of the sheet
         Set oDrwView = oDrwSheet.Views.ActiveView
@@ -68,6 +87,10 @@ converted: "2026-05-11T17:31:51.067330"
         ' Set the drawing table's name
 ```
 
+```vbscript
+' Create a new drawing table
+Set oDrwTable = oDrwTables.Add(107, 70, 9, 9, 5, 20)
+' Set the drawing table's name
         oDrwTable.Name = "Title Block"
         ' Do not update drawing table modifications
         oDrwTable.ComputeMode = CatTableComputeOFF
@@ -111,14 +134,9 @@ converted: "2026-05-11T17:31:51.067330"
         oDrwTable.SetColumnSize 9, 15
         ' Update drawing table modifications
         oDrwTable.ComputeMode = CatTableComputeON
-    
+
         CATIA.ActiveWindow.ActiveViewer.Reframe 
-    
+
 ```
 
-```vbscript
     End Sub
-    
-```
-
-```

@@ -1,10 +1,13 @@
 ---
+```vbscript
 title: "Defining the Activated Workbench"
 category: "use case"
 module: "CAAAfrUseCases"
 tags: ["CAAEAfrActivateWorkbenchOnPart", "CATIAfrActivateWorkbench", "CAAAfrInitialWorkbench", "CATIAApplicationFrm", "CAACATIAApplicationFrm", "CAAAfrProduct", "CAAApplicationFrame"]
 source_file: "Doc/online/CAAAfrUseCases/CAAAfrInitialWorkbench.htm"
 converted: "2026-05-11T17:17:55.614529"
+```
+
 ---
 # 3D PLM Enterprise Architecture
 
@@ -17,7 +20,7 @@ converted: "2026-05-11T17:17:55.614529"
 _Using CATIAfrActivateWorkbench_  
 ---|---|---  
 Use Case  
-  
+
 * * *
 ### Abstract
 
@@ -62,23 +65,26 @@ CAAAfrInitialWorkbench is a use case of the CAAApplicationFrame.edu framework th
 This article shows an implementation of the _CATIAfrActivateWorkbench_ interface __ on the **MechanicalPart** object. The activated workbench, among the Part workbenches, is the **Part Design** workbench. ![](images/CAAAfrInitialWkbPartDesign.gif) [Top]
 #### How to Launch CAAAfrInitialWorkbench
 
+This article shows an implementation of the _CATIAfrActivateWorkbench_ interface __ on the **MechanicalPart** object. The activated workbench, among the Part workbenches, is the **Part Design** workbench. ![](images/CAAAfrInitialWkbPartDesign.gif) [Top]
 To launch CAAAfrInitialWorkbench, you will need to set up the build time environment, then compile CAAAfrInitialWorkbench along with its prerequisites, set up the run time environment, and then execute the use case [3]. But just before launching the execution, edit the CAAApplicationFrame.edu.dico interface dictionary file located in the dictionary directory of the CAAApplicationFrame.edu framework: | Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CNext\code\dictionary\`  
----|---  
+
+This article shows an implementation of the _CATIAfrActivateWorkbench_ interface __ on the **MechanicalPart** object. The activated workbench, among the Part workbenches, is the **Part Design** workbench. ![](images/CAAAfrInitialWkbPartDesign.gif) [Top]
+To launch CAAAfrInitialWorkbench, you will need to set up the build time environment, then compile CAAAfrInitialWorkbench along with its prerequisites, set up the run time environment, and then execute the use case [3]. But just before launching the execution, edit the CAAApplicationFrame.edu.dico interface dictionary file located in the dictionary directory of the CAAApplicationFrame.edu framework: | Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CNext\code\dictionary\`
 UNIX | `InstallRootDirectory/CAAApplicationFrame.edu/CNext/code/dictionary/`  
-  
+
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 In this file, remove the "**#** " character before the following line,
-    
-    
+
     ...
     #MechanicalPart      CATIAfrActivateWorkbench  libCAAAfrInitialWorkbench 
     ...  
-  
+
 ---  
-  
+
 and run mkCreateRuntimeView.
 
+and run mkCreateRuntimeView.
 Then, in the window where you run the mkrun command, do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following:
 
   1. On the **Start** menu, select **Shape** and click **FreeStyle**
@@ -113,26 +119,32 @@ Without the _CATIAfrActivateWorkbench_ implementation, the current workbench wou
 
 (*)The document is located in the InputData directory of the CAAApplicationFrame.edu framework:
 
+Without the _CATIAfrActivateWorkbench_ implementation, the current workbench would have been **Wireframe and Surface Design,** the last used workbench for a Part.
 Windows | `InstallRootDirectory\CAACATIAApplicationFrm.edu\InputData\`  
----|---  
+
+Windows | `InstallRootDirectory\CAACATIAApplicationFrm.edu\InputData\`
 Unix | `InstallRootDirectory/CAACATIAApplicationFrm.edu/InputData/`  
-  
+
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
 #### Where to Find the CAAAfrInitialWorkbench Code
 
+where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 The CAAAfrInitialWorkbench use case is made of one single class, the _CAAEAfrActivateWorkbenchOnPart_ class, located in the CAAAfrInitialWorkbench.m module of the CAAApplicationFrame.edu framework:
 
 Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrInitialWorkbench.m\`  
----|---  
+
+The CAAAfrInitialWorkbench use case is made of one single class, the _CAAEAfrActivateWorkbenchOnPart_ class, located in the CAAAfrInitialWorkbench.m module of the CAAApplicationFrame.edu framework:
+Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrInitialWorkbench.m\`
 Unix | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrInitialWorkbench.m/`  
-  
+
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
 ### Step-by-Step
 
+where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 To implement the _CATIAfrActivateWorkbench_ interface, there are two steps:
 
   1. Creating the Header File
@@ -140,70 +152,81 @@ To implement the _CATIAfrActivateWorkbench_ interface, there are two steps:
 
 [Top]
 #### Creating the Header File
-    
-    
+
     // System framework
     #include "CATBaseUnknown.h"  
     #include "CATString.h"        
-    
+
     class CAAEAfrActivateWorkbenchOnPart: public CATBaseUnknown
     {
+class CAAEAfrActivateWorkbenchOnPart: public CATBaseUnknown
       CATDeclareClass;
-    
+
       public:
-    
+
         CAAEAfrActivateWorkbenchOnPart();
         virtual ~CAAEAfrActivateWorkbenchOnPart();
-    
+
         CATString & **GetInitialWorkbench**();
-    
+
       private:
-    
+
         CAAEAfrActivateWorkbenchOnPart(const CAAEAfrActivateWorkbenchOnPart &iObjectToCopy);
         CAAEAfrActivateWorkbenchOnPart & operator = (const CAAEAfrActivateWorkbenchOnPart &iObjectToCopy);
-    
+
       private:
-    
+
           CATString **_WbName** ;
+
     };  
-  
+
 ---  
-  
+
 The _CAAEAfrActivateWorkbenchOnPart_ class derives from _CATBaseUnkown_. The `GetInitialWorkbench` method is the only one method of the _CATIAfrActivateWorkbench_ interface. The `CATDeclareClass` macro declares that the _CAAEAfrActivateWorkbenchOnPart_ class belongs to a component. Note that the copy constructor and the assignment operator are set as private, and are not implemented in the source file. This prevents the compiler from creating them as public without you know. **`_WbName`** is the data returned by the `GetInitialWorkbench` method.
 
 [Top]
 #### Creating the Source File
-    
+
     #include "CAAEAfrActivateWorkbenchOnPart.h"
     #include "TIE_CATIAfrActivateWorkbench.h"              
     TIE_CATIAfrActivateWorkbench(CAAEAfrActivateWorkbenchOnPart); 
-    
+
+```vbscript
+TIE_CATIAfrActivateWorkbench(CAAEAfrActivateWorkbenchOnPart);
     CATImplementClass (CAAEAfrActivateWorkbenchOnPart,**DataExtension** , 
                        CATBaseUnknown, **MechanicalPart**);
-      
-  
+
+```
+
 ---  
-  
+
 The _CAAEAfrActivateWorkbenchOnPart_ class states that it implements the _CATIAfrActivateWorkbench_ interface thanks to the `TIE_CATIAfrActivateWorkbench` macro. The `CATImplementClass` macro declares that the _CAAEAfrActivateWorkbenchOnPart_ class is a data extension, thanks to the `DataExtension` keyword, that extends `MechanicalPart`. The third argument must always be set as _CATBaseUnknown_ or _CATNull_ for any kind of extension.
-    
-    
+
     ...
     CAAEAfrActivateWorkbenchOnPart::CAAEAfrActivateWorkbenchOnPart()
-                                
+
     {
+CAAEAfrActivateWorkbenchOnPart::CAAEAfrActivateWorkbenchOnPart()
         _WbName = "**PrtCfg** " ;
+
     }
+CAAEAfrActivateWorkbenchOnPart::CAAEAfrActivateWorkbenchOnPart()
+_WbName = "**PrtCfg** " ;
     CAAEAfrActivateWorkbenchOnPart::~CAAEAfrActivateWorkbenchOnPart()
+
     {
     }
+_WbName = "**PrtCfg** " ;
+CAAEAfrActivateWorkbenchOnPart::~CAAEAfrActivateWorkbenchOnPart()
     CATString & CAAEAfrActivateWorkbenchOnPart::**GetInitialWorkbench**()
+
     {
-     
+
         return **_WbName** ;
     }  
-  
+
 ---  
-  
+
 In this implementation, the workbench is always the Part Design workbench. The name of this workbench is **PrtCfg**.
 
 [Top]
@@ -223,14 +246,14 @@ This use case explains how to implement the _CATIAfrActivateWorkbench_ interface
 [2] | [Application Frame Overview](../CAAAfrTechArticles/CAAAfrOverview.md)  
 [3] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 [Top]  
-  
+
 * * *
 ### History
 
 Version: **1** [Aug 2003] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2003, Dassault Systmes. All rights reserved._

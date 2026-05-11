@@ -1,12 +1,14 @@
 ---
+```vbscript
 title: "CAAAniMesh1D.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAScdAniUseCases", "CAAAniMesh1D"]
 source_file: "Doc/online/CAAScdAniUseCases/CAAAniMesh1DSource.htm"
 converted: "2026-05-11T17:31:51.604045"
----
+```
 
+---
 ```vbscript
     'COPYRIGHT DASSAULT SYSTEMES 2000
     '***********************************************************************
@@ -19,12 +21,11 @@ converted: "2026-05-11T17:31:51.604045"
     '  Locales:      English 
     '  CATIA Level:  V5R16
     '***********************************************************************
-    
+
 ```
 
-    
-```vbscript
     Sub CATMain()
+
 ```vbscript
     '----------------------------------------------------------- 
     'Optional: allows to find the sample wherever it's installed
@@ -36,19 +37,30 @@ converted: "2026-05-11T17:31:51.604045"
     Err.Raise 9999,,"No Doc Path Defined"
     End If
     '----------------------------------------------------------- 
-    
+
 ```
 
+```vbscript
+End If
+'-----------------------------------------------------------
     'Open the CATAnalysis Document
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Beam.CATAnalysis")
-```vbscript
-    Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
-    
 ```
 
+```vbscript
+    Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+
+```
+
+```vbscript
+Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
     'Retrieve the Analysis Managar and Analysis Model
+```
+
 ```vbscript
     Set oAnalysisManager = oAnalysisDocument.Analysis
+```
+
 ```vbscript
     'Retrieve the part document and product
     Set oAnalysisLinkedDocuments = oAnalysisManager.LinkedDocuments
@@ -62,18 +74,18 @@ converted: "2026-05-11T17:31:51.604045"
     Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
 ```
 
-    
-```
-
     'Retrieve publications from product and retrieve the published face.
 ```vbscript
     Set publications = product.Publications
     Set pubLine = publications.Item("Line.3")
     'Add the new beam mesh part to the list of mesh parts
     Set beamPart = oAnalysisMeshParts.Add("MSHPart1D")
-    
+
 ```
 
+```vbscript
+'Add the new beam mesh part to the list of mesh parts
+Set beamPart = oAnalysisMeshParts.Add("MSHPart1D")
     beamPart.AddSupportFromPublication product, pubLine
     beamPart.SetGlobalSpecification "SizeValue", "10.0 mm"
     beamPart.SetGlobalSpecification "AbsoluteSag", 1
@@ -83,16 +95,10 @@ converted: "2026-05-11T17:31:51.604045"
     beamPart.SetGlobalSpecification "MeshCapture", 1
     beamPart.SetGlobalSpecification "MeshCaptureTol", "1.1 mm"
     beamPart.SetGlobalSpecification "CurveAngle", "40 deg"
-    
-    
+
     'Update the mesh part
     beamPart.Update 
-    
-```vbscript
+
+```
+
     End Sub
-    
-```
-
-    
-
-```

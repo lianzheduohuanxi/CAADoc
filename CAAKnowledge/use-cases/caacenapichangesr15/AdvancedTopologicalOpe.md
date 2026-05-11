@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "AdvancedTopologicalOpe Framework Modifications in V5R15"
 category: "use-case"
 module: "CAACenAPIChangesR15"
@@ -6,11 +7,12 @@ version: "V5R15"
 tags: []
 source_file: "Doc/online/CAACenAPIChangesR15/AdvancedTopologicalOpe.htm"
 converted: "2026-05-11T17:33:51.012993"
----
+```
 
+---
 | CAA C++ API Modifications|  AdvancedTopologicalOpe Framework Modifications in V5R15 |   
 ---|---|---  
-  
+
 * * *
 
 **Entity|  SP| Modification| To Do** | AdvancedTopologicalOpe/Public/CATTopSpine.h/CATTopSpine/SetFirstPlaneNormalOrn  

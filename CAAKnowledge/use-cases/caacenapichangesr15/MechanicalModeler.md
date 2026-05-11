@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "MechanicalModeler Framework Modifications in V5R15"
 category: "use-case"
 module: "CAACenAPIChangesR15"
@@ -6,15 +7,15 @@ version: "V5R15"
 tags: ["CATIMfBorderRedge", "CATIMfRedge", "CATIMfResultManagement", "CATIMf3DBehavior2", "CATIDatumFactory", "CATIMfWireRedge", "CATIIsolate", "CATIMfPlanarSubElement", "CATIPrtProceduralView", "CATIMechanicalRootFactory", "CATIShapeFeatureProperties", "CATIMfPoint", "CATIUpdateError", "CATIMfExtremity", "CATIMfFedge", "CATIMfPointOnEdge", "CATIMfProcReport", "CATIMfRsur", "CATIMfGeom", "CATIMfFvertex"]
 source_file: "Doc/online/CAACenAPIChangesR15/MechanicalModeler.htm"
 converted: "2026-05-11T17:33:51.116895"
----
+```
 
+---
 | 
 # CAA C++ API Modifications
 
 | 
 ##  MechanicalModeler Framework Modifications in V5R15 
 
-  
 * * *
 
 **Entity|  SP| Modification| To Do** | MechanicalModeler/Public/CATIDatumFactory.h >FHBD | Moved to MecModInterfaces. No Impact.  

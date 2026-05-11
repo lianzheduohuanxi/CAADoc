@@ -1,13 +1,16 @@
 ---
+```vbscript
 title: "Infrastructure Automation Objects"
 category: "use-case"
 module: "CAAScdInfTechArticles"
 tags: []
 source_file: "Doc/online/CAAScdInfTechArticles/CAAInfTocSettingCtrl.htm"
 converted: "2026-05-11T17:31:52.495651"
+```
+
 ---
 # Setting Controller Automation Objects
- 
+
  ![](../CAAScrAutomationImages/images/setctrls.gif)[![Application Object Diagram](../CAAScrAutomationImages/images/uparrow.gif)](CAAInfTocApplication.md)  
 ![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/setctrllong.gif)  
  ---  
@@ -100,18 +103,18 @@ converted: "2026-05-11T17:31:52.495651"
 ![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/scv4v5sp.gif)  
 ![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/scwork.gif)  
 ![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/scv4writing.gif)  
-   
+
  **Legend**
- 
+
  ![](../CAAScrAutomationImages/images/yellbox.gif) Collection  
 ![](../CAAScrAutomationImages/images/purpbox.gif) Abstract object  
 ![](../CAAScrAutomationImages/images/bluebox.gif) Object
- 
+
  ![right arrow](../CAAScrAutomationImages/images/rtarrow.gif) Click arrow to expand chart  
 ![](../CAAScrAutomationImages/images/uparrow.gif) Click arrow to return to previous chart
- 
+
  [Top]
- 
+
  * * *
- 
+
  _Copyright 1999-2013, Dassault Systmes. All rights reserved._

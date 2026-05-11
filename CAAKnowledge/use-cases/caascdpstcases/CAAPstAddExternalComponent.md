@@ -1,26 +1,26 @@
 ---
+```vbscript
 title: "Adding an External Component"
 category: "use-case"
 module: "CAAScdPstUseCases"
 tags: ["CAAPstAddExternalComponent", "CAAScdPstUseCases", "CATIA", "CAAPstHull"]
 source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddExternalComponent.htm"
 converted: "2026-05-11T17:31:52.319791"
----
+```
 
+---
 | 
 ## Product Structure
 
 | 
 ## Adding an External Component  
-  
-  
+
 * * *
 
   This macro shows you how to create a simple product structure that imports an existing Part from an external Part document. It assumes that the CATDocView has been initialized so that it references the path leading to the part document, CAAPstHull.CATPart.  Here is an image of the resulting product structure: 
 ---  
-  
-   
-  
+
+This macro shows you how to create a simple product structure that imports an existing Part from an external Part document. It assumes that the CATDocView has been initialized so that it references the path leading to the part document, CAAPstHull.CATPart.  Here is an image of the resulting product structure:
   CAAPstAddExternalComponent is launched in CATIA [1]. No previously opened document is needed. [CAAPstAddExternalComponent.CATScript ](CAAPstAddExternalComponentSource.md)is located in the CAAScdPstUseCases module. [Execute macro](macros/CAAPstAddExternalComponent.CATScript) (Windows only).  
   CAAPstAddExternalComponent includes three steps:
 
@@ -31,14 +31,19 @@ converted: "2026-05-11T17:31:52.319791"
 #### Prolog
 
 | 
-    
-    
+
       ...
           'Create a new product document object by adding a document with the Product
+```vbscript
+'Create a new product document object by adding a document with the Product
           'type to the document collection of the CATIA application. 
+```
+
 ```vbscript
           Dim oProductDoc As Document
           Set oProductDoc = CATIA.Documents.**Add**("Product") 
+```
+
 ```vbscript
           'Retrieve the root product.
           Dim oRoot As Product
@@ -49,49 +54,43 @@ converted: "2026-05-11T17:31:52.319791"
 ```
 
       ...  
-  
-```
-
-```
 
 ---  
-  
+
 A new Product document is created using the `Add` method of the documents collection (_Documents o_ bject). Next, the root product of the document is retrieved using the `Product` property of the _ProductDocument_ object.  Finally, the product's collection is retrieved using the `Products` property of the _Product_ object.
 #### Open the Part Document
-    
-    
+
       ...
+A new Product document is created using the `Add` method of the documents collection (_Documents o_ bject). Next, the root product of the document is retrieved using the `Product` property of the _ProductDocument_ object.  Finally, the product's collection is retrieved using the `Products` property of the _Product_ object.
           'Open the Part Document
+
 ```vbscript
           Dim oPartDoc As Document
           Set oPartDoc = CATIA.Documents.**Open**(sDocPath & "CAAPstHull.CATPart")
-      ...  
-  
 ```
 
-```
+      ...  
 
 ---  
-  
+
 The Part document to be imported is opened using the `Open` method of the _Documents_ object.
 #### Import the Part Document as a Product in the Collection of Products
-    
-    
+
       ...
+The Part document to be imported is opened using the `Open` method of the _Documents_ object.
           'Add a new component from the already opened part document.
+
 ```vbscript
           Dim oNewComponent As Product
           Set oNewComponent = oRootCol.**AddExternalComponent**(oPartDoc)
-      ...  
-  
 ```
 
-```
+      ...  
 
 ---  
-  
+
 A new part is imported under the product collection using the `AddExternalComponent` method of the _Products_ object.  
-  
+
 ![](../CAAScrBase/images/aendtask.gif)
 
 [Top]

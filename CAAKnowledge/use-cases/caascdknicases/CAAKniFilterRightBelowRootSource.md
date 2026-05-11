@@ -1,17 +1,25 @@
 ---
+```vbscript
 title: "CAAKniFilterRightBelowRoot.CATScript"
 category: "use-case"
 module: "CAAScdKniUseCases"
 tags: ["CAAKniFilterRightBelowRoot", "CATIA", "CAAKniClash", "CAAScdKniUseCases"]
 source_file: "Doc/online/CAAScdKniUseCases/CAAKniFilterRightBelowRootSource.htm"
 converted: "2026-05-11T17:31:51.981824"
----
+```
 
+---
+tags: ["CAAKniFilterRightBelowRoot", "CATIA", "CAAKniClash", "CAAScdKniUseCases"]
+source_file: "Doc/online/CAAScdKniUseCases/CAAKniFilterRightBelowRootSource.htm"
+converted: "2026-05-11T17:31:51.981824"
     Option Explicit
     ' COPYRIGHT DASSAULT SYSTEMES 2001
+
 ```vbscript
     Dim Language as String
     Language="VBScript"
+```
+
 ```vbscript
     ' ***********************************************************************
     '   Purpose:      Given a CATProduct document,
@@ -39,11 +47,8 @@ converted: "2026-05-11T17:31:51.981824"
     ' ***********************************************************************
 ```
 
-    
-```
-
-```vbscript
     Sub CATMain()
+
 ```vbscript
         ' ----------------------------------------------------------- 
         ' Optional: allows to find the sample wherever it's installed
@@ -59,8 +64,13 @@ converted: "2026-05-11T17:31:51.981824"
 ```
 
     		"online\CAAScdKniUseCases\samples\CAAKniClash.CATProduct")
+```vbscript
+Dim sFilePath
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
         Dim oDoc As Document
         set oDoc = CATIA.Documents.Open(sFilePath)
+```
+
 ```vbscript
      ' Set the CATIA popup file alerts to False
      ' It prevents to stop the macro at each alert during its execution
@@ -70,7 +80,7 @@ converted: "2026-05-11T17:31:51.981824"
      ' on your application object
      Dim oActiveDoc As Document 
      Set oActiveDoc = CATIA.ActiveDocument 
-     
+
      Dim i,j,k As Integer
      Dim BelongToComp As Integer
      ' Check whether the document is a CATProduct
@@ -94,8 +104,14 @@ converted: "2026-05-11T17:31:51.981824"
               end if 
 ```
 
+```vbscript
+if  S1 = oProductList.Item(j).Parameters.Item(k).name then
+BelongToComp = 1
+end if
               next
            Next  
+```
+
 ```vbscript
             ' if the flag is set to 0 - the document parameter
             ' does not belong to ant sub-component 
@@ -103,18 +119,17 @@ converted: "2026-05-11T17:31:51.981824"
             if BelongToComp = 0 then
 ```
 
+```vbscript
+' does not belong to ant sub-component
+' Conclusion: it is right below the root
+if BelongToComp = 0 then
             msgbox S1
            end if
         Next    
      Else 
         MsgBox "The active document must be a CATProduct"
     End If
-    
+
 ```
 
-```vbscript
     End Sub
-    
-```
-
-```

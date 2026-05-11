@@ -1,10 +1,13 @@
 ---
+```vbscript
 title: "What Is the Product Line Visual Identity"
 category: "use-case"
 module: "CAAAfrTechArticles"
 tags: ["CATIA"]
 source_file: "Doc/online/CAAAfrTechArticles/CAAAfrVisualIdentity.htm"
 converted: "2026-05-11T17:17:55.938631"
+```
+
 ---
 # 3D PLM Enterprise Architecture
 
@@ -17,7 +20,7 @@ converted: "2026-05-11T17:17:55.938631"
 _The objects related to a product line that you can customize_  
 ---|---|---  
 Technical Article  
-  
+
 * * *
 ### Abstract
 
@@ -27,9 +30,8 @@ A product line should be easily recognized from others using some visual feature
   * **In Short**
   * **References**
 
-  
 ---  
-  
+
 * * *
 ### What Are the Visual Identity Components?
 
@@ -38,9 +40,11 @@ The components that help to differentiate your product line from any other are t
   * **The product line name** , such as CATIA. It appears in the Help menu and in the Help About dialog box, in the sentence "CATIA is a registered trademark ..." and must be used as the product line resource file names: CATIA.CATNls and CATIA.CATRsc. If the name includes several words, only the first one is used for the resource file names
   * **The product line version level**. It appears in:  ![](images/CAAAfrVICATIAWinTitle.jpg) | The application frame window title, either displayed or iconified, such as CATIA V5  
 ---|---  
+The components that help to differentiate your product line from any other are the following:
  The title of the welcome dialog box displayed when the application is just launched: "Welcome to CATIA V5"  
  The Help menu  
  The Help About dialog box title  
+
   * **The product line icon** ![](images/CAAAfrVICATIAIcon.gif) to be displayed: 
     * In the top left corner of the application frame window (Windows only)
     * In the top left corner of the document windows .
@@ -89,14 +93,14 @@ To provide a visual identity to your product line, you can, with Windows only, c
 ---|---  
 [2] | [Contextual Help](CAAAfrHelpOnLine.md)  
 [Top]  
-  
+
 * * *
 ### History
 
 Version: **1** [Jul 2000] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2000, Dassault Systmes. All rights reserved._

@@ -1,13 +1,19 @@
 ---
+```vbscript
 title: "CAASchInsertComponent.CATScript"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAASCH_Sample", "CATIASchGRRRoute", "CATIASchRouteGraphic", "CAAScdSchUseCases", "CAASCH_RouteForPlacement", "CATIA", "CAASacInsertComponent", "CATIASchCompatible", "CATIASchComponent", "CATIASchCompGraphic", "CATIASchRoute", "CATIASchAppConnectable", "CAASchInsertComponent"]
 source_file: "Doc/online/CAAScdSchUseCases/CAASchInsertComponentSource.htm"
 converted: "2026-05-11T17:31:51.378605"
----
+```
 
+---
+tags: ["CAASCH_Sample", "CATIASchGRRRoute", "CATIASchRouteGraphic", "CAAScdSchUseCases", "CAASCH_RouteForPlacement", "CATIA", "CAASacInsertComponent", "CATIASchCompatible", "CATIASchComponent", "CATIASchCompGraphic", "CATIASchRoute", "CATIASchAppConnectable", "CAASchInsertComponent"]
+source_file: "Doc/online/CAAScdSchUseCases/CAASchInsertComponentSource.htm"
+converted: "2026-05-11T17:31:51.378605"
     Option Explicit
+
 ```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2004
     ' *****************************************************************************
@@ -18,21 +24,22 @@ converted: "2026-05-11T17:31:51.378605"
     ' *****************************************************************************
 ```
 
-    
-```vbscript
     Sub CATMain()
+
 ```vbscript
         ' ------------------------------------------------------------------------- 
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String 
         sDocPath=CATIA.SystemService.Environ("CATDocView")
-    
+
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 
 ```vbscript
           Err.Raise 9999,sDocPath,"No Doc Path Defined"
         End If
+```
+
 ```vbscript
         ' ------------------------------------------------------------------------- 
         ' Open the catalog document 
@@ -41,9 +48,13 @@ converted: "2026-05-11T17:31:51.378605"
 ```
 
                 "online\CAAScdSchUseCases\samples\CAASCH_Sample.catalog")
-    
+
+```vbscript
+sCtlgFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
         Dim objSchCtlgDoc As Document
         Set objSchCtlgDoc = CATIA.Documents.Open(sCtlgFilePath)
+```
+
 ```vbscript
         ' Open main schematic design document (for new component instances created here)
         Dim sFilePath
@@ -51,20 +62,31 @@ converted: "2026-05-11T17:31:51.378605"
 ```
 
                 "online\CAAScdSchUseCases\samples\CAASCH_RouteForPlacement.CATProduct")
-    
+
+```vbscript
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
         Dim objSchDoc As Document
         Set objSchDoc = CATIA.Documents.Open(sFilePath)
-    
+
         Dim strMessage As String
-    
+
 ```
 
+```vbscript
+Dim strMessage As String
         strMessage = _
+```
+
           "--------------------------------------------------------------------" & vbCr
+strMessage = _
         strMessage = strMessage & _
+
           "Output traces from CAASacInsertComponent.CATScript" & vbCrLf
+strMessage = _
+strMessage = strMessage & _
         '
         ' Find the top node of the schematic object tree - schematic root.
+
 ```vbscript
         Dim objPrdRoot As Product
         Dim objSchRoot As SchematicRoot
@@ -74,7 +96,7 @@ converted: "2026-05-11T17:31:51.378605"
             Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
           End If
         End If
-    
+
         Dim objSchGRRCVCtlg As SchGRR 
         Dim objSchCntblCVRef As SchAppConnectable
         Dim objSchCompCVRef As SchComponent
@@ -84,11 +106,13 @@ converted: "2026-05-11T17:31:51.378605"
         Dim objSchRouteInst As SchRoute
         Dim objSchCntblRouteInst As SchAppConnectable
         Dim objSchRouteGraph As SchRouteGraphic
-    
+
 ```
 
 ```vbscript
         If ( Not ( IsEmpty(objSchRoot ) ) ) Then
+```
+
 ```vbscript
            '-----------------------------------------------------------------------
            ' Get the symbol of a component from the component catalog.
@@ -103,13 +127,13 @@ converted: "2026-05-11T17:31:51.378605"
              Set objSchCntblCVRef = objSchGRRCVCtlg.GetSchObjOwner
              If ( Not ( IsEmpty (objSchCntblCVRef ) ) ) Then
                strMessage = strMessage &  "Got catalog connectable of the symbol" & vbCr
-    
+
                Dim objCompRefPlaceInfo As AnyObject  
                Dim objCompatInfo As AnyObject  
                Dim objFinalInsertInfo As AnyObject
                Dim bYesCompat As Boolean   
                Dim bFindAllSolutions As Boolean    
-    
+
                Set objSchCompCVRef = objSchRoot.GetInterface ("CATIASchComponent",objSchCntblCVRef)
                If ( Not ( IsEmpty (objSchCompCVRef ) ) ) Then
                   strMessage = strMessage &  "Got catalog component reference of the symbol" & vbCr
@@ -117,12 +141,11 @@ converted: "2026-05-11T17:31:51.378605"
                End If 'If ( Not ( IsEmpty (objSchCompCVRef ) ) ...
 ```
 
-    
-```
-
 ```vbscript
                If ( Not ( IsEmpty (objSchCompCVRef ) ) And _
                     Not ( IsEmpty (objSchCompatRoute )) ) Then
+```
+
 ```vbscript
                   '----------------------------------------------------------------
                   '  Insert a component into a route.
@@ -159,14 +182,18 @@ converted: "2026-05-11T17:31:51.378605"
                   ' -- step 2 
 ```
 
+```vbscript
+Set objCompRefPlaceInfo = objSchCompCVRef.QueryConnectAbility _
+(objSchGRRCVCtlg)
+' -- step 2
                   objSchCompatRoute.IsTargetOKForInsert objCompRefPlaceInfo, _
                     objCompatInfo, bYesCompat
-    
+
                   Dim db2Pt(2) As CATSafeArrayVariant
                   '-- a point at the middle of the route
                   db2Pt(0) = 80.0
                   db2Pt(1) = 50.0
-    
+
 ```
 
 ```vbscript
@@ -176,7 +203,7 @@ converted: "2026-05-11T17:31:51.378605"
                      ' -- step 3 
                      objSchCompatRoute.GetBestFitInsertInfo db2Pt, objCompatInfo, _
                        objFinalInsertInfo, bFindAllSolutions
-    
+
 ```
 
 ```vbscript
@@ -184,26 +211,36 @@ converted: "2026-05-11T17:31:51.378605"
                         ' -- step 4 
                         objSchCompCVRef.InsertIntoRouteWithInfo objFinalInsertInfo, _
                           objSchCompInst,objSchRouteInst
-    
+
 ```
 
 ```vbscript
                         If ( Not ( IsEmpty (objSchCompInst ) )  And _
                              Not ( IsEmpty (objSchRouteInst ) ) ) Then
                            strMessage = strMessage &  _
+```
+
                              "Insert a new component instance into a route is successful" & vbCr
+```vbscript
+If ( Not ( IsEmpty (objSchCompInst ) )  And _
+Not ( IsEmpty (objSchRouteInst ) ) ) Then
+strMessage = strMessage &  _
                         End If
-    
+
 ```
 
 ```vbscript
                      End If 
-    
+
 ```
 
+```vbscript
+End If
                   Else 
                      strMessage = strMessage &  "Target is NOT compatible" & vbCr
                   End If
+```
+
 ```vbscript
                   '----------------------------------------------------------------
                   '  Insert a component into a route.
@@ -221,43 +258,50 @@ converted: "2026-05-11T17:31:51.378605"
                   '  For this we need to extract the x-y coordinates of the route
                   '  points.
                   '----------------------------------------------------------------
-    
-                  Dim objLDbPlace As SchListOfDoubles
-```
 
-    
+                  Dim objLDbPlace As SchListOfDoubles
 ```
 
 ```vbscript
                   If ( Not ( IsEmpty (objSchRouteInst ) ) ) Then
-    
+
                     Set objSchCntblRouteInst = objSchRoot.GetInterface ( _
-                      "CATIASchAppConnectable",objSchRouteInst)
-    
-                    Set objSchRouteGraph = objSchRoot.GetInterface ( _
-                      "CATIASchRouteGraphic",objSchRouteInst)
-    
-                    Set objLDbPlace = FindPlacementPoint (objSchRoot, objSchRouteGraph)
-             
 ```
+
+                      "CATIASchAppConnectable",objSchRouteInst)
+
+```vbscript
+If ( Not ( IsEmpty (objSchRouteInst ) ) ) Then
+Set objSchCntblRouteInst = objSchRoot.GetInterface ( _
+                    Set objSchRouteGraph = objSchRoot.GetInterface ( _
+```
+
+                      "CATIASchRouteGraphic",objSchRouteInst)
+
+                    Set objLDbPlace = FindPlacementPoint (objSchRoot, objSchRouteGraph)
 
 ```vbscript
                   End If
-    
+
 ```
 
 ```vbscript
                   If (  Not ( IsEmpty (objSchCntblRouteInst ) ) And _
                         Not ( IsEmpty (objLDbPlace ) )  ) Then
-    
+
 ```
 
+```vbscript
+If (  Not ( IsEmpty (objSchCntblRouteInst ) ) And _
+Not ( IsEmpty (objLDbPlace ) )  ) Then
                     db2Pt(0) = objLDbPlace.Item(1)
                     db2Pt(1) = objLDbPlace.Item(2)
-    
+
                     strMessage = strMessage &  _
+```
+
                       "Placement point for PlaceOnObject = (" & db2Pt(0) & "," & db2Pt(1) &")" & vbCr       
-    
+
 ```vbscript
                      Dim db6Matrix(6) As CATSafeArrayVariant
                      db6Matrix(0)=1.0
@@ -266,51 +310,65 @@ converted: "2026-05-11T17:31:51.378605"
                      db6Matrix(3)=1.0
                      db6Matrix(4)=db2Pt(0)
                      db6Matrix(5)=db2Pt(1)
-    
+
 ```
 
+```vbscript
+db6Matrix(4)=db2Pt(0)
+db6Matrix(5)=db2Pt(1)
                      objSchCompCVRef.PlaceOnObject objSchGRRCVCtlg, db6Matrix, _
                        objSchCntblRouteInst, objSchCompInst2
-    
+
+```
+
 ```vbscript
                      If (  Not ( IsEmpty (objSchCntblRouteInst ) )  ) Then
                         strMessage = strMessage &  _
+```
+
                           "PlaceOnObject is successful" & vbCr
+```vbscript
+If (  Not ( IsEmpty (objSchCntblRouteInst ) )  ) Then
+strMessage = strMessage &  _
                      End If 
-    
+
 ```
 
 ```vbscript
                   End If '---- If ( ( Not ( IsEmpty (objSchCntblRouteInst ) ) ...
-    
+
 ```
 
 ```vbscript
                End If '----If ( Not ( IsEmpty (objSchCompCVRef ) )...
-    
+
 ```
 
 ```vbscript
              End If '---- If ( Not ( IsEmpty (objSchCntblCVRef ) )...
-    
+
 ```
 
 ```vbscript
            End If '----- If ( Not ( IsEmpty (objSchGRRCVCtlg ) )...
-    
+
 ```
 
 ```vbscript
         End If  '----If ( Not ( IsEmpty (objSchRoot ) )...
-    
+
 ```
 
+```vbscript
+End If  '----If ( Not ( IsEmpty (objSchRoot ) )...
         strMessage = strMessage & _
+```
+
           "--------------------------------------------------------------------" & vbCr
         MsgBox strMessage
-    
-```vbscript
+
     End Sub
+
 ```vbscript
     ' -----------------------------------------------------------------------------
     ' | Find a route instance in the model.
@@ -336,8 +394,12 @@ converted: "2026-05-11T17:31:51.378605"
     Private Function FindPlacementPoint (objSchRootArg As SchematicRoot, _ 
 ```
 
+```vbscript
+' | Returns: the mid point of the first segment of the route.
+' -----------------------------------------------------------------------------
+Private Function FindPlacementPoint (objSchRootArg As SchematicRoot, _
       objSchRouteGraphArg As SchRouteGraphic) As SchListOfDoubles
-    
+
        Dim objSchLGRR As SchListOfObjects
        Dim objSchLDb As SchListOfDoubles
        Dim objSchGRRRoute As SchGRRRoute
@@ -347,7 +409,7 @@ converted: "2026-05-11T17:31:51.378605"
        Dim db2Seg1(4) As CATSafeArrayVariant
        Dim dbXOut As Double
        Dim dbYOut As Double
-    
+
 ```
 
 ```vbscript
@@ -357,76 +419,76 @@ converted: "2026-05-11T17:31:51.378605"
              Set FindPlacementPoint = objSchTempListFact.CreateListOfDoubles
           End If 
        End If 
-    
+
 ```
 
 ```vbscript
        If ( Not ( IsEmpty (objSchRouteGraphArg ) ) And _
             Not ( IsEmpty (FindPlacementPoint ) ) ) Then
-    
+
           Set objSchLGRR = objSchRouteGraphArg.ListGraphicalPrimitives
-    
+
 ```
 
 ```vbscript
           If ( Not ( IsEmpty (objSchLGRR ) ) ) Then
-    
+
              Set objSchGRRRoute = objSchLGRR.Item (1,"CATIASchGRRRoute")
-    
+
 ```
 
 ```vbscript
              If ( Not ( IsEmpty (objSchGRRRoute ) ) ) Then
-    
+
 ```
 
                 objSchGRRRoute.GetPath objSchLDb
-    
+
 ```vbscript
                 If ( Not ( IsEmpty (objSchLDb ) ) ) Then
-    
+
 ```
 
                    intCount = objSchLDb.Count
-    
+
 ```vbscript
                    If ( intCount > 3 ) Then
-    
+
 ```
 
+```vbscript
+If ( intCount > 3 ) Then
                       db2Seg1(0) = objSchLDb.Item(1)
                       db2Seg1(1) = objSchLDb.Item(2)
                       db2Seg1(2) = objSchLDb.Item(3)
                       db2Seg1(3) = objSchLDb.Item(4)
-    
+
                       dbXOut = (db2Seg1(0) + db2Seg1(2)) * 0.5
                       dbYOut = (db2Seg1(1) + db2Seg1(3)) * 0.5
-    
+
                       FindPlacementPoint.Append (dbXOut)
                       FindPlacementPoint.Append (dbYOut)
-    
+
+```
+
 ```vbscript
                    End If
-    
+
 ```
 
 ```vbscript
                 End If 
              End If 
-    
+
 ```
 
 ```vbscript
           End If '--- If ( Not ( IsEmpty (objSchLGRR ) ) ...
-    
+
 ```
 
 ```vbscript
        End If '--- If ( Not ( IsEmpty (objSchRouteGraphArg ) ) ...
     End Function
-    
-```
-
-    
 
 ```

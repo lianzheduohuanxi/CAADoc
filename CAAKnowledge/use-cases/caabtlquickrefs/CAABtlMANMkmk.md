@@ -1,16 +1,23 @@
 ---
+```vbscript
 title: "mkmk"
 category: "use-case"
 module: "CAABtlQuickRefs"
 tags: []
 source_file: "Doc/online/CAABtlQuickRefs/CAABtlMANMkmk.htm"
 converted: "2026-05-11T17:33:49.944363"
----
+```
 
+---
+tags: []
+source_file: "Doc/online/CAABtlQuickRefs/CAABtlMANMkmk.htm"
+converted: "2026-05-11T17:33:49.944363"
 RADE |  Multi-Workspace Application Builder |  mkmk _CAA V5 code builder_  
----|---|---  
+
+converted: "2026-05-11T17:33:49.944363"
+RADE |  Multi-Workspace Application Builder |  mkmk _CAA V5 code builder_
 Quick Reference  
-  
+
 * * *
 
 Purpose The **mkmk** command builds sources written in C, C++, Express, Fortran, JAVA. If you use another language, please contact Dassault Systmes for the integration of your language in the CAA Workbench product. [Top] Default Usage Run without any option, mkmk by default executes the four following phases:
@@ -101,13 +108,15 @@ The table hereunder gives you a view on what could be used: **Current working
 directory** **Parameters on the command line** |  **If you're in the workspace root directory** |  **If you're in the directory of framework FW1:  
 WS/FW1** |  **If you're in the directory of module Mod1:  
 WS/FW1/Mod1**  
----|---|---|---  
+
 -lFW fwlst | FWs: the fwlst list Mods: all the modules of the Frameworks | FWs: the fwlst list Mods: all the modules of the Frameworks | FWs: the fwlst list Mods: all the modules of the Frameworks  
 -lMod modlst | **ERROR: at least one framework must be specified** | FWs: current FW Mods: the modlst list | FWs: current FW Mods: the modlst list  
 -a | FWs: all FW Mods: all modules of all FW | FWs: current FW Mods: all modules belonging to this current FW | FWs: current FW Mods: all modules belonging to this current FW  
+WS/FW1/Mod1**
 FW1 FW2 | FWs: FW1, FW2 Mods: all modules belonging to FW1 or FW2 | **ERROR: FW1 and FW2 will be considered like modules of the current FW** | **ERROR: FW1 and FW2 will be considered like modules of the current FW**  
 Mod1 Mod2 | **ERROR: Mod1 and Mod2 will be considered like frameworks of the current WS** | FWs: current FW Mods:Mod1, Mod2 | FWs: current FW Mods: Mod1, Mod2  
 FW1/Mod1 FW2/Mod2 | FWs: FW1, FW2 Mods: Mod1, Mod2 | FWs: **current FW** , FW1, FW2 Mods: Mod1, Mod2 | FWs: **current FW** , FW1, FW2 Mods: Mod1, Mod2  
+
 {nothing} | **ERROR: at least one framework must be specified** | FWs: current FW Mods: all modules. | FWs: current FW Mods: current module.  
 [Top] Examples **Beginners** : if you are not (yet) familiar with the make principles, we recommend you to use: `mkmk`
 
@@ -120,7 +129,7 @@ FW1/Mod1 FW2/Mod2 | FWs: FW1, FW2 Mods: Mod1, Mod2 | FWs: **current FW** , FW1, 
 History Version: **1** [Mar 2000] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2000, Dassault Systmes. All rights reserved._

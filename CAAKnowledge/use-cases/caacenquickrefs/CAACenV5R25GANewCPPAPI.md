@@ -1,15 +1,19 @@
 ---
+```vbscript
 title: "New C++ Authorized APIs in CAA V5-6R2015 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIThreadManagement", "CATICGMDistanceBodyBody", "CATITPSExtendedCylinder", "CATIACbdUserImportIDF", "CATIPrdHandlePDMObject", "CATIAVPMVDACreateExtension", "CATIA", "CATICGMHealGaps", "CATIPDMSaveContext", "CATIAV4Interfaces", "CATIMfgSpiralMilling3x"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R25GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.564481"
----
+```
 
+---
+tags: ["CATIThreadManagement", "CATICGMDistanceBodyBody", "CATITPSExtendedCylinder", "CATIACbdUserImportIDF", "CATIPrdHandlePDMObject", "CATIAVPMVDACreateExtension", "CATIA", "CATICGMHealGaps", "CATIPDMSaveContext", "CATIAV4Interfaces", "CATIMfgSpiralMilling3x"]
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R25GANewCPPAPI.htm"
+converted: "2026-05-11T17:33:47.564481"
 CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5-6R2015 GA  
----|---  
-  
+
 * * *
 
 The following are the new CAA V5-6R2015 GA C++ Authorized APIs, compared with CAA V5-6R2014 at GA level.
@@ -78,7 +82,7 @@ The following are the new CAA V5-6R2015 GA C++ Authorized APIs, compared with CA
 History Version: **1** [Jul 2014] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright © 1999-2014, Dassault Systèmes. All rights reserved._  

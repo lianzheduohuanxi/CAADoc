@@ -1,12 +1,14 @@
 ---
+```vbscript
 title: "CAAAniPreProAsmbldSol.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniPreProAsmbldSol", "CAAScdAniUseCases"]
 source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProAsmbldSolSource.htm"
 converted: "2026-05-11T17:31:51.789455"
----
+```
 
+---
 ```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2000
     ' ***********************************************************************
@@ -20,18 +22,17 @@ converted: "2026-05-11T17:31:51.789455"
     '   Locales:      English 
     '   CATIA Level:  V5R16
     ' ***********************************************************************
-    
+
 ```
 
-    
-```vbscript
     Sub CATMain()
+
 ```vbscript
     ' ----------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     sSep=CATIA.SystemService.Environ("ADL_ODT_SLASH")
-    
+
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 
@@ -39,12 +40,19 @@ converted: "2026-05-11T17:31:51.789455"
     Err.Raise 9999,,"No Doc Path Defined"
     End If
     ' ----------------------------------------------------------- 
-    
+
 ```
 
+```vbscript
+End If
+' -----------------------------------------------------------
     ' Open the CATAnalysis Document
+```
+
 ```vbscript
     Set analysisDocument1 = CATIA.Documents.Open(sDocPath & sSep & "online" & sSep & "CAAScdAniUseCases" & sSep & "samples" & sSep & "Assembled_Loads_Slutions.CATAnalysis")
+```
+
 ```vbscript
     'Retrieve the Analysis Manager from the analysis document
     Set analysisManager1 = analysisDocument1.Analysis
@@ -60,12 +68,11 @@ converted: "2026-05-11T17:31:51.789455"
     Set analysisModel1 = analysisModels1.Item(1)
 ```
 
-    
-```
-
     'Retrieve the analysis cases from analysis model
 ```vbscript
     Set analysisCases1 = analysisModel1.AnalysisCases
+```
+
 ```vbscript
     'Retrieve the second object that is Solution Case.1 
     'from the list of analysis cases
@@ -83,13 +90,12 @@ converted: "2026-05-11T17:31:51.789455"
     Set basicComponent2 = basicComponents2.GetItem("ElfAssemblyPtr.1")
 ```
 
-    
-```
-
     'Search and select
 ```vbscript
     Set selection1 = analysisDocument1.Selection
     selection1.Search "Name=*DISP*,all"
+```
+
 ```vbscript
     'Retrieve the analysis manager object from the analysis document
     Set documents1 = CATIA.Documents
@@ -97,11 +103,12 @@ converted: "2026-05-11T17:31:51.789455"
     Set analysisManager2 = analysisDocument2.Analysis
 ```
 
-    
+    'Go through the selections and find out the the analysis set
+```vbscript
+'Go through the selections and find out the the analysis set
+    'create a reference from the analysis set and add it to the basic component
 ```
 
-    'Go through the selections and find out the the analysis set
-    'create a reference from the analysis set and add it to the basic component
 ```vbscript
     For i =1 To selection1.Count
               Set element = selection1.Item(i)
@@ -109,9 +116,11 @@ converted: "2026-05-11T17:31:51.789455"
                   Set Reference = analysisManager2.CreateReferenceFromObject(element.Value)
                   basicComponent1.AddSupportFromProduct product2, Reference
              END IF
-           
+
 ```
 
+basicComponent1.AddSupportFromProduct product2, Reference
+END IF
     Next
     'Search and select
     selection1.Clear
@@ -121,6 +130,7 @@ converted: "2026-05-11T17:31:51.789455"
     selection1.Remove2(selection1.Count)
     'Go through the selections and find out the the analysis set
     'create a reference from the analysis set and add it to the basic component
+
 ```vbscript
     For i =1 To selection1.Count
               Set element = selection1.Item(i)
@@ -128,19 +138,14 @@ converted: "2026-05-11T17:31:51.789455"
                    Set Reference = analysisManager2.CreateReferenceFromObject(element.Value)
                    basicComponent2.AddSupportFromProduct product2, Reference
              END IF
-           
+
 ```
 
+basicComponent2.AddSupportFromProduct product2, Reference
+END IF
     Next
     'update the two analysis sets
     analysisSet1.Update
     analysisSet2.Update
-    
-```vbscript
+
     End Sub
-    
-```
-
-    
-
-```

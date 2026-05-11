@@ -1,13 +1,16 @@
 ---
+```vbscript
 title: "How to Use the Topological Operators"
 category: "technical article"
 module: "CAACgmModel"
 tags: ["CATICGMSolidPrimitive", "CAAGMOperatorsSpline", "CATICGMTopSkin", "CATICGMTopOperator", "CATICGMGeoToTopOperator"]
 source_file: "Doc/online/CAACgmModel/CAACgmTaUseTopoOperators.htm"
 converted: "2026-05-11T17:33:48.060274"
+```
+
 ---
 # How to Use Topological Operators  
-  
+
 ---  
 Technical Article  
 ### Abstract
@@ -22,6 +25,7 @@ Build on a common scheme, the topological operators are transient objects used t
 
 Using topological operators is an easy way to create new consistent topological objects. There are two types of operators:
 
+Using topological operators is an easy way to create new consistent topological objects. There are two types of operators:
     1. The operators building topology from geometry. They derive from the `CATICGMGeoToTopOperator` class ( to create wire bodies or skin bodies) or from `CATICGMSolidPrimitive` (to create basic primitives such as cylinder, box, sphere).
     2. The operators only operating on topological objects. They derive from the `CATICGMTopOperator` class. Some of them allows you to create simple bodies (point, line and spline bodies), see the `CAAGMOperatorsSpline` use case.
 
@@ -32,47 +36,78 @@ The operators can log, under request, the follow-up of the faces and free edges 
 The topological operators are transient objects used to define topological operations, and cannot be streamed.
 
 The GMOperatorsInterfaces framework provides main topological operators. 
+
 ### How to Create and Use a Topological Operator
 
+The topological operators are transient objects used to define topological operations, and cannot be streamed.
+The GMOperatorsInterfaces framework provides main topological operators.
 To use a topological operator, you must:
 
     1. Create it: 
+
        * By calling a global method.
        * During this step, the operation is not run.
+To use a topological operator, you must:
+1. Create it:
     2. If needed, specify or modify additional information: 
+
        * During this step, the operation is not run.
+1. Create it:
+2. If needed, specify or modify additional information:
     3. Run the operator: `Run`
+
        * The operation is run.
+2. If needed, specify or modify additional information:
+3. Run the operator: `Run`
     4. Get the result: `GetResult`
+
        * The topological result is always retrieved as a `CATBody`.
+3. Run the operator: `Run`
+4. Get the result: `GetResult`
     5. Delete the operator instance (see How to Delete a Topological Operator).
-    
+
     // Create the operator
+4. Get the result: `GetResult`
+5. Delete the operator instance (see How to Delete a Topological Operator).
     CATICGMTopSkin * pSkinOp = ::CATCGMCreateTopSkin (piGeomFactory,
+
     &topdata,
+5. Delete the operator instance (see How to Delete a Topological Operator).
+CATICGMTopSkin * pSkinOp = ::CATCGMCreateTopSkin (piGeomFactory,
     piPlane,
     nbPCurves, 
     aPCurves,
     aLimits,
     aOrientations);
+
     ...
-    
+
     // Run the operator
+aLimits,
+aOrientations);
     pSkinOp->Run();
-    
+
     // Get the resulting body
     CATBody * piSkinBody = pSkinOp->GetResult();
     ...
 ### How to Delete a Topological Operator
 
+CATBody * piSkinBody = pSkinOp->GetResult();
 Topological operators should be deleted by using the **Release** method.
-    
+
     CATICGMTopSkin * pSkinOp = ::CATCGMCreateTopSkin (piGeomFactory,
+
     &topdata,
+Topological operators should be deleted by using the **Release** method.
+CATICGMTopSkin * pSkinOp = ::CATCGMCreateTopSkin (piGeomFactory,
     piPlane, ...)
+
     ...
     // delete the operator
+CATICGMTopSkin * pSkinOp = ::CATCGMCreateTopSkin (piGeomFactory,
+piPlane, ...)
     pSkinOp **- >Release();  
+
     **pSkinOp **= NULL;**
 ### In Short
 

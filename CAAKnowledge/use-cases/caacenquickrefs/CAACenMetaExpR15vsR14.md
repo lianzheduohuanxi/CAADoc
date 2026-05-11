@@ -1,19 +1,25 @@
 ---
+```vbscript
 title: "Changes to ENOVIA LCA Metadata in V5R15 Compared with V5R14"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: []
 source_file: "Doc/online/CAACenQuickRefs/CAACenMetaExpR15vsR14.htm"
 converted: "2026-05-11T17:33:46.992768"
----
+```
 
+---
+tags: []
+source_file: "Doc/online/CAACenQuickRefs/CAACenMetaExpR15vsR14.htm"
+converted: "2026-05-11T17:33:46.992768"
 CAA V5 Encyclopedia |  Changes to ENOVIA LCA Metadata in V5R15 Compared with V5R14  
----|---  
-  
+
 * * *
 
+CAA V5 Encyclopedia |  Changes to ENOVIA LCA Metadata in V5R15 Compared with V5R14
 Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Object Inheritance | Attribute | Type | Inherited | Alias | Short role | Role  
----|---|---|---|---|---|---|---|---|---|---|---|---|---|---  
+
+Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Object Inheritance | Attribute | Type | Inherited | Alias | Short role | Role
 2 | 2 | 1 | New object | APLAFL | ACTION | Action_Simulation | Class | AFLBaseAction |  |  |  | Action_Simulation |  |   
 3 | 2 | 1 | New object | APLAFL | ACTION | Action_Simulation | Class | AFLBaseAction | V_execute | Simple of String |  | V_execute | The executable to run to perform the analysis or simulation |   
 3 | 2 | 1 | New object | APLAFL | ACTION | Action_Simulation | Class | AFLBaseAction | V_applName | Simple of String |  | V_applName | The analysis or simulation software name |   
@@ -278,6 +284,7 @@ Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Obj
 3 | 2 | 1 | New object | ACTION |  | AFLRootCategoryAssociation | Class | AFLCategoryAssociation | C_folder_id | Simple of URL | Inherited | C_folder_id | The reference to a folder |   
 3 | 2 | 1 | New object | ACTION |  | AFLRootCategoryAssociation | Class | AFLCategoryAssociation | V_description | Simple of String | Inherited | V_description | A description of the category association |   
 3 | 2 | 0 | New object | ACTION |  | AFLRootCategoryAssociation | Class | AFLCategoryAssociation | C_related_category | Inverse of AFLCategory.C_associations (Simple) | Inherited | C_related_category |  |   
+
 [Top]
 
 * * *
@@ -285,7 +292,7 @@ Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Obj
 History Version: **1** [Mar 2005] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 1994-2005, Dassault Systmes. All rights reserved._

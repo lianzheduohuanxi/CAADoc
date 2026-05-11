@@ -1,10 +1,13 @@
 ---
+```vbscript
 title: "Shape Automation Objects"
 category: "use-case"
 module: "CAAScdPriTechArticles"
 tags: []
 source_file: "Doc/online/CAAScdPriTechArticles/CAAPriTocShapes.htm"
 converted: "2026-05-11T17:31:51.248415"
+```
+
 ---
 # Shape Automation Objects
 
@@ -83,12 +86,12 @@ converted: "2026-05-11T17:31:51.248415"
 ![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/rotat.gif)  
 ![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/thread.gif)  
 ![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/solid.gif)  
-  
+
 **Legend** ![](../CAAScrAutomationImages/images/yellbox.gif) Collection  
 ![](../CAAScrAutomationImages/images/purpbox.gif) Abstract object  
 ![](../CAAScrAutomationImages/images/bluebox.gif) Object ![right arrow](../CAAScrAutomationImages/images/rtarrow.gif) Click arrow to expand chart  
 ![](../CAAScrAutomationImages/images/uparrow.gif) Click arrow to return to previous chart  
-  
+
 Shapes are classified into those built on a sketch, such as a pad or a hole, those which represent boolean operations, such as a split or an intersection, those which are used to dress-up sketch-based shapes, such as a fillet or a chamfer, and finally those which transform an original shape, transform meaning here duplicates, such as mirror and pattern.
 
 Sketch-based shapes rely obviously on sketches, and the Sketch property sets or retrieves the sketch associated with the shape. The Prism abstract object federates properties and methods for the Pad and the Pocket objects.

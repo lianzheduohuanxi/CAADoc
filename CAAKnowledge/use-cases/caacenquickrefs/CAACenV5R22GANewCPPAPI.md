@@ -1,15 +1,19 @@
 ---
+```vbscript
 title: "New C++ Authorized APIs in CAA V5-6R2012 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIVpmLightQueryManager", "CATIPrtExplodeServices", "CATIGSMMultiSelAccess", "CATIGSMUIFactory", "CATIGSMGrid", "CATICGMObjectsSaveDiagnosis", "CATIEwrWire", "CATIGSMWorkingSupport", "CATIGSMMultiSelManager", "CATIGSMCartesianGrid", "CATIGSMAutomaticFillGeo", "CATIGSMFactoryGeo", "CATIDdeDxfSettingAtt", "CATIDdeIg2SettingAtt", "CATIGSM3DFurtiveGrid", "CATIA", "CATIGSMTransfer", "CATIGSMWorkingSupportFactory", "CATIGSMWorkingSupportSet"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R22GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.519115"
----
+```
 
+---
+tags: ["CATIVpmLightQueryManager", "CATIPrtExplodeServices", "CATIGSMMultiSelAccess", "CATIGSMUIFactory", "CATIGSMGrid", "CATICGMObjectsSaveDiagnosis", "CATIEwrWire", "CATIGSMWorkingSupport", "CATIGSMMultiSelManager", "CATIGSMCartesianGrid", "CATIGSMAutomaticFillGeo", "CATIGSMFactoryGeo", "CATIDdeDxfSettingAtt", "CATIDdeIg2SettingAtt", "CATIGSM3DFurtiveGrid", "CATIA", "CATIGSMTransfer", "CATIGSMWorkingSupportFactory", "CATIGSMWorkingSupportSet"]
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R22GANewCPPAPI.htm"
+converted: "2026-05-11T17:33:47.519115"
 CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5-6R2012 GA  
----|---  
-  
+
 * * *
 
 The following are the new CAA V5-6R2012 GA C++ Authorized APIs, compared with CAA V5R21 at GA level.
@@ -121,7 +125,7 @@ The following are the new CAA V5-6R2012 GA C++ Authorized APIs, compared with CA
 History Version: **1** [Sep 2011] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright © 1999-2011, Dassault Systèmes. All rights reserved._  

@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "System Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR10"
@@ -6,11 +7,14 @@ version: "V5R10"
 tags: []
 source_file: "Doc/online/CAACenAPIChangesR10/System.htm"
 converted: "2026-05-11T17:33:50.262510"
----
+```
 
+---
+tags: []
+source_file: "Doc/online/CAACenAPIChangesR10/System.htm"
+converted: "2026-05-11T17:33:50.262510"
 CAA C++ API Modifications|  System  |   
----|---|---  
-  
+
 * * *
 
 **Entity|  SP| Modification| To Do** | System/Protected/CATListOfDouble.h/CATRawColldouble/Append| GA| MRTHC| Now returns an int to allow error management.  

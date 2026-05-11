@@ -1,12 +1,14 @@
 ---
+```vbscript
 title: "CAAAniMeshTetraFiller.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAScdAniUseCases", "CAAAniMeshTetraFiller"]
 source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshTetraFillerSource.htm"
 converted: "2026-05-11T17:31:51.726093"
----
+```
 
+---
 ```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2000
     ' ***********************************************************************
@@ -19,17 +21,16 @@ converted: "2026-05-11T17:31:51.726093"
     '   Locales:      English 
     '   CATIA Level:  V5R16
     ' ***********************************************************************
-    
+
 ```
 
-    
-```vbscript
     Sub CATMain()
+
 ```vbscript
     ' ----------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
       sDocPath=CATIA.SystemService.Environ("CATDocView")
-    
+
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 
@@ -37,19 +38,30 @@ converted: "2026-05-11T17:31:51.726093"
           Err.Raise 9999,,"No Doc Path Defined"
         End If
     ' ----------------------------------------------------------- 
-    
+
 ```
 
+```vbscript
+End If
+' -----------------------------------------------------------
     ' Open the CATAnalysis Document
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis")
-```vbscript
-    Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
-    
 ```
 
+```vbscript
+    Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+
+```
+
+```vbscript
+Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
     'Retrieve the Analysis Manager and Analysis Model
+```
+
 ```vbscript
     Set oAnalysisManager = oAnalysisDocument.Analysis
+```
+
 ```vbscript
     'Retrieve the part document and product
     Set oAnalysisLinkedDocuments = oAnalysisManager.LinkedDocuments
@@ -68,9 +80,7 @@ converted: "2026-05-11T17:31:51.726093"
     Set tetraFiller = oAnalysisMeshParts.Add ("MSHPartGHS3D") 
 ```
 
-    
-```
-
+```vbscript
     ' Add reference previously created
     tetraFiller.AddSupportFromReference NOTHING, reference1
     ' Set the global Specifications
@@ -78,14 +88,7 @@ converted: "2026-05-11T17:31:51.726093"
     tetraFiller.SetGlobalSpecification "ElementOrder", "Parabolic"
     'Update the mesh part
     tetraFiller.Update
-    
-```vbscript
+
+```
+
     End Sub
-    
-```
-
-    
-    
-    
-
-```

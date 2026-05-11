@@ -1,31 +1,36 @@
 ---
+```vbscript
 title: "Setting Controller Reference"
 category: "use-case"
 module: "CAAScdInfTechArticles"
 tags: ["CATImmLogonSettingCtrl", "CATIdeIgesSettingCtrl", "CATIColCollabIdentificationSettingCtrl", "CATIColCollabNetworkSettingCtrl", "CATIColConnectivitySettingCtrl"]
 source_file: "Doc/online/CAAScdInfTechArticles/CAAInfTabPageList.htm"
 converted: "2026-05-11T17:31:52.475701"
+```
+
 ---
 ## Infrastructure
- 
+
  | 
  ## Setting Controller Reference  
-   
-   
+
  * * *
- 
+
  This table lists the property pages that are associated with a setting controller.
- 
+
      * The **Solution** , **Workbench** , and **Property Page** columns help you locate a given property page as it appears in the **Tools- >Options...** command dialog box. A None workbench indicates that the property page is displayed when clicking on the solution.
      * The **Object** column lists the Automation setting controller object(s) that manage(s) the setting attributes of this property page.
      * The **Type** column gives: 
        * The setting controller object type for a setting controller managed by a dedicated object.
        * The setting controller attribute documentation if the setting controller is managed by the generic SettingRepository object.
- 
+
  Pass it as an argument of the `Item` method of the setting controller collection object when you want to create a setting controller object. Using Automation to administrate your settings in described in [1].
- 
+
+Pass it as an argument of the `Item` method of the setting controller collection object when you want to create a setting controller object. Using Automation to administrate your settings in described in [1].
  Solutions | Workbenches | Property Pages | Objects | Types  
- ---|---|---|---|---  
+
+Pass it as an argument of the `Item` method of the setting controller collection object when you want to create a setting controller object. Using Automation to administrate your settings in described in [1].
+Solutions | Workbenches | Property Pages | Objects | Types
  Analysis & Simulation | None | Post Processing | AnalysisPostProSettingAtt | CATSPMAnalysisPostProSettingCtrl  
  Reporting | AnalysisReportingSettingAtt | CATSPMAnalysisReportingSettingCtrl  
  Digital Mockup | DMU Fastening Review | Display | SettingRepository | [GBiWDisplay](../CAAScrSettings/GBiWDisplay.md)  
@@ -252,13 +257,13 @@ converted: "2026-05-11T17:31:52.475701"
  Imagine & Shape | Display | SettingRepository | [CATDesSettingDisplay](../CAAScrSettings/CATDesSettingDisplay.md)  
  General | SettingRepository | [CATDesSettingGeneral](../CAAScrSettings/CATDesSettingGeneral.md)  
  Shape Sculptor | Parameters | SettingRepository | [StyGlobalSettings](../CAAScrSettings/StyGlobalSettings.md)  
-   
+
  [Top]
- 
+
  * * *
  ### References
- 
+
  [1] | [Administrating Settings with Automation](CAAInfSettings.md)  
  ---|---  
-   
+
  _Copyright 1999-2013, Dassault Systmes. All rights reserved._

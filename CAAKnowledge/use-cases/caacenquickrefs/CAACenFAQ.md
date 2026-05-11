@@ -1,15 +1,19 @@
 ---
+```vbscript
 title: "CAA V5 Frequently Asked Questions"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIA"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenFAQ.htm"
 converted: "2026-05-11T17:33:46.513396"
----
+```
 
+---
+tags: ["CATIA"]
+source_file: "Doc/online/CAACenQuickRefs/CAACenFAQ.htm"
+converted: "2026-05-11T17:33:46.513396"
 CAA V5 Encyclopedia |  CAA V5 Frequently Asked Questions  
----|---  
-  
+
 * * *
 
 The frequently asked questions are sorted by foundation and modeler. Foundations
@@ -88,7 +92,7 @@ ENOVIA Portal
 ---  
 Version: **1** [Oct 2000] | Document created  
 [Top]  
-  
+
 * * *
 
 _Copyright 2000, Dassault Systmes. All rights reserved._

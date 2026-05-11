@@ -1,10 +1,13 @@
 ---
+```vbscript
 title: "The Physical Types for Structural Analysis"
 category: "use-case"
 module: "CAAScdAniTechArticles"
 tags: ["CATIAConstraints"]
 source_file: "Doc/online/CAAScdAniTechArticles/CAAAniPreprocessingFeatures.htm"
 converted: "2026-05-11T17:31:51.963872"
+```
+
 ---
 # Analysis Solution
 
@@ -17,7 +20,7 @@ converted: "2026-05-11T17:31:51.963872"
 _All the physical types you can use_  
 ---|---|---  
 Technical Article  
-  
+
 * * *
 ### Abstract
 
@@ -35,55 +38,54 @@ This article describes the physical types that are defined for structural Analys
   * **Free Group**
   * **References**
 
-  
 ---  
-  
+
 * * *
 ### About Entities
 
 The basic automation type for all the preprocessing data objects is AnalysisEntity. Their parameters are Basic component. An analysis entity is created by using the Add method of the collection. This collection is given by the appropriate set (ex: load set for creating loading condition). The basic component is retrieved using the Item method of the collection. To valuate attributes with units, if you need to be independent of the current user settings, you can valuate the parameters with strings including the current unit system. This is essential if you need to generate macros what will not depend on a user settings. For this, see next example:
-    
-    
+
     ...
+The basic automation type for all the preprocessing data objects is AnalysisEntity. Their parameters are Basic component. An analysis entity is created by using the Add method of the collection. This collection is given by the appropriate set (ex: load set for creating loading condition). The basic component is retrieved using the Item method of the collection. To valuate attributes with units, if you need to be independent of the current user settings, you can valuate the parameters with strings including the current unit system. This is essential if you need to generate macros what will not depend on a user settings. For this, see next example:
     ' To valuate by forcing the unit system:
     basicComponent2.SetValue "", 1, 1, 1, "5000.0lbf_ft"
     ' To take into account the current unit system: 
     basicComponent2.SetValue "", 1, 1, 1, 5000.0
+
     ...  
-  
+
 ---  
-  
+
+basicComponent2.SetValue "", 1, 1, 1, 5000.0
  Remember that the basic components are mainly created automatically when the entity itself is created. For this the Add method makes non sense, as in the following example:
-    
+
     ' To Create an analysis entity:
+
 ```vbscript
     Dim analysisEntities As AnalysisEntities
     Dim ThisAnalysisEntity As AnalysisEntity
     Set ThisAnalysisEntity = analysisEntities.Add("Analysis Entity Type")
+```
+
 ```vbscript
     ' To retrieve the parameter "Param": First Retrieve the collection on the Entity
     Dim BasicComponents1 As BasicComponents
     Set BasicComponents1 = ThisAnalysisEntity.BasicComponents
-    
+
     Dim BasicComponent1 As BasicComponent
     Set BasicComponent1 = BasicComponents1.Item("Param")
 ```
 
     ...  
-  
-```
-
-```
 
 ---  
-  
+
 Note that the basic components concept can be used also on an analysis set. In this case, use also the "BasicComponents" collection returned by the set.
 
 To valuate a support on an analysis entity and for some Basic components, the following methods may be used:
 
   * To use a Brep element or a mechanical feature
 
-    
 ```vbscript
     ' To valuate a support from a mechanical feature or a Brep element: The product object will manage
     ' the instance of the Part Document.
@@ -93,9 +95,11 @@ To valuate a support on an analysis entity and for some Basic components, the fo
 ```vbscript
     Dim part1 As Part
     Set part1 = PartDocument.Part
-    
+
     Dim product1 As Product
     Set product1 = PartDocument.Product
+```
+
 ```vbscript
     ' Retrieve the References for Brep's
     Dim referenceBound As Reference
@@ -113,22 +117,16 @@ To valuate a support on an analysis entity and for some Basic components, the fo
     Set reference1 = part1.CreateReferenceFromObject(split1)               // Create the reference thanks to the part
 ```
 
-    
-```
-
     ThisAnalysisEntity.AddSupportFromProduct product1, reference1 
-    
+
     ...  
-  
-```
 
 ---  
-  
+
   * To use a publication
 
-    
     ' To valuate a support from a publication: From the product feature (in a product or part document)
-    
+
 ```vbscript
     Dim product1 As Product
     Set product1 = TheProductDoc.Product
@@ -136,19 +134,21 @@ To valuate a support on an analysis entity and for some Basic components, the fo
     Set publications1 = product1.Publications    // Extract the collection of publications.
     Dim publication1 As Publication
     Set publication1 = publications1.Item("ClampFace")
-    
+
 ```
 
+```vbscript
+Dim publication1 As Publication
+Set publication1 = publications1.Item("ClampFace")
     ThisAnalysisEntity.AddSupportFromPublication product1, publication1 // product1 is the publisher object.
-    ...  
-  
 ```
+
+    ...  
 
 ---  
-  
+
   * To use an assembly constraints
 
-    
     ' To valuate a support from an assembly constraints:
 ```vbscript
     Dim product1 As Product
@@ -157,22 +157,24 @@ To valuate a support on an analysis entity and for some Basic components, the fo
     Set constraints1 = product1.Connections("CATIAConstraints")// Extract the collection of constraints.
     Dim constraint1 As Constraint
     Set constraint1 = constraints1.Item("Surface contact.2")
-    
+
 ```
 
+```vbscript
+Dim constraint1 As Constraint
+Set constraint1 = constraints1.Item("Surface contact.2")
     ThisAnalysisEntity.AddSupportFromConstraint product1, constraint1 
-    ...  
-  
 ```
+
+    ...  
 
 ---  
-  
+
   * To use another Analysis feature
 
-    
     ' To valuate a support from another analysis feature: 
     ' Consider analysisSets2 is the Collection of AnalysisSet returned by AnalysisModel
-    
+
 ```vbscript
     Dim analysisSet4  As AnalysisSet 
     Set analysisSet4 = analysisSets2.ItemByType("PropertySet") // Extract the property set 
@@ -180,17 +182,15 @@ To valuate a support on an analysis entity and for some Basic components, the fo
     Set analysisEntities1 = analysisSet4.AnalysisEntities
     Dim analysisEntity1 As AnalysisEntity
     Set analysisEntity1= analysisEntities1.Item("MyRigidVirPart")  // Extract the entity to consider as a support 
-    
+
     Set reference2 = analysisManager1.CreateReferenceFromObject(analysisEntity1) // Create the Reference Object
     ThisAnalysisEntity.AddSupportFromReference reference2, reference2
-    ...  
-  
 ```
 
-```
+    ...  
 
 ---  
-  
+
 [Top]
 #### AnalysisConnectionDesign
 
@@ -218,7 +218,7 @@ Analysis Entity Name | Parameter Name | Value Type | Line Column Layer Number
   | SAMConnectionDesigner1.1 | SAMMultiGeomPtr | [ 0 , 1 , 1 ]  
   | SAMConnectionDesigner2.1 | SAMMultiGeomPtr | [ 0 , 1 , 1 ]  
   | LinesPtr.1 | SAMMultiGeomPtr | [ 0 , 1 , 1 ]  
-  
+
 [Top]
 #### AnalysisMaterial
 
@@ -309,7 +309,7 @@ Analysis Entity Name | Parameter Name | Value Type | Line Column Layer Number
   | SAMTensileStressLimit | PRESSURE | [ 1 , 1 , 1 ]  
   | SAMCompressiveStressLimit | PRESSURE | [ 1 , 1 , 1 ]  
   | SAMShearStressLimit | PRESSURE | [ 1 , 1 , 1 ]  
-  
+
 [Top]
 #### AnalysisProperty
 
@@ -392,7 +392,7 @@ SAMVirtualPart |   |   |  
 Optional   | SAMVariableBeamFactors | SAMBindComponent | [ 1 , 1 , 1 ]  
   |   | SAMScalingFactorStart | Real [ 1 , 1 , 1 ]  
   |   | SAMScalingFactorEnd | Real [ 1 , 1 , 1 ]  
-  
+
 [Top]
 #### AnalysisRestraint
 
@@ -424,7 +424,6 @@ Analysis Entity Name | Parameter Name | Value Type | Line Column Layer Number
   | SAMRestrainAxis | SAMAxisSystem | [ 1 , 1 , 1 ]  
   | SAMRestrainDOF | SAMDOFBasicComponent | [ 6 , 1 , 1 ]  
 
-  
 [Top]
 #### AnalysisLoad
 
@@ -489,7 +488,7 @@ Optional   | SAMDTPtrTemperatureField | SAMSingleEntityPtr | [ 1 , 1 , 1 ]
 
   | SAMForceDensityAxis | SAMAxisSystem | [ 1 , 1 , 1 ]  
   | SAMForceDensityVector | FORCE | [ 3 , 1 , 1 ]  
-  
+
 [Top]
 #### AnalysisMass
 
@@ -507,7 +506,7 @@ Analysis Entity Name | Parameter Name | Value Type | Line Column Layer Number
   | SAMInertiaMassAxis | SAMAxisSystem | [ 1 , 1 , 1 ]  
   | SAMInertiaMassMass | MASS | [ 1 , 1 , 1 ]  
   | SAMInertiaMassVector | INERTIAMOMENT | [ 3 , 1 , 1 ]  
-  
+
 [Top]
 #### AnalysisSensor
 
@@ -522,7 +521,7 @@ Analysis Entity Name | Parameter Name | Value Type | Line Column Layer Number
   | SAMImagePointer.1 | BasicComponent | [ 1 , 1 , 1 ]  
   | PostProType | Enumere | [ 1 , 1 , 1 ]  
   | Parameters | Enumere | [ 1 , 1 , 1 ]  
-  
+
 [Top]
 #### SAMSpecifiedGroup
 
@@ -531,7 +530,6 @@ This section presents all the preprocessing features derived from SAMSpecifiedGr
 Analysis Entity Name | Parameter Name | Value Type | Line Column Layer Number  
 ---|---|---|---  
 
-  
 [Top]
 #### SAMFreeGroup
 
@@ -545,7 +543,7 @@ Analysis Entity Name | Parameter Name | Value Type | Line Column Layer Number
 
   | SAMSphereFE | BasicComponent | [ 4 , 1 , 1 ]  
   | Extremum | BasicComponent | [ 1 , 1 , 1 ]  
-  
+
 [Top]
 
 * * *
@@ -554,7 +552,7 @@ Analysis Entity Name | Parameter Name | Value Type | Line Column Layer Number
 Version: **1** [Mar 2001] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2000, Dassault Systmes. All rights reserved._

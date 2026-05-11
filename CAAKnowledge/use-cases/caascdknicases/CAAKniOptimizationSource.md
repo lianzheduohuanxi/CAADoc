@@ -1,17 +1,25 @@
 ---
+```vbscript
 title: "CAAKniOptimization.CATScript"
 category: "use-case"
 module: "CAAScdKniUseCases"
 tags: ["CATIA", "CAAKniOptimization"]
 source_file: "Doc/online/CAAScdKniUseCases/CAAKniOptimizationSource.htm"
 converted: "2026-05-11T17:31:51.983820"
----
+```
 
+---
+tags: ["CATIA", "CAAKniOptimization"]
+source_file: "Doc/online/CAAScdKniUseCases/CAAKniOptimizationSource.htm"
+converted: "2026-05-11T17:31:51.983820"
     Option Explicit
     ' COPYRIGHT DASSAULT SYSTEMES 2001
+
 ```vbscript
     Dim Language as String
     Language="VBScript"
+```
+
 ```vbscript
     ' ***********************************************************************
     '   Purpose:    This macro shows how to create and run an optimization feature.
@@ -31,12 +39,8 @@ converted: "2026-05-11T17:31:51.983820"
     ' ***********************************************************************
 ```
 
-    
-```
-
-    
-```vbscript
     Sub CATMain()
+
 ```vbscript
     ' Set the CATIA popup file alerts to False
     ' It prevents to stop the macro at each alert during its execution
@@ -63,14 +67,26 @@ converted: "2026-05-11T17:31:51.983820"
             Set oFx = oParameters.CreateReal("Real1", 199 )
 ```
 
+```vbscript
+' Create Real type parameter as objective to be optimized.
+Dim oFx As Parameter
+Set oFx = oParameters.CreateReal("Real1", 199 )
             oFx.Rename "fx"
+```
+
 ```vbscript
             ' Create Real type parameter as free parameter.
             Dim oX As Parameter
             Set oX = oParameters.CreateReal("Real2", 299 )
 ```
 
+```vbscript
+' Create Real type parameter as free parameter.
+Dim oX As Parameter
+Set oX = oParameters.CreateReal("Real2", 299 )
             oX.Rename "x" 
+```
+
 ```vbscript
             ' Create a formula to be optimized.
             Dim oFormula As Formula
@@ -91,18 +107,24 @@ converted: "2026-05-11T17:31:51.983820"
             Set oOptimization1 = oOptimizations.CreateOptimization()
 ```
 
+```vbscript
+' Create the optimization feature.
+Dim oOptimization1 As Optimization
+Set oOptimization1 = oOptimizations.CreateOptimization()
             oOptimization1.OptimizationType = catMinimum
             oOptimization1.AlgorithmType = catSimulatedAnnealing
-    
+
 ```
 
+oOptimization1.OptimizationType = catMinimum
+oOptimization1.AlgorithmType = catSimulatedAnnealing
             'Set up the optimization feature attributes.
             oOptimization1.MaxEvalsNb = 300
             oOptimization1.UseMaxTime = True
             oOptimization1.MaxTime = 2 '2 minutes.
             oOptimization1.UseMaxEvalsWoImprovement = True
             oOptimization1.MaxEvalsWoImprovement = 20
-    
+
 ```vbscript
             'Set up the free parameters of the optimization and their steps (this is optional).
     	'The step helps the algorithm to get an order of magnitude of the changes of values
@@ -113,6 +135,8 @@ converted: "2026-05-11T17:31:51.983820"
             Dim oFreeParameters As FreeParameters
             Set oFreeParameters = oOptimization1.FreeParameters
             oFreeParameters.AddFreeParameter(oX)
+```
+
 ```vbscript
             'The following is optional, but usually reducing the range of input parameters helps to
             'solve the problem faster. In this case there only is one free parameter but optimizations
@@ -121,6 +145,10 @@ converted: "2026-05-11T17:31:51.983820"
             For Each p in oFreeParameters
 ```
 
+```vbscript
+' can be run with multiple free parameters.
+Dim p As FreeParameter
+For Each p in oFreeParameters
                     p.Step = 0.1
                     p.InfRange = -1000
                     p.SupRange = 2000
@@ -130,25 +158,22 @@ converted: "2026-05-11T17:31:51.983820"
             msgbox "Before optimisation :" & oFx.Name & " =  " & oFx.Value & " and " & oX.Name & " = " & oX.Value
             'Running the optimization without the progress bar dialog box (False).
             oOptimization1.Run False
-    
+
 ```
 
+```vbscript
+'Running the optimization without the progress bar dialog box (False).
+oOptimization1.Run False
             msgbox "After optimisation :" & oFx.Name & " =  " & oFx.Value & " and " & oX.Name & " = " & oX.Value
             ' Update the document
-```vbscript
-            CATIA.ActiveDocument.Part.Update 
-    
 ```
 
-    
-    
+```vbscript
+            CATIA.ActiveDocument.Part.Update 
+
+```
+
     else 
        MsgBox "The active document must be a CATPart"
     End If
     End Sub
-    
-```
-
-    
-
-```

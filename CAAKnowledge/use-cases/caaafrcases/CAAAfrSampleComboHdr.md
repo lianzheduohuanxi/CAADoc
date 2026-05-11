@@ -1,10 +1,13 @@
 ---
+```vbscript
 title: "Creating a Combo Command Header"
 category: "use case"
 module: "CAAAfrUseCases"
 tags: ["CAAAfrMRUHeader", "CAAGeometry", "CAAAfrComboColorNotification", "CAAAfrComboColorHeader", "CAAAfrComboColorRep", "CAAAfrComboColorHdr", "CAAIAfrTemporaryObjectColor", "CAAAfrComboRep", "CAAAfrComboRepId", "CATIAfrCommandHeaderRep", "CAAIAfrGeometryWksAddin", "CAAAfrGeoChartWindowAdn", "CAASysGeomRootObj", "CAASysGeoRootObj", "CATImplementHeaderResources", "CAAAfrEduCombo", "CAAApplicationFrame", "CAAAfrCustomizedCommandHeader", "CAAAfrGeoWksAddin2"]
 source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleComboHdr.htm"
 converted: "2026-05-11T17:17:55.651120"
+```
+
 ---
 # 3D PLM Enterprise Architecture
 
@@ -17,7 +20,7 @@ converted: "2026-05-11T17:17:55.651120"
 How to create a command header class whose the representation is a combo in a toolbar?  
 ---|---|---  
 Use Case  
-  
+
 * * *
 ### Abstract
 
@@ -57,7 +60,8 @@ CAAAfrComboColorHeader is a use case of the CAAApplicationFrame.edu framework th
 
 CAAAfrComboColorHeader creates a command header whose the graphic representation is a combo color in a toolbar. The following picture shows the header in the Customized Command Header toolbar: Fig.1 The combo header 
 ---  
-  
+
+CAAAfrComboColorHeader creates a command header whose the graphic representation is a combo color in a toolbar. The following picture shows the header in the Customized Command Header toolbar: Fig.1 The combo header
 If you drop down the combo, you have the choice between ten colors:
 
 Fig.2 Ten values of the combo ![](images/CAAAfrComboHdrDeplie.jpg) |  The combo needs two information: 
@@ -65,20 +69,23 @@ Fig.2 Ten values of the combo ![](images/CAAAfrComboHdrDeplie.jpg) |  The combo 
   * The available colors in the combo. These ten color are "hard" coded.  
   * The current selected color. This information is kept by a component linked to the CAAGeometry document. This component is the CAASysGeomRootObj component. Refer to the referenced article for complete details on the CAAGeometry document and the CAASysGeomRootObj component [3].
 
-  
-  
 The **CAASysGeomRootObj component** is the component controlling the data used by the graphic representation. It manages the current value of the color through the _CAAIAfrTemporaryObjectColor_ interface. This interface enables us to get and set the current color. However the color is not persistent (not streamed) because the CAAGeometry document is not "streamable".
 
 Fig.3 Component Controlling the Data Used by the Graphic Representation - UML Diagram ![](images/CAAAfrComboColorHdrUMLModel.jpg)  
 ---  
-  
+
+The **CAASysGeomRootObj component** is the component controlling the data used by the graphic representation. It manages the current value of the color through the _CAAIAfrTemporaryObjectColor_ interface. This interface enables us to get and set the current color. However the color is not persistent (not streamed) because the CAAGeometry document is not "streamable".
+Fig.3 Component Controlling the Data Used by the Graphic Representation - UML Diagram ![](images/CAAAfrComboColorHdrUMLModel.jpg)
 The CAASysGeomRootObj component plays the role of controller [2], when the current color value is modified using the _CAAIAfrTemporaryObjectColor_ interface, the _CAAEAfrTemporaryObjectColor_ implementation class sends a notification, a _CAAAfrComboColorNotification_ class instance. 
 
 The **combo header class** is an instance of a class deriving from the _CATAfrDialogCommandHeader_ class _,_ like any command header whose the graphic representation is customized. The following UML diagram describes in details the schema of classes:
 
 Fig.4 Combo Header - UML Diagram ![](images/CAAAfrComboColorHdrUMLHdr.jpg)  
+
 ---  
-  
+
+The **combo header class** is an instance of a class deriving from the _CATAfrDialogCommandHeader_ class _,_ like any command header whose the graphic representation is customized. The following UML diagram describes in details the schema of classes:
+Fig.4 Combo Header - UML Diagram ![](images/CAAAfrComboColorHdrUMLHdr.jpg)
 CAAAfrComboColorHeader is a component which must implement the _CATIAfrCommandHeaderRep_ interface to provide the customized graphic representation _._ This interface contains three methods:
 
   * `CreateCtxMenuRep`: it returns nothing
@@ -87,7 +94,8 @@ CAAAfrComboColorHeader is a component which must implement the _CATIAfrCommandHe
 
 Fig.5 Class Instantiating the Graphic Representation \- UML Diagram ![](images/CAAAfrComboColorHdrUMLRep.jpg)  
 ---  
-  
+
+Fig.5 Class Instantiating the Graphic Representation \- UML Diagram ![](images/CAAAfrComboColorHdrUMLRep.jpg)
 The _CAAAfrComboRep_ class creates a _CATDlgCombo_ [4] class instance and sets a callback to be inform when the current color is changed. Therefore, if there are several instances of the _CAAAfrComboColorHeader_ class in the same document, see the How to Launch CAAAfrComboColorHeader section, all the representations will be automatically updated. 
 
 The combo header is instantiated in an Add-in of the workshop of the CAAGeometry document. The last step of the Step by Step section explains this instantiation.
@@ -97,10 +105,7 @@ The combo header is instantiated in an Add-in of the workshop of the CAAGeometry
 
 See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)" use case for a detailed description of how this use case should be launched.
 
-```vbscript
 Do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following: 
-
-```
 
   * On the **File** menu, click **New**
   * **New** Dialog box click **CAAGeometry** and click **OK**
@@ -136,10 +141,13 @@ Do not type the module name on the command line, but type CNEXT instead. When th
 
 The CAAAfrComboColorHeader use case is made of several classes located in three modules of the CAAApplicationFrame.edu framework:
 
+The CAAAfrComboColorHeader use case is made of several classes located in three modules of the CAAApplicationFrame.edu framework:
 Windows | `InstallRootDirectory\CAAApplicationFrame.edu\`  
----|---  
+
+The CAAAfrComboColorHeader use case is made of several classes located in three modules of the CAAApplicationFrame.edu framework:
+Windows | `InstallRootDirectory\CAAApplicationFrame.edu\`
 Unix | `InstallRootDirectory/CAAApplicationFrame.edu/`  
-  
+
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 The `CAAAfrCustCommandHdrModel.m` module contains classes to define (update) the component controlling the current color.
@@ -154,6 +162,7 @@ It is the implementation of the _CAAIAfrTemporaryObjectColor_ interface on the C
 
   * CAAAfrComboColorNotification.h (LocalInterfaces) and CAAAfrComboColorNotification.cpp (src)
 
+It is the implementation of the _CAAIAfrTemporaryObjectColor_ interface on the CAASysGeomRootObj component.
 It is the notification sent by the _CAAEAfrTemporaryObjectColor_ class when the current color is modified.
 
 The `CAAAfrCustomizedCommandHeader``.m` module contains classes to define the combo color header:
@@ -171,6 +180,7 @@ The `CAAAfrGeoWksAddin2.``m` module contains an Add-in of the CAAGeometry worksh
 
 There are four logical steps in CAAAfrComboColorHeader:
 
+There are four logical steps in CAAAfrComboColorHeader:
   1. Creating the Component Representing the Current Color in the Combo
   2. Creating the Component Representing the Command Header 
   3. Creating the Class Instantiating the Graphic Representation
@@ -179,104 +189,124 @@ There are four logical steps in CAAAfrComboColorHeader:
 [Top]
 #### Creating the Data Model Representing the Current Color in the Combo
 
+4. Instantiating the Combo Header Class
 The current color is kept by the CAASysGeomRootObj component which implements the _CAAIAfrTemporaryObjectColor_ interface to set and retrieve the current color (Fig.3). When the color is modified on the component (Set method) a _CAAAfrComboColorNotification_ notification is sent by the callback mechanism [5]. 
 
 Here the _CAAIAfrTemporaryObjectColor_ interface such as you can see it in the PublicInterfaces directory of the CAAApplicationFrame.edu framework. Refer to the Creating an Interface use case [6] for more details on its creation. 
-    
-    
+
     ...
     #include <CATBaseUnknown.h>      
-    
+
     class ExportedByCAAAfrCustCommandHdrModel CAAIAfrTemporaryObjectColor: public CATBaseUnknown
     {
+class ExportedByCAAAfrCustCommandHdrModel CAAIAfrTemporaryObjectColor: public CATBaseUnknown
       CATDeclareInterface;
-    
+
       public:
           virtual HRESULT **GetCurrentColor**(int & oRed, int & oGreen, int & oBlue) const = 0 ;
           virtual HRESULT **SetCurrentColor**(int & iRed, int & iGreen, int & iBlue) = 0 ;
+
     };
     ...  
-  
+
 ---  
-  
+
 This interface is implemented by the CAASysGeomRootObj component thanks to the _CAAEAfrTemporaryObjectColor_ class extension. 
-    
-    
+
     ...
     #include "**TIE_CAAIAfrTemporaryObjectColor.h** "              
     TIE_CAAIAfrTemporaryObjectColor(CAAEAfrTemporaryObjectColor); 
-    
+
     **CATImplementClass** (CAAEAfrTemporaryObjectColor,**DataExtension** , 
                               CATBaseUnknown, **CAASysGeomRootObj**);
     ...  
-  
+
 ---  
-  
+
+CATBaseUnknown, **CAASysGeomRootObj**);
 The _CAAEAfrTemporaryObjectColor_ class states that it implements the _CAAIAfrTemporaryObjectColor_ interface thanks to the `TIE_``CAAIAfrTemporaryObjectColor` __ macro. This extension class is dedicated to this component, and the `CATImplementClass` macro declares that the _CAAEAfrTemporaryObjectColor_ class is data extension class, thanks to the `DataExtension` keyword, and that it extends the component whose main class is CAASysGeomRootObj. The third parameter must always be set to _CATBaseUnknown_ , makes no sense, and is unused for extensions. 
 
 In the constructor class, you can see that the default value is red ( 255,0,0). 
-    
-    
+
     ...
     CAAEAfrTemporaryObjectColor::CAAEAfrTemporaryObjectColor(): CATBaseUnknown()
-                                
+
     {    
        **_RedComp**   = 255   ;
+CAAEAfrTemporaryObjectColor::CAAEAfrTemporaryObjectColor(): CATBaseUnknown()
        _GreenComp = 10    ;
        _BlueComp  = 0     ; 
+
     }
-    
+
+_GreenComp = 10    ;
+_BlueComp  = 0     ;
     CAAEAfrTemporaryObjectColor::~CAAEAfrTemporaryObjectColor(){}
+
     ...  
-  
+
 ---  
-  
+
 The `GetCurrentColor` returns the three data members representing the red, blue and green components of the current color. 
-    
-    
+
     ...
+The `GetCurrentColor` returns the three data members representing the red, blue and green components of the current color.
     HRESULT CAAEAfrTemporaryObjectColor::GetCurrentColor(int & oRed, int & oGreen, int & oBlue) const
+
     {
+HRESULT CAAEAfrTemporaryObjectColor::GetCurrentColor(int & oRed, int & oGreen, int & oBlue) const
        oRed   = _RedComp ;
        oGreen = _GreenComp ;
        oBlue  = _BlueComp ; 
-    
+
        return (S_OK) ;
+
     }
     ...  
-  
+
 ---  
-  
+
 The `SetCurrentColor` valuates the three data members using the input argument:
-    
-    
+
     ...
+The `SetCurrentColor` valuates the three data members using the input argument:
     HRESULT CAAEAfrTemporaryObjectColor::SetCurrentColor(int & iRed, int & iGreen, int & iBlue) 
+
     {
+HRESULT CAAEAfrTemporaryObjectColor::SetCurrentColor(int & iRed, int & iGreen, int & iBlue)
        _RedComp   = iRed   ;
        _GreenComp = iGreen;
        _BlueComp  = iBlue; 
+
     ...  
-  
+
 ---  
-  
+
 and sends a notification:
-    
-    
+
     ...
+and sends a notification:
         CATCallbackManager * pCBManager = ::**GetDefaultCallbackManager**(this) ;
         if ( NULL != pCBManager )
+
         {
+CATCallbackManager * pCBManager = ::**GetDefaultCallbackManager**(this) ;
+if ( NULL != pCBManager )
              CAAAfrComboColorNotification * pNotification = new CAAAfrComboColorNotification();
              pCBManager->**DispatchCallbacks**(pNotification,this);
              pNotification->Release(); pNotification = NULL ;
+
         }
+CAAAfrComboColorNotification * pNotification = new CAAAfrComboColorNotification();
+pCBManager->**DispatchCallbacks**(pNotification,this);
+pNotification->Release(); pNotification = NULL ;
        return (S_OK) ;
+
     }
     ...  
-  
+
 ---  
-  
+
 The `SetCurrentColor` method publishes the notification that states the current color is modifying. To do this, the global function `GetDefaultCallbackManager` retrieves the callback manager associated by default with the _CAAEAfrTemporaryObjectColor_ class instance, and this callback uses its `DispatchCallbacks` method to inform its subscribers or listeners that the current color is modifying by means of the _CAAAfrComboColorNotification_ notification created.
 
 Refer to the callback use case [7] which explains in details the callback mechanism, and how the _CAAAfrComboColorNotification_ must be created. You will learn why the _CAAAfrComboColorNotification_ class instance is deleted just after the `DispatchCallbacks` call. See the constructor of the CAAAfrComboColorRep class. 
@@ -292,30 +322,36 @@ The combo header is a component which must Object Modeler and C++ derive from _C
 ##### **Component Creation**
 
 Here the CAAAfrComboColorHeader header file:
-    
-    
+
     //ApplicationFrame framework
     #include "CATAfrDialogCommandHeader.h"
-    
+
     class ExportedByCAAAfrCustomizedCommandHeader CAAAfrComboColorHeader : public **CATAfrDialogCommandHeader**
     {
+class ExportedByCAAAfrCustomizedCommandHeader CAAAfrComboColorHeader : public **CATAfrDialogCommandHeader**
       CATDeclareHeaderResources;
       CATDeclareClass ;
-    
+
       public:
         CAAAfrComboColorHeader(const CATString & iHeaderName);
-    
+
         virtual ~CAAAfrComboColorHeader();
         CATCommandHeader * **Clone**() ;
-          
+
       private:
+
         **CAAAfrComboColorHeader(CATCommandHeader *iHeaderToCopy);**
+virtual ~CAAAfrComboColorHeader();
+CATCommandHeader * **Clone**() ;
+private:
         CAAAfrComboColorHeader(const CAAAfrComboColorHeader &iObjectToCopy);
         CAAAfrComboColorHeader & operator = (const CAAAfrComboColorHeader &iObjectToCopy);
+
     };  
-  
+
 ---  
-  
+
+CAAAfrComboColorHeader & operator = (const CAAAfrComboColorHeader &iObjectToCopy);
 _CAAAfrComboColorHeader_ derives from _CATAfrDialogCommandHeader_. It is mandatory for a command header whose the graphic representation is customized. The `CATDeclareClass` macro declares that it belongs to a CAA component. The `CATDeclareHeaderResources` macro inserts the methods to manage the command header resources. 
 
 About the mandatory public methods:
@@ -330,34 +366,50 @@ About the mandatory private methods:
   * Two other `constructor` are declared in the private part, and are not implemented in the source file. This prevents the compiler from creating them as public without you know.
 
 Here the CAAAfrComboColorHeader header file:
-    
+
     #include "CAAAfrComboColorHeader.h"
-    
+
+Here the CAAAfrComboColorHeader header file:
     CATImplementClass(CAAAfrComboColorHeader, 
                       Implementation,
+
                       **CATAfrDialogCommandHeader** , 
+```vbscript
+CATImplementClass(CAAAfrComboColorHeader,
+Implementation,
                       CATNull);
-    
+
     CATImplementHeaderResources(CAAAfrComboColorHeader,  
     			 CATAfrDialogCommandHeader,          
     			 CAAAfrComboColorHeader);            
-    
+
     CAAAfrComboColorHeader::CAAAfrComboColorHeader(const CATString & iHeaderName) : 
+```
+
         **CATAfrDialogCommandHeader**(iHeaderName){}
-    
+
+CAAAfrComboColorHeader);
+CAAAfrComboColorHeader::CAAAfrComboColorHeader(const CATString & iHeaderName) :
     CAAAfrComboColorHeader::~CAAAfrComboColorHeader(){}
-    
+
     CATCommandHeader * CAAAfrComboColorHeader::**Clone** ()                                  
+
     { 
+CAAAfrComboColorHeader::~CAAAfrComboColorHeader(){}
+CATCommandHeader * CAAAfrComboColorHeader::**Clone** ()
         return new **CAAAfrComboColorHeader**(this); 
+
     }   
-    
+
+CATCommandHeader * CAAAfrComboColorHeader::**Clone** ()
+return new **CAAAfrComboColorHeader**(this);
     CAAAfrComboColorHeader::CAAAfrComboColorHeader(CATCommandHeader * iHeaderToCopy):
+
                               **CATAfrDialogCommandHeader**(iHeaderToCopy)
     {}	                    
-  
+
 ---  
-  
+
   * A customized command header is a CAA component. The `CATImplementClass` macro makes the class _CAAAfrComboColorHeader_ a component main class (`Implementation`) that OM-derives [9] from _CATAfrDialogCommandHeader_. 
   * The `CATImplementHeaderResources` macro is used in conjunction with the `CATDeclareHeaderResources` macro in the header file. It states that the _CAAAfrComboColorHeader_ class derives from _CATAfrDialogCommandHeader_ , and that its associated resource file names use the class name: CAAAfrComboColorHeader.CATNls and CAAAfrComboColorHeader.CATRsc respectively. The base class name set as second argument helps to use resource concatenation. The third argument could be set to the name of another class that is associated with resource files that use its class name, or to the name, without suffix, of an already existing resource file pair.
   * The `Clone` method returns a copy construction instance of this.
@@ -367,77 +419,97 @@ Here the CAAAfrComboColorHeader header file:
 This interface of the ApplicationFrame framework must be implemented by all command header whose the graphic representation is customized. On Fig.4, you see that the _CAAEAfrCommandHeaderRepForComboColor_ class is the implementation of this interface for the CAAAfrComboColorHeader component. 
 
 Here the CAAEAfrCommandHeaderRepForComboColor header file
-    
-    
+
     ...
+Here the CAAEAfrCommandHeaderRepForComboColor header file
     class CAAEAfrCommandHeaderRepForComboColor : public CATBaseUnknown
+
     {
+class CAAEAfrCommandHeaderRepForComboColor : public CATBaseUnknown
       CATDeclareClass;
     public:
-      
+
       CAAEAfrCommandHeaderRepForComboColor();
       virtual ~CAAEAfrCommandHeaderRepForComboColor();
-      
+
       virtual HRESULT  **CreateToolbarRep** (const CATDialog * iParent,
                                                 CATAfrCommandHeaderRep ** oHdrRep) ;
       virtual HRESULT  **CreateMenuRep**    (const CATDialog * iParent,
                                                 CATAfrCommandHeaderRep ** oHdrRep) ;
       virtual HRESULT  **CreateCtxMenuRep** (const CATDialog * iParent,
                                                 CATAfrCommandHeaderRep ** oHdrRep) ;
-      
+
     private:
       CAAEAfrCommandHeaderRepForComboColor(const CAAEAfrCommandHeaderRepForComboColor &iObjectToCopy);
       CAAEAfrCommandHeaderRepForComboColor & operator = (const CAAEAfrCommandHeaderRepForComboColor &iObjectToCopy);
+
     };        
-  
+
 ---  
-  
+
+CAAEAfrCommandHeaderRepForComboColor & operator = (const CAAEAfrCommandHeaderRepForComboColor &iObjectToCopy);
 The `CATDeclareClass` macro declares that _CAAEAfrCommandHeaderRepForComboColor_ belongs to a component. `CreateToolbarRep`, `CreateMenuRep`, and `CreateCtxMenuRep` are methods of the _CATIAfrCommandHeaderRep_ interface.
 
 Here the CAAEAfrCommandHeaderRepForComboColor source file
-    
-    
+
     ...
     #include <TIE_CATIAfrCommandHeaderRep.h>
+Here the CAAEAfrCommandHeaderRepForComboColor source file
     TIE_**CATIAfrCommandHeaderRep**(CAAEAfrCommandHeaderRepForComboColor);
-    
+
     CATImplementClass(CAAEAfrCommandHeaderRepForComboColor, 
                       DataExtension,
                       CATBaseUnknown, 
+
                       **CAAAfrComboColorHeader**);
     };
+```vbscript
+CATImplementClass(CAAEAfrCommandHeaderRepForComboColor,
+DataExtension,
+CATBaseUnknown,
     CAAEAfrCommandHeaderRepForComboColor::
                CAAEAfrCommandHeaderRepForComboColor():CATBaseUnknown(){}
-    
+
     CAAEAfrCommandHeaderRepForComboColor::~CAAEAfrCommandHeaderRepForComboColor(){}
+```
+
     ...        
-  
+
 ---  
-  
+
 The _CAAEAfrCommandHeaderRepForComboColor_ class states that it implements the _CATIAfrCommandHeaderRep_ __ interface thanks to the `TIE_CATIAfrCommandHeaderRep `macro. The `CATImplementClass` macro declares that the _CAAEAfrCommandHeaderRepForComboColor_ class is a data extension, thanks to the `DataExtension` keyword, that extends CAAAfrComboColorHeader. The third argument must always be set as _CATBaseUnknown_ or _CATNull_ for any kind of extension.  The class constructor and the class destructor are empty.
-    
-    
+
     ...
+The _CAAEAfrCommandHeaderRepForComboColor_ class states that it implements the _CATIAfrCommandHeaderRep_ __ interface thanks to the `TIE_CATIAfrCommandHeaderRep `macro. The `CATImplementClass` macro declares that the _CAAEAfrCommandHeaderRepForComboColor_ class is a data extension, thanks to the `DataExtension` keyword, that extends CAAAfrComboColorHeader. The third argument must always be set as _CATBaseUnknown_ or _CATNull_ for any kind of extension.  The class constructor and the class destructor are empty.
     HRESULT CAAEAfrCommandHeaderRepForComboColor::**CreateToolbarRep**
              (const CATDialog * iParent,CATAfrCommandHeaderRep ** oHdrRep)
+
     {
+HRESULT CAAEAfrCommandHeaderRepForComboColor::**CreateToolbarRep**
+(const CATDialog * iParent,CATAfrCommandHeaderRep ** oHdrRep)
        HRESULT rc = E_FAIL ;
-    
+
        if ( oHdrRep != NULL )
+
        {
+HRESULT rc = E_FAIL ;
+if ( oHdrRep != NULL )
           CATString Name = "CAAAfrComboRepId" ;
           CAAAfrComboRep * pComboRep = new **CAAAfrComboRep**(iParent,Name);
-    
+
           *oHdrRep = (CATAfrCommandHeaderRep *) pComboRep ;
+CATString Name = "CAAAfrComboRepId" ;
+CAAAfrComboRep * pComboRep = new **CAAAfrComboRep**(iParent,Name);
           rc = S_OK ;
+
        }
-    
+
        return rc ;
     }
     ...        
-  
+
 ---  
-  
+
 The `CreateToolbarRep` method provides the class instantiating the graphic representation of the combo header. This method is called each time the header command must be represented in a toolbar.
 
 The _CAAAfrComboRep_ class is a _CATCommand_ class (Fig.5) which instantiates the graphic representation of the combo header (a _CATDlgCombo_ instance). It is detailed in the Creating the Component Instantiating the Graphic Representation section, just below.  
@@ -445,23 +517,22 @@ The _CAAAfrComboRep_ class is a _CATCommand_ class (Fig.5) which instantiates th
 `iParent` is a _CATDialog_ component. It will be the dialog parent of the _CATDlgCombo_ instance. `Name` is the command name of the _CAAAfrComboRep_ class. You can set the same identifier for all _CAAAfrComboRep_ class instances. 
 
 You do not have to take care of the _CAAAfrComboRep_ class instance, the returned value, `oHdrRep` is kept by the frame application, and the deletion of this pointer is automatically done.  
-    
-    
+
     ...
     HRESULT CAAEAfrCommandHeaderRepForComboColor::
                  **CreateMenuRep**(const CATDialog * iParent,CATAfrCommandHeaderRep ** oHdrRep)
     {
       return  **E_FAIL** ;
     }
-    
+
     HRESULT CAAEAfrCommandHeaderRepForComboColor::
               **CreateCtxMenuRep**(const CATDialog * iParent,CATAfrCommandHeaderRep ** oHdrRep)
     {
       return **E_FAIL** ;
     }  
-  
+
 ---  
-  
+
 The combo header has no representation in the menu bar or in a contextual menu, so `CreateMenuRep` and `CreateCtxMenuRep` return E_FAIL.
 
 [Top]
@@ -474,40 +545,43 @@ This class is the _CAAAfrComboRep_ class. Its main roles are:
   * Change the current value of the _CATDlgCombo_ instance when a notification is sent by the CAASysGeomRootObj component
 
 Here the CAAAfrComboRep header file:
-    
-    
+
     ...
+Here the CAAAfrComboRep header file:
     class CAAAfrComboRep : public **CATAfrCommandHeaderRep**
+
     {
+class CAAAfrComboRep : public **CATAfrCommandHeaderRep**
     public:
       CAAAfrComboRep(const CATDialog * iParent, CATString & iCommandName);
       virtual ~CAAAfrComboRep();
-    
+
       HRESULT **Build**();
-    
+
     private:
       void **SelectCB**(CATCommand * iPublishingCommand, 
                     CATNotification * iNotification, 
                     CATCommandClientData iData);
-    
+
       void **ModifiedCB**(CATCallback       iEvent, 
                       void            *       , 
                       CATNotification * iNotification, 
                       CATCallbackEvent  iData,
     		          CATSubscriberData iCallBack);
       HRESULT **SetCurrentColor**() ;
-    
+
       CAAAfrComboRep(const CAAAfrComboRep &iObjectToCopy);
       CAAAfrComboRep & operator = (const CAAAfrComboRep &iObjectToCopy);
-    
+
     private:
          CATDlgCombo    * _pCombo;
          CATBaseUnknown * _pUIActiveObject ;
          int              _ColorTable[30] ;
+
     };  
-  
+
 ---  
-  
+
   * The _CAAAfrComboRep_ class derives from the _CATAfrCommandHeaderRep_ class ( Fig.5)
   * The `Build` method is a method of the _CATAfrCommandHeaderRep_ class. You must overwrite this method. In the _CATAfrCommandHeaderRep_ class it is a pure virtual method. This method is called by the frame application just after the _CAAAfrComboRep_ class instantiation, in other words just after the `CreateToolbarRep` method call.  
   * In private methods 
@@ -524,64 +598,92 @@ Here the CAAAfrComboRep source file:
   * The **constructor** class 
 
 First the ten values of the combo are initialized. To simplify the use case, there are always ten values, and there are "hard" coded. 
-    
+
     ...
+First the ten values of the combo are initialized. To simplify the use case, there are always ten values, and there are "hard" coded.
     CAAAfrComboRep::CAAAfrComboRep(const CATDialog * iParent,CATString & iCommandName): 
                      CATAfrCommandHeaderRep(iParent,iCommandName)
+
                     ,_pUIActiveObject(NULL),_pCombo(NULL)
     {
+CAAAfrComboRep::CAAAfrComboRep(const CATDialog * iParent,CATString & iCommandName):
+CATAfrCommandHeaderRep(iParent,iCommandName)
        float val ;
        for ( int i= 0 ; i < 10 ; i++)
+
        {
           // red
+float val ;
+for ( int i= 0 ; i < 10 ; i++)
           val = (255 * i / 9 ); 
           _ColorTable[i*3]   = (int)val;
-    
+
           // green
+val = (255 * i / 9 );
+_ColorTable[i*3]   = (int)val;
           _ColorTable[i*3+1] = 10 ;
-    
+
           // blue
+_ColorTable[i*3+1] = 10 ;
           val = (255 * (9-i) / 9); 
           _ColorTable[i*3+2] = (int)val;
+
        }
     ...  
-  
+
 ---  
-  
+
 The second step consists in to retrieve the CAASysGeomRootObj component. it is also the UI active object of the CAAGeometry document. 
-    
+
     ...
+The second step consists in to retrieve the CAASysGeomRootObj component. it is also the UI active object of the CAAGeometry document.
        CATFrmEditor * pEditor   = **CATFrmEditor** ::**GetCurrentEditor**();
        if ( NULL != pEditor )
+
        {
-    
+
+CATFrmEditor * pEditor   = **CATFrmEditor** ::**GetCurrentEditor**();
+if ( NULL != pEditor )
            CATPathElement path = pEditor->**GetUIActiveObject**();
            if ( 0 != path.GetSize() ) 
+
            {
+CATPathElement path = pEditor->**GetUIActiveObject**();
+if ( 0 != path.GetSize() )
               _pUIActiveObject=path[path.GetSize()-1];
-    
+
              _pUIActiveObject->**AddRef**();
+
            }
        }
     ...  
-  
+
 ---  
-  
+
 The last step consists in to set a callback method to be informed when the CAASysGeomRootObj component will sent a _CAAAfrComboColorNotification_ notification, in other words when the current color kept by the CAASysGeomRootObj component, will be modified. 
-    
+
     ...
        if ( NULL != _pUIActiveObject )
        {
           ::**AddCallback**(this,
+```vbscript
+if ( NULL != _pUIActiveObject )
                        _pUIActiveObject,
+```
+
     	          "CAAAfrComboColorNotification",
+```vbscript
+if ( NULL != _pUIActiveObject )
+_pUIActiveObject,
     	          (CATSubscriberMethod)&CAAAfrComboRep::**ModifiedCB** ,
     	          NULL);
+```
+
        }
     }  
-  
+
 ---  
-  
+
 `AddCallback` is a static global function whose the parameters are:
 
     * `this:` The subscriber
@@ -591,164 +693,219 @@ The last step consists in to set a callback method to be informed when the CAAS
     * `NULL**:**`No parameters for the callback method  
 
   * The **Destructor** class
-    
+
     ...
     CAAAfrComboRep::~CAAAfrComboRep()
     {
         if ( NULL != _pUIActiveObject )
         {
            ::**RemoveSubscriberCallbacks**(this, _pUIActiveObject);
-    
+
+```vbscript
+if ( NULL != _pUIActiveObject )
             _pUIActiveObject->Release();
             _pUIActiveObject = NULL ;
+```
+
         }
+_pUIActiveObject->Release();
+_pUIActiveObject = NULL ;
         if ( NULL != _pCombo )
+
         {
+_pUIActiveObject->Release();
+_pUIActiveObject = NULL ;
+if ( NULL != _pCombo )
            _pCombo->**RequestDelayedDestruction**();
            _pCombo = NULL ;
+
         }
-    
+
     }...  
-  
+
 ---  
-  
+
 At the end, the callback set in the constructor must be removed from the callback manager [7], and the _CATDlgCombo_ instance must be released. 
 
   * The **Build** method
 
+At the end, the callback set in the constructor must be removed from the callback manager [7], and the _CATDlgCombo_ instance must be released.
 You must overwrite this method. The goal of this method is to create the graphic representation and to initialize it.
 
 The first step consists in to retrieve the Dialog parent of the graphic representation to create. This information is kept by the _CATAfrCommandHeaderRep_ class, and retrieved by its `GetDialogParent` method. Then you can create a _CATDlgCombo_ class instance using, `pParent`, the Dialog parent. The second argument of the _CATDlgCombo_ class is the identifier of the dialog object, and the last one is the type of combo (`CATDlgCmbColor`: a combo of colors). Once the creation is done, you can set a callback to be informed when the end user selects a color among the ten values. 
-    
+
     ...
+You must overwrite this method. The goal of this method is to create the graphic representation and to initialize it.
+The first step consists in to retrieve the Dialog parent of the graphic representation to create. This information is kept by the _CATAfrCommandHeaderRep_ class, and retrieved by its `GetDialogParent` method. Then you can create a _CATDlgCombo_ class instance using, `pParent`, the Dialog parent. The second argument of the _CATDlgCombo_ class is the identifier of the dialog object, and the last one is the type of combo (`CATDlgCmbColor`: a combo of colors). Once the creation is done, you can set a callback to be informed when the end user selects a color among the ten values.
     HRESULT  CAAAfrComboRep::Build()
+
     {
+The first step consists in to retrieve the Dialog parent of the graphic representation to create. This information is kept by the _CATAfrCommandHeaderRep_ class, and retrieved by its `GetDialogParent` method. Then you can create a _CATDlgCombo_ class instance using, `pParent`, the Dialog parent. The second argument of the _CATDlgCombo_ class is the identifier of the dialog object, and the last one is the type of combo (`CATDlgCmbColor`: a combo of colors). Once the creation is done, you can set a callback to be informed when the end user selects a color among the ten values.
+HRESULT  CAAAfrComboRep::Build()
        const CATDialog * pParent = NULL ;
+
        **GetDialogParent**(&pParent);
-    
+
+HRESULT  CAAAfrComboRep::Build()
+const CATDialog * pParent = NULL ;
        _pCombo = new **CATDlgCombo**((CATDialog *)pParent, "CAAAfrEduCombo", CATDlgCmbColor);
-    
+
        **AddAnalyseNotificationCB**(_pCombo,
+_pCombo = new **CATDlgCombo**((CATDialog *)pParent, "CAAAfrEduCombo", CATDlgCmbColor);
     			   _pCombo->GetComboSelectNotification(),
     			   (CATCommandMethod)&CAAAfrComboRep::**SelectCB** ,
     			   (CATCommandClientData)NULL);
+
     ...  
-  
+
 ---  
-  
+
 Then, you can initialize the combo with the ten values using `_ColorTable`, the data member, initialized in the constructor class. Once the initialization is done, you can set current value calling `SetCurrentColor`. 
-    
+
     ...
+Then, you can initialize the combo with the ten values using `_ColorTable`, the data member, initialized in the constructor class. Once the initialization is done, you can set current value calling `SetCurrentColor`.
        for ( int i=0 ; i < 10 ; i++)
+
        {
+Then, you can initialize the combo with the ten values using `_ColorTable`, the data member, initialized in the constructor class. Once the initialization is done, you can set current value calling `SetCurrentColor`.
+for ( int i=0 ; i < 10 ; i++)
          _pCombo->**SetLine**(CATUnicodeString(),
     			(unsigned char)_ColorTable[i*3 ], 
     			(unsigned char)_ColorTable[i*3+1], 
     			(unsigned char)_ColorTable[i*3+2], 
     			i);
+
        }
        **SetCurrentColor**();
     ...  
-  
+
 ---  
-  
+
 Finally, the _CATCommand_ parent of the combo is changed. By default, the command parent is the Dialog parent, so it is `pParent`, the container in which the combo will be inserted. If you do not change the command parent, this, the current _CAAAfrComboRep_ instance, will do not receive the `GetComboSelectNotification` notification. Refer to the referenced article about the command tree [8].
-    
+
     ...
+Finally, the _CATCommand_ parent of the combo is changed. By default, the command parent is the Dialog parent, so it is `pParent`, the container in which the combo will be inserted. If you do not change the command parent, this, the current _CAAAfrComboRep_ instance, will do not receive the `GetComboSelectNotification` notification. Refer to the referenced article about the command tree [8].
        _pCombo->**SetFather**(this);
-    
+
        return S_OK ;
+
     }
     ...  
-  
+
 ---  
   * The **SelectCB** method
 
 The `SelectCB` method is called when the end user has selected a color in the combo. When `_pCombo` sends a notification, this callback method is called. The goal of this method, is first to retrieve the current color, using `GetSelect`, and then to modify the current color on the CAASysGeomRootObj component. `_pUIActiveObject,` is the CAASysGeoRootObj component which implements the _CAAIAfrTemporaryObjectColor_ interface. 
-    
+
     ...
+The `SelectCB` method is called when the end user has selected a color in the combo. When `_pCombo` sends a notification, this callback method is called. The goal of this method, is first to retrieve the current color, using `GetSelect`, and then to modify the current color on the CAASysGeomRootObj component. `_pUIActiveObject,` is the CAASysGeoRootObj component which implements the _CAAIAfrTemporaryObjectColor_ interface.
     void CAAAfrComboRep::SelectCB(CATCommand * iPublishingCommand, 
     			      CATNotification * iNotification, 
     			      CATCommandClientData iData)
+
     {
       **CAAIAfrTemporaryObjectColor** * pITemporaryObjectColor = NULL ;
+void CAAAfrComboRep::SelectCB(CATCommand * iPublishingCommand,
+CATNotification * iNotification,
+CATCommandClientData iData)
       HRESULT rc = _pUIActiveObject->QueryInterface(IID_CAAIAfrTemporaryObjectColor,
                                                     (void**) & pITemporaryObjectColor);
+
       ...
+HRESULT rc = _pUIActiveObject->QueryInterface(IID_CAAIAfrTemporaryObjectColor,
+(void**) & pITemporaryObjectColor);
          int val = _pCombo->**GetSelect**();
-    
+
          pITemporaryObjectColor->**SetCurrentColor**(_ColorTable[val*3 ],
                                                     _ColorTable[val*3+1],
                                                     _ColorTable[val*3+2]);
+
     ...  
-  
+
 ---  
   * The **ModifyCB** method
 
 The `ModifyCB` method is called when the CAASysGeomRootObj component sends the _CAAAfrComboColorNotification_ notification. It informs the _CAAAfrComboRep_ class instance, that the current color on the CAASysGeoRootObj component has been changed by someone. 
-    
+
     ...
+The `ModifyCB` method is called when the CAASysGeomRootObj component sends the _CAAAfrComboColorNotification_ notification. It informs the _CAAAfrComboRep_ class instance, that the current color on the CAASysGeoRootObj component has been changed by someone.
     void CAAAfrComboRep::ModifiedCB(CATCallback, 
                                   void *, 
                                   CATNotification * iNotification,
     			                  CATCallbackEvent, 
                                   CATSubscriberData)
+
     {
        **SetCurrentColor**();
     }
     ...  
-  
+
 ---  
   * The **SetCurrentColor** method
 
 This method consists in to read the current color on the CAASysGeoRootObj component, and modify, thanks to the `SetSelect` method, the current value on `_pCombo`, the _CATDlgCombo_ data member of the _CAAAfrComboRep_ class. 
-    
+
     ...
     HRESULT CAAAfrComboRep::SetCurrentColor()
     {
        **CAAIAfrTemporaryObjectColor** * pITemporaryObjectColor = NULL ;
+HRESULT CAAAfrComboRep::SetCurrentColor()
        HRESULT rc = _pUIActiveObject->QueryInterface(IID_CAAIAfrTemporaryObjectColor,
                                                     (void**) & pITemporaryObjectColor);
+
        ...
+HRESULT rc = _pUIActiveObject->QueryInterface(IID_CAAIAfrTemporaryObjectColor,
+(void**) & pITemporaryObjectColor);
           int r,g,b ;
           pITemporaryObjectColor->**GetCurrentColor**(r,g,b);
-    
+
           int position = 0 ;
           CATBoolean FOUND = FALSE ;
           while ( ( FALSE == FOUND) && ( position < 10 ))
+
           {
+int position = 0 ;
+CATBoolean FOUND = FALSE ;
+while ( ( FALSE == FOUND) && ( position < 10 ))
              if ( (r == _ColorTable[position*3 ]) &&
                   (g == _ColorTable[position*3+1 ]) &&
                   (b == _ColorTable[position*3+2 ]) )
+
              {
+```vbscript
+if ( (r == _ColorTable[position*3 ]) &&
+(g == _ColorTable[position*3+1 ]) &&
+(b == _ColorTable[position*3+2 ]) )
                  FOUND = TRUE ;
+```
+
              }else position ++ ;
           }
-    
+
+FOUND = TRUE ;
           if ( TRUE == FOUND) 
+
           {
              _pCombo->**SetSelect**(position,0);
           }
     ...  
-  
+
 ---  
 
 [Top]
 #### Instantiating the Combo Header Class
 
 The combo header is used in the CAAGeometry document. An instance of this header has been created in an Add-in of the workshop of the document. Here is an extract of the _CAAAfrGeoChartWindowAdn_ class which is an implementation of the _CAAIAfrGeometryWksAddin_ interface. 
-    
-    
+
     ...
     void CAAAfrGeoChartWindowAdn::CreateCommands()
     {
     ...
        new **CAAAfrComboColorHeader**("CAAAfrComboColorHdr");
     }
-      
-  
+
 ---  
-  
+
 The combo command header is created using its constructor class. 
 
 * * *
@@ -777,14 +934,14 @@ The component controlling the data used by the graphic representation is depende
 [8] | [The CAA Command Model](../CAADegTechArticles/CAADegCommandModel.md)  
 [9] | [Object Modeler Inheritances](../CAASysTechArticles/CAASysOMInheritance.md)  
 [Top]  
-  
+
 * * *
 ### History
 
 Version: **1** [Fev 2004] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2004, Dassault Systmes. All rights reserved._

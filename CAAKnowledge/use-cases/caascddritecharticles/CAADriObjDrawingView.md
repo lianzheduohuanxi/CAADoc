@@ -1,19 +1,18 @@
 ---
+```vbscript
 title: "DrawingView Object"
 category: "use-case"
 module: "CAAScdDriTechArticles"
 tags: ["CATIA"]
 source_file: "Doc/online/CAAScdDriTechArticles/CAADriObjDrawingView.htm"
 converted: "2026-05-11T17:31:51.127693"
+```
+
 ---
 # DrawingView Object
 
- 
-
 See Also | UseCases | Properties | Methods  
 ---|---|---|---  
-  
- 
 
 [![](../CAAScrAutomationImages/images/drviews.gif)](CAADriObjDrawingViews.md)  
 ![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/dractview.gif)![](../CAAScrAutomationImages/images/drview.gif)  
@@ -29,13 +28,14 @@ See Also | UseCases | Properties | Methods
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/drtables.gif)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/drthreads.gif)  
 ---  
-  
+
 Represents a drawing view of a drawing sheet in a drawing document.
 
 The drawing view is placed in the drawing sheet using the following properties:
 
 ![](images/baspp4-4.gif)
 
+The drawing view is placed in the drawing sheet using the following properties:
 The **x** , **y** , and **Angle** properties are used to place the drawing view in the drawing sheet. The drawing view has also a **Scale** property which determines its size in the drawing sheet with respect to the 3D document represented. The **GenerativeBehavior** property retrieves the **DrawingViewGenerativeBehavior** object associated with the drawing view, and you can get or set the reference view thanks to the **ReferenceView** property.
 
 Using the **Activate** method, you can make the drawing view the active one. The **AlignedWithReferenceView** and **UnAlignedWithReferenceView** methods enable you to align and deactivates the alignment with respect to the reference view. The **IsGenerative** methods returns whether the drawing view is generated from a document.
@@ -50,19 +50,22 @@ A drawing view is strongly linked to its parent view. If the parent view is upda
 
 ![](images/baspp4-5.gif)
 
+A drawing view is strongly linked to its parent view. If the parent view is updated because the document it displays has changed, or if you change its scale, all the drawing views which have this view as parent view are changed accordingly.
 The front view is also used as a reference by the left view for positioning. If you want to move the left view, it is constrained to move horizontally to remain a left view of the front view. The left view can access its reference view by means of the **ReferenceView** property.
 
 The following table summarizes the different view types along with their ability to have a parent view and if this parent view can also be a reference view.
 
 View Types | Parent View | Reference View | Creation Method  
----|---|---|---  
+
+The following table summarizes the different view types along with their ability to have a parent view and if this parent view can also be a reference view.
+View Types | Parent View | Reference View | Creation Method
 Front View | No | No | **DefineFrontView**  
 Isometric View | No | No | **DefineIsometricView**  
 Projection View | Yes | Yes | **DefineProjectionView**  
 Section View | Yes | Yes | **DefineSectionView**  
 Detail View | Yes | No | **DefineCircularDetailView**  
 Auxiliary View | Yes | Yes | **DefineAuxiliaryView**  
-  
+
 A front view or an isometric view are defined using the components of the two vectors defining its projection plane in the 3D space.
 
 The other views are all defined by giving the **DrawingViewGenerativeBehavior** object of their parent view, and additional information:
@@ -78,8 +81,7 @@ The other views are all defined by giving the **DrawingViewGenerativeBehavior** 
 ## Using the DrawingView Object
 
 Use x and y properties to set or retrieve the x and y coordinates of the view coordinate system. The following example sets these coordinates to 260mm and 120mm respectively.
-    
-    
+
 ```vbscript
     Dim myView As Object
     Set myView = CATIA.Documents(2).ActiveSheet.ActiveView
@@ -91,5 +93,3 @@ Use x and y properties to set or retrieve the x and y coordinates of the view co
 * * *
 
 _Copyright 1999-2013, Dassault Syst èmes. All rights reserved._
-
-```

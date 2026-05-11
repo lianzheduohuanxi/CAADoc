@@ -1,15 +1,19 @@
 ---
+```vbscript
 title: "New C++ Authorized APIs in CAA V5R10 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIMSHSelectedElement", "CATICatalogBrowserFactory", "CATIDOMDocumentType", "CATIEleUipFilteringCriteria", "CATITTRSList", "CATIElbTermination", "CATIDOMCharacterData", "CATICatalogEnable", "CATIMfgManufacturingBatch", "CATICatalogSynchronize", "CATICatalogInstantiation", "CATIGSOWrapSurface", "CATIDOMTreeWalker", "CATIDOMEntityReference", "CATIDOMEntity", "CATICatalogPersistentQuery", "CATInstanciationContext", "CATIElbEquipment", "CATIMfgUserDataFeature", "CATIDOMNodeIterator"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R10GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.025274"
----
+```
 
+---
+tags: ["CATIMSHSelectedElement", "CATICatalogBrowserFactory", "CATIDOMDocumentType", "CATIEleUipFilteringCriteria", "CATITTRSList", "CATIElbTermination", "CATIDOMCharacterData", "CATICatalogEnable", "CATIMfgManufacturingBatch", "CATICatalogSynchronize", "CATICatalogInstantiation", "CATIGSOWrapSurface", "CATIDOMTreeWalker", "CATIDOMEntityReference", "CATIDOMEntity", "CATICatalogPersistentQuery", "CATInstanciationContext", "CATIElbEquipment", "CATIMfgUserDataFeature", "CATIDOMNodeIterator"]
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R10GANewCPPAPI.htm"
+converted: "2026-05-11T17:33:47.025274"
 CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R10 GA  
----|---  
-  
+
 * * *
 
 The following are the new CAA V5R10 GA C++ Authorized APIs, compared with CAA V5R9 at GA level.
@@ -299,7 +303,7 @@ The following are the new CAA V5R10 GA C++ Authorized APIs, compared with CAA V5
 History Version: **1** [Oct 2002] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2002, Dassault Systmes. All rights reserved._

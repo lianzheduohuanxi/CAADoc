@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "Detail Of C++ API Changes"
 category: "api-changes"
 module: "CAACenAPIChangesR18"
@@ -6,8 +7,9 @@ version: "V5R18"
 tags: ["CAA2Usage", "CAA2Level"]
 source_file: "Doc/online/CAACenAPIChangesR18/CAACenAPIChangeDetail.htm"
 converted: "2026-05-11T17:33:51.416222"
----
+```
 
+---
 | 
 # 
 
@@ -20,13 +22,14 @@ converted: "2026-05-11T17:33:51.416222"
 _What changes in the API compared with CAA V5R17_  
 ---|---|---  
 Technical Article  
-  
+
 * * *
 ### Abstract
 
 This article presents by frameworks the detail of CAA C++ resources modified in V5R18 and how to modify your code accordingly. Each modification is listed for a resource (file, class, method) with a classification. They will generally be detected by a recompilation of the code. Most of the time, signature modifications are obvious. Check in the framework detail how to replace deleted entities. Possibly impacting modifications are highlighted in red.  
 | Classification | Meaning  
 ---|---  
+This article presents by frameworks the detail of CAA C++ resources modified in V5R18 and how to modify your code accordingly. Each modification is listed for a resource (file, class, method) with a classification. They will generally be detected by a recompilation of the code. Most of the time, signature modifications are obvious. Check in the framework detail how to replace deleted entities. Possibly impacting modifications are highlighted in red.
 LHC | @CAA2Level Has Changed: a L1 file is no more L1.  
 UHC | @CAA2Usage Has Changed: usage has changed for a more restricted usage. For example a class tagged as derivable is not derivable anymore.  
 CHBD | Class Has Been Deleted  
@@ -37,20 +40,19 @@ MRTHC | Method Returned Type Has Changed
 NPVM | New Pure Virtual Method. A new pure virtual method has been added on a derivable class or on an interface to be implemented without an adapter.   
 INDM | Method is no more documented. It does not break your code in any way but means that you are not supposed to use it anymore. Check that you don't use it or look for replacement informations.    
 MINMV | Method is no more virtual. If occurs on a U1 class, may require modifications in Imakefile.mk of client code. If occurs on a U2 class, see details on the documentation of the concerned resource modification.  
-  
-   
-  
+
 * * *
 
 CATArrangementInterfaces | [R18GA vs R17GA](CATArrangementInterfaces.md) |   
 ---|---|---  
+CATArrangementInterfaces | [R18GA vs R17GA](CATArrangementInterfaces.md) |
 CATxPDMInterfaces | [R18GA vs R17GA](CATxPDMInterfaces.md) |   
 DialogEngine | [R18GA vs R17GA](DialogEngine.md) |   
 DraftingInterfaces | [R18GA vs R17GA](DraftingInterfaces.md) |   
 DNBD5IInterfaces | [R18GA vs R17GA](DNBD5IInterfaces.md) |   
 MecModInterfaces | [R18GA vs R17GA](MecModInterfaces.md) |   
 TopologicalOperators | [R18GA vs R17GA](TopologicalOperators.md) |   
-  
+
 * * *
 ### References
 
@@ -59,14 +61,14 @@ TopologicalOperators | [R18GA vs R17GA](TopologicalOperators.md) |
 [2] | [Details Of V5R17 API Changes](../CAACenAPIChangesR17/CAACenAPIChangeDetail.md)  
   |    
 [Top]  
-  
+
 * * *
 ### History
 
 Version: **1** [Mar 2002] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2002, Dassault Systmes. All rights reserved._

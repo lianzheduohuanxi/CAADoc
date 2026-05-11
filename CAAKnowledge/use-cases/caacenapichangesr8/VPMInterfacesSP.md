@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "VPMInterfaces Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR8"
@@ -6,11 +7,14 @@ version: "V5R8"
 tags: ["CATIConfigurable", "CATIVpmAttribute", "CATICfgManager", "CATIVpmAggrAttribute", "CATIVpmServices", "CATICfgModification"]
 source_file: "Doc/online/CAACenAPIChangesR8/VPMInterfacesSP.htm"
 converted: "2026-05-11T17:33:52.772477"
----
+```
 
+---
+tags: ["CATIConfigurable", "CATIVpmAttribute", "CATICfgManager", "CATIVpmAggrAttribute", "CATIVpmServices", "CATICfgModification"]
+source_file: "Doc/online/CAACenAPIChangesR8/VPMInterfacesSP.htm"
+converted: "2026-05-11T17:33:52.772477"
 CAA C++ API Modifications|  VPMInterfaces  |   
----|---|---  
-  
+
 * * *
 
 **Entity|  SP| Modification| To Do** | VPMInterfaces/Protected/ENOVIHistoricalConnexion.h/ENOVIHistoricalConnexion/CheckConnexionState| 1| INDM| Check that you don't use it  

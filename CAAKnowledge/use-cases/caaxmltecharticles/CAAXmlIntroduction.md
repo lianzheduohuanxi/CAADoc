@@ -1,10 +1,13 @@
 ---
+```vbscript
 title: "Introduction to XML"
 category: "concept"
 module: "CAAXmlTechArticles"
 tags: ["CATIDOMElements", "CATIDOMText"]
 source_file: "Doc/online/CAAXmlTechArticles/CAAXmlIntroduction.htm"
 converted: "2026-05-11T17:33:45.680797"
+```
+
 ---
 # 3D PLM Enterprise Architecture
 
@@ -17,7 +20,7 @@ converted: "2026-05-11T17:33:45.680797"
 _Quick overview of XML fundamentals_  
 ---|---|---  
 Technical Article  
-  
+
 * * *
 ### Abstract
 
@@ -36,9 +39,8 @@ This article explains what XML is. It gives an overview of the standards governi
     * DOM Versus SAX
     * DTDs Versus Schemas
 
-  
 ---  
-  
+
 * * *
 ### What Is XML ?
 
@@ -54,6 +56,7 @@ XML documents are composed of elements, delimited by a start tag (of the form `*
 
 ![xmlsample.png \(15916 bytes\)](images/xmlsample.png)
 
+XML documents are composed of elements, delimited by a start tag (of the form `**<** element_name**>**`) and an end tag (of the form `**< /**element_name**>**`). Elements can contain either other elements or free text. Every XML document has one and only one root element, which contains all the other elements. The following XML sample is provided to illustrate the anatomy of an XML document.
 The following syntactic constructs are the most common in XML documents.
 
 The XML declaration
@@ -79,20 +82,17 @@ Other syntactic constructs (CDATA sections, processing instructions, etc.) can o
 #### Well-formedness and Validity
 
 XML files follow syntactic rules, some of which were just described in the previous section: there must be one and only one root element; attribute names must be unique within an element start tag scope; reserved XML characters such as '&' and '<' must be properly escaped, etc. An XML document, which obeys these syntactic rules is said to be **well formed**.
-    
-    
+
     <?xml version='1.0' encoding='UTF-8'?>
     <car><part name="engine"></car></part>
                                     ^
                                     |
        Not well-formed XML: the tags are not properly nested.
-                
-  
+
 ---  
-  
+
 The elements, which are allowed to appear in an XML documents and the order in which these elements are allowed to appear is described by a grammar file, called a DTD or an XSD schema. An XML document, which obeys all the rules specified by its associated grammar file is said to be **valid**.
-    
-    
+
     <?xml version='1.0' encoding='UTF-8'?>
     <!DOCTYPE car SYSTEM "automotive.dtd">
     <car>
@@ -101,10 +101,9 @@ The elements, which are allowed to appear in an XML documents and the order in w
     </car>     ^
                |
      Well-formed but invalid XML: aeroplane is not defined in the automotive DTD.
-                
-  
+
 ---  
-  
+
 [Top]
 ### Presentation of the Core XML Standards
 
@@ -113,6 +112,7 @@ The W3C (World Wide Web Consortium) is the standard body in charge of XML. The W
 [Top]
 #### De Jure Standards (W3C): XML 1.0, Schemas 1.0, DOM
 
+The W3C (World Wide Web Consortium) is the standard body in charge of XML. The W3C does not only take care of the standardization of the language itself (see [1]); it also offers standardized programming APIs to manipulate XML documents. Aside from the W3C, other programming APIs have become very popular to the point of becoming de facto standards. Note that though XML is very stable and upward compatibility will be assured, the standard keeps evolving with revisions of the specifications (XML 1.1, XSD 1.1) or the apparition of newer programming paradigms.
 The following list presents the official W3C standards:
 
 XML 1.0
@@ -142,8 +142,7 @@ The DOM API uses an object-oriented approach to describe XML documents. The DOM 
 ![domhierarchy.png \(8328 bytes\)](images/domhierarchy.png)
 
 The DOM API views XML documents as a tree of XML nodes. The root element of the XML document corresponds to the root of the DOM tree. The sub-elements of the root element are the children of this root node. The following sample shows the DOM tree which corresponds to a sample XML document.
-    
-    
+
     <?xml version="1.0"?>
     <!DOCTYPE car SYSTEM "automotive.dtd">
     <car>
@@ -153,9 +152,9 @@ The DOM API views XML documents as a tree of XML nodes. The root element of the 
      <part name="engine" quantity="1">low consumption engine</part>
      <part name="body" quantity="1">weight must be &lt; 1200 kg</part>
     </car>  
-  
+
 ---  
-  
+
 ![dominstance.png \(7116 bytes\)](images/dominstance.png)
 
 The DOM API defines methods to parse documents (build the in-memory tree, which corresponds to an XML document), manipulate document (insert elements, edit attribute values, copy or delete sub-trees, etc.), and write documents (generate XML from an in-memory DOM tree).
@@ -164,8 +163,7 @@ The DOM API defines methods to parse documents (build the in-memory tree, which 
 #### An Event-oriented API: SAX
 
 The SAX API uses an event-oriented API to process XML documents. The XML SAX parser reads XML documents sequentially and emits one typed event for each XML construct it comes across: start of the document, start of an element, end of an element, comment, characters, etc. Programmers register callback functions with the SAX parser for the events they are interested in. Usually, programmers will need to store the generated events in a stack in order to keep track of the location of the event in the XML tree. The following list shows the SAX events, which are generated for a sample document.
-    
-    
+
     <?xml version="1.0"?>
     <!DOCTYPE car SYSTEM "automotive.dtd">
     <car>
@@ -175,10 +173,9 @@ The SAX API uses an event-oriented API to process XML documents. The XML SAX par
      <part name="engine" quantity="1">low consumption engine</part>
      <part name="body" quantity="1">weight must be &lt; 1200 kg</part>
     </car>  
-  
+
 ---  
-      
-    
+
     1. Start document
     2. Start element "car"
     3. Start element "part", attributes {"name=seat", "quantity=2"}
@@ -193,10 +190,9 @@ The SAX API uses an event-oriented API to process XML documents. The XML SAX par
     12. End element "part"
     13. End element "car"
     14. End document
-                
-  
+
 ---  
-  
+
 [Top]
 ### Choosing the Right API
 
@@ -234,23 +230,23 @@ In summary, **use DOM if** you need to manipulate files no larger than a few meg
 #### DTDs Versus Schemas
 
 DTD and schemas address the same problem: defining tag vocabularies (grammars) for XML documents. They are to XML documents what the description of tables and relationships is to a relational database. The following example shows how an XML grammar defined as a DTD. The grammar defines two elements (car and part). The part element element can have two attributes ("name" and "quantity"). Several "part" elements can be nested inside a "car" element. Part elements can contain text.
-    
-    
+
     <!ELEMENT car (part)+>
     <!ELEMENT part (#PCDATA)>
     <!ATTLIST part name ID #REQUIRED
               quantity CDATA #IMPLIED>  
-  
+
 ---  
-  
+
 Here is an equivalent grammar defined as an XSD schema:
-    
-    
+
     <?xml version="1.0" encoding="UTF-8"?>
     <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+Here is an equivalent grammar defined as an XSD schema:
      elementFormDefault="qualified" 
      targetNamespace="urn:com:dassault_systemes:automotive" 
      xmlns:tns="urn:com:dassault_systemes:automotive">
+
      <xsd:element name="car">
       <xsd:complexType>
        <xsd:sequence maxOccurs="unbounded">
@@ -267,9 +263,9 @@ Here is an equivalent grammar defined as an XSD schema:
       </xsd:simpleContent>
      </xsd:complexType>
     </xsd:schema>  
-  
+
 ---  
-  
+
 The main advantages of DTDs are:
 
   * DTDs are simple and easy to understand.
@@ -312,14 +308,14 @@ XML is a data description language. Its simplicity, strict standardization, broa
 [5] |  XML Schema Part 0: Primer Second Edition  
 [6] |  XML SAX (Simple API for XML)  
 [Top]  
-  
+
 * * *
 ### History
 
 Version: **1** [Apr 2005] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2005, Dassault Systmes. All rights reserved._

@@ -1,15 +1,19 @@
 ---
+```vbscript
 title: "New C++ Authorized APIs in CAA V5R11 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIMSHSelectedElement", "CATITPSNoa", "CATIMfResultManagement", "CATICkeFunctionFactory", "CATISchPostPaste", "CATIParmManipulator", "CATIEleUipFilteringCriteria", "CATISchAppObsoleteClass", "CATIEhiPrtWkbCfgAddin", "CATIMSHSelectedFace", "CATIDftGDT", "CATISchAppSourcePostPaste", "CATIMfgDesignHole", "CATICkeUnit", "CATIMfgMacrosTabPage", "CATInitBatchOnHost", "CATIDesktopDocUE", "CATIBRepAccess", "CATISketchPositioning", "CATIParmSelector"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R11GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.082066"
----
+```
 
+---
+tags: ["CATIMSHSelectedElement", "CATITPSNoa", "CATIMfResultManagement", "CATICkeFunctionFactory", "CATISchPostPaste", "CATIParmManipulator", "CATIEleUipFilteringCriteria", "CATISchAppObsoleteClass", "CATIEhiPrtWkbCfgAddin", "CATIMSHSelectedFace", "CATIDftGDT", "CATISchAppSourcePostPaste", "CATIMfgDesignHole", "CATICkeUnit", "CATIMfgMacrosTabPage", "CATInitBatchOnHost", "CATIDesktopDocUE", "CATIBRepAccess", "CATISketchPositioning", "CATIParmSelector"]
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R11GANewCPPAPI.htm"
+converted: "2026-05-11T17:33:47.082066"
 CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R11 GA  
----|---  
-  
+
 * * *
 
 The following are the new CAA V5R11 GA C++ Authorized APIs, compared with CAA V5R10 at GA level.
@@ -578,7 +582,7 @@ The following are the new CAA V5R11 GA C++ Authorized APIs, compared with CAA V5
 History Version: **1** [Feb 2003] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2003, Dassault Systmes. All rights reserved._

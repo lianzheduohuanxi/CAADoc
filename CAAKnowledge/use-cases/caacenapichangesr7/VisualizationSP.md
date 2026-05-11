@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "Visualization Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR7"
@@ -6,11 +7,14 @@ version: "V5R7"
 tags: []
 source_file: "Doc/online/CAACenAPIChangesR7/VisualizationSP.htm"
 converted: "2026-05-11T17:33:52.280468"
----
+```
 
+---
+tags: []
+source_file: "Doc/online/CAACenAPIChangesR7/VisualizationSP.htm"
+converted: "2026-05-11T17:33:52.280468"
 CAA API Modifications|  Visualization  |   
----|---|---  
-  
+
 * * *
 
 **Entity|  SP| Modification| To Do** | Visualization/Protected/CAT2DRep.h/CAT2DRep/OkToDraw| 5| INDM| Check that you don't use it  

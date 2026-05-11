@@ -1,15 +1,19 @@
 ---
+```vbscript
 title: "New C++ Authorized APIs in CAA V5R18 SP2"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIEhiMechanicalImport", "CATIDlgTableViewColumnModel", "CATIAApplicationFrame", "CATIDlgTableViewLineModel", "CATIA", "CATIDlgTableViewController", "CATIDlgTableViewModel"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R18SP2NewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.384919"
----
+```
 
+---
+tags: ["CATIEhiMechanicalImport", "CATIDlgTableViewColumnModel", "CATIAApplicationFrame", "CATIDlgTableViewLineModel", "CATIA", "CATIDlgTableViewController", "CATIDlgTableViewModel"]
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R18SP2NewCPPAPI.htm"
+converted: "2026-05-11T17:33:47.384919"
 CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R18 SP2  
----|---  
-  
+
 * * *
 
 The following are the new CAA V5R18 SP2 C++ Authorized APIs, compared with CAA V5R18 at SP1 level.
@@ -71,7 +75,7 @@ The following are the new CAA V5R18 SP2 C++ Authorized APIs, compared with CAA V
 History Version: **1** [Oct 2007] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright © 1999-2007, Dassault Systèmes. All rights reserved._  

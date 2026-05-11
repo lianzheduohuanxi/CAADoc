@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "DNBInspectInterfaces Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR11"
@@ -6,11 +7,14 @@ version: "V5R11"
 tags: []
 source_file: "Doc/online/CAACenAPIChangesR11/DNBInspectInterfaces.htm"
 converted: "2026-05-11T17:33:50.359218"
----
+```
 
+---
+tags: []
+source_file: "Doc/online/CAACenAPIChangesR11/DNBInspectInterfaces.htm"
+converted: "2026-05-11T17:33:50.359218"
 CAA C++ API Modifications|  DNBInspectInterfaces  |   
----|---|---  
-  
+
 * * *
 
 **Entity|  SP| Modification| To Do** | DNBInspectInterfaces/Protected/DNBIInsTagPoint.h/DNBIInsTagPoint/SetPointApproachDirection| GA| MHBDM|   

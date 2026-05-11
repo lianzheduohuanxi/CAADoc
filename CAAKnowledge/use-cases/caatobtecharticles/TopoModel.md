@@ -1,16 +1,23 @@
 ---
+```vbscript
 title: "The CGM Topological Model"
 category: "use-case"
 module: "CAATobTechArticles"
 tags: []
 source_file: "Doc/online/CAATobTechArticles/TopoModel.htm"
 converted: "2026-05-11T17:33:45.920949"
----
+```
 
+---
+tags: []
+source_file: "Doc/online/CAATobTechArticles/TopoModel.htm"
+converted: "2026-05-11T17:33:45.920949"
 Geometric Modeler |  Topology |  The CGM Topological Model _How the Topological Concepts are implemented_  
----|---|---  
+
+converted: "2026-05-11T17:33:45.920949"
+Geometric Modeler |  Topology |  The CGM Topological Model _How the Topological Concepts are implemented_
 Technical Article  
-  
+
 * * *
 
 Abstract This article details how CGM V5 implements the concepts of the topology used to bound geometric objects. The topological operations are not handled here. First, the main interfaces (CATBody, CATDomain, CATCell) are presented, followed by their mutual relationships, and their validity range. The smart mechanism allowing to reuse topology from body to body is explained in a second part. The last part is more specific about the objects management. 
@@ -33,9 +40,8 @@ Abstract This article details how CGM V5 implements the concepts of the topology
   * **In Short**
   * **References**
 
-  
 ---  
-  
+
 * * *
 
 The CGM Topological Objects The Topological Objects interfaces allow to handle the body and all the types of topological domains and cells described in Topological Concepts. They give means to navigate through the topological graph, but do not operate bodies: the operations are brought by the TopologicalOperators interfaces. [Top] CATBody The CATBody interface implements the concept of topological body [2]. A CATBody is a geometric object, which handles a set of non necessarily connected cells and refers, directly or indirectly, all the cells needed for its construction. It offers tools to 
@@ -57,17 +63,29 @@ The building up of a CATBody takes several steps
 1 | Edge | CATEdge | CATEdgeCurve | CATVertex  
 2 | Face | CATFace | CATSurface | CATLoop, CATVertexInFace  
 3 | Volume | CATVolume |   | CATShell, CATWire, CATVertexInVolume  
+
     | Domain in 3D body (concepts) | CATDomain | Bounding  
 ---|---|---|---  
+1 | Edge | CATEdge | CATEdgeCurve | CATVertex
+2 | Face | CATFace | CATSurface | CATLoop, CATVertexInFace
+3 | Volume | CATVolume |   | CATShell, CATWire, CATVertexInVolume
 0 | VertexInVolume | CATVertexInVolume | CATBody, CATVolume  
 1 | Wire | CATWire | CATBody, CATVolume  
 2 | Shell | CATShell | CATBody, CATVolume  
 3 | Lump | CATLump | CATBody  
+
   | Domain in 2D body (concepts) | CATDomain | Bounding  
+0 | VertexInVolume | CATVertexInVolume | CATBody, CATVolume
+1 | Wire | CATWire | CATBody, CATVolume
+2 | Shell | CATShell | CATBody, CATVolume
+3 | Lump | CATLump | CATBody
 0 | VertexInFace | CATVertexInFace | CATFace  
 1 | Loop | CATLoop | CATFace  
 The general object diagram is now presented. Fig. 1: Topological objects diagram ![](images/TopoDiagram.gif) 
----|---  
+
+0 | VertexInFace | CATVertexInFace | CATFace
+1 | Loop | CATLoop | CATFace
+The general object diagram is now presented. Fig. 1: Topological objects diagram ![](images/TopoDiagram.gif)
 Notice: 
 
   * There is no domain associated with an edge boundary: a vertex bounds directly an edge.
@@ -84,13 +102,20 @@ We discuss now on the relationships and relative orientations between these obje
 The CATCell is oriented with regards to its underlying geometry. 
 
 `CATOrientationNegative`
+The CATCell is oriented with regards to its underlying geometry.
     the cell orientation is reversed with regards to the geometry orientation.
+
 `CATOrientationPositive`
+The CATCell is oriented with regards to its underlying geometry.
+the cell orientation is reversed with regards to the geometry orientation.
     the cell orientation is the geometry orientation.
+
 `CATOrientationUnknown`
+the cell orientation is reversed with regards to the geometry orientation.
+the cell orientation is the geometry orientation.
     the cell orientation is not defined.
 Fig. 3: Orientation of the cell with regards to its geometry ![TopoModelOrientation2.gif \(3983 bytes\)](images/TopoModelOrientation1.gif) | The edge V1-V2 is oriented from V2 to V1. Its orientation with regards to the geometry is inverted (`CATOrientationNegative`) Face has the same orientation as the orientation of the underlying surface. (`CATOrientationPositive`)  
----|---  
+
 [Top] Location of a CATDomain Bounding a CATCell
 
   * A CATDomain is a set of connected CATCells of same dimension that bound a cell of higher dimension. If it bounds a CATCell of dimension n, the CATDomain contains cells of dimension n-1. If immersed in a cell of dimension n, it contains cells of dimension less or equal to n-1.
@@ -145,21 +170,28 @@ Notice the CATSide attributes associated with the CATEdges. A boundary cell oper
      * A CATVertex bounding a CATEdge is related to a CATMacroPoint containing a CATPointOnEdgeCurve
      * A CATVertex immersed into a CATFace is related to a CATMacroPoint containing a CATPointOnSurface.
      * A CATVertex immersed into the space is related to a CATMacroPoint representing any type of CATPoint.
+1. The geometry of a CATVertex is a CATMacroPoint and the geometry of the CATEdge is a CATEdgeCurve.
+2. The geometry of the points of the CATMacroPoint and the geometry of the bounded cells must be consistent. Hence,
   3. The geometry of the curves of an CATEdgeCurve and the geometry of the bounded cells must be consistent: 
+
      * A CATEdge bounding a CATFace is related to a CATEdgeCurve containing a CATPCurve.
      * A CATEdge immersed into the space is related a CATEdgeCurve representing any type of CATCurves.
+3. The geometry of the curves of an CATEdgeCurve and the geometry of the bounded cells must be consistent:
   4. A CATLoop is declared to be done as the loop is defined in terms of topology AND geometry. Inner and outer loops must be closed. Full (immersed) loop must not be closed.
   5. A CATShell (res.CATLoop) does not cut right across a CATVolume (reps. CATFace). This rule is required. However, it is not tested for a matter of performance.
   6. The iterator of the face edges always scans all the edges by letting the matter on the left side, whatever the type of loop (inner or outer) they belong to.
   7. Compatibility between the `CATSide` and `CATLocation` attributes
   8. Closed topological cells: the CGM topological modeler allows such configurations, but some topological operators do not hold them for the moment. Avoid their use. 
+
      * Closed circle with the same vertex at the beginning and the end of the edge.
      * Cylinder with an unique closed face: the surface cylinder is closed and an edge is laid down on the closure. The loop uses the edge, one way up, the other way down.
      * Cylinder with an unique closed face and two loops on the bottom and up circles.
+7. Compatibility between the `CATSide` and `CATLocation` attributes
+8. Closed topological cells: the CGM topological modeler allows such configurations, but some topological operators do not hold them for the moment. Avoid their use.
 _Hence, a cell must not be bounded several times by the same cell of lower dimension._ For representing such objects, it will be necessary to use more than one cell .
 
  This figure illustrates the smart concept: the initial bodies are not modified. A new one is created, sharing existing topology. Notice that the boundaries of the upper and lower faces of the cylinder are made of two edges, for satisfying the validity rules about closed cells.  
----|---  
+
 [Top] The Object Management The object persistency is realized through the use of a document, that can be any user Document. A geometric container of CATGeoFactory type must be initialized to allow the creation of the geometric and topological objects. [Top] CATGeoFactory: the Factory of the CATBody The CATGeoFactory is the factory of all geometric objects in general hence it is the factory of the CATBody, that is a geometric object. [Top] CATBody: the Factory of the CATCells and CATDomains In turn, the CATBody allows to create CATCells and CATDomains of all dimensions inside a geometric container. These objects are however not directly attached to the CATBody that created them. Only the first level of domains will be directly related to the CATBody. [Top] Navigation Different tools allows to easily navigate though the topology. 
 
   * At the CATBody level: list of all the first level domains, hashtable of all the cells of a given dimension, bounding edges list of a set of faces, etc.
@@ -189,13 +221,13 @@ References [1] | [The CGM Objects](../CAAGobTechArticles/GeoObjects.md)
 [2] | [Topology Concepts](TopoConcepts.md)  
 [3] | [How to Associate Topology with Geometry](TopoCreate.md)  
 [Top]  
-  
+
 * * *
 
 History Version: **1** [Mar 2000] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2000, Dassault Systmes. All rights reserved._ `

@@ -1,13 +1,16 @@
 ---
+```vbscript
 title: "The Objects of CATIA Geometric Modeler"
 category: "use-case"
 module: "CAACgmModel"
 tags: ["CATICGMContainer", "CATICGMObject", "CATIContainer", "CATICGMObjects", "CATIA"]
 source_file: "Doc/online/CAACgmModel/CAACgmTaGobGeoObjects.htm"
 converted: "2026-05-11T17:33:47.936600"
+```
+
 ---
 # The Objects of CATIA Geometric Modeler  
-  
+
 ---  
 Technical Article  
 ## Abstract
@@ -88,24 +91,32 @@ The creation of a CATGeoFactory instance really triggers the creation of two fac
 Given the CATGeoFactory, you already can write your own applications, visualize the data by your own viewer and save the data using our own repository. If you do not have such viewer or repository, you can use these offered by CGM.
 #### Document
 
+Given the CATGeoFactory, you already can write your own applications, visualize the data by your own viewer and save the data using our own repository. If you do not have such viewer or repository, you can use these offered by CGM.
 No specific document is required to store the persistent CGM objects. Each application writes the CGM objects in its own document but have to put them consistently inside a geometric container (CATGeoFactory).
 
 Now, if you are not owner of any document, but you want to store your data, CGM puts a .NCGM document to your disposal.
 
 The reference of CGM instances from a document to another one is offered by the ObjectModeler hyperlinks.
+
 #### Viewer and Workshop
 
+Now, if you are not owner of any document, but you want to store your data, CGM puts a .NCGM document to your disposal.
+The reference of CGM instances from a document to another one is offered by the ObjectModeler hyperlinks.
 Moreover, a viewer and a workshop, associated with the .NCGM document, are provided to illustrate the CGM use. In this implementation, the viewer only displays the objects of the explicit factory, but it is its own choice.
+
 #### Integration into CATIA V5
 
+Moreover, a viewer and a workshop, associated with the .NCGM document, are provided to illustrate the CGM use. In this implementation, the viewer only displays the objects of the explicit factory, but it is its own choice.
 To let CGM possibly be independent of the CATIA V5 environment, the CATGeoFactory does not require all the properties of a CATIA V5 container. In fact, if you examine the behavior of the CATGeoFactory interface, you can see that is not a CATIA V5 container, because it does not adhere to the CATIContainer interface. In particular, it does not allow an application to include other container in itself.
 
 However, CATIA V5 brings a higher level object, created by the CATIA V5 factory of containers, that is a CATIA container, and also adheres to CATGeoFactory. In this environment, you take advantages of the CATIContainer interface and the CATGeoFactory interface.
 
 Fig. 2: Available Interfaces According to the Offering ![Interfaces](images/CAACgmGobGeoObjects2.gif) | The CATGeoFactory interface is different from the CATIContainer interface. CGM proposes an object adhering to the CATGeoFactory interface, while CATIA V5 offers an object also adhering to the CATIContainer interface.  
----|---  
-  
+
+However, CATIA V5 brings a higher level object, created by the CATIA V5 factory of containers, that is a CATIA container, and also adheres to CATGeoFactory. In this environment, you take advantages of the CATIContainer interface and the CATGeoFactory interface.
+Fig. 2: Available Interfaces According to the Offering ![Interfaces](images/CAACgmGobGeoObjects2.gif) | The CATGeoFactory interface is different from the CATIContainer interface. CGM proposes an object adhering to the CATGeoFactory interface, while CATIA V5 offers an object also adhering to the CATIContainer interface.
 As an example, this object will be seen when you use a Part document, that contains a SpecModeler/Part container, a Generic Naming container, and a geometric container.
+
 ## Persistent CGM Objects: CATICGMObjects
 
 CATICGMObject is the basis interface for all the persistent objects of the CGM offering. The CATICGMObject instances are explicit or implicit according to the factory they belong to and are identified through a persistent tag. They offer more behaviors: 
@@ -121,6 +132,7 @@ The added value of the CATGeometry interface is its geometric meaning. Hence, a 
     * The ability to return the definition of a portion of the space (called bounding box) that contains it.
     * The ability to be moved.
 
+The added value of the CATGeometry interface is its geometric meaning. Hence, a CATGeometry object offers:
 and many other behaviors, depending on the kind of CATGeometry.
 
 The CATGeometry interface groups 
@@ -134,6 +146,8 @@ The main assumption made on the geometric objects is that **they must be C2 cont
 Before dealing with the curves (base class CATCurve) and the surfaces (base class CATSurface), we briefly presents the geometric points (CATPoint).
 ### Points
 
+The main assumption made on the geometric objects is that **they must be C2 continuous**. CGM directly generates objects satisfying this criterion. If you want to introduce foreign curves or surfaces, you have to insure they satisfy it. If they do not satisfy it, you can cut them where they are not C2 continuous, and use topological objects to assemble the parts.
+Before dealing with the curves (base class CATCurve) and the surfaces (base class CATSurface), we briefly presents the geometric points (CATPoint).
 There mainly are three geometric point interfaces: 
 
     * CATCartesianPoint, allowing you to modify the Cartesian coordinates.
@@ -141,10 +155,7 @@ There mainly are three geometric point interfaces:
     * CATMacroPoint, used to define the geometry of a vertex (the vertex the is topological object of the lowest dimension).
     * CATPointOnEdgeCurve, representing a point on a specific curve called edge curve, used to define the geometry of a topological edge [8].
 
-```vbscript
 Do not confuse CATPoint and CATMathPoint!
-
-```
 
     * CATPoint is a geometric interface. Instances are created with the CATGeoFactory and can be streamed.
     * CATMathPoint is a mathematical class. Instances are created with the class constructor and are transient: they cannot be streamed.
@@ -152,11 +163,15 @@ Do not confuse CATPoint and CATMathPoint!
 
 A point on a curve may be represented with 3 coordinates, as a point in a 3D space, or with 1 parameter (usually called `w`) in the space of the curve.
 
+A point on a curve may be represented with 3 coordinates, as a point in a 3D space, or with 1 parameter (usually called `w`) in the space of the curve.
 In the same way, a point on a surface may be represented as a 3D point or with two parameters (usually called `u` and `v`) in the space of the surface.
 
 These parameters have only sense if they are associated with the curve or the surface they parameterize. Hence, the object is responsible for the mapping between the 3D coordinates and the parameter(s), and the user of these objects must never make any assumptions about this mapping.
+
 ### Surfaces in CGM
 
+In the same way, a point on a surface may be represented as a 3D point or with two parameters (usually called `u` and `v`) in the space of the surface.
+These parameters have only sense if they are associated with the curve or the surface they parameterize. Hence, the object is responsible for the mapping between the 3D coordinates and the parameter(s), and the user of these objects must never make any assumptions about this mapping.
 CGM offers several types of surfaces: 
 
     * Elementary surfaces: canonical (cylinder, cone, sphere, torus, plane) or NURBS surfaces.
@@ -169,6 +184,8 @@ All the CGM surfaces are precisely described in [4].
 If you have specific surfaces that no CGM surface fits, CGM allows you to define your own surface, and use it as if it were a CGM surface. See [2] for a precise description of this capability.
 ### Curves in CGM
 
+All the CGM surfaces are precisely described in [4].
+If you have specific surfaces that no CGM surface fits, CGM allows you to define your own surface, and use it as if it were a CGM surface. See [2] for a precise description of this capability.
 CGM offers several types of curves:
 
     * Resolved curves: these curves have a mathematical form: line, conic (circle, ellipse, parabola, hyperbola), NURBS, Spline belong to this type. Evaluations are made directly from the mathematical equations.
@@ -180,28 +197,41 @@ All the CGM curves are precisely described in [5].
 If you have specific curves that no CGM curve fits, CGM allows you to define your own curve, and use it as if it were a CGM curve. See [2] for a precise description of this capability.
 ### Topology
 
+All the CGM curves are precisely described in [5].
+If you have specific curves that no CGM curve fits, CGM allows you to define your own curve, and use it as if it were a CGM curve. See [2] for a precise description of this capability.
 The topological objects are geometric objects, and managed in the same container. These topological objects are bodies, cells (vertex, edge, face, volume) and domains (loop, shell, wire, lump). See [5] for the topological concepts and [6] for their implementation in CGM.
+
 ## Units and Tolerance
 
 This section explains how CGM deals with the units and the tolerances for its objects.
 ### Unit
 
+This section explains how CGM deals with the units and the tolerances for its objects.
 The geometric factory is the object that creates any geometric objects. The unit of the geometric factory is the mm.
 
 The angles are defined in radians in the whole CGM offering. Constants (`CATRadianToDegree`, `CATDegreeToRadian`) allows you to convert degrees to radians and the converse.
+
 ### Model Size: the Bounding Box of the CGM Model
 
+The geometric factory is the object that creates any geometric objects. The unit of the geometric factory is the mm.
+The angles are defined in radians in the whole CGM offering. Constants (`CATRadianToDegree`, `CATDegreeToRadian`) allows you to convert degrees to radians and the converse.
 The factory defines the maximum box inside which the geometric objects must be. This box is defined by the _Model Size_ , fixed to 10^6mm (10^5mm before R14). As the unit is the millimeter, all the objects must be inside the box [-1000m, +1000m] ([-100m, +100 m] before R14).
+
 ###  Resolution: the Lower Valid Length of an Object of the CGM Model
 
+The factory defines the maximum box inside which the geometric objects must be. This box is defined by the _Model Size_ , fixed to 10^6mm (10^5mm before R14). As the unit is the millimeter, all the objects must be inside the box [-1000m, +1000m] ([-100m, +100 m] before R14).
 The _Resolution_ defines the minimum length of a valid object. It is fixed to `10^-3.unit`. As the unit is mm, lines of length smaller than `1micro-m` are not valid.
 
 The management of confusions ("Do two objects have the same geometry?") is a direct consequence of the resolution: if the distance between two geometric points is less than the resolution, the two points are considered to be geometrically at the same location.
 
 However, the resolution is not a maximum gap (between adjacent surfaces for example). In fact, the topology captures the design intent, and the gap between the geometry of two faces sharing the same edge can be greater than the factory resolution: the modeler is tolerant.
+
 ### Numerical Tolerance
 
+The management of confusions ("Do two objects have the same geometry?") is a direct consequence of the resolution: if the distance between two geometric points is less than the resolution, the two points are considered to be geometrically at the same location.
+However, the resolution is not a maximum gap (between adjacent surfaces for example). In fact, the topology captures the design intent, and the gap between the geometry of two faces sharing the same edge can be greater than the factory resolution: the modeler is tolerant.
 All the algorithms use a numerical tolerance, much more precise than the resolution.
+
 ## In Short
 
     * CGM offers persistent objects to model geometry and topology.

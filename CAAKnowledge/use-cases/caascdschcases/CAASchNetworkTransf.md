@@ -1,24 +1,27 @@
 ---
+```vbscript
 title: "Transforming a Schematic Network Object"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAADoc", "CAAScdSchUseCases", "CATIA", "CAASchAppBase", "CAASCHEDUApp", "CAASchPlatformModeler", "CATIASchMovable", "CAASCH_Network01", "CAASchNetworkTransf", "CAASchAppUtilities"]
 source_file: "Doc/online/CAAScdSchUseCases/CAASchNetworkTransf.htm"
 converted: "2026-05-11T17:31:51.417508"
+```
+
 ---
 ## Schematics Platform Modeler
 
 | 
 ## Transforming a Schematic Network Object  
-  
-  
+
 * * *
 
  This macro shows you how to transform a schematic network object.Given a list of independent objects that are connected to other objects, this macros shows how to transform the members accounting for the connectivity. This macro opens the CAASCH_Network01.CATProduct document. ![](images/CAASchNetworkTransf_01.jpg) Through special naming convention (i.e. the word "_network_scale" embedded in the instance name), the macro knows to include the following Schematic component instances in the input list.
 
   1. V-082_network_scale_instance.
 
-  
+This macro shows you how to transform a schematic network object.Given a list of independent objects that are connected to other objects, this macros shows how to transform the members accounting for the connectivity. This macro opens the CAASCH_Network01.CATProduct document. ![](images/CAASchNetworkTransf_01.jpg) Through special naming convention (i.e. the word "_network_scale" embedded in the instance name), the macro knows to include the following Schematic component instances in the input list.
+1. V-082_network_scale_instance.
  CAASchNetworkTransf is launched in CATIA [1]. No open document is needed.Special environment must be available to successfully run this macro:
 
   * Prerequisites:
@@ -38,33 +41,43 @@ converted: "2026-05-11T17:31:51.417508"
 [CAASchNetworkTransf.CATScript ](CAASchNetworkTransfSource.md) is located in the CAAScdSchUseCases module. [Execute macro](macros/CAASchNetworkTransf.CATScript) (Windows only).  
  CAASchNetworkTransf includes the following steps:
 
+CAASchNetworkTransf includes the following steps:
   1. Prolog
   2. Translating a Schematic component that is connected to other objects
   3. Scaling a Schematic component that is connected to other objects
 
 #### Prolog
 
+2. Translating a Schematic component that is connected to other objects
+3. Scaling a Schematic component that is connected to other objects
 The macro first loads CAASCH_Network01.CATProduct. |     ...  
     ' -------------------------------------------------------------------------    
     ' Open the schematic document   
+
 ```vbscript
     Dim sFilePath  
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _  
+```
+
             "online\CAAScdSchUseCases\samples\CAASCH_Network01.CATProduct")  
-  
+
+```vbscript
+Dim sFilePath
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
     Dim objSchDoc As Document  
     Set objSchDoc = CATIA.Documents.Open(sFilePath)  
-    ...  
 ```
 
-```
+    ...  
 
 ---  
-  
+
 Next, the macro acquires the schematic root object from the document. The schematic root is the top node of the object instance tree in a schematic document.
 
     ...  
+Next, the macro acquires the schematic root object from the document. The schematic root is the top node of the object instance tree in a schematic document.
     ' Find the top node of the schematic object tree - schematic root.  
+
 ```vbscript
     Dim objPrdRoot As Product  
     Dim objSchRoot As SchematicRoot  
@@ -74,10 +87,9 @@ Next, the macro acquires the schematic root object from the document. The schema
         Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")  
       End If  
     End If  
-    ...  
 ```
 
-```
+    ...  
 
 ---  
 #### Translating a Schematic component that is connected to other objects
@@ -92,18 +104,23 @@ This macro provides a private FindNetworkComponent subroutine which searches for
              '-----------------------------------------------------------------  
 ```
 
+```vbscript
+' The following "Sub" will populate objLCntbl_g and objLGRR_g and
+' objLSelected_g
+'-----------------------------------------------------------------
              FindNetworkComponentInst objSchRoot  
-  
+
+```
+
 ```vbscript
              Set objLNetWork = objSchBaseFact.CreateNetwork (objLCntbl_g, _  
                objLGRR_g)  
-    ...  
 ```
 
-```
+    ...  
 
 ---  
-  
+
 A network object member in the output list: objLNetwork implements the SchMovable interface. This interface provides the Translate method to move all the members in the network accounting for the connectivity.
 
     ...  
@@ -111,24 +128,31 @@ A network object member in the output list: objLNetwork implements the SchMovabl
     ...  
 ```vbscript
        If ( intNbNet > 0 ) Then    
+```
+
 ```vbscript
           Set objSchNet = objLNetWork.Item (1,"CATIASchMovable")  
-  
+
 ```
 
 ```vbscript
           If ( Not ( objSchNet Is Nothing ) ) Then  
+```
+
 ```vbscript
              '-----------------------------------------------------------------  
              '  Translate the first network by (50.0, 0.0)  
              '-----------------------------------------------------------------  
 ```
 
+```vbscript
+'-----------------------------------------------------------------
+'  Translate the first network by (50.0, 0.0)
+'-----------------------------------------------------------------
              objSchNet.Translate Db2Vector  
-    ...  
 ```
 
-```
+    ...  
 
 ---  
 #### Scaling a Schematic component that is connected to other objects
@@ -151,13 +175,12 @@ The SchMovable interface provides the ScaledSelectedObjects method to scale a co
              intSelected = objLSelected_g.Count  
              If ( intSelected > 0 ) Then    
                 objSchNet.ScaleSelectedObjects objLSelected_g, DbScaleFactor  
-    ...  
 ```
 
-```
+    ...  
 
 ---  
-  
+
 [Top]
 
 * * *
@@ -175,7 +198,7 @@ This use case shows how to transform a Schematic network object. A message loggi
 [1] | [ Replaying a Macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2001, Dassault Systmes. All rights reserved._

@@ -1,12 +1,14 @@
 ---
+```vbscript
 title: "CAAAniMeshCoating1D.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniMeshCoating1D", "CAAScdAniUseCases"]
 source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshCoating1DSource.htm"
 converted: "2026-05-11T17:31:51.623499"
----
+```
 
+---
 ```vbscript
     'COPYRIGHT DASSAULT SYSTEMES 2000
     '***********************************************************************
@@ -21,17 +23,16 @@ converted: "2026-05-11T17:31:51.623499"
     '  Locales:      English 
     '  CATIA Level:  V5R16
     '***********************************************************************
-    
+
 ```
 
-    
-```vbscript
     Sub CATMain()
+
 ```vbscript
     '----------------------------------------------------------- 
     'Optional: allows to find the sample wherever it's installed
       sDocPath=CATIA.SystemService.Environ("CATDocView")
-    
+
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 
@@ -39,40 +40,54 @@ converted: "2026-05-11T17:31:51.623499"
           Err.Raise 9999,,"No Doc Path Defined"
         End If
     '----------------------------------------------------------- 
-    
+
 ```
 
+```vbscript
+End If
+'-----------------------------------------------------------
     'Open the CATAnalysis Document
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Surface.CATAnalysis")
+```
+
 ```vbscript
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
-    
+
 ```
 
+```vbscript
+Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
     'Retrieve the analysis Manager 
+```
+
 ```vbscript
     Set oAnalysisManagar = oAnalysisDocument.Analysis
-    
+
 ```
 
+```vbscript
+Set oAnalysisManagar = oAnalysisDocument.Analysis
     'Retrieve the part document and product
+```
+
 ```vbscript
     Set oAnalysisLinkedDocuments = oAnalysisManagar.LinkedDocuments
     Set partDocument = oAnalysisLinkedDocuments.Item(1)
     Set product = partDocument.Product
+```
+
 ```vbscript
     'Retrieve the published edge
     Set publications1 = product.Publications
     Set pubFace = publications1.Item("Edge")
 ```
 
-    
-```
-
     'Retrieve the analysis model
 ```vbscript
     Set oAnalysisModels = oAnalysisManagar.AnalysisModels
     Set oAnalysisModel = oAnalysisModels.Item(1)
+```
+
 ```vbscript
     'Retrieve mesh manager and the surface mesh part by name
     Set oAnalysisMeshManager = oAnalysisModel.MeshManager 
@@ -82,9 +97,6 @@ converted: "2026-05-11T17:31:51.623499"
     Set reference1 = oAnalysisManagar.CreateReferenceFromObject(oAnalysisMeshPart)
 ```
 
-    
-```
-
     'Add the new Coating mesh part to the list of mesh parts
 ```vbscript
     Set coat1D = oAnalysisMeshParts.Add ("MSHPart1DCoating") 
@@ -92,28 +104,27 @@ converted: "2026-05-11T17:31:51.623499"
     coat2D.AddSupportFromReference NOTHING, reference1
     'Set the global specifications
     coat2D.SetGlobalSpecification "ExtractionType", 1
-    
+
 ```
 
-    
+coat2D.SetGlobalSpecification "ExtractionType", 1
     'Create the local specification
+
 ```vbscript
     Set meshSpecs = coat2D.AnalysisMeshLocalSpecifications
     Set spec = meshSpecs.Add("MSHCoatingLocalSpecification")
     spec.SetAttribute "LocalExtractionType", 2
-    
+
 ```
 
+```vbscript
+Set spec = meshSpecs.Add("MSHCoatingLocalSpecification")
+spec.SetAttribute "LocalExtractionType", 2
     spec.AddSupportFromPublication "ConnectorList", product, pubFace
-    
-    
+
     'Update mesh part
     coat1D.Update
-    
-    
-```vbscript
-    End Sub
-    
-```
 
 ```
+
+    End Sub

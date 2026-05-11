@@ -1,17 +1,25 @@
 ---
+```vbscript
 title: "CAAKniSubListFilter.CATScript"
 category: "use-case"
 module: "CAAScdKniUseCases"
 tags: ["CAAScdKniUseCases", "CATIA", "CAAKniSamplePartR13", "CAAKniSubListFilter"]
 source_file: "Doc/online/CAAScdKniUseCases/CAAKniSubListFilterSource.htm"
 converted: "2026-05-11T17:31:51.997304"
----
+```
 
+---
+tags: ["CAAScdKniUseCases", "CATIA", "CAAKniSamplePartR13", "CAAKniSubListFilter"]
+source_file: "Doc/online/CAAScdKniUseCases/CAAKniSubListFilterSource.htm"
+converted: "2026-05-11T17:31:51.997304"
     Option Explicit
     ' COPYRIGHT DASSAULT SYSTEMES 2001
+
 ```vbscript
     Dim Language as String
     Language="VBScript"
+```
+
 ```vbscript
     ' ***********************************************************************
     '   Purpose:      You can add user parameters to a given feature by using the
@@ -30,11 +38,8 @@ converted: "2026-05-11T17:31:51.997304"
     ' ***********************************************************************
 ```
 
-    
-```
-
-```vbscript
     Sub CATMain()
+
 ```vbscript
      ' Set the CATIA popup file alerts to False
      ' It prevents to stop the macro at each alert during its execution
@@ -46,31 +51,37 @@ converted: "2026-05-11T17:31:51.997304"
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String 
         sDocPath=CATIA.SystemService.Environ("CATDocView")
-    
+
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
           Err.Raise 9999,,"No Doc Path Defined"
         End If
         ' ----------------------------------------------------------- 
 ```
 
-    
-```
-
-    
 ```vbscript
         Dim sFilePath
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
-    		"online\CAAScdKniUseCases\samples\CAAKniSamplePartR13.CATPart")
-        Dim oDoc As Document
-        set oDoc = CATIA.Documents.Open(sFilePath)
-    
 ```
 
-    
+    		"online\CAAScdKniUseCases\samples\CAAKniSamplePartR13.CATPart")
+```vbscript
+Dim sFilePath
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+        Dim oDoc As Document
+        set oDoc = CATIA.Documents.Open(sFilePath)
+
+```
+
+```vbscript
+set oDoc = CATIA.Documents.Open(sFilePath)
      ' Retrieve your active document
+```
+
 ```vbscript
      Dim oActiveDoc As Document 
      Set oActiveDoc = CATIA.ActiveDocument 
+```
+
 ```vbscript
      ' Check whether the document is a CATPart
      If (InStr(oActiveDoc.Name,".CATPart")) <> 0  Then 
@@ -96,29 +107,31 @@ converted: "2026-05-11T17:31:51.997304"
                ' all the parameters related to Pad.1 itself plus the parameters related
                ' to its children (for example, the parameters of the sketch from which 
                ' the pad was extruded from)          
-               
+
                Dim oPad1SubList As Parameters
                Set oPad1SubList = oParamList.SubList(oBodies.item(j).Shapes.item(i), False)
                  for k = 1 to oPad1SubList.Count
 ```
 
+```vbscript
+Dim oPad1SubList As Parameters
+Set oPad1SubList = oParamList.SubList(oBodies.item(j).Shapes.item(i), False)
+for k = 1 to oPad1SubList.Count
                     msgbox oPad1SubList.Item(k).name
                  next
              End if 
              Next 
         Next       
-    
-```
 
-     Else
-        MsgBox "The active document must be a CATPart"
-    End If
-    
 ```
 
 ```vbscript
-    End Sub
-    
-```
+Next
+Next
+     Else
+        MsgBox "The active document must be a CATPart"
+    End If
 
 ```
+
+    End Sub

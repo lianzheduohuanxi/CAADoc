@@ -1,16 +1,23 @@
 ---
+```vbscript
 title: "mkmk Commands"
 category: "use-case"
 module: "CAABtlQuickRefs"
 tags: ["CAA2", "CATIA"]
 source_file: "Doc/online/CAABtlQuickRefs/CAABtlMkOthers.htm"
 converted: "2026-05-11T17:33:50.021658"
----
+```
 
+---
+tags: ["CAA2", "CATIA"]
+source_file: "Doc/online/CAABtlQuickRefs/CAABtlMkOthers.htm"
+converted: "2026-05-11T17:33:50.021658"
 RADE |  Multi-Workspace Application Builder |  mkmk Commands _Quick Reference to mkmk commands_  
----|---|---  
+
+converted: "2026-05-11T17:33:50.021658"
+RADE |  Multi-Workspace Application Builder |  mkmk Commands _Quick Reference to mkmk commands_
 Quick Reference  
-  
+
 * * *
 
  **mkCopyPreq**  
@@ -132,17 +139,23 @@ Only modules which are found at the first level of the concatenation (thus the w
 
 * * *
 
+4. If a module, which is referenced in a LINK_WITH directive, is destroyed in a local framework, it can be still visible because existing somewhere in the concatenation.
+Only modules which are found at the first level of the concatenation (thus the workspace itself) can be modified. We consider that a framework is "local", and thus that its modules can be modified, if it contains the source of its Identity Card. As a consequence, it is possible to copy some frameworks locally and to prevent that they could be modified by deleting the local copy of their Identity Card source file.
 Examples To define in workspace /u/users/me/myws_dir a dynamic prerequisit search path for mkmk
-    
+
     $ cd /u/users/me/myws_dir
     $ ls
     SampleFramework aix_a
     $ mkGetPreq -p /u/lego/CXR1/BSF:/u/lego/CXR1rel/BSF
     $ ls
+SampleFramework aix_a
     Install_config SampleFramework aix_a
 
 Other examples: In the following example, framework Fw1 is made of modules Titi1 and Toto1. Module Titi1 needs services implemented by modules Toto1, Toto2 and Toto3. Given the content of the all workspaces in presence, mkGetPreq should be run in Ws_mine the following way: "`mkGetPreq -p Ws_b:Ws_c`". A further mkmk picks up in path Ws_b:Ws_c the prerequisites it needs. ![](images/linkwith.gif) Advanced Scenarios This paragraph sets out some scenarios `not that intuitive'. Read it to make sure you understand the combined effect of mkGetPreq and mkmk. Scenario 1: concatenation of modules In the following example, Ws_mine does not contain the entire framework Fw1(made of modules Titi1 and Toto1): only the module under work Titi1. Nevertheless, module Toto1 is present in Ws_Teamster. To build Titi1 in Ws_mine, work spaces WS_mine, WS_b ,WS_c and Ws_Teamster need to be concatenated. mkGetPreq makes it possible. ![](images/linkwith2.gif) Even if command mkGetPreq seems simple, it may lead to sharp situations. Scenario 2: prerequisite framework not complete In the following situation, the prerequisite framework is not complete in the first work space given in the -p option: ![](images/linkwith3.gif) The chosen behaviour of mkGetPreq in such a case is to only consider the modules of Fw2 presents in the first work space Fw2 was found. In the example, Toto2 only will be referred to at link-time.  **mkPrintPreq**  
+
 ---  
+Install_config SampleFramework aix_a
+Other examples: In the following example, framework Fw1 is made of modules Titi1 and Toto1. Module Titi1 needs services implemented by modules Toto1, Toto2 and Toto3. Given the content of the all workspaces in presence, mkGetPreq should be run in Ws_mine the following way: "`mkGetPreq -p Ws_b:Ws_c`". A further mkmk picks up in path Ws_b:Ws_c the prerequisites it needs. ![](images/linkwith.gif) Advanced Scenarios This paragraph sets out some scenarios `not that intuitive'. Read it to make sure you understand the combined effect of mkGetPreq and mkmk. Scenario 1: concatenation of modules In the following example, Ws_mine does not contain the entire framework Fw1(made of modules Titi1 and Toto1): only the module under work Titi1. Nevertheless, module Toto1 is present in Ws_Teamster. To build Titi1 in Ws_mine, work spaces WS_mine, WS_b ,WS_c and Ws_Teamster need to be concatenated. mkGetPreq makes it possible. ![](images/linkwith2.gif) Even if command mkGetPreq seems simple, it may lead to sharp situations. Scenario 2: prerequisite framework not complete In the following situation, the prerequisite framework is not complete in the first work space given in the -p option: ![](images/linkwith3.gif) The chosen behaviour of mkGetPreq in such a case is to only consider the modules of Fw2 presents in the first work space Fw2 was found. In the example, Toto2 only will be referred to at link-time.  **mkPrintPreq**
 Purpose Prints out the list of the [direct and indirect] prerequesite frameworks of a given framework. The **mkPrintPreq** command may be compared with "mkGetPreq -simul", which also outputs a list of prerequisite frameworks. mkPrintPreq can be run on a given [local] framework, whereas mkGetPreq works on all the [local] frameworks.
 
 * * *
@@ -218,23 +231,29 @@ Warning
 * * *
 
 Examples In the current workspace, mkGetPreq was previously run to define a dynamic search path to access the prerequisites. To basically obtain the list of prerequisites of framework SampleFramework1:
-    
+
     E/MyWorkspace<mkPrintPreq Framework1
     # Populating 2 workspace(s) with frameworks and modules ...
     # 2 workspace(s) populated with 301 frameworks and 1688 modules.
+Examples In the current workspace, mkGetPreq was previously run to define a dynamic search path to access the prerequisites. To basically obtain the list of prerequisites of framework SampleFramework1:
+E/MyWorkspace<mkPrintPreq Framework1
     BSFBuildtimeData
     LCCommon
     SpecialAPI
     System
 
 To get more information:
-    
+
     E/MyWorkspace<>mkprintpreq -l Framework1
+
     # Populating 2 workspace(s) with frameworks and modules ...
     # 2 workspace(s) populated with 301 frameworks and 1688 modules.
-    
+
+E/MyWorkspace<>mkprintpreq -l Framework1
     Required frameworks for: Framework1
+
     ------------------------------------
+Required frameworks for: Framework1
     Direct   : BSFBuildtimeData in C/Program Files\Dassault Systemes\B24\.\BSFBuildtimeData
     Direct   : System           in C/Program Files\Dassault Systemes\B24\.\System
     Indirect : LCCommon         in C/Program Files\Dassault Systemes\B24\.\LCCommon
@@ -242,6 +261,8 @@ To get more information:
 
  **mkCopyFW**  
 ---  
+Indirect : LCCommon         in C/Program Files\Dassault Systemes\B24\.\LCCommon
+Indirect : SpecialAPI       in C/Program Files\Dassault Systemes\B24\.\SpecialAPI
 Purpose **mkCopyFw** copies the build-time and run-time files of a framework from a workspace into another workspace. Please note that mkCopyFw replaces the existing frameworks only for a case where these frameworks were previously created by the mkCopyFw command. mkCopyFw can be used to copy frameworks from an Unix system into Windows system and vice versa. But this functionality can be involved only from a Windows platform. If one of the frameworks is already existing in the target workspace, an error message is displaying and the copy stops.
 
 * * *
@@ -369,11 +390,13 @@ Usage `mkRemoveDo -h`
 
 Examples `mkRemoveDo -W /u/users/gus/MyWS -preq -o aix_a` This command deletes all _aix_a_ derived objects in the frameworks which have been copied by mkCopyPreq  **mkCreateRuntimeView**  
 ---  
-  
+
 * * *
 
+Examples `mkRemoveDo -W /u/users/gus/MyWS -preq -o aix_a` This command deletes all _aix_a_ derived objects in the frameworks which have been copied by mkCopyPreq  **mkCreateRuntimeView**
 Purpose They are two kinds of file trees: one for the build time and one for the run time. Some objects are used during the run time like icons, resources files and are stored in the frameworks architecture ($$CAA2 $$FileTree). In order to be used during the run time they must be copied in a run time file tree named RunTimeView. CATIA software knows only the RunTimeView. The **mkCreateRuntimeView** is a command to copy (copy or symbolic link) automatically files from the build time file tree into the run time file tree. ![](images/rtview.gif) CNext.xxx means specific operating systems. In this kind of directories are resources which are available only on some operating systems. These directories are named CNext.specifics_$OS. The following table shows the different values of $OS $OS |  Operating System  
----|---  
+
+Purpose They are two kinds of file trees: one for the build time and one for the run time. Some objects are used during the run time like icons, resources files and are stored in the frameworks architecture ($$CAA2 $$FileTree). In order to be used during the run time they must be copied in a run time file tree named RunTimeView. CATIA software knows only the RunTimeView. The **mkCreateRuntimeView** is a command to copy (copy or symbolic link) automatically files from the build time file tree into the run time file tree. ![](images/rtview.gif) CNext.xxx means specific operating systems. In this kind of directories are resources which are available only on some operating systems. These directories are named CNext.specifics_$OS. The following table shows the different values of $OS $OS |  Operating System
 aix_a | AIX | UNIX  
 hpux_a | HP-UX 10  
 hpux_b | HP-UX 11  
@@ -383,6 +406,8 @@ The values are hierarchical. It means if a file is both in CNext, CNext.specific
 
 > - CNext.specifics_AIX on aix_a - CNext_specifics_UNIX on the other UNIX platforms - CNext on Windows.
 
+intel_a | Windows |
+The values are hierarchical. It means if a file is both in CNext, CNext.specifics_AIX and CNext_specifics_UNIX, the run time view will contain the file coming from:
 Here is an example (for AIX operating system) where the same file appears in different CNext directories, the arrrows show what is taken into account. ![](images/rtview2.gif)
 
 * * *
@@ -434,7 +459,7 @@ Unix only `[-s]`
 
 Examples `mkCreateRuntimeView` creates symbolic links from the CNext directory in the current workspace into the _$Mkms_OS_VAR_ of the current workspace. `mkCreateRuntimeView -t /tmp/myCNext -c` creates the run time view of the current workspace into the /tmp/myCNext directory. `mkCreateRuntimeView -W /u/users/gus/ADELE/MYWS` creates the run time view of the /u/users/gus/ADELE/MYWS  **mkrun**  
 ---  
-  
+
 * * *
 
 Purpose This command is used to execute a $$CNext program. It initializes the environment: PATH on Unix, LIBPATH on AIX, SHLIB_PATH on HP, LD_LIBRARY_PATH for Sun, path on Windows.
@@ -494,7 +519,7 @@ Warning
 * * *
 
 Examples `mkrun -p /u/lego/CXR1rel/BSF:/u/lego/CSSTOOLSCXR1rel/BSF -t off:dev:inst ...` The PATH variable will be:
-    
+
     /u/lego/CXR1rel/BSF/aix_a/**CNext** /code/bin:/u/lego/CXR1rel/BSF/aix_a/code/bin:
     /u/lego/CXR1rel/BSF/aix_a/**CNext.inst** /code/bin:/u/lego/CSSTOOLSCXR1/BSF/aix_a/**CNext** /code/bin:
     /u/lego/CSSTOOLSCXR1/BSF/aix_a/code/bin:/u/lego/CSSTOOLSCXR1/BSF/aix_a/**CNext.inst** /code/bin:
@@ -503,6 +528,7 @@ Examples `mkrun -p /u/lego/CXR1rel/BSF:/u/lego/CSSTOOLSCXR1rel/BSF -t off:dev:in
 ---  
 This list is communicated for information. These directories are under the workspace root directory. Do not remove these files and directories. **Files or Directories** |  **Purpose**  
 ---|---  
+This list is communicated for information. These directories are under the workspace root directory. Do not remove these files and directories. **Files or Directories** |  **Purpose**
 FW/various/MkmkOS_VAR/HList/*.lh | Headers which are contained in the *Interfaces and *Generated directories of the framework  
 FW/*Generated/MkmkOS_VAR/* | Headers generated by mkmk  
 FW/IdentityCard/Objects/MkmkOS_VAR/* | Files used to generate the identity card of the framework  
@@ -511,6 +537,7 @@ FW/ImportedInterfaces/MkmkOS_VAR/*.h | Headers which are indirection into the ex
 FW/MOD/Objects/MkmkOS_VAR/*.o | Compilation results  
 FW/MOD/LocalGenerated/MkmkOS_VAR/.f .cpp.c ... | Grammar apply results  
 OS/code/bin/* | Librairies and load generated by mkmk  
+
 [Top]
 
 * * *
@@ -518,7 +545,7 @@ OS/code/bin/* | Librairies and load generated by mkmk
 History Version: **1** [Jan 2000] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2000, Dassault Systmes. All rights reserved._

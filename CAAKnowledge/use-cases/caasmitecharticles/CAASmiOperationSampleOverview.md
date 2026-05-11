@@ -1,10 +1,13 @@
 ---
+```vbscript
 title: "Creating Surface Machining Operations Overview"
 category: "use-case"
 module: "CAASmiTechArticles"
 tags: ["CAASmiConnectUserOperationWithMA", "CAASmgGuide", "CAASmgOperation", "CAASmiUserOperationWithMA", "CAASmgMachiningFeature", "CAASmiUserOperationWithMAToolPath", "CAASmiUserOperationCommand", "CAASmiUserOperationUI", "CAASmiUserOperationWithUserMFToolPath", "CAASurfaceMachiningItf", "CAASmiUserOperationCatalog", "CAASmiUserOperationWithUserMF", "CATIA", "CAASmiUserOperationGeomUI", "CAASmiUserOperationToolPathReplay", "CAASmiUserMachFeatureCatalog", "CAASmgOperationWithMA"]
 source_file: "Doc/online/CAASmiTechArticles/CAASmiOperationSampleOverview.htm"
 converted: "2026-05-11T17:31:51.295307"
+```
+
 ---
 # Machining
 
@@ -17,7 +20,7 @@ converted: "2026-05-11T17:31:51.295307"
 _A full example showing you how to add your own surface machining operations_  
 ---|---|---  
 Technical Article  
-  
+
 * * *
 ### Abstract
 
@@ -32,9 +35,8 @@ This article discusses the CAASmiUserOperationCatalog, CAASmiUserOperationUI, CA
   * **In Short**
   * **References**
 
-  
 ---  
-  
+
 * * *
 ### What You Will Learn With These Use Cases
 
@@ -50,6 +52,7 @@ The main intent is to explain:
 
 These use cases include some knowledge from various V5 Frameworks, such as the Object Specs Modeler framework, or the Dialog and Dialog Engine Frameworks. Their intent is to focus on the use of the Surface Machining Infrastructure frameworks. A prerequisite knowledge of other Frameworks may be required to fully understand this use case, some links with other CAA use cases will help you navigate among them. 
 
+These use cases include some knowledge from various V5 Frameworks, such as the Object Specs Modeler framework, or the Dialog and Dialog Engine Frameworks. Their intent is to focus on the use of the Surface Machining Infrastructure frameworks. A prerequisite knowledge of other Frameworks may be required to fully understand this use case, some links with other CAA use cases will help you navigate among them.
 Notice that some of these use cases can be put into practice in others Manufacturing Frameworks, like Prismatic Machining. 
 
 Before getting to the tutorials, it is important to get an understanding of **the use case scenarios**. This is the goal of the next section.
@@ -63,18 +66,17 @@ Two scenarios are available:
 
 The goal of this scenario is to create a **new operation** CAASmgOperation. It has 3 parameters and it is connected with a **new machining feature** CAASmgMachiningFeature, linked to **geometry** by an **attribute** : CAASmgGuide. It computes a kind of "plunge roughing" tool path.
 
-  
 **Scenario 2** : Define a "Box" operation using machining areas.
 
 The goal of this scenario is to create a second **operation** CAASmgOperationWithMA, illustrating the use of **machining areas**. It ****computes a tool path following the bounding boxes of the geometrical elements of a machining area.
 
-  
 [Top]
 ### The Use Cases
 
 This section will describe the different tasks to perform to achieve this sample.
 #### What Do These Use Cases Do
 
+This section will describe the different tasks to perform to achieve this sample.
 The final intent of these use cases is to create some new surface machining operations. This is an **end-to-end integration**. At the end of this use case "Tour", you should hardly notice any difference between these operations and an original V5 surface machining operation.
 
 The sample is divided into several steps. Following them leads to full defined surface machining operations:
@@ -93,6 +95,7 @@ The sample is divided into several steps. Following them leads to full defined s
 [Top]
 #### How to Launch the Use Cases
 
+2. Computes its tool path. See [CAASmiUserOperationWithMAToolPath](../CAASmiUseCases/CAASmiUserOperationWithMAToolPath.md) use case.
 To launch the use cases, you will need to set up the build time environment, then uncomment the lines of the interface dictionary, then compile all the modules of CAASurfaceMachiningItf.edu framework along with their prerequisites, and execute the use cases [3].
 
 Be sure that use cases catalogs are stored in the CNext + resources + graphic directory of the runtime view. See [CAASmiUserOperationCatalog](../CAASmiUseCases/CAASmiUserOperationCatalog.md) use case.
@@ -110,16 +113,18 @@ When CATIA is opened,
   * Set parameters and select geometry
   * Click on "Replay" button. The tool path is created !
 
-  
 [Top]
 #### Where to Find the Code
 
 The sample is made of a several modules of the CAASurfaceMachiningItf.edu framework:
 
+The sample is made of a several modules of the CAASurfaceMachiningItf.edu framework:
 Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\`  
----|---  
+
+The sample is made of a several modules of the CAASurfaceMachiningItf.edu framework:
+Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\`
 Unix | `InstallRootDirectory/CAASurfaceMachiningItf.edu/`  
-  
+
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 These modules are:
@@ -158,14 +163,14 @@ You can now successively go to:
 [2] | [Creating Features in an Applicative Container](../CAAOsmUseCases/CAAOsmAppliCont.md)  
 [3] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 [Top]  
-  
+
 * * *
 ### History
 
 Version: **1** [Mar 2002] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2002, Dassault Systmes. All rights reserved._

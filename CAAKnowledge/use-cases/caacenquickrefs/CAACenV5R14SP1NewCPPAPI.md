@@ -1,15 +1,19 @@
 ---
+```vbscript
 title: "New C++ Authorized APIs in CAA V5R14 SP1"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIMfgToolAssemblyActivityEditorCustom", "CATICfgVariabilitySpace_var", "CATIUExitCrypt", "CATIAVPMIIProductSpec", "CATIAVPMProductSpecification2", "CATICfgVariabilitySpace"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R14SP1NewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.199397"
----
+```
 
+---
+tags: ["CATIMfgToolAssemblyActivityEditorCustom", "CATICfgVariabilitySpace_var", "CATIUExitCrypt", "CATIAVPMIIProductSpec", "CATIAVPMProductSpecification2", "CATICfgVariabilitySpace"]
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R14SP1NewCPPAPI.htm"
+converted: "2026-05-11T17:33:47.199397"
 CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R14 SP1  
----|---  
-  
+
 * * *
 
 The following are the new CAA V5R14 SP1 C++ Authorized APIs, compared with CAA V5R14 at GA level.
@@ -49,7 +53,7 @@ The following are the new CAA V5R14 SP1 C++ Authorized APIs, compared with CAA V
 History Version: **1** [Sep 2004] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 1994-2004, Dassault Systmes. All rights reserved._

@@ -1,10 +1,13 @@
 ---
+```vbscript
 title: "Inserting Commands in Contextual Menus"
 category: "use case"
 module: "CAAAfrUseCases"
 tags: ["CAASysEllipse", "CAAAfrEllipseHdr", "CAACafContextualMenu", "CAA2", "CAAEMmrCombinedCurveContSubMenu", "CAAECafContextualMenuEllipse", "CAACafContextualMenuCircleStr", "CAAAfrCircleHdr", "CAAAfrGeometryWks", "CAAGeometry", "CAACafContextualMenuEllipseStr", "CAACafContextualMenuSep", "CATIContextualMenu", "CATIA", "CATIAApplicationFrm", "CAACATIAApplicationFrm", "CATIAApplicationFrame"]
 source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleContextualMenu.htm"
 converted: "2026-05-11T17:17:55.668604"
+```
+
 ---
 # 3D PLM Enterprise Architecture
 
@@ -17,7 +20,7 @@ converted: "2026-05-11T17:17:55.668604"
 _Implementing CATIContextualMenu_  
 ---|---|---  
 Use Case  
-  
+
 * * *
 ### Abstract
 
@@ -43,7 +46,8 @@ CAACafContextualMenu is a use case of the CAACATIAApplicationFrm.edu framework t
 
 CAACafContextualMenu enables you to display the following contextual menu when you right click on an Ellipse during  the Select command life: 
 ---  
-  
+
+CAACafContextualMenu enables you to display the following contextual menu when you right click on an Ellipse during  the Select command life:
 This menu is separated in third parts: 
 
   1. The items added in the menu by the current window. `Center Graph, Reframe On` ... are items added by the _CATFrmGraphAnd3DWindow_ class. This part is independent of the _CATIContextualMenu_ implementation on the Ellipse. 
@@ -71,7 +75,6 @@ Launch CATIA, when the application is ready:
 
 In the **CAAAfrGeometryWks****.txt** find out the "`Ellipse` " and "`Circle`" strings: 
 
-  
 The identifiers of the command header instances are the **Id** strings, so **CAAAfrEllipseHdr** and **CAAAfrCircleHdr****** for the "`Ellipse` " and "`Circle`" commands respectively. These two identifiers will be associated with the starters of the menu. 
 
 [Top]
@@ -91,15 +94,19 @@ See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The C
 
 The CAACafContextualMenu use case is made of one single class, the CAAECafContextualMenuEllipse class, located in the CAACafContextualMenu.m module of the CAACATIAApplicationFrm.edu framework:
 
+The CAACafContextualMenu use case is made of one single class, the CAAECafContextualMenuEllipse class, located in the CAACafContextualMenu.m module of the CAACATIAApplicationFrm.edu framework:
 Windows | `InstallRootDirectory\CAACATIAApplicationFrm.edu\CAACafContextualMenu.m\`  
----|---  
+
+The CAACafContextualMenu use case is made of one single class, the CAAECafContextualMenuEllipse class, located in the CAACafContextualMenu.m module of the CAACATIAApplicationFrm.edu framework:
+Windows | `InstallRootDirectory\CAACATIAApplicationFrm.edu\CAACafContextualMenu.m\`
 Unix | `InstallRootDirectory/CAACATIAApplicationFrm.edu/CAACafContextualMenu``.m/`  
-  
+
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
 ### Step-by-Step
 
+where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 To implement the _CATIContextualMenu_ interface, there are two steps: 
 
   1. Creating the Contextual Menu Description Class
@@ -110,100 +117,111 @@ To implement the _CATIContextualMenu_ interface, there are two steps: 
 
   1. Create the CAAECafContextualMenuEllipse.h file
     #include "CATExtIContextualMenu.h"
-    
+
+1. Create the CAAECafContextualMenuEllipse.h file
     class CAAECafContextualMenuEllipse : public **CATExtIContextualMenu**
+
     {
+1. Create the CAAECafContextualMenuEllipse.h file
+class CAAECafContextualMenuEllipse : public **CATExtIContextualMenu**
       CATDeclareClass;
-    
+
       public:
-    
+
         CAAECafContextualMenuEllipse();
         virtual ~CAAECafContextualMenuEllipse();
-    
+
       private:
         CAAECafContextualMenuEllipse(const CAAECafContextualMenuEllipse &iObjectToCopy);
         CAAECafContextualMenuEllipse& operator = (const CAAECafContextualMenuEllipse
+
                                                                &iObjectToCopy);
-    
+
     };  
-  
+
 ---  
-  
+
 The implementation class derives from the _CATExtIContextualMenu_ adapter class.
 
   2. Create the CAAECafContextualMenuEllipse.cpp file
     #include "CAAECafContextualMenuEllipse.h"
     #include "CATCreateWorkshop.h"
-    
+
     **CATImplementClass**(CAAECafContextualMenuEllipse, 
                             DataExtension,CATBaseUnknown,
                             **CAASysEllipse**);
     #include "TIE_CATIContextualMenu.h"
     TIE_**CATIContextualMenu**(CAAECafContextualMenuEllipse);
     ...  
-  
+
 ---  
-  
+
 The CAAECafContextualMenuEllipse class states that it implements the _CATIContextualMenu_ interface thanks to the `TIE_CATIContextualMenu` macro. The `CATImplementClass` macro declares that the CAAECafContextualMenuEllipse class is a data extension, thanks to the `DataExtension` keyword, that extends _CAASysEllipse_. The third argument must always be set as _CATBaseUnknown_ or _CATNull_ for any kind of extension.
-    
+
     ...
     CAAEMmrCombinedCurveContSubMenu::CAAEMmrCombinedCurveContSubMenu()
-                          				   
+
     {
         Creating the Contextual Menu
     }
-    
+
     CAAEMmrCombinedCurveContSubMenu::~CAAEMmrCombinedCurveContSubMenu()
     {
     }
-      
-  
+
 ---  
-  
+
 The constructor contains the main code, and the destructor is empty.
 
+The constructor contains the main code, and the destructor is empty.
   3. Updating the Interface Dictionary
 
 Update the interface dictionary, that is a file named, for example, CAACATIAApplicationFrm.dico, whose directory's pathname is concatenated at run time in the CATDictionaryPath environment variable, and containing the following declaration to state that the CAASysEllipse component implements the _CATIContextualMenu_ interface, and whose code is located in the libCAACafContextualMenu shared library or DLL.
-    
+
     CAASysEllipse CATIContextualMenu libCAACafContextualMenu  
-  
+
 ---  
 
 #### Creating the  Contextual Menu 
 
 In this use case, the contextual menu associated with the UIActive object is first retrieved. It is possible thanks to the `GetContextualMenu` method of the adapter class. This menu, `pMenu`, is completed with the two commands (Circle and Ellipse). A separator is also added.
-    
-    
+
        ...
        **CATCmdContainer** * pMenu = NULL ; 
-    
+
        CATExtIContextualMenu::**GetContextualMenu**(pMenu);
-    
+
        if ( NULL != pMenu )
        {
           **NewAccess**(CATCmdStarter,pStEllipse,CAACafContextualMenuEllipseStr);
+CATExtIContextualMenu::**GetContextualMenu**(pMenu);
+if ( NULL != pMenu )
           NewAccess(CATCmdStarter,pStCircle,CAACafContextualMenuCircleStr);
           NewAccess(CATCmdSeparator,pSep1,CAACafContextualMenuSep);
-    
+
           **SetAccessCommand**(pStEllipse,"**CAAAfrEllipseHdr** ");
+```vbscript
+NewAccess(CATCmdStarter,pStCircle,CAACafContextualMenuCircleStr);
+NewAccess(CATCmdSeparator,pSep1,CAACafContextualMenuSep);
           SetAccessCommand(pStCircle,"**CAAAfrCircleHdr** ");
-          
+
+```
+
           **AddAccessChild**(pMenu,pStEllipse);
-          
+
           **SetAccessNext**(pStEllipse,pStCircle);
           SetAccessNext(pStCircle,pSep1);
-    
-          
+
        }
        ...  
-  
+
 ---  
-  
+
 The menu, `pMenu,` is completed thanks macros contained in the `CATCreateWorkshop` file:
 
   * NewAccess
 
+The menu, `pMenu,` is completed thanks macros contained in the `CATCreateWorkshop` file:
 A command starter is created as a _CATCmdStarter_ instance using the `NewAccess` macro. `pStEllipse` is the variable used to handle a pointer to the instance, and `CAACafContextualMenuEllipseStr` is its identifier.
 
 A separator access is created as a _CATCmdSeparator_ instance using also the `NewAccess` macro. `pSep1` is the variable used to handle a pointer to the instance and `CAACafContextualMenuSep` is its identifier.
@@ -218,13 +236,14 @@ Refer to the technical article entitled "The Command Headers" [2] for complete d
 
   * AddAccessChild/SetAccessNext
 
+Refer to the technical article entitled "The Command Headers" [2] for complete details about the re-usage of the command header identifiers.
 The `AddAccessChild` macro enables you to link the `pStEllipse`` `access to the last access of `_pMenu`. The `SetAccessNext` macro enables you to chain the other accesses to the `pStEllipse` access.
 
 The picture below shows `_pMenu` before and after :
 
 ![](images/CAACafContextualMenuChain.jpg)  
 ---  
-  
+
 **Note1** : The `GetContextualMenu` method returns a pointer on a _CATCmdContainer_ instance class. The _CATExtIContextualMenu_ class keeps this pointer, and at the _CATExtIContextualMenu_ class instance destruction, the container and the accesses created in this current implementation will be released.
 
 **Note2** : In this use case, the contextual menu of the UIActive object has been retrieved and completed. But it is also possible to create your own contextual menu. You overwrite the `GetContextualMenu` method which returns your own _CATCmdContainer_ class instance. This instance will be created in the constructor (if constant menu) or in the `GetContextualMenu`  method (if variable menu). 
@@ -247,14 +266,14 @@ This use case explains how to implement a contextual menu and how to retrieve co
 ---|---  
 [2] | [The Command Headers](../CAAAfrTechArticles/CAAAfrCommandHeaders.md)  
 [Top]  
-  
+
 * * *
 ### History
 
 Version: **1** [Fev 2003] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2003, Dassault Systmes. All rights reserved._

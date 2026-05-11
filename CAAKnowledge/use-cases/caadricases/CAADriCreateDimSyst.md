@@ -1,10 +1,13 @@
 ---
+```vbscript
 title: "Creating Center Lines in a CATDrawing Document"
 category: "use case"
 module: "CAADriUseCases"
 tags: ["CATIDrwDimDimension", "CATIUnknownListImpl", "CAADrwAddin", "CATIDrwStackedDimSystem", "CAAUseCaseCommands", "CATIDrwDimSystem", "CAADraftingInterfaces", "CATIA", "CAADrwCreateDimSystCmd", "CATISpecObject_var", "CAADrwCreateDimSyst", "CATIDrwAnnotationFactory", "CATIUnknownList"]
 source_file: "Doc/online/CAADriUseCases/CAADriCreateDimSyst.htm"
 converted: "2026-05-11T17:31:50.955484"
+```
+
 ---
 # Mechanical Design
 
@@ -17,7 +20,7 @@ converted: "2026-05-11T17:31:50.955484"
 _How to create dimension system on interactive_  
 ---|---|---  
 Use Case  
-  
+
 * * *
 ### Abstract
 
@@ -34,9 +37,8 @@ This article discusses the CAADrwCreateDimSyst use case. This use case explains 
   * **In Short**
   * **References**
 
-  
 ---  
-  
+
 * * *
 ### What You Will Learn With This Use Case
 
@@ -50,25 +52,31 @@ CAADrwCreateDimSyst is a use case of the CAADraftingInterfaces.edu framework tha
 [Top]
 #### What Does CAADrwCreateDimSyst Do
 
+CAADrwCreateDimSyst is a use case of the CAADraftingInterfaces.edu framework that illustrates DraftingInterfaces framework capabilities.
 This use case is made of a state command that creates a dimension system from points already put in the CSO.
 
 Fig. 1: The Drawing with geometry on which the dimensions will be created ![](images/CAADrwCreateDimSyst1.jpg)  
+
 ---  
-  
+
+This use case is made of a state command that creates a dimension system from points already put in the CSO.
+Fig. 1: The Drawing with geometry on which the dimensions will be created ![](images/CAADrwCreateDimSyst1.jpg)
 This picture represents geometry created by Interactive Drafting product
 
- 
-
 Fig. 2: The Drawing with selected points used to create dimension system (red square) ![](images/CAADrwCreateDimSyst2.jpg)  
+
 ---  
 Fig. 3: The Drawing with geometry on which the dimensions will be created ![](images/CAADrwCreateDimSyst3.jpg)  
 ---  
-  
+
+Fig. 2: The Drawing with selected points used to create dimension system (red square) ![](images/CAADrwCreateDimSyst2.jpg)
+Fig. 3: The Drawing with geometry on which the dimensions will be created ![](images/CAADrwCreateDimSyst3.jpg)
 This picture shows the dimension system created  by the CAA command CreateDimSystem.
 
 [Top]
 #### How to Launch CAADrwCreateDimSyst
 
+This picture shows the dimension system created  by the CAA command CreateDimSystem.
 To launch CAADrwCreateDimSyst, you will need to set up the build time environment, then compile CAADrwCreateDimSyst and CAADrwAddin along with its prerequisites, set up the run time environment.[1].
 
   1. Launch CATIA session.
@@ -77,19 +85,25 @@ To launch CAADrwCreateDimSyst, you will need to set up the build time environmen
   4. Launch the CreateDimSystem use case command to create the dimension system.
 
 Top]
+
 #### Where to Find the CAADrwCreateDimSyst Code
 
+4. Launch the CreateDimSystem use case command to create the dimension system.
+Top]
 The CAADrwCreateDimSyst use case is made of two source files named CAADrwCreateDimSystCmd.h and CAADrwCreateDimSystCmd.cpp located in the CAADrwCreateDimSyst.m module of the CAADraftingInterfaces.edu framework:
 
 Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwCreateDimSyst.m\`  
----|---  
+
+The CAADrwCreateDimSyst use case is made of two source files named CAADrwCreateDimSystCmd.h and CAADrwCreateDimSystCmd.cpp located in the CAADrwCreateDimSyst.m module of the CAADraftingInterfaces.edu framework:
+Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwCreateDimSyst.m\`
 Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCreateDimSyst.m/`  
-  
+
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
 ### Step-by-Step
 
+where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 There are two steps in CAADrwCreateDimSyst:
 
   1. Building the State Chart and Creating the Appropriate Selection Agent.
@@ -97,47 +111,60 @@ There are two steps in CAADrwCreateDimSyst:
 
 [Top]
 ### Building the State Chart and Creating the Appropriate Selection Agent
-    
-    
+
     void CAADrwCreateDimSystCmd::BuildGraph()
     { 
       // Creation of the acquisition agent
+void CAADrwCreateDimSystCmd::BuildGraph()
       _pObjectAgent = new CATPathElementAgent("_pObjectAgent A");
       _pObjectAgent ->SetBehavior( CATDlgEngWithPrevaluation | 
       CATDlgEngMultiAcquisition | 
       CATDlgEngWithCSO); 
-    
+
       // We only want to get points
+_pObjectAgent ->SetBehavior( CATDlgEngWithPrevaluation |
+CATDlgEngMultiAcquisition |
+CATDlgEngWithCSO);
       _pObjectAgent ->AddElementType("IDMPoint2D");
       AddCSOClient(_pObjectAgent);
-    
+
       // States definition
+_pObjectAgent ->AddElementType("IDMPoint2D");
+AddCSOClient(_pObjectAgent);
       CATDialogState* pState1 = GetInitialState("Sel points");
       pState1->AddDialogAgent(_pObjectAgent);
-    
+
       // Transition definition 
+CATDialogState* pState1 = GetInitialState("Sel points");
+pState1->AddDialogAgent(_pObjectAgent);
       AddTransition(pState1, NULL, IsOutputSetCondition(_pObjectAgent),
       Action((ActionMethod)&CAADrwCreateDimSystCmd::CreateDimSyst, NULL, NULL));
+
     }  
-  
+
 ---  
-  
+
 In this section we create a CATPathElementAgent and set the corresponding element type to IDMPoint.
 
 [Top]
 ### Retrieving the Selection and Creating the dimension system
-    
-    
+
     boolean CAADrwCreateDimSystCmd::CreateDimSyst(void *iData)
     { 
+boolean CAADrwCreateDimSystCmd::CreateDimSyst(void *iData)
       CATSO* pObjSO = _pObjectAgent->GetListOfValues(); 
       CATPathElement *pElemPath = NULL;
-    
+
       // Dimension System creation:
       // ==========================
+CATSO* pObjSO = _pObjectAgent->GetListOfValues();
+CATPathElement *pElemPath = NULL;
       if (NULL != pObjSO) 
+
       {
         // We will scan the CSO from the begining
+```vbscript
+if (NULL != pObjSO)
         pObjSO->InitElementList();
         CATIDrwAnnotationFactory *piDrwFact = NULL;
         IDMPoint2D *piFirstElem = NULL;
@@ -151,18 +178,44 @@ In this section we create a CATPathElementAgent and set the corresponding elemen
         sysDef.SetValueAlignmentMode(OnRefLineSide);
         sysDef.SetValueOffset(100.0);
         while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement()) )
+```
+
         {
+sysDef.SetOffsetMode(ConstantOffsetSystem);
+sysDef.SetValueAlignmentMode(OnRefLineSide);
+sysDef.SetValueOffset(100.0);
+while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement()) )
           if (NULL == piFirstElem)
+
           {
+sysDef.SetValueOffset(100.0);
+while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement()) )
+if (NULL == piFirstElem)
             piFirstElem = (IDMPoint2D *)pElemPath->FindElement(IID_IDMPoint2D);
             piDrwFact = (CATIDrwAnnotationFactory *)pElemPath->FindElement(IID_CATIDrwAnnotationFactory);
+
           }
+```vbscript
+if (NULL == piFirstElem)
+piFirstElem = (IDMPoint2D *)pElemPath->FindElement(IID_IDMPoint2D);
+piDrwFact = (CATIDrwAnnotationFactory *)pElemPath->FindElement(IID_CATIDrwAnnotationFactory);
           else if (NULL == piSecondElem)
+```
+
           {
+piFirstElem = (IDMPoint2D *)pElemPath->FindElement(IID_IDMPoint2D);
+piDrwFact = (CATIDrwAnnotationFactory *)pElemPath->FindElement(IID_CATIDrwAnnotationFactory);
+else if (NULL == piSecondElem)
             piSecondElem = (IDMPoint2D *)pElemPath->FindElement(IID_IDMPoint2D);
+
             // Dimension creation
+else if (NULL == piSecondElem)
+piSecondElem = (IDMPoint2D *)pElemPath->FindElement(IID_IDMPoint2D);
             if (piSecondElem && piFirstElem)
+
             {
+piSecondElem = (IDMPoint2D *)pElemPath->FindElement(IID_IDMPoint2D);
+if (piSecondElem && piFirstElem)
               CATDrwDimType dimType = DrwDimDistance;
               CATDimDefinition dimDef;
               dimDef.OrientationReference = ParallelDim;
@@ -171,16 +224,26 @@ In this section we create a CATPathElementAgent and set the corresponding elemen
               CATIUnknownListImpl * piListsel = new CATIUnknownListImpl();
               piListsel->QueryInterface(IID_CATIUnknownList, (void **) &piSelectionsList);
               piListsel->Release(); piListsel=NULL;
-    
+
               IUnknown * piLine1 = NULL;
               IUnknown * piLine2 = NULL;
               piFirstElem->QueryInterface(IID_IUnknown, (void **)&piLine1);
               piSecondElem->QueryInterface(IID_IUnknown, (void **)&piLine2);
               if (piSelectionsList)
+
               {
+IUnknown * piLine2 = NULL;
+piFirstElem->QueryInterface(IID_IUnknown, (void **)&piLine1);
+piSecondElem->QueryInterface(IID_IUnknown, (void **)&piLine2);
+if (piSelectionsList)
                 piSelectionsList->Add(0, piLine1);
                 piSelectionsList->Add(1, piLine2);
+
               }
+```vbscript
+if (piSelectionsList)
+piSelectionsList->Add(0, piLine1);
+piSelectionsList->Add(1, piLine2);
               double pt1[2],pt2[2];
               piFirstElem->GetPointData(pt1);
               piSecondElem->GetPointData(pt2);
@@ -189,79 +252,135 @@ In this section we create a CATPathElementAgent and set the corresponding elemen
               pts[1] = pt2;
               dimDef.Orientation = DrwDimAuto;
               if (piDrwFact)
+```
+
               {
+pts[0] = pt1;
+pts[1] = pt2;
+dimDef.Orientation = DrwDimAuto;
+if (piDrwFact)
                 piDrwFact->CreateDimension(piSelectionsList,pts,dimType,&dimDef,&piDim);
                 piDrwFact->CreateDimSystem(piDim,&sysDef,&piDimSyst);
+
               }
+```vbscript
+if (piDrwFact)
+piDrwFact->CreateDimension(piSelectionsList,pts,dimType,&dimDef,&piDim);
+piDrwFact->CreateDimSystem(piDim,&sysDef,&piDimSyst);
               if (piLine1) piLine1->Release(),piLine1 = NULL;
               if (piLine2) piLine2->Release(),piLine2 = NULL;
               if (piSelectionsList) piSelectionsList->Release(),piSelectionsList=NULL;
+```
+
             } 
           }
+```vbscript
+if (piLine1) piLine1->Release(),piLine1 = NULL;
+if (piLine2) piLine2->Release(),piLine2 = NULL;
+if (piSelectionsList) piSelectionsList->Release(),piSelectionsList=NULL;
           else if (NULL == piNextElem)
+```
+
           {
+```vbscript
+if (piSelectionsList) piSelectionsList->Release(),piSelectionsList=NULL;
+else if (NULL == piNextElem)
             piNextElem = (IDMPoint2D *)pElemPath->FindElement(IID_IDMPoint2D);
+```
+
             // Dimension system creation
+else if (NULL == piNextElem)
+piNextElem = (IDMPoint2D *)pElemPath->FindElement(IID_IDMPoint2D);
             if (piNextElem && piDimSyst && piDim)
+
             {
+piNextElem = (IDMPoint2D *)pElemPath->FindElement(IID_IDMPoint2D);
+if (piNextElem && piDimSyst && piDim)
               double pt1[2];
               piNextElem->GetPointData(pt1);
               CATMathPoint2D ptSel(pt1[0],pt1[1]);
               CATIDrwDimDimension *myDimToAdd = NULL;
               piDimSyst->AddDimension((CATBaseUnknown *)piNextElem,myDimToAdd,&ptSel);
+
             }
+piNextElem->GetPointData(pt1);
+CATMathPoint2D ptSel(pt1[0],pt1[1]);
+CATIDrwDimDimension *myDimToAdd = NULL;
+piDimSyst->AddDimension((CATBaseUnknown *)piNextElem,myDimToAdd,&ptSel);
             if (piNextElem) piNextElem->Release(),piNextElem=NULL;
+
           }
+CATIDrwDimDimension *myDimToAdd = NULL;
+piDimSyst->AddDimension((CATBaseUnknown *)piNextElem,myDimToAdd,&ptSel);
+if (piNextElem) piNextElem->Release(),piNextElem=NULL;
           else
             cout << "invalid input" << endl;
+
         }
-        
-  
+
 ---  
-  
+
 The acquisition agent did put the selected points into the CSO. So we get the SO and loop on it. A dimension is created from the 2 first points in the SO, then the dimension system is created from this dimension by using ` CreateDimSystem` method defined in CATIDrwAnnotationFactory interface, Others dimensions are created in the dimension system by using ` AddDimension `method defined in CATIDrwDimSystem interface. CATDimSystemDefinition class allows to initialize a set of parameters for the dimension system definition as the type of the dimension system (Chained, Cumulated, Stacked).
 
 [Top]
 ### Modifying a dimension system
-    
-    
+
     // Dimension System modifications:
     // ===============================
     if (piDimSyst)
     {
       // Get the master dimension for dimension system moving
+```vbscript
+if (piDimSyst)
       CATIDrwDimDimension *piMasterDim=NULL;
       CATMathPoint2D ptPos(150.0,230);
       piDimSyst->GetMasterDimension(&piMasterDim);
       if (piMasterDim)
+```
+
       {
+CATIDrwDimDimension *piMasterDim=NULL;
+CATMathPoint2D ptPos(150.0,230);
+piDimSyst->GetMasterDimension(&piMasterDim);
+if (piMasterDim)
         piMasterDim->MoveDimensionLine (ptPos);
         CATISpecObject_var spDimSpec = piMasterDim;
         if (!!spDimSpec)
           spDimSpec->Update();
         piMasterDim->Release();piMasterDim=NULL;
+
       }
       // Dimension system properties modification
+```vbscript
+if (!!spDimSpec)
+spDimSpec->Update();
+piMasterDim->Release();piMasterDim=NULL;
       CATIDrwStackedDimSystem *piDrwStkSyst=NULL;
       if (SUCCEEDED(piDimSyst->QueryInterface(IID_CATIDrwStackedDimSystem,(void **)&piDrwStkSyst)))
+```
+
       {
+CATIDrwStackedDimSystem *piDrwStkSyst=NULL;
+if (SUCCEEDED(piDimSyst->QueryInterface(IID_CATIDrwStackedDimSystem,(void **)&piDrwStkSyst)))
         double valueoffset = 12.0;
         piDrwStkSyst->SetValueAlignmentMode(AlignedOnCenter); 
         piDrwStkSyst->SetOffset(valueoffset);
         piDrwStkSyst->Release();piDrwStkSyst=NULL;
+
       }
+double valueoffset = 12.0;
+piDrwStkSyst->SetValueAlignmentMode(AlignedOnCenter);
+piDrwStkSyst->SetOffset(valueoffset);
+piDrwStkSyst->Release();piDrwStkSyst=NULL;
       piDimSyst->LineUp(2);
+
     }
-    
-        
-  
+
 ---  
-  
+
 The modification of dimension system dimensions line is insured by the moving of the dimension line of the "master" dimension. At the end of this operation, LineUp method allows to update the positioning of all others dimension line of the dimensions system.
 
 [Top]
-
- 
 
 * * *
 ### In Short
@@ -277,14 +396,14 @@ This use case shows how to create a state command creating and modifying a dimen
 ---|---  
 [2] | [Implementing the Statechart Diagram](../CAADegUseCases/CAADegSampleGraph.md)  
 [Top]  
-  
+
 * * *
 ### History
 
 Version: **1** [March 2008] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2000, Dassault Systmes. All rights reserved._

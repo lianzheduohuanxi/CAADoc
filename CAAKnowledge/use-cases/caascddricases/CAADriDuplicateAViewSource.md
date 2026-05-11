@@ -1,13 +1,19 @@
 ---
+```vbscript
 title: "CAADriDuplicateAView.CATScript"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CAADriDuplicateAView", "CATIA", "CAAScdDriUseCases"]
 source_file: "Doc/online/CAAScdDriUseCases/CAADriDuplicateAViewSource.htm"
 converted: "2026-05-11T17:31:51.074314"
----
+```
 
+---
+tags: ["CAADriDuplicateAView", "CATIA", "CAAScdDriUseCases"]
+source_file: "Doc/online/CAAScdDriUseCases/CAADriDuplicateAViewSource.htm"
+converted: "2026-05-11T17:31:51.074314"
     Option Explicit
+
 ```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2003
     ' ***********************************************************************
@@ -21,13 +27,14 @@ converted: "2026-05-11T17:31:51.074314"
     ' ***********************************************************************
 ```
 
-    
-```vbscript
     Sub CATMain()
         ' Set the CATIA popup file alerts to False
         ' It prevents to stop the macro at each alert during its execution
+
 ```vbscript
         CATIA.DisplayFileAlerts = False
+```
+
 ```vbscript
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String 
@@ -56,6 +63,10 @@ converted: "2026-05-11T17:31:51.074314"
         ' Clear the selection
 ```
 
+```vbscript
+Dim oSelectionSource As Selection
+Set oSelectionSource = oDrawingSource.Selection
+' Clear the selection
         oSelectionSource.Clear
         ' Add the view to be duplicated in the selection
         oSelectionSource.Add oViewSource
@@ -63,6 +74,8 @@ converted: "2026-05-11T17:31:51.074314"
         oSelectionSource.Copy
         ' Clear the selection
         oSelectionSource.Clear
+```
+
 ```vbscript
         ' Create the Drawing document where the view will be pasted
         Dim oDrawingTarget As DrawingDocument
@@ -73,7 +86,13 @@ converted: "2026-05-11T17:31:51.074314"
         ' Set the sheet paper size
 ```
 
+```vbscript
+Dim oSheetTarget As DrawingSheet
+Set oSheetTarget = oDrawingTarget.Sheets.Item("Sheet.1")
+' Set the sheet paper size
         oSheetTarget.PaperSize = catPaperA0
+```
+
 ```vbscript
         ' Create an object of selection for the source document
         Dim oSelectionTarget As Selection
@@ -81,6 +100,10 @@ converted: "2026-05-11T17:31:51.074314"
         ' Clear the selection
 ```
 
+```vbscript
+Dim oSelectionTarget As Selection
+Set oSelectionTarget = oDrawingTarget.Selection
+' Clear the selection
         oSelectionTarget.Clear
         ' Add the sheet where the view will be pasted in the selection
         oSelectionTarget.Add oSheetTarget
@@ -88,6 +111,8 @@ converted: "2026-05-11T17:31:51.074314"
         oSelectionTarget.Paste
         ' Clear the selection
         oSelectionTarget.Clear
+```
+
 ```vbscript
         ' Fit in window the active document    
         CATIA.ActiveWindow.ActiveViewer.Reframe
@@ -101,12 +126,4 @@ converted: "2026-05-11T17:31:51.074314"
         Set oDrawingSource = Nothing
 ```
 
-        
-```
-
-```vbscript
     End Sub
-    
-```
-
-```

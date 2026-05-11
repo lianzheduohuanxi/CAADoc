@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "Visualization Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR10"
@@ -6,11 +7,14 @@ version: "V5R10"
 tags: ["CATIVisu"]
 source_file: "Doc/online/CAACenAPIChangesR10/Visualization.htm"
 converted: "2026-05-11T17:33:50.275018"
----
+```
 
+---
+tags: ["CATIVisu"]
+source_file: "Doc/online/CAACenAPIChangesR10/Visualization.htm"
+converted: "2026-05-11T17:33:50.275018"
 CAA C++ API Modifications |  Visualization |   
----|---|---  
-  
+
 * * *
 
 ** Entity | SP | Modification | To Do** | Visualization/Protected/CAT3DArrowGP.h | GA | FHBD | [Split Visualization/VisualizationBase (forgotten in R9).](../CAACenQuickRefs/CAACenWhatsNew.htm#VisuSplit)  

@@ -1,10 +1,13 @@
 ---
+```vbscript
 title: "Saving and Restoring the Dialog Box State"
 category: "use case"
 module: "CAADlgUseCases"
 tags: ["CAADlgDemoWindow", "CAADlgDialogDemonstrator", "CATISpecObject", "CAADlgFrameReplace", "CATInteractiveApplication", "CAADlgDemoApplication", "CAADialog", "CAADlgFrameReplaceDlg"]
 source_file: "Doc/online/CAADlgUseCases/CAADlgSampleSettings.htm"
 converted: "2026-05-11T17:17:55.997189"
+```
+
 ---
 # 3D PLM Enterprise Architecture
 
@@ -17,7 +20,7 @@ converted: "2026-05-11T17:17:55.997189"
 How to keep and retrieve the dialog object values   
 ---|---|---  
 Use Case  
-  
+
 * * *
 ### Abstract
 
@@ -50,7 +53,7 @@ CAADlgFrameReplace simulates the  "Point Definition" V5 Dialog box. It creates 
 | _Fig. 1c: Between_  
 ---  
 ![](images/CAADlgTabulationFrameReplace3.jpg)  
-  
+
 When the end user clicks **OK** , the following values are kept: 
 
   * The "`Point Type`" ( an integer )
@@ -97,10 +100,13 @@ When the `CAADlgDialogDemonstrator` application is launched:
 
 The CAADlgFrameReplace use case is made of several classes located in the CAADlgDialogDemonstrator.m module of the CAADialog.edu framework:
 
+The CAADlgFrameReplace use case is made of several classes located in the CAADlgDialogDemonstrator.m module of the CAADialog.edu framework:
 Windows | `InstallRootDirectory\CAADialog.edu\CAADlgDialogDemonstrator.m\`  
----|---  
+
+The CAADlgFrameReplace use case is made of several classes located in the CAADlgDialogDemonstrator.m module of the CAADialog.edu framework:
+Windows | `InstallRootDirectory\CAADialog.edu\CAADlgDialogDemonstrator.m\`
 Unix | `InstallRootDirectory/CAADialog.edu/CAADlgDialogDemonstrator.m/`  
-  
+
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 In the LocalInterfaces and src directory, you will find the following files:
@@ -114,6 +120,7 @@ In the LocalInterfaces and src directory, you will find the following files:
 
 There are four logical steps in the use case:
 
+There are four logical steps in the use case:
   1. Creating the Class Header
   2. Retrieving the Setting Repository
   3. Retrieving the Last Values
@@ -123,39 +130,54 @@ There are four logical steps in the use case:
 #### Creating the Class Header
 
 The main contents of the CAADlgFrameReplaceDlg.h file is the following:
-    
+
     #include "CATDlgDialog.h"   // To derive from
     ...
+The main contents of the CAADlgFrameReplaceDlg.h file is the following:
     class **CATSettingRepository** ; // To manage values
-    
+
     class CAADlgFrameReplaceDlg: public **CATDlgDialog**
+
     {
       ...
+class **CATSettingRepository** ; // To manage values
+class CAADlgFrameReplaceDlg: public **CATDlgDialog**
       public:
-    
+
           CAADlgFrameReplaceDlg(CATDialog * pParentDlg);
           virtual ~CAADlgFrameReplaceDlg();
-    
+
           void Build ();
-    
+
       private:
+
           ...
+void Build ();
+private:
           virtual void **CloseWindowOK** (CATCommand * iSendingCommand, 
                                     CATNotification * iSentNotification, 
                                     CATCommandClientData iUsefulData);
-    
+
           virtual void **CloseWindow** (CATCommand * iSendingCommand, 
                                     CATNotification * iSentNotification, 
                                     CATCommandClientData iUsefulData);
+
          ...
+virtual void **CloseWindow** (CATCommand * iSendingCommand,
+CATNotification * iSentNotification,
+CATCommandClientData iUsefulData);
       private:
+
          ...
+CATNotification * iSentNotification,
+CATCommandClientData iUsefulData);
+private:
          CATSettingRepository * _pSettingFrameReplace ;
-    
+
     };  
-  
+
 ---  
-  
+
 where
 
   * The `Build` method enables you to construct the Dialog objects and to initialize them with the values saved in the setting file. 
@@ -166,46 +188,59 @@ where
 #### Retrieving the Setting Repository
 
 In the _CAADlgFrameReplaceDlg_ class constructor you retrieve a setting repository pointer thanks to the static `GetRepository` method. The first and unique argument of this method is the name of the setting file. 
-    
-    
+
+In the _CAADlgFrameReplaceDlg_ class constructor you retrieve a setting repository pointer thanks to the static `GetRepository` method. The first and unique argument of this method is the name of the setting file.
     CAADlgFrameReplaceDlg::CAADlgFrameReplaceDlg(CATDialog * pParentDlg) :
       CATDlgDialog (pParentDlg,"CAADlgFrameReplaceDlg",
           CATDlgWndAutoResize | CATDlgWndBtnOKCancel |CATDlgWndNoResize ),
           _CurrentSelection(0),_pComboPointType(NULL),_pSpinnerX(NULL),
           _pSpinnerY(NULL),_pSpinnerZ(NULL)
+
     {
        ...
+CATDlgWndAutoResize | CATDlgWndBtnOKCancel |CATDlgWndNoResize ),
+_CurrentSelection(0),_pComboPointType(NULL),_pSpinnerX(NULL),
+_pSpinnerY(NULL),_pSpinnerZ(NULL)
        _pSettingFrameReplace = CATSettingRepository::**GetRepository**("CAADlgFrameReplaceDlg" );
+
     }  
-  
+
 ---  
-  
+
 In the _CAADlgFrameReplaceDlg_ class destructor you have just to set NULL the `_pSettingFrameReplace` pointer. 
-    
-    
+
+In the _CAADlgFrameReplaceDlg_ class destructor you have just to set NULL the `_pSettingFrameReplace` pointer.
     CAADlgFrameReplaceDlg::~CAADlgFrameReplaceDlg()
+
     {
+In the _CAADlgFrameReplaceDlg_ class destructor you have just to set NULL the `_pSettingFrameReplace` pointer.
+CAADlgFrameReplaceDlg::~CAADlgFrameReplaceDlg()
         _pSettingFrameReplace = NULL ;
+
         ...
     }  
-  
+
 ---  
-  
+
 [Top]
 #### Retrieving the Last Values
 
 The `Build` method can be divided in three parts:
-    
-    
+
+The `Build` method can be divided in three parts:
     void CAADlgFrameReplaceDlg::Build()
+
     {
+The `Build` method can be divided in three parts:
+void CAADlgFrameReplaceDlg::Build()
        a/ Creating the Dialog objects and Arranging them
-    
+
        b/ Retrieving the initial values
-     
+
        c/ Defining the callbacks
+
     }  
-  
+
 ---  
 ##### a/ Creating the Dialog objects and Arranging them
 ##### This part is described in the use case about the tabulation layout [2].
@@ -224,41 +259,55 @@ For the use case:
   * `XCoord`, `YCoord` and `ZCoord` are the names of the attributes to initialize the X, Y and Z spinner respectively. The value of each attribute is a double
   * `ComboPointType `is the name of the attribute to initialize the first selected element in the combo list. The value of the attribute is an integer.
 
-    
-    
     ...
           double X(0.0f),Y(0.0f),Z(0.0f);
+double X(0.0f),Y(0.0f),Z(0.0f);
           if ( NULL != _pSettingFrameReplace )
+
           {
+double X(0.0f),Y(0.0f),Z(0.0f);
+if ( NULL != _pSettingFrameReplace )
              _pSettingFrameReplace->**ReadSetting**("**XCoord** ",&X);
              _pSettingFrameReplace->ReadSetting("**YCoord** ",&Y);
              _pSettingFrameReplace->ReadSetting("**ZCoord** ",&Z);
+
           }
-          
+
+_pSettingFrameReplace->**ReadSetting**("**XCoord** ",&X);
+_pSettingFrameReplace->ReadSetting("**YCoord** ",&Y);
+_pSettingFrameReplace->ReadSetting("**ZCoord** ",&Z);
           _pSpinnerX ->**SetValue**(X,0);
           _pSpinnerY ->SetValue(Y,0);
           _pSpinnerZ ->SetValue(Z,0);
-          
+
           _CurrentSelection = Coordinates ;
           if ( NULL != _pSettingFrameReplace )
+
           {
+_pSpinnerZ ->SetValue(Z,0);
+_CurrentSelection = Coordinates ;
+if ( NULL != _pSettingFrameReplace )
              _pSettingFrameReplace->**ReadSetting**("**ComboPointType** ",&_CurrentSelection);
+
           }
+_CurrentSelection = Coordinates ;
+if ( NULL != _pSettingFrameReplace )
+_pSettingFrameReplace->**ReadSetting**("**ComboPointType** ",&_CurrentSelection);
           _pComboPointType->**SetSelect**(_CurrentSelection,0);
+
     ...
     }  
-  
+
 ---  
 ##### Where `_pSpinnerX, _pSpinnerY` and` _pSpinnerZ `are _CATDlgSpinner_ class instances created in the first part of the `Build` method, but not explained in this article. `_pComboPointType` is a _CATDlgCombo_ class instance created in the first part of the `Build `method, but also not explained in this article. 
 ##### c/ Defining the Callbacks
-    
-    
+
     ...
        AddAnalyseNotificationCB (this, 
                                    GetDiaCANCELNotification(),
                                    (CATCommandMethod)&CAADlgFrameReplaceDlg::**CloseWindow** ,
                                    NULL);
-    
+
        AddAnalyseNotificationCB (this, 
                                    GetDiaOKNotification(),
                                    (CATCommandMethod)&CAADlgFrameReplaceDlg::**CloseWindowOK** ,
@@ -267,10 +316,11 @@ For the use case:
                                    GetWindCloseNotification(),
                                    (CATCommandMethod)&CAADlgFrameReplaceDlg::**CloseWindow** ,
                                    NULL);
+
     ...  
-  
+
 ---  
-  
+
 [Top]
 #### Saving the Values
 
@@ -279,54 +329,67 @@ When the end user clicks OK, the dialog box must be closed. The current values o
   * The name of the attribute
   * The value of the attribute
 
- 
-    
-    
     void CAADlgFrameReplaceDlg::CloseWindowOK(CATCommand* cmd, CATNotification* evt, CATCommandClientData data)
     {
        ...
+void CAADlgFrameReplaceDlg::CloseWindowOK(CATCommand* cmd, CATNotification* evt, CATCommandClientData data)
        if ( NULL != _pSettingFrameReplace )
+
        {
+void CAADlgFrameReplaceDlg::CloseWindowOK(CATCommand* cmd, CATNotification* evt, CATCommandClientData data)
+if ( NULL != _pSettingFrameReplace )
            if ( NULL != _pComboPointType )
+
            {
+```vbscript
+if ( NULL != _pSettingFrameReplace )
+if ( NULL != _pComboPointType )
               int PointType = _pComboPointType->GetSelect() ;
               _pSettingFrameReplace->**WriteSetting**("ComboPointType",&PointType);
+```
+
            }
-    
+
+int PointType = _pComboPointType->GetSelect() ;
+_pSettingFrameReplace->**WriteSetting**("ComboPointType",&PointType);
            if ( (NULL !=_pSpinnerX) && (NULL !=_pSpinnerY) && (NULL !=_pSpinnerZ) )
+
            {
+_pSettingFrameReplace->**WriteSetting**("ComboPointType",&PointType);
+if ( (NULL !=_pSpinnerX) && (NULL !=_pSpinnerY) && (NULL !=_pSpinnerZ) )
               double XVal = _pSpinnerX->GetValue() ;
               _pSettingFrameReplace->**WriteSetting**("XCoord",&XVal);
               double YVal = _pSpinnerY->GetValue() ;
               _pSettingFrameReplace->**WriteSetting**("YCoord",&YVal);
               double ZVal = _pSpinnerZ->GetValue() ;
               _pSettingFrameReplace->**WriteSetting**("ZCoord",&ZVal);
+
            }
     ...  
-  
+
 ---  
-  
+
 To retrieve the values after the session closing use the `SaveRepository` method. The setting repository is saved in a setting file whose the name is those of the setting repository.  
-    
-    
+
     ...
            _pSettingFrameReplace->**SaveRepository**();
      ...
     }  
-  
+
 ---  
-  
+
 When the end user clicks Cancel or closes the window, there is nothing to save. The end user will retrieve the values before the current modifications. 
-    
-    
+
+When the end user clicks Cancel or closes the window, there is nothing to save. The end user will retrieve the values before the current modifications.
     void CAADlgFrameReplaceDlg::**CloseWindow**(CATCommand* cmd, CATNotification* evt, 
                                                               CATCommandClientData data)
+
     {
      ...
     }  
-  
+
 ---  
-  
+
 [Top]
 
 * * *
@@ -344,14 +407,14 @@ This use case explains how to use the setting file and repository to save and re
 [2] | [Creating Dialog Boxes Automatically Resizable](CAADlgSampleTabulation.md)  
 [3] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 [Top]  
-  
+
 * * *
 ### History
 
 Version: **1** [Fev 2003] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2003, Dassault Systmes. All rights reserved._

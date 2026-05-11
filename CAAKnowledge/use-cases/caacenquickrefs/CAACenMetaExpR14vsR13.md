@@ -1,19 +1,25 @@
 ---
+```vbscript
 title: "Changes to ENOVIA LCA Metadata in V5R14 Compared with V5R13"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: []
 source_file: "Doc/online/CAACenQuickRefs/CAACenMetaExpR14vsR13.htm"
 converted: "2026-05-11T17:33:46.903919"
----
+```
 
+---
+tags: []
+source_file: "Doc/online/CAACenQuickRefs/CAACenMetaExpR14vsR13.htm"
+converted: "2026-05-11T17:33:46.903919"
 CAA V5 Encyclopedia |  Changes to ENOVIA LCA Metadata in V5R14 Compared with V5R13  
----|---  
-  
+
 * * *
 
+CAA V5 Encyclopedia |  Changes to ENOVIA LCA Metadata in V5R14 Compared with V5R13
 Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Object Inheritance | Attribute | Type | Inherited | Alias | Short role | Role  
----|---|---|---|---|---|---|---|---|---|---|---|---|---|---  
+
+Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Object Inheritance | Attribute | Type | Inherited | Alias | Short role | Role
 3 | 3 | 1 | New attribute | VPMWFL | ACTION | WFProcess | Class | AFLAction | V_waitTime | Simple of Real |   | V_waitTime | The expected time needed to prepare the performance of the process | This attribute is not currently taken into account by the Workflow.  
 3 | 3 | 1 | Multi-valuated attribute newly declared as injective | VPMWFL | ACTION | WFProcess | Class | AFLAction | C_activities | (Injective) |   | C_activities | References to all activities defined for the Workflow process |    
 3 | 3 | 1 | Multi-valuated attribute newly declared as injective | VPMWFL | ACTION | WFProcess | Class | AFLAction | C_transitions | (Injective) |   | C_transitions | References to all transitions defined for the Workflow process |    
@@ -520,6 +526,7 @@ Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Obj
 3 | 3 | 1 | Multi-valuated attribute newly declared as injective | APLAFL | ACTION | Action_Import | Class | ActionForDataX | C_objects | (Injective) | Inherited | C_objects | References to all action affected objects |    
 3 | 3 | 1 | Multi-valuated attribute newly declared as injective | APLAFL | ACTION | Action_Import | Class | ActionForDataX | C_attachements | (Injective) | Inherited | C_attachements | References to all action attachments |    
 3 | 3 | 1 | Multi-valuated attribute newly declared as injective | APLAFL | ACTION | Action_Import | Class | ActionForDataX | C506_resps | (Injective) | Inherited | C506_resps | References to all action responsibilities |    
+
 [Top]
 
 * * *
@@ -527,7 +534,7 @@ Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Obj
 History Version: **1** [Jun 2004] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 1994-2004, Dassault Systmes. All rights reserved._

@@ -1,10 +1,13 @@
 ---
+```vbscript
 title: "Using XML in V5"
 category: "use-case"
 module: "CAAXmlTechArticles"
 tags: ["CATIDOMElement", "CATIDOM", "CATIXMLSAXFactory_var", "CATISAXDocumentHandler", "CATIXML", "CATIDOMNode_var", "CATISAXAttributeList_var", "CATIDOMImplementation", "CATIDOMDocument_var", "CATISAXErrorHandler", "CATISAXInputSource_var", "CATIDOMXXX_var", "CATIXMLSAXFactory", "CATISAXYYY_var", "CATIXMLDOMDocumentBuilder", "CATISAXInputSource", "CATIDOMDocumentType_var", "CATIDOMElement_var", "CATIXMLDOMDocumentBuilder_var", "CATISAXEntityResolver"]
 source_file: "Doc/online/CAAXmlTechArticles/CAAXmlV5Overview.htm"
 converted: "2026-05-11T17:33:45.712135"
+```
+
 ---
 # 3D PLM Enterprise Architecture
 
@@ -17,7 +20,7 @@ converted: "2026-05-11T17:33:45.712135"
 _Description of the XML infrastructure available in V5_  
 ---|---|---  
 Technical Article  
-  
+
 * * *
 ### Abstract
 
@@ -33,9 +36,8 @@ This article explains what is an XML parser. It describes the parsers available 
     * UTF-8
     * Other Supported Encodings
 
-  
 ---  
-  
+
 * * *
 ### V5 XML Parser Components
 
@@ -56,23 +58,29 @@ To make the development of XML-based solutions easier for CAA developers, the XM
 Each parser component in the XMLParser framework is identified by a GUID. To instantiate the parser, developers invoke a global function, passing it the identifier of the parser they want to use. Since there are two families of APIs (DOM and SAX), there are two global functions. If the developer fails to pass an identifier, a default value is used (corresponding to the XML4C3 parser).
 
 The following sample shows how to instantiate a DOM parser backed by the XML4C5 parser component:
-    
+
     #include "CATIXMLDOMDocumentBuilder.h"  // To create the DOM objects
-    
+
+The following sample shows how to instantiate a DOM parser backed by the XML4C5 parser component:
     CATIXMLDOMDocumentBuilder_var builder;
     HRESULT hr = CreateCATIXMLDOMDocumentBuilder(builder, CLSID_XML4C5_DOM);  
-  
+
 ---  
-  
+
+CATIXMLDOMDocumentBuilder_var builder;
+HRESULT hr = CreateCATIXMLDOMDocumentBuilder(builder, CLSID_XML4C5_DOM);
 The following sample shows how to instantiate a SAX parser backed by the XML4C5 parser component:
-    
+
     #include "CATIXMLSAXFactory.h"       // To create the SAX objects
-    
+
+The following sample shows how to instantiate a SAX parser backed by the XML4C5 parser component:
     CATIXMLSAXFactory_var factory;
     HRESULT hr = CreateCATIXMLSAXFactory(factory, CLSID_XML4C5_SAX);  
-  
+
 ---  
-  
+
+CATIXMLSAXFactory_var factory;
+HRESULT hr = CreateCATIXMLSAXFactory(factory, CLSID_XML4C5_SAX);
 _Compatibility between parsers_
 
 ![warning.gif \(206 bytes\)](../CAAIcons/images/warning.gif) DOM V5 components have dependencies on SAX V5 components. For instance a DOM parser needs to be able to fetch XML from various physical sources (an HTTP server, a file, a relational database, etc.); rather than defining yet another interface for input sources, the V5 DOM parser accepts parsing from a CATISAXInputSource; to create such input sources, one uses the V5 SAX component.
@@ -86,6 +94,7 @@ The following table gives an overview of the features supported by each parser.
 
   | X4C3 | X4C5 | MSXML3 | MSXML4 | MSXML5  
 ---|---|---|---|---|---  
+The following table gives an overview of the features supported by each parser.
 DOM level 1 and 2 | Yes | Yes | Yes (1) | Yes (1) | Yes (1)  
 DOM traversal | Yes | Yes | Yes (2) | Yes (2) | Yes (2)  
 SAX 1 | Yes | Yes | Yes (3)(2) | Yes (4)(2) | Yes (4)(2)  
@@ -94,7 +103,7 @@ DTD validation | Yes | Yes | Yes (7) | Yes (7) | Yes (7)
 XSD schema validation | No | Yes | No | Yes | Yes  
 Unix availability | Yes | Yes | No | No | No  
 Windows availability | Yes | Yes | Yes | Yes | Yes  
-  
+
   1. Some functions are emulated in the V5 adapter
   2. Emulated in the V5 adapter
   3. DTD and XSD schema validation is not supported
@@ -122,71 +131,96 @@ The following two sections give you more information as to how XML standard spec
 [Top]
 #### V5 C++ Bindings for DOM
 
+The following two sections give you more information as to how XML standard specifications have been adapted for V5.
 The DOM specification uses OMG IDL to define its APIs in an abstract, platform-neutral way. It is then up to each platform to define a binding, that is a concrete version of the APIs using the language and data types native to the platform. The following table explains how this is done for V5 in C++.
 
 OMG IDL | V5 C++ | Comment  
----|---|---  
+
+The DOM specification uses OMG IDL to define its APIs in an abstract, platform-neutral way. It is then up to each platform to define a binding, that is a concrete version of the APIs using the language and data types native to the platform. The following table explains how this is done for V5 in C++.
+OMG IDL | V5 C++ | Comment
 DOMString | CATUnicodeString | All the strings obtained from parsing an XML document are represented as _CATUnicodeStrings_ : element names, attribute values, characters, entity names, etc.  
 DOM exception | HRESULT + CATError | The usage for V5 code is to signal errors using _HRESULTs_. Additional information about the error can be obtained using the CATError mechanism. See [1] for more information.  
 interface XXX | V5 interface handler CATIDOMXXX_var | All DOM interfaces are represented by V5 interface handlers. The V5 naming conventions are respected by prepending the "CATIDOM" prefix to the original DOM name (Thus, the _Node_ interface from the specification is mapped to _CATIDOMNode_var_ interface handler in V5 C++, the _Element_ interface is mapped to the _CATIDOMElement_var_ interface handler and so on).  
 rettype method(arg1, arg2, ..., argN) raises DOMException | HRESULT Method(arg1, arg2, ..., argN, rettype) | Methods bear the same name in V5 as in the specification, with the first letter in capital to obey the V5 naming convention. If the specification indicates a return value for the method, the corresponding V5 method will have an additional out parameter to return this argument. The exceptions declared by the method are replaced by a _HRESULT_.  
 boolean | CATBoolean |   
 unsigned long | unsigned int |   
-  
+
 As a concrete example of how the binding works, please consider the abstract definition of the DOMImplementation extracted from DOM specification.
-    
-    
+
     interface DOMImplementation {
      boolean hasFeature(
                in DOMString feature, 
                in DOMString version);
+
      // Introduced in DOM Level 2:
+interface DOMImplementation {
+boolean hasFeature(
+in DOMString feature,
+in DOMString version);
      DocumentType createDocumentType(
                     in DOMString qualifiedName, 
                     in DOMString publicId, 
                     in DOMString systemId) raises(DOMException);
+
      // Introduced in DOM Level 2:
+DocumentType createDocumentType(
+in DOMString qualifiedName,
+in DOMString publicId,
+in DOMString systemId) raises(DOMException);
      Document createDocument(
                  in DOMString namespaceURI, 
                  in DOMString qualifiedName, 
                  in DocumentType doctype) raises(DOMException);
+
     };
-                  
-  
+
 ---  
-  
+
 In V5, you will manipulate the following V5 interface
-    
-    
+
+In V5, you will manipulate the following V5 interface
     class CATIDOMImplementation : public CATBaseUnknown {
      virtual HRESULT HasFeature(
                        const CATUnicodeString& iFeature,
                        const CATUnicodeString& iVersion, 
                        CATBoolean& oResult) = 0;
+
      // Introduced in DOM Level 2:
+virtual HRESULT HasFeature(
+const CATUnicodeString& iFeature,
+const CATUnicodeString& iVersion,
+CATBoolean& oResult) = 0;
      virtual HRESULT CreateDocumentType(
                       const CATUnicodeString& iQualifiedName, 
                       const CATUnicodeString& iPublicId, 
                       const CATUnicodeString& iSystemId, 
                       CATIDOMDocumentType_var& oDocumentType) = 0;
+
      // Introduced in DOM Level 2:
+const CATUnicodeString& iQualifiedName,
+const CATUnicodeString& iPublicId,
+const CATUnicodeString& iSystemId,
+CATIDOMDocumentType_var& oDocumentType) = 0;
      virtual HRESULT CreateDocument(
                       const CATUnicodeString& iNamespaceURI, 
                       const CATUnicodeString& iQualifiedName, 
                       const CATIDOMDocumentType_var& iDocumentType, 
                       CATIDOMDocument_var& oDocument) = 0;
+
     };
-                  
-  
+
 ---  
-  
+
 [Top]
 #### V5 C++ Bindings for SAX
 
 The SAX specification uses Java to define its APIs. Platforms, which do not use Java as their programming language define a binding for their language, that is a version of the APIs using the language and data types native to the platform. The following table explains how this is done for V5 in C++.
 
+The SAX specification uses Java to define its APIs. Platforms, which do not use Java as their programming language define a binding for their language, that is a version of the APIs using the language and data types native to the platform. The following table explains how this is done for V5 in C++.
 Java SAX definition | V5 C++ | Comment  
----|---|---  
+
+The SAX specification uses Java to define its APIs. Platforms, which do not use Java as their programming language define a binding for their language, that is a version of the APIs using the language and data types native to the platform. The following table explains how this is done for V5 in C++.
+Java SAX definition | V5 C++ | Comment
 java.lang.String | CATUnicodeString | All the strings obtained from parsing an XML document are represented as _CATUnicodeStrings_ : element names, attribute values, characters, entity names, etc.  
 java.io.Exception  
 org.xml.sax.SAXException | HRESULT + CATError | The usage for V5 code is to signal errors using _HRESULTs_. Additional information about the error can be obtained using the CATError mechanism. See [1] for more information.  
@@ -199,49 +233,46 @@ CATSAXDefaultHandler
 CATSAXDefaultXMLFilter | Classes providing a default implementation for SAX interfaces are represented in V5 by a V5 component providing a default implementation for the same SAX interface. The V5 naming conventions are respected by prepending the "CATSAX" prefix to the original SAX name. Thus, the _HandlerBase_ Java class, which implements the _DocumentHandler_ , _DTDHandler_ , _EntityResolver_ and _ErrorHandler_ Java SAX interfaces is mapped to the _CATSAXHandlerBase_ V5 component, which implements the _CATISAXDocumentHandler_ , _CATISAXDTDHandler_ , _CATISAXEntityResolver_ and _CATISAXErrorHandler_ V5 interfaces  
 boolean | CATBoolean |   
 int | unsigned int |   
-  
+
 As a concrete example of how the binding works, please consider the Java definition of the EntityResolver extracted from SAX specification.
-    
-    
+
     package org.xml.sax;
     public interface EntityResolver {
      InputSource resolveEntity(
        String publicId,
        String systemId) throws SAXException, IOException;
+
     }
-      
-  
+
 ---  
-  
+
 In V5, you will manipulate the following V5 interface
-    
-    
+
+In V5, you will manipulate the following V5 interface
     class CATISAXEntityResolver: public CATBaseUnknown {
      virtual HRESULT ResolveEntity(
                        const CATUnicodeString & iPublicId, 
                        const CATUnicodeString & iSystemId, 
                        CATISAXInputSource_var & oInputSource) = 0;
+
     };
-                  
-  
+
 ---  
-  
+
 [Top]
 ### Supported XML Encodings
 
 The XML specification defines the XML syntax using the character model defined by the Unicode specification. XML contents however can be stored in text using any encoding (code page) provided that the underlying parsers support them. To use a given encoding for an XML file, you need to:
 
+The XML specification defines the XML syntax using the character model defined by the Unicode specification. XML contents however can be stored in text using any encoding (code page) provided that the underlying parsers support them. To use a given encoding for an XML file, you need to:
   1. Encode the file with this encoding.
   2. Indicate in the XML declaration the encoding you have used.
 
-    
-    
     <?xml version='1.0' encoding='UTF-8'?>
     ... content encoded in UTF-8 ...
-                  
-  
+
 ---  
-  
+
 [Top]
 #### UTF-8
 
@@ -254,6 +285,7 @@ The XML specification mandates that XML parsers support UTF-8. Therefore, this e
 
 A few other encodings are also supported by the XMLParser framework. 
 
+A few other encodings are also supported by the XMLParser framework.
 UTF-16
     Can sometimes be more compact that UTF-8 for eastern languages.
 ISO-8859-1
@@ -275,14 +307,14 @@ The XMLParser framework provides several parsers. All these parsers are accessib
 
 [1] | [ Managing Errors Using HRESULT](../CAASysTechArticles/CAASysErrors.md)  
 ---|---  
-  
+
 * * *
 ### History
 
 Version: **1** [Apr 2005] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2005, Dassault Systmes. All rights reserved._

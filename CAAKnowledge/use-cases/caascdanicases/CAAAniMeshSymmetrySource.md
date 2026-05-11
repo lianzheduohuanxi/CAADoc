@@ -1,12 +1,14 @@
 ---
+```vbscript
 title: "CAAAniMeshSymmetry.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniMeshSymmetry", "CAAScdAniUseCases"]
 source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSymmetrySource.htm"
 converted: "2026-05-11T17:31:51.720607"
----
+```
 
+---
 ```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2000
     ' ***********************************************************************
@@ -22,39 +24,47 @@ converted: "2026-05-11T17:31:51.720607"
     ' ***********************************************************************
 ```
 
-    
-```vbscript
     Sub CATMain()
+
 ```vbscript
     ' ----------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
 
-    
-```
-
-    
 ```vbscript
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+```
+
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
         End If
     ' ----------------------------------------------------------- 
-    
+
 ```
 
+```vbscript
+End If
+' -----------------------------------------------------------
     ' Open the CATAnalysis Document
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Surface.CATAnalysis")
-```vbscript
-    Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
-    
 ```
 
+```vbscript
+    Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+
+```
+
+```vbscript
+Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
     ' Retrieve the analysis Manager 
+```
+
 ```vbscript
     Set oAnalysisManagar = oAnalysisDocument.Analysis
     Set oAnalysisSet = oAnalysisManagar.AnalysisSets
+```
+
 ```vbscript
     ' Retrieve the part document and product
     Set oAnalysisLinkedDocuments = oAnalysisManagar.LinkedDocuments
@@ -78,10 +88,15 @@ converted: "2026-05-11T17:31:51.720607"
     'Assign the reference to the mesh part
 ```
 
+```vbscript
+'Add the mesh part to list of mesh parts
+Set meshTrans = oAnalysisMeshParts.Add("MSHPartSymmetry")
+'Assign the reference to the mesh part
     meshTrans.AddSupportFromReference NOTHING, reference
-    
+
 ```
 
+meshTrans.AddSupportFromReference NOTHING, reference
     meshTrans.SetGlobalSpecification "Condensation", 0
     meshTrans.SetGlobalSpecification "Tolerance", "1.0 mm"
     meshTrans.SetGlobalSpecification "NbCopies", 2
@@ -89,10 +104,5 @@ converted: "2026-05-11T17:31:51.720607"
     meshTrans.SetSpecificationFromPublication "Direction", product, pubPlane, 0
     'Update the mesh part
     meshTrans.Update
-    
-```vbscript
-    End Sub
-    
-```
 
-```
+    End Sub

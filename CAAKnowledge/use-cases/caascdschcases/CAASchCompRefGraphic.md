@@ -1,21 +1,24 @@
 ---
+```vbscript
 title: "Managing the Graphical Representation of a Schematic Reference Component"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAAScdSchUseCases", "CAASchCompRefGraphic", "CATIA", "CATIASchGRR", "CATIASchCompGraphic", "CAASCH_Detail03"]
 source_file: "Doc/online/CAAScdSchUseCases/CAASchCompRefGraphic.htm"
 converted: "2026-05-11T17:31:51.330224"
+```
+
 ---
 ## Schematics Platform Modeler
 
 | 
 ## Managing the Graphical Representation of a Schematic Reference Component  
-  
-  
+
 * * *
 
  This macro shows you how to manage the graphical representations (symbols) of a schematic reference component. This macro opens the document CAASCH_Detail03.CATProduct that contains three component symbols. One of the symbols (the highlighted one) has been associated with an existing schematic reference component. This macro shows how to add the other two unassociated symbols to the same reference component. It also illustrates how to remove one of the 3 symbols from the reference component and how to query for a list of associated symbols. ![](images/CAASchCompRefGraphic_01.jpg)  
 ---|---  
+This macro shows you how to manage the graphical representations (symbols) of a schematic reference component. This macro opens the document CAASCH_Detail03.CATProduct that contains three component symbols. One of the symbols (the highlighted one) has been associated with an existing schematic reference component. This macro shows how to add the other two unassociated symbols to the same reference component. It also illustrates how to remove one of the 3 symbols from the reference component and how to query for a list of associated symbols. ![](images/CAASchCompRefGraphic_01.jpg)
  CAASchCompRefGraphic is launched in CATIA [1]. No open document is needed. [CAASchCompRefGraphic.CATScript ](CAASchCompRefGraphicSource.md) is located in the CAAScdSchUseCases module. [Execute macro](macros/CAASchCompRefGraphic.CATScript) (Windows only).  
  CAASchCompRefGraphic includes the following steps:
 
@@ -27,26 +30,35 @@ converted: "2026-05-11T17:31:51.330224"
 
 #### Prolog
 
+4. Query for a list of graphical representation of the schematic reference component
+5. Remove a graphical representation from the schematic reference component
 The macro first loads CAASCH_Detail03.CATProduct. |     ...  
     ' Open the schematic document    
+
 ```vbscript
     Dim sFilePath  
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _  
+```
+
             "online\CAAScdSchUseCases\samples\CAASCH_Detail03.CATProduct")  
-  
+
+```vbscript
+Dim sFilePath
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
     Dim objSchDoc As Document  
     Set objSchDoc = CATIA.Documents.Open(sFilePath)  
-    ...  
 ```
 
-```
+    ...  
 
 ---  
-  
+
 Next, the macro acquires the schematic root object from the document. The schematic root is the top node of the object instance tree in a schematic document. 
 
     ...  
+Next, the macro acquires the schematic root object from the document. The schematic root is the top node of the object instance tree in a schematic document.
     ' Find the top node of the schematic object tree - schematic root.  
+
 ```vbscript
     Dim objPrdRoot As Product  
     Dim objSchRoot As SchematicRoot  
@@ -56,10 +68,9 @@ Next, the macro acquires the schematic root object from the document. The schema
         Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")  
       End If  
     End If  
-    ...  
 ```
 
-```
+    ...  
 
 ---  
 #### Find a schematic reference component in the model
@@ -70,11 +81,13 @@ Using the GetRefComponents method, a list of existing schematic reference compon
 ```vbscript
     Dim objLCompRefs As SchListOfObjects  
     Dim objCompRefGraphic As SchCompGraphic  
-  
+
 ```
 
 ```vbscript
     If ( Not ( objSchRoot Is Nothing ) ) Then  
+```
+
 ```vbscript
        '-----------------------------------------------------------------------  
        ' Find a list of reference component in the model  
@@ -82,11 +95,10 @@ Using the GetRefComponents method, a list of existing schematic reference compon
        Set objLCompRefs = objSchRoot.GetRefComponents  
 ```
 
-  
-```
-
 ```vbscript
        If ( Not ( objLCompRefs Is Nothing ) ) Then  
+```
+
 ```vbscript
           '--------------------------------------------------------------------  
           ' Get a SchCompGraphic interface handle from a reference  
@@ -96,9 +108,6 @@ Using the GetRefComponents method, a list of existing schematic reference compon
 ```
 
     ...  
-```
-
-```
 
 ---  
 #### Add a graphical representation to the schematic reference component
@@ -108,6 +117,8 @@ The macro calls GetComponentSymbol to find a symbol that has not been associated
     ...  
 ```vbscript
               Dim objUnassocSymbol As AnyObject  
+```
+
 ```vbscript
               '----------------------------------------------------------------  
               ' Find a symbol that is not associated with any reference in  
@@ -116,11 +127,10 @@ The macro calls GetComponentSymbol to find a symbol that has not been associated
               Set objUnassocSymbol = GetComponentSymbol (objSchRoot)  
 ```
 
-  
-```
-
 ```vbscript
               If ( Not ( objUnassocSymbol Is Nothing ) ) Then  
+```
+
 ```vbscript
                 '--------------------------------------------------------------  
                 '  Add the second graphical representation to the reference  
@@ -128,12 +138,15 @@ The macro calls GetComponentSymbol to find a symbol that has not been associated
                 '--------------------------------------------------------------  
 ```
 
+```vbscript
+'  Add the second graphical representation to the reference
+'  component using the symbol just found
+'--------------------------------------------------------------
                 objCompRefGraphic.AddGraphicalRepresentation objUnassocSymbol  
-  
+
 ```
 
     ...  
-```
 
 ---  
 #### Query for a list of graphical representation of the schematic reference component
@@ -144,10 +157,9 @@ ListGraphicalRepresentation returns a list of graphical representations. This li
 ```vbscript
               Dim objLGraphic As SchListOfObjects  
               Set objLGraphic = objCompRefGraphic.ListGraphicalRepresentations  
-    ...  
 ```
 
-```
+    ...  
 
 ---  
 #### Remove a graphical representation from the schematic reference component
@@ -171,14 +183,13 @@ The macro finds the first member of the list of graphical representations obtain
                     End If  
                  End If ' --- If (intNbGraphic > 1)  
               End If '--- If ( Not ( objLGraphic Is Nothing ) ) Then  
-  
+
 ```
 
     ...  
-```
 
 ---  
-  
+
 [Top]
 
 * * *
@@ -196,7 +207,7 @@ This use case shows how to add, remove and query for a list of graphical represe
 [1] | [ Replaying a Macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2001, Dassault Systmes. All rights reserved._

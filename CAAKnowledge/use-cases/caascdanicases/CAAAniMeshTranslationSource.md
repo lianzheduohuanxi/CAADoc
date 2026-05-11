@@ -1,12 +1,14 @@
 ---
+```vbscript
 title: "CAAAniMeshTranslation.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CAAAniMeshTranslation", "CATIA", "CAAScdAniUseCases"]
 source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshTranslationSource.htm"
 converted: "2026-05-11T17:31:51.732080"
----
+```
 
+---
 ```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2000
     ' ***********************************************************************
@@ -22,11 +24,7 @@ converted: "2026-05-11T17:31:51.732080"
     ' ***********************************************************************
 ```
 
-    
-```vbscript
     Sub CATMain()
-    
-```
 
 ```vbscript
     ' ----------------------------------------------------------- 
@@ -34,28 +32,38 @@ converted: "2026-05-11T17:31:51.732080"
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
 
-    
 ```vbscript
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+```
+
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
         End If
     ' ----------------------------------------------------------- 
-    
+
 ```
 
-    
+```vbscript
+' -----------------------------------------------------------
     ' Open the CATAnalysis Document
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Surface.CATAnalysis")
-```vbscript
-    Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
-    
 ```
 
+```vbscript
+    Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+
+```
+
+```vbscript
+Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
     ' Retrieve the analysis Manager 
+```
+
 ```vbscript
     Set oAnalysisManagar = oAnalysisDocument.Analysis
     Set oAnalysisSet = oAnalysisManagar.AnalysisSets
+```
+
 ```vbscript
     ' Retrieve the part document and product
     Set oAnalysisLinkedDocuments = oAnalysisManagar.LinkedDocuments
@@ -78,10 +86,15 @@ converted: "2026-05-11T17:31:51.732080"
     'Assign the reference to the mesh part
 ```
 
+```vbscript
+'Add the mesh part to list of mesh parts
+Set meshTrans = oAnalysisMeshParts.Add("MSHPartTranslation")
+'Assign the reference to the mesh part
     meshTrans.AddSupportFromReference NOTHING, reference
-    
+
 ```
 
+meshTrans.AddSupportFromReference NOTHING, reference
     meshTrans.SetGlobalSpecification "TranslationValue", "-100.0 mm"
     meshTrans.SetGlobalSpecification "Condensation", 0
     meshTrans.SetGlobalSpecification "Tolerance", "1.0 mm"
@@ -90,14 +103,5 @@ converted: "2026-05-11T17:31:51.732080"
     meshTrans.SetSpecificationFromPublication "Direction", product, pubDirection, 0
     'Update the mesh
     meshTrans.Update
-    
-```vbscript
+
     End Sub
-    
-```
-
-    
-    
-    
-
-```

@@ -1,10 +1,13 @@
 ---
+```vbscript
 title: "Retrieving Data of an Element of a V4 Document"
 category: "use case"
 module: "CAAV4iUseCases"
 tags: ["CAADoc", "CAACATIAV4Interfaces", "CAAV4iEduV4GetTubingData", "CAAV4iEduGetTubingData", "CAAV4iEduV4DataAccess", "CAAV4iGetTubingData", "CATIAV4Interfaces"]
 source_file: "Doc/online/CAAV4iUseCases/CAAV4iGetTubingDataUseCase.htm"
 converted: "2026-05-11T17:33:45.764869"
+```
+
 ---
 # 3D PLM PPR Hub Open Gateway
 
@@ -17,7 +20,7 @@ converted: "2026-05-11T17:33:45.764869"
 _Get the information contained in a model_  
 ---|---|---  
 Use Case  
-  
+
 * * *
 ### Abstract
 
@@ -32,9 +35,8 @@ This article shows how to retrieve tubing data from a V4 document. 
   * **In Short**
   * **References**
 
-  
 ---  
-  
+
 * * *
 ### What You Will Learn With This Use Case
 
@@ -48,6 +50,7 @@ CAAV4iEduGetTubingData is a use case of the CAACATIAV4Interfaces.edu framework t
 [Top] 
 #### What Does CAAV4iEduGetTubingData Do
 
+CAAV4iEduGetTubingData is a use case of the CAACATIAV4Interfaces.edu framework that illustrates CATIAV4Interfaces framework capabilities.
 CAAV4iEduGetTubingData begins by opening the _.model_ document.  
 Then, it scans the model using functions of CATIAV4Interfaces to get the element to be analyzed [1]. These elements are objects of the class CATV4iV4Element.  
 In this particular case, it retrieves the first element of the first set of the workspace MASTER.  
@@ -57,6 +60,7 @@ The elements are removed.
 [Top] 
 #### How to Launch CAAV4iEduGetTubingData
 
+The elements are removed.
 To launch CAAV4iEduGetTubingData , you will need to set up the build time environment, then compile CAAV4iEduGetTubingData along with its prerequisites, set up the run time environment, and then execute the use case [2].  
 CAAV4iEduGetTubingData takes two parameters. 
 
@@ -76,58 +80,71 @@ You can use the model TUBING`.model` and TUBING2.model located in `CAADoc/``CAA`
 #### Where to Find the CAAV4iEduGetTubingData Code
 
 The CAAV4iEduGetTubingData use case is made of a single file located in the CAAV4iEduGetTubingData.m module of the CAACATIAV4Interfaces.edu framework:  
+The CAAV4iEduGetTubingData use case is made of a single file located in the CAAV4iEduGetTubingData.m module of the CAACATIAV4Interfaces.edu framework:
   Windows | `InstallRootDirectory\`CAACATIAV4Interfaces`.edu\`CAAV4iEduGetTubingData`.m\`  
----|---  
+
+The CAAV4iEduGetTubingData use case is made of a single file located in the CAAV4iEduGetTubingData.m module of the CAACATIAV4Interfaces.edu framework:
+Windows | `InstallRootDirectory\`CAACATIAV4Interfaces`.edu\`CAAV4iEduGetTubingData`.m\`
 Unix | `InstallRootDirectory/`CAACATIAV4Interfaces`.edu/`CAAV4iEduGetTubingData`.m/`  
-  
+
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.  
- 
 
 [Top] 
 ### Step-by-Step
 
 There are 3 logical steps in CAAV4iEduV4DataAccess : 
 
+There are 3 logical steps in CAAV4iEduV4DataAccess :
   1. Opening the model
   2. Scanning the model
   3. Retrieving the data
 
 [Top] 
 #### Opening the model
-    
-    
+
     ...
       char* pathname = argv[1];
       CATDocument * doc=NULL;
       CATUnicodeString filename( pathname );
       CATDocumentServices::OpenDocument( filename, doc, readOnlyFlag );
+
     ...  
-  
+
 ---  
-  
+
+CATDocumentServices::OpenDocument( filename, doc, readOnlyFlag );
 To access to the data of the model, a CATDocument is needed.  
 The path of the model passed in argument is converted to a CATString and is used to open the model in "read only" mode.  
 __ 
 
 [Top] 
 #### Scaning the model
-    
-    
+
     ...
       CATV4iV4Element* masterElem=NULL;
       CATV4iV4Element* setElem=NULL;
       CATV4iV4Element* element=NULL;
       int end =0;
       if (! CATV4iGetMaster(doc, masterElem, ier) )
+
       {
+CATV4iV4Element* setElem=NULL;
+CATV4iV4Element* element=NULL;
+int end =0;
+if (! CATV4iGetMaster(doc, masterElem, ier) )
         if (! CATV4iGisset(masterElem, setElem, end, ier) )
+
         {  
+int end =0;
+if (! CATV4iGetMaster(doc, masterElem, ier) )
+if (! CATV4iGisset(masterElem, setElem, end, ier) )
           if (! CATV4iGisels(setElem, NULL, element, end, ier) )
+
           {
     ...  
-  
+
 ---  
-  
+
 CATV4iGetMaster is a functions that retrieves the first workspace of the model : the MASTER. If _doc_ is not a V4 document, the function fails.  
 CATV4iGisset retrieves the first set of the workspace _masterElem_.  
 CATV4iGisels retrieves the first element of the set _setElem_. 
@@ -136,17 +153,17 @@ CATV4iGisels retrieves the first element of the set _setElem_.
 #### Retrieving the data
 
 // Get the tubing line Outside Diameter double Diameter = 0.0; double BendRadius = 0.0; double Angle = 0.0; double Extremity1[3]; double Extremity2[3]; double Center[3]; double Udir[3]; double Vdir[3]; int iReturnElbowTubeData = CATV4iGetElbowTubeData (element, Diameter, BendRadius, Angle, Extremity1,  Extremity2, Center, Udir, Vdir); if (iReturnElbowTubeData == -1)  outputFile << "CATV4iGetElbowTubeData failed" << endl; else if (iReturnElbowTubeData == 0) { outputFile << "CATV4iGetElbowTubeData succeeded" << endl; outputFile << "Elbow tube Diameter = " << Diameter << endl; outputFile << "Elbow tube BendRadius = " << BendRadius << endl; outputFile << "Elbow tube Angle = " << Angle << endl;
-    
-    
-       
-  
+
 ---  
-  
+
+```vbscript
 If _element_ has been correctly created by CATV4iGisels, the data can be retrieved.  
 _element- >Id()_ retrieves the identificator of the _element_ ,  
 _element- >GetType(...)_ retrieves the primary and the secondary types of _element_  
 _...CATV4iGirlay(..._ retrieves the number of the layer  
 _...CATV4iGirvis(..._ retrieves graphical data about the element : show, pickable, color, blink, steady, thickness, line type. 
+
+```
 
 [Top] 
 
@@ -164,14 +181,14 @@ _[_Top]
 ---|---  
 [2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 [Top]  
-  
+
 * * *
 ### History
 
 Version: **1** [Jul 2003] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 1994-2003, Dassault Systmes. All rights reserved._

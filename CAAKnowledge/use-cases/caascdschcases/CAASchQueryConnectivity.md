@@ -1,17 +1,19 @@
 ---
+```vbscript
 title: "Querying for a List of Connected Objects"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAASCH_CompRoute01", "CAADoc", "CAAScdSchUseCases", "CAASchAppBase", "CATIA", "CAASCHEDUApp", "CAASchQueryConnectivity", "CAASchPlatformModeler", "CATIASchAppConnectable", "CAASchAppUtilities"]
 source_file: "Doc/online/CAAScdSchUseCases/CAASchQueryConnectivity.htm"
 converted: "2026-05-11T17:31:51.464895"
+```
+
 ---
 ## Schematics Platform Modeler
 
 | 
 ## Querying for a List of Connected Objects  
-  
-  
+
 * * *
 
  This macro shows you how to find a list of objects connected to a Schematic component instance or a Schematic route instance.In this use case, the macro query for a list of Schematic component instances and a list of Schematic route instance. For each member in the two lists, the macro searches for all the objects connected to the member.  
@@ -35,32 +37,42 @@ converted: "2026-05-11T17:31:51.464895"
 [ CAASchQueryConnectivity.CATScript ](CAASchQueryConnectivitySource.md)is located in the CAAScdSchUseCases module. [Execute macro](macros/CAASchQueryConnectivity.CATScript) (Windows only).  
  CAASchQueryConnectivity includes the following steps:
 
+CAASchQueryConnectivity includes the following steps:
   1. Prolog
   2. Get a list of Schematic component instances and Schematic route instances in the document.
   3. Query for lists of connected objects.
 
 #### Prolog
 
+2. Get a list of Schematic component instances and Schematic route instances in the document.
+3. Query for lists of connected objects.
 The macro first loads the document: CAASCH_CompRoute01.CATProduct.  |     ...  
     ' Open the schematic document   
+
 ```vbscript
     Dim sFilePath  
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _  
+```
+
             "online\CAAScdSchUseCases\samples\CAASCH_CompRoute01.CATProduct")  
-  
+
+```vbscript
+Dim sFilePath
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
     Dim objSchDoc As Document  
     Set objSchDoc = CATIA.Documents.Open(sFilePath)  
-    ...  
 ```
 
-```
+    ...  
 
 ---  
-  
+
 Next, the macro acquires the schematic root object from the document. The schematic root is the top node of the object instance tree in a schematic document.
 
     ...  
+Next, the macro acquires the schematic root object from the document. The schematic root is the top node of the object instance tree in a schematic document.
     ' Find the top node of the schematic object tree - schematic root.  
+
 ```vbscript
     Dim objPrdRoot As Product  
     Dim objSchRoot As SchematicRoot  
@@ -70,10 +82,9 @@ Next, the macro acquires the schematic root object from the document. The schema
         Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")  
       End If  
     End If  
-    ...  
 ```
 
-```
+    ...  
 
 ---  
 #### Get a list of Schematic component instances and Schematic route instances in the document
@@ -88,14 +99,15 @@ Next, the macro acquires the schematic root object from the document. The schema
 
 ```vbscript
     If ( Not ( objSchRoot Is Nothing ) ) Then  
+```
+
 ```vbscript
        Set objSchLComps = objSchRoot.GetComponents  
        Set objSchLRoutes = objSchRoot.GetRoutes  
     End If  
-    ...  
 ```
 
-```
+    ...  
 
 ---  
 #### Query for lists of connected objects
@@ -109,28 +121,37 @@ For each member in the output list of component instants, the macro uses the App
 ```vbscript
     If ( Not ( objSchLComps Is Nothing ) And _  
          Not ( objSchRoot Is Nothing ) ) Then  
-  
+
 ```
 
+```vbscript
+If ( Not ( objSchLComps Is Nothing ) And _
+Not ( objSchRoot Is Nothing ) ) Then
        intNb = objSchLComps.Count  
+```
+
     ...  
 ```vbscript
        If (intNb > 0) Then  
-    ...  
-  
 ```
+
+    ...  
 
 ```vbscript
           For intIndex = 1 To intNb  
+```
+
     ...  
-              
+
 ```vbscript
             Set objAppCntbl = objSchRoot.GetInterface ("CATIASchAppConnectable",objPrd)  
-  
+
 ```
 
 ```vbscript
             If ( Not ( objAppCntbl Is Nothing ) ) Then  
+```
+
 ```vbscript
                '---------------------------------------------------------------  
                '  AppListConnectables output 3 lists of objects.  
@@ -144,22 +165,20 @@ For each member in the output list of component instants, the macro uses the App
                '           B               connector on A   connector on B  
                '           C               connector on A   connector on C  
                '---------------------------------------------------------------  
-  
-               Set objLFilter = Nothing  
-```
 
-  
+               Set objLFilter = Nothing  
 ```
 
                objAppCntbl.AppListConnectables objLFilter, objLCntblOther, _  
                  objLCntrThis, objLCntrOther  
     ...  
-```
 
 ---  
-  
+
 ```vbscript
 For each member in the output list of route instants, the macro uses the AppListConnectables to find a list of Schematic component or route instances that are connected to the route instance member.
+```
+
 ```vbscript
     '-------------------------------------------------------------------------  
     ' |  For each route instance in the list, find connected objects  
@@ -167,33 +186,46 @@ For each member in the output list of route instants, the macro uses the AppList
          If ( Not ( objSchLRoutes Is Nothing ) And _  
 ```
 
+```vbscript
+' |  For each route instance in the list, find connected objects
+'-------------------------------------------------------------------------
+If ( Not ( objSchLRoutes Is Nothing ) And _
               Not ( objSchRoot Is Nothing ) ) Then  
-  
+
 ```
 
            intNb = objSchLRoutes.Count  
     ...  
 ```vbscript
            If (intNb > 0) Then  
+```
+
     ...  
+```vbscript
+intNb = objSchLRoutes.Count
+If (intNb > 0) Then
              For intIndex = 1 To intNb  
+```
+
     ...  
 ```vbscript
                Set objAppCntbl = objSchRoot.GetInterface ("CATIASchAppConnectable",objPrd)  
                  If ( Not ( objAppCntbl Is Nothing ) ) Then  
-  
+
                     Set objLFilter = Nothing  
-                 
+
 ```
 
+```vbscript
+Set objLFilter = Nothing
                     objAppCntbl.AppListConnectables objLFilter, objLCntblOther, _    
                       objLCntrThis, objLCntrOther  
 ```
 
 ---  
-  
+
 This macro provides the internal GenerateALine subroutine to report connected objects. It uses the GetPosition method of the SchCntrLocation interface to obtain the x-y coordinates of the connection points. SchCntrLocation is found based on the output list of connectors from the AppListConnectable method.  
-  
+
 [Top]
 
 * * *
@@ -211,7 +243,7 @@ This use case shows how to query the connectivity of Schematic objects in a Sche
 [1] | [ Replaying a Macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2001, Dassault Systmes. All rights reserved._

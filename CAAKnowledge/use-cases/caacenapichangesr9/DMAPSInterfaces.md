@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "DMAPSInterfaces Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR9"
@@ -6,11 +7,14 @@ version: "V5R9"
 tags: ["CATISPPResourceManagement", "CATISPPItemMgt"]
 source_file: "Doc/online/CAACenAPIChangesR9/DMAPSInterfaces.htm"
 converted: "2026-05-11T17:33:52.858160"
----
+```
 
+---
+tags: ["CATISPPResourceManagement", "CATISPPItemMgt"]
+source_file: "Doc/online/CAACenAPIChangesR9/DMAPSInterfaces.htm"
+converted: "2026-05-11T17:33:52.858160"
 CAA C++ API Modifications|  DMAPSInterfaces  |   
----|---|---  
-  
+
 * * *
 
 **Entity|  SP| Modification| To Do** | DMAPSInterfaces/Protected/CATISPPItemMgt.h/CATISPPItemMgt/AddItem| GA| MHBDM|   

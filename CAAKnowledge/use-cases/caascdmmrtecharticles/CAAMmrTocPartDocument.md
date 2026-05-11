@@ -1,10 +1,13 @@
 ---
+```vbscript
 title: "Part Document Automation Objects"
 category: "use-case"
 module: "CAAScdMmrTechArticles"
 tags: []
 source_file: "Doc/online/CAAScdMmrTechArticles/CAAMmrTocPartDocument.htm"
 converted: "2026-05-11T17:31:51.155629"
+```
+
 ---
 # Part Document Automation Objects
 
@@ -59,7 +62,7 @@ converted: "2026-05-11T17:31:51.155629"
 ![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/sfmfact.gif)  
 ![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/annotsets.gif)[![AnnotationSets Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdTpiTechArticles/CAATpiTocAnnotationSets.md)  
 ![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/usrsurfs.gif)[![UserSurfaces Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdTpiTechArticles/CAATpiTocAnnotationSets.md)  
-  
+
 **Legend**
 
 ![](../CAAScrAutomationImages/images/yellbox.gif) Collection  
@@ -84,7 +87,7 @@ In addition, the **Part** object aggregates:
   * The relations between parameters stored in a **Relations** collection you can retrieve using the Part's Relations property
   * The parameters stored in a **Parameters** collection you can retrieve usin the Part's Parameters property
   * The factories: a **ShapeFactory** object to create shapes, an **HybridShapeFactory** object to create hybrid shapes, and an **InstanceFactory** object to instantiate either User Defined Features or a Power Copies. You can retrieve the first two factories using the Part's ShapeFactory and HybridShapeFactory properties respectively. You can retrieve the InstanceFactory object thanks to the Part's GetCustomerFactory method as follows, assuming Part1 is the **Part** object of the active Part document: 
-        
+
 ```vbscript
         Dim myFactory As InstanceFactory
         Set myFactory = Part1.GetCustomerFactory("InstanceFactory")
@@ -95,6 +98,7 @@ In addition, the **Part** object aggregates:
 
 The **Bodies** collection includes **Body** objects, one being the main body returned by the **MainBody** property of the collection. The part has in addition a current body and a current shape, returned or set using the CurrentBody and the CurrentShape properties of the **Part** object respectively. The current body is the body in which a new shape is added when using the **ShapeFactory** object. The current shape is the shape of the current body after which a new shape is added in the specification tree when using the shape factory. You then need to make current the appropriate body and shape before using the shape factory.
 
+The **Bodies** collection includes **Body** objects, one being the main body returned by the **MainBody** property of the collection. The part has in addition a current body and a current shape, returned or set using the CurrentBody and the CurrentShape properties of the **Part** object respectively. The current body is the body in which a new shape is added when using the **ShapeFactory** object. The current shape is the shape of the current body after which a new shape is added in the specification tree when using the shape factory. You then need to make current the appropriate body and shape before using the shape factory.
 The other collections can be classified in two categories:
 
   1. The collections that only contains objects and have methods to retrieve and possibly remove them, but leave the dedicated factories for object creation, such as **Sketches** , **GeometricElements** , and **Shapes**
@@ -102,6 +106,6 @@ The other collections can be classified in two categories:
 
 * * *
 
+1. The collections that only contains objects and have methods to retrieve and possibly remove them, but leave the dedicated factories for object creation, such as **Sketches** , **GeometricElements** , and **Shapes**
+2. The collections that also have methods to create the objects they contain, such as **Constraints** , **Relations** , and **Parameters**.
 _Copyright © 1999-2013, Dassault Systèmes. All rights reserved._
-
-```

@@ -1,15 +1,19 @@
 ---
+```vbscript
 title: "New C++ Authorized APIs in CAA V5R20 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATI2DLayoutClipping", "CATIEcvPercentFill", "CATIPDMUELoadProcess", "CATIPrintableDrafting", "CATISamImageAttributes", "CATICfgEffVal", "CATIMfgMultiAxisCurveMachining", "CATIMfgPPMachine", "CATICGMOperator", "CATIElbDeviceInstance", "CATIBRepAccess_var", "CATICGMVirtual", "CATISysFileAccessStatisticsSettingAtt", "CATITPSDimVisu", "CATISamImageFilters", "CATIAApplicationFrame", "CATIntersectionHVertexType", "CATIAV4Interfaces", "CATIA", "CATISamImageAxisSystem"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R20GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.475080"
----
+```
 
+---
+tags: ["CATI2DLayoutClipping", "CATIEcvPercentFill", "CATIPDMUELoadProcess", "CATIPrintableDrafting", "CATISamImageAttributes", "CATICfgEffVal", "CATIMfgMultiAxisCurveMachining", "CATIMfgPPMachine", "CATICGMOperator", "CATIElbDeviceInstance", "CATIBRepAccess_var", "CATICGMVirtual", "CATISysFileAccessStatisticsSettingAtt", "CATITPSDimVisu", "CATISamImageFilters", "CATIAApplicationFrame", "CATIntersectionHVertexType", "CATIAV4Interfaces", "CATIA", "CATISamImageAxisSystem"]
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R20GANewCPPAPI.htm"
+converted: "2026-05-11T17:33:47.475080"
 CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R20 GA  
----|---  
-  
+
 * * *
 
 The following are the new CAA V5R20 GA C++ Authorized APIs, compared with CAA V5R19 at GA level.
@@ -133,7 +137,7 @@ The following are the new CAA V5R20 GA C++ Authorized APIs, compared with CAA V5
 History Version: **1** [Oct 2009] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright © 1999-2009, Dassault Systèmes. All rights reserved._  

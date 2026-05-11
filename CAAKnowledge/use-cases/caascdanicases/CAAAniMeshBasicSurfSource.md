@@ -1,12 +1,14 @@
 ---
+```vbscript
 title: "CAAAniMeshBasicSurf.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CAAAniMeshBasicSurf", "CATIA", "CAAScdAniUseCases"]
 source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshBasicSurfSource.htm"
 converted: "2026-05-11T17:31:51.617511"
----
+```
 
+---
 ```vbscript
     'COPYRIGHT DASSAULT SYSTEMES 2000
     '***********************************************************************
@@ -22,18 +24,19 @@ converted: "2026-05-11T17:31:51.617511"
     '***********************************************************************
 ```
 
-    
-```vbscript
     Sub CATMain()
     '----------------------------------------------------------- 
     'Optional: allows to find the sample wherever it's installed
-    
+
       sDocPath=CATIA.SystemService.Environ("CATDocView")
-    
+
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
         End If
+```
+
 ```vbscript
     '----------------------------------------------------------- 
     'Open the Analysis document 
@@ -41,12 +44,11 @@ converted: "2026-05-11T17:31:51.617511"
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```
 
-    
-```
-
     'Retrieve the Analysis Manager and Analysis Model
 ```vbscript
     Set oAnalysisManagar = oAnalysisDocument.Analysis
+```
+
 ```vbscript
     'Retrieve the product from Analysis manager
     Set oAnalysisLinkedDocument = oAnalysisManagar.LinkedDocuments
@@ -66,10 +68,15 @@ converted: "2026-05-11T17:31:51.617511"
     'Add the support from the published surface
 ```
 
+```vbscript
+'Add the new basic surface mesh part to the list of mesh parts
+Set surfPart = meshPart.Add ("MSHPartBasicSurf")
+'Add the support from the published surface
     surfPart.AddSupportFromPublication product, pubSurf
-    
+
 ```
 
+surfPart.AddSupportFromPublication product, pubSurf
     'Set the global Specifications
     surfPart.SetGlobalSpecification "GlobalMethod", 1
     surfPart.SetGlobalSpecification "QuadsOnly", 2
@@ -90,31 +97,27 @@ converted: "2026-05-11T17:31:51.617511"
     surfPart.SetGlobalSpecification "MeshCaptureTol", "1.1 mm"
     surfPart.SetGlobalSpecification "MeshAbsSag", 1
     surfPart.SetGlobalSpecification "MeshAbsSaglValue", "1.1 mm"
-    
+
     'Create local specification
+
 ```vbscript
     Set meshSpecs = surfPart.AnalysisMeshLocalSpecifications 
     Set spec = meshSpecs.Add("MSHTopProjectCurve") 
     spec.AddSupportFromPublication "ConnectorList", product1, pubCurve
     spec.SetAttribute "Tolerance", "500 mm" 
-    
+
 ```
 
-    
-    
 ```vbscript
     Set spec = meshSpecs.Add("MSHTopProjectPoint")
     spec.AddSupportFromPublication "ConnectorList", product1, pubPoint
     spec.SetAttribute "Tolerance", "500 mm"
-    
+
 ```
 
+spec.AddSupportFromPublication "ConnectorList", product1, pubPoint
+spec.SetAttribute "Tolerance", "500 mm"
     'Update the mesh part
     surfPart.Update
-    
-```vbscript
-    End Sub
-    
-```
 
-```
+    End Sub

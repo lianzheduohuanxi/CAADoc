@@ -1,15 +1,23 @@
 ---
+```vbscript
 title: "Geometry"
 category: "use cases"
 module: "CAACgmBase"
 tags: ["CATIA", "CAAGMModelInterfaces"]
 source_file: "Doc/online/CAACgmBase/CAACgmGeometryHome.htm"
 converted: "2026-05-11T17:33:47.799971"
----
+```
 
+---
+tags: ["CATIA", "CAAGMModelInterfaces"]
+source_file: "Doc/online/CAACgmBase/CAACgmGeometryHome.htm"
+converted: "2026-05-11T17:33:47.799971"
 Geometric Modeler New V6 operators have been coexisting with V5 operators from V5R20 so that CAA developers can start migrating their V5 applications to V6 while remaining in V5. CAA developers are encouraged to migrate to these new interfaces. The use cases related to geometry are delivered in the CAAGMModelInterfaces.edu framework. Turn to [GM Model](CAACgmGMModelHome.md) to access the documentation associated with the use cases. |  Geometry  
----|---  
+
+converted: "2026-05-11T17:33:47.799971"
+Geometric Modeler New V6 operators have been coexisting with V5 operators from V5R20 so that CAA developers can start migrating their V5 applications to V6 while remaining in V5. CAA developers are encouraged to migrate to these new interfaces. The use cases related to geometry are delivered in the CAAGMModelInterfaces.edu framework. Turn to [GM Model](CAACgmGMModelHome.md) to access the documentation associated with the use cases. |  Geometry
 Technical Articles  
+
 ---  
 [CGM Overview](../CAACgmTechArticles/CAACgmOverview.md) | A first glance at CATIA Geometric Modeler  
 [ The Objects of CATIA Geometric Modeler](../CAAGobTechArticles/GeoObjects.md) | An introduction to CGM objects  
@@ -38,16 +46,22 @@ Use Cases
 Quick Reference  
 [ Where to Find What](../CAACgmQuickRefs/CAACgmIndex.md) | The index of the resources used in the use cases  
 [ Frequently Asked Questions](../CAACgmQuickRefs/CAACgmFaq.md) | To help you to answer your questions  
+Quick Reference
 GeometricObjects Framework Reference | Interface and class reference for GeometricObjects  
 GeometricOperators Framework Reference | Interface and class reference for GeometricOperators  
 GMModelInterfaces Framework Reference | Interface and class reference for GMModelInterfaces  
 GMOperatorsInterfaces Framework Reference | Interface and class reference for GMOperatorsInterfaces  
 FreeFormOperators Framework Reference | Interface and class reference for FreeFormOperators  
+
 [Top]  
+GeometricOperators Framework Reference | Interface and class reference for GeometricOperators
+GMModelInterfaces Framework Reference | Interface and class reference for GMModelInterfaces
+GMOperatorsInterfaces Framework Reference | Interface and class reference for GMOperatorsInterfaces
+FreeFormOperators Framework Reference | Interface and class reference for FreeFormOperators
 History Version: **1** [Jan 2000] | Document created  
----|---  
+
 [Top]  
-  
+
 * * *
 
 _Copyright 2000, Dassault Systmes. All rights reserved._

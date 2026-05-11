@@ -1,16 +1,23 @@
 ---
+```vbscript
 title: "The IdentityCard.h Special File"
 category: "use-case"
 module: "CAABtlTechArticles"
 tags: []
 source_file: "Doc/online/CAABtlTechArticles/CAABtlMANIdCard.htm"
 converted: "2026-05-11T17:33:46.051073"
----
+```
 
+---
+tags: []
+source_file: "Doc/online/CAABtlTechArticles/CAABtlMANIdCard.htm"
+converted: "2026-05-11T17:33:46.051073"
 RADE |  Multi-Workspace Application Builder |  The IdentityCard.h Special File _Purpose and use_  
----|---|---  
+
+converted: "2026-05-11T17:33:46.051073"
+RADE |  Multi-Workspace Application Builder |  The IdentityCard.h Special File _Purpose and use_
 Technical Article  
-  
+
 * * *
 
 **Warning** : The IdentityCard.h file format is **deprecated** starting with V5R24, and is replaced with XML. You should convert your IdentityCard.h files to XML ones. Refer to [Migrating Your Identity Cards to XML](CAABtlMANIdCardXMLV5Mig.md). The following commands help you to do this:
@@ -19,7 +26,6 @@ Technical Article
   * The [mkCreateIC](../CAABtlQuickRefs/CAABtlMkCreateICV5.md) command enables you to create an empty Identity Card ready to be edited using mkICE.
   * The [mkIc2Xml](../CAABtlQuickRefs/CAABtlMkIc2XmlV5.md) command enables you to convert a .h Identity Card to an XML one.
 
-  
 ---  
 Abstract The **IdentityCard.h** file is one of the files needed to build a program using the CAA Multi-Workspace Application Builder mkmk. The aim of this article is to explain the purpose of this file, how to write it and where it must be installed in the CAA FileTree.
 
@@ -27,7 +33,6 @@ Abstract The **IdentityCard.h** file is one of the files needed to build a progr
   * **Location**
   * **Content**
 
-  
 Purpose Since almost all components (frameworks) are built upon other components, it is necessary:
 
   * To include at compile time the corresponding header files
@@ -46,20 +51,27 @@ However the source files of a given component may include a lot of header files 
 Remember the notions of public and private parts of a component: you don't know how a framework is implemented, so you shouldn't know its own prerequisites.
 
 Top] Location Every framework must have an Identity Card file, named _IdentityCard.h_. This file is stored in directory _IdentityCard_ , right under the framework root directory itself:. This file allows the framework to declare (the list of) its prerequisite frameworks. ![](images/FileTree18.gif) Conversely, to export a service a framework must just store the header file of its service in its _PublicInterfaces_ directory. Content Syntax and rules The IdentityCard.h file is a text file containing depencies of the current framework. The syntax to declare a dependency is:
-    
-    
+
     **_AddPrereqComponent( "_**_< framework name>_**_" , Public);_**
 
 ```vbscript
 For architecture matter, any type of framework (code, test, education) cannot declare a prerequisite on any type of framework. The following table specifies prerequisite composition rules depending on framework type.  
 ```
 
+```vbscript
+For architecture matter, any type of framework (code, test, education) cannot declare a prerequisite on any type of framework. The following table specifies prerequisite composition rules depending on framework type.
 The table indicate if a a framework of type (Row header) can have a prerequisite on a framework of type (Column header).  Framework type| Code| Test (.tst)| Edu (.edu)  
----|---|---|---  
+```
+
+```vbscript
+For architecture matter, any type of framework (code, test, education) cannot declare a prerequisite on any type of framework. The following table specifies prerequisite composition rules depending on framework type.
+The table indicate if a a framework of type (Row header) can have a prerequisite on a framework of type (Column header).  Framework type| Code| Test (.tst)| Edu (.edu)
 Code| YES| NO| NO  
 Test (.tst)| YES| YES| YES  
 Edu (.edu)| YES| NO| YES  
 Examples In the following example, source _themine.cpp_ in _framework1/module1_ needs header _otherservice.h_ which is neither in module _module1_ , nor in _framework1_ , but in another framework named _framework2_. Thus, _framework1_ needs to declare _framework2_ as a prerequisite in its identity card: ![](images/IdCard.gif) The previous schema gives an example of a prerequisite between code frameworks, you can also have:
+
+```
 
   * A prerequisite between an education framework (.edu) and a code framework - when the education framework contains code samples which need code frameworks to be implemented.
   * A prerequisite between an education framework and others education frameworks - if the first framework contains documents which refer to documents managed in others frameworks.
@@ -71,7 +83,7 @@ Examples In the following example, source _themine.cpp_ in _framework1/module1_ 
 History Version: **1** [Mar 2000] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2000, Dassault Systmes. All rights reserved._

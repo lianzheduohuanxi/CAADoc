@@ -1,13 +1,16 @@
 ---
+```vbscript
 title: "Intersecting a Curve with a Surface"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGopIntersect", "CATICGMIntersectionCrvSur", "CAAGMModelGemBrowser", "CAAGMModelInterfaces", "CAAGMModelIntersect"]
 source_file: "Doc/online/CAACgmModel/CAACgmUcGopIntersect.htm"
 converted: "2026-05-11T17:33:48.435496"
+```
+
 ---
 # Intersecting a Curve with a Surface  
-  
+
 ---  
 Use Case  
 ## Abstract
@@ -30,12 +33,14 @@ This use case [1] is intended to help you to use the CATICGMIntersectionCrvSur o
 CAAGMModelIntersect is a use case of the CAAGMModelInterfaces.edu framework.
 ### What Does CAAGMModelIntersect Do
 
+CAAGMModelIntersect is a use case of the CAAGMModelInterfaces.edu framework.
 This use case creates the input data to be passed to the CATICGMIntersectionCrvSur operator (a line and a cylinder). The result can be optionally saved into an NCGM container and displayed using the CAAGMModelGemBrowser use case [3].
 
 Fig. 1: The Geometry of the CAAGMModelIntersect Use Case ![Use Case Data](images/CAACgmGopIntersect1.gif) | This use case illustrates the global scheme of the geometric operators and takes the curve-surface intersection operator as example. The curve is a line, and the surface a cylinder. The operator being independent of the type of curve or surface, any kind of curve or surface can be used in the same way.  
----|---  
+
 ### How to Launch CAAGMModelIntersect 
 
+Fig. 1: The Geometry of the CAAGMModelIntersect Use Case ![Use Case Data](images/CAACgmGopIntersect1.gif) | This use case illustrates the global scheme of the geometric operators and takes the curve-surface intersection operator as example. The curve is a line, and the surface a cylinder. The operator being independent of the type of curve or surface, any kind of curve or surface can be used in the same way.
 To launch CAAGMModelIntersect, you will need to set up the build time environment, then compile CAAGMModelIntersect.m along with its prerequisites, set up the run time environment, and then execute the use case [4].
 
 If you simply type CAAGMModelIntersect with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example:
@@ -43,8 +48,11 @@ If you simply type CAAGMModelIntersect with no argument, the use case executes, 
 CAAGMModelIntersect `e/Intersection.NCGM`
 
 This NCGM file can be displayed using the CAAGMModelGemBrowser use case [3].
+
 ### Where to Find the CAAGMModelIntersect Code
 
+CAAGMModelIntersect `e/Intersection.NCGM`
+This NCGM file can be displayed using the CAAGMModelGemBrowser use case [3].
 The CAAGMModelIntersect use case is made of a main named CAAGopIntersect.cpp located in the CAAGMModelIntersect .m module of the CAAGMModelInterfaces.edu framework:
 
 `InstallRootDirectory\CAAGMModelInterfaces.edu\CAAGMModelIntersect.m\`
@@ -52,15 +60,20 @@ The CAAGMModelIntersect use case is made of a main named CAAGopIntersect.cpp loc
 where `InstallRootFolder` [4] is the folder where the API CD-ROM is installed.
 ## Step-by-Step
 
+where `InstallRootFolder` [4] is the folder where the API CD-ROM is installed.
 The initial step which consists in creating the geometry factory as well as the last step which consists in writing the model and closing the factory are described in . The coding steps dedicated to the CATICGMIntersectionCrvSur operator are explained below:
 
     1. Creating the Geometry Factory [1].
     2. Creating the Line and Cylinder to Intersect.
     3. Using the BASIC Mode [2] 
+
        * Creating the operator.
        * Getting the results by using the iterators.
        * Deleting the operator.
+2. Creating the Line and Cylinder to Intersect.
+3. Using the BASIC Mode [2]
     4. Using the ADVANCED Mode [2] 
+
        * Creating the operator.
        * Running.
        * Getting the results.
@@ -69,17 +82,24 @@ The initial step which consists in creating the geometry factory as well as the 
        * Deleting the operator.
     5. Writing the Model and Closing the Factory [1].
 ### Creating the Line and Cylinder to Intersect
-    
+
     // ------------ line passing thru (0,0,0), of direction (1.,1.,0)
+5. Writing the Model and Closing the Factory [1].
     CATLine * piLine = piGeomFactory->**CreateLine**(CATMathO,     // (0,0,0) math point
                                                  CATMathVector(1.,1.,0.) );
     if (NULL==piLine) 
+
     {
       ::CATCloseCGMContainer(piGeomFactory);
+CATLine * piLine = piGeomFactory->**CreateLine**(CATMathO,     // (0,0,0) math point
+CATMathVector(1.,1.,0.) );
+if (NULL==piLine)
       return (1);
+
     }
     //
     // ------------ cylinder
+return (1);
     double radius = 10.;
     double axisStart = -50.;
     double axisEnd = 50.;
@@ -92,9 +112,14 @@ The initial step which consists in creating the geometry factory as well as the 
                                                             angleStart,
                                                             angleEnd);
     if (NULL==piCylinder) 
+
     {
       ::CATCloseCGMContainer(piGeomFactory);
+angleStart,
+angleEnd);
+if (NULL==piCylinder)
       return (1);
+
     }
 
 The geometry is created by the `CATGeoFactory` with the `CreateLine` and `CreateCylinder` methods.
@@ -105,35 +130,61 @@ In this mode, you must use the operator only once with the input parameters. The
     * Retrieves the number of solution points: `GetNumberOfPoints`.
     * Skips to the next point: `NextPoint`.
     * Creates the current geometric point: `GetCartesianPoint`.
-    
+
     //  creation and run
     CATICGMIntersectionCrvSur* pIntOp = **::CATCGMCreateIntersection**(
                            piGeomFactory,   // geometric factory 
                            piLine,          // geometric line
                            piCylinder,      // geometric cylinder
+
                            **BASIC**);          // the mode (default value)
     //
     // get the results
+piLine,          // geometric line
+piCylinder,      // geometric cylinder
     if (NULL == pIntOp) return (3);
     long nbPoints = pIntOp->**GetNumberOfPoints**();
-    
+
     cout << "Basic case: Number of intersection points: "<< nbPoints 
+
          << endl;
+```vbscript
+if (NULL == pIntOp) return (3);
+long nbPoints = pIntOp->**GetNumberOfPoints**();
+cout << "Basic case: Number of intersection points: "<< nbPoints
     if (0 != nbPoints) 
+```
+
     {
       // iterator on the resulting points
+cout << "Basic case: Number of intersection points: "<< nbPoints
+if (0 != nbPoints)
       pIntOp->**BeginningPoint**();	         // initialization
       while(TRUE== (pIntOp->**NextPoint**()) )   // loop on the resulting points
+
       {
         // create the geometric point
+pIntOp->**BeginningPoint**();	         // initialization
+while(TRUE== (pIntOp->**NextPoint**()) )   // loop on the resulting points
         CATCartesianPoint* piPoint=pIntOp->**GetCartesianPoint**(); 
         double x,y,z;
         if (NULL != piPoint)
+
         {
+CATCartesianPoint* piPoint=pIntOp->**GetCartesianPoint**();
+double x,y,z;
+if (NULL != piPoint)
           piPoint->GetCoord(x,y,z);
           cout << " X= "<< x << " Y= "<< y << " Z= "<< z <<endl;
+
           // remove the point if you do not want to keep it
+```vbscript
+if (NULL != piPoint)
+piPoint->GetCoord(x,y,z);
+cout << " X= "<< x << " Y= "<< y << " Z= "<< z <<endl;
           piGeomFactory->**Remove**(piPoint); 
+```
+
         }                          
       }
     }
@@ -146,58 +197,72 @@ This mode can be used, in case of the curve - surface intersection:
 
     * To set advanced parameters: the limits on the geometry to take into account for this operation.
     * To run again the operator on a different curve. This mode can be useful where performing intersections between a surface and a bunch of curves.
-    
+
+This mode can be used, in case of the curve - surface intersection:
     CATTICGMIntersectionCrvSur* pIntOp = **::CATCGMCreateIntersection**(
                                     piGeomFactory,    // geometric factory
                                     piLine,           // geometric line
                                     piCylinder,       // geometric cylinder
+
                                     **ADVANCED**);        // MODE
+CATTICGMIntersectionCrvSur* pIntOp = **::CATCGMCreateIntersection**(
+piGeomFactory,    // geometric factory
+piLine,           // geometric line
+piCylinder,       // geometric cylinder
     if (NULL==pIntOp) return (3);
-    
+
     // set  limits. These limits were previously defined or computed
+piCylinder,       // geometric cylinder
+if (NULL==pIntOp) return (3);
     pIntOp->**SetLimits**(crvLimits);
-    
+
     // run
     pIntOp->**Run**();
-    
+
     // get the results
     // ... same way as in BASIC mode ..., but not same result! 
     // as the curve limits are more restrictive, only one solution is found
-    
+
     // set another line and new limits
-    
+
     pIntOp->**SetCurve**(piNewLine);     // piNewLine was previously created
     pIntOp->SetLimits(newCrvLimits); // newCrvLimits was previously defined
-    
+
     // run again 
+pIntOp->**SetCurve**(piNewLine);     // piNewLine was previously created
+pIntOp->SetLimits(newCrvLimits); // newCrvLimits was previously defined
     pIntOp->**Run**();
-    
+
     // get the results
+pIntOp->**Run**();
     nbPoints = pIntOp->GetNumberOfPoints();
     cout << " Number of intersection points: "<< nbPoints << endl;
     long nbCurves= pIntOp->GetNumberOfCurves();
     cout << "Number of intersection curves: "<< nbCurves << endl;
-    
+
     // delete
     **pIntOp- >Release();  
+long nbCurves= pIntOp->GetNumberOfCurves();
+cout << "Number of intersection curves: "<< nbCurves << endl;
     pIntOp=NULL;**
 
 **Notes** :
 
+pIntOp=NULL;**
     1. If you only ask for the number of solutions, without getting the corresponding geometric objects, these objects are not created in the geometric factory. So you will not see them at the visualization of the NCGM document. In the use case, the `NewLine` curve is lying on the cylinder. There is a curve solution, that is not created, because the `GetPCurve` method is not called.
     2. The limits are defined by two CATCrvParam. These CATCrvParam are directly computed by calling the `CATCurve::GetParam` method on two cartesian points. This is only possible, first because these points belong to the curve, and second because the line is a canonical entity. In other cases, you must use `CATProjectionPtCrv` to retrieve the `CATCrvParam` corresponding to a `CATPoint` on a given curve.
-    
+
     CATCrvParam  startParam, endParam;
-    
+
     // piLine is the line of origin CATMathO and of direction (1.,1.,0.)
     // The use of GetParam is only possible because the points belong to the line
     // and piLine is canonical.
     // In other cases use a CATProjectionPtCrv operator
     piLine->GetParam(CATMathO,startParam);
-    
+
     // another point on the line  
     piLine->GetParam(CATMathPoint(35.,35.,0.),endParam);
-    
+
     // the limits
     CATCrvLimits crvLimits(startParam,endParam);
 ## In Short

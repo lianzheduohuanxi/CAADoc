@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "Dialog Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR8"
@@ -6,11 +7,14 @@ version: "V5R8"
 tags: []
 source_file: "Doc/online/CAACenAPIChangesR8/Dialog.htm"
 converted: "2026-05-11T17:33:52.470290"
----
+```
 
+---
+tags: []
+source_file: "Doc/online/CAACenAPIChangesR8/Dialog.htm"
+converted: "2026-05-11T17:33:52.470290"
 CAA C++ API Modifications|  Dialog  |   
----|---|---  
-  
+
 * * *
 
 **Entity|  SP| Modification| To Do** | Dialog/Protected/CATDlgNotification.h/CATDlgDSLogoNotification/CATDlgDSLogoNotification| GA| INDM| Check that you don't use it  

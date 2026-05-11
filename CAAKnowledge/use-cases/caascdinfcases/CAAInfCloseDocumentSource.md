@@ -1,13 +1,19 @@
 ---
+```vbscript
 title: "CAAInfCloseDocument.CATScript"
 category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CAAScdInfUseCases", "CATIA", "CAAInfCloseDocument", "CAAInfReadDocument"]
 source_file: "Doc/online/CAAScdInfUseCases/CAAInfCloseDocumentSource.htm"
 converted: "2026-05-11T17:31:52.352570"
----
+```
 
+---
+tags: ["CAAScdInfUseCases", "CATIA", "CAAInfCloseDocument", "CAAInfReadDocument"]
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfCloseDocumentSource.htm"
+converted: "2026-05-11T17:31:52.352570"
     Option Explicit
+
 ```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2001
     ' *****************************************************************************
@@ -19,20 +25,21 @@ converted: "2026-05-11T17:31:52.352570"
     '   Locales:        English 
     '   CATIA Level:  V5R7 
     ' *****************************************************************************
-    
+
 ```
 
-    
-```vbscript
     Sub CATMain()
         ' -----------------------------------------------------------------------------------------------
         ' Optional: allows to find the sample wherever it may be installed
+
 ```vbscript
         Dim sDocPath As String
         sDocPath=CATIA.SystemService.Environ("CATDocView")
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
           Err.Raise 9999,,"No Doc Path Defined"
         End If
+```
+
 ```vbscript
         ' ------------------------------------------------------------------------------------------------ 
         'Open the document. 
@@ -41,8 +48,13 @@ converted: "2026-05-11T17:31:52.352570"
 ```
 
            "online\CAAScdInfUseCases\samples\CAAInfReadDocument.CATPart")
+```vbscript
+Dim sFilePath
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
         Dim iPartDoc As Document
         Set iPartDoc = CATIA.Documents.Open(sFilePath)
+```
+
 ```vbscript
         'Close the active document which is the document just opened.
          CATIA.ActiveDocument.Close()
@@ -51,7 +63,13 @@ converted: "2026-05-11T17:31:52.352570"
         'Close the document using the variable defined for it.
 ```
 
+```vbscript
+'Open the same document again.
+Set iPartDoc = CATIA.Documents.Open(sFilePath)
+'Close the document using the variable defined for it.
          iPartDoc.Close()
+```
+
 ```vbscript
          'Open the same document a third time.
           Set iPartDoc = CATIA.Documents.Open(sFilePath)
@@ -59,14 +77,4 @@ converted: "2026-05-11T17:31:52.352570"
           CATIA.Documents.Item("CAAInfReadDocument.CATPart").Close()
 ```
 
-       
-```
-
-```vbscript
     End Sub
-    
-```
-
-    
-
-```

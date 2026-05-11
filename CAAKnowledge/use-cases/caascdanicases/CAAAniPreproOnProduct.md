@@ -1,12 +1,14 @@
 ---
+```vbscript
 title: "Creating Connection Properties on a Product"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATISamImportDefine", "CATIAParameter", "CATIAConstraints", "CAAScdAniUseCases", "CATIA", "CAAAniPreproOnProduct"]
 source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproOnProduct.htm"
 converted: "2026-05-11T17:31:51.820883"
----
+```
 
+---
 ## Analysis Modeler
 
 ## Creating Connection Properties on a Product  
@@ -15,6 +17,7 @@ converted: "2026-05-11T17:31:51.820883"
 
 This macro shows you how to create an Analysis document for a generative structural analysis. With this scenario, you will cover all the steps of a generative analysis application. This scenario will require a "CATIA - GENERATIVE ASSEMBLY STRUCTURAL ANALYSIS 2 Product" license. It creates an Analysis document, imports a Product document provided with the sample. An Analysis Case is created as for static linear analysis. Some preprocessing data are defined by using the publication defined on the product. We will focus on the creation of connection properties based on assembly constraints and creation of loading conditions based on rigid virtual part.
 
+This macro shows you how to create an Analysis document for a generative structural analysis. With this scenario, you will cover all the steps of a generative analysis application. This scenario will require a "CATIA - GENERATIVE ASSEMBLY STRUCTURAL ANALYSIS 2 Product" license. It creates an Analysis document, imports a Product document provided with the sample. An Analysis Case is created as for static linear analysis. Some preprocessing data are defined by using the publication defined on the product. We will focus on the creation of connection properties based on assembly constraints and creation of loading conditions based on rigid virtual part.
 CAAAniPreproOnProduct is launched in CATIA [1]. No open document is needed. [CAAAniPreproOnProduct.catvbs](CAAAniPreproOnProductSource.htm) is located in the CAAScdAniUseCases module. [Execute macro](macros/CAAAniPreproOnProduct.catvbs) (Windows only).
 
 CAAAniPreproOnProduct includes the following steps:
@@ -54,7 +57,13 @@ If (WBName <> "GPSCfg") Then
 End If
 ```
 
+```vbscript
+If (WBName <> "GPSCfg") Then
+CATIA.StartWorkbench("GPSCfg")
+End If
 Create the Analysis document. The use of StartWorkbench will customize the analysis document as a generative one. This means that meshparts and properties will be automatically created as in the Generative workbench.
+
+```
 
 #### Importing the Product Document and Extracting the Publications
 
@@ -87,7 +96,13 @@ Set publications1 = product1.Publications
 Set constraints1 = product1.Connections("CATIAConstraints")
 ```
 
+```vbscript
+Set products1 = product1.Products
+Set publications1 = product1.Publications
+Set constraints1 = product1.Connections("CATIAConstraints")
 The product document is fetched in the documentation installation path, this path has already been stored in the `sDocPath` variable. In the collection of documents analysisLinkedDocuments1, two documents can be retrieved: the Analysis document and the Product document. The extraction of pre-defined geometrical arena is done by using the Publication interface. Each publication is identified by a logical name. This is equivalent as the selection of a Publication element inside the interactive applications. Other used support is the assembly constraints. For this we also extract from the product the constraints collection.
+
+```
 
 [Top]
 
@@ -137,7 +152,13 @@ Set analysisSet2 = analysisSets1.Add("LoadSet", catAnalysisSetIn)
 Set analysisSet3 = analysisCase1.AddSolution("StaticSet")
 ```
 
+```vbscript
+Set analysisSet1 = analysisSets1.Add("RestraintSet", catAnalysisSetIn)
+Set analysisSet2 = analysisSets1.Add("LoadSet", catAnalysisSetIn)
+Set analysisSet3 = analysisCase1.AddSolution("StaticSet")
 According to the general [Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.htm) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **document**, we find the **Analysis manager Object**, the **Analysis models** and the **Analysis cases Objects**. From both last object (Analysis Model and Analysis case), you can get access to **Analysis Sets** and **Analysis entities** that defines the preprocessing actions. This step create a new case and create two input sets (Restraint Set and Load Set) and a solution set (StaticSet).
+
+```
 
 [Top]
 
@@ -151,7 +172,13 @@ Set publication2 = publications1.Item("FaceToClamp")
 analysisEntity3.AddSupportFromPublication product1, publication2
 ```
 
+```vbscript
+Set analysisEntity3 = analysisEntities2.Add("SAMClamp")
+Set publication2 = publications1.Item("FaceToClamp")
+analysisEntity3.AddSupportFromPublication product1, publication2
 From the restraint set defined on the analysis case, we retrieve the collection of analysis entities. We add to this collection a fix (clamp) boundary condition and apply it on the geometry extracted from the Product document.
+
+```
 
 [Top]
 
@@ -175,6 +202,9 @@ basicComponent3.SetValue "", 2, 1, 1, 0.000000
 basicComponent3.SetValue "", 3, 1, 1, 0.000000
 ```
 
+basicComponent3.SetValue "", 1, 1, 1, 100.000000
+basicComponent3.SetValue "", 2, 1, 1, 0.000000
+basicComponent3.SetValue "", 3, 1, 1, 0.000000
 The load is defined as the boundaries. In this case the support is the virtual part created before. To use the method with a Reference use AnalysisManager.CreateReferenceFromObject that will transform the analysis entity into a reference.
 
 [Top]
@@ -212,7 +242,12 @@ Next
 MyCase.ComputeMeshOnly
 ```
 
+```vbscript
+' Launch the computation of the Case
+MyCase.ComputeMeshOnly
 This method will launch the mesher, generate the finite element model for preprocessing.
+
+```
 
 [Top]
 
@@ -224,7 +259,13 @@ Set analysisManager1 = Nothing
 Set TheAnalysisDocument = Nothing
 ```
 
+```vbscript
+' Clean up (optional)
+Set analysisManager1 = Nothing
+Set TheAnalysisDocument = Nothing
 To run the macro interactively CATDocView and ADL_ODT_SLASH environment variables must be defined.
+
+```
 
 [Top]
 

@@ -1,16 +1,23 @@
 ---
+```vbscript
 title: "How to Associate Topology With Geometry"
 category: "tutorial"
 module: "CAATobTechArticles"
 tags: ["CATIntCurve"]
 source_file: "Doc/online/CAATobTechArticles/TopoCreate.htm"
 converted: "2026-05-11T17:33:45.903936"
----
+```
 
+---
+tags: ["CATIntCurve"]
+source_file: "Doc/online/CAATobTechArticles/TopoCreate.htm"
+converted: "2026-05-11T17:33:45.903936"
 Geometric Modeler |  Topology |  How to Associate Topology With Geometry _Rules Between Topological and Geometric Objects_  
----|---|---  
+
+converted: "2026-05-11T17:33:45.903936"
+Geometric Modeler |  Topology |  How to Associate Topology With Geometry _Rules Between Topological and Geometric Objects_
 Technical Article  
-  
+
 * * *
 
 * * *
@@ -31,9 +38,8 @@ Abstract The topology describes the limitation of a geometry. Hence, topological
   * **In Short**
   * **References**
 
-  
 ---  
-  
+
 * * *
 
 Introduction The topology is a building set for limiting the space. Vertex bound edges, which bound faces, which bound volumes. How to map these topological entities to geometric entities in order to limit the geometric space? 
@@ -59,11 +65,14 @@ Fig. 2: Geomery associated with topology: the case of the Wire and VertexInVolum
 ---|---  
 [Top] Main Steps to Create Cells Related to Geometry We suppose in all these examples that a CATGeoFactory and a CATBody have been already created. These examples only detail the cell construction. You must then create the domain (Lump, Shell, Wire, VertexInVolume) containing the cells and add it to the body to complete it. For code examples, see. [Top] Main Steps to Create a Vertex
 
+Fig. 2: Geomery associated with topology: the case of the Wire and VertexInVolume domain ![](images/TopoGeom2.gif)
   1. From a geometric point, eventually create a POEC or CATPointOnSurface, and relate it to a CATMacroPoint.
   2. Create the CATVertex and associate it with the macro-point.
 
 [Top] Main Steps to Create an Edge
 
+1. From a geometric point, eventually create a POEC or CATPointOnSurface, and relate it to a CATMacroPoint.
+2. Create the CATVertex and associate it with the macro-point.
   1. From a CATCurve, eventually create a CATPCurve, and relate it to a CATEdgeCurve.
   2. Determine two parameters on the curve. Create the POECs and relate them to a CATMacroPoint.
   3. Create the vertices (CATVertex) and associate them with their corresponding macro-points.
@@ -77,24 +86,28 @@ Note: A CATEdgeCurve cannot be directly created. Only its derived types (CATSimC
 
 [Top] Main Steps to Create a Volume
 
+2. Create a CATLoop.
+3. Create a CATFace, associate it with its CATSurface and border it by the edges, building up the loop.
   1. Follows the steps of the preceding section to create the vertices, edges and faces.
   2. Create a CATShell.
   3. Create a CATVolume and border it by the faces, building up the shell.
 
 [Top] Example: Wire Creation This section details step by step the creation of a Wire containing one edge. 
 
+2. Create a CATShell.
+3. Create a CATVolume and border it by the faces, building up the shell.
   1. **Geometry Creation**
-    
+
     CATCartesianPoint * Point1=factory->CreateCartesianPoint(0,0,0);
     CATCartesianPoint * Point2=factory->CreateCartesianPoint(0,10,0);
     CATLine *           Line  =factory->CreateLine(Point1,Point2);      
 
   2. **CATEdgeCurve Creation**
-    
+
     CATSimCurve *           SimCurve  =factory->CreateSimCurve(Line);
 
   3. **CATPointOnEdgeCurve and CATMacroPoint Creation**
-    
+
     CATCrvParam       Param
     CATCrvLimit       Limit = Line->GetLimits;
     Limit.GetLow(Param);
@@ -109,29 +122,29 @@ Note: A CATEdgeCurve cannot be directly created. Only its derived types (CATSimC
     Macro2->Append(Poec2);
 
   4. **Vertex Creation; Association with the Geometry**
-    
+
     CATVertex * Vertex1=body->CreateVertex();
     Vertex1->SetGeometry(Macro1);
     CATVertex * Vertex2=body->CreateVertex();
     Vertex2->SetGeometry(Macro2);
 
   5. **CATEdge Creation, Association with the Geometry, Boundary Definition.**
-    
+
     CATEdge *   Edge= body->CreateEdge();
     Edge->SetCurve(SimCurve);
     Edge->AddBoundingCell(Vertex1,CATSideLeft,NULL,Poec1);
     Edge->AddBoundingCell(Vertex2,CATSideLeft,NULL,Poec2);
 
   6. **Wire Creation.**
-    
+
     CATWire Wire=body->CreateWire();
 
   7. **Append the Edge into the Wire.**
-    
+
     Wire->AddCell(Edge);
 
   8. **Append the Wire into the Body.**
-    
+
     Body->AddDomain(Wire);
 
 ** Note**: This was detailed for explaining all the capabilities of the topological objects. You can use operators such as CATWireOperator or CATSkinOperator to directly create domains from geometry. [Top]
@@ -153,13 +166,13 @@ References [1] | [The CGM Objects](../CAAGobTechArticles/GeoObjects.md)
 [2] | [Topology Concepts](TopoConcepts.md)  
 [3] | [The CGM Topological Model](TopoModel.md)  
 [Top]  
-  
+
 * * *
 
 History Version: **1** [Mar 2000] | Document created  
 ---|---  
 [Top]  
-  
+
 * * *
 
 _Copyright 2000, Dassault Systmes. All rights reserved._

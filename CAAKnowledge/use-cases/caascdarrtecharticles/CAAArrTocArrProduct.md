@@ -1,10 +1,13 @@
 ---
+```vbscript
 title: "Arrangement Automation Objects"
 category: "use-case"
 module: "CAAScdArrTechArticles"
 tags: ["CATIA"]
 source_file: "Doc/online/CAAScdArrTechArticles/CAAArrTocArrProduct.htm"
 converted: "2026-05-11T17:31:51.588556"
+```
+
 ---
 # Arrangement Automation Objects
 
@@ -42,7 +45,7 @@ converted: "2026-05-11T17:31:51.588556"
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/arrsystemlineproduct.png)  
 ![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/arrbendablestring.png)  
 ---|---  
-  
+
 **Legend**
 
 ![](../CAAScrAutomationImages/images/yellbox.gif) Collection  
@@ -58,54 +61,40 @@ The **GetWorkbench** method applied to a **ProductDocument** object with the `"A
 
 ```vbscript
 For example, to retrieve the **ArrangementProduct** object from the root product, write: 
-    
+
 ```
 
-    
-```vbscript
     Sub CATMain()
-    
+
 ```vbscript
       Dim pro As Product
       Set pro=CATIA.ActiveDocument.Product
-    
+
       Dim arrPrd As **ArrangementProduct**
       Set arrPrd=pro.GetTechnologicalObject("**ArrangementProduct** ")
-    
+
 ```
 
-```vbscript
     End Sub
-    
-```
 
 ```vbscript
 For example, to retrieve the **ArrWorkbench** object in the active Product document, and then to retrieve the **ArrNomenclatureTree** object, write: 
-    
+
 ```
 
-    
-```vbscript
     Sub CATMain()
-    
+
     Dim doc As Document
     Set doc=CATIA.ActiveDocument
-    
+
     Dim wkb As ArrWorkbench
     Set wkb=doc.GetWorkbench("ArrWorkbench")
-    
+
     Dim arr As ArrNomenclatureTree
     Set arr=wkb.ArrNomenclatureTree
-    
-```
 
-```vbscript
     End Sub
-    
-```
 
 * * *
 
 _Copyright 1994-2003, Dassault Systmes. All rights reserved._
-
-```

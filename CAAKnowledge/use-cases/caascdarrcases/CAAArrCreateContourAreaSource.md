@@ -1,13 +1,19 @@
 ---
+```vbscript
 title: "CAAArrCreateContourArea.CATScript"
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CAAArrCreateContourArea", "CATIA"]
 source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateContourAreaSource.htm"
 converted: "2026-05-11T17:31:51.546099"
----
+```
 
+---
+tags: ["CAAArrCreateContourArea", "CATIA"]
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateContourAreaSource.htm"
+converted: "2026-05-11T17:31:51.546099"
     Option Explicit
+
 ```vbscript
     '// COPYRIGHT DASSAULT SYSTEMES  2000
     '******************************************************************************
@@ -19,12 +25,11 @@ converted: "2026-05-11T17:31:51.546099"
     ' CATIA Level:   V5R6
     ' Locale     :   English
     '******************************************************************************
-    
+
 ```
 
-    
-```vbscript
     Sub CATMain()
+
 ```vbscript
        ' On Error Resume Next
        '----------------------------------------------
@@ -36,6 +41,8 @@ converted: "2026-05-11T17:31:51.546099"
        Dim objRootProd       As Product
        Set objProdDoc      = CATIA.Documents.Add("Product")
        Set objRootProd     = objProdDoc.Product
+```
+
 ```vbscript
        '----------------------------------------------
        'Retrieving Root Product's Relative Axis and Position Information
@@ -53,12 +60,11 @@ converted: "2026-05-11T17:31:51.546099"
        Dim dblAreaPos(11)  As Double
 ```
 
-    
-```
-
        objPosition.GetComponents dblAreaPos
 ```vbscript
        Set objArea     = objArrProd.ArrangementAreas.AddArea(objMove, dblAreaPos, 50.0)
+```
+
 ```vbscript
        '----------------------------------------------
        ' Create Rectangle
@@ -68,33 +74,24 @@ converted: "2026-05-11T17:31:51.546099"
        Dim objMove1          As Move
        Dim objPosition1      As Position
        Dim dblRectPos(11)    As Double
-    
+
        Set objAreaProd1  = objArea.GetTechnologicalObject("Product")
        Set objArrProd1   = objArea.GetTechnologicalObject("ArrangementProduct")
        Set objMove1      = objAreaProd1.Move
        Set objPosition1  = objAreaProd1.Position
 ```
 
-    
-```
-
        objPosition1.GetComponents dblRectPos
        dblRectPos(9)  = 100.0
        dblRectPos(10) = 100.0
        dblRectPos(11) = 0.0
+
 ```vbscript
        Set objRectangle = objArrProd1.ArrangementRectangles.AddRectangle (objMove1,dblRectPos, 50.0, 50.0)   
        '---------------------------------------------
        ' Add Rectangular contour to Area                    
        objArea.ArrangementContours.AddRectangularContour(objRectangle)
-    
+
 ```
 
-```vbscript
     End Sub 
-    
-```
-
-    
-
-```

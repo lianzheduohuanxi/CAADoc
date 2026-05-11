@@ -1,4 +1,5 @@
 ---
+```vbscript
 title: "VPMInterfaces Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR8"
@@ -6,11 +7,14 @@ version: "V5R8"
 tags: ["CATIConfigurable", "CATIAVPMBusinessObject", "CATICfgManager", "CATIABase", "CATIAVPMBOProductInstance", "CATIConfigHandler", "CATIVpmAFLAffectedObject", "CATICfgModification", "CATICfgNormalValue", "CATIVpmFactoryObject", "CATICfgEffectivity", "CATICfgFilter", "CATIVpmUEActionFlow", "CATIAVPMBOProductComponent", "CATICfgSpecCategory", "CATIVpmAFLAttachement", "CATIVpmAFLProductView", "CATIVpmAFLAction", "CATIVpmAFLManager", "CATICfgSimpleSpecification"]
 source_file: "Doc/online/CAACenAPIChangesR8/VPMInterfaces.htm"
 converted: "2026-05-11T17:33:52.761505"
----
+```
 
+---
+tags: ["CATIConfigurable", "CATIAVPMBusinessObject", "CATICfgManager", "CATIABase", "CATIAVPMBOProductInstance", "CATIConfigHandler", "CATIVpmAFLAffectedObject", "CATICfgModification", "CATICfgNormalValue", "CATIVpmFactoryObject", "CATICfgEffectivity", "CATICfgFilter", "CATIVpmUEActionFlow", "CATIAVPMBOProductComponent", "CATICfgSpecCategory", "CATIVpmAFLAttachement", "CATIVpmAFLProductView", "CATIVpmAFLAction", "CATIVpmAFLManager", "CATICfgSimpleSpecification"]
+source_file: "Doc/online/CAACenAPIChangesR8/VPMInterfaces.htm"
+converted: "2026-05-11T17:33:52.761505"
 CAA C++ API Modifications|  VPMInterfaces  |   
----|---|---  
-  
+
 * * *
 
 **Entity|  SP| Modification| To Do** | VPMInterfaces/Protected/CATIAVPMBusinessObject.h/CATIAVPMBusinessObject/Describe| 99| INDM| Check that you don't use it  
