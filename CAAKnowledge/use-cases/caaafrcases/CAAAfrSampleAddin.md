@@ -2,7 +2,7 @@
 title: "Creating an Add-in"
 category: "use case"
 module: "CAAAfrUseCases"
-tags: ["CAAAfrFilletHdr", "CAAAfrGeoCreationWkbAddin", "CAAGeometry", "CAAAfrOperationToolsMnu", "CAAAfrUnionHdr", "CAAAfrTFilletStr", "CAAAfrGeoOperationAdnHeader", "CAAAfrSubstractHdr", "CATImplementClass", "CAAAfrGeoOperationAdn", "CAAAfrMFilletStr", "CAAAfrOperationMbr", "CAAAfrMSubstractStr", "CAAApplicationFrame", "CAAAfrTSubstractStr", "CAAAfrOperationTlb", "CAAAfrGeoOperationAddin", "CAAAfrOperationToolsSep", "CAAAfrTUnionStr", "CAAIAfrGeoCreationWkbAddin"]
+tags: ["CAAAfrFilletHdr", "CAAAfrGeoCreationWkbAddin", "CAAGeometry", "CAAAfrOperationToolsMnu", "CAAAfrUnionHdr", "CAAAfrTFilletStr", "CAAAfrGeoOperationAdnHeader", "CAAAfrSubstractHdr", "CAAAfrGeoOperationAdn", "CAAAfrMFilletStr", "CAAAfrOperationMbr", "CAAAfrMSubstractStr", "CAAApplicationFrame", "CAAAfrTSubstractStr", "CAAAfrOperationTlb", "CAAAfrGeoOperationAddin", "CAAAfrOperationToolsSep", "CAAAfrTUnionStr", "CAAIAfrGeoCreationWkbAddin"]
 source_file: "Doc\online\CAAAfrUseCases\CAAAfrSampleAddin.htm"
 converted: "2026-05-11T17:17:55.625620"
 ---

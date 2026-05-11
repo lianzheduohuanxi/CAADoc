@@ -2,7 +2,7 @@
 title: "Making a Component Displayable With CATI3DGeoVisu"
 category: "use case"
 module: "CAAVisUseCases"
-tags: ["CATI3DGeoVisu", "CAASysLine", "CAASysPolyline", "CAAEVisVisuCircle", "CAAVisualization", "CAAVisGeoModel", "CAASysEllipse", "CATIA", "CAAEVisModelEvents", "CAAIModelEvents", "CAAGeometry", "CAAISysCircle", "CAAVisModelEvents", "CAASysPoint", "CAASysCircle", "CATImplementClass", "CAASysSampRootObj", "CATIModelEvents", "CAASysPlane", "CAASysGeomRootObj"]
+tags: ["CATI3DGeoVisu", "CAASysLine", "CAASysPolyline", "CAAEVisVisuCircle", "CAAVisualization", "CAAVisGeoModel", "CAASysEllipse", "CATIA", "CAAEVisModelEvents", "CAAIModelEvents", "CAAGeometry", "CAAISysCircle", "CAAVisModelEvents", "CAASysPoint", "CAASysCircle", "CAASysSampRootObj", "CATIModelEvents", "CAASysPlane", "CAASysGeomRootObj"]
 source_file: "Doc\online\CAAVisUseCases\CAAVisSampleCATIVisu.htm"
 converted: "2026-05-11T17:31:52.066701"
 ---

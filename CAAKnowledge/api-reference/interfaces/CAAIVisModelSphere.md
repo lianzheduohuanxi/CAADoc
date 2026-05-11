@@ -4,6 +4,7 @@ type: "interface"
 module: "CAAVisualization"
 base: "CATBaseUnknown"
 method_count: 4
+visibility: "protected"
 verified: true
 ---
 
@@ -11,7 +12,10 @@ verified: true
 
 **基类**: CATBaseUnknown  
 **模块**: CAAVisualization  
+**可见性**: protected  
 **方法数**: 4
+
+> Mathematics FrameWork
 
 ## 方法列表
 
@@ -34,4 +38,9 @@ HRESULT SetRadius(const float iRadius);
 ```cpp
 HRESULT GetRadius(float & oRadius) const;
 ```
+
+## 依赖
+
+- `CATBaseUnknown.h`
+- `CAAVisManagerInt.h`
 

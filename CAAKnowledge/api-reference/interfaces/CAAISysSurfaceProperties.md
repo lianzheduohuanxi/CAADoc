@@ -4,6 +4,7 @@ type: "interface"
 module: "CAASystem"
 base: "CATBaseUnknown"
 method_count: 2
+visibility: "local"
 verified: true
 ---
 
@@ -11,7 +12,10 @@ verified: true
 
 **基类**: CATBaseUnknown  
 **模块**: CAASystem  
+**可见性**: local  
 **方法数**: 2
+
+> Interface to modify the Surface properties.
 
 ## 方法列表
 
@@ -24,4 +28,8 @@ HRESULT GetColor(int & oRed,int & oGreen,int & oBlue);
 ```cpp
 HRESULT SetColor(const int iRed,const int iGreen,const int iBlue);
 ```
+
+## 依赖
+
+- `CATBaseUnknown.h`
 

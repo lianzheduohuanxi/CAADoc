@@ -4,6 +4,7 @@ type: "interface"
 module: "CAAV5V6MechanicalModeler"
 base: "CATBaseUnknown"
 method_count: 5
+visibility: "public"
 verified: true
 ---
 
@@ -11,6 +12,7 @@ verified: true
 
 **基类**: CATBaseUnknown  
 **模块**: CAAV5V6MechanicalModeler  
+**可见性**: public  
 **方法数**: 5
 
 ## 方法列表
@@ -39,4 +41,9 @@ HRESULT GetWetAreaParameter(CATICkeParm_var &oWetAreaParm);
 ```cpp
 HRESULT GetVolumeParameter(CATICkeParm_var &oVolumeParm);
 ```
+
+## 依赖
+
+- `CAAV5V6ExtMmrMultiMeasure.h`
+- `CATBaseUnknown.h`
 

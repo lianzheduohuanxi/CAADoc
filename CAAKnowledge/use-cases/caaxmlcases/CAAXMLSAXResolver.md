@@ -2,7 +2,7 @@
 title: "Resolving external entities with SAX"
 category: "use case"
 module: "CAAXmlUseCases"
-tags: ["CAAXMLSAXResolverMain", "CATISAXParser_var", "CAAXMLParser", "CATIXMLSAXFactory", "CATISAXEntityResolver_var", "CAAXMLSAXResolverHandlers", "CATImplementClass", "CATISAXParser", "CATISAXInputSource", "CATISAXEntityResolver", "CAAXMLSAXResolver", "CATISAXErrorHandler_var", "CATISAXErrorHandler", "CATISAXInputSource_var", "CATIXMLSAXFactory_var", "CATISAXDTDHandler", "CATISAXDocumentHandler"]
+tags: ["CAAXMLSAXResolverMain", "CATISAXParser_var", "CAAXMLParser", "CATIXMLSAXFactory", "CATISAXEntityResolver_var", "CAAXMLSAXResolverHandlers", "CATISAXParser", "CATISAXInputSource", "CATISAXEntityResolver", "CAAXMLSAXResolver", "CATISAXErrorHandler_var", "CATISAXErrorHandler", "CATISAXInputSource_var", "CATIXMLSAXFactory_var", "CATISAXDTDHandler", "CATISAXDocumentHandler"]
 source_file: "Doc\online\CAAXmlUseCases\CAAXMLSAXResolver.htm"
 converted: "2026-05-11T17:33:45.664165"
 ---

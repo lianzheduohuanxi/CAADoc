@@ -4,6 +4,7 @@ type: "interface"
 module: "CAAApplicationFrame"
 base: "CATBaseUnknown"
 method_count: 2
+visibility: "public"
 verified: true
 ---
 
@@ -11,7 +12,10 @@ verified: true
 
 **基类**: CATBaseUnknown  
 **模块**: CAAApplicationFrame  
+**可见性**: public  
 **方法数**: 2
+
+> Local Framework
 
 ## 方法列表
 
@@ -24,4 +28,9 @@ HRESULT GetCurrentColor(int & oRed, int & oGreen, int & oBlue) const;
 ```cpp
 HRESULT SetCurrentColor(int & oRed, int & oGreen, int & oBlue);
 ```
+
+## 依赖
+
+- `CATBaseUnknown.h`
+- `CAAAfrCustCommandHdrModel.h`
 

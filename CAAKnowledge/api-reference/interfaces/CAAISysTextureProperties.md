@@ -4,6 +4,7 @@ type: "interface"
 module: "CAASystem"
 base: "CATBaseUnknown"
 method_count: 4
+visibility: "public"
 verified: true
 ---
 
@@ -11,7 +12,10 @@ verified: true
 
 **基类**: CATBaseUnknown  
 **模块**: CAASystem  
+**可见性**: public  
 **方法数**: 4
+
+> System Framework
 
 ## 方法列表
 
@@ -34,4 +38,9 @@ HRESULT GetRough(int & oIsMetal);
 ```cpp
 HRESULT SetRough(const int iIsMetal);
 ```
+
+## 依赖
+
+- `CATBaseUnknown.h`
+- `CAASysGeoModelInf.h`
 

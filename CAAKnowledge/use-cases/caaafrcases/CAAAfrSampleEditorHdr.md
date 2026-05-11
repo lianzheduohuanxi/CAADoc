@@ -2,7 +2,7 @@
 title: "Creating Editors in Toolbar"
 category: "use case"
 module: "CAAAfrUseCases"
-tags: ["CAAAfrEltCountRep", "CAAAfrEltCountRepId", "CAAAfrMRUHeader", "CAAGeometry", "CAAAfrComboColorHeader", "CAAAfrGeoModel", "CAAAfrEdtLine", "CAAISysPoint", "CAAAfrPaletteOptions", "CATIAfrCommandHeaderRep", "CAASysCollectionModifNotif", "CATImplementClass", "CAAAfrEltCountHeader", "CAAAfrEdtPoint", "CAAISysLine", "CAASysGeoModelInf", "CAAEAfrCommandHeaderRepForEltCount", "CAASysSampCont", "CATImplementHeaderResources", "CAASysGeomCont"]
+tags: ["CAAAfrEltCountRep", "CAAAfrEltCountRepId", "CAAAfrMRUHeader", "CAAGeometry", "CAAAfrComboColorHeader", "CAAAfrGeoModel", "CAAAfrEdtLine", "CAAISysPoint", "CAAAfrPaletteOptions", "CATIAfrCommandHeaderRep", "CAASysCollectionModifNotif", "CAAAfrEltCountHeader", "CAAAfrEdtPoint", "CAAISysLine", "CAASysGeoModelInf", "CAAEAfrCommandHeaderRepForEltCount", "CAASysSampCont", "CATImplementHeaderResources", "CAASysGeomCont"]
 source_file: "Doc\online\CAAAfrUseCases\CAAAfrSampleEditorHdr.htm"
 converted: "2026-05-11T17:17:55.729034"
 ---

@@ -2,7 +2,7 @@
 title: "Understanding the Application Frame Layout"
 category: "general"
 module: "CAAAfrTechArticles"
-tags: ["CATIDocumentEdit", "CAAAfrHistogramChartWindow", "CAAEMyInterface", "CATIAfrGeneralWksAddin", "CATISO", "CATIVisu", "CATIAApplicationFrame", "CATIEditor", "CATImplementClass"]
+tags: ["CATIDocumentEdit", "CAAAfrHistogramChartWindow", "CAAEMyInterface", "CATIAfrGeneralWksAddin", "CATISO", "CATIVisu", "CATIAApplicationFrame", "CATIEditor"]
 source_file: "Doc\online\CAAAfrTechArticles\CAAAfrLayoutV5.htm"
 converted: "2026-05-11T17:17:55.923668"
 ---

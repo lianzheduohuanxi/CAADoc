@@ -2,7 +2,7 @@
 title: "Defining the Activated Workbench"
 category: "use case"
 module: "CAAAfrUseCases"
-tags: ["CAAEAfrActivateWorkbenchOnPart", "CATImplementClass", "CATIAfrActivateWorkbench", "CAAAfrInitialWorkbench", "CATIAApplicationFrm", "CAACATIAApplicationFrm", "CAAAfrProduct", "CAAApplicationFrame"]
+tags: ["CAAEAfrActivateWorkbenchOnPart", "CATIAfrActivateWorkbench", "CAAAfrInitialWorkbench", "CATIAApplicationFrm", "CAACATIAApplicationFrm", "CAAAfrProduct", "CAAApplicationFrame"]
 source_file: "Doc\online\CAAAfrUseCases\CAAAfrInitialWorkbench.htm"
 converted: "2026-05-11T17:17:55.614529"
 ---

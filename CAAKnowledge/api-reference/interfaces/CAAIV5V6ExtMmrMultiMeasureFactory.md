@@ -4,6 +4,7 @@ type: "interface"
 module: "CAAV5V6MechanicalModeler"
 base: "CATBaseUnknown"
 method_count: 2
+visibility: "public"
 verified: true
 ---
 
@@ -11,6 +12,7 @@ verified: true
 
 **基类**: CATBaseUnknown  
 **模块**: CAAV5V6MechanicalModeler  
+**可见性**: public  
 **方法数**: 2
 
 ## 方法列表
@@ -25,4 +27,9 @@ HRESULT CreateMmrMultiMeasure(CATBaseUnknown *ipGeometricalElementToMesure ,
 ```cpp
 HRESULT CreateMmrMeasureSet(CATBaseUnknown *&opMeasureSetInstance);
 ```
+
+## 依赖
+
+- `CAAV5V6ExtMmrMultiMeasure.h`
+- `CATBaseUnknown.h`
 

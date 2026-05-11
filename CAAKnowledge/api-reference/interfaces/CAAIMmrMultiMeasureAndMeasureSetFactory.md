@@ -4,6 +4,7 @@ type: "interface"
 module: "CAAMechanicalModeler"
 base: "CATBaseUnknown"
 method_count: 2
+visibility: "protected"
 verified: true
 ---
 
@@ -11,6 +12,7 @@ verified: true
 
 **基类**: CATBaseUnknown  
 **模块**: CAAMechanicalModeler  
+**可见性**: protected  
 **方法数**: 2
 
 ## 方法列表
@@ -25,4 +27,9 @@ HRESULT CreateMmrMultiMeasure(CATBaseUnknown *ipGeometricalElementToMesure ,
 ```cpp
 HRESULT CreateMmrMeasureSet(CATISpecObject **opMeasureSetInstance);
 ```
+
+## 依赖
+
+- `CAAMmrMultiMeasureAndMeasureSet.h`
+- `CATBaseUnknown.h`
 

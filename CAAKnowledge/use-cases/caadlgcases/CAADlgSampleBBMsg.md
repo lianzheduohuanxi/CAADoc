@@ -2,7 +2,7 @@
 title: "Sending a Data Message to an Interactive Application"
 category: "use case"
 module: "CAADlgUseCases"
-tags: ["CAADlgBBSender", "CAAIDlgDataRequest", "CATICommunicator", "CAADlgBBMessage", "CATIMessageReceiver", "CAADlgBBMessageNotification", "CATICommMsg", "CAADlgBBMessageManager", "CAADlgBBEditorMessageHandler", "CAADlgBBEditorMessage", "CATImplementClass", "CAADlgBBReceiver", "CAADlgBBReceiverWindow", "CAADlgBBSenderWindow", "CAASystem", "CATInstantiateComponent", "CATInteractiveApplication", "CAADlgBBMessageInt", "CAADialog"]
+tags: ["CAADlgBBSender", "CAAIDlgDataRequest", "CATICommunicator", "CAADlgBBMessage", "CATIMessageReceiver", "CAADlgBBMessageNotification", "CATICommMsg", "CAADlgBBMessageManager", "CAADlgBBEditorMessageHandler", "CAADlgBBEditorMessage", "CAADlgBBReceiver", "CAADlgBBReceiverWindow", "CAADlgBBSenderWindow", "CAASystem", "CATInstantiateComponent", "CATInteractiveApplication", "CAADlgBBMessageInt", "CAADialog"]
 source_file: "Doc\online\CAADlgUseCases\CAADlgSampleBBMsg.htm"
 converted: "2026-05-11T17:17:55.971235"
 ---

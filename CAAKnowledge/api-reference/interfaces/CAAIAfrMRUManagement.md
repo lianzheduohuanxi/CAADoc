@@ -4,6 +4,7 @@ type: "interface"
 module: "CAAApplicationFrame"
 base: "CATBaseUnknown"
 method_count: 3
+visibility: "public"
 verified: true
 ---
 
@@ -11,7 +12,10 @@ verified: true
 
 **基类**: CATBaseUnknown  
 **模块**: CAAApplicationFrame  
+**可见性**: public  
 **方法数**: 3
+
+> Local Framework
 
 ## 方法列表
 
@@ -29,4 +33,10 @@ HRESULT GetElementList(CATListOfCATUnicodeString &ElementList) const;
 ```cpp
 HRESULT SelectElement(int iPosition);
 ```
+
+## 依赖
+
+- `CATBaseUnknown.h`
+- `CATListOfCATUnicodeString.h`
+- `CAAAfrCustCommandHdrModel.h`
 

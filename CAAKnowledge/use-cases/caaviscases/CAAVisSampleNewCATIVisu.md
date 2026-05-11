@@ -2,7 +2,7 @@
 title: "Making a Component Displayable With Your Own Interface"
 category: "use case"
 module: "CAAVisUseCases"
-tags: ["CAAVisManagerDefaultDocument", "CATI3DGeoVisu", "CAAVisManagerAppli", "CAAVisModelEventsForObject", "CAAIVis2DGraphVisu", "CAAEVis2DGraphVisuForObject", "CAAVisualization", "CATI2GeoVisu", "CAAVisManager", "CATIA", "CAAVisModelObject", "CATImplementInterface", "CAAEVisModelEventsuForObject", "CAAVisManagerImpl", "CAAVisManagerComp", "CATIVisu", "CATImplementClass", "CATIModelEvents", "CAAVisManagerInt", "CAAVis2DGraphBoxRep"]
+tags: ["CAAVisManagerDefaultDocument", "CATI3DGeoVisu", "CAAVisManagerAppli", "CAAVisModelEventsForObject", "CAAIVis2DGraphVisu", "CAAEVis2DGraphVisuForObject", "CAAVisualization", "CATI2GeoVisu", "CAAVisManager", "CATIA", "CAAVisModelObject", "CAAEVisModelEventsuForObject", "CAAVisManagerImpl", "CAAVisManagerComp", "CATIVisu", "CATIModelEvents", "CAAVisManagerInt", "CAAVis2DGraphBoxRep"]
 source_file: "Doc\online\CAAVisUseCases\CAAVisSampleNewCATIVisu.htm"
 converted: "2026-05-11T17:31:52.156240"
 ---

@@ -2,7 +2,7 @@
 title: "Creating Temporary Components"
 category: "use case"
 module: "CAAVisUseCases"
-tags: ["CATInstantiateComponent", "CATI3DGeoVisu", "CAAVisWireBoxComp", "CAAVisualization", "CAAVisTemporaryObjects", "CAADegGeoCommands", "CAAEVisCreateInstanceForWireBox", "CAAVisModelForRep", "CATIA", "CAAIVisTextModel", "CAAGeometry", "CAAIVisWireBox", "CAAEVisWireBox", "CAAEVisVisuWireBox", "CAAVisWireBox", "CAAVisTextModel", "CAADialogEngine", "CATICreateInstance", "CATImplementClass", "CAADegClippingByBoxCmd"]
+tags: ["CATInstantiateComponent", "CATI3DGeoVisu", "CAAVisWireBoxComp", "CAAVisualization", "CAAVisTemporaryObjects", "CAADegGeoCommands", "CAAEVisCreateInstanceForWireBox", "CAAVisModelForRep", "CATIA", "CAAIVisTextModel", "CAAGeometry", "CAAIVisWireBox", "CAAEVisWireBox", "CAAEVisVisuWireBox", "CAAVisWireBox", "CAAVisTextModel", "CAADialogEngine", "CATICreateInstance", "CAADegClippingByBoxCmd"]
 source_file: "Doc\online\CAAVisUseCases\CAAVisSampleTempObject.htm"
 converted: "2026-05-11T17:31:52.178221"
 ---

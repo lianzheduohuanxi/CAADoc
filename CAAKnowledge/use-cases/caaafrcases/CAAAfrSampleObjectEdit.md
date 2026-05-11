@@ -2,7 +2,7 @@
 title: "Editing Objects"
 category: "use case"
 module: "CAAAfrUseCases"
-tags: ["CAASysPoint", "CATImplementClass", "CAAISysPoint", "CAAAfrGeoEdition", "CAAEAfrEditPoint", "CATIModelEvents", "CAAGeometry", "CATIEdit", "CAAAfrPointEditDlg", "CAAAfrPointEditCmd", "CAAAfrPointEditDlgId", "CAAApplicationFrame"]
+tags: ["CAASysPoint", "CAAISysPoint", "CAAAfrGeoEdition", "CAAEAfrEditPoint", "CATIModelEvents", "CAAGeometry", "CATIEdit", "CAAAfrPointEditDlg", "CAAAfrPointEditCmd", "CAAAfrPointEditDlgId", "CAAApplicationFrame"]
 source_file: "Doc\online\CAAAfrUseCases\CAAAfrSampleObjectEdit.htm"
 converted: "2026-05-11T17:17:55.785009"
 ---

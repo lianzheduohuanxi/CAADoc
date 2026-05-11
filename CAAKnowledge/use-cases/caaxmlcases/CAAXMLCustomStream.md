@@ -2,7 +2,7 @@
 title: "Reading XML from a custom source"
 category: "use case"
 module: "CAAXmlUseCases"
-tags: ["CATISAXXMLReader", "CATIXMLInputStream_var", "CAAXMLParser", "CATIXMLSAXFactory", "CATIXMLInputStream", "CAAXMLMultiFileStream", "CATImplementClass", "CATIXMLDOMDocumentBuilder", "CATISAXParser", "CATIXMLDOMDocumentBuilder_var", "CATISAXInputSource", "CATIDOMDocument_var", "CATISAXInputSource_var", "CATIXMLSAXFactory_var", "CAAXMLCustomStream"]
+tags: ["CATISAXXMLReader", "CATIXMLInputStream_var", "CAAXMLParser", "CATIXMLSAXFactory", "CATIXMLInputStream", "CAAXMLMultiFileStream", "CATIXMLDOMDocumentBuilder", "CATISAXParser", "CATIXMLDOMDocumentBuilder_var", "CATISAXInputSource", "CATIDOMDocument_var", "CATISAXInputSource_var", "CATIXMLSAXFactory_var", "CAAXMLCustomStream"]
 source_file: "Doc\online\CAAXmlUseCases\CAAXMLCustomStream.htm"
 converted: "2026-05-11T17:33:45.595301"
 ---

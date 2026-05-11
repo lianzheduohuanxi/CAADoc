@@ -4,6 +4,7 @@ type: "interface"
 module: "CAAVisualization"
 base: "CATBaseUnknown"
 method_count: 4
+visibility: "public"
 verified: true
 ---
 
@@ -11,7 +12,10 @@ verified: true
 
 **基类**: CATBaseUnknown  
 **模块**: CAAVisualization  
+**可见性**: public  
 **方法数**: 4
+
+> Local Framework
 
 ## 方法列表
 
@@ -34,4 +38,9 @@ HRESULT SetCenterBox(const CATMathPoint & iCenter);
 ```cpp
 HRESULT GetCenterBox(CATMathPoint & oCenter) const;
 ```
+
+## 依赖
+
+- `CATBaseUnknown.h`
+- `CAAVisWireBoxComp.h`
 

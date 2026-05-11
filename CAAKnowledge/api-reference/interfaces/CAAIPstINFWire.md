@@ -4,6 +4,7 @@ type: "interface"
 module: "CAAProductStructure"
 base: "CATBaseUnknown"
 method_count: 2
+visibility: "protected"
 verified: true
 ---
 
@@ -11,7 +12,10 @@ verified: true
 
 **基类**: CATBaseUnknown  
 **模块**: CAAProductStructure  
+**可见性**: protected  
 **方法数**: 2
+
+> ObjectSpecsModeler Framework
 
 ## 方法列表
 
@@ -24,4 +28,10 @@ HRESULT GetPoints(CATListPtrCATISpecObject **pointList);
 ```cpp
 HRESULT SetPoints(CATListPtrCATISpecObject *pointList);
 ```
+
+## 依赖
+
+- `CAAPstINFInterfaces.h`
+- `CATBaseUnknown.h`
+- `CATListPtrCATISpecObject.h`
 

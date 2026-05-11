@@ -2,7 +2,7 @@
 title: "Managing Transitions between Workbenches"
 category: "use case"
 module: "CAAAfrUseCases"
-tags: ["CATImplementClass", "CAAAfrGeometryWksTransition", "CAAAfrGeometryWks", "CAAAfrGeometryWks_trans", "CAAEAfrGeometryWksTransition", "CAAGeometry", "CATIWorkbenchTransition", "CAAApplicationFrame"]
+tags: ["CAAAfrGeometryWksTransition", "CAAAfrGeometryWks", "CAAAfrGeometryWks_trans", "CAAEAfrGeometryWksTransition", "CAAGeometry", "CATIWorkbenchTransition", "CAAApplicationFrame"]
 source_file: "Doc\online\CAAAfrUseCases\CAAAfrSampleWorkbenchTransitions.htm"
 converted: "2026-05-11T17:17:55.847355"
 ---

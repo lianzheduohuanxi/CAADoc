@@ -4,6 +4,7 @@ type: "interface"
 module: "CAAAnalysisInterfaces"
 base: "CATBaseUnknown"
 method_count: 3
+visibility: "local"
 verified: true
 ---
 
@@ -11,7 +12,10 @@ verified: true
 
 **基类**: CATBaseUnknown  
 **模块**: CAAAnalysisInterfaces  
+**可见性**: local  
 **方法数**: 3
+
+> ------------------------------------------------------------------
 
 ## 方法列表
 
@@ -32,4 +36,8 @@ HRESULT TranslateToFieldModel(CATISpecObject* iFeatToTranslate,
                                           CATAnalysisExplicitListUsr& iOldExplObjects, 
                                           CATAnalysisExplicitListUsr& oNewExplObjects);
 ```
+
+## 依赖
+
+- `CATBaseUnknown.h`
 

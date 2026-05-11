@@ -2,7 +2,7 @@
 title: "Creating a Most Recent Used Command Header"
 category: "use case"
 module: "CAAAfrUseCases"
-tags: ["CAAAfrGeneralWksAddinHeader", "CAAAfrMRUHeader", "CAAAfrMRUAddElementCmd", "CAAAfrComboColorHeader", "CAAAfrMRURep", "CAAAfrMRUManager", "CAAAfrGetMRUManager", "CAAEAfrCommandHeaderRepForMRU", "CATIAfrCommandHeaderRep", "CAAAfrMRUHdr", "CATIniCleanerSettingCtrl", "CATINT32ToPtr", "CATIWorkbenchAddin", "CAAAfrMRUSelElementHdr", "CAAAfrMRUNotification", "CATImplementClass", "CATImplementHeaderResources", "CAAAfrGeoCommands", "CAAAfrGeneralWksAddin", "CAAAfrMRUManagerNotification"]
+tags: ["CAAAfrGeneralWksAddinHeader", "CAAAfrMRUHeader", "CAAAfrMRUAddElementCmd", "CAAAfrComboColorHeader", "CAAAfrMRURep", "CAAAfrMRUManager", "CAAAfrGetMRUManager", "CAAEAfrCommandHeaderRepForMRU", "CATIAfrCommandHeaderRep", "CAAAfrMRUHdr", "CATIniCleanerSettingCtrl", "CATINT32ToPtr", "CATIWorkbenchAddin", "CAAAfrMRUSelElementHdr", "CAAAfrMRUNotification", "CATImplementHeaderResources", "CAAAfrGeoCommands", "CAAAfrGeneralWksAddin", "CAAAfrMRUManagerNotification"]
 source_file: "Doc\online\CAAAfrUseCases\CAAAfrSampleMRUHdr.htm"
 converted: "2026-05-11T17:17:55.774532"
 ---

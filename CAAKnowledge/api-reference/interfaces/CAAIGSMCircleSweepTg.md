@@ -4,6 +4,7 @@ type: "interface"
 module: "CAAGSMInterfaces"
 base: "CATBaseUnknown"
 method_count: 10
+visibility: "protected"
 verified: true
 ---
 
@@ -11,7 +12,10 @@ verified: true
 
 **基类**: CATBaseUnknown  
 **模块**: CAAGSMInterfaces  
+**可见性**: protected  
 **方法数**: 10
+
+> ------------------------------------------------------------------
 
 ## 方法列表
 
@@ -64,4 +68,9 @@ HRESULT SetSolution(const int iSolution);
 ```cpp
 HRESULT GetSolution(int  & oSolution);
 ```
+
+## 依赖
+
+- `CAAGsiFeaturesSplModel.h`
+- `CATBaseUnknown.h`
 

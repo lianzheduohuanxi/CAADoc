@@ -4,6 +4,7 @@ type: "interface"
 module: "CAAVisualization"
 base: "CATBaseUnknown"
 method_count: 6
+visibility: "protected"
 verified: true
 ---
 
@@ -11,7 +12,10 @@ verified: true
 
 **基类**: CATBaseUnknown  
 **模块**: CAAVisualization  
+**可见性**: protected  
 **方法数**: 6
+
+> /Visualization FrameWork
 
 ## 方法列表
 
@@ -44,4 +48,9 @@ HRESULT AddParent(CATBaseUnknown *iObject);
 ```cpp
 HRESULT RemParent(CATBaseUnknown *iObject);
 ```
+
+## 依赖
+
+- `CATBaseUnknown.h`
+- `CAAVisManagerInt.h`
 

@@ -4,6 +4,7 @@ type: "interface"
 module: "CAAGSMInterfaces"
 base: "CATBaseUnknown"
 method_count: 7
+visibility: "protected"
 verified: true
 ---
 
@@ -11,7 +12,10 @@ verified: true
 
 **基类**: CATBaseUnknown  
 **模块**: CAAGSMInterfaces  
+**可见性**: protected  
 **方法数**: 7
+
+> ------------------------------------------------------------------
 
 ## 方法列表
 
@@ -49,4 +53,10 @@ HRESULT GetOrientation(CATGSMOrientation & oOrientation);
 ```cpp
 HRESULT InvertOrientation();
 ```
+
+## 依赖
+
+- `CAAGsiFeaturesSplModel.h`
+- `CATGSMOrientation.h`
+- `CATBaseUnknown.h`
 

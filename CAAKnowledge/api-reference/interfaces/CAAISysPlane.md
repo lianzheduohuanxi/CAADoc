@@ -4,6 +4,7 @@ type: "interface"
 module: "CAASystem"
 base: "CATBaseUnknown"
 method_count: 4
+visibility: "public"
 verified: true
 ---
 
@@ -11,7 +12,10 @@ verified: true
 
 **基类**: CATBaseUnknown  
 **模块**: CAASystem  
+**可见性**: public  
 **方法数**: 4
+
+> Local Framework
 
 ## 方法列表
 
@@ -36,4 +40,9 @@ HRESULT SetPlane(const CATMathVector & iU,
 HRESULT GetPlane(CATMathVector & iU,
 		                 CATMathVector & iV) const;
 ```
+
+## 依赖
+
+- `CATBaseUnknown.h`
+- `CAASysGeoModelInf.h`
 

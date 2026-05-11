@@ -4,6 +4,7 @@ type: "interface"
 module: "CAASystem"
 base: "CATBaseUnknown"
 method_count: 6
+visibility: "public"
 verified: true
 ---
 
@@ -11,7 +12,10 @@ verified: true
 
 **基类**: CATBaseUnknown  
 **模块**: CAASystem  
+**可见性**: public  
 **方法数**: 6
+
+> Mathematics Framework
 
 ## 方法列表
 
@@ -44,4 +48,9 @@ HRESULT SetTopPoint(const CATMathPoint & iTopPoint);
 ```cpp
 HRESULT GetTopPoint(CATMathPoint & oTopPoint) const;
 ```
+
+## 依赖
+
+- `CATBaseUnknown.h`
+- `CAASysGeoModelInf.h`
 

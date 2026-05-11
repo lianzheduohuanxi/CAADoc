@@ -4,6 +4,7 @@ type: "interface"
 module: "CAAMechanicalModeler"
 base: "CATBaseUnknown"
 method_count: 4
+visibility: "public"
 verified: true
 ---
 
@@ -11,6 +12,7 @@ verified: true
 
 **基类**: CATBaseUnknown  
 **模块**: CAAMechanicalModeler  
+**可见性**: public  
 **方法数**: 4
 
 ## 方法列表
@@ -38,4 +40,9 @@ HRESULT SetDirection(int iNum ,
 HRESULT GetDirection(int iNum ,
                                  CATISpecObject **opDirection);
 ```
+
+## 依赖
+
+- `CAAMmrCombinedCurve.h`
+- `CATBaseUnknown.h`
 

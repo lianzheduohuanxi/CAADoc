@@ -4,6 +4,7 @@ type: "interface"
 module: "CAAV5V6MechanicalModeler"
 base: "CATBaseUnknown"
 method_count: 4
+visibility: "public"
 verified: true
 ---
 
@@ -11,6 +12,7 @@ verified: true
 
 **基类**: CATBaseUnknown  
 **模块**: CAAV5V6MechanicalModeler  
+**可见性**: public  
 **方法数**: 4
 
 ## 方法列表
@@ -34,4 +36,9 @@ HRESULT AggregateParam(CATICkeParm_var ispParmToAggregate);
 ```cpp
 HRESULT GetValuatedParam(CATICkeParm_var& iospValuatedParm);
 ```
+
+## 依赖
+
+- `CAAV5V6ExtMmrCCDataExtension.h`
+- `CATBaseUnknown.h`
 

@@ -2,7 +2,7 @@
 title: "Making Your Document Independent Command Available in All Workbenches"
 category: "use case"
 module: "CAAAfrUseCases"
-tags: ["CAAAfrGeneralWksAddinHeader", "CAAAfrGeneralViewFBStr", "CAAAfrViewerFeedbackStr", "CAAAfrGeneralView", "CAAAfrGeneralWksTlb", "CAAAfrGeneralWksMbr", "CATIWorkbenchAddin", "CAAMmrGeneralSearchStr", "CAAAfrGeneralEditMnu", "CATImplementClass", "CAAAfrViewerFeedbackHdr", "CAAAfrGeneralEditSearchStr", "CAASearch", "CAAAfrGeneralWksAddin", "CAACafSearchCmd", "CAAApplicationFrame", "CAACafSearch", "CAAAfrSearchHdr", "CAAAfrSearchStr", "CATIAfrGeneralWksAddin"]
+tags: ["CAAAfrGeneralWksAddinHeader", "CAAAfrGeneralViewFBStr", "CAAAfrViewerFeedbackStr", "CAAAfrGeneralView", "CAAAfrGeneralWksTlb", "CAAAfrGeneralWksMbr", "CATIWorkbenchAddin", "CAAMmrGeneralSearchStr", "CAAAfrGeneralEditMnu", "CAAAfrViewerFeedbackHdr", "CAAAfrGeneralEditSearchStr", "CAASearch", "CAAAfrGeneralWksAddin", "CAACafSearchCmd", "CAAApplicationFrame", "CAACafSearch", "CAAAfrSearchHdr", "CAAAfrSearchStr", "CATIAfrGeneralWksAddin"]
 source_file: "Doc\online\CAAAfrUseCases\CAAAfrSampleGeneralWksAddin.htm"
 converted: "2026-05-11T17:17:55.744995"
 ---

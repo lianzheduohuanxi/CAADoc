@@ -3,7 +3,8 @@ title: "CAAIVis2DGraphVisu"
 type: "interface"
 module: "CAAVisualization"
 base: "CATIVisu"
-method_count: 1
+method_count: 2
+visibility: "protected"
 verified: true
 ---
 
@@ -11,12 +12,25 @@ verified: true
 
 **基类**: CATIVisu  
 **模块**: CAAVisualization  
-**方法数**: 1
+**可见性**: protected  
+**方法数**: 2
+
+> Local framework
 
 ## 方法列表
+
+### GetPositioningMatrix
+```cpp
+CAT3x3Matrix & GetPositioningMatrix();
+```
 
 ### IncrementPositioningMatrix
 ```cpp
 void IncrementPositioningMatrix();
 ```
+
+## 依赖
+
+- `CATIVisu.h`
+- `CAAVisManagerInt.h`
 

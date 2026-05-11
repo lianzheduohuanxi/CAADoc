@@ -2,7 +2,7 @@
 title: "Creating a Command with Options in the "Tools Palette" Toolbar"
 category: "use case"
 module: "CAAAfrUseCases"
-tags: ["CAADegTwoPointsBoxUncheckHdr", "CAADegGeoCommands", "CAADegOriginBoxHdr", "CAADegTwoPointsBoxCheckHdr", "CAADialogEngine", "CATIAfrPaletteOptions", "CAAAfrViewerFeedbackHdr", "CAASysCuboid", "CAADegBoxCreationChoiceNotification", "CAADegFourPointsBoxHdr", "CAAGeometry", "CAADegBoxPaletteChoiceCmd", "CAADegCreateBoxPaletteHeader", "CAADegTwoPointsBoxHdr", "CAADegThreePointsBoxHdr", "CAADegCreateBoxCmd", "CATIAfrCmdPaletteOptions", "CATImplementClass"]
+tags: ["CAADegTwoPointsBoxUncheckHdr", "CAADegGeoCommands", "CAADegOriginBoxHdr", "CAADegTwoPointsBoxCheckHdr", "CAADialogEngine", "CATIAfrPaletteOptions", "CAAAfrViewerFeedbackHdr", "CAASysCuboid", "CAADegBoxCreationChoiceNotification", "CAADegFourPointsBoxHdr", "CAAGeometry", "CAADegBoxPaletteChoiceCmd", "CAADegCreateBoxPaletteHeader", "CAADegTwoPointsBoxHdr", "CAADegThreePointsBoxHdr", "CAADegCreateBoxCmd", "CATIAfrCmdPaletteOptions"]
 source_file: "Doc\online\CAAAfrUseCases\CAAAfrCmdPalette.htm"
 converted: "2026-05-11T17:17:55.606549"
 ---

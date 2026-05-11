@@ -2,7 +2,7 @@
 title: "Making Your Components Printable"
 category: "use case"
 module: "CAAPrtUseCases"
-tags: ["CAAPrtPrintableString", "CAAPrtStringImage", "CAAPrint", "CAAPrtPrintableObjects", "CATIPrintable", "CATImplementClass"]
+tags: ["CAAPrtPrintableString", "CAAPrtStringImage", "CAAPrint", "CAAPrtPrintableObjects", "CATIPrintable"]
 source_file: "Doc\online\CAAPrtUseCases\CAAPrtSamplePrintableObjects.htm"
 converted: "2026-05-11T17:17:56.133823"
 ---

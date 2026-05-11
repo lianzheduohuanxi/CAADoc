@@ -2,7 +2,7 @@
 title: "Parsing XML documents with SAX"
 category: "use case"
 module: "CAAXmlUseCases"
-tags: ["CATISAXParser_var", "CAAXMLParser", "CATIXMLSAXFactory", "CAAXMLSAXCountErrHandler", "CAAXMLSAXCountMain", "CATImplementClass", "CATISAXParser", "CAAXMLSAXCountDocHandler", "CATISAXDocumentHandler_var", "CATISAXEntityResolver", "CATISAXErrorHandler_var", "CATISAXErrorHandler", "CAAXMLSAXCount", "CATIXMLSAXFactory_var", "CATISAXDTDHandler", "CATISAXDocumentHandler"]
+tags: ["CATISAXParser_var", "CAAXMLParser", "CATIXMLSAXFactory", "CAAXMLSAXCountErrHandler", "CAAXMLSAXCountMain", "CATISAXParser", "CAAXMLSAXCountDocHandler", "CATISAXDocumentHandler_var", "CATISAXEntityResolver", "CATISAXErrorHandler_var", "CATISAXErrorHandler", "CAAXMLSAXCount", "CATIXMLSAXFactory_var", "CATISAXDTDHandler", "CATISAXDocumentHandler"]
 source_file: "Doc\online\CAAXmlUseCases\CAAXMLSAXCount.htm"
 converted: "2026-05-11T17:33:45.649159"
 ---

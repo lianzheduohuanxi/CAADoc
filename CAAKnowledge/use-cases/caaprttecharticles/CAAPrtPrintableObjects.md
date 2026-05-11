@@ -2,7 +2,7 @@
 title: "Making Your Components Printable"
 category: "general"
 module: "CAAPrtTechArticles"
-tags: ["CAACmp", "CAAECmpPrintable", "CAACmpInstanceToPrint", "CATIPrintable", "CATImplementClass", "CAACmpImage"]
+tags: ["CAACmp", "CAAECmpPrintable", "CAACmpInstanceToPrint", "CATIPrintable", "CAACmpImage"]
 source_file: "Doc\online\CAAPrtTechArticles\CAAPrtPrintableObjects.htm"
 converted: "2026-05-11T17:17:56.147286"
 ---

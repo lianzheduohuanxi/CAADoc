@@ -4,6 +4,7 @@ type: "interface"
 module: "CAAProductStructure"
 base: "CATBaseUnknown"
 method_count: 6
+visibility: "protected"
 verified: true
 ---
 
@@ -11,7 +12,10 @@ verified: true
 
 **基类**: CATBaseUnknown  
 **模块**: CAAProductStructure  
+**可见性**: protected  
 **方法数**: 6
+
+> System Framework
 
 ## 方法列表
 
@@ -44,4 +48,9 @@ HRESULT SetY(double iY);
 ```cpp
 HRESULT SetZ(double iZ);
 ```
+
+## 依赖
+
+- `CAAPstINFInterfaces.h`
+- `CATBaseUnknown.h`
 

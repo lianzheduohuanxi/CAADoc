@@ -2,7 +2,7 @@
 title: "Using the "Tools Palette" Toolbar for a Workbench"
 category: "use case"
 module: "CAAAfrUseCases"
-tags: ["CAAAfrGeoCreationWkb_Palette", "CAAAfrGeoCreationWkb", "CATImplementClass", "CATIAfrPaletteOptions", "CAAEAfrPaletteOptions", "CAAAfrPaletteOptions", "CAAGeometry", "CAAAfrEltCountHeader", "CAAAfrEltCountHdr", "CATIAfrCmdPaletteOptions", "CAAApplicationFrame"]
+tags: ["CAAAfrGeoCreationWkb_Palette", "CAAAfrGeoCreationWkb", "CATIAfrPaletteOptions", "CAAEAfrPaletteOptions", "CAAAfrPaletteOptions", "CAAGeometry", "CAAAfrEltCountHeader", "CAAAfrEltCountHdr", "CATIAfrCmdPaletteOptions", "CAAApplicationFrame"]
 source_file: "Doc\online\CAAAfrUseCases\CAAAfrSamplePaletteWkb.htm"
 converted: "2026-05-11T17:17:55.792002"
 ---

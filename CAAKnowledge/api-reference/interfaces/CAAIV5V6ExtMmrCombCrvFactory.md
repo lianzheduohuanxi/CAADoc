@@ -4,6 +4,7 @@ type: "interface"
 module: "CAAV5V6MechanicalModeler"
 base: "CATBaseUnknown"
 method_count: 1
+visibility: "public"
 verified: true
 ---
 
@@ -11,6 +12,7 @@ verified: true
 
 **基类**: CATBaseUnknown  
 **模块**: CAAV5V6MechanicalModeler  
+**可见性**: public  
 **方法数**: 1
 
 ## 方法列表
@@ -23,4 +25,9 @@ HRESULT CreateCombinedCurve(CATBaseUnknown  *ipCurve1,
                                           CATBaseUnknown  *ipDirection2,
                                           CAAIV5V6ExtMmrCombinedCurve *& opCombinedCurve);
 ```
+
+## 依赖
+
+- `CAAV5V6ExtMmrCombinedCurve.h`
+- `CATBaseUnknown.h`
 
