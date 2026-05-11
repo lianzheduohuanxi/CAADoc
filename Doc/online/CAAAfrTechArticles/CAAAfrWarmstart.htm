@@ -1,0 +1,755 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<title>Warm Start Incremental Backup</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Warm Start Incremental Backup</h3>
+      <em>Principles and CAA Integration</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article first presents principles and mechanisms for warm
+      start incremental backup. Then it explains what you should do to make sure
+      the workbench or command you create supports warm start.&nbsp;</p>
+      <ul>
+        <li><strong><a href="#Principles">Incremental Warm Start Principles</a></strong>
+        </li>
+        <li><strong><a href="#Technical Description">Technical Description</a></strong>
+          <ul>
+            <li><b><a href="#data">Backup Data</a></b></li>
+            <li><a href="#Activation,  Deactivation,  Re-initialization Mechanisms"><b>Activation,
+              Deactivation, Re-initialization Mechanisms</b></a></li>
+            <li><b><a href="#Transaction validation">Transaction</a></b></li>
+          </ul>
+        </li>
+        <li><strong><a href="#CAA Workbench Integration">CAA Workbench Integration</a></strong>
+        </li>
+        <li><strong><a href="#CAA Command Integration">CAA Command Integration</a></strong>
+          <ul>
+            <li><b><a href="#What are Commands to Take Into Account?">What are Commands to Take Into Account?</a></b></li>
+            <li><b><a href="#Why and How Deactivate the Warm Start ?">Why and How
+              to Deactivate the Warm Start?</a></b></li>
+            <li><b><a href="#Why and How Activate or Re-initialize the Warm Start?">Why and How
+              to Activate or Re-initialize the Warm Start?</a></b></li>
+            <li><b><a href="#Why and How Commit a Transaction?">Why and How to Commit a Transaction?</a></b></li>
+            <li><b><a href="#Commands Creating Applicative Container">Commands Creating
+              Applicative Container</a></b></li>
+            <li><b><a href="#Commands Using External Files">Commands Using Non V5
+              Documents</a></b></li>
+          </ul>
+        </li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Principles"></a>Incremental Warm Start Principles</h3>
+<p>Until now, warm start meant simply automatically saving all documents every
+xx minutes. Auto save operations on large amounts of data can take a long time,
+even lasting several minutes, and all interactions since the last auto save are
+lost. The auto save feature can also be deactivated by users who prefer to save
+their documents frequently and manually to avoid losing data.</p>
+<p>To resolve these problems the incremental warm start has been created. Its
+objectives are:</p>
+<ul>
+  <li>No CPU over cost perceptible for the end user,</li>
+  <li>No loss of interactions.</li>
+</ul>
+<p>All open documents are copied in a temporary directory, and all modifications
+since the document was opened are logged in a log file. These operations involve a minimum
+inconvenience for the end user when opening documents (direct copy without
+loading), and the logging of document modifications at each interaction is not
+perceptible.&nbsp;</p>
+<p>Regarding the restore behavior:</p>
+<ul>
+  <li>after a crash, all documents are opened from the temporary directory
+  <li>all modifications stored in the log are replayed
+  <li>all necessary editors are opened
+  <li>restoring data could take a long time:
+    <ul>
+      <li>all modifications made by users (including test/try, mistakes, etc.)
+        are replayed
+      <li>time is needed to replay necessary updates.</li>
+    </ul>
+  </li>
+</ul>
+<p>Most of the logged data correspond to operations done in commands. Some of
+them are not always replayable. When it is the case, the warm start mechanism is
+deactivated to avoid a bad restoration in case of crash.</p>
+<p> A &quot;warm
+start compliant&quot; workbench means that for any commands defined inside the workbench:</p>
+<ul>
+  <li>either the command is warm start compliant, it means that the command does
+    not execute operations preventing a complete restoration,&nbsp;</li>
+  <li>or the command deactivates the warm start.</li>
+</ul>
+<p> The incremental warm start mechanism is available for all Dassault
+Systemes workbenches of the following
+document types [<a href="#References">1</a>]:</p>
+<ul>
+  <li>Part,
+  <li>Product,
+  <li>Drawing.</li>
+</ul>
+<p>This incremental warm start is activated through the Options
+command.&nbsp;&nbsp;</p>
+<ul>
+
+ 
+<table border="0">
+<caption><a name="Fig.1">Fig.1</a> Activation through Tools/Options</caption>
+  <tr>
+    <td><img border="0" src="images/CAAAfrWarmStartTOEntoure.jpg" width="569" height="199"></td>
+  </tr>
+</table>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Technical Description"></a>Technical Description</h3>
+<p>The aim of this section is first to give an internal description of the
+data which allow us to support the incremental warm start, and then to explain how
+this data is used during a session.&nbsp;</p>
+<h4><a name="data"></a>Backup Data</h4>
+<p>Data to do an incremental backup is stored in the CNext02.roll directory
+located in the <code>CATTemp</code> environment variable which is by default:</p>
+<table border="0">
+  <tr>
+    <td valign="top">Unix</td>
+    <td valign="top">:</td>
+    <td valign="top">$HOME/CATTemp</td>
+  </tr>
+  <tr>
+    <td valign="top">Windows</td>
+    <td valign="top">:</td>
+    <td valign="top">DriveName:\Documents and Settings\LogonName\Local Settings\Application
+      Data\DassaultSystemes\CATTemp</td>
+  </tr>
+</table>
+<p align="left">CNext02.roll contains:</p>
+<ul>
+  <li>
+    <p align="left">
+    <b>Documents</b>&nbsp;</li>
+</ul>
+<blockquote>
+    <p align="left">These are copies of all opened documents in session, no
+    matter if those are visible or not. A copy is done either from the original
+    file location ( in file environment) , or from a database (in ENOVIA
+    environment).
+    The name of each copy is an internal name, without relationship with the
+    document original name.&nbsp;&nbsp;
+</blockquote>
+<ul>
+  <li>
+    <p align="left">A <b>Autosave.log</b> file</li>
+  <p align="left">This file contains all modifications on the documents since
+  they were copied to CNext02.roll. Moreover, it contains
+  opening and closure orders on documents.&nbsp;</p>
+  <p align="left"> <a href="#Fig.2">Fig.2</a> shows how operations in this file
+  are grouped in lots. Each lot is a &quot;transaction&quot; done on a
+  document. The ith transaction can concern a document, and the i+1th another
+  one.&nbsp;</p>
+  <p align="left">It should be noted that this file can reach a great size if the end user works a long time without saving documents.</p>
+  <li>
+    A <b>Undoredo.log&nbsp;</b>file</li>
+  <p>The Autosave.log file stores operations without taking into account the
+  undo or redo commands that the end user can do. Take the following example: the
+  end user creates a point, and then cancels the operation. The creation is
+  stored in the Autosave.log file, but not the reverse operation. It is the role
+  of the Undoredo.log file to keep the &quot;track&quot; of transactions.</p>
+  <p>The Undoredo.log file, smaller than the Autosave.log file,
+  contains information on each transaction contained in the Autosave.log file.
+  It also keeps track of the last closed (or validated) transaction. An opened transaction is a no validated
+  transaction, and therefore not replayed at the restoration stage. It is
+  detailed in the <a href="#Transaction validation">Transaction</a> section.</p>
+</ul>
+<table border="0">
+<caption><a name="Fig.2">Fig.2</a> Warm start Data Diagram</caption>
+  <tr>
+    <td><img border="0" src="images/CAAAfrWarmStartDiagram.jpg" width="563" height="383"></td>
+  </tr>
+</table>
+<h4 align="left"><a name="Activation,  Deactivation,  Re-initialization Mechanisms"></a>Activation,&nbsp;
+Deactivation,&nbsp; Re-initialization Mechanisms</h4>
+<p align="left">Now that backup data is described, we can explained how it is used
+according to end user interactions.</p>
+<ol>
+  <li>
+    <b>The session is opened in &quot;Incremental
+    backup&quot;</b> <b>mode</b>- <a href="#Fig.1">Fig.1</a></li>
+  <p>The CNext02.roll&nbsp;directory is created.</p>
+  <li>
+    <b>A first warm start compliant document is opened&nbsp;</b> (Part, Drawing ou Product)</li>
+  <p >A copy of the document is done from its original location to the
+  CNext02.roll directory.&nbsp;</p>
+  <li><b>Operations&nbsp;are done on the opened document</b></li>
+  <p>The
+Autosave.log and Undoredo.log files are modified.</p>
+  <li><b>The document is saved</b></li>
+  <p>As all opened documents are saved, the warm start can be re-initialized: the
+Autosave.log and Undoredo.log files are emptied, and the copy of the document
+  is redone.&nbsp;</p>
+  <li><b>Another warm start compliant document is opened&nbsp;</b></li>
+  <p>Now, two documents are in the CNext02.roll&nbsp;directory. (If the
+  Autosave.log and Undoredo.log files were present, they are not deleted.)</p>
+  <li><b>One document is saved</b></li>
+  <p>The
+Autosave.log and Undoredo.log files cannot be deleted, since there is one dirty
+  file left in memory. As long as there remains dirty documents in memory, a unique save
+  is not sufficient to re-initialize (*) the warm start.</p>
+  <p>(*) A re-initialization includes the destruction of the Autosave.log and
+  Undoredo.log files and a copy from their original location of all loaded
+  documents.</p>
+  <li><b>Save All</b></li>
+  <p>In this case, the re-initialization is possible. The Autosave.log and
+  Undoredo.log files are deleted and the document copies are brought up to
+  date.&nbsp;</p>
+  <li><b>Modification on documents are done, and then a
+    command which is not warm start compliant is executed</b>  - <a href="#La liste des operations qui ne sont pas warm start compatibles&nbsp;">See
+    the detailed list</a></li>
+  <p>All data contained in the CNext02.roll directory are deleted. The end user
+  is informed by the following message that the incremental warm start is
+  deactivated:</p>
+  <table border="0">
+  <caption><a name="Fig.4">Fig.3 </a>Warm Start Deactivation Message From a Command.</caption>
+
+    <tr>
+      <td><img border="0" src="images/CAAAfrWarmStartCommandKO.jpg" width="429" height="120"></td>
+    </tr>
+  </table>
+  <p>If the end user saves all the opened documents (Save All command) and
+  leaves the no warm start compliant command, the warm
+  start will be reactivated. As long as it is not done, the CNext02.roll
+  directory stays empty.&nbsp;</p>
+  <li>Save All has been done, modifications are done, and <b>a document which is
+    not warm start compliant is opened</b>  (A Process document for example)&nbsp;</li>
+  <p>The incremental warm start is deactivated, and the CNext02.roll directory
+  is emptied The end user is informed by the following message:</p>
+  <table border="0">
+  <caption><a name="Fig.5">Fig.4</a> Warm start Deactivation Message From a Workbench.</caption>
+
+    <tr>
+      <td><img border="0" src="images/CAAAfrWarmStartWBKO.jpg" width="429" height="115"></td>
+    </tr>
+  </table>
+  <br><li><b>A warm start compliant workbench is activated</b></li>
+  <p>Since the documents in memory are not saved, the following message appears:</p>
+
+  <table border="0">
+    <tr>
+      <td><img border="0" src="images/CAAAfrWarmStartWBOK.jpg" width="452" height="117"></td>
+    </tr>
+  </table>
+  <p>Once all the documents are saved, the warm start is re-activated.</p>
+  <p>However, if all documents are saved before the warm start compliant
+  workbench activation, the following message appears:&nbsp;</p>
+  <table border="0">
+    <tr>
+      <td><img border="0" src="images/CAAAfrWarmStartWBOK1.jpg" width="330" height="120"></td>
+    </tr>
+  </table>
+  <br><li><b>Closing a document</b> when the warm start is still active</li>
+  <p>A copy of the document exists in the backup directory. There are two cases
+  to consider:</p>
+  <ul>
+  <li>If all other documents are saved, the warm start will be re-initialized,</li>
+  <li>Otherwise, i.e. at least one document is still dirty, the copy of the
+    closed document is not deleted, and the operations are recorded in
+    the Autosave.log and Undoredo.log files.</li>
+    
+  </ul>
+</ol>
+<h4 align="left"><a name="Transaction validation"></a>Transaction</h4>
+<p align="left">We have previously seen that the Autosave.log file contains the
+operations recorded during the session, and that they are grouped together in
+transactions <a href="#Fig.2">Fig.2</a>. A transaction is a lot which
+corresponds to a logical set of operations. When operations are replayed, only
+full lots are redone. It also means that if the last lot is not &quot;closed&quot;,
+it will be not replayed.&nbsp;&nbsp;&nbsp;&nbsp;</p>
+<p align="left">To understand at which moment a transaction is closed, the type
+of the executed command [<a href="#References">2</a>] must be
+distinguished:&nbsp;</p>
+<table border="1">
+  <tr>
+    <td><b>Command Class Type</b></td>
+    <td><b>Transaction Closure Time</b></td>
+  </tr>
+  <tr>
+    <td>CATStateCommand &nbsp;</td>
+    <td>When the command is ended</td>
+  </tr>
+  <tr>
+    <td>CATDlgDialog&nbsp;or CATCommand&nbsp;</td>
+    <td>When the next command will open a new transaction (*)</td>
+  </tr>
+</table>
+<p>(*) For CAA commands, it can be only a state command since the transactional
+mechanism is not opened, and only the state commands open natively a transaction
+when they are activated.&nbsp;</p>
+<h5>Here is the particular case of the Copy and Cut Command.&nbsp;</h5>
+<ol>
+  <li><h5>Clipboard not kept</h5>
+    <p>Suppose that the end user launches the Cut or the Copy command, if the
+    application crashes before or during the paste command, after the warm
+    start, the Paste command will be not possible. The reason is that the Cut
+    and Copy commands copy the selected object in the clipboard which cannot be
+    restored by the warm start feature.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+  </li>
+  <li><h5>The Cut command is not executed if it is the last validated operation&nbsp;</h5>
+  </li>
+  <p>No data is lost.</p>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3 align="left"><a name="CAA Workbench Integration"></a>CAA Workbench Integration</h3>
+<p align="left">You are making a new workbench [<a href="#References">3</a>], you
+should considerer its warm start integration. There are two cases to consider:</p>
+<ul>
+  <li>
+    It is a workbench of a non warm start compliant document (
+    Analysis, Process, ...)&nbsp;</li>
+  <p align="left">You have nothing to do. By default, a workbench is not warm start compliant,
+  so warm start will be not activated in this new workbench.&nbsp;</p>
+    <li>
+    <p align="left">It is a workbench of a warm start compliant document (Part,
+    Product, Drawing)&nbsp;</li>
+</ul>
+<blockquote>
+  <p align="left">You should declare that the new CAA workbench is warm start
+  compliant. It is done by adding the
+following line in the CATRsc resource file of the workbench [<a href="#References">4</a>]:</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>AllowWarmStart=&quot;YES&quot; ;</pre>
+    </td>
+  </tr>
+</table>
+  <p align="left">You find this file in the CNext/resource/msgcatalog directory of
+the framework defining the workbench.&nbsp;</p>
+  <p align="left">The warm start compatibility will be checked on each command
+  such as described in the next section.</p>
+</blockquote>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h3 align="left"><a name="CAA Command Integration"></a>CAA Command Integration</h3>
+<p align="left">Once you have created a command [<a href="#References">5</a>],
+you should check its integration in the warm start mechanism. This section
+explains you which commands are concerned, and if any, how you can use the <i>CATOmbWarmStartServices</i>
+ class to activate, deactivate the warm start, or validate a transaction.
+Commands which create applicative container, or use non V5 documents, end this
+section.&nbsp;</p>
+<h4 align="left"><b><a name="What are Commands to Take Into Account?"></a>What are Commands to Take Into Account?</b></h4>
+<p align="left">Any command which modifies a V5 document, launched from a
+command header [<a href="#References">6</a>] or not, is concerned by the warm
+start. However, these two following cases can be excluded:</p>
+<ol>
+  <li>
+    <p align="left">Undefined command</li>
+  <p>For recall, an undefined command is a command which is not seen by the
+  focus manager [<a href="#References">2</a>]. It means that such command are
+  never activated, deactivated or killed by this object. An example is the
+  Search command [<a href="#References">7</a>]. These commands should not be
+  concerned by the warm start, because they should not contain operations on
+  document. Two commands should not work on the same object at the same
+  time.&nbsp;</p>
+  <li>
+    <p align="left">Command launched from a no warm start document</li>
+  <p>Please note that if today the document does not support
+  warm start, one day it could do it. If now, you can exclude the command, it is only
+  because the warm start will be first deactivated by the workbench of the
+  document.</p>
+
+</ol>
+<h4 align="left"><a name="Why and How Deactivate the Warm Start ?"></a>Why and How
+to Deactivate the Warm Start?</h4>
+<p align="left">It is necessary to make sure that the command will not corrupt
+the backup restoration. For that it is necessary to analyze the operations which
+are made on the document.&nbsp;</p>
+<ul>
+  <li><b>W</b><b>arm start compliant operation list</b></li>
+  <p>All the following operations are re-playable:</p>
+  <ul>
+  <li>Document: Open , New, Save&nbsp;</li>
+  <li>Container: Creation inside a state command&nbsp;</li>
+  <li>Selection Set</li>
+  <li>Feature:&nbsp;
+    <ul>
+      <li>Creation, Copy, Paste, Delete, Update</li>
+      <li>Attribute addition</li>
+      <li>Attribute modification such as graphical property modification
+        (except some Drafting elements)</li>
+      <li>Activation and deactivation.</li>
+      </ul>
+            <p>It is available on any features: Dassault Systemes and CAA
+        features</p>
+     
+  </li>
+  </ul>
+</ul>
+     
+    <ul>
+  <li><a name="La liste des operations qui ne sont pas warm start compatibles&nbsp;"></a><b>List
+    of operations which are not w</b><b>arm start compliant&nbsp;</b></li>
+  <p>If one of the operations which follow is carried out in the command, the
+  warm start will have to be deactivated.</p>
+    <ul>
+    <li>Applicative attribute addition on sub-elements,</li>
+    <li>CGM attribute addition outside Build implementation,</li>
+    <li>Applicative container creation outside a state command,</li>
+    <li>Graphical property modification on some Drafting elements</li>
+    <li>Document creation by the <code>NewFrom</code> method of the <i>CATDocumentServices</i>
+      class</li>
+    </ul>
+</ul>
+<p align="left">To deactivate the warm start, you should use the <code>Deactivate</code>
+ method of the <i>CATOmbWarmStartServices </i>class<i>.</i> This call must be
+done in the command activation. Here is an code example:</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>class CAAMyCommand : public CATCommand
+{
+      ...
+         CATStatusChangeRC <b>Activate</b>( CATCommand *iCmd,CATNotification *iNotif);
+      ...
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="left"><i>CAAMyCommand</i> derives from CATCommand, but it can be <i>CATStateCommand</i>
+or <i>CATDlgDialog. </i>The unique common point is that the command is shared or
+exclusive. The <code>Activate</code> method is called by the focus manager once
+the command is activated or reactivated after a deactivation by a shared
+command.&nbsp;In the two cases the deactivated
+state is tested, because the command which has interrupted the <i>CAAMyCommand</i>
+command might have reactivated the warm start.</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATStatusChangeRC CAAMyCommand::Activate( CATCommand *iCmd,CATNotification *iNotif)
+{
+   CATBoolean WarmStartActivationState = FALSE ;
+   HRESULT rc = CATOmbWarmStartServices::<b>IsActive</b>(WarmStartActivationState );
+   if ( SUCCEEDED(rc) &amp;&amp; (TRUE == WarmStartActivationState) )
+   {
+      CATUnicodeString WarningMessageToDisplay ;
+      rc = <b>CATOmbWarmStartServices</b>::<b>Deactivate</b>(WarningMessageToDisplay);
+      if (SUCCEEDED(rc) &amp;&amp; (0 != WarningMessageToDisplay.GetLengthInChar()) )
+      {
+         CATApplicationFrame *pFrame = CATApplicationFrame::<b>GetFrame</b>();
+         if ( (NULL != pFrame ) &amp;&amp; ( NULL != pFrame-&gt;<b>GetMainWindow</b>() ))
+         {
+            CATDlgNotify * pNotify = new <b>CATDlgNotify</b>(
+                                        pFrame-&gt;GetMainWindow(),
+                                        &quot;AutoSaveId&quot;,
+                                  CATDlgNfyInformation|CATDlgNfyOK|CATDlgWndModal) ;
+                                        
+            CATUnicodeString NotifyWindowTitle= &quot;....&quot;;
+            pNotify-&gt;<b>DisplayBlocked</b>(WarningMessageToDisplay,NotifyWindowTitle);
+            
+            pNotify-&gt;<b>RequestDelayedDestruction();</b>
+            pNotify = NULL ;
+         }
+      }
+   }
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">Before deactivating the warm start, you can test that it
+is not already deactivated. The <code>Deactivate</code> method returns a message
+that you should display to inform the end user. This message, <a href="#Fig.4">Fig.4</a>,
+is displayed
+through a <i><a href="../CAADlgQuickRefs/CAADlgCATDlgNotify.htm">CATDlgNotify</a></i> class
+instance:&nbsp;</p>
+<ul>
+  <li>
+    <p align="left">The dialog parent of the <i>CATDlgNotify</i> class instance
+    is the object returned by the <code>GetMainWindow</code> method of the <i>CATApplicationFrame</i>
+    class. Refer to the technical article entitled &quot;Understanding the
+    Application Frame Layout &quot; for complete details about the dialog parent
+    of a dialog box.&nbsp;[<a href="#References">8</a>]</li>
+  <li>
+    <p align="left"><code>AutoSaveId</code> is the identifier of the dialog box</li>
+  <li>
+    <p align="left"><code>CATDlgNfyInformation,CATDlgNfyOK </code>and <code>CATDlgWndModal</code>
+    are the information style&nbsp;&nbsp;</li>
+</ul>
+<p align="left">The <code>DisplayBlocked</code> method&nbsp;usage avoids setting
+a callback to close the window. The <code>RequestDelayedDestruction</code> call
+will be executed after the closure of the window by the end user.&nbsp; The
+first argument of the <code>DisplayBlocked</code>  method is the message to
+display, and the second one is the title of the window.&nbsp;</p>
+
+<p align="left">For the title of the window, you can set for
+example the command's NLS name. If the command is activated from a command header [<a href="#References">6</a>],
+this NLS name is the title of the command header instance [<a href="#References">9</a>].&nbsp;</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+      CATUnicodeString NotifyWindowTitle= &quot;CommandClassName&quot;;
+      CATString CatalogName=&quot;xxx&quot;;
+      CATString MessageKey = &quot;xxx.yyy.<b>Title</b>&quot;;
+      CATMsgCatalog::<b>BuildMessage</b>(CatalogName,MessageKey,NULL,0,NotifyWindowTitle);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">where&nbsp;</p>
+<ul>
+  <li>
+    <p align="left"><code>CommandClassName</code> is the name of the command class.&nbsp;</li>
+  <li>
+    <p align="left"><code>xxx</code> is the command header resource file name.</li>
+  <li>
+    <p align="left"><code>yyy</code> is the command header instance (which
+    the command class is associated with).</li>
+</ul>
+<h4 align="left"><a name="Why and How Activate or Re-initialize the Warm Start?"></a>Why and How
+to Activate or Re-initialize the Warm Start?</h4>
+<p align="left">If the command saves or closes one or several documents, it can
+try to activate or re-initialize the warm start. The activation will succeed if
+the following conditions are met:</p>
+<ol>
+  <li>
+    <p align="left">Warm Start option is activated, <a href="#Fig.1">Fig.1&nbsp;</a></li>
+  <li>
+    <p align="left">Command is launched from a workbench which authorizes the warm
+    start,</li>
+  <li>
+    <p align="left">All documents in session are saved, or not dirty. If you
+    close or save all the loaded documents, this last condition is of course
+    always true.&nbsp;</li>
+</ol>
+<p>The <code>Activate</code>
+ method of the <i>CATOmbWarmStartServices</i>  class enables you to try to
+reactivate the warm start. This
+call must be done just after the last closure or saving. Here is a piece of code:</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>      CATUnicodeString WarningMessageToDisplay ;
+      rc = <b>CATOmbWarmStartServices</b>::<b>Activate</b>(WarningMessageToDisplay);
+      if (SUCCEEDED(rc) &amp;&amp; (0 != WarningMessageToDisplay.GetLengthInChar()) )
+      {
+         CATApplicationFrame *pFrame = CATApplicationFrame::<b>GetFrame</b>();
+         if ( (NULL != pFrame ) &amp;&amp; ( NULL != pFrame-&gt;<b>GetMainWindow</b>() ))
+         {
+            CATDlgNotify * pNotify = new <b>CATDlgNotify</b>(
+                                        pFrame-&gt;GetMainWindow(),
+                                        &quot;AutoSaveId&quot;,
+                                        CATDlgNfyInformation|CATDlgNfyOK|CATDlgWndModal) ;
+                                        
+            CATUnicodeString NotifyWindowTitle= &quot;....&quot;;
+            pNotify-&gt;<b>DisplayBlocked</b>(WarningMessageToDisplay,NotifyWindowTitle);
+            
+            pNotify-&gt;<b>RequestDelayedDestruction();</b>
+            pNotify = NULL ;
+         }
+      }
+   }
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>Refer to the previous section for details.&nbsp;</p>
+<h4 align="left"><a name="Why and How Commit a Transaction?"></a>Why and How to Commit a Transaction?</h4>
+<p align="left">Normally the operations inside a command are validated at the
+end of the command for a state command, or at the activation of the next state
+command for the
+others type of commands. That means that as long as the validation is not made, if the V5
+session is broken, the last operations will be not replayed at the backup.
+However, you can force this validation during a command if it is necessary.</p>
+<p align="left">The <code>CommitTransaction</code>  method of the <i>CATOmbWarmStartServices</i> 
+class enables you to do so. This call must be done just after the last validated
+operation.&nbsp;&nbsp;</p>
+<h4 align="left"><a name="Commands Creating Applicative Container"></a>Commands
+Creating Applicative Container</h4>
+<p align="left">The method to create an applicative container is the <i>CATCreateApplicativeContainer</i>
+global function [<a href="#References">10</a>]. Once the applicative container is
+created you have in this order to:</p>
+<ol>
+  <li>
+    Call its initialization through the <code>Init</code> method
+    of the <i>CATInit</i> interface [<a href="#References">11</a>]</li>
+  <p>You call it only if the container implements the <i>CATInit</i> interface.
+  Inside this implementation you find the provider declarations, and sometime feature creations.</p>
+  <li>Call the <i>CATOmbPerformAfterContainerCreation</i> global
+    function</li>
+  <p>This call enables the application to initialize the undo/redo and the
+  transactional mechanism on the container. This call must always be called <b>after</b>
+  the container initialization. If you do it before the operations done
+  in the <code>Init</code>  method will be stored in the backup data. So when
+  the document will be reloaded, the operations in the <code>Init</code>  method
+  will be executed twice: first by the warm start restoration and a second time,
+  by the automatically call to the <code>Init</code>  method.&nbsp;</p>
+</ol>
+Here is an extract of code to create an applicative container inside a command:
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATBaseUnknown * pAppliContainer = NULL;
+CATDocument *pDocument = ... ;
+CATIdent AppliContainerType = &quot;....&quot;;
+CATIdent AppliContainerSuperType = &quot;....&quot;;
+CATUnicodeString AppliContainerIdentifier = &quot;...&quot;;
+
+HRESULT rc = ::<b>CATCreateApplicativeContainer</b>(&amp;pAppliContainer,
+                       pDocument , 
+                       AppliContainerType, 
+                       IID_CATIContainer,  
+                       AppliContainerSuperType, 
+                       AppliContainerIdentifier); 
+                       
+if ( SUCCEEDED(rc) &amp;&amp; (NULL !=pAppliContainer) )
+{                    
+   CATIContainer * pIContainer =  (CATIContainer *) pAppliContainer ;
+          
+   <b>CATInit</b> * pInitOnApplicativeContainer = NULL ;                    
+   rc = pIContainer-&gt;QueryInterface(IID_CATInit, (void**) &amp; pInitOnApplicativeContainer);     
+   if ( SUCCEEDED(rc) )
+   {
+      pInitOnApplicativeContainer-&gt;<b>Init</b>(FALSE);
+      pInitOnApplicativeContainer-&gt;Release(); 
+      pInitOnApplicativeContainer = NULL ;
+   }
+   rc ::<b>CATOmbPerformAfterContainerCreation</b>(pIContainer);
+}
+...                 </pre>
+    </td>
+  </tr>
+</table>
+  <h4 align="left"><b><a name="Commands Using External Files"></a>Commands Using
+  Non V5 Documents</b></h4>
+<p align="left">The warm start architecture is not able to manage modifications
+in non-V5 documents. This kind of command needs to be checked individually.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>The incremental backup is a mean to distribute the &quot;automatic save&quot; time along the
+session. The principle is to keep a copy of the loaded documents and to store
+the modifications done on these documents. In case of crash, it is possible to
+restore the model such as it was before the interruption of the session,
+except the last non validated transaction.</p>
+<p>However, some operations on data are not re-playable. If the warm
+start is not stopped before executing them, the restoration will be corrupted.
+This article explains why and how the warm start should be deactivated for a
+single command or for the whole workbench.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td>Document Overview</td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADegTechArticles/CAADegCommandModel.htm">The
+      CAA Command Model</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAAAfrUseCases/CAAAfrSampleWorkbench.htm">Creating a Workbench</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="CAAAfrI18NWorkshop.htm">Creating Resources for Workbenches</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAADegTechArticles/CAADegGettingStarted.htm">Getting
+      Started with State Dialog Commands</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[6]</td>
+    <td><a href="CAAAfrCommandHeaders.htm">The Command Headers</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[7]</td>
+    <td><a href="../CAACafTechArticles/CAACafSearch.htm">Search
+      Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[8]</td>
+    <td><a href="CAAAfrLayoutV5.htm">Understanding the Application Frame Layout&nbsp;</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[9]</td>
+    <td><a href="CAAAfrI18NHeader.htm">Creating Resources for Command Headers</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[10]</td>
+    <td>Creating Features in Applicative Container</td>
+  </tr>
+  <tr>
+    <td valign="top">[11]</td>
+    <td>Creating New Features &quot;From Scratch&quot; in a Product Document</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Sep 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

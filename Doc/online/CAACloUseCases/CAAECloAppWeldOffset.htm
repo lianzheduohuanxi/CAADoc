@@ -1,0 +1,221 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Weld Offset Calculation</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1><span lang="en-us">Equipment</span> &amp; Systems</h1>
+    </td>
+    <td valign="top">
+      <h2>Systems Layout</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Weld Offset Calculation</h3>
+      <p><em>How to customize weld offset calculation</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAECloAppWeldOffset use case.</p>
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><a href="#UseCase"><strong>The CAAECloAppWeldOffset Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAECloAppWeldOffset Do</a></li>
+            <li><a href="#How">How to use CAAECloAppWeldOffset</a></li>
+            <li><a href="#Where">Where to Find the CAAECloAppWeldOffset Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to customize the weld offset
+calculation using the interface CATICloAppWeldOffset. This interface is used by
+the welding design rule which is used to determine the type of weld that should
+be placed between two parts. For Piping Design, the rule also calculates the
+weld offset, which is necessary when placing a branch. An offset is the distance
+between the center line of the main pipe and the ends of the branch being
+placed. The offset value is used during parts placement to position the weld
+correctly with respect to the main pipe and branch. The weld gap that is defined
+on the weld is used to calculate the offset value. You can provide calculation
+of the weld offset by implementing the CAA Interface CATICloAppWeldOffset. If no
+implementation is found for CATICloAppWeldOffset, the default calculation is
+used. The default calculation is shown in the sample located in
+CAACommonLayoutItf.edu/CAACloSetup.m/src/CAAECloAppWeldOffset.cpp.</p>
+<p align="right"><a href="#Top">[Top]</a></p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAECloAppWeldOffset Use Case</h3>
+<p>CAAECloAppWeldOffset is a use case of the CAACommonLayoutItf.edu framework
+that illustrates the capabilities to provide custom code to calculate the weld
+offset used by part placement.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="What"></a>What Does CAAECloAppWeldOffset Do</h3>
+<p>The goal of CAAECloAppWeldOffset is to show you how to use the interfaces
+from CATCommonLayoutInterfaces framework to calculate the weld offset.</p>
+<p align="right"><a href="#Top">[Top]</a></p>
+<h3><a name="How"></a>How to Use CAAECloAppWeldOffset</h3>
+<p>To use CAAECloAppWeldOffset , you will need to set up the build time
+environment, then compile CAAECloAppWeldOffset along with its prerequisites, set
+up the run time environment, and then place a part that require welding.</p>
+<p>There are five six steps to use this sample:</p>
+<ol>
+  <li>Customize your implementation in CAAECloAppWeldOffset.cpp</li>
+  <li>Remove “#CAA#” before CATPiping&nbsp; CATICloAppWeldOffset in CNext/code/dictionary/CAACommonLayoutItf.dico
+    to enable the implementation for CATICloAppWeldOffset.</li>
+  <li>Compile the source code. See the compiler documentation for more
+    information.</li>
+  <li>Copy the shared library CAACloSetup.dll or libCAACloSetup depending on the
+    operating system to your run time bin directory.</li>
+  <li>Copy the CAACommonLayoutItf.edu.dico to your run time dictionary
+    directory.</li>
+  <li>Do the following to test your implementation:
+    <ul>
+      <li>Start CNext and select Piping Design workbench.</li>
+      <li>Route a run and place an Elbow or value.</li>
+      <li>place a bendable next to the created part.</li>
+      <li>CAAECloAppWeldOffset should be invoked when a weld is placed.</li>
+    </ul>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Where"></a>Where to Find the CAAECloAppWeldOffset Code</h3>
+<p>CAAECloAppWeldOffset code is located in the CAACloSetup.m use case module of
+the CAACommonLayoutItf.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAACommonLayoutItf.edu\CAACloSetup.m\src\CAAECloAppWeldOffset.cpp</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAACommonLayoutItf.edu/CAACloSetup.m/src/CAAECloAppWeldOffset.cpp</code></td>
+  </tr>
+</table>
+<p>The following contains the dictionary file that references the
+implementation:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAACommonLayoutItf.edu\CNext\code\dictionary\CAACommonLayoutItf.edu.dico</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAACommonLayoutItf.edu/CNext/code/dictionary/CAACommonLayoutItf.edu.dico</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the root directory of your CAA V5
+installation.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<ol>
+  <li><a href="#Prolog">Prolog</a></li>
+  <li><a href="#Initializing">Calculating the weld offset</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Prolog"></a>Prolog</h4>
+<p><font face="Times New Roman">The user will have to provide Implementation for
+</font>CATICloAppWeldOffset.<font face="Times New Roman"> The interface is
+called directly by the commands that create the Piping object.</font></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Initializing"></a>Calculating the weld offset</h4>
+<p>The CAAECloAppWeldOffset is a sample implementation for CATICloAppWeldOffset.
+The following code shows the default calculation:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  if ( offsetType == WeldLinear )
+  {
+    *odWeldOffset = idWeldGap;
+  }
+  else if ( offsetType == WeldCalculated )
+  {
+    *odWeldOffset = idWeldGap;
+  }
+  else if ( offsetType == WeldStubOn )
+  {
+    if ( idRunOutsideRadius &gt; idBranchInsideRadius )
+      *odWeldOffset = sqrt( idRunOutsideRadius*idRunOutsideRadius - 
+               idBranchInsideRadius*idBranchInsideRadius ) + idWeldGap;
+    else 
+      RC = E_FAIL;
+  }
+  else if ( offsetType == WeldStubIn )
+  {
+    double x = idBranchOutsideRadius + idWeldGap;
+    if ( idRunInsideRadius &gt; x )
+      *odWeldOffset = sqrt ( idRunInsideRadius*idRunInsideRadius - x*x );
+    else
+      RC = E_FAIL;
+  }
+  else if ( offsetType == WeldSetOn )
+  {
+    *odWeldOffset = idRunOutsideRadius + idWeldGap;
+  }</pre>
+      <pre>&nbsp;</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated how to the interfaces from
+CATCommonLayoutInterfaces framework to calculate the weld offset.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top"></td>
+    <td></td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [May 2004]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

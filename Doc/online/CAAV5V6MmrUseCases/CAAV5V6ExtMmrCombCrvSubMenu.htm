@@ -1,0 +1,205 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Adding a Contextual Sub-Menu</title>
+</head>
+
+<body>
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Adding a Contextual Sub-Menu</h3>
+      <em>Implementing CATIContextualSubMenu</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+  <tr>
+    <td valign="top" colspan="3"><a href="CAAV5V6ExtMmrCombinedCurveOverview.htm">Creating
+      a New Geometrical Feature: The V5V6ExtCombinedCurve</a> <b>&gt; Adding a Contextual Sub-Menu</b></td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      
+        <p>This article discusses the implementation of the <i>CATIContextualSubMenu</i> 
+		interface that enables to insert commands in the contextual menu when selecting 
+		an instance of V5V6ExtCombinedCurve feature. 
+		<br>It 
+		is a copy of the implementation of <em>CATIContextualSubMenu</em> interface for&nbsp; 
+		the CombinedCurve feature, described in the article 
+		&quot;Adding a Contextual Sub-Menu&quot;[<a href="#References">4</a>], rewritten 
+		to be&nbsp; V5/V6 compatible. Some 
+		specific parts are coded inside #ifdef/#endif macros, we won't detail in this article 
+		any of the V6 specific code.
+
+      
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAV5V6ExtMmrCombinedCurve Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAV5V6ExtMmrCombinedCurve Do</a></li>
+            <li><a href="#How">How to Launch CAAV5V6ExtMmrCombinedCurve</a></li>
+            <li><a href="#Where">Where to Find the V5V6ExtMmrCombinedCurve Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to insert commands in the contextual
+menu associated with the V5V6ExtCombinedCurve [<a href="#References">1</a>], by 
+implementing&nbsp; <i>CATIContextualSubMenu</i>&nbsp; interface. A prerequisite 
+is that this
+mechanical feature implements the <i>CATIEdit</i> interface [<a href="#References">2</a>]. </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAV5V6ExtMmrCombinedCurve Use Case</h3>
+<p>CAAV5V6ExtMmrCombinedCurve is a use case of the CAAV5V6MechanicalModeler.edu framework that
+illustrates Mechanical Modeler interactive capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAV5V6ExtMmrCombinedCurve Do</h4>
+<p>CAAV5V6ExtMmrCombinedCurve enables you to add commands in the sub-menu of the 
+contextual menu associated with the V5V6ExtCombinedCurve feature. The picture below 
+shows the sub-menu of the V5V6ExtCombinedCurve. There are two pictures because, the 
+last command can be either Deactivate or Activate. You will see how the switch 
+can be done.</p>
+<table border="0">
+  <tr>
+    <td>
+    <img border="0" src="../CAAMmrUseCases/images/CAAMmrCombCrvContextualMenuDeac.jpg" width="351" height="101"></td>
+    <td>
+    <img border="0" src="../CAAMmrUseCases/images/CAAMmrCombCrvActivated.jpg" width="345" height="105"></td>
+  </tr>
+</table>
+<p>Once the V5V6ExtCombinedCurve implements <i>CATIEdit, </i>its contextual menu
+contains at the end the &quot;V5V6ExtCombinedCurve object&quot; item. This item contains
+a sub-menu which by default contains only the <code>Definition</code> item. In implementing the <i>CATIContextualSubMenu</i> 
+interface on the V5V6ExtCombinedCurve, you can insert other commands after the <code>Definition</code>
+ item.</p>
+<p>The commands that will will insert are Dassault Systèmes commands : <code>Parent/Children</code>, <code>Reset Properties,</code>
+<code>Deactivate</code> or <code>Activate</code></p>
+<p>The identifiers of the command header instances are:
+<ul>
+<li>&quot;CATParentChildrenHdr&quot; for <code>Parent/Children</code> command </li>
+<li>&quot;CATMmrPrtResetPropHdr&quot; for <code>Reset Properties</code> command </li>
+<li>&quot;CATPrtActiveHdr&quot; for <code>Deactivate</code> and <code>Activate</code> commands </li>
+
+</ul>
+<p> These identifiers will be associated with the starters of the menu.&nbsp;</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAV5V6ExtMmrCombinedCurve</h4>
+<p>See the section entitled &quot;How to Launch the V5V6ExtCombinedCurve Use
+Case&quot; in the &quot;<a href="CAAV5V6ExtMmrCombinedCurveOverview.htm">Creating
+a New Geometrical Feature: The V5V6ExtCombinedCurve</a>&quot; use case for a detailed
+description of how this use case should be launched.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAV5V6ExtMmrCombinedCurve Code</h4>
+<p>The CAAV5V6ExtMmrCombinedCurve use case is made of one single class, the <code>CAAEV5V6ExtMmrCombinedCurveContSubMenu</code>
+class, located in
+the CAAV5V6ExtMmrCombinedCurveUI.m module of the CAAV5V6MechanicalModeler.edu framework:</p>
+<table>
+  <tr>
+  
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAV5V6MechanicalModeler.edu\CAAV5V6ExtMmrCombinedCurveUI.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAV5V6MechanicalModeler.edu/CAAV5V6ExtMmrCombinedCurveUI.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+
+<p> You can refer to the orginal CombinedCurve Use Case for the detail of the implementation, 
+it is exactly the same implementation as for V5V6ExtCombinedCurve [<a href="#References">4</a>]. 
+When you look into CAAEV5V6ExtMmrCombinedCurveContSubMenu.cpp, you will see that some part are in between #ifdef/#endif
+macros. Indeed, there are some evolutions in V6 that have not been backported to V5.
+</p> 
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case explains how to implement the <i>CATIContextualSubMenu</i> 
+interface.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAV5V6ExtMmrCombinedCurveOverview.htm">Creating a New Geometrical Feature: the V5V6ExtCombinedCurve</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAAV5V6ExtMmrCombCrvEdit.htm">Editing the V5V6ExtCombinedCurve</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAAAfrTechArticles/CAAAfrCommandHeaders.htm">Command
+      Headers</a></td>
+  </tr>
+   <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAAMmrUseCases/CAAMmrCombinedCurveCATIMechPop.htm">
+      Adding a Contextual Sub-Menu
+</a></td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>    [Dec 2012]</td>
+    <td valign="top">Document created</td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+</body>
+
+</html>
+

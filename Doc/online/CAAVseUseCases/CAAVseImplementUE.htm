@@ -1,0 +1,453 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Customizing Import Components</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="top">
+      <h2>PDM Object Hub</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Customizing Import Components</h3>
+      <em>Implementing VPMIExOrderVersioning and VPMIExVersionToUpdate</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract" width="100%">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAADkoImplementUE use case and explains how
+      to implement the User Exits used in the import tool.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAADkoImplementUE Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAADkoImplementUE Do</a></li>
+            <li><a href="#How">How to Launch CAADkoImplementUE</a></li>
+            <li><a href="#Where">Where to Find the CAADkoImplementUE Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you to implement the methods declared in
+the VPMIExOderVersioning and VPMIExVersionToUpdate User Exits.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAADkoImplementUE Use Case</h3>
+<p>CAADkoImplementUE is a use case of the CAAVPMDesktopObjects.edu framework
+that illustrates how to implement the VPMIExOderVersioning and
+VPMIExVersionToUpdate User Exits used in the import tools. There are called in
+some Mergers (see the ENOVIA V5 documentation for Merger definition) to
+customize the behavior for a given existing Object Version (can it be updated,
+which is the next version, ... ).&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAADkoImplementUE Do</h4>
+<p>CAADkoImplementUE enables the customer to implement the methods of both User
+Exits in order to get the information needed in the import tool. The behavior of
+the import tool will depend on this information.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAADkoImplementUE</h4>
+<p>To launch CAADkoImplementUE, you will need to:</p>
+<ul>
+  <li>Set up the build time environment, then compile CAADkoImplementUE.m module
+    along with its prerequisites</li>
+  <li>Set up the run time environment</li>
+</ul>
+<p>This is described in [<a href="#References">1</a>].</p>
+<p>Then, successively import two different versions of the same part, either by
+using the Supply Chain management CATlet in the ENOVIA LCA client, or by using
+the batch IEnovIn.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAADkoImplementUE Code</h4>
+<p>The CAADkoImplementUE use case is located in the CAADkoImplementUE.m module
+of the CAAVPMDesktopObjects.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAVPMSTEPExchanges.edu\CAADkoImplementUE.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAVPMSTEPExchanges.edu/CAADkoImplementUE.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are three logical steps in CAADkoImplementUE:</p>
+<ol>
+  <li><a href="#Step1">Implementing the VPMIExOrderVersioning Interface</a></li>
+  <li><a href="#Step2">Implementing the VPMIExVersionToUpdate Interface</a></li>
+  <li><a href="#Step3">Updating the Interface Dictionary</a></li>
+</ol>
+<p>We now comment each of those sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Implementing the VPMIExOrderVersioning Interface</h4>
+<p><i>VPMIExOrderVersioning</i> must be implemented by <i>UEOrderVersion</i> to
+be called dynamically by the import tool. This is done in a code extension class
+of <i>UEOrderVersion</i> named <i>CAAEDkoUserExitOrderVersioning</i> whose
+header file is the following:</p>
+<table class="code" width="100%">
+  <tr>
+    <td>
+      <pre>#include &quot;CATBaseUnknown.h&quot;
+class CATUnicodeString;
+
+class CAAEDkoUserExitOrderVersioning : public CATBaseUnknown
+{
+  CATDeclareClass;
+  public:
+  
+    CAAEDkoUserExitOrderVersioning();
+    virtual ~CAAEDkoUserExitOrderVersioning();
+
+    HRESULT <b>IsBeforeThan</b>( const CATUnicodeString &amp; iVersion1,
+                          const CATUnicodeString &amp; iVersion2 );
+
+  private:
+
+    CAAEDkoUserExitOrderVersioning(const CAAEDkoUserExitOrderVersioning &amp; iObjectToCopy);
+    CAAEDkoUserExitOrderVersioning &amp; operator = (const CAAEDkoUserExitOrderVersioning &amp; iObjectToCopy);
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAAEDkoUserExitOrderVersioning</i> extension class derives from <i>CATBaseUnknown</i>.
+The <code>CATDeclareClass</code> macro declares that the class <i>CAAEDkoUserExitOrderVersioning</i>
+belongs to a component. The class has a constructor and a destructor, and
+declares the method <code>IsBeforeThan</code> of the <i>VPMIExOrderVersioning</i>
+interface. Note that the copy constructor and the assignment operator are set as
+private. This is very important for extensions. Since extensions must never be
+directly instantiated by client applications, this prevents the compiler from
+creating the copy constructor and the assignment operator as public without you
+know. They are not implemented in the source file.</p>
+<p>The source file of <i>CAAEDkoUserExitOrderVersioning</i> is as follows:
+<table class="code" width="100%">
+  <tr>
+    <td>
+      <pre>// Local Framework 
+#include &quot;CAAEDkoUserExitOrderVersioning.h&quot;
+
+// System Framework 
+#include &quot;CATUnicodeString.h&quot; // Type of object versions
+
+<b>CATImplementClass(CAAEDkoUserExitOrderVersioning,
+                  CodeExtension,
+                  CATBaseUnknown,
+                  UEOrderVersion);</b>
+
+<b>#include &quot;TIE_VPMIExUEOrderVersioning.h&quot;
+TIE_VPMIExUEOrderVersioning(CAAEDkoUserExitOrderVersioning);</b>
+
+CAAEDkoUserExitOrderVersioning::CAAEDkoUserExitOrderVersioning() {}
+CAAEDkoUserExitOrderVersioning::~CAAEDkoUserExitOrderVersioning() {}
+
+//-----------------------------------------------------------------------------
+
+HRESULT CAAEDkoUserExitOrderVersioning::<b>IsBeforeThan</b>(
+                     const CATUnicodeString &amp; iVersion1,
+                     const CATUnicodeString &amp; iVersion2)
+{
+  HRESULT hr = S_OK; 
+
+  if(iVersion1&gt;iVersion2)
+    hr = S_FALSE;
+
+  return hr;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>CATImplementClass</code> macro declares that the <i>CAAEDkoUserExitOrderVersioning</i>
+class is code extension class, thanks to the <code>CodeExtension</code> keyword,
+and that it extends the component whose type is <i>UEOrderVersion</i>. The third
+parameter must always be set to <i>CATBaseUnknown</i>, makes no sense, and is
+unused for extensions. The <i>CAAEDkoUserExitOrderVersioning</i> class states
+that it implements the <i>VPMIExOrderVersioning</i> interface thanks to the <code>TIE_VPMIExUEOrderVersioning</code>
+macro.</p>
+<p>The <code>IsBeforeThan</code> method compares the object versions. <code>iVersion1</code>
+is the version of the released object, and <code>iVersion2</code> is the one of
+the currently imported object. If the version of the released object object is
+greater than the one of the imported object, the import must not take place, and
+<code>IsBeforeThan</code> returns <code>S_FALSE</code>. Otherwise, the import
+can take place.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Implementing the VPMIExVersionToUpdate Interface</h4>
+<p><i>VPMIExVersionToUpdate</i> must be implemented by <i>UEVersionToUpdate</i>
+to be called dynamically by the import tool. This is done in a code extension
+class of <i>UEVersionToUpdate</i> named <i>CAAEDkoUserExitVersionToUpdate</i>
+whose header file is the following:</p>
+<table class="code" width="100%">
+  <tr>
+    <td>
+      <pre>// System framework
+#include &quot;CATBaseUnknown.h&quot;
+class CATUnicodeString;
+
+// VPMInterfaces framework
+class CATIAVPMObjectVersion;
+
+class CAAEDkoUserExitVersionToUpdate : public CATBaseUnknown
+{
+  // Used in conjunction with CATImplementClass in the .cpp file
+  CATDeclareClass;
+
+  public: 
+
+    CAAEDkoUserExitVersionToUpdate();
+    virtual ~CAAEDkoUserExitVersionToUpdate();
+
+    HRESULT RightToUpdate(const CATIAVPMObjectVersion* iObjectVersion);
+    HRESULT GenerateTheNextV_Version(const CATUnicodeString iCurrentV_Version,
+                                     const int              iCurrentV_order,
+                                     CATUnicodeString &amp;     oNextV_Version);
+
+  private:
+
+    CAAEDkoUserExitVersionToUpdate(const CAAEDkoUserExitVersionToUpdate &amp; iObjectToCopy);
+    CAAEDkoUserExitVersionToUpdate &amp; operator = (const CAAEDkoUserExitVersionToUpdate &amp; iObjectToCopy);
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAAEDkoUserExitVersionToUpdate</i> extension class derives from <i>CATBaseUnknown</i>.
+The <code>CATDeclareClass</code> macro declares that the class <i>CAAEDkoUserExitVersionToUpdate</i>
+belongs to a component. The class has a constructor and a destructor, and
+declares the two methods <code>RightToUpdate</code> and <code>GenerateTheNextV_Version</code>
+of the <i>VPMIExVersionToUpdate</i> interface. Note that the copy constructor
+and the assignment operator are set as private. This is very important for
+extensions. Since extensions must never be directly instantiated by client
+applications, this prevents the compiler from creating the copy constructor and
+the assignment operator as public without you know. They are not implemented in
+the source file.</p>
+<p>The source file of <i>CAAEDkoUserExitVersionToUpdate</i> is as follows:
+<table class="code" width="100%">
+  <tr>
+    <td>
+      <pre>// Local Framework 
+#include &quot;CAAEDkoUserExitVersionToUpdate.h&quot;
+
+// System Framework 
+#include &quot;CATUnicodeString.h&quot;       // To be used for object new version generation
+
+// VPMInterfaces framework
+#include &quot;CATIVpmAttribute.h&quot;      // To retrieve the object attributes
+#include &quot;CATIAVPMObjectVersion.h&quot; // To retrieve the object version
+
+CATImplementClass(CAAEDkoUserExitVersionToUpdate,
+                  CodeExtension,
+                  CATBaseUnknown,
+                  UEVersionToUpdate);
+
+#include &quot;TIE_VPMIExUEVersionToUpdate.h&quot;
+TIE_VPMIExUEVersionToUpdate(CAAEDkoUserExitVersionToUpdate);
+
+CAAEDkoUserExitVersionToUpdate::CAAEDkoUserExitVersionToUpdate() {}
+CAAEDkoUserExitVersionToUpdate::~CAAEDkoUserExitVersionToUpdate() {}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>CATImplementClass</code> macro declares that the <i>CAAEDkoUserExitVersionToUpdate</i>
+class is code extension class, thanks to the <code>CodeExtension</code> keyword,
+and that it extends the component whose type is <i>UEVersionToUpdate</i> . The
+third parameter must always be set to <i>CATBaseUnknown</i>, makes no sense, and
+is unused for extensions. The <i>CAAEDkoUserExitVersionToUpdate</i> class states
+that it implements the <i>VPMIExVersionToUpdate</i> interface thanks to the <code>TIE_VPMIExUEVersionToUpdate</code>
+macro.</p>
+<p>The <code>RightToUpdate</code> method analyzes whether a given <i>CATIAVPMObjectVersion</i>
+object can be updated or not. In this use case, the criterion is the status of
+this object. If this status is “Released”, the object cannot be updated.
+Otherwise, it can be updated.</p>
+<table class="code" width="100%">
+  <tr>
+    <td>
+      <pre>...
+HRESULT CAAEDkoUserExitVersionToUpdate::<b>RightToUpdate</b>(const CATIAVPMObjectVersion * iObjectVersion)
+{
+  HRESULT hr = S_OK; 
+
+  // Get the attributes
+  CATIVpmAttribute * piVpmAttributeOnObject = NULL;
+  hr = iObjectVersion-&gt;QueryInterface(IID_CATIVpmAttribute,
+                                      (void **) &amp;piVpmAttributeOnObject);
+  if (SUCCEEDED(hr) &amp;&amp; NULL != piVpmAttributeOnObject)
+  {
+    CORBAAny oValue;
+    // Get the status
+    hr = piVpmAttributeOnObject-&gt;<b>GetValue</b>(&quot;V_status&quot;, oValue);
+    piVpmAttributeOnObject-&gt;Release();
+    piVpmAttributeOnObject = NULL;
+    if (SUCCEEDED(hr))
+    {
+      CATUnicodeString Status;
+      CATBoolean rc = oValue &gt;&gt; Status;
+      if (CATTrue == rc)
+      {
+        CATUnicodeString StatusRel(&quot;Released&quot;);
+
+        // If status = Released -&gt; S_FALSE
+        if(Status.Compare(StatusRel)==2)
+        {
+          hr = S_FALSE;
+        }
+        else
+        {
+          hr = S_OK;
+        }
+      }
+      else
+      {
+        hr = E_FAIL;
+      }
+    }
+    else
+    {
+      hr = E_ABORT;
+    }
+  }
+  return hr;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>RightToUpdate</code> method first retrieves a pointer to <i>CATIVpmAttribute</i>
+from the object passed as argument using a <i>CATIVPMObjectVersion</i> pointer.
+It then calls the <code>GetValue</code> method of <i>CATIVpmAttribute</i> to
+retrieve the value of the <code>V_status</code> attribute. The retrieved value
+is then converted as <i>CATUnicodeString</i> instance, compared to <code>Released</code>.
+If <code>V_status</code> compares with <code>Released</code>, <code>RightToUpdate</code>
+returns <code>S_FALSE</code>. Otherwise, the import can take place.</p>
+<p>The <code>GenerateTheNextV_Version</code> method is as follows:</p>
+<table class="code" width="100%">
+  <tr>
+    <td>
+      <pre>...
+HRESULT CAAEDkoUserExitVersionToUpdate::<b>GenerateTheNextV_Version</b>(
+                        const CATUnicodeString iCurrentV_Version,
+                        const int              iCurrentV_order,
+                        CATUnicodeString &amp; oNextV_Version)
+{
+  HRESULT hr = S_OK; 
+
+  const CATUnicodeString NextVB(&quot;--B&quot;);
+  const CATUnicodeString NextVC(&quot;--C&quot;);
+
+  if      (iCurrentV_order == 1 &amp;&amp; iCurrentV_Version.Compare(&quot;--A&quot;)==2)
+     oNextV_Version = NextVB;
+  else if (iCurrentV_order == 2 &amp;&amp; iCurrentV_Version.Compare(&quot;--B&quot;)==2)
+     oNextV_Version = NextVC;
+  else
+      hr = E_ABORT;
+
+  return hr;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>GenerateTheNextV_Version</code> method returns the next Version
+from the current Version and the current Order.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Updating the Interface Dictionary</h4>
+<table class="code" width="100%">
+  <tr>
+    <td>
+      <pre>UEOrderVersion    VPMIExUEOrderVersioning libCAADkoImplementUE
+UEVersionToUpdate VPMIExUEVersionToUpdate libCAADkoImplementUE</pre>
+    </td>
+  </tr>
+</table>
+<p>The interface dictionary declares that the <i>UEOrderVersion</i> component
+implements the <i>VPMIExUEOrderVersioning</i> interface and that the code to
+load into memory to use these interfaces is located in the libCAADkoImplementUE
+shared library or DLL, and that <i>UEVersionToUpdate</i> implements <i>VPMIExUEVersionToUpdate</i>&nbsp;
+in the same shared library or DLL. Note that the component name is used to refer
+to the component in the interface dictionary, and never the extension class
+names. Note also that the shared library or DLL to associate with the
+component/interface pair is the one that contains the code created by the call
+to the TIE macro (This is generally the same library than the one that contains
+the interface implementation code, since the TIE macro is usually included in
+the extension class source file.) This is because when a client asks a component
+for an interface pointer, the TIE class is instantiated first, and it either
+retrieves the existing instance of the appropriate extension class, or otherwise
+instantiates it.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This article provides an example on how to implement both User Exits called
+by the import tool.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [May 2001]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

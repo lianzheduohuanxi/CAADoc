@@ -1,0 +1,84 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>CAAPriChangeHoleModule.bas</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+</head>
+
+<body>
+
+<pre><font color="#0000FF">Option Explicit</font>
+
+<font color="#008000">' COPYRIGTH DASSAULT SYSTEMES 2004</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose:      Changes hole description</font>
+<font color="#008000">'   Assumptions:   Looks for CAAPriChangeHoleVBA.htm in the DocView</font>
+<font color="#008000">'   Author:</font>
+<font color="#008000">'   Languages:    MS VBA</font>
+<font color="#008000">'   Locales:      English</font>
+<font color="#008000">'   CATIA Level:  V5R13</font>
+
+Public oPartDocument<font color="#0000FF"> As </font>PartDocument
+Public i<font color="#0000FF"> As </font>Long
+Public sDocPath<font color="#0000FF"> As </font>String
+
+<font color="#0000FF">Sub </font>CATMain()
+
+<font color="#008000">' -----------------------------------------------------------</font>
+<font color="#008000">' Optional: allows to find the sample wherever it's installed</font>
+sDocPath = CATIA.SystemService.Environ(&quot;CATDocView&quot;)
+<font color="#0000FF">If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+  Err.Raise 9999, , &quot;No Doc Path Defined&quot;
+<font color="#0000FF">End If</font>
+<font color="#008000">' -----------------------------------------------------------</font>
+
+<font color="#008000">' ------------</font>
+<font color="#008000">' Get the part document</font>
+<font color="#008000">' ------------</font>
+<font color="#0000FF">Set </font>oPartDocument = CATIA.ActiveDocument
+<font color="#008000">' ------------</font>
+<font color="#008000">' Test the selection content</font>
+<font color="#008000">' ------------</font>
+<font color="#0000FF">If </font>oPartDocument.Selection.Count = 0<font color="#0000FF"> Then</font>
+    <font color="#008000">' ------------</font>
+    <font color="#008000">' The selection content is empty, the macro ends</font>
+    <font color="#008000">' ------------</font>
+    MsgBox &quot;Select the holes you wish to transform before running the macro.&quot;, vbOKOnly, &quot;Warning&quot;
+Else
+    <font color="#008000">' ------------</font>
+    <font color="#008000">' The selection content is not empty</font>
+    <font color="#008000">' Show the dialog box</font>
+    <font color="#008000">' ------------</font>
+    CAAPriChangeHoleForm.Show
+<font color="#0000FF">End If</font>
+
+<font color="#0000FF">End Sub</font>
+
+Public Function CatObjectExistsInSelection(CatSelection<font color="#0000FF"> As </font>Selection, CatObjectName<font color="#0000FF"> As </font>String, CatObject<font color="#0000FF"> As </font>Object)<font color="#0000FF"> As </font>Boolean
+
+On Error Resume Next
+<font color="#0000FF">Set </font>CatObject = CatSelection.FindObject(CatObjectName)
+CatObjectExistsInSelection = (Err.Number = 0)
+Err.Clear
+
+<font color="#0000FF">End Function</font>
+
+Public Function ParameterExists(ItemIndex<font color="#0000FF"> As </font>String, ItemCollection<font color="#0000FF"> As </font>Object)<font color="#0000FF"> As </font>Boolean
+
+<font color="#0000FF">Dim </font>TmpItem<font color="#0000FF"> As </font>Variant
+On Error Resume Next
+<font color="#0000FF">Set </font>TmpItem = ItemCollection.Item(ItemIndex)
+ParameterExists = (Err.Number = 0)
+Err.Clear
+    
+<font color="#0000FF">End Function</font>
+</pre>
+
+</body>
+
+</html>

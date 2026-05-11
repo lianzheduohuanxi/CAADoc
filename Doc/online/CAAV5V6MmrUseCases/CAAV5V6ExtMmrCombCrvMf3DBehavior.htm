@@ -1,0 +1,199 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Defining the Combined Curve's Type</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Defining the Combined Curve's Type</h3>
+      <em>Implementing CATIMf3DBehavior</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>The main goal of this use case is to describe how to implement the <i>CATIMf3DBehavior</i>
+      interface to define the type (surfacic) of the V5V6ExtCombinedCurve Feature.
+      <br> This use case is the same as the original CombinedCurve use case, "Defining the Combined Curve's Type" 
+      [<a href="#References">2</a>] rewritten for the new V5V6ExtCombinedCurve Feature.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAV5V6ExtMmrCombinedCurve - CATIMf3DBehavior Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAV5V6ExtMmrCombinedCurve - CATIMf3DBehavior Do</a></li>
+            <li><a href="#How">How to Launch CAAV5V6ExtMmrCombinedCurve - CATIMf3DBehavior</a></li>
+            <li><a href="#Where">Where to Find the CAAV5V6ExtMmrCombinedCurve - CATIMf3DBehavior Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+      </td>
+      </tr/>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>The main goal of this use case is to describe how to implement the
+      <em> CATIMf3DBehavior</em> interface on the V5V6ExtCombinedCurve StartUp.&nbsp;Since
+the V5R14, this implementation is mandatory for a StartUp deriving from the
+GeometricalElement3D StartUp [<a href="#References">1</a>].
+&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAV5V6ExtMmrCombinedCurve - CATIMf3DBehavior Use Case</h3>
+<p> CAAV5V6ExtMmrCombinedCurve - CATIMf3DBehavior is a use case of the
+CAAV5V6MechanicalModeler.edu framework that illustrates Mechanical Modeler capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAV5V6ExtMmrCombinedCurve - CATIMf3DBehavior Do</h4>
+<p>The use case is an implementation of the <em>CATIMf3DBehavior</em>  interface
+to specify that the V5V6ExtCombinedCurve is a surfacic feature.&nbsp;</p> 
+<table border="0">
+  <tr>
+    <td><img border="0" src="../CAAMmrUseCases/images/CAAMmrCombinedCurveInstantiation.jpg" width="339" height="405"></td>
+  </tr>
+</table>
+<p align="left">A such feature can be included into:</p>
+<ul>
+  <li>
+    <p align="left">A solid and surfacic features set (SSS) (<code>CombinedCurve.3</code>
+    into <code>Body.1</code>),&nbsp;</li>
+  <li>
+    <p align="left">A non ordered surfacic features set&nbsp; (<code>CombinedCurve.1</code>
+    into <code>Geometrical Set.1)</code></li>
+  <li>
+    <p align="left">An ordered surfacic features set (<code>CombinedCurve.2</code>
+    into <code>Ordered Geometrical Set.2</code>)&nbsp;&nbsp;</li>
+</ul>
+<p align="left">If you do not implement the <i>CATIMf3DBehavior</i>
+interface, you will have wrong behaviors such as the graphic properties. Your
+feature, inserted into a SSS, will be seen such as a solid feature by
+the default implementation of the <i>CATIMf3DBehavior</i> interface, and for
+example, the wireframe properties will not be accessible such as shown by the
+picture below:</p>
+<table border="0">
+  <tr>
+    <td><img border="0" src="../CAAMmrUseCases/images/CAAMmrMf3DBehaviorWrong.jpg" width="397" height="301"></td>
+    <td>You can see that only the options in the &quot;Fill&quot; frame are
+      available. The other options, included into the &quot;Edges&quot;, Lines
+      and Curves&quot;, and &quot;Points&quot; frames, are unavailable.&nbsp;</td>
+  </tr>
+</table>
+<p align="left">But, if you implement the <i>CATIMf3DBehavior</i> interface you
+will have the good valid options in the same dialog box.</p>
+<table border="0">
+  <tr>
+    <td valign="top"><img border="0" src="../CAAMmrUseCases/images/CAAMmrMf3DBehaviorOK.jpg" width="405" height="300"></td>
+    <td valign="middle">Now, only the &quot;Lines and Curves&quot; frame is
+      available. It
+      is the frame corresponding to the wireframe objects.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAV5V6ExtMmrCombinedCurve - CATIMf3DBehavior</h4>
+<p>See the section entitled &quot;How to Launch the Combined Curve Use
+Case&quot; in the &quot;<a href="CAAV5V6ExtMmrCombinedCurveOverview.htm">Creating
+a New Geometrical Feature: The V5V6ExtCombinedCurve</a>&quot; use case for a detailed
+description of how this use case should be launched.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAV5V6ExtMmrCombinedCurve - CATIMf3DBehavior Code</h4>
+<p>The CAAV5V6ExtMmrCombinedCurve - CATIMf3DBehavior use case is made one class,<i>CAAEV5V6ExtMmrCombCrvMf3DBehavior</i>,
+located in the CAAV5V6ExtMmrCombinedCurve.m module of the CAAV5V6MechanicalModeler.edu
+framework:</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAAV5V6MechanicalModeler.edu\CAAV5V6ExtMmrCombinedCurve.m\</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAAV5V6MechanicalModeler.edu/CAAV5V6ExtMmrCombinedCurve.m/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+
+<p> You can refer to the orginal CombinedCurve Use Case for the detail of the implementation, 
+it is exactly the same implementation as for V5V6ExtCombinedCurve [<a href="#References">3</a>]. 
+</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case explains how to implement the <i>CATIMf3DBehavior</i>&nbsp;
+interface for a surfacic feature.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrFeatureIntegration.htm"> Integrating
+      a New Mechanical Feature in V5</a></td>
+  </tr>
+    <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAMmrUseCases/CAAMmrCombinedCurveMf3DBehavior.htm">
+    Defining the Combined Curve's Type</a></td>
+  </tr>
+  
+
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>   [Dec 2012]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+</body>
+
+</html>

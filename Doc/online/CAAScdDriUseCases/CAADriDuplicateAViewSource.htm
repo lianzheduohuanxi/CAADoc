@@ -1,0 +1,94 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAADriDuplicateAView.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2003</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose:      This macro allows you to copy a view from an </font>
+<font color="#008000">'                      existing drawing document into a new drawing</font>
+<font color="#008000">'                      document</font>
+<font color="#008000">'   Author: </font>
+<font color="#008000">'   Languages:   VBScript</font>
+<font color="#008000">'   Locales:       English </font>
+<font color="#008000">'   CATIA Level: V5R11</font>
+<font color="#008000">' ***********************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+
+    <font color="#008000">' Set the CATIA popup file alerts to False</font>
+    <font color="#008000">' It prevents to stop the macro at each alert during its execution</font>
+    CATIA.DisplayFileAlerts = False
+
+    <font color="#008000">' Optional: allows to find the sample wherever it's installed</font>
+<font color="#0000FF">    dim </font>sDocPath<font color="#0000FF"> As </font>String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+<font color="#0000FF">    If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,,"No Doc Path Defined"
+<font color="#0000FF">    End If</font>
+
+    <font color="#008000">' Open the Drawing document</font>
+<font color="#0000FF">    Dim </font>oDrawingSource<font color="#0000FF"> As </font>DrawingDocument
+<font color="#0000FF">    Set </font>oDrawingSource = CATIA.Documents.Open(sDocPath & _
+             "\online\CAAScdDriUseCases\samples\CAADriDuplicateAView.CATDrawing")
+    
+    <font color="#008000">' Fit in window the opened document</font>
+    CATIA.ActiveWindow.ActiveViewer.Reframe
+    
+    <font color="#008000">' Retrieve the sheet containing the view to be duplicated</font>
+<font color="#0000FF">    Dim </font>oSheetSource<font color="#0000FF"> As </font>DrawingSheet
+<font color="#0000FF">    Set </font>oSheetSource = oDrawingSource.Sheets.Item("Sheet.1")
+    
+    <font color="#008000">' Retrieve the view to be duplicated</font>
+<font color="#0000FF">    Dim </font>oViewSource<font color="#0000FF"> As </font>DrawingView
+<font color="#0000FF">    Set </font>oViewSource = oSheetSource.Views.Item("Front view")
+    
+    <font color="#008000">' Create an object of selection for the source document</font>
+<font color="#0000FF">    Dim </font>oSelectionSource<font color="#0000FF"> As </font>Selection
+<font color="#0000FF">    Set </font>oSelectionSource = oDrawingSource.Selection
+    
+    <font color="#008000">' Clear the selection</font>
+    oSelectionSource.Clear
+    <font color="#008000">' Add the view to be duplicated in the selection</font>
+    oSelectionSource.Add oViewSource
+    <font color="#008000">' Copy the view</font>
+    oSelectionSource.Copy
+    <font color="#008000">' Clear the selection</font>
+    oSelectionSource.Clear
+    
+    <font color="#008000">' Create the Drawing document where the view will be pasted</font>
+<font color="#0000FF">    Dim </font>oDrawingTarget<font color="#0000FF"> As </font>DrawingDocument
+<font color="#0000FF">    Set </font>oDrawingTarget = CATIA.Documents.Add("Drawing")
+    
+    <font color="#008000">' Retrieve the where the view will be pasted</font>
+<font color="#0000FF">    Dim </font>oSheetTarget<font color="#0000FF"> As </font>DrawingSheet
+<font color="#0000FF">    Set </font>oSheetTarget = oDrawingTarget.Sheets.Item("Sheet.1")
+    
+    <font color="#008000">' Set the sheet paper size</font>
+    oSheetTarget.PaperSize = catPaperA0
+    
+    <font color="#008000">' Create an object of selection for the source document</font>
+<font color="#0000FF">    Dim </font>oSelectionTarget<font color="#0000FF"> As </font>Selection
+<font color="#0000FF">    Set </font>oSelectionTarget = oDrawingTarget.Selection
+    
+    <font color="#008000">' Clear the selection</font>
+    oSelectionTarget.Clear
+    <font color="#008000">' Add the sheet where the view will be pasted in the selection</font>
+    oSelectionTarget.Add oSheetTarget
+    <font color="#008000">' Paste the clipboard</font>
+    oSelectionTarget.Paste
+    <font color="#008000">' Clear the selection</font>
+    oSelectionTarget.Clear
+
+    <font color="#008000">' Fit in window the active document    </font>
+    CATIA.ActiveWindow.ActiveViewer.Reframe
+    
+    <font color="#008000">' Clear the variables</font>
+<font color="#0000FF">    Set </font>oSelectionTarget = Nothing
+<font color="#0000FF">    Set </font>oSheetTarget = Nothing
+<font color="#0000FF">    Set </font>oDrawingTarget = Nothing
+<font color="#0000FF">    Set </font>oSelectionSource = Nothing
+<font color="#0000FF">    Set </font>oViewSource = Nothing
+<font color="#0000FF">    Set </font>oSelectionSource = Nothing
+<font color="#0000FF">    Set </font>oDrawingSource = Nothing
+    
+<font color="#0000FF">End Sub</font>
+</pre></body></html>

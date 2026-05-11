@@ -1,0 +1,441 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns="http://www.w3.org/TR/REC-html40">
+	<head>
+		<title>Retrieving VPM Identification</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+		<meta name="ProgId" content="FrontPage.Editor.Document">
+		<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css"><!--[if !mso]>
+<STYLE>
+v\:*         { behavior: url(#default#VML) }
+o\:*         { behavior: url(#default#VML) }
+.shape       { behavior: url(#default#VML) }
+</STYLE>
+<![endif]-->  <!--[if gte mso 9]>
+<xml><o:shapedefaults v:ext="edit" spidmax="1027"/>
+</xml><![endif]-->
+	</head>
+	<body>
+		<table width="100%">
+			<tr>
+				<td valign="top">
+					<h1>3D PLM Enterprise Architecture</h1>
+				</td>
+				<td valign="top">
+					<h2>ENOVIA V5 Integration</h2>
+				</td>
+				<td rowspan="2" align="right" valign="top">
+					<h3><a name="Top"></a>Save Process Customization</h3>
+                    <em>Customize Enovia Save Process</em></td>
+			</tr>
+			<tr>
+				<td class="use" colspan="2">Use Case</td>
+			</tr>
+		</table>
+		<hr>
+		<!---------------------------------comment------------------------------------->
+		<table class="abstract">
+			<tr>
+				<td>
+					<h3>Abstract</h3>
+					<p>&nbsp;<ul>
+							<li>
+								<a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a>
+							<li>
+								<a href="#UseCase"><strong>The Save Process
+                                Customization Use Case</strong></a>
+								<ul>
+									<li>
+										<a href="#What">What Does CAAE5iUEDocumentName Do</a>
+									<li>
+										<a href="#How">How to Launch CAAE5iUEDocumentName </a>
+									<li>
+										<a href="#Where">Where to Find the CAAE5iUEDocumentName Code</a></li>
+								</ul>
+							<li>
+								<a href="#Step"><strong>Step-by-Step</strong></a>
+							<li>
+								<a href="#InShort"><strong>In Short</strong></a>
+							<li>
+								<a href="#References"><strong>References</strong></a></li>
+						</ul>
+				</td>
+			</tr>
+		</table>
+		<hr>
+		<!---------------------------------comment------------------------------------->
+		<h4><a name="Learn"></a>What You Will Learn With This Use Case</h4>
+        <p class="MsoNormal">Using the CATIPDMUESaveProcess and CATIPDMUEOnCancel interfaces, the
+        Enovia Save process can be customized step by step. We will learn what
+        are the available User-Exits during Save Process from CATIA to ENOVIA,
+        and when and how they can be used.&nbsp;</p>
+		<p class="MsoNormal">First let us have a quick look on the available
+        User-Exits during Enovia save process:</p>
+        <ol>
+          <li>
+            <p class="MsoNormal">BeforeSaveDialog,</li>
+          <li>
+            <p class="MsoNormal">OnOK,</li>
+          <li>
+            <p class="MsoNormal">BeforeStartingSave,</li>
+          <li>
+            <p class="MsoNormal">OnSaveSucceeded,</li>
+          <li>
+            <p class="MsoNormal">OnSaveFailed,</li>
+          <li>
+            <p class="MsoNormal">BeforeCommit,</li>
+          <li>
+            <p class="MsoNormal">BeforeRollback.</li>
+		  <li>
+            <p class="MsoNormal">OnCancel.</li>
+        </ol>
+        <p class="MsoNormal">In addition to that Save Process Customization Use
+        Case will internally call another existing CAA API method
+        GetModificationStatus, which returns status of a Document in CATIA
+        session. For details on GetModificationStatus please look for
+        CATIPDMSaveInfo Interface.</p>
+		<p class="MsoNormal">Please note that all above mentioned user-exits except OnCancel are available with interface CATIPDMUESaveProcess while OnCancel is available with interface CATIPDMUEOnCancel.</p>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h4><a name="UseCase"></a>The Save Process Customization Use Case</h4>
+        <p>The CAAEV5CommitAndRollback is a use case of the CAAProductStructureE5i.edu
+        framework that illustrates how and when different User-Exits of&nbsp; CATIPDMUESaveProcess
+        and CATIPDMUEOnCancel allows customer to tailor the “Save in ENOVIA” command with business
+        logic that fits their own needs.&nbsp;</p>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h4><a name="What"></a>What Does CAAEV5CommitAndRollback Do</h4>
+		<p class="MsoNormal">The goal of CAAEV5CommitAndRollback is to explain
+        how and when different User-Exits of CATIPDMUESaveProcess and CATIPDMUEOnCancel
+		are called when user performs &quot;Save in Enovia&quot; command.&nbsp;We will see
+        how outcome of User-Exits affect Save Process, depending on result of
+        every User-Exit next step from Save process is performed.</p>
+        <p class="MsoNormal">In this Use Case we are using a static call counter based
+        on which User-exits will SUCCEED or FAIL. In addition to these
+        User-exits, we will see how the Document status changes during
+        &quot;Save in Enovia&quot; process. Document status mentioned here is
+        the same as returned by&nbsp; GetModificationStatus.</p>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h4><a name="How"></a>How to Launch CAAEV5CommitAndRollback&nbsp;
+		</h4>
+		<p class="MsoNormal">To launch CAAEV5CommitAndRollback, you will need to set up the 
+			build time environment, then compile CAAEV5CommitAndRollback along with its 
+			prerequisites, set up the run time environment, and then execute the use case [<a href="#References">1</a>] 
+			in the following way:
+		</p>
+		<p class="MsoNormal">1.<span style="FONT:7pt 'Times New Roman'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Set the current directory to <code>InstallRootDirectory/CAAProductStructureE5i.edu</code></p>
+		<p class="MsoNormal">2.<span style="FONT:7pt 'Times New Roman'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Set up the build time environment and build the following module: CAAEV5CommitAndRollback.m</p>
+		<p class="MsoNormal">3.<span style="FONT:7pt 'Times New Roman'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </span>Edit file <code>InstallRootDirectory/CAAProductStructureE5i.edu/CNext/code/dictionary/CAAProductStructureE5i.edu.dico</code>: 
+			uncomment the following line<br>
+			<table class="code" id="table1">
+				<tr>
+					<td>
+                        <pre><span style="FONT-SIZE: 10pt; FONT-FAMILY: Courier New">#<font SIZE="2">CATUEPDMSaveProcess CATIPDMUESaveProcess libCAAEV5CommitAndRollback</font></span></pre>
+					</td>					
+				</tr>
+				<tr>
+					<td>
+                        <pre><span style="FONT-SIZE: 10pt; FONT-FAMILY: Courier New">#<font SIZE="2">CATUEPDMSaveProcess CATIPDMUEOnCancel libCAAEV5CommitAndRollback</font></span></pre>
+					</td>					
+				</tr>
+			</table>
+		<p class="MsoNormal">4.<span style="FONT:7pt 'Times New Roman'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Install the run time environment by executing the command mkCreateRuntimeView
+		</p>
+		<p class="MsoNormal">5.<span style="FONT:7pt 'Times New Roman'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Run CNEXT on the command line</p>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h4><a name="Where"></a>Where to Find the CAAEV5CommitAndRollback Code</h4>
+		<table>
+			<tbody>
+				<tr>
+					<td><code>InstallRootDirectory\CAAProductStructureE5i.edu</code><p class="MsoNormal" style="MARGIN-LEFT: 57.6pt; TEXT-INDENT: -18pt">
+							<span style="FONT-FAMILY: Symbol">·<span style="FONT:7pt 'Times New Roman'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		</span></span>the code implementing CAAEV5CommitAndRollback can be found in <code>CAAE5iUEDocumentName.m\src\CAAEV5CommitAndRollback.cpp</code></p>
+						<p class="MsoNormal" style="MARGIN-LEFT: 57.6pt; TEXT-INDENT: -18pt">
+							<span style="FONT-FAMILY: Symbol">·<span style="FONT:7pt 'Times New Roman'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		</span></span>the corresponding dictionary entry can be found in <code>CNext\code\dictionary\CAAProductStructureE5i.edu.dico</code></p>
+                    </td>
+				</tr>
+			</tbody>
+		</table>
+		<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM is 
+			installed.</p>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h3><a name="Step"></a>Step-by-Step</h3>
+		<p>The Use Case of CAAEV5CommitAndRollback includes the following 
+			steps:</p>
+		<table width="100%">
+			<tr>
+				<th width="83">
+                    <p align="left">
+					#</p>
+                </th>
+				<th>
+                    <p align="left">
+					Step</p>
+                </th>
+			</tr>
+			<tr>
+				<td valign="top" width="83"><a href="#Step2">1</a></td>
+				<td valign="top">Implement the User Exit.</td>
+			</tr>
+			<tr>
+				<td valign="top" width="83"><a href="#Step3">2</a></td>
+				<td valign="top">Replay the Use Case scenario.</td>
+			</tr>
+			<tr>
+				<td valign="top" width="83"><a href="#Step3">3</a></td>
+				<td valign="top">Checks to be performed.</td>
+			</tr>
+		</table>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<h4><a name="Step2"></a>Implement the User Exit</h4>
+        <p class="MsoNormal">The CAAEV5CommitAndRollback.cpp code is a user exit program; I.E. 
+			CATIA V5 calls the various User-exits in this&nbsp; implementation code
+        during &quot;Save in Enovia&quot; process. The call to different
+        User-exits are made depending on how &quot;Save in Enovia&quot;
+        progresses.</p>
+		<p class="MsoNormal">To do this, CATIA instanciates a CATObject with late type
+        CATUEPDMSaveProcess<font SIZE="2"> </font>and queries it for the interfaces
+        CATIPDMUESaveProcess and CATIPDMUEOnCancel.</p>
+		<p class="MsoNormal">This is why CAAEV5CommitAndRollback.cpp declares</p>
+		<p class="MsoNormal"><span style="FONT-SIZE: 10pt; FONT-FAMILY: Courier New">
+1.<span style="FONT:7pt 'Times New Roman'">&nbsp;&nbsp;&nbsp; </span></span>its late type 
+			is CATUEPDMSaveProcess:</p>
+		<table class="code" id="table1">
+			<tr>
+				<td>
+					<pre><span style="FONT-FAMILY: Courier New">CATImplementClass( </span>CAAEV5CommitAndRollback<span style="FONT-FAMILY: Courier New">, DataExtension, <span style="COLOR:blue">CATBaseUnknown</span>, </span><font SIZE="2"><b>CATUEPDMSaveProcess</b></font><span style="FONT-FAMILY: Courier New">);</span></pre>
+				</td>
+			</tr>
+		</table>
+		<p class="MsoNormal">2.<span style="FONT:7pt 'Times New Roman'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>it implements CATIPDMUESaveProcess and CATIPDMUEOnCancel:</p>
+		<table class="code" id="table1">
+			<tr>
+				<td>
+					<pre><span style="FONT-FAMILY: Courier New">#include &quot;TIE_</span>CATIPDMUESaveProcess<span style="FONT-FAMILY: Courier New">.h&quot;
+&nbsp;TIEchain_</span><b>CATIPDMUESaveProcess</b><span style="FONT-FAMILY: Courier New">(CAAE5iUEDocumentName);</span></pre>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<pre><span style="FONT-FAMILY: Courier New">#include &quot;TIE_</span>CATIPDMUEOnCancel<span style="FONT-FAMILY: Courier New">.h&quot;
+&nbsp;TIEchain_</span><b>CATIPDMUEOnCancel</b><span style="FONT-FAMILY: Courier New">(CAAE5iUEDocumentName);</span></pre>
+				</td>
+			</tr>
+		</table>
+		<p class="MsoNormal">Additionally the CAAProductStructureE5i.edu.dico file 
+			declares the implementation of CATIPDMUESaveProcess in the following line:</p>
+		<table class="code" id="table1" width="629">
+			<tr>
+				<td width="621">
+					<pre><span style="FONT-SIZE: 10pt; FONT-FAMILY: Courier New"><font SIZE="2">CATUEPDMSaveProcess	CATIPDMUESaveProcess	libCAAEV5CommitAndRollback</font></span></pre>
+				</td>
+			</tr>
+			<tr>
+				<td width="621">
+					<pre><span style="FONT-SIZE: 10pt; FONT-FAMILY: Courier New"><font SIZE="2">CATUEPDMSaveProcess	CATIPDMUEOnCancel	libCAAEV5CommitAndRollback</font></span></pre>
+				</td>
+			</tr>
+		</table>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<h4><a name="Step3"></a>Replay the Use Case scenario</h4>
+        <p class="MsoNormal">User-exits implemented in this Use case returns
+        S_OK and E_FAIL based on a statis call counter. What action user wants
+        to perform inside these User-exits is up to the user. Following is the
+        scenario used to demonstrate how this User-exits can be implemented and
+        how &quot;Save in Enovia&quot; process proceeds with the outcome of
+        these User-Exits:</p>
+        <p class="MsoNormal" style="margin-left:39.6pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
+tab-stops:list 39.6pt"><span style="mso-list: Ignore; mso-fareast-font-family: Verdana; mso-bidi-font-family: Verdana">1.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </span></span>Create Product structure in CATIA as shown below:</p>
+        <p class="MsoNormal" style="margin-left:39.6pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
+tab-stops:list 39.6pt"><img border="0" src="Product_Structure.jpg" width="400" height="206"></p>
+        <p class="MsoNormal" style="margin-left:39.6pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
+tab-stops:list 39.6pt"><span style="mso-list: Ignore; mso-fareast-font-family: Verdana; mso-bidi-font-family: Verdana">2.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </span></span>Click on <span lang="EN-GB" style="mso-ansi-language:EN-GB">“Save
+        in ENOVIA” command.</span></p>
+        <p class="MsoNormal" style="margin-left:39.6pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
+tab-stops:list 39.6pt"><span style="mso-list: Ignore; mso-fareast-font-family: Verdana; mso-bidi-font-family: Verdana">3.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </span></span>Implementation of <i style="mso-bidi-font-style:normal">BeforeSaveDialog</i>
+        will be called which return’s E_FAIL based on static call counter
+        value (At this step counter value is 0 hence returned E_FAIL and
+        incremented by 1)<i style="mso-bidi-font-style:
+normal">.</i></p>
+        <p class="MsoNormal" style="margin-left:39.6pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
+tab-stops:list 39.6pt"><span style="mso-list: Ignore; mso-fareast-font-family: Verdana; mso-bidi-font-family: Verdana">4.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </span></span>Due to failure of User-exit <i style="mso-bidi-font-style:normal">BeforeSaveDialog</i>
+        following Error message will be shown in reporter panel:</p>
+        <p class="MsoNormal" style="margin-left:39.6pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
+tab-stops:list 39.6pt"><img border="0" src="Error_1_BeforeSaveDialog.jpg" width="668" height="489"></p>
+        <p class="MsoNormal" style="margin-left:39.6pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
+tab-stops:list 39.6pt"><span style="mso-list: Ignore; mso-fareast-font-family: Verdana; mso-bidi-font-family: Verdana">5.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </span></span>Close the Error Message and again click on “Save in
+        ENOVIA” command.</p>
+        <p class="MsoNormal" style="margin-left:39.6pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
+tab-stops:list 39.6pt"><span style="mso-list: Ignore; mso-fareast-font-family: Verdana; mso-bidi-font-family: Verdana">6.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </span></span>Implementation of <i style="mso-bidi-font-style:normal">BeforeSaveDialog</i>
+        will return S_OK (At this step counter value is 1)<i style="mso-bidi-font-style:normal">.</i></p>
+        <p class="MsoNormal" style="margin-left:39.6pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
+tab-stops:list 39.6pt"><span style="mso-list: Ignore; mso-fareast-font-family: Verdana; mso-bidi-font-family: Verdana">7.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </span></span>Save Panel will be displayed, click on OK.</p>
+        <p class="MsoNormal" style="margin-left:39.6pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
+tab-stops:list 39.6pt"><span style="mso-list: Ignore; mso-fareast-font-family: Verdana; mso-bidi-font-family: Verdana">8.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </span></span>Implementation of <i style="mso-bidi-font-style:normal">OnOK</i>
+        will be called which return’s E_FAIL (At this step counter value is 1
+        hence returned E_FAIL and incremented by 1). Error message will be shown
+        as earlier.</p>
+        <p class="MsoNormal" style="margin-left:39.6pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
+tab-stops:list 39.6pt"><span style="mso-list: Ignore; mso-fareast-font-family: Verdana; mso-bidi-font-family: Verdana">9.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </span></span>Save process has been interrupted, again click on “Save
+        in ENOVIA” command.</p>
+        <p class="MsoNormal" style="margin-left:39.6pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
+tab-stops:list 39.6pt"><span style="mso-list: Ignore; mso-fareast-font-family: Verdana; mso-bidi-font-family: Verdana">10.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;
+        </span></span>Implementation of <i style="mso-bidi-font-style:normal">BeforeSaveDialog</i>
+        will return S_OK, click on “OK” from Save Panel.</p>
+        <p class="MsoNormal" style="margin-left:39.6pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
+tab-stops:list 39.6pt"><span style="mso-list: Ignore; mso-fareast-font-family: Verdana; mso-bidi-font-family: Verdana">11.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;
+        </span></span>Implementation of <i style="mso-bidi-font-style:normal">OnOK</i>
+        will return S_OK.</p>
+        <p class="MsoNormal" style="margin-left:39.6pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
+tab-stops:list 39.6pt"><span style="mso-list: Ignore; mso-fareast-font-family: Verdana; mso-bidi-font-family: Verdana">12.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;
+        </span></span>Implementation of <i style="mso-bidi-font-style:normal">BeforeStartingSave
+        </i>will be called which return’s E_FAIL (At this step counter value
+        is 2 hence returned E_FAIL and incremented by 1).</p>
+        <p class="MsoNormal" style="margin-left:39.6pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
+tab-stops:list 39.6pt"><span style="mso-list: Ignore; mso-fareast-font-family: Verdana; mso-bidi-font-family: Verdana">13.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;
+        </span></span>If <i style="mso-bidi-font-style:normal">BeforeStartingSave
+        </i>is failed implementation of <i style="mso-bidi-font-style:normal">OnSaveFailed</i>
+        is called which returns S_OK.</p>
+        <p class="MsoNormal" style="margin-left:39.6pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
+tab-stops:list 39.6pt"><span style="mso-list: Ignore; mso-fareast-font-family: Verdana; mso-bidi-font-family: Verdana">14.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;
+        </span></span>Save process has been interrupted, again click on “Save
+        in ENOVIA” command.</p>
+        <p class="MsoNormal" style="margin-left:39.6pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
+tab-stops:list 39.6pt"><span style="mso-list: Ignore; mso-fareast-font-family: Verdana; mso-bidi-font-family: Verdana">15.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;
+        </span></span>Implementation of <i style="mso-bidi-font-style:normal">BeforeStartingSave
+        </i>will return S_OK, click on “OK” from Save Panel.</p>
+        <p class="MsoNormal" style="margin-left:39.6pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
+tab-stops:list 39.6pt"><span style="mso-list: Ignore; mso-fareast-font-family: Verdana; mso-bidi-font-family: Verdana">16.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;
+        </span></span>Implementation of <i style="mso-bidi-font-style:normal">OnOK</i>,
+        <i style="mso-bidi-font-style:
+normal">BeforeStartingSave </i>and<i style="mso-bidi-font-style:normal">
+        OnSaveSucceeded </i>will return S_OK.</p>
+        <p class="MsoNormal" style="margin-left:39.6pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
+tab-stops:list 39.6pt"><span style="mso-list: Ignore; mso-fareast-font-family: Verdana; mso-bidi-font-family: Verdana">17.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;
+        </span></span>Implementation of <i style="mso-bidi-font-style:normal">BeforeCommit
+        </i>will be called which returns S_OK (At this step counter value is 3
+        and incremented by 1).</p>
+        <p class="MsoNormal" style="margin-left:39.6pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
+tab-stops:list 39.6pt"><span style="mso-list: Ignore; mso-fareast-font-family: Verdana; mso-bidi-font-family: Verdana">18.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;
+        </span></span>Created Product structure will be saved to ENOVIA.</p>
+        <p class="MsoNormal" style="margin-left:39.6pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
+tab-stops:list 39.6pt"><span style="mso-list: Ignore; mso-fareast-font-family: Verdana; mso-bidi-font-family: Verdana">19.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;
+        </span></span>Make some modifications on Part geometries, and click on
+        “Save in Enovia”.</p>
+        <p class="MsoNormal" style="margin-left:39.6pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
+tab-stops:list 39.6pt"><span style="mso-list: Ignore; mso-fareast-font-family: Verdana; mso-bidi-font-family: Verdana">20.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;
+        </span></span>Click on “OK” on Save Panel. All other User-exits will
+        return S_OK except for <i style="mso-bidi-font-style:normal">BeforeCommit
+        </i>which returns E_FAIL at this step.</p>
+        <p class="MsoNormal" style="margin-left:39.6pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
+tab-stops:list 39.6pt"><span style="mso-list: Ignore; mso-fareast-font-family: Verdana; mso-bidi-font-family: Verdana">21.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;
+        </span></span>Due to failure of User-exit <i style="mso-bidi-font-style:normal">BeforeRollback</i>
+        will be called and then ENOVIA rollback will be called, Following Error message
+        will be shown in reporter panel:</p>
+        <p class="MsoNormal" style="margin-left:39.6pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
+tab-stops:list 39.6pt"><img border="0" src="Error_3_BeforeCommit.jpg" width="668" height="489"></p>
+        <p class="MsoNormal" style="margin-left:39.6pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
+tab-stops:list 39.6pt"><span style="mso-list: Ignore; mso-fareast-font-family: Verdana; mso-bidi-font-family: Verdana">22.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;
+        </span></span>Close the Error Message and again click on “Save in
+        ENOVIA” command.</p>
+        <p class="MsoNormal" style="margin-left:39.6pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
+tab-stops:list 39.6pt"><span style="mso-list: Ignore; mso-fareast-font-family: Verdana; mso-bidi-font-family: Verdana">23.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;
+        </span></span>At this step all User-exits will return S_OK and hence the
+        modified data will be saved to ENOVIA.</p>
+		<p class="MsoNormal" style="margin-left:39.6pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
+tab-stops:list 39.6pt"><span style="mso-list: Ignore; mso-fareast-font-family: Verdana; mso-bidi-font-family: Verdana">24.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;
+        </span></span>Click on "Save in ENOVIA" command.</p>
+		<p class="MsoNormal" style="margin-left:39.6pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
+tab-stops:list 39.6pt"><span style="mso-list: Ignore; mso-fareast-font-family: Verdana; mso-bidi-font-family: Verdana">25.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;
+        </span></span>Click on "Cancel" on Save Panel. Implementation of <i style="mso-bidi-font-style:normal">OnCancel</i> will be called which return’s E_FAIL based on static call counter value (At this step counter value is 3 hence returned E_FAIL and incremented by 1).</p>
+		<p class="MsoNormal" style="margin-left:39.6pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
+tab-stops:list 39.6pt"><span style="mso-list: Ignore; mso-fareast-font-family: Verdana; mso-bidi-font-family: Verdana">26.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;
+        </span></span>Due to failure of User-exit <i style="mso-bidi-font-style:normal">OnCancel</i> an Error message will be shown in reporter panel.</p>
+		<p class="MsoNormal" style="margin-left:39.6pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
+tab-stops:list 39.6pt"><img border="0" src="Error_1_BeforeSaveDialog.jpg" width="668" height="489"></p>
+		<p class="MsoNormal" style="margin-left:39.6pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
+tab-stops:list 39.6pt"><span style="mso-list: Ignore; mso-fareast-font-family: Verdana; mso-bidi-font-family: Verdana">27.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;
+        </span></span>Close the Error Message and again click on "Save in ENOVIA" command.</p>
+		<p class="MsoNormal" style="margin-left:39.6pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
+tab-stops:list 39.6pt"><span style="mso-list: Ignore; mso-fareast-font-family: Verdana; mso-bidi-font-family: Verdana">28.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;
+        </span></span>Click on "Cancel" on Save Panel.</p>
+		<p class="MsoNormal" style="margin-left:39.6pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
+tab-stops:list 39.6pt"><span style="mso-list: Ignore; mso-fareast-font-family: Verdana; mso-bidi-font-family: Verdana">29.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;
+        </span></span>Implementation of <i style="mso-bidi-font-style:normal">OnCancel</i> will return S_OK.</p>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<h4><a name="Step2"></a>Checks to be performed</h4>
+        <p class="MsoNormal">Check after every User-exit if corresponding Save,
+        Commit and Rollback process have been performed correctly.</p>
+        <p class="MsoNormal">Additional check for documents modifications has to
+        be performed. Newly created method <i style="mso-bidi-font-style:normal">GetModificationStatus</i>
+        in API <i style="mso-bidi-font-style:normal">CATIPDMSaveInfo </i>will
+        return status during different User-exits as below:</p>
+        <p class="MsoNormal"><i style="mso-bidi-font-style:normal">BeforeSaveDialog</i>
+        – Status will be PDM_New (Documents are new for PDM)</p>
+        <p class="MsoNormal"><i style="mso-bidi-font-style:normal">BeforeCommit
+        – </i>Status will be PDM_NotModified (Save process has been completed,
+        commit to be done hence documents are in PDM and NotModified)</p>
+        <p class="MsoNormal">Once the Product Structure is saved in DB (After
+        Step 18):</p>
+        <p class="MsoNormal"><i style="mso-bidi-font-style:normal">BeforeSaveDialog</i>
+        – Status will be PDM_Modified (Documents are saved in PDM and Modified
+        in CATIA session).</p>
+        <p class="MsoNormal"><i style="mso-bidi-font-style:normal">BeforeCommit
+        –</i>Status will be PDM_NotModified (Modifications have been saved in
+        DB, commit is to be performed hence status is PDM_NotModified.</p>
+		<!---------------------------------comment------------------------------------->
+		<h3><a name="InShort"></a>In Short</h3>
+        <p class="MsoNormal">This use case has demonstrated how various
+        User-exits available with
+        CATIPDMUESaveProcess and CATIPDMUEOnCancel allows customers to tailor the “Save in ENOVIA”
+        command with business logic that fits their own needs.
+		</p>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<hr>
+		<!---------------------------------comment------------------------------------->
+		<h3><a name="References"></a>References</h3>
+		<table width="100%">
+			<tr>
+				<td valign="top">[1]</td>
+				<td><a href="../CAADocUseCases/CAADocRunSample.htm">Building 
+						and Launching a CAA V5 Use Case</a></td>
+			</tr>
+			<tr>
+				<td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+			</tr>
+		</table>
+		<hr>
+		<!---------------------------------comment------------------------------------->
+		<h3><a name="History"></a>History</h3>
+		<table width="100%">
+			<tr>
+				<td valign="top">Version: <strong>1</strong>  [Feb 2008]</td>
+				<td valign="top">Document created</td>
+			</tr>
+			<tr>
+				<td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+			</tr>
+		</table>
+		<hr>
+		<!---------------------------------comment------------------------------------->
+		<p><i>Copyright © 2008, Dassault Systèmes. All rights reserved.</i></p>
+	</body>
+</html>

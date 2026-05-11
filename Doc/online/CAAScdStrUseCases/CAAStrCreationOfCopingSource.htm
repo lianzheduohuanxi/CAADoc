@@ -1,0 +1,133 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>CAAStrCreateCoping.CATScript</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+</head>
+
+<body>
+<pre>
+<font color="#0000FF">Sub</font> CATMain()
+<font color="#0000FF">Dim</font> StrWorkbench <font color="#0000FF">As</font> StrWorkbench
+<font color="#0000FF">Dim</font> strFactory <font color="#0000FF">As</font> StrObjectFactory
+
+<font color="#0000FF">Set</font> doc = CATIA.ActiveDocument
+<font color="#0000FF">Dim</font> rootProduct <font color="#0000FF">As</font> Product
+<font color="#0000FF">Set</font> rootProduct = doc.Product
+   
+<font color="#0000FF">Set</font> StrWorkbench = doc.GetWorkbench(&quot;StrWorkbench&quot;)
+    
+<font color="#0000FF">Dim</font> strPlates <font color="#0000FF">As</font> strPlates
+<font color="#0000FF">Set</font> strPlates = rootProduct.GetTechnologicalObject(&quot;StructurePlates&quot;)
+   
+<font color="#0000FF">Dim</font> strMembers <font color="#0000FF">As</font> strMembers
+<font color="#0000FF">Set</font> strMembers = rootProduct.GetTechnologicalObject(&quot;StructureMembers&quot;)
+
+<font color="#008000">'Case1: When Plate is limited by other Plate and Surface</font>
+<font color="#008000">'Get The Factory from Selection Method</font>
+<font color="#0000FF">Dim</font> PlateToNibble <font color="#0000FF">As</font> StrPlate
+<font color="#0000FF">Set</font> PlateToNibble = strPlates.Item(&quot;Deck_014.2&quot;)
+
+<font color="#0000FF">Dim</font> PlateSelection <font color="#0000FF">As</font> Selection
+<font color="#0000FF">Set</font> PlateSelection = CATIA.ActiveDocument.Selection
+PlateSelection.Add PlateToNibble
+  
+<font color="#0000FF">Dim</font> FactoryForPlate <font color="#0000FF">As</font> StrFeatureFactory
+<font color="#0000FF">Set</font> FactoryForPlate = PlateSelection.FindObject(&quot;CATIAStrFeatureFactory&quot;)
+
+<font color="#008000">'Define the Limits for PlateToNibble</font>
+<font color="#0000FF">Dim</font> Limitplate1 <font color="#0000FF">As</font> StrPlate
+<font color="#0000FF">Set</font> Limitplate1 = strPlates.Item(&quot;Shell_002.1&quot;)
+
+<font color="#0000FF">Dim</font> LimitSurface1 <font color="#0000FF">As</font> Reference
+<font color="#0000FF">Set</font> LimitSurface1 = rootProduct.CreateReferenceFromName(&quot;Product1/Part1.1/!Extrude.1&quot;)
+
+<font color="#0000FF">Dim</font> Listoflimits1(0) <font color="#0000FF">As</font> Variant
+<font color="#0000FF">Dim</font> Listoflimits2(0) <font color="#0000FF">As</font> Variant
+
+<font color="#0000FF">Set</font> Listoflimits1(0) = Limitplate1
+<font color="#0000FF">Set</font> Listoflimits2(0) = LimitSurface1
+
+<font color="#008000">'Create Nibbling by defining Type and SubType</font>
+<font color="#0000FF">Dim</font> NibblingFeature1, NibblingFeature2 <font color="#0000FF">As</font> StrNibblingFeature
+
+<font color="#0000FF">Set</font> NibblingFeature1 = FactoryForPlate.AddNibbling(Listoflimits1, &quot;Remove&quot;)
+NibblingFeature1.SubType = &quot;ButtButt&quot;
+
+<font color="#0000FF">Set</font> NibblingFeature2 = FactoryForPlate.AddNibbling(Listoflimits2, &quot;Remove&quot;)
+NibblingFeature2.SubType = &quot;CurrCurr&quot;
+
+<font color="#008000">'*******************************************************************</font>
+<font color="#008000">'Case2: When Member is limited by 2 Members and One Plate</font>
+<font color="#008000">'Get The Factory from Selection Method</font>
+<font color="#0000FF">Dim</font> MembertoNibble1 <font color="#0000FF">As</font> StrMember
+<font color="#0000FF">Set</font> MembertoNibble1 = strMembers.Item(&quot;BottShell_LStf_003.1&quot;)
+
+<font color="#0000FF">Dim</font> MemberSelection <font color="#0000FF">As</font> Selection
+<font color="#0000FF">Set</font> MemberSelection = CATIA.ActiveDocument.Selection
+MemberSelection.Add MembertoNibble1
+
+<font color="#0000FF">Dim</font> FactoryForMember <font color="#0000FF">As</font> StrFeatureFactory
+<font color="#0000FF">Set</font> FactoryForMember = MemberSelection.FindObject(&quot;CATIAStrFeatureFactory&quot;)
+
+<font color="#008000">'Define the Limits for  MembertoNibble1</font>
+<font color="#0000FF">Dim</font> L1 <font color="#0000FF">As</font> StrMember
+<font color="#0000FF">Set</font> L1 = strMembers.Item(&quot;Shell_VStf_006.1&quot;)
+
+<font color="#0000FF">Dim</font> L2 <font color="#0000FF">As</font> StrMember
+<font color="#0000FF">Set</font> L2 = strMembers.Item(&quot;Shell_VStf_005.1&quot;)
+
+<font color="#0000FF">Dim</font> L3 <font color="#0000FF">As</font> StrPlate
+<font color="#0000FF">Set</font> L3 = strPlates.Item(&quot;Shell_002.1&quot;)
+
+<font color="#0000FF">Dim</font> Listoflimits3(0) <font color="#0000FF">As</font> Variant
+<font color="#0000FF">Dim</font> Listoflimits4(0) <font color="#0000FF">As</font> Variant
+<font color="#0000FF">Dim</font> Listoflimits5(0) <font color="#0000FF">As</font> Variant
+
+<font color="#0000FF">Set</font> Listoflimits5(0) = L3
+<font color="#0000FF">Set</font> Listoflimits3(0) = L1
+<font color="#0000FF">Set</font> Listoflimits4(0) = L2
+
+<font color="#008000">'Create Nibbling by defining Type and SubType</font>
+<font color="#0000FF">Dim</font> NibblingFeature3, NibblingFeature4, NibblingFeature5 <font color="#0000FF">As</font> StrNibblingFeature
+
+<font color="#0000FF">Set</font> NibblingFeature3 = FactoryForMember.AddNibbling(Listoflimits3, &quot;WeldCut&quot;)
+<font color="#0000FF">Set</font> NibblingFeature4 = FactoryForMember.AddNibbling(Listoflimits4, &quot;LongPoint&quot;)
+NibblingFeature4.Type = &quot;ShortPoint&quot;
+<font color="#0000FF">Set</font> NibblingFeature5 = FactoryForMember.AddNibbling(Listoflimits5, &quot;Remove&quot;)
+
+<font color="#008000">'*******************************************************************</font>
+<font color="#008000">'Case3: When Member is limited by Lateral Face of of Plate</font>
+<font color="#008000">'Get The Factory from Selection Method</font>
+<font color="#0000FF">Dim</font> MembertoNibble2 <font color="#0000FF">As</font> StrMember
+<font color="#0000FF">Set</font> MembertoNibble2 = strMembers.Item(&quot;Deck_TStf_005.1&quot;)
+
+<font color="#0000FF">Dim</font> Member2Sel <font color="#0000FF">As</font> Selection
+<font color="#0000FF">Set</font> Member2Sel = CATIA.ActiveDocument.Selection
+Member2Sel.Add MembertoNibble2
+
+<font color="#0000FF">Dim</font> FactoryForMember2 <font color="#0000FF">As</font> StrFeatureFactory
+<font color="#0000FF">Set</font> FactoryForMember2 = Member2Sel.FindObject(&quot;CATIAStrFeatureFactory&quot;)
+
+<font color="#008000">'Define the Limits for  MembertoNibble2</font>
+<font color="#0000FF">Dim</font> L4 <font color="#0000FF">As</font> StrPlate
+<font color="#0000FF">Set</font> L4 = strPlates.Item(&quot;Deck_014.2&quot;)
+
+<font color="#0000FF">Dim</font> ListofLimits6(0) <font color="#0000FF">As</font> Variant
+<font color="#0000FF">Set</font> ListofLimits6(0) = L4
+
+<font color="#008000">'Create Nibbling by defining the Extrapolation Offset</font>
+<font color="#0000FF">Dim</font> NibblingFeature6 <font color="#0000FF">As</font> StrNibblingFeature
+<font color="#0000FF">Set</font> NibblingFeature6 = FactoryForMember2.AddNibbling(ListofLimits6, &quot;Remove&quot;)
+NibblingFeature6.GetOffsetForExtrapolate (&quot;25mm&quot;)
+
+<font color="#0000FF">End Sub</font>
+</pre>
+
+</body>
+
+</html>

@@ -1,0 +1,2133 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Implementing the Command Statechart Diagram</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+     <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Commands</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Implementing the Command Statechart Diagram</h3>
+      <em>From the statechart diagram to the BuildGraph method</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to code the command class <code>BuildGraph</code>
+      method that contains the command statechart implementation.
+      <ul>
+        <li><a href="#30000A"><strong>Implementing the Statechart Diagram</strong></a></li>
+        <li><a href="#400000"><strong>Creating States</strong></a>
+          <ul>
+            <li><a href="#410000">Creating Simple States</a></li>
+            <li><a href="#420000">Creating Composite States</a></li>
+            <li><a href="#430000">Deleting States</a></li>
+          </ul>
+        </li>
+        <li><a href="#500000"><strong>Creating Dialog Agents</strong></a>
+          <ul>
+            <li><a href="#510000">Managing Indication</a></li>
+            <li><a href="#520000">Managing Selection</a></li>
+            <li><a href="#530000">Creating an Acquisition Filter to an
+              Indication or a Path Element Dialog Agent</a></li>
+            <li><a href="#540000">Setting a Dialog Agent as Repeatable</a></li>
+            <li><a href="#550000">Modifying a Dialog Agent's Behavior</a></li>
+            <li><a href="#560000">Plugging a Dialog Agent to a State</a></li>
+            <li><a href="#570000">Concatenating Several Dialog Agents</a></li>
+            <li><a href="#580000">Using a Dialog Agent in a Condition or Action
+              Method</a></li>
+          </ul>
+        </li>
+        <li><a href="#600000"><strong>Creating Transitions</strong></a>
+          <ul>
+            <li><a href="#610000">Creating Simple Transitions</a></li>
+            <li><a href="#620000">Creating Transitions with the Same Source
+              State</a></li>
+            <li><a href="#630000">Creating Transitions with the Same Target
+              State</a></li>
+            <li><a href="#640000">Creating Self-Transitions</a></li>
+          </ul>
+        </li>
+        <li><a href="#700000"><strong>Creating Guard Conditions</strong></a>
+          <ul>
+            <li><a href="#710000">Creating Conditions with Unconstrained Data
+              Input</a></li>
+            <li><a href="#720000">Creating Conditions Constraining Data Input</a></li>
+            <li><a href="#730000">Creating Composite Conditions</a></li>
+            <li><a href="#740000">Creating a State Exit Condition</a></li>
+          </ul>
+        </li>
+        <li><a href="#800000"><strong>Creating Actions</strong></a>
+          <ul>
+            <li><a href="#810000">Creating an Action and Adding it to a
+              Transition</a></li>
+            <li><a href="#820000">Creating Composite Actions</a></li>
+            <li><a href="#830000">Creating State Entry/Exit Actions</a></li>
+            <li><a href="#840000">Storing the Created Object in the CSO</a></li>
+          </ul>
+        </li>
+        <li><a href="#C00000"><strong>Troubleshooting</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="30000A"></a>Implementing the Statechart Diagram</h3>
+<p>The statechart diagram is implemented using the <code>BuildGraph</code>
+method. States, transitions, guard conditions, actions, and dialog agents are
+created in this method, and states, guard conditions and action methods are
+declared as transition parameters, or as state parameters.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAACommandCmd::BuildGraph()
+{
+  // Create <a href="#400000">states</a>
+  // Create <a href="#500000">dialog agents</a>, set their <a href="#540000">behaviors</a>, and <a href="#550000">plug</a> them to the states
+  // Create <a href="#600000">transitions</a> between states and declare your <a href="#700000">guard conditions</a> and <a href="#800000">actions</a>
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="400000"></a>Creating States</h3>
+<p>States are instances of the <i>CATDialogState</i> class.</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="410000"></a>Creating Simple States</h4>
+<ul>
+  <li>The initial state, as a pseudo state, is never explicitly created. It
+    automatically activates the first state of the statechart diagram to which
+    it is linked with a triggerless transition. This first state is created
+    thanks to the <code>GetInitialState</code> method of the <i>CATStateCommand</i>
+    class.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATDialogState * stFirstState = GetInitialState(&quot;stFirstStateId&quot;); </pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Additional states are created using the <code>AddDialogState</code> of the
+    <i>CATStateCommand</i> class.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATDialogState * stSecondState = AddDialogState(&quot;stSecondStateId&quot;);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>The final state, as a pseudo state, is also never explicitly created. It
+    is reffered to as the <code>NULL</code> state in the <code>AddTransition</code>
+    method that creates the transition to complete the state dialog command.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATDialogTransition * pLastTransition = AddTransition(stEndState, <strong>NULL</strong>, ...</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>The Cancel state is a flavor of the final state. Like the final state, it
+    ends the command, but in addition, it requests the <a href="CAADegUndoRedo.htm">command
+    undo</a> when the command completes. It is created using the <code>GetCancelState</code>
+    method.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATDialogState * stCancelState = GetCancelState();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p>The parameter passed as the argument of the methods <code>GetInitialState</code>
+and <code>AddDialogState</code> is the state identifier. This identifier is used
+in the state dialog command resource file to declare prompts to display when the
+state is the active one.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="420000"></a>Creating Composite States</h4>
+<p>Composite states are created like simple states.
+<ul>
+  <li>Non-concurrent composite states are in fact made of a series of subsequent
+    simple states</li>
+  <li>Concurrent composite states are modeled as simple states with dialog
+    agents matching composite input.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="430000"></a>Deleting States</h4>
+<p>The states created using the <code>GetInitiaState</code>, <code>AddDialogState</code>,
+and <code>GetCancelState</code> methods of the <i>CATStateCommand</i> class are
+automatically deleted. Never explicitly delete them. On the opposite, the states
+created using the <i>CATDialogState</i> constructor must be explicitly deleted
+in your state dialog command destructor.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="500000"></a>Creating Dialog Agents</h3>
+<p>A <em>dialog agent</em> translates a user interaction into a user input. It
+is created to match a given end user interaction and is valued when the end user
+performs this interaction. It is associated with one or possibly several states,
+and its valuation is always required to check the conditions of the transition
+from this or these states. From the state machine viewpoint, the event that
+triggers the transition and enters the guard condition check process is the
+dialog agent valuation.</p>
+<p>An end user interaction is always defined, for the dialog agent, using a
+notification whose type reflects the interaction, and a notifier, that is, the
+object that sends the notification. Basically, the dialog agent is valued when
+both notification and notifier match the dialog agent's required ones. For
+specific dialog agents, the notification should also be decoded, for example to
+find what is under the mouse, and the decoding result should be checked before
+the dialog agent is valued.</p>
+<p>The end user interactions with which a state dialog command can be interested
+are made either by the following notifiers: a 2D or a 3D viewer, or a dialog
+box. The corresponding notifications are those of the viewer protocol [<a href="#References">1</a>],
+or those that the dialog box can send, depending on which controls it is made
+of. Specific interactions are indication (left click in the viewer background),
+selection (left click on an object representation), and dialog box input. They
+are retrieved thanks to specific dialog agents named acquisition agents.</p>
+<p>An acquisition agent is a specific dialog agent dedicated to get something
+&quot;under the mouse&quot; in addition to the notification. Acquisition agents
+are valued as dialog agents, but in addition, what is under the mouse must match
+what's expected by the acquisition agent. Acquisition agents fall into the
+following categories:
+<ul>
+  <li>Indication agent: dedicated to indication, that is to retrieve a 2D point
+    from a left click</li>
+  <li>Path element agent: dedicated to selection, that is to retrieve the path
+    element of the object under the mouse.</li>
+</ul>
+<p>Any dialog agent has a behavior that you can customize. For example, you can
+activate it or not, or enable it for undo or not. You can also apply a filter or
+a combination of filters to a dialog agent, or concatenate several dialog agents
+to refine the condition that triggers the transition. In addition, other
+interactions such as double click on an object representation, right click, move
+with the left button pressed, can also be retrieved by customizing the dialog
+agent behavior.</p>
+<p>Note that:
+<ul>
+  <li>Dialog agents should be created as data members of the state dialog
+    command class</li>
+  <li>They are created in the <code>BuildGraph</code> method, along with the
+    state(s) they are dedicated to, and the transition(s) in which they are used</li>
+  <li>Their destruction must be requested in the command destructor using the <code>RequestDelayedDestruction</code>
+    method.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="510000"></a>Managing Indication</h4>
+<p>Indication retrieves the coordinates of a 2D point that doesn't exist in the
+document, but that is indicated by an end user left click in a 2D or a 3D
+viewer. An indication agent is an instance of the CATIndicationAgent class.</p>
+<h5>Creating an Indication Agent</h5>
+<p>An indication agent is instantiated as follows.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>_daIndicationAgent = new CATIndicationAgent(&quot;2DIndicationAgentId&quot;);</pre>
+    </td>
+  </tr>
+</table>
+<h5>Enabling a 3D Point Indication on a 2D Screen</h5>
+<p>An indication agent that is dedicated to a command running with a 2D viewer
+directly retrieves the 2D point coordinates from the screen plane, expressed
+with respect to the document absolute axis system. With a 3D viewer, the click
+on the screen is undetermined. If you do not provide a projection plane, the
+default is a plane parallel to the screen. You can supply a plane,
+attached to the dialog agent, on which the point clicked on the screen plane
+will be projected according to the sight direction of the current viewpoint.</p>
+<p><img src="images/3DIndicationAgent.gif" alt="3DIndicationAgent.gif (7508 bytes)" width="639" height="293"></p>
+<p>Pay attention to this plane: it should not be perpendicular to the near or
+far planes, that is to the screen plane, in order to get a point. To create a
+plane, create the plane axis system origin, and the two plane axes, then set the
+origin and the axes as those of the plane, and set the plane as the indication
+agent plane using the <code>SetMathPlane</code> method.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATMathPoint origin(0,0,0);  // Create projection plane origin and axes
+CATMathDirection u(1,0,0);
+CATMathDirection v(0,1,0);
+
+CATMathPlane Plane;
+Plane.SetOrigin(origin);     // Set them to the projection plane
+Plane.SetDirections(u, v);
+
+_daIndicationAgent-&gt;<strong>SetMathPlane</strong>(Plane); // Assigns the plane to the dialog agent</pre>
+    </td>
+  </tr>
+</table>
+<p>If you want to make sure that the plane is not perpendicular to the screen
+plane, you can, for example, check that the vector normal to the plane is not
+perpendicular to the sight direction of the viewpoint. This can be done as
+follows.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATCATBoolean isPlaneNormal = FALSE;
+
+CATFrmLayout * pCurrentLayout = CATFrmLayout::GetCurrentLayout();
+if ( NULL != pCurrentLayout )
+{
+  CATFrmWindow * pCurrentWindow = pCurrentLayout-&gt;GetCurrentWindow();
+  if ( NULL != pCurrentWindow )
+  {
+    CATICamera * piICamera = NULL;
+    piICamera = pCurrentWindow-&gt;GetCurrentCamera();
+    
+    if (NULL != piICamera) 
+    {
+      CATI3DCamera * pi3DCamera = NULL;
+      HRESULT rc = piICamera-&gt;QueryInterface(IID_CATI3DCamera,(void **)&amp; pi3DCamera);
+
+      if ( SUCCEEDED(rc) )
+      {
+        CATMathVector Normal;
+        Plane.GetNormal(Normal);
+        CATMathDirection Sight = pi3DCamera-&gt;GetDirection();
+        isPlaneNormal = Sight.IsNormal(Normal);
+
+        pi3DCamera-&gt;Release(); 
+        pi3DCamera=NULL;
+      }
+      piICamera-&gt;Release();
+      piICamera= NULL ;
+    }
+  }
+}
+if (FALSE == isPlaneNormal) ...</pre>
+    </td>
+  </tr>
+</table>
+<h5>Enabling for Multi-indication</h5>
+<p>You may allow the end user to indicate a set of points instead of one. This
+is done by setting the behavior of the indication dialog agent to <code>CATDlgEngMultiAcquisition</code>
+by means of the <code>SetBehavior</code> method:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>_daMultiIndicationAgent = new CATIndicationAgent(&quot;MultipleAgentId&quot;);
+_daMultiIndicationAgent-&gt;SetBehavior(CATDlgEngMultiAcquisition);</pre>
+    </td>
+  </tr>
+</table>
+<h5>Retrieving the Indicated Point</h5>
+<p>The point indicated by the end user is retrieved directly as a <i>CATMathPoint2D</i>
+instance in case of a 2D viewer, and should be transformed as a <i>CATMathPoint</i>
+with a 3D viewer.
+<ul>
+  <li>With a 2D viewer
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+CATMathPoint2D IndPoint = _daIndicationAgent-&gt;GetValue();
+
+double X = IndPoint.GetX();
+double Y = IndPoint.GetY();
+// OR
+double X, Y;
+IndPoint.GetCoord(X, Y);
+...</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>With a 3D viewer
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+CATMathPoint2D IndPoint2D = _daIndicationAgent-&gt;GetValue();
+CATMathPoint IndPoint3D;
+Plane.EvalPoint(IndPoint2D.GetX(),IndPoint2D.GetY(), IndPoint3D);
+
+double X = IndPoint3D.GetX();
+double Y = IndPoint3D.GetY();
+double Z = IndPoint3D.GetZ();
+// OR
+double, X, Y, Z;
+IndPoint3D.GetCoord(X, Y, Z);
+...</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <p>If you do not have define an explicit plane, you retrieve the default
+  plane, with the <code>GetMathPlane</code> method.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+CATMathPlane Plane = _daIndicationAgent-&gt;<b>GetMathPlane</b>();
+Plane.EvalPoint(IndPoint2D.GetX(),IndPoint2D.GetY(), IndPoint3D);
+...</pre>
+        </td>
+      </tr>
+    </table>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="520000"></a>Managing Selection</h4>
+<p>Selection enables the object-action paradigm, as well as the action-object
+paradigm:</p>
+<p><strong>Object-action</strong>: The Select command and the commands that can
+take their input from the CSO enable the object-action paradigm. Using the
+Select command, the end user can select an object, that is, make this object
+active, and then click a command to work on this object. The command takes this
+object as input.</p>
+<table>
+  <tr>
+    <td><img src="images/Selection1.jpg" alt="Selection1.jpg (44094 bytes)" width="547" height="416"></td>
+    <td>Using the Select command, provided as an arrow button in the user
+      interface and shown here as the current command with its focused icon, the
+      end user selects the top face of the pad. This face is put into the CSO,
+      and its contour is highlighted. No predicate is done about what could be
+      the next current command.
+      <p>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><img src="images/Selection2.jpg" alt="Selection2.jpg (53162 bytes)" width="547" height="416"></td>
+    <td>The end user clicks the Thickness command. The selected face is taken as
+      input to be the face to thicken. If the clicked command cannot take a face
+      as input, the selected face is ignored by the command, and is deselected,
+      that is&nbsp; removed from the CSO.</td>
+  </tr>
+</table>
+<p><strong>Action-object</strong>: Each command that requires an end user input
+enables the action-object paradigm. The command can be selected first, and if no
+object is active, or if no active object matches the expected one(s), the active
+objects are deselected and the command waits for the end user to select an
+appropriate object, and takes this object as input.</p>
+<table>
+  <tr>
+    <td><img src="images/Selection3.jpg" alt="Selection3.jpg (52480 bytes)" width="547" height="416"></td>
+    <td>The thickness command is clicked, but no face is selected. The command
+      includes a selection step that lets the end user select the face to
+      thicken.</td>
+  </tr>
+  <tr>
+    <td><img src="images/Selection4.jpg" alt="Selection4.jpg (53021 bytes)" width="547" height="416"></td>
+    <td>The end user selects a face, and the command applies to this face.</td>
+  </tr>
+</table>
+<p>To detect that the end user has selected a representation in a viewer that
+stands for an object that matches what your state dialog command expects in the
+current state, and to retrieve this object, use an instance of the <i>CATPathElementAgent</i>
+class. The path element dialog agent is a generic dialog agent that interprets a
+user selection, that is a left click on an object's representation&nbsp;in a
+viewer, as a document's object input, such as the selection of the rear left
+wheel instance of a car, and of all the objects above it in the document
+specification tree structure. It retrieves a path element, instance of the <i>CATPathElement</i>
+class, that is an object that contains an ordered list of pointers starting from
+the root object of the active document to the selected object. Using the path
+element; you can navigate to find objects that are above the selected one in the
+document specification tree structure.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h5>Creating a CATPathElement Instance</h5>
+<p>You can create an instance of a <i>CATPathElement</i> class by simply
+providing its identifier, as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>_SelectionAgent = new CATPathElementAgent(&quot;MySelectionAgentId&quot;);</pre>
+    </td>
+  </tr>
+</table>
+<p>If you do nothing else, your path element dialog agent will be valued with
+any object selected.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h5>Enabling for Selection</h5>
+<p>You can decide which feedback to give to the end user when the object is
+selected, take your input from the CSO if the object your command expects is
+already selected, define the object(s) the command expects, and retrieve the
+selected object, or the path element that contains it.
+<ul>
+  <li><strong>Enabling a given object to be selected (Type Query)</strong>: To
+    value your path element dialog agent when the end user selects a given type
+    of object, use the <code>AddElementType</code> method to set an interface
+    this object implements. The following example shows how to value a path
+    element dialog agent when the end user selects objects implementing the <em>CAAIPoint</em>
+    interface.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>_daSelectionAgent-&gt;AddElementType(CAAIPoint::ClassId());</pre>
+        </td>
+      </tr>
+    </table>
+    <p>When a dialog agent is intended for such objects implementing the <i>CAAIPoint</i>
+    interface, it automatically sets the&nbsp; cursor as <img src="images/NoEntry.gif" align="bottom" alt="NoEntry.gif (864 bytes)" width="17" height="17">
+    when the end user moves or locates the mouse above the representation of an
+    object that doesn't implement this interface.</p>
+    <p>The <code>AddElementType</code> method can be used as many times as you
+    want the dialog agent to be valued with&nbsp; objects implementing different
+    interfaces. For example, if you want to value it with points or with lines,
+    write:</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>_daSelectionAgent-&gt;AddElementType(CAAIPoint::ClassId());
+_daSelectionAgent-&gt;AddElementType(CAAILine::ClassId());</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The order in which the interfaces are declared using the <code>AddElementType</code>
+    method is not taken into account.</p>
+    <p>You can also set an ordered list of the interfaces among which the object
+    selected should match at least one, and use the <code>SetOrderedTypeList</code>
+    method to pass this ordered list to the dialog agent. Interface support is
+    then sequentially checked using the list order.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATListOfCATString Types;
+Types.Append(CAAIPoint::ClassId());
+Types.Append(CAAILine::ClassId());
+_daSelectionAgent-&gt;SetOrderedTypeList(Types);</pre>
+        </td>
+      </tr>
+    </table>
+    <p>In this case, the <i>CAAIPoint</i> is queried first against the selected
+    object, and if the query fails, then the <i>CAAILine</i> interface is
+    queried.</p>
+  </li>
+  <li><strong>Input from the CSO</strong>: You can ask a path element dialog
+    agent to retrieve its input from the CSO if it contains appropriate
+    elements. This is done by defining it as a CSO client with the <code>AddCSOClient</code>
+    method:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>AddCSOClient(_daSelectionAgent);</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The valuation of all the dialog agents set as CSO clients is done when
+    the command starts, whatever the state to which the dialog agent is plugged.
+    When this is done, the CSO is emptied. If at least one object in the CSO is
+    not expected by a dialog agent, none of them is valued, and the CSO is
+    emptied.</p>
+  </li>
+  <li><strong>Feedback</strong>: You can ask a path element dialog agent to
+    highlight the object it is valued with by calling the <code>SetBehavior</code>
+    method in the <code>BuildGraph</code> method with the appropriate parameter.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>_daSelectionAgent-&gt;SetBehavior(CATDlgEngWithPSOHSO);</pre>
+        </td>
+      </tr>
+    </table>
+    <p>This puts the object in the PSO and in the HSO. You can use <code>CATDlgEngWithPSO</code>
+    or <code>CATDlgEngWithHSO</code> to put the object in the PSO or in the HSO
+    respectively. The default is <code>CATDlgEngWithoutSO</code> that does not
+    highlight the object. Nothing happens if the selected object does not match
+    the requested type.</p>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h5>Enabling for Multiselection</h5>
+<p>You may allow the end user to select a set of elements instead of one.
+Multiselection is possible using a trap, or using the Search command, either run
+from the Edit menu or from the Power Input field. To enable a path element
+dialog agent for multiselection, set its behavior to <code>CATDlgEngMultiAcquisition</code>
+by means of the <code>SetBehavior</code> method:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>_daMultiSelectionAgent = new CATPathElementAgent(&quot;MultipleAgentId&quot;);
+_daMultiSelectionAgent-&gt;SetBehavior(CATDlgEngMultiAcquisition);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="530000"></a>Creating an Acquisition Filter to an Indication or a
+Path Element Dialog Agent</h4>
+<p>To filter the possible values of an indication or a path element dialog
+agent, you can create an acquisition filter. It encapsulates a constraint you
+set on the selected object to value the dialog agent. Typical constraints
+include:
+<ul>
+  <li>Topological constraints, such as check if a point belongs to a given plane</li>
+  <li>Interval constraints, such as check if a number is between 0 and 100</li>
+  <li>Lexical constraints, such as check if a date is a &quot;MM/DD/YY&quot;
+    string.</li>
+</ul>
+<p>When a dialog agent has such a filter, it applies the filter to check if the
+end user input is valid. It automatically sets the&nbsp; cursor as <img src="images/NoEntry.gif" align="bottom" alt="NoEntry.gif (864 bytes)" width="17" height="17">
+when the end user moves or locates the mouse above the representation of an
+object that doesn't match the filter.&nbsp;</p>
+<p>Use acquisition filters to provide single-data constraints, such as <code>0&lt;=N&lt;=100</code>,
+and conditions to provide multiple-data constraints, such as <code>[point1&lt;&gt;point2&nbsp;?]</code>.
+Using filters simplifies conditions (all single-data constraints are provided as
+filters) and improves performance (conditions are checked only when each data
+has been checked).</p>
+<p>Use a condition method or a filter can seem equivalent, but there is a point
+to consider. Suppose your dialog agent has the pre-highlight behavior. With the
+condition method the wrong selected element will be first pre-highlighted and
+then the condition method will reject it. To re-pre-select an other element a
+re-initialization will be done, but the wrong element will be always
+pre-highlighted. With the filter the element will be pre-highlighted only if it
+is really selectable.&nbsp;</p>
+<p>A filter can be created using the <code>Filter</code> method of the <i>CATStateCommand</i>
+class:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATAcquisitionFilter * CATStateCommand::Filter
+                        (FilterMethod iMethod, void * data);</pre>
+    </td>
+  </tr>
+</table>
+<p>Adding an acquisition filter to an acquisition agent is done by means of the <code>SetFilter</code>
+method:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CATAcquisitionAgent::SetFilter(CATAcquisitionFilter * iFilter)</pre>
+    </td>
+  </tr>
+</table>
+<p>Composite filters can be built by combining filters using the <code>AndFilter</code>,
+<code>OrFilter</code> and <code>NotFilter</code> methods.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATAcquisitionFilter * CATDialogAgent::AndFilter(CATAcquisitionFilter * iFilter1,
+                                                 CATAcquisitionFilter * iFilter2)
+
+CATAcquisitionFilter * CATDialogAgent::OrFilter (CATAcquisitionFilter * iFilter1,
+                                                 CATAcquisitionFilter * iFilter2)
+
+CATAcquisitionFilter * CATDialogAgent::NotFilter(CATAcquisitionFilter * iFilter)</pre>
+    </td>
+  </tr>
+</table>
+<p>Filters created using these methods are automatically deleted, and thus
+should not be explicitly deleted in the destructor&nbsp;</p>
+<p>For example, assume you want to trigger a transition as soon as the end user
+selects a point in a 2D viewer. This is easy if all the points implement a point
+type interface, such as <i>CATI2DPoint</i>. In this case, you should create a
+single dialog agent, as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>_PointAgent = new CATPathElementAgent(&quot;PointAgent&quot;);
+_PointAgent-&gt;AddElementType(IID_CATI2DPoint);
+SourceState-&gt;AddDialogAgent(_PointAgent);
+...
+AddTransition(SourceState, TargetState, IsOutputSetCondition(_PointAgent), ...);</pre>
+    </td>
+  </tr>
+</table>
+<p>But assume in addition that some other points, such as spline control points,
+exist in the document, and that these control points implement their own
+interface <i>CATI2DControlPoint</i> in addition to <i>CATI2DPoint</i>. To filter
+control point selection, you can create a filter to apply to the previous dialog
+agent. This dialog agent will be valued only with points and not with control
+points.&nbsp;</p>
+<p>To set this filter to the dialog agent, first instantiate the filter thanks
+to the <code>Filter</code> method,<strong> </strong>and use the <code>
+SetFilter</code> method. New statements are shown in bold:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>_PointAgent = new CATPathElementAgent(&quot;PointAgent&quot;);
+_PointAgent-&gt;AddElementType(IID_CATI2DPoint);
+
+<strong>CATAcquisitionFilter * pFilterForPointCtrl = Filter((FilterMethod) &amp; MyCmd::TestCtrlPoint,(void*)NULL);
+										   </strong><strong>
+_PointAgent-&gt;SetFilter(pFilterForPointCtrl);
+</strong>
+SourceState-&gt;AddDialogAgent(_PointAgent);
+...
+AddTransition(SourceState, TargetState, IsOutputSetCondition(_PointAgent), ...);</pre>
+    </td>
+  </tr>
+</table>
+<p><code>TestCtrlPoint</code> is a Filter method of the <i> MyCmd</i> state
+command.&nbsp;</p>
+<table class="code" height="48">
+  <tr>
+    <td height="44">
+      <pre>CATBoolean MyCmd::<code>TestCtrlPoint</code> ( CATDialogAgent * iAgent, void * iUsefulData)
+{
+  CATBoolean ret = FALSE;
+  if ( NULL != iAgent )
+  {
+     CATBaseUnknown * pSelectedElt= ((CATPathElementAgent *)iAgent)-&gt;GetElementValue();
+     if ( NULL != pSelectedElt )
+     {
+        CATI2DControlPoint * pI2DControlPoint = NULL;
+        HRESULT rc = pSelectedElt-&gt;QueryInterface(IID_CATI2DControlPoint,
+                                       (void **) &amp; pI2DControlPoint );
+        if SUCCEEDED(rc)
+        {
+           ret = TRUE;
+           pI2DControlPoint -&gt;Release();
+           pI2DControlPoint = NULL ;
+        }
+      }
+    }
+  }
+  return ret;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>To retrieve the value to check, you can use the <code>GetValue</code> , <code>GetListOfValues</code>
+and <code>GetElementValue</code> methods of the <i>CATPathElementAgent</i>
+class. Attention, the <code>GetElementValue</code> method does not Addref the
+returned value.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="540000"></a>Setting a Dialog Agent as Repeatable</h4>
+<p>A dialog agent set as repeatable is useful for states with self-transitions,
+that is transitions that loops on the same state, when:
+<ul>
+  <li>You request from the end user an array input: in this case, the dialog
+    agent should be valued to trigger the transition</li>
+  <li>You want to hook a rubber band at the mouse cursor: in this case, the
+    dialog agent should be just prevalued to trigger the transition.</li>
+</ul>
+<p>You can set a dialog agent set as repeatable using the behavior parameter <code>CATDlgEngRepeat</code>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="550000"></a>Modifying a Dialog Agent's Behavior</h4>
+<p>All dialog agents share a common behavior made of:
+<ol>
+  <li>The behavior mode</li>
+  <li>The notifier set</li>
+  <li>The notification pattern.</li>
+</ol>
+<p>It defines when a dialog agent accepts a notification and how it behaves
+afterwards.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h5>Behavior Mode</h5>
+<p>It can set either using the optional second parameter of the dialog agent
+constructor, or by calling the <code>SetBehavior</code> method:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CATDialogAgent::SetBehavior(CATDlgEngBehavior iBehavior);</pre>
+    </td>
+  </tr>
+</table>
+<p>The behavior mode is made of behavioral facets that can be each set to a
+given value. These behavioral facets can apply to all dialog agents, or to
+acquisition dialog agents only. The behavior mode is described as a
+concatenation of the following parameters described below (defaults appear in
+bold)</p>
+<table border="1" height="756" width="782">
+  <tr>
+    <td height="38" width="60">Dialog Agents</td>
+    <td height="38" width="80">Behavioral Facet</td>
+    <td height="38" width="263">Behavior Parameters</td>
+    <td height="38" width="351">Description</td>
+  </tr>
+  <tr>
+    <td rowspan="12" height="228" width="60">Any dialog agent</td>
+    <td rowspan="2" height="38" width="80">Activating</td>
+    <td height="19" width="263"><strong>CATDlgEngActive</strong></td>
+    <td height="19" width="351">Is notified about user interactions</td>
+  </tr>
+  <tr>
+    <td height="19" width="263">CATDlgEngInactive</td>
+    <td height="19" width="351">Isn't notified about user interactions</td>
+  </tr>
+  <tr>
+    <td rowspan="2" height="38" width="80">Repeating</td>
+    <td height="19" width="263"><strong>CATDlgEngOneShot</strong></td>
+    <td height="19" width="351">Doesn't remain active after it is valued</td>
+  </tr>
+  <tr>
+    <td height="19" width="263">CATDlgEngRepeat</td>
+    <td height="19" width="351">Remains active and reusable after it is valued</td>
+  </tr>
+  <tr>
+    <td rowspan="2" height="38" width="80">Receiving notifications</td>
+    <td height="19" width="263"><b>CATDlgEngReceiveAllNotifications</b></td>
+    <td height="19" width="351">Receives all the notifications received by the
+      command it belongs to</td>
+  </tr>
+  <tr>
+    <td height="19" width="263">CATDlgEngReceiveFromLinkedViews</td>
+    <td height="19" width="351">Receives only notifications sent by objects of
+      which it is the father</td>
+  </tr>
+  <tr>
+    <td rowspan="3" height="57" width="80">Visualizing</td>
+    <td height="19" width="263"><strong>CATDlgEngWithoutVisualization</strong></td>
+    <td height="19" width="351">Has no particular visualization attribute</td>
+  </tr>
+  <tr>
+    <td height="19" width="263">CATDlgEngWithVisualization</td>
+    <td height="19" width="351">Is put into the ISO when it is activated</td>
+  </tr>
+  <tr>
+    <td height="19" width="263">CATDlgEngWithXORVisualization</td>
+    <td height="19" width="351">Is put into the furtive ISO when it is activated</td>
+  </tr>
+  <tr>
+    <td rowspan="3" height="57" width="80">Undoing</td>
+    <td height="19"><strong>CATDlgEngWithUndoStep</strong></td>
+    <td height="19">Agent's valuation can be undone, and an undo step is registered</td>
+  </tr>
+  <tr>
+    <td height="19">CATDlgEngWithUndo</td>
+    <td height="19">Agent's valuation can be undone, but no undo step is registered</td>
+  </tr>
+  <tr>
+    <td height="19" width="263">CATDlgEngWithoutUndo</td>
+    <td height="19" width="351">Agent's valuation can't be undone</td>
+  </tr>
+  <tr>
+    <td rowspan="10" height="238" width="60">Any state command</td>
+    <td rowspan="2" height="38" width="80">Repeating</td>
+    <td height="19" width="263"><strong>CATDlgEngOneShot</strong></td>
+    <td height="19" width="351">Stops when it reaches the NULL state</td>
+  </tr>
+  <tr>
+    <td height="19" width="263">CATDlgEngRepeat</td>
+    <td height="19" width="351">Resumes when it reaches the NULL state</td>
+  </tr>
+  <tr>
+    <td rowspan="2" height="38" width="80">Undoing</td>
+    <td height="19"><strong>CATDlgEngWithAutoUndo</strong></td>
+    <td height="19" width="351">Can have Undo steps depending on its agents'
+      behaviors</td>
+  </tr>
+  <tr>
+    <td height="19">CATDlgEngWithoutAutoUndo</td>
+    <td height="19" width="351">Can't have Undo steps</td>
+  </tr>
+  <tr>
+    <td height="19" width="80">Undoing</td>
+    <td height="19" width="263">CATDlgEngWithoutUndoStart</td>
+    <td height="19" width="351">No Undo step is automatically added at the
+      beginning of the command</td>
+  </tr>
+  <tr>
+    <td height="19" width="80">Undoing</td>
+    <td height="19" width="263">CATDlgEngNoTransaction</td>
+    <td height="19" width="351">The Undo/Redo stack is emptied and remains empty
+      as long as the command is active</td>
+  </tr>
+  <tr>
+    <td rowspan="2" height="38" width="80">Initializing</td>
+    <td height="19" width="263"><strong>CATDlgEngWithAgentInitialization</strong></td>
+    <td height="19" width="351">Reinitializes its agents if it resumes after
+      reaching the NULL state of after Undo or Redo</td>
+  </tr>
+  <tr>
+    <td height="19" width="263">CATDlgEngWithoutAgentInitialization</td>
+    <td height="19" width="351">Does not reinitialize its agents</td>
+  </tr>
+  <tr>
+    <td rowspan="2" height="38" width="80">Activating agents</td>
+    <td height="19" width="263"><strong>CATDlgEngAgentActivationWhenEnteringState</strong></td>
+    <td height="19" width="351">Activates its agents each time a state they
+      belong to is entered</td>
+  </tr>
+  <tr>
+    <td height="19" width="263">CATDlgEngAgentActivationWhenChangingState</td>
+    <td height="19" width="351">Activates its agents only if the state has
+      changed</td>
+  </tr>
+  <tr>
+    <td rowspan="24" height="455" width="60">Acquisition dialog agent</td>
+    <td rowspan="2" height="38" width="80">Prevaluating</td>
+    <td height="19" width="263"><strong>CATDlgEngIgnoreOnPrevaluate</strong></td>
+    <td height="19" width="351">Requests that the transition triggers when an object is selected only</td>
+  </tr>
+  <tr>
+    <td height="19" width="263">CATDlgEngAcceptOnPrevaluate</td>
+    <td height="19" width="351">Requests that the transition triggers as soon as an object is located
+      under the mouse without being selected</td>
+  </tr>
+  <tr>
+    <td rowspan="2" height="38" width="80">Valuating from CSO</td>
+    <td height="19" width="263"><b>CATDlgEngNotValuedFromCSO</b></td>
+    <td height="19" width="351">Is not valued from the CSO</td>
+  </tr>
+  <tr>
+    <td height="19" width="263">CATDlgEngValuedFromCSO</td>
+    <td height="19" width="351">Is valued from the CSO at the beginning of the
+      command</td>
+  </tr>
+  <tr>
+    <td rowspan="6" height="113" width="80">Valuating</td>
+    <td height="37"><strong>CATDlgEngSimpleValuation</strong></td>
+    <td height="37">Values the agent with object selection, that is, mouse left button
+      simple click on an object (CATActivate notification)</td>
+  </tr>
+  <tr>
+    <td height="76">CATDlgEngWithPrevaluation</td>
+    <td height="76">Values the agent with object preselection, that is, object under the
+      mouse without being selected, in addition to object selection (CATActivate,
+      CATPreactivate, CATMove, and CATEndPreactivate
+      notifications)</td>
+  </tr>
+  <tr>
+    <td height="57">CATDlgEngWithManipulation</td>
+    <td height="57">Values the agent with object manipulation, that is, object selected and
+      dragged (CATBeginManipulate, CATManipulate, CATEndManipulate
+      notifications)</td>
+  </tr>
+  <tr>
+    <td height="38">CATDlgEngWithEdit</td>
+    <td height="38">Values the agent with object edition, that is, mouse left button double
+      click on an object (CATEdit notification)</td>
+  </tr>
+  <tr>
+    <td height="38">CATDlgEngWithContext</td>
+    <td height="38">Values the agent with a mouse right click, on an object (CATContext and
+      CATEndContext notifications)</td>
+  </tr>
+  <tr>
+    <td height="19" width="263">CATDlgEngWithDrag</td>
+    <td height="19" width="351">Manages notifications during Drag and Drop</td>
+  </tr>
+  <tr>
+    <td rowspan="4" height="76" width="80">Highlighting</td>
+    <td height="38"><strong>CATDlgEngWithoutSO</strong></td>
+    <td height="38">Doesn't highlight neither the object under the mouse nor the selected
+      object</td>
+  </tr>
+  <tr>
+    <td height="38">CATDlgEngWithPSOHSO</td>
+    <td height="38">Highlights both the object under the mouse and the selected object.
+      Requests that valuing be CATDlgEngWithPrevaluation</td>
+  </tr>
+  <tr>
+    <td height="38">CATDlgEngWithPSO</td>
+    <td height="38">Highlights the object under the mouse. Requests that valuing be
+      CATDlgEngWithPrevaluation</td>
+  </tr>
+  <tr>
+    <td height="19">CATDlgEngWithHSO</td>
+    <td height="19">Highlights the selected object</td>
+  </tr>
+  <tr>
+    <td rowspan="2" height="38" width="80">Highlighting</td>
+    <td height="19"><b>CATDlgEngOldHSOManager</b></td>
+    <td height="19" width="351">Selected element remains highlighted until the
+      end of the command</td>
+  </tr>
+  <tr>
+    <td height="19">CATDlgEngNewHSOManager</td>
+    <td height="19" width="351">Selected elements do not remain highlighted when
+      the agent is removed</td>
+  </tr>
+  <tr>
+    <td rowspan="5" height="76" width="80">Multi-selecting</td>
+    <td height="19"><strong>CATDlgEngMonoAcquisition</strong></td>
+    <td height="19">Accepts one object indication or selection only</td>
+  </tr>
+  <tr>
+    <td height="57">CATDlgEngMultiAcquisition</td>
+    <td height="57">Accepts indication or multi-selection. Multi-selection is possible
+      using a trap, or using the Search command, either run from the Edit menu
+      or from the Power Input field&nbsp;</td>
+  </tr>
+    <tr>
+    <td height="19" width="263">CATDlgEngMultiAcquisitionSelModes</td>
+    <td height="19" width="351">Accepts indication or multi-selection,
+      with the help of an user interface. Triggered as soon as a selection is
+      performed. Multi-selection is possible
+      using a trap, or using the Search command, either run from the Edit menu
+      or from the Power Input field&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td height="19" width="263">CATDlgEngMultiAcquisitionCtrl</td>
+    <td height="19" width="351">Accepts indication or multi-selection,
+      with the help of an user interface. Triggered as soon as the user validates
+      the selection. Multi-selection is possible
+      using a trap, or using the Search command, either run from the Edit menu
+      or from the Power Input field&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="19" width="263">CATDlgEngMultiAcquisitionUserCtrl</td>
+    <td height="19" width="351">Accepts indication or multi-selection,
+      with the help of a user interface. Triggered as soon as a selection is
+      performed unless the end user decides to toggle the multi-acquisition control mode.&nbsp;&nbsp;
+      Multi-selection is possible
+      using a trap, or using the Search command, either run from the Edit menu
+      or from the Power Input field&nbsp;</td>
+  </tr>
+  <tr>
+    <td rowspan="3" height="57" width="80">&quot;through&quot; selecting</td>
+    <td height="19" width="263"><strong>CATDlgEngWithoutDeepSel</strong></td>
+    <td height="19" width="351">One selection only. Accepts no
+      &quot;through&quot; selection, only the element &quot;in front&quot;</td>
+  </tr>
+  <tr>
+    <td height="19" width="263">CATDlgEngWithDeepSel</td>
+    <td height="19" width="351">Multi-selection. Accepts &quot;through&quot;
+      selection</td>
+  </tr>
+  <tr>
+    <td height="19" width="263">CATDlgEngWithDeepFirstSel</td>
+    <td height="19" width="351">One selection only. Accepts &quot;through&quot;
+      selection</td>
+  </tr>
+  <tr>
+    <td height="19" width="80">leaf selecting</td>
+    <td height="19" width="263">CATDlgEngNoSubPath</td>
+    <td height="19" width="351">Accepts leaf selections only</td>
+  </tr>
+  <tr>
+    <td rowspan="2" height="38" width="60">Agent set</td>
+    <td rowspan="2" height="38" width="80">Dispatching</td>
+    <td height="19" width="263"><strong>CATDlgEngDispatchUntilAccept</strong></td>
+    <td height="19" width="351">Dispatches notifications to the agents until one
+      accepts it</td>
+  </tr>
+  <tr>
+    <td height="19" width="263">CATDlgEngDispatchToAllAgents</td>
+    <td height="19" width="351">Dispatches notifications to all the agents</td>
+  </tr>
+</table>
+<p>The behavior mode is a concatenation of the behavior parameters using the |
+character. For example, you can change the default behavior mode of a dialog
+agent for repeatability and undo as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>MyDialogAgent-&gt;SetBehavior(CATDlgEngRepeat | CATDlgEngWithUndo);</pre>
+    </td>
+  </tr>
+</table>
+<p>The behavior mode is a concatenation of the behavior parameters using the |
+character. For example, you can change the default behavior mode of a dialog
+agent for repeatability and undo as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>MyDialogAgent-&gt;SetBehavior(CATDlgEngRepeat | CATDlgEngWithUndo);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h5>Notifier Set</h5>
+<p>When a dialog agent is created, its <em>notifier set</em> is the set of all
+the notifiers, that is, all viewers and dialog boxes that can send notifications
+conveyed to the dialog agent through the command thanks to the Send/receive
+communication protocol. But you can define explicitly the notifier set by
+calling the <code>AddNotifier</code> method, as many times as required.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CATDialogAgent::AddNotifier(CATCommand * iNotifier);</pre>
+    </td>
+  </tr>
+</table>
+<ul>
+  <li>The first call actually empties the notifier set and fills it with the
+    notifier passed as parameter</li>
+  <li>Each following call adds the notifier passed as a parameter to the
+    notifier set.</li>
+</ul>
+<p>Use the <code>RemoveNotifier</code> method to remove a given notifier from
+the notifier set.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h5>Notification Pattern</h5>
+<p>The <em>notification pattern</em> describes when the dialog agent accepts the
+user intent. It's a set of {Accept if n comes from N} rules, where n is a
+notification and N a notifier. These rules are defined by calling the <code>AcceptOnNotify</code>
+method.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CATDialogAgent::AcceptOnNotify
+        (CATCommand * iNotifier, CATCommand * iNotification);</pre>
+    </td>
+  </tr>
+</table>
+<ul>
+  <li>Set <code>iNotifier</code> to <code>NULL</code> if the notification is
+    notifier (viewer or dialog box) independent</li>
+  <li>Set <code>iNotification</code> to <code>NULL</code> to receive all the
+    sent notifications, whatever their kind.</li>
+</ul>
+<p>Use the <code>IgnoreOnNotify</code> method to remove a rule from the
+notification pattern.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="560000"></a>Plugging a Dialog Agent to a State</h4>
+<p>Once the dialog agent is created and well defined with the appropriate
+behavior, you can plug it to the dialog state you intend it for. This is done
+using the <code>AddDialogAgent</code> method of the <i>CATDialogState</i> class.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>stStartState-&gt;AddDialogAgent(_daIndicationAgent);</pre>
+    </td>
+  </tr>
+</table>
+<p>A dialog agent is usually associated with one state only, but you can also
+associate it with several states if you recycle it between two usages. Refer to <a href="#585000">Recycling
+a Dialog Agent</a>. If you use it several times for the same state in a
+self-transition, you can set it as repeatable. Refer to <a href="#540000">Setting
+a Dialog Agent as Repeatable</a>.</p>
+<p>On the other hand, several dialog agents can be associated with a single
+state. Refer to <a href="#560000">Concatenating Several Dialog Agents</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="570000"></a>Concatenating Several Dialog Agents</h4>
+<p>You can concatenate several dialog agents plugged to the same state to filter
+the end user input. To understand how you can use dialog agent concatenation,
+remember that if several dialog agents are plugged to the same state:
+<ul>
+  <li>The end user interaction values only one of them before the transition is
+    triggered</li>
+  <li>The dialog agents are scanned for setting their values in the order they
+    are declared to the state using the <code>AddDialogAgent</code> method.</li>
+</ul>
+<p>For example, assume you want to trigger a transition as soon as the end user
+right clicks. This is easy to do using a dialog agent valued with a <code>CATContext</code>
+notification sent by the right click.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>_daAgent = new CATDialogAgent(&quot;RightClickAgentId&quot;);
+_daAgent-&gt;AcceptOnNotify(NULL, &quot;CATContext&quot;);
+SourceState-&gt;AddDialogAgent(_daAgent);
+...
+AddTransition(SourceState, TargetState, IsOutputSetCondition(_daAgent), ...);</pre>
+    </td>
+  </tr>
+</table>
+<p>But if you want that the transition is triggered only when the end user right
+clicks in the background, you can concatenate two dialog agents. The first one
+declared, a <i>CATPathElementAgent</i> instance, captures all right clicks on
+any object. To do this, set its behavior to <code>CATDlgEngWithContext</code>.
+The second one, as above, is valued with right clicks, but since it is plugged
+to the state as the second one, the right clicks on objects will not value it.
+Only the second dialog agent fires the transition.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>_peAgent = new CATPathElementAgent(&quot;RightClickOnObjectId&quot;);
+_peAgent-&gt;SetBehavior(CATDlgEngWithContext|CATDlgEngRepeat);
+_daAgent = new CATDialogAgent(&quot;RightClick&quot;);
+_daAgent-&gt;AcceptOnNotify(NULL, &quot;CATContext&quot;);
+SourceState-&gt;AddDialogAgent(_peAgent);
+SourceState-&gt;AddDialogAgent(_daAgent);
+...
+AddTransition(SourceState, TargetState, IsOutputSetCondition(_daAgent), ...);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="580000"></a>Using a Dialog Agent in a Condition or Action Method</h4>
+<p>You can use a dialog agent in a condition or action method to:
+<ul>
+  <li>Retrieve the selected object</li>
+  <li>Retrieve the selected path element</li>
+  <li>Retrieved the multiselected path elements</li>
+  <li>Retrieve the end user interaction</li>
+  <li>Recycle the dialog agent to use it again as a brand new one.</li>
+</ul>
+<h5><a name="581000"></a>Retrieving the Selected Object</h5>
+<p>To retrieve the object selected, use the <code>GetElementValue</code> method,
+as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATBaseUnknown * SelectedObject = _SelectionAgent-&gt;GetElementValue();</pre>
+    </td>
+  </tr>
+</table>
+<p>This is generally done in the appropriate action method, or possibly in a
+condition method.</p>
+<h5><a name="582000"></a>Retrieving the Selected Path Element</h5>
+<p>You may want also to retrieve the path element which contains the selected
+object by using the <code>GetValue</code> method.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATPathElement * SelectedPath = _SelectionAgent-&gt;GetValue();</pre>
+    </td>
+  </tr>
+</table>
+<ul>
+  <li>If you have not specified any interface or class, the returned path
+    element contains all the elements from the root element to the selected
+    element. For example, if the user selects the rear left wheel, the returned
+    path is: Car/RearAxle/RearLeftWheel</li>
+  <li>Otherwise, with a type query, if the selected element is a child of the
+    required element, the returned model path is a subpath, that is a path that
+    begins with the root element and truncated with the first element matching
+    the interface or class name specified using the <code>AddElementType</code>
+    method. For example, if a CATIAxle is required and the user selects the rear
+    left wheel, the returned subpath is: Car/RearAxle</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h5><a name="583000"></a>Retrieving the Multiselected Path Elements</h5>
+<p>You may want also to retrieve the path elements which contains the
+multiselected objects by using the <code>GetListOfValue</code>s method, as a
+pointer to a CATSO instance that contains the list of path elements.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATSO * SelectedPaths = _SelectionAgent-&gt;GetListOfValues();</pre>
+    </td>
+  </tr>
+</table>
+<p>With a type query, the returned path list contains only the matching object
+paths. Each object path may be truncated if the selected object is a child of
+the required one. For example, if a CATIAxle is required and the user selects
+the rear left wheel and the front axle, the returned list is:
+<ul>
+  <li>Car/RearAxle (subpath for the rear left wheel).</li>
+  <li>Car/FrontAxle (path for the front axle).</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h5><a name="584000"></a>Retrieving whether a Dialog Agent Is Valued</h5>
+<p>You can query a dialog agent to know whether it is valued by calling the <code>IsOutputSet</code>
+method.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATBoolean CATDialogAgent::IsOutputSet()</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h5><a name="585000"></a>Recycling a Dialog Agent</h5>
+<p>Recycling allows a dialog agent to be reused once it has been input. This
+feature is useful in the following situations:
+<ul>
+  <li><strong>Array input</strong>: One acquisition variable is enough to input
+    an array: a self-transition is used to store each data input in an array's
+    element before recycling by means of the <code>InitializeAcquisition</code>
+    method. For example, for a <i>CATIndicationAgent</i>:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATMathPoint2D point2D = _daIndication-&gt;GetValue();
+...
+_daIndication-&gt;InitializeAcquisition();</pre>
+        </td>
+      </tr>
+    </table>
+    <p>If the dialog agent is recycled using the <code>InitializeAcquisition</code>
+    method, you can use it again as if it were never used, that is, using the <code>IsOutputSetCondition</code>
+    method.</p>
+    <p>Another way of providing array input with a single dialog agent is to set
+    it as repeatable using the <code>CATDlgEngRepeat</code> behavior parameter,
+    and to use the <code>IsLastModifiedAgentCondition</code> method instead of
+    the <code>IsOutputSetCondition</code> method.</p>
+  </li>
+  <li><strong>Multiple use</strong>: This situation arises when there are
+    multiple occurrences of the same data type in a dialog. We may design a
+    LineBuilder which benefits from recycling. Any state that use the same
+    dialog agent must recycle it, usually in one of their action methods, using
+    the <code>InitializeAcquisition</code> method.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="600000"></a>Creating Transitions</h3>
+<p>A transition is a relationship between a <em>source state</em> and a <em>target
+state</em>. The transition's source state being the active state, the transition
+is triggered when an event activates it. The guard condition is evaluated, and
+if it evaluates to TRUE, the transition fires. This executes the action
+associated with the transition and the transition's target state becomes the
+active state. You can create <a href="#610000">simple transitions</a>, <a href="#620000">transitions
+with the same source state</a>, <a href="#630000">transitions with the same
+target state</a> and <a href="#640000">self-transitions</a>.</p>
+<p>Transitions are created using the <code>AddTransition</code> method of the <i>CATStateCommand</i>
+class.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="610000"></a>Creating Simple Transitions</h4>
+<p>A simple transition that connects <code>SourceState</code> to <code>TargetState</code>
+is created using the <code>AddTransition</code> method as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>AddTransition(SourceState, TargetState, ...);</pre>
+    </td>
+  </tr>
+</table>
+<p><code>AddTransition</code> has other arguments used to associate the
+transition with the guard condition evaluated when the transition is triggered,
+and actions to perform when the transition fires. See <a href="#700000">Creating
+Guard Conditions</a> and <a href="#800000">Creating Actions</a> respectively.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="620000"></a>Creating Transitions with the Same Source State</h4>
+<p>Several transitions may originate from the same source state. When creating
+such transitions, the transition creation order is important if they, or some of
+them, share the same condition. To prevent from condition overlapping, which
+could lead to freeze the flow of control, the transition creation order is taken
+into account. As soon as one of the dialog agents assigned to the state is
+valued, the first transition found in the transition creation order whose
+condition evaluates to True fires. On the opposite, if the guard condition
+evaluates to False, the transition doesn't fire, and the condition of the
+following transition is evaluated, and so on until a transition fires, or the
+last transition is reached.</p>
+<p>For example, a command that creates a polyline can declare two transitions
+originating from the same state with the same trigger: a point indication. The
+first transition creates a line of the polyline, the second draws a rubber band
+to visualize the line that could be created at the current mouse location.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+_daIndicationP = new CATIndicationAgent(&quot;IndicationPNId&quot;);
+_daIndicationP-&gt;SetBehavior(CATDlgEngAcceptOnPrevaluate | 
+                            CATDlgEngWithPrevaluation);
+...
+AddTransition(stRepeatState,
+              stRepeatState,
+              AndCondition(IsOutputSetCondition(_daIndicationP),
+                 Condition((ConditionMethod) &amp; CAACreatePolylineCmd::CheckPointByIndic)),
+              Action((ActionMethod) &amp; CAACreatePolylineCmd::CreateLineByIndic,));
+   
+AddTransition(stRepeatState,
+              stRepeatState,
+              IsLastModifiedAgentCondition(_daIndicationP),
+              Action((ActionMethod) &amp; CAACreatePolylineCmd::RubberLine));
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Both transitions share the same trigger, that is the CATIndication agent
+valuation or prevaluation, according to the dialog agent behavior. As soon as
+the dialog agent is valued or prevalued, that is if the end user left clicks or
+moves the mouse, the first transition is triggered. Its guard condition
+evaluates. As a composite condition, the first condition evaluates to TRUE if
+the dialog agent is valued, that is, if the end user has left clicked. If this
+is the case, and if the other condition evaluates to TRUE, the transition fires
+to create the line. Otherwise, the second transition is triggered, its guard
+condition evaluates, and if it evaluates to TRUE, the transition fires to update
+the rubber band.</p>
+<p>Note that the target states are also identical, making these transitions <a href="#640000">self-transitions</a>.
+To enable for the dialog agent reuse, it must be <a href="#585000">recycled</a>
+in both action methods.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="630000"></a>Creating Transition with the Same Target State</h4>
+<p>Several transitions may target the same state. If in addition they share the
+same guard conditions and actions, you may end up with a bulky code like this if
+you create separate transitions:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>AddTransition(<strong>state1</strong>, target, IsOutputSetCondition(_daAgent),
+              Action(ActionMethod) &amp;MyDialogCommand::action));
+AddTransition(<strong>state2</strong>, target, IsOutputSetCondition(_daAgent),
+              Action(ActionMethod) &amp;MyDialogCommand::action));
+AddTransition(<strong>state3</strong>, target, IsOutputSetCondition(_daAgent),
+              Action(ActionMethod) &amp;MyDialogCommand::action));</pre>
+    </td>
+  </tr>
+</table>
+<p>Using the <code>AddInitialState</code> method to define a transition avoids
+repeating the transition guard conditions and actions.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATDialogTransition * <strong>JoinTransition</strong> =
+         AddTransition(<strong>state1</strong>, target,
+                       IsOutputSetCondition(_daAgent)
+                       Action(ActionMethod) &amp;MyDialogCommand::action));
+<strong>JoinTransition-&gt;AddInitialState(state2);
+JoinTransition-&gt;AddInitialState(state3);</strong></pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="640000"></a>Creating Self-Transitions</h4>
+<p>A self-transition loops on the same state. This can be useful to enable the
+same kind of input several times, or to visualize using a rubber band the object
+that could be created with respect to the current mouse location. To create a
+self-transition, the <code>AddTransition</code> method should just set the same
+state as its source state and as its target state.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>AddTransition(stRepeatState, stRepeatState,
+              Condition(...),
+              Action(...));</pre>
+    </td>
+  </tr>
+</table>
+<p>To make it possible to get out of the loop, another transition from the same
+source state to another target state should exist.</p>
+<p>Self-transitions are also useful to visualize the object that could be
+created at the current mouse location if the end user requested to create it.
+Below are two examples.</p>
+<table>
+  <tr>
+    <td><img src="images/RubberBanding1.gif" alt="RubberBanding1.gif (2520 bytes)" width="370" height="210"></td>
+    <td>The circle is not yet created. The circle center is already created, and
+      the end user moves the mouse. A circle that corresponds to the current
+      mouse location is drawn. It corresponds to the circle that would be
+      created if the end user clicked the mouse at that location. This is made
+      possible thanks to a self-transition looping on a state that expects the
+      circle radius input by means of an indication.</td>
+  </tr>
+  <tr>
+    <td><img src="images/RubberBanding3.gif" alt="RubberBanding3.gif (2868 bytes)" width="374" height="186"></td>
+    <td>The state dedicated to get the circle radius has an incoming transition
+      that comes from a previous state that is not detailed here. As long as the
+      end user moves the mouse, the viewer sends a preactivation notification
+      that values a dialog agent and fires the self-transition whose action
+      creates a temporary circle that corresponds to the current mouse location.
+      As soon as the end user indicates a point, the transition that creates the
+      circle fires, the circle is created and the final state is reached.</td>
+  </tr>
+</table>
+<p>The code to write to create the self-transition for the circle in the <code>BuildGraph</code>
+method is the following.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>_daIndicRadius = new CATIndicationAgent(&quot;GetRadiusPoint&quot;);
+_daIndicRadius-&gt;SetBehavior(CATDlgEngWithPrevaluation |
+                            CATDlgEngAcceptOnPrevaluate |
+                            CATDlgEngWithUndo);
+...
+AddTransition(stGetRadius, stGetRadius,
+              IsLastModifiedAgentCondition(_daIndicRadius),
+              Action((ActionMethod) &amp; CAACreateCircleCmd::UpdateCircle));</pre>
+    </td>
+  </tr>
+</table>
+<p>The indication dialog agent should feature a behavior that makes it react on
+preactivation notifications:
+<ul>
+  <li><code>CATDlgEngWithPrevaluation</code> enables the dialog agent to be
+    valued from such a notification</li>
+  <li><code>CATDlgEngAcceptOnPrevaluate</code> triggers the transition when the
+    dialog agent is prevalued with such a notification, the default being that a
+    selection should occur to trigger a transition.</li>
+</ul>
+<p>The transition is triggered as soon as the dialog agent is prevalued. Dialog
+agent prevaluation takes place when a preactivation notification is received.
+This is the case with an indication dialog agent as long as the mouse moves
+without clicking the left button. The <code>IsLastModifiedAgentCondition</code>
+method detects dialog agent prevaluation. Otherwise, using the <code>IsOutputSetCondition</code>
+method, the transition would be triggered only when the agent would be valued,
+that is once the end user would have clicked. The temporary circle displayed is
+not stored in the document, but added to the ISO (Interactive Set of Objects).
+It is created from a previous action, and updated according to the mouse move
+using the <code>UpdateCircle</code> method.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATBoolean CAACreateCircleCmd::UpdateCircle(void * iData)
+{
+  //        Get current point  
+  CATMathPoint2D point2D = _daIndicRadius-&gt;GetValue();
+  CATMathPoint Mouse;
+  _ProjPlane.EvalPoint(point2D.GetX(),point2D.GetY(),Mouse);
+  //        Compute the radius 
+  _Radius = (float) _CircleCenter.DistanceTo(Mouse);
+  //        Modify the temporary circle
+  _TemporaryCircle-&gt;SetRadius(_Radius);
+  //        Update ISO
+  _ISO-&gt;UpdateElement(_TemporaryCircle);
+  //        Recycle the dialog agent
+  _daIndicRadius-&gt;InitializeAcquisition();
+
+  return TRUE;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>UpdateElement</code> method updates the ISO with the modified
+temporary circle, and the dialog agent is recycled before the method returns.
+The &quot;Get Point&quot; state becomes active again, and the dialog agent can
+be reused thanks to the&nbsp; <code>InitializeAcquisition</code> method. Note
+that if the dialog agent were set as repeatable using the <code>CATDlgEngRepeat</code>
+behavior parameter, it would be useless to recycle it.</p>
+<p>Here is another case with a polyline example.</p>
+<table>
+  <tr>
+    <td><img src="images/RubberBanding2.gif" alt="RubberBanding2.gif (2160 bytes)" width="312" height="226"></td>
+    <td>The polyline is being built. Five line segments are created, and the end
+      user moves the mouse to create the sixth one. The dashed line segment
+      visualizes what would be this line segment if the end user clicked at the
+      current mouse location. This is made possible thanks two self-transitions
+      looping on a state. The first transition expects a point indication to
+      create a line segment, the second one expects a point indication
+      prevaluation to create the rubber band.</td>
+  </tr>
+  <tr>
+    <td><img src="images/RubberBanding4.gif" alt="RubberBanding4.gif (3988 bytes)" width="449" height="191"></td>
+    <td>The state dedicated to get a point of the polyline has an incoming
+      transition that comes from a previous state that is not detailed here. As
+      long as the end user moves the mouse, the viewer sends a preactivation
+      notification that values a dialog agent and fires the self-transition
+      whose action creates a temporary line that corresponds to the current
+      mouse location. As soon as the end user indicates a point, another
+      self-transition fires and the line segment is created. Due to the
+      self-transition, the state remains active to enable another line segment
+      creation. The final state is reached as soon as the end user right clicks.</td>
+  </tr>
+</table>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="700000"></a>Creating Guard Conditions</h3>
+<p>The guard condition is a CATBoolean expression that is evaluated as soon as the
+transition is triggered, and if it evaluates True, the transition fires and the
+associated action is executed. A guard condition is declared as the third
+parameter of the <code>AddTransition</code> method. A composite condition can be
+created by combining elementary conditions. In addition, an exit condition can
+be set onto the state. It is evaluated before the guard conditions, and if it
+evaluates False, the guard condition is not evaluated.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="710000"></a>Creating Conditions with Unconstrained Data Input</h4>
+<p>An <em>unconstrained data input</em> is either:
+<ul>
+  <li>A dataless input, that is an input without associated value</li>
+  <li>A data input without any constraint on the value provided by the end user.</li>
+</ul>
+<p>To create such a condition, use the <code>IsOutputSetCondition</code> method
+to build a <i>CATStateCondition</i> instance and provide the returned instance
+as the third argument of the <code>AddTransition</code> method:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>AddTransition(iSourceState, iTargetSstate,
+<strong>              IsOutputSetCondition(</strong>_daAgent<strong>)</strong>, ...);</pre>
+    </td>
+  </tr>
+</table>
+<p>As soon as the dialog agent is valued, the condition is checked, and since
+there is no constraint on this value, the condition is evaluates True and the
+transition fires.</p>
+<p>The same agent can be reused in self-transitions if it is set as repeatable
+using the <code>CATDlgEngRepeat</code> behavior parameter, for example to
+trigger the transition when it is prevalued. In these cases, use the <code>IsLastModifiedAgentCondition</code>
+method instead of the <code>IsOutputSetCondition</code> method.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>AddTransition(iSourceState, iTargetSstate,
+<strong>              IsLastModifiedAgentCondition(</strong>_daAgent<strong>)</strong>, ...);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="720000"></a>Creating Conditions Constraining Data Input</h4>
+<p>To constrain data input, you need to retrieve the input value and check it
+according to the constraints you want to apply to this data. You can do this
+either in a condition method, or using a condition class. Creating a condition
+class allows the condition to be reused in other commands.</p>
+<p>Another way of constraining data input is to create filters. Filters are set
+to dialog agents. When a dialog agent is assigned a filter, it is valued when
+the filter evaluates True. This means that the transition is not triggered as
+long as the filter evaluates False, and thus that the guard condition is not
+evaluated. This improves performance. In addition, the end user receives a
+feedback using the cursor featuring the no entry shape <img src="images/NoEntry.gif" alt="NoEntry.gif (864 bytes)" width="17" height="17">
+when attempting to indicate or select an undesired object. Refer to <a href="#530000">Creating
+an Acquisition Filter to an Indication or a Path Element Dialog Agent</a> for
+more information.</p>
+<h5>Creating a Condition Method</h5>
+<p>The easiest way to define a data constraint is to encapsulate it in a method
+of state dialog command. Such a condition method has a single argument and must
+return a CATBoolean.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATBoolean ConditionMethod(void * iUsefulData);</pre>
+    </td>
+  </tr>
+</table>
+<p>The argument can be passed as the second argument of the <code>Condition</code>
+method, or using the&nbsp; <code>SetData</code> method</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>AddTransition(...
+              <strong>Condition</strong>((ConditionMethod) &amp;CAACreateLineCmd::CheckEndPoint,<strong>
+                        CAAIPoint * PointToCheck)</strong>,
+              ...);
+// OR
+_MyCondition-&gt;<strong>SetData(CAAIPoint * PointToCheck)</strong>;</pre>
+    </td>
+  </tr>
+</table>
+<p>For example, assume that a command creating a line in the 3D space needs to
+check that the end point input by the end user is not coincident with the start
+point. This can be checked in the <code>CheckEndPoint</code> method of the <i>CAACreateLineCmd</i>
+class, standing for the Line command.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATBoolean CAACreateLineCmd::CheckEndPoint(void * iDummy)
+{
+  CATBoolean ret = TRUE;
+  CATMathPoint2D point2D = _daIndicationAgent-&gt;GetValue();
+  CATMathPoint EndPoint;
+  _ProjPlane.EvalPoint(point2D.GetX(),point2D.GetY(), EndPoint);
+
+  if ( EndPoint.DistanceTo(StartPoint) &lt; EPSILON ) 
+  { 
+    ret = FALSE;
+    _daIndicationAgent-&gt;InitializeAcquisition();
+  }
+  return ret;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The input point is retrieved from the indication dialog agent, and
+transformed as a 3D point. Refer to <a href="#510000">Managing Indication</a>
+for more details about how to get a 3D point from an end user indication. Then
+the distance between the start and end points is compared to the tolerance that
+defines coincident points, and the method returns <code>TRUE</code> or <code>FALSE</code>
+according to the test result. Note that if points are found as coincident, the
+dialog indication agent is recycled using the <code>InitializeAcquisition</code>
+method. It can be reused in the transition source state that remains active to
+enable the end user to indicate another point, because the condition is not met
+and the method returned False.</p>
+<p>Then, the <code>CATStateCondition</code> instance is built from this method
+by means of the <code>Condition</code> method. This instance is then provided to
+the <code>AddTransition</code> method, concatened to the indication agent
+valuation check using the <code>AndCondition</code> method to create a <a href="#730000">composite
+condition</a>:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>AddTransition(state2, NULL,
+              <strong>AndCondition</strong>(
+                 IsOutputSetCondition(_daIndicationAgent<strong>),</strong>
+                 <strong>Condition((ConditionMethod) &amp;CAACreateLineCmd::CheckEndPoint)</strong>),
+              ...);</pre>
+    </td>
+  </tr>
+</table>
+<h5>Creating a Condition Class</h5>
+<p>When a condition is intended to be reusable, you can encapsulate it in a <i>CATStateCondition</i>
+subclass. The condition test is implemented by overloading the <code>GetStatus</code>
+method. For example, the <i>NoCoincidence</i> class is created to check that the
+two points input to the Line command do not coincide.</p>
+<p>The NoCoincidence class header file is:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>class <strong>NoCoincidence</strong> : public CATStateCondition
+{
+  public:
+    NoCoincidence(CATMathPoint StartPoint, CATIndicationAgent * daIndicationAgent);
+    virtual ~NoCoincidence();
+    virtual CATBoolean <strong>GetStatus</strong>();
+  private:
+    CATMathPoint         _StartPoint;
+    CATIndicationAgent * _daIndicationAgent;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>Let's have a look at the <i>NoCoincidence</i> constructor and <code>GetStatus</code>
+method.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+NoCoincidence::NoCoincidence(CATMathPoint         StartPoint,
+                             CATIndicationAgent * daIndicationAgent)
+             : _StartPoint(StartPoint), _daIndicationAgent(daIndicationAgent)
+{}
+    
+CATBoolean NoCoincidence::<strong>GetStatus</strong>()
+{
+  CATBoolean ret = TRUE;
+  CATMathPoint2D point2D = _daIndicationAgent-&gt;GetValue();
+  CATMathPoint EndPoint;
+  _ProjPlane.EvalPoint(point2D.GetX(),point2D.GetY(), EndPoint);
+
+  if ( EndPoint.DistanceTo(StartPoint) &lt; EPSILON ) 
+  { 
+    ret = FALSE;
+    _daIndicationAgent-&gt;InitializeAcquisition();
+  }
+  return ret;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>Notice that condition parameters are provided by means of the constructor.
+They are stored in private data members in order to be used by the <code>GetStatus</code>
+method that retrieves the end point as a 3D point from the indicated 2D point,
+checks the coincidence with the start point, and returns accordingly.</p>
+<p>To use this condition class in the <code>BuildGraph</code> method of your
+state dialog commands, you simply need to instantiate it, and pass the pointer
+to that class to the <code>Condition</code> method that will call the <code>GetStatus</code>
+method.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+<strong>_CoincidenceCondition</strong> = new NoCoincidence(_StartPoint,
+                                          _daIndicationAgent);
+...
+AddTransition(state2, NULL,
+              AndCondition(
+                 IsOutputSetCondition(_daIndicationAgent),
+                 <strong>_CoincidenceCondition</strong>)),
+              ...);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Note that <code>_CoincidenceCondition</code> must be a data member of your
+state dialog command class, and must be deleted in the destructor.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="730000"></a>Creating Composite Conditions</h4>
+<p>When CATBoolean expressions, such as <code>[condition1 AND condition2?]</code>,
+are needed, you must write them as <em>composite conditions</em>. A composite
+condition is built by combining conditions using the AND, OR, and NOT operators
+supplied through the following methods:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATStateCondition * <strong>AndCondition</strong>(CATStateCondition * iCondition1,
+                                 CATStateCondition * iCondition2);
+
+CATStateCondition * <strong>OrCondition</strong> (CATStateCondition * iCondition1,
+                                 CATStateCondition * iCondition2);
+
+CATStateCondition * <strong>NotCondition</strong>(CATStateCondition * iCondition);</pre>
+    </td>
+  </tr>
+</table>
+<p>For example, when creating a line with two points, if you want to check that
+the end user has indicated a point, and that this point is not identical to the
+previously selected point, the condition could be expressed as follows:</p>
+<p align="center"><code>[EndPoint input AND (StartPoint&lt;&gt;EndPoint)?]</code></p>
+<p>This is implemented in this way:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>AddTransition(state2, NULL,
+              <strong>AndCondition</strong>(
+                 IsOutputSetCondition(EndPoint), // condition1: EndPoint input?
+                 Condition((ConditionMethod)     // condition2: StartPoint&lt;&gt; EndPoint?
+                           &amp;CAACreateLineCmd::CheckEndPoint)),
+              ...);</pre>
+    </td>
+  </tr>
+</table>
+<p>You can combine these methods to match your specific needs.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="740000"></a>Creating a State Exit Condition</h4>
+<p>A state exit condition is assigned to the state, and is evaluated:
+<ul>
+  <li>When entering the state from a non self transition</li>
+  <li>Whenever a state dialog agent is valued</li>
+  <li>When entering the state from a self transition if the dialog agent were
+    valued in the transition action</li>
+</ul>
+<p>This evaluation is done prior to the guard conditions. If it evaluates False,
+the guard conditions are not evaluated, and the transition doesn't fire.</p>
+<p>To create a state exit condition, you can either instantiate classes you have
+derived from the <i>CATStateCondition</i> class or use the <code>Condition</code>
+method, as described in <a href="#710000">Creating Conditions with Unconstrained
+Data Input</a> and in <a href="#720000">Creating Conditions Constraining Data
+Input</a>. You can also combine conditions to create a composite condition, as
+described in <a href="#730000">Creating Composite Conditions</a>,&nbsp; you'll
+assign to the state.</p>
+<p>Use the <code>SetLeaveCondition</code> method to assign the created condition
+to the state.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>_State-&gt;SetLeaveCondition(_ExitCondition);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="800000"></a>Creating Actions</h3>
+<p>The action associated with the transition is executed when the transition
+fires. This action can be represented by a method of the state dialog command
+class, or, if the action is intended to be reused by other commands, by a class
+derivinf from the <i>CATDiaAction</i> class. An action is declared as the fourth
+parameter of the <code>AddTransition</code> method. A composite action can be
+created by combining elementary actions. A state can also feature enter and
+leave actions that are automatically executed when the state is respectively
+entered and left.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="810000"></a>Creating an Action and Adding It to a Transition</h4>
+<p>You can create an action either using a method of the state dialog command or
+using a class.</p>
+<h5>Creating an Action Method</h5>
+<p>The easiest way to add an action to a transition is to implement it as a
+method of your state dialog command. Such an action method has a sigle argument
+and must return a CATBoolean.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATBoolean ActionMethod(void * iUsefulData);</pre>
+    </td>
+  </tr>
+</table>
+<p>The argument can be passed as the fourth argument of the <code>Action</code>
+method, or using the&nbsp; <code>SetData</code> method. The second and third
+arguments are dedicated to undo/redo. Refer to <a href="CAADegUndoRedo.htm">Managing
+Undo/Redo</a>.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>AddTransition(...
+              <strong>Action(</strong>(ActionMethod) &amp;CAACreateLineCmd::CreateLine,
+                     (ActionMethod) &amp;CAACreateLineCmd::UndoCreateLine,
+                     (ActionMethod) &amp;CAACreateLineCmd::RedoCreateLine,<strong>
+                     CAAIPoint * EndPoint)</strong>);
+// OR
+_MyAction-&gt;<strong>SetData(CAAIPoint * EndPoint)</strong>;</pre>
+    </td>
+  </tr>
+</table>
+<p>For example, an action method that creates a line could be.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATBoolean CAACreateLineCmd::CreateLine(void * iDummy)
+{
+  // action task is implemented there
+  return TRUE;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>Then you may add this action to a transition by providing it as an argument
+of the <code>Action</code> method which returns a <i>CATDiaAction</i> instance
+and provide the returned instance as the fourth argument of the <code>AddTransition</code>
+method:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>AddTransition(_state1, NULL,
+              IsOutputSetCondition(_point2),
+              <strong>Action((ActionMethod) &amp;CAACreateLineCmd::CreateLine)</strong>);</pre>
+    </td>
+  </tr>
+</table>
+<h5>Creating an Action Class</h5>
+<p>When an action is reusable, such as a line creation that can be used in a
+command that creates line and in a command that creates polylines, it is advised
+to encapsulate it in class that derives from <i>CATDiaAction</i>. An action
+class must at least override the inherited <code>Execute</code> method in order
+to implement the action task. It may also provide an <code>Undo</code> method
+(see Input Undo/Redo.) For example, the <i>CreateLine</i> class is created to
+create a line.</p>
+<p>The <i>CreateLine</i> class header file is:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>class CreateLine: public CATDiaAction
+{
+  public:
+    CreateLine(CATMathPoint StartPoint, CATIndicationAgent * daIndicationAgent);
+    virtual ~CreateLine();
+    virtual CATBoolean Execute();
+  private:
+    CATMathPoint         _StartPoint;
+    CATIndicationAgent * _daIndicationAgent;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>Let's have a look at the <i>CreateLine</i> constructor and <code>Execute</code>
+method.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CreateLine::CreateLine(CATMathPoint         StartPoint,
+                       CATIndicationAgent * daIndicationAgent):
+          _StartPoint(StartPoint), _daIndicationAgent(daIndicationAgent)
+{}
+
+CATBoolean CreateLine::Execute()
+{
+  // Creates a line between StartPoint and EndPoint
+  return TRUE;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>Notice that action parameters are provided by means of its constructor. They
+are stored in private data members in order to be used by the <code>Execute</code>
+method.</p>
+<p>To use this action class in the <code>BuildGraph</code> method of your state
+dialog commands, you simply need to instantiate it, and pass the pointer to that
+class to the <code>Action</code> method that will call the <code>Execute</code>
+method.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+<strong>_CreateLineAction</strong> = new CreateLine(_StartPoint,
+                                   _daIndicationAgent);
+AddTransition(_state2, NULL,
+              AndCondition(
+                IsOutputSetCondition(_daIndicationAgent),
+                CoincidenceCondition)),
+              <strong>_CreateLineAction</strong>);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Note that <code>_CreateLineAction</code> must be a data member of your state
+dialog command class, and must be deleted in the destructor.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="820000"></a>Creating Composite Actions</h4>
+<p>A composite action is built by combining actions using the AND and&nbsp; OR
+operators supplied through the following methods:
+<ul>
+  <li><code>AndAction</code>: <code>iAction1</code> is executed first, then <code>iAction2</code>
+    is executed
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATDiaAction * AndAction(CATDiaAction * iAction1,
+                         CATDiaAction * iAction2);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li><code>OrAction</code>: <code>iAction1</code> is executed first, and then <code>iAction2</code>
+    is executed if <code>iAction1</code> was successful, that is if the executed
+    method returned <code>TRUE</code>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATDiaAction * OrAction (CATDiaAction * iAction1,
+                         CATDiaAction * iAction2);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p>For example, the following expression: <code>/action1, action2</code> is
+implemented in this way:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>AddTransition(state1, state2,
+              ... ,
+              AndAction(action1, action2);</pre>
+    </td>
+  </tr>
+</table>
+<p>where <code>action1</code> and <code>action2</code> are pointers to <i>CATDiaAction</i>
+instances.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="830000"></a>Creating State Entry/Exit Actions</h4>
+<p>Entry/Exit actions are useful when you need to execute an action either:
+<ul>
+  <li>When a transition enters a state:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATDialogState::SetEnterAction(CATDiaAction * iAction);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>When a transition exits a state:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATDialogState::SetLeaveAction(CATDiaAction * iAction);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p>Entry/Exit actions are not executed by a self-transition.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="840000"></a>Storing the Created Object in the CSO</h4>
+<p>If your state dialog command creates a new object in the document, you should
+store this object in the Current Set of Objects to enable for the object-action
+paradigm. The next command will then be able to take this object as input
+without end user action. Storing the resulting object in the CSO is done in
+three steps in the appropriate method:
+<ol>
+  <li>Retrieve the current editor</li>
+  <li>Retrieve the CSO from the current editor</li>
+  <li>Add the element to the CSO</li>
+</ol>
+<p>The following code shows how to add the <code>_CreatedObject</code> to the
+CSO:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATFrmEditor * pEditor = GetEditor();
+CATCSO * pCso;
+if (pEditor &amp;&amp; ((pCso = pEditor-&gt;GetCSO()) != NULL)
+                 pCso-&gt;AddElement(_CreatedObject);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="C00000"></a>Troubleshooting</h3>
+<h4>A Self-transition Loops with no Means to Get out of the Loop</h4>
+<table>
+  <tr>
+    <td valign="top"><img src="../CAAIcons/images/symptom.gif" alt="symptom.gif (111 bytes)" width="10" height="29"></td>
+    <td valign="top">A self-transition loops on the same state, and whatever the
+      end user does, there is no means to get out of the loop.</td>
+  </tr>
+  <tr>
+    <td valign="top"><img src="../CAAIcons/images/diagnos.gif" alt="diagnos.gif (130 bytes)" width="17" height="27"></td>
+    <td valign="top">The state on which the self-transition loops has no dialog
+      agent plugged, or the dialog agent is already valued, is not set as
+      repeatable, and is not recycled.</td>
+  </tr>
+  <tr>
+    <td valign="top"><img src="../CAAIcons/images/solution.gif" alt="solution.gif (218 bytes)" width="28" height="30"></td>
+    <td valign="top">Either assign a dialog agent to the state, or recycle the
+      existing one in the action method.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>A dialog state command is a dialog command designed as a state machine, each
+state enabling end user input, that allows the end user to pass from state to
+state using transitions between these states triggered when requested events
+happen and when requested guard conditions are satisfied, and that execute the
+declared actions. It is modeled using a class deriving from the <i>CATStateCommand</i>
+class.</p>
+<p>The statechart diagram is implemented using the <code>BuildGraph</code>
+method.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAVisTechArticles/CAAVisViewerProtocol.htm">Conveying
+      End User Intent from Mouse to Controller</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong> [Sep 2002]</td>
+    <td valign="top">Behavior mode updated</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

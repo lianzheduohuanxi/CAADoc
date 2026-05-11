@@ -1,0 +1,257 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="en-us" http-equiv="Content-Language" />
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type" />
+<link href="../CAADocStyleSheets/caav5.css" rel="stylesheet" type="text/css"/>
+<title>How to Change the Output Folder</title>
+</head>
+
+<body>
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>How to Use and Change the Output Folder</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="tech">Technical Article</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="DocHeaderIntro">
+	<tr>
+		<td class="Intro1">
+		<p class="header">This article shows you how to use and change the mkodt 
+		output folder, using either way proposed.</p>
+		<ul>
+			<li><a href="#Output">The Output Folder</a></li>
+			<li><a href="#Change">How to Change the Output Folder</a>
+			<ul>
+				<li><a href="#Option">Using the -o mkodt Option</a></li>
+				<li><a href="#Variable">Using the ADL_ODT_OUT Environment Variable</a></li>
+			</ul>
+			</li>
+			<li><a href="#InShort">In Short</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Output"></a>The Output Folder</h2>
+<p>mkodt output folder is set by default to the FunctionTests\Output folder of the 
+framework to which the test object belongs.</p>
+<p>
+<img alt="mkodt Output Folder" height="106" src="images/CAARqc0013.png" width="114"/></p>
+<p>The output folder contains as many folders as operating systems you use to run 
+mkodt. The names of these folders are the identifiers of the operating systems used 
+to run mkodt [<a href="#References">3</a>], such as win_b64 for Windows 64 bit. 
+Each of mkodt run for a given test object creates two text files, where ODTName 
+is the test objet XML file name without the .xml extension:</p>
+<ol>
+	<li>ODTName.traces which contains the traces created by either the echo command 
+		in bat or shell files, and/or the traces created by the cout command in 
+		C++ programs.</li>
+	<li>ODTName.mkodt_result which contains data about the test object replay. For 
+		example:
+		<pre class="code">CAASystem.tst -f CAASysEnvVar win_b64 0 2013-08-14-15-02-47 ? . 1 00:01 .</pre>
+		<p>Where:</p>
+		<ul>
+			<li><code>CAASystem.tst</code> is the test framework containing the 
+				test object.</li>
+			<li><code>-f</code> is a separator.</li>
+			<li><code>CAASysEnvVar</code> is the test object XML file name, without 
+				the .xml extension.</li>
+			<li><code>win_b64</code> is the operating used to replay the test object.</li>
+			<li><code>0</code> is the mkodt return code.</li>
+			<li><code>2013-08-14-15-02-47</code> is the replay date and time.</li>
+			<li><code>?</code> is a separator.</li>
+			<li><code>.</code> (dot) is the test object type: a dot for a test object 
+				from the TestCases folder, or <kbd>-S</kbd> for a test object from 
+				the SwitchTestCases folder.</li>
+			<li><code>1</code> is the test object pertinence. <code>1</code> is 
+				for pertinent, and <code>0</code> for non pertinent test objects 
+				[X].</li>
+			<li><code>00:01</code> is the actual replay elapsed time, expressed 
+				in minutes and seconds.</li>
+			<li><code>.</code> (dot) is the maximum elapsed time: a dot for the 
+				default value, or the value you set, expressed as minutes and seconds, 
+				using the<code> ODT_MAX_TIME</code> environment variable expressed 
+				as minutes. For example 10:00 is displayed if you set the <code>
+				ODT_MAX_TIME</code> environment variable to 10 minutes (<code>set 
+				ODT_MAX_TIME=10</code>) [<a href="#References">1</a>].</li>
+		</ul>
+	</li>
+</ol>
+<p>You can request mkodt to create the ODTName.mkodt_result file as either an HTML 
+or an XML file in addition to the default text file. These files are created in 
+the ToolsData/TestAuto/mkodt/os folder, where os is the identifier of the operating 
+system used to run mkodt [<a href="#References">3</a>].</p>
+<p>
+<img alt="mkodt Output Folder" height="84" src="images/CAARqc0014.png" width="110"/></p>
+<ul>
+	<li>To create an HTML file use the <code>-html</code> option:
+		<pre class="code">mkodt ... -html</pre>
+		<p>The&nbsp; file ODTName.mkodt_result.html is created in the ToolsData\TestAuto\mkodt\os 
+		folder of the workspace to which the test object belongs.</p>
+		<p>
+		<img alt="mkodt HTML Result File" height="261" src="images/CAARqc0009.png" width="454"/></p>
+		<p>This page displays a row per test framework. Clicking a test framework 
+		link, here CAASystem.tst, displays the test framework result page, with 
+		a row for each test object replayed:</p>
+		<p>
+		<img alt="mkodt HTML Result File" height="261" src="images/CAARqc0010.png" width="454"/></p>
+		<p>Clicking a test object, here CAASysEnvVar, displays the test object result 
+		page:</p>
+		<p>
+		<img alt="mkodt HTML Result File" height="261" src="images/CAARqc0011.png" width="454"/></p>
+		<p>This page shows the test object data, and two links to the trace file 
+		and the text result file respectively</p>
+	</li>
+	<li>To create an XML file, use the <code>-xml</code> option:
+		<pre class="code">mkodt ... -xml</pre>
+		<p>This file is created in the FunctionTests\Output folder of the framework 
+		to which the test object belongs.</p>
+		<pre class="code">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;REPLAYRESULT&gt;
+  &lt;WS host=&quot;LW5PSRDSY&quot;
+      path=&quot;e:\MyWorkspace&quot;&gt;
+  &lt;/WS&gt;
+  &lt;ODTRESULT rc=&quot;0&quot;
+             os=&quot;win_b64&quot;
+             pertinence=&quot;1&quot;
+             rundate=&quot;2013-08-19-14-54-59&quot;
+             elapsedtime=&quot;00:01&quot;
+             hostname=&quot;LW5PSRDSY&quot;&gt;
+    &lt;ODT name=&quot;CAASysEnvVar&quot;
+         fw=&quot;CAASystem.tst&quot;&gt;
+    &lt;/ODT&gt;
+  &lt;/ODTRESULT&gt;
+&lt;/REPLAYRESULT&gt;</pre>
+		<p>This file contains a <code>REPLAYRESULT</code> tag that contains all 
+		the other tags. The workspace is identified thanks the the WS tag with two 
+		attributes:</p>
+		<ol>
+			<li><code>host</code>: the computer onto which the workspace is located.</li>
+			<li><code>path</code>: the test workspace path on this computer.</li>
+		</ol>
+		<p>Each test object replay result is contained in the <code>ODTRESULT</code> 
+		tag with the following attributes:</p>
+		<ol>
+			<li><code>rc</code>: the mkodt return code.</li>
+			<li><code>os</code>: the operating used to replay the test object.</li>
+			<li><code>pertinence</code>: the test object pertinence. <code>1</code> 
+				is for pertinent, and <code>0</code> for non pertinent test objects. 
+				The pertinence notion makes no sense with XML test objects, and
+				<code>1</code> is always used.</li>
+			<li><code>rundate</code>: the replay date and time.</li>
+			<li><code>elapsestime</code>: the actual replay elapsed time, expressed 
+				in minutes and seconds.</li>
+			<li><code>hostname</code>: the computer which have replayed the test 
+				object.</li>
+		</ol>
+		<p>The <code>ODTRESULT</code> tag includes the <code>ODT</code> tag 
+		to display the test object with the following attributes:</p>
+		<ol>
+			<li><code>name</code>: the test object XML file name, without the .xml 
+				extension.</li>
+			<li><code>fw</code>: the test framework containing the test object.</li>
+		</ol>
+	</li>
+</ul>
+<p>In addition, if your test object outputs data, such as a modified part or product, 
+or data of any kind you may create during the test object replay and you want to 
+save to process it later on, you are strongly advised to use this folder to store 
+this data.</p>
+<p>If you cannot write in the workspace from which you get the test object, mkodt 
+cannot use the FunctionTests\Output folder of the framework to which the test object 
+belongs. mkodt instead creates thus an output folder named MKODT_save_xxx, where 
+xxx are digits related to the mkodt replay. This folder is located in C:\temp with 
+Windows or /tmp with Unix.</p>
+<p>Finally, if you need to output data that you do not want to keep after the mkodt 
+run, use the temporary folder created by this mkodt run. You can access this folder 
+using the <code>ADL_ODT_TMP</code> environment variable [<a href="#References">1</a>].</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Change"></a>How to Change the Output Folder</h2>
+<p>You can change the default output folder using either the <code>-o</code> option 
+or the <code>ADL_ODT_OUT</code> environment variable/</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Option"></a>Using the -o mkodt Option</h3>
+<p>To change the mkodt output folder, you can use the <code>-o</code> option of 
+mkodt [<a href="#References">2</a>] as follows:</p>
+<pre class="code">E:\MyWorkspace&gt;mkodt -s CAASysEnvVar <strong>-o E:\mkodtOutput</strong></pre>
+<p>This change is valid only for the command run for which you use this option. 
+If the folder declared using the -o option does not exist, mkodt creates it.</p>
+<p>The framework structure is replicated below the folder mkodtOutput:</p>
+<p>
+<img alt="mkodt Output Folder" height="106" src="images/CAARqc0008.png" width="128"/></p>
+<p>The folder win_b64 shows that mkodt was run with a Windows 64 bit operating system 
+[<a href="#References">3</a>].</p>
+<p>If you have asked mkodt to create either an HTML or an XML output using the -html 
+or -xml option, the HTML files or the XML file are created in a replicated folder 
+structure below the folder mkodtOutput:</p>
+<p>
+<img alt="mkodt Output Folder" height="104" src="images/CAARqc0012.png" width="110"/></p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Variable"></a>Using the ADL_ODT_OUT Environment Variable</h3>
+<p>To change the mkodt output folder, you can use the <code>ADL_ODT_OUT</code> environment 
+variable [<a href="#References">1</a>] as follows:</p>
+<pre class="code">E:\MyWorkspace&gt;<strong>set ADL_ODT_OUT=E:\mkodtOutput</strong>
+E:\MyWorkspace&gt;mkodt -s CAASysEnvVar</pre>
+<p>The <code>ADL_ODT_OUT</code> environment variable sets the mkodt output folder 
+for all the test objects run after its value is set, and until the command prompt 
+is killed or the environment variable is reset.</p>
+<p>If the folder declared using the <code>ADL_ODT_OUT</code> environment variable 
+does not exist, mkodt creates it. The mkodt run output is stored in the e:\mkodtoutput\&lt;OS&gt; 
+folder, where &lt;OS&gt; is the identifier of the operating system used to run mkodt 
+[<a href="#References">3</a>]. The created folder structure is identical as the 
+one above in <a href="#Option">Using the -o mkodt Option</a>.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>mkodt uses a default output folder to store your traces and its own output, and 
+the output you want to save for a later usage, if any. You can reset the default 
+output folder using either the <code>-o</code> mkodt option or the <code>ADL_ODT_OUT</code> 
+environment variable. You can also request mkodt to output its result files in either 
+HTML and/or XML files using the -html and/or -xml options respectively. Resetting 
+the default output folder also applies to the HTML and/od XML result files. </p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td><a href="CAARqcQr0002.htm">Environment Variables</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td><a href="CAARqcQr0001.htm">mkodt</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Aug 2013]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p><em>Copyright © 2013, Dassault Syst&#232;mes. All rights reserved.</em></p>
+
+</body>
+
+</html>

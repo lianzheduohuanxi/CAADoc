@@ -1,0 +1,429 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Using the Basic Topological Operators</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Using Basic Topological Operators (Point, Line, 
+		Spline)</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>Basic topological operators are transient objects for the creation of 
+		basic topological bodies such as point, line or spline bodies. These operators 
+		are based on the same scheme, which is described. The use of each provided 
+		basic topological operator is presented in the <code>CAATopSpline.cpp</code> 
+		sample:</p>
+		<ul>
+			<li><a href="#Learn">What You Will Learn With This Use Case</a></li>
+			<li><a href="#The Basic Topological Operators">Basic Topological 
+			Operators</a></li>
+			<li><a href="#How to Use a Basic Topological Operator">How to Use a 
+			Basic Topological Operator</a></li>
+			<li><a href="#UseCase">The CAAGMOperatorsSpline Use Case</a>
+			<ul>
+				<li><a href="#What">What Does CAAGMOperatorsSpline Do</a></li>
+				<li><a href="#How">How to Launch CAAGMOperatorsSpline</a></li>
+				<li><a href="#Where">Where to Find the CAAGMOperatorsSpline Code</a></li>
+			</ul>
+			</li>
+			<li><a href="#Step">Step-by-Step</a></li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Learn"></a>What You Will Learn With This Use Case</h2>
+<p>This use case is intended to help you use the basic topological operators classes 
+and presents an example of use for each provided basic topological operator: creation 
+of a point body, a spline body, a line body, and length computation.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="The Basic Topological Operators"></a>Basic Topological Operators</h2>
+<p>Using basic topological operators is an easy way to create point, line, or spline 
+bodies, that is to say: bodies only containing one vertex, or one wire whose geometry 
+is a line or a spline.</p>
+<p>These operators are called with parameters such as coordinates (to define a point), 
+vectors (to define tangents), or other basic bodies. They work inside one geometric 
+container: the input and output objects must belong to the same geometric container.</p>
+<p>Basic topological operators create:</p>
+<ul>
+	<li>Point body: <code>CATICGMTopPointOperator</code>.</li>
+	<li>Line body: <code>CATICGMTopLineOperator</code>.</li>
+	<li>Spline body: <code>CATICGMTopSplineOperator</code>.</li>
+</ul>
+<p>An additional operator, the <code>CATICGMLengthFromBodyOnWire</code> operator, 
+analyzes the length between two point bodies.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="How to Use a Basic Topological Operator"></a>How to Use a Basic Topological 
+Operator</h2>
+<p>There are two ways to create basic bodies.</p>
+<ol>
+	<li>One way is to use the corresponding basic topological operator, based on 
+	the general scheme of the GM operators, that:
+	<ul>
+		<li>Creates the operator with a global function: <code>::CATCGMCreateTopxxxOperator</code> 
+		(where <code>xxx</code> stands for the type of the created geometry of the 
+		body). The created operator is transient (that is to say, it is not streamed 
+		when streaming the geometric factory).</li>
+		<li>Possibly sets parameters.</li>
+		<li>Runs the operation.</li>
+		<li>Retrieves the resulting body.</li>
+		<li>Deletes the operator.</li>
+	</ul>
+	</li>
+	<li>The other way is to call the global function <code>::CATCGMCreateTopxxx</code>: 
+	it directly returns the created body. But in this case, you cannot tune parameters. 
+	You can only retrieve the created body: the tangents to the spline are not available 
+	for example.</li>
+</ol>
+<p>The length analysis can be only used with the first way, except that there is 
+no creation global function. In this case, the constructor is directly used.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="UseCase"></a>The CAAGMOperatorsSpline Use Case</h2>
+<p>CAAGMOperatorsSpline is a use case of the CAAGMOperatorsInterfaces.edu framework 
+that illustrates GMOperatorsInterfaces framework capabilities.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="What"></a>What Does CAAGMOperatorsSpline Do</h3>
+<table>
+	<caption>Fig. 1: The created objects of the CAAGMOperatorsSpline use case</caption>
+	<tr>
+		<td>
+		<img src="images/CAACgmTopSpline1.gif" alt="CAAGMOperatorsSpline Use Case Created Objects" width="480" height="384"></td>
+		<td>This use case details the two ways of creation of basic bodies.
+		<ul>
+			<li><code>SplineBody</code> is directly created with a global function.</li>
+			<li><code>SplineBody2</code> is created by an operator. Tangency constraints 
+			are imposed on the extremities. The operator also returns the tangents 
+			to all the passing points, that are used to create lines.</li>
+		</ul>
+		<p>Moreover, the use case shows an example of the curve length computation.</p>
+		</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="How"></a>How to Launch CAAGMOperatorsSpline</h3>
+<p>To launch CAAGMOperatorsSpline, you will need to set up the build time environment, 
+then compile CAAGMOperatorsSpline.m along with its prerequisites, set up the run 
+time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p>If you simply type CAAGMOperatorsSpline with no argument, the use case executes, 
+but doesn&#39;t save the result in an NCGM file. If you want to save this result, provide 
+the full pathname of the NCGM file to create. For example:</p>
+<p><code>CAAGMOperatorsSpline e:\SplineCreation.NCGM</code></p>
+<p>This NCGM file can be displayed using the CAAGMModelGemBrowser use case.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Where"></a>Where to Find the CAATopSpline Code</h3>
+<p>The CAAGMOperatorsSpline use case is made of a main named CAATopSpline.cpp located 
+in the CAAGMOperatorsSpline.m module of the CAAGMOperatorsInterfaces.edu framework:</p>
+<p><code>InstallRootFolder\CAADoc\CAATGMOperatorsInterfaces.edu\CAAGMOperatorsSpline.m\</code></p>
+<p>where <code>InstallRootFolder</code> [<a href="#References">1</a>] is the folder 
+where the API CD-ROM is installed.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Step"></a>Step-by-Step</h2>
+<p>There are six steps in CAATopSpline.cpp:</p>
+<ol>
+	<li><a href="#Creates the Geometry Factory">Creating the Geometry Factory</a></li>
+	<li><a href="#Direct Creation">Directly Creating Point Bodies and a Spline Body</a> 
+	(first way)</li>
+	<li><a href="#Use of  a Basic Topological Operator">Using a Basic Topological 
+	Operator to Create Another Spline Body</a> (second way.) This includes:
+	<ul>
+		<li>Creating the operator.</li>
+		<li>Running it.</li>
+		<li>Getting the results, then using them to create the line bodies representing 
+		the tangents to the passing points.</li>
+		<li>Deleting the operator.</li>
+	</ul>
+	</li>
+	<li><a href="#Length Computation">Computing the Length</a></li>
+	<li><a href="#Removal of the Unused Bodies">Removing the Unused Bodies</a></li>
+	<li><a href="#Writes the Model and Closes the Factory">Writing the Model And 
+	Closing the Container</a></li>
+</ol>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Creates the Geometry Factory"></a>Creating the Geometry Factory</h3>
+<p>The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject. 
+This creation is done by the global function <code>::CATCreateCGMContainer</code>. 
+Notice that the factory can be defined by reading a NCGM file that was previously 
+stored. In that case, the global function <code>::CATLoadCGMContainer</code> must 
+be used.</p>
+<pre class="code">CATGeoFactory* piGeomFactory = <strong>::CATCreateCGMContainer</strong>() ;
+if (NULL==piGeomFactory) return (1);</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Direct Creation"></a>Directly Creating Point Bodies and a Spline Body</h3>
+<p>To operate in this way, you only have to call the global function <code>::CATCGMCreateTopPoint</code> 
+or <code>::CATCGMCreateTopSpline</code>.</p>
+<p>In case of the spline body creation, the created body is retrieved, but you cannot 
+have access to the tangent or curvature at the passing points. To have them, you 
+must use the operator, as in the next section.</p>
+<p>The non detailed steps created or loaded the geometric factory (<code>piGeomFactory</code>).</p>
+<pre class="code">//
+// 2-<a name="Direct creation of point bodies"></a>Direct creation of point bodies 
+//
+const int nbpts = 4;
+CATBody ** aPoints = new CATBody * [nbpts];
+
+// defines an open configuration for the operator
+CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration();
+// defines the data of the operator: configuration + journal
+CATTopData topdata(pConfig,NULL);
+
+aPoints[0] = <strong>::CATCGMCreateTopPointXYZ</strong>(piGeomFactory,&amp;topdata,10., 15., 0.);
+aPoints[1] = ::CATCGMCreateTopPointXYZ(piGeomFactory,&amp;topdata,20., 20., 0.5);
+aPoints[2] = ::CATCGMCreateTopPointXYZ(piGeomFactory,&amp;topdata,30., 18., 0.);
+aPoints[3] = ::CATCGMCreateTopPointXYZ(piGeomFactory,&amp;topdata,40., 15., 0.5);
+
+//
+// 3-Direct creation of a spline body without any tangent 
+// or curvature imposition.
+//
+CATBody * piSplineBody = <strong>::CATCGMCreateTopSpline</strong>(piGeomFactory,
+                                                 &amp;topdata,
+                                                 nbpts,
+                                                 aPoints);
+</pre>
+<p>The operator configuration is the level of software you want to use to run this 
+operator. By default, define an open configuration as in this use case to run with 
+the current level. Moreover here, the pointer to the journal is set to <code>NULL</code> 
+in the operator data. So that the journal is not filled.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Use of  a Basic Topological Operator"></a>Using a Basic Topological 
+Operator to Create Another Spline Body</h3>
+<p>To operate in this mode, the sample proceeds with the following steps that:</p>
+<ol>
+	<li>Create the operator with the appropriate global function (<code>CATCGMCreateTopSplineOperator</code>). 
+	Here, tangents to the start and end points are imposed.</li>
+	<li>Execute the operation: <code>Run</code> method.</li>
+	<li>Get the results:
+	<ul>
+		<li>The created body.</li>
+		<li>The computed tangents at all the passing points. These vectors are used 
+		to create line bodies (<code>CATCGMCreateTopLineFromDirection</code>).</li>
+	</ul>
+	</li>
+	<li>Remove the operator instance from the memory. Notice that you also must 
+	release the software configuration, because it is no more used.</li>
+</ol>
+<pre class="code">//
+// 4-Use now a <a name="CATTopSplineBody"></a>CATICGMSplineBody Operator.
+//
+CATMathVector aTangent[nbpts];
+long          aImposition[nbpts];
+
+// imposition of the direction of the tangent at the start point.
+aImposition[0]=1;
+aTangent[0].SetCoord(1.,0.,0.);
+
+// no imposition for the intermediate points:
+// the corresponding aTangent values need not to be given
+aImposition[1]=0;
+aImposition[2]=0;
+
+// imposition of the tangent at the ending point.
+aImposition[3]=2;
+aTangent[3].SetCoord(5.,5.,0.);
+
+// a- creation
+CATICGMTopSplineOperator *pSplineOp = 
+<strong>        ::CATCGMCreateTopSplineOperator</strong>(piGeomFactory,
+                                        &amp;topdata,
+                                        nbpts,
+                                        aPoints,
+                                        aTangent,
+                                        NULL,   // no curvature imposition
+                                        aImposition);
+
+if (NULL==pSplineOp)                    // in case of problem
+{
+  CATCloseCGMContainer(piGeomFactory);  // close the factory and return
+  return(2);                             
+}
+// b- run the operator
+pSplineOp-&gt;<strong>Run</strong>();
+
+// c- get the result
+CATBody * piSplineBody2 = pSplineOp-&gt;<strong>GetResult</strong>();
+
+// also get the computed tangents .
+const CATMathVector *  pComputedTangents=NULL; 
+pSplineOp-&gt;<strong>GetComputedTangents</strong>(pComputedTangents);
+
+// <a name="Create topological lines representing the tangents"></a>Create topological lines representing the tangents
+CATBody * aTgtBody[nbpts];
+for (int i=0;i &lt;nbpts; i++)
+{
+  double length = pComputedTangents[i].Norm();
+  aTgtBody[i] = <strong>::CATCGMCreateTopLineFromDirection</strong>(piGeomFactory,
+                                                &amp;topdata,
+                                                aPoints[i],
+                                                pComputedTangents[i],
+                                                length);
+}
+
+// d- delete the operator
+<strong>pSplineOp-&gt;Release();
+pSplineOp=NULL;
+</strong>// Releases the configuration<strong>
+pConfig-&gt;Release();</strong></pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Length Computation"></a>Computing the Length</h3>
+<p>The <code>CATICGMLengthFromBodyOnWire</code> operator is constructed by using 
+the CATCGMCreateLengthFromBodyOnWire global function. Then, it is run and the length 
+is retrieved. Finally, it is released.</p>
+<p>The <code>l1</code> and <code>l2</code> computed lengths are different, even though 
+they are computed between the same points, because the lengths are computed on the 
+splines, that are different.</p>
+<pre class="code">//
+// 5- length computation
+//
+// between two points on the first spline
+// between two points on the first spline
+CATICGMLengthFromBodyOnWire* pLengthOp= 
+CATCGMCreateLengthFromBodyOnWire(piGeomFactory,
+&amp;topdata,
+aPoints[1], 
+aPoints[2],
+piSplineBody );
+double l1=0.;
+if (NULL != pLengthOp)
+{
+l1=pLengthOp-&gt;GetDistance();
+
+pLengthOp-&gt;Release();
+pLengthOp = NULL;
+}
+
+// between the same points on the second spline
+pLengthOp =CATCGMCreateLengthFromBodyOnWire(piGeomFactory,
+&amp;topdata,
+aPoints[1], 
+aPoints[2],
+piSplineBody2 ); 
+
+// P2 will contain the 3D mathematical coordinates of the second point
+CATMathPoint P2;
+double l2=0.;
+if (NULL != pLengthOp)
+{
+l2=pLengthOp-&gt;GetDistance(NULL, // the coordinates of the first point are not asked
+&amp;P2); // the coordinates of the second point
+pLengthOp-&gt;Release();
+pLengthOp = NULL;
+}
+cout &lt;&lt; &quot;length 1 = &quot; &lt;&lt; l1 &lt;&lt;&quot; , length2  &quot;&lt;&lt; l2 &lt;&lt; endl;</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Removal of the Unused Bodies"></a>Removing the Unused Bodies</h3>
+<p>The point bodies have only been constructed to be used in the definition of the 
+spline. Depending on your application, you may not need them afterwards. If you 
+want to remove them from the geometric factory, use the <code>CATICGMContainer::Remove</code> 
+method. If not, they will be automatically saved when streaming the factory.</p>
+<p><strong>Note</strong>: Although geometric objects are handled by the mean of 
+interfaces, such as <code>CATCartesianPoint</code>, <code>CATLine</code>, or
+<code>CATBody</code>, the pointers on these objects must not be released. In fact, 
+they are released at the closure of the factory (the <code>CATCloseCGMContainer</code> 
+global function).</p>
+<pre class="code">//
+// 6- Delete the unused point bodies and the array
+//
+
+for (i=0;i &lt;nbpts; i++)
+{
+  piGeomFactory-&gt;<strong>Remove</strong>(aPoints[i],CATICGMContainer::RemoveDependancies);
+}
+
+delete [] aPoints;
+aPoints = NULL;</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Writes the Model and Closes the Factory"></a>Writing the Model and 
+Closing the Container</h3>
+<p>To save the model in a file, the <code>::CATSaveCGMContainer</code> global function 
+is used. Notice that in the use case, the save is conditioned by an input parameter 
+representing the file inside which the model must be saved.</p>
+<p>The use case ends with the closure of the geometry factory, done by the <code>
+::CATCloseCGMContainer</code> global function.</p>
+<pre class="code"> if(1==toStore)
+ {
+#ifdef _WINDOWS_SOURCE
+   ofstream filetowrite(pfileName, ios::binary ) ;
+#else
+   ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;
+#endif
+
+   <strong>::CATSaveCGMContainer</strong>(piGeomFactory,filetowrite);
+   filetowrite.close();
+ }	
+
+ //
+ // Closes the container
+ //
+ <strong>::CATCloseCGMContainer</strong>(piGeomFactory);</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<ul>
+	<li>The basic topological operators are transient objects used to create basic 
+	topological objects. They work inside one container.</li>
+	<li>They are base on the general scheme of the GM operators: creation, optionally 
+	set of advanced options, run, read of the results, deletion</li>
+	<li>Basic bodies can also be directly created by a global function.</li>
+</ul>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Feb 2000]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

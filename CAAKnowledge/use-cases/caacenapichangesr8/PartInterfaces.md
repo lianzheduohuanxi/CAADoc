@@ -1,0 +1,16 @@
+---
+title: "PartInterfaces Modifications"
+category: "general"
+module: "CAACenAPIChangesR8"
+tags: ["CATIDraft"]
+source_file: "Doc\online\CAACenAPIChangesR8\PartInterfaces.htm"
+converted: "2026-05-11T17:33:52.677398"
+---
+
+CAA C++ API Modifications|  PartInterfaces  |   
+---|---|---  
+  
+* * *
+
+**Entity|  SP| Modification| To Do** | PartInterfaces/Protected/CATIDraft.h/CATIDraft/ModifyPullingDirection| GA| MHBDM|   
+---|---|---|---

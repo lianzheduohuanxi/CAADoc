@@ -1,0 +1,2415 @@
+<head>
+ <meta http-equiv="Content-Language" content="en">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+
+ <link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+ <title>The Mesh Parts and their Attributes</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>Analysis Solution</h1>
+     </td>
+     <td>
+     <h2>Analysis Modeler</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>The Mesh Parts and their Attributes</h3>
+     <p><em>All the mesh parts you can use</em></td>
+   </tr>
+   <tr>
+     <td class="tech" colspan="2">Technical Article</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This article describes the Mesh Parts and their Attributes available in Advanced 
+		Meshing Tools Workbench.&nbsp; Names of the Mesh parts and their 
+		attributes are listed. These names are required to create 
+		the mesh part and also to assign values to its attributes. The type of 
+		attributes their legal values and their meaning is also explained.</p>
+		<p>Following is the list of Mesh Parts</p>
+		<ul style="margin-bottom: 2mm">
+			<li><strong><a href="#OctreeTetra">Octree Tetrahedron Mesh</a></strong></li>
+			<li><b><a href="#TetraFiller">Tetrahedron Filler Mesh</a></b></li>
+			<li><b><a href="#Sweep">Sweep 3D Mesh</a></b></li>
+			<li><b><a href="#AdvSurfMesh">Advanced Surface Mesh</a></b></li>
+			<li><b><a href="#SurfMesh">Surface Mesh</a></b></li>
+			<li><b><a href="#OctreeTria">Octree Triangle Mesh</a></b></li>
+			<li><b><a href="#Beam">Beam Mesh</a></b></li>
+			<li><b><a href="#Translation">Translation Mesh</a></b></li>
+			<li><b><a href="#Rotation">Rotation Mesh</a></b></li>
+			<li><b><a href="#Symmetry">Symmetry Mesh</a></b></li>
+			<li><b><a href="#ExtTrans">Extrude with Translation Mesh</a></b></li>
+			<li><b><a href="#ExtRot">Extrude with Rotation Mesh </a></b></li>
+			<li><b><a href="#ExtSymm">Extrude with Symmetry Mesh </a></b></li>
+			<li><b><a href="#ExtSpine">Extrude along a Spine Mesh</a></b></li>
+			<li><b><a href="#Coating1D">Coating 1D Mesh</a></b></li>
+			<li><b><a href="#Coating2D">Coating 2D Mesh</a></b></li>
+			<li><b><a href="#SpotWelding">Spot Welding Connection Mesh</a></b></li>
+			<li><b><a href="#SeamWelding">Seam Welding Connection Mesh</a></b></li>
+			<li><b><a href="#SurfWelding">Surface Welding Connection Mesh</a></b></li>
+			<li><b><a href="#NodesToNodes">Nodes to Nodes Connection Mesh</a></b></li>
+			<li><b><a href="#NodesInterface">Node Interface Mesh</a></b></li>
+		</ul>
+		<p>&nbsp;</p>
+		<p>&nbsp;</p>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <p align="right"><a href="#Top">Top]</a></p>
+ <h4><a name="OctreeTetra"></a>
+	<img border="0" src="images/I_MshTetP2.gif" width="24" height="24">Octree Tetrahedron Mesh&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<a href="../CAAScdAniUseCases/CAAAniMeshOctTetra.htm"><u>use case</u>&nbsp;
+	</a>&nbsp; </h4><table border="1" width="100%">
+   <tr>
+     <th width="12%">Mesh Part Name</th>
+     <th width="12%">Attributes Name</th>
+     <th width="10%">Value Type</th>
+     <th width="6%">Legal Values</th>
+     <th width="57%">Meaning</th>
+   </tr>
+   <tr>
+     <td width="12%" align="center">
+     MSHPartOctree3D</td>
+     <td width="12%" align="center">SizeValue&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">The required size of the mesh, it is an objective, the octree mesher will try to reach the nearest possible value</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">AbsoluteSagValue</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specifies the maximum absolute sag accepted this is active 
+		when the <a href="#AbsSag">AbsoluteSag</a> attribute is valuated 
+		to 2</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">ElementOrder</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1,2</td>
+     <td width="57%">Specifies the degree of the element 1 for linear 2 for 
+		parabolic</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">MaxInteriorSize</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specifies the value of the imposed interior size for 3D 
+		mesh when the <font color="#FB7203"><a href="#IntSize">InteriorSize</a></font> attribute is active</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">
+     &nbsp;</td>
+     <td width="12%" align="center">MinSizeForSags </td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specifies the minimum size of the mesh. The Octree mesher 
+		tries to achieve the value specified in &quot;SizeValue&quot; but constrain sag 
+		may require decrease of the mesh size. This attributes imposes the 
+		condition on mesher that mesh size should not be less than the specified 
+		value.</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">MinGeometrySize </td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">The geometry having size below the specified size is not 
+		taken into account</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center"><a name=AbsSag><font color="#FB7203">
+		</font></a> <font color="#FB7203">AbsoluteSag</font></td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1,2</td>
+     <td width="57%">Attribute specifies whether the mesh is to be created with 
+		an imposed absolute sag value. Impose absolute sag (2), (1) otherwise.</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">MaxWarpAngle&nbsp; </td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specifies the maximum warp angle accepted for a quadratic 
+		triangle element</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">
+     &nbsp;</td>
+     <td width="12%" align="center">Criteria </td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1,2,3</td>
+     <td width="57%">Factor that user wants to respect for the elements of the 
+		mesh Skewness(1), Stretch(2), Shape(3)</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">MeshGeometryViolation </td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1,2</td>
+     <td width="57%">Specifies whether the user wants to suppress the edges of 
+		the mesh</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center"><a name =IntSize></a><font color="#FB7203">InteriorSize</font></td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1,2</td>
+     <td width="57%">Whether the user wants to apply the imposed maximum size 
+		for the interior size of the 3D mesh</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">MinJacobian</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Minimum Jacobian accepted for each element of the mesh.</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">
+     &nbsp;</td>
+     <td width="12%" align="center">MaxAttempts</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Number of attempts for launching Octree algorithm if the 
+		meshing of the solid fails</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">ProportionalSag</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1,2</td>
+     <td width="57%">Specifies whether the mesh is created with imposed 
+		proportional minimum sag. Mesh is created with proportional sag(2), (1) 
+		otherwise</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">ProportionalSagValue </td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Attribute which specifies the size of the maximum relative 
+		sag accepted this attribute is active when the &quot;ProportionalSag&quot; 
+		attribute is valuated to (2)</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center"><b>LocalSpecifications</b></td>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="10%" align="center">&nbsp;</td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center" rowspan="3">MSHLocalMeshSize</td>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">This specification is used in order to specify a local mesh 
+		size to faces or edges of geometry</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">MSHMeshSizeMag</td>
+     <td width="7%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">Defines the required mesh size</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">ConnectorList</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">Defines the support of the local specification</td>
+   </tr>   
+   <tr>
+     <td width="13%" align="center" rowspan="3">MSHLocalMeshSag</td>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">To specify the local mesh sag to faces and edges of 
+		geometry</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">MSHMeshSagMag</td>
+     <td width="7%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">Defines the required mesh sag</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">ConnectorList</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">Defines the support of the local specification</td>
+   </tr>  
+   <tr>
+     <td width="13%" align="center" rowspan="2">MSHLocalMeshImposedPoints</td>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">To impose mesh on the points on the geometry</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">ConnectorList</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">Defines the support of the local specification</td>
+   </tr>  
+   <tr>
+     <td width="13%" align="center" rowspan="3">MSHLocalMeshDistribution</td>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">This specification is used in order to impose a mesh 
+		distribution on edges of geometry</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">MSHNumberOdEdges</td>
+     <td width="7%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">Defines the number of mesh edges</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">ConnectorList</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">Defines the support of the local specification</td>
+   </tr>  
+ </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <h4><a name="TetraFiller"></a>
+	<img border="0" src="images/I_MshGHS3DP2.gif" width="24" height="24">Tetrahedron Filler Mesh&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<u><a href="../CAAScdAniUseCases/CAAAniMeshTetraFiller.htm"><u>
+	use case</u></a></u></h4><table border="1" width="100%">
+   <tr>
+     <th width="17%">Mesh Part Name</th>
+     <th width="14%">Attributes Name</th>
+     <th width="10%">Value Type</th>
+     <th width="5%">Legal Values</th>
+     <th width="53%">Meaning</th>
+   </tr>
+   <tr>
+     <td width="17%" align="center" height="33">
+     <font face="Verdana">MHSPartGHS3D</font></td>
+     <td width="14%" align="center" height="33">ElementOrder </td>
+     <td width="10%" align="center" height="33"><font color="#0000FF">Integer</font></td>
+     <td width="5%" align="center" height="33">1,2</td>
+     <td width="53%" height="33">Specifies the type of element linear(1) or 
+		parabolic(2)</td>
+   </tr>
+   <tr>
+     <td width="17%" align="center" height="22">&nbsp;</td>
+     <td width="14%" align="center" height="22">Propagation</td>
+     <td width="10%" align="center" height="22"><font color="#0000FF">Double</font></td>
+     <td width="5%" align="center" height="22">&gt;1</td>
+     <td width="53%" height="22">Factor which lets you dilute mesh elements 
+		inside solid </td>
+   </tr>
+ </table>
+ <p>&nbsp;</p>
+ <h4><a name="Property"></a>
+	<img border="0" src="images/I_MshSweep3DP2.gif" width="24" height="24"><b><a name="Sweep"><font color="#FB7203">Sweep 3D Mesh</font></a><font color="#FB7203">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<a href="../CAAScdAniUseCases/CAAAniMeshSweep3D.htm"><u>use case</u></a></font></b></h4><table border="1" width="100%">
+   <tr>
+     <th width="12%">Mesh Part Name</th>
+     <th width="12%">Attributes Name</th>
+     <th width="10%">Value Type</th>
+     <th width="6%">Legal Values</th>
+     <th width="57%">Meaning</th>
+   </tr>
+   <tr>
+     <td width="12%" align="center">
+     MSHPartSweep3D</td>
+     <td width="12%" align="center">&nbsp;ElementOrder&nbsp;&nbsp; </td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1,2</td>
+     <td width="57%">Specifies the type of element linear or parabolic</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">GuideAngle</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specifies the tolerance angle to compute the guides</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">CaptureTol</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Lets you define maximum distance for mesh capture</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center"><a name="Distribution">
+		<font color="#FB7203">DsitributionType</font></a></td>
+     <td width="10%" align="center"><font color="#0000FF">String</font></td>
+     <td width="6%" align="center">Uniform, Arithmetic, Geometric</td>
+     <td width="57%">Based on the distance 
+		between distributed nodes</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">
+     &nbsp;</td>
+     <td width="12%" align="center">NbElements</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Number of layers you want to insert between two supports</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">Symmetric</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1,2</td>
+     <td width="57%">Specifies the distribution to be symmetric(2) or not(1)</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">Ratio</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specifies the common difference value for the AP or 
+		common ratio value for GP.</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">Reverse</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Reverse the direction linked to the <a href="#Distribution">DistributionType</a></td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">
+     &nbsp;</td>
+     <td width="12%" align="center">Smoothing</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">Top</td>
+     <td width="10%" align="center">&nbsp;</td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">This geometrical support specifies the top face</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">Bottom</td>
+     <td width="10%" align="center">&nbsp;</td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">This geometrical support specifies the bottom face</td>
+   </tr>
+   </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <h4><a name="Restraint"></a>
+	<img border="0" src="images/I_MshAdvancedSurfMesherP2.gif" width="24" height="24"><b><a name="AdvSurfMesh"><font color="#FB7203">Advanced Surface Mesh</font></a><font color="#FB7203">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<a href="../CAAScdAniUseCases/CAAAniMeshAdvSurf.htm"><u>use case</u></a></font></b></h4><table border="1" width="100%">
+   <tr>
+     <th width="13%">Mesh Part Name</th>
+     <th width="12%">Attributes Name</th>
+     <th width="7%">Value Type</th>
+     <th width="17%">Legal Values</th>
+     <th width="49%">Meaning</th>
+   </tr>
+   <tr>
+     <td width="13%" align="center">
+     MSHPartSmartSurface</td>
+     <td width="12%" align="center">GlobalMethod</td>
+     <td width="7%" align="center"><font color="#0000FF">String</font></td>
+     <td width="17%" align="center">&quot;Frontal triangle&quot;, &quot;Frontal quadrangle&quot; </td>
+     <td width="49%">Specifies the type of the mesh wanted by the user. </td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">&nbsp;</td>
+     <td width="12%" align="center">GlobalSize</td>
+     <td width="7%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">The required size of the mesh, it is an objective the 
+		surface mesher will try to reach the nearest possible value</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">&nbsp;</td>
+     <td width="12%" align="center">MinimumSize</td>
+     <td width="7%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">Attribute which specifies the minimum size accepted for the 
+		length of topological edges, under this size edges must be merged with 
+		others (if it's possible)</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">&nbsp;</td>
+     <td width="12%" align="center">ElementOrder</td>
+     <td width="7%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="17%" align="center">1,2</td>
+     <td width="49%">Attribute which specifies the type of the element the user 
+		wants to create linear(1), parabolic(2)</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">&nbsp;</td>
+     <td width="12%" align="center">FaceAngle</td>
+     <td width="7%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">Attribute which specifies the minimum angle under which two 
+		faces from geometry are grouped in a single topological domain</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">&nbsp;</td>
+     <td width="12%" align="center">CurveAngle</td>
+     <td width="7%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">Attribute which specifies the minimum angle under which two 
+		edges from the geometry are grouped in a single topological edge</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">&nbsp;</td>
+     <td width="12%" align="center">DetailsElimination</td>
+     <td width="7%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="17%" align="center">1,2</td>
+     <td width="49%">To activate the the merge of the edges during 
+		simplification of topology, linked to &quot;MinimumSize&quot;. 1(Don`t activate 
+		the merge), 2(activate the merge)</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">&nbsp;</td>
+     <td width="12%" align="center">StripOptimization</td>
+     <td width="7%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="17%" align="center">1,2</td>
+     <td width="49%">Attribute which specifies if mesh in strips must be 
+		optimized in order to have a more regular mesh. Activate 
+		optimization(2), (1) otherwise</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">
+     &nbsp;</td>
+     <td width="12%" align="center">CleanSize</td>
+     <td width="7%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">Minimum diameter under which a hole is ignored.</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">&nbsp;</td>
+     <td width="12%" align="center">Offset</td>
+     <td width="7%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">Distance between mesh and geometry</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">&nbsp;</td>
+     <td width="12%" align="center">OffsetFromThickness</td>
+     <td width="7%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="17%" align="center">1,2</td>
+     <td width="49%">Attribute which activates the calculation of better offset 
+		between mesh and geometry when thickness is defined. activate the 
+		calculation(2), (1) otherwise</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">&nbsp;</td>
+     <td width="12%" align="center">MinimizeTriangles</td>
+     <td width="7%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">whether the number of triangles in the created mesh is 
+		minimized ( Useful when global method is &quot;Frontal quadrangle&quot;). 
+		Minimize(2), don't minimize(1)</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">
+     &nbsp;</td>
+     <td width="12%" align="center">MinSizeForSag</td>
+     <td width="7%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">Minimum size for the mesh. Useful when the global method is 
+		&quot;Frontal triangle&quot;</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">&nbsp;</td>
+     <td width="12%" align="center">CurveCaptureTol</td>
+     <td width="7%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">Maximum distance for curve capture</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">&nbsp;</td>
+     <td width="12%" align="center">OptmtimizeRegularity</td>
+     <td width="7%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="17%" align="center">1,2</td>
+     <td width="49%">Activate(2) or not(1) the parameter which favor a 
+		mesh direction for elements.</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">&nbsp;</td>
+     <td width="12%" align="center">MeshRelSagValue</td>
+     <td width="7%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">Attribute which specifies the maximum relative sag 
+		accepted. Useful when the global method is &quot;Frontal triangle&quot;.</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">
+     &nbsp;</td>
+     <td width="12%" align="center">MeshRelSag</td>
+     <td width="7%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="17%" align="center">1,2</td>
+     <td width="49%">Specifies if the mesh is created with an imposed relative 
+		minimum sag ( Useful if the global method is &quot;Frontal triangle&quot;)</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">&nbsp;</td>
+     <td width="12%" align="center">ConstraintSagValue</td>
+     <td width="7%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">Specifies the geometric sag for topology build</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">&nbsp;</td>
+     <td width="12%" align="center">CurveCapture</td>
+     <td width="7%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="17%" align="center">1,2</td>
+     <td width="49%">Attributes which specifies if the external curves must be 
+		captured.</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">&nbsp;</td>
+     <td width="12%" align="center">MeshCapture</td>
+     <td width="7%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="17%" align="center">1,2</td>
+     <td width="49%">Attribute which specifies if the external mesh must be 
+		captured.</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">&nbsp;</td>
+     <td width="12%" align="center">MeshCaptureTol</td>
+     <td width="7%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">Specifies the maximum distance for mesh capture linked to 
+		the attribute &quot;MeshCapture&quot; parameter.</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">&nbsp;</td>
+     <td width="12%" align="center">MeshAbsSag</td>
+     <td width="7%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="17%" align="center">1,2</td>
+     <td width="49%">Attribute which specifies if the mesh is created with an 
+		imposed minimum sag</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">&nbsp;</td>
+     <td width="12%" align="center">MeshAbsSagValue</td>
+     <td width="7%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">The size of the maximum sag accepted, if the &quot;MeshAbsSag&quot; 
+		attribute is activated only</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center"><b>Local Specifications</b></td>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center" rowspan="3">MSHSuppressHole</td>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">This attribute is used in order to specify hole which must 
+		be ignored for mesh generation.</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Status</td>
+     <td width="7%" align="center"><font color="#0000FF">Boolean</font></td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">Specifies if the hole must be suppressed (1) or not (0)</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Supports</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">It must represent the edge of the hole to suppress and only 
+		one.</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center" rowspan="3">MSHSuppressCrack</td>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">This specification is used in order to ignore cracks of the 
+		geometry for mesh generation</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Status</td>
+     <td width="7%" align="center"><font color="#0000FF">Boolean</font></td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">This specifies if the crack must be 
+		ignored (1) or not (0)</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Supports</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">It must represe the crack to suppress.</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center" rowspan="3">MSHSuppressFace</td>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">This specification is used in order to ignore faces of the 
+		geometry for mesh generation</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Status</td>
+     <td width="7%" align="center"><font color="#0000FF">Boolean</font></td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">Defines if the faces must be filled (1) or not (0) after 
+		being removed.</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Supports</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">It must represent one or more faces (a convex set) to 
+		inactivate. Supports could be added more than one time.</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center" rowspan="3">MSHConstrainEdge</td>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">Used in order to constrain/unconstraint edge(s) of the 
+		geometry associated to the current mesh part</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Status</td>
+     <td width="7%" align="center"><font color="#0000FF">Boolean</font></td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">Specifies if the supports must be constrained(1) or 
+		unconstrained(0)</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Supports</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">It could represent one or more edges to inactivate or a set 
+		of faces from which edges to constrain will be extracted</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center" rowspan="3">MSHConstrainVertex</td>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">Used in order to constrain/unconstraint vertex from the 
+		geometry linked to the current mesh part</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Status</td>
+     <td width="7%" align="center"><font color="#0000FF">Boolean</font></td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">This specifies if the supports must be 
+		constrained (1) or unconstrained (0)</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Supports</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">It must represent a vertex to constraint</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center" rowspan="2">MSHConstrainCurve</td>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">This specification is used in order to 
+		constrain/unconstraint curves from geometry which is not linked to the 
+		current mesh part.</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Supports</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">It could represent one or more edges to inactivate or a set 
+		of faces from which edges to constrain will be extracted.</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center" rowspan="2">MSHConstrainPoint</td>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">This specification is used in order to 
+		constrain/unconstraint points from geometry which is not linked to the 
+		current mesh part.</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Supports</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">It must represent a point to constraint</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center" rowspan="10">MSHDistributionElement</td>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">This specification is used in order to define distribution 
+		on edge(s)</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Symmetric</td>
+     <td width="7%" align="center"><font color="#0000FF">Boolean</font></td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">Specifies the distribution must be symmetric(1) or not(0)</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Type</td>
+     <td width="7%" align="center"><font color="#0000FF">String</font></td>
+     <td width="17%" align="center">&quot;Isometric&quot;, &quot;Geometric&quot;, &quot;Arithmetic&quot;, 
+		&quot;Law&quot;</td>
+     <td width="49%">Type of wanted distribution.</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Reverse</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">Linked to the &quot;Law&quot; type this attribute allow to apply the 
+		law on the reverse side of the edge than default one</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Option</td>
+     <td width="7%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="17%" align="center">1-8</td>
+     <td width="49%">Specifies the set of attributes to apply depending 
+		on the distribution type.</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">NbElements</td>
+     <td width="7%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">Number of element wanted for the distribution</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Size1</td>
+     <td width="7%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%" rowspan="2">It represents the 
+		distance from the first extremity ( respectively the second ) of the 
+		edge to the first internal node</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Size2</td>
+     <td width="7%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="17%" align="center">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Ratio21</td>
+     <td width="7%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">It is a ratio between size1 and size2 </td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Supports</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">It must represent a set of edges (continuous). Supports 
+		could be added more than one time</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center" rowspan="6">MSHCaptureElement</td>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">This specification is used in order to define mesh capture 
+		coming from others mesh parts. In order to use it, others associated 
+		attributes must be defined:</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Tolerence</td>
+     <td width="7%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">This is a length (double) which define the tolerance of the 
+		capture; </td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Coincidence</td>
+     <td width="7%" align="center"><font color="#0000FF">Boolean</font></td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">Which define if the capture must be done with (1) or 
+		without (0) coincidence</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Condensation</td>
+     <td width="7%" align="center"><font color="#0000FF">Boolean</font></td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">Defines if the capture must be done with (1) or without (0) 
+		condensation; </td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Sources</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">To this component you must set the capture source if no 
+		tolerance have been set</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Supports</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">It must represent a set of edges. Note that supports 
+		could be added more than one time in this case. </td>
+   </tr>
+   <tr>
+     <td width="13%" align="center" rowspan="7">MSHMeshAroundHole</td>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">This specification is used in order to apply a mesh 
+		distribution around a set of holes</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">NbElements</td>
+     <td width="7%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">Defines the number of elements (mesh edges) to create 
+		around each hole of the set specified</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">NbRows</td>
+     <td width="7%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="17%" align="center">1,2,3</td>
+     <td width="49%">Defines the number of rows of mesh elements to 
+		create around the hole; </td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Height1</td>
+     <td width="7%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%" rowspan="3">These attributes depends from the NbRows 
+		attribute. You must define these ones to specify the height of each row 
+		elements</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Height2</td>
+     <td width="7%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="17%" align="center">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Height3</td>
+     <td width="7%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="17%" align="center">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Supports</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">It must represent only one edge around hole</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center" rowspan="4">MSHMeshDomain</td>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">This specification is used in order to specify a mesh 
+		method to a topological domain</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Method</td>
+     <td width="7%" align="center"><font color="#0000FF">String</font></td>
+     <td width="17%" align="center">FrontalTria,&nbsp; FrontalQuad, HalfBead, MappedFree, 
+		Mapped, MappedTria, Bead</td>
+     <td width="49%">Type of the mesh to be created</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Size</td>
+     <td width="7%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">Defines the required mesh size</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Supports</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">Must represent the connex set of faces</td>
+   </tr>
+ </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <h4><a name="SurfMesh"></a>
+	<img border="0" src="images/I_MshBasicSurfMesherP2.gif" width="24" height="24"><b><a href="#SurfMesh">Surface Mesh</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<a href="../CAAScdAniUseCases/CAAAniMeshBasicSurf.htm"><u>use 
+	case</u></a></b></h4><table border="1" width="100%">
+   <tr>
+     <th width="13%">Mesh Part Name</th>
+     <th width="12%">Attributes Name</th>
+     <th width="10%">Value Type</th>
+     <th width="6%">Legal Values</th>
+     <th width="57%">Meaning</th>
+   </tr>
+   <tr>
+     <td width="13%" align="center">
+     MSHPartBasicSurf</td>
+     <td width="12%" align="center">GlobalMethod</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1,2</td>
+     <td width="57%">triangle(2), quadrangle(1)</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">&nbsp;</td>
+     <td width="12%" align="center">ElementOrder</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1,2</td>
+     <td width="57%">Attribute which specifies the type of the element the user 
+		wants to create linear(1), parabolic(2)</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">&nbsp;</td>
+     <td width="12%" align="center">QuadsOnly</td>
+     <td width="10%" align="center">Integer</td>
+     <td width="6%" align="center">1,2</td>
+     <td width="57%">Set(2) and unset(2) the quads only option</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">&nbsp;</td>
+     <td width="12%" align="center">DedicatedMesh</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1,2</td>
+     <td width="57%">Whether the user wants to specify dedicated meshing method 
+		Useful only when frontal quadrangle method is selected</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">&nbsp;</td>
+     <td width="12%" align="center">DedicatedMethod</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1,2</td>
+     <td width="57%">This option specifies the dedicated method</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">
+     &nbsp;</td>
+     <td width="12%" align="center">GlobalSize</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Size of the mesh</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">&nbsp;</td>
+     <td width="12%" align="center">Offset</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Value according to which both the geometrical 
+		simplification and meshing will be offset</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">&nbsp;</td>
+     <td width="12%" align="center">CleanSize</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Minimum diameter under which a hole is ignored.</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">&nbsp;</td>
+     <td width="12%" align="center">TopologySize</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Global size assigned to the mesh</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">
+     &nbsp;</td>
+     <td width="12%" align="center">TopoloySag</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">constraint is created along the edge of a face to avoid 
+		creating elements across this edge. Lower the value more the constraints 
+		and vice versa</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">&nbsp;</td>
+     <td width="12%" align="center">SharpEdges</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1,2</td>
+     <td width="57%">Whether the user wants to add sharp edges </td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">&nbsp;</td>
+     <td width="12%" align="center">FaceAngle</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Attribute which specifies the minimum angle under which two 
+		faces from geometry are grouped in a single topological domain</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">&nbsp;</td>
+     <td width="12%" align="center">OffsetFromThickness</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1,2</td>
+     <td width="57%">Attribute which activates the calculation of better offset 
+		between mesh and geometry when thickness is defined</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">
+     &nbsp;</td>
+     <td width="12%" align="center">MeshRelSag</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1,2</td>
+     <td width="57%">Specifies if the mesh is created with an imposed relative 
+		minimum sag ( Useful if the global method is &quot;triangle&quot;)</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">&nbsp;</td>
+     <td width="12%" align="center">MeshRelSagValue</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Attribute which specifies the maximum relative sag 
+		accepted. Useful when the global method is &quot;triangle&quot;</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">&nbsp;</td>
+     <td width="12%" align="center">CurveCapture</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1,2</td>
+     <td width="57%">Attributes which specifies if the external curves must be 
+		captured(2) or not(1)</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">&nbsp;</td>
+     <td width="12%" align="center">CurveCaptureTol</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Maximum distance for curve capture</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">
+     &nbsp;</td>
+     <td width="12%" align="center"><a name="MeshCapture"><font color="#FB7203">
+		MeshCapture</font></a></td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1,2</td>
+     <td width="57%">Attribute which specifies if the external mesh must be 
+		captured.</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">&nbsp;</td>
+     <td width="12%" align="center">MeshCaptureTol</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specifies the maximum distance for mesh capture linked to 
+		the attribute <a href="#MeshCapture">MeshCapture</a> parameter</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">&nbsp;</td>
+     <td width="12%" align="center"><a name =MeshAbsSag></a>
+		<font color="#FB7203">MeshAbsSag</font></td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1,2</td>
+     <td width="57%">Attribute which specifies if the mesh is created with an 
+		imposed minimum sag.</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center">&nbsp;</td>
+     <td width="12%" align="center">MeshAbsSagValue</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">The size of the maximum sag accepted, only the
+		<font color="#FB7203"><a href="#MeshAbsSag">MeshAbsSag</a></font> 
+		attribute is is valuated to 2</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center"><b>Local Specifications</b></td>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="10%" align="center">&nbsp;</td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center" rowspan="2">MSHTopProjectCurve</td>
+     <td width="12%" align="center">ConnectorList</td>
+     <td width="10%" align="center">&nbsp;</td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specify the curve which is to be projected</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Tolerance</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">The approximate distance of the curve from specified 
+		geometry</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center" rowspan="3">MSHTopProjectPoint</td>
+     <td width="12%" align="center">ConnectorList</td>
+     <td width="10%" align="center">&nbsp;</td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specify the point which is to be projected</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Tolerance</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">The approximate distance of the point from the specified 
+		geometry</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Project</td>
+     <td width="10%" align="center"><font color="#0000FF">Boolean</font></td>
+     <td width="6%" align="center">0,1</td>
+     <td width="57%">Specifies whether the point is to be projected on the 
+		geometry(1) or not (0)</td>
+   </tr>
+   </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <h4><img border="0" src="images/I_MshTr3P2.gif" width="24" height="24"><b><a name="OctreeTria"><font color="#FB7203">Octree Triangle Mesh</font></a><font color="#FB7203">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<a href="../CAAScdAniUseCases/CAAAniMeshOctTriangle.htm"><u>use 
+	case</u></a></font></b></h4><table border="1" width="100%">
+   <tr>
+     <th width="12%">Mesh Part Name</th>
+     <th width="12%">Attributes Name</th>
+     <th width="10%">Value Type</th>
+     <th width="6%">Legal Values</th>
+     <th width="57%">Meaning</th>
+   </tr>
+   <tr>
+     <td width="12%" align="center">
+     MSHPartOctree2D</td>
+     <td width="12%" align="center">SizeValue</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">The required size of the mesh, it is an objective the 
+		octree mesher will try to reach the neares possible value</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">AbsoluteSagValue</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specifies the maximum absolute sag accepted this is active 
+		when the <a href="#AbsoluteSag">AbsoluteSag</a> attribute is active</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">ElementOrder</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1,2</td>
+     <td width="57%">Specifies the degree of the element 1 for linear 2 for 
+		parabolic</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">MaxInteriorSize</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specifies the value of the imposed interior size for 2D 
+		mesh when the <a href="#InteriorSize">InteriorSize</a> attribute is active</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">
+     &nbsp;</td>
+     <td width="12%" align="center">MinSizeForSags</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specifies the minimum size of the mesh.</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">MinGeometrySize</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">The geometry having size below the specified size is not 
+		taken into account</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center" height="21">&nbsp;</td>
+     <td width="12%" align="center" height="21"><a name="AbsoluteSag">AbsoluteSag</a></td>
+     <td width="10%" align="center" height="21"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center" height="21">1,2</td>
+     <td width="57%" height="21">Attribute specifies whether the mesh is to be 
+		created with an imposed absolute sag value(2) or not (1) </td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center"><a name="ProportionalSag">ProportionalSag</a></td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1,2</td>
+     <td width="57%">Specifies whether the mesh is created with imposed 
+		proportional minimum sag.</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">
+     &nbsp;</td>
+     <td width="12%" align="center">ProportionalSagValue</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Attribute which specifies the size of the maximum relative 
+		sag accepted this attribute is active when the
+		<a href="#ProportionalSag">ProportionalSag</a> 
+		attribute is active</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">MaxWarpAngle</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specifies the maximum warp angle accepted for a quadratic 
+		triangle element</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">Criteria</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1,2,3</td>
+     <td width="57%">Factor that user wants to respect for the elements of the 
+		mesh Skewness(1), Stretch(2), Shape(3).</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">MeshGeometryViolation</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1,2</td>
+     <td width="57%">Specifies whether the user wants to suppress the edges of 
+		the mesh(2) or not</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center"><a name="InteriorSize">InteriorSize</a></td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1,2</td>
+     <td width="57%">Whether the user wants to apply the imposed maximum size 
+		for the interior size of the 3D mesh.</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">MinJacobian</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Minimum Jacobian accepted for each element of the mesh.</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">MaxAttempts</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Number of attempts for launching Octree algorithm if the 
+		meshing of the surface fails</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">MeshViolationValue</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specifies the value for which edges will be suppressed</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center"><b>LocalSpecifications</b></td>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="10%" align="center">&nbsp;</td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center" rowspan="3">MSHLocalMeshSize</td>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">This specification is used in order to specify a local mesh 
+		size to faces or edges of geometry</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">MSHMeshSizeMag</td>
+     <td width="7%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">Defines the required mesh size</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">ConnectorList</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">Defines the support of the local specification</td>
+   </tr>   
+   <tr>
+     <td width="13%" align="center" rowspan="3">MSHLocalMeshSag</td>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">To specify the local mesh sag to faces and edges of 
+		geometry</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">MSHMeshSagMag</td>
+     <td width="7%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">Defines the required mesh sag</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">ConnectorList</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">Defines the support of the local specification</td>
+   </tr>  
+   <tr>
+     <td width="13%" align="center" rowspan="2">MSHLocalMeshImposedPoints</td>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">To impose mesh on the points on the geometry</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">ConnectorList</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">Defines the support of the local specification</td>
+   </tr>  
+   <tr>
+     <td width="13%" align="center" rowspan="3">MSHLocalMeshDistribution</td>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">This specification is used in order to impose a mesh 
+		distribution on edges of geometry</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">MSHNumberOdEdges</td>
+     <td width="7%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">Defines the number of mesh edges</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">ConnectorList</td>
+     <td width="7%" align="center">&nbsp;</td>
+     <td width="17%" align="center">&nbsp;</td>
+     <td width="49%">Defines the support of the local specification</td>
+   </tr>     
+   </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <h4><img border="0" src="images/I_MshBarP2.gif" width="24" height="24"><b><a name="Beam"><font color="#FB7203">Beam Mesh</font></a><font color="#FB7203">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<a href="../CAAScdAniUseCases/CAAAniMesh1D.htm"><u>use case</u></a></font></b></h4><table border="1" width="100%">
+   <tr>
+     <th width="12%">Mesh Part Name</th>
+     <th width="12%">Attributes Name</th>
+     <th width="10%">Value Type</th>
+     <th width="6%">Legal Values</th>
+     <th width="57%">Meaning</th>
+   </tr>
+   <tr>
+     <td width="12%" align="center">
+     MSHPart1D</td>
+     <td width="12%" align="center">SizeValue</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Sets the global mesh size</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">AbsoluteSag</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1,2</td>
+     <td width="57%">Sets the element sag</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">AbsoluteSagValue</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Minimum distance between the mesh elements and the 
+		geometry. Useful for curve-type geometry</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">MinimumSizeValue</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Minimum size of the element</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">
+     &nbsp;</td>
+     <td width="12%" align="center">ElementOrder</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1,2</td>
+     <td width="57%">Elements with intermediate nodes (2; specify &quot;Parabolic&quot;) or without linear intermediate 
+		nodes(1; specify &quot;Linear&quot;).</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">MeshCapture</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1,2</td>
+     <td width="57%">Specifies the option to capture external mesh with given tolerance. 
+		External mesh must be a 2D mesh</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center" height="21">&nbsp;</td>
+     <td width="12%" align="center" height="21">MeshCaptureTol</td>
+     <td width="10%" align="center" height="21"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center" height="21">&nbsp;</td>
+     <td width="57%" height="21">Specifies the tolerance value to capture mesh</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">CurveAngle</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Defines the vertices to be taken into account.</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">
+     LocalSpecification</td>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="10%" align="center">&nbsp;</td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="13%" align="center" rowspan="3">MSHTopProjectPoint</td>
+     <td width="12%" align="center">ConnectorList</td>
+     <td width="10%" align="center">&nbsp;</td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specify the point which is to be projected</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Tolerance</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">The approximate distance of the point from the specified 
+		geometry</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Project</td>
+     <td width="10%" align="center"><font color="#0000FF">Boolean</font></td>
+     <td width="6%" align="center">0,1</td>
+     <td width="57%">Specifies whether the point is to be projected on the 
+		geometry(1) or not (0)</td>
+   </tr>
+   </table>
+ <p>&nbsp;</p>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <h4><img border="0" src="images/I_MshTranslateP2.gif" width="24" height="24"><b><a name="Translation"><font color="#FB7203">Translation Mesh</font></a><font color="#FB7203">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<a href="../CAAScdAniUseCases/CAAAniMeshTranslation.htm"><u>use 
+	case</u></a></font></b></h4><table border="1" width="100%">
+   <tr>
+     <th width="12%">Mesh Part Name</th>
+     <th width="12%">Attributes Name</th>
+     <th width="10%">Value Type</th>
+     <th width="6%">Legal Values</th>
+     <th width="57%">Meaning</th>
+   </tr>
+   <tr>
+     <td width="12%" align="center">
+     MSHPartTranslation</td>
+     <td width="12%" align="center">Direction</td>
+     <td width="10%" align="center"><font color="#0000FF">ConnectorList</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specifies the direction of translation, it must be a line 
+		created in GSD workbench</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">TranslationValue</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specifies distance and orientation of translation ( 
+		negative value for reverse )</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center" rowspan="3">Condensation</td>
+     <td width="10%" align="center" rowspan="3"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">0</td>
+     <td width="57%">Decides to not condense the nodes of the 
+		transformed and parent mesh part</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="6%" align="center">1</td>
+     <td width="57%">Condense the nodes of the transformed and 
+		parent mesh part.</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="6%" align="center">2</td>
+     <td width="57%">Condense the nodes of transformed mesh part and 
+		all the neighboring mesh parts</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">Tolerance</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specifies the tolerance of condensation</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">
+     &nbsp;</td>
+     <td width="12%" align="center">NbCopies</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specifies the number of copies</td>
+   </tr>
+   </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+	<p><img border="0" src="images/I_MshRotateP2.gif" width="24" height="24"><b><a name="Rotation"><font color="#FB7203">Rotation Mesh</font></a><font color="#FB7203">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<a href="../CAAScdAniUseCases/CAAAniMeshRotation.htm"><u>use case</u></a></font></b></p><table border="1" width="100%">
+   <tr>
+     <th width="12%">Mesh Part Name</th>
+     <th width="12%">Attributes Name</th>
+     <th width="10%">Value Type</th>
+     <th width="6%">Legal Values</th>
+     <th width="57%">Meaning</th>
+   </tr>
+   <tr>
+     <td width="12%" align="center">
+     MSHPartRotation</td>
+     <td width="12%" align="center">Direction</td>
+     <td width="10%" align="center"><font color="#0000FF">ConnectorList</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specifies the direction of translation</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">RotationValue</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Lets you select angle of rotation</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center" rowspan="3">Condensation</td>
+     <td width="10%" align="center" rowspan="3"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">0</td>
+     <td width="57%">Decides to not condense the ndoes of the 
+		transformed and parent mesh part</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="6%" align="center">1</td>
+     <td width="57%">Condense the nodes of the transformed and 
+		parent mesh part.</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="6%" align="center">2</td>
+     <td width="57%">Condense the nodes of transformed mesh part and 
+		all the neighboring mesh parts</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">Tolerance</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specifies the tolerance of condensation</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">
+     &nbsp;</td>
+     <td width="12%" align="center">NbCopies</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specifies the number of copies</td>
+   </tr>
+   </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <p>&nbsp;</p>
+	<p><img border="0" src="images/I_MshSymmetryP2.gif" width="24" height="24"><b><a name="Symmetry"><font color="#FB7203">Symmetry Mesh</font></a><font color="#FB7203">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<a href="../CAAScdAniUseCases/CAAAniMeshSymmetry.htm"><u>use case</u></a></font></b></p><table border="1" width="100%">
+   <tr>
+     <th width="12%">Mesh Part Name</th>
+     <th width="12%">Attributes Name</th>
+     <th width="10%">Value Type</th>
+     <th width="6%">Legal Values</th>
+     <th width="57%">Meaning</th>
+   </tr>
+   <tr>
+     <td width="12%" align="center">
+     MSHPartSymmetry</td>
+     <td width="12%" align="center">Direction</td>
+     <td width="10%" align="center"><font color="#0000FF">ConnectorList</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Lets you select the plane of symmetry</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center" rowspan="3">Condensation</td>
+     <td width="10%" align="center" rowspan="3"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">0</td>
+     <td width="57%">Decides to not condense the ndoes of the 
+		transformed and parent mesh part</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="6%" align="center">1</td>
+     <td width="57%">Condense the nodes of the transformed and 
+		parent mesh part.</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="6%" align="center">2</td>
+     <td width="57%">Condense the nodes of transformed mesh part and 
+		all the neighboring mesh parts</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">
+     &nbsp;</td>
+     <td width="12%" align="center">NbCopies</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specifies the number of copies</td>
+   </tr>
+   </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <p>&nbsp;</p>
+	<p><img border="0" src="images/I_MshExtrTranslationP2.gif" width="24" height="24"><b><a name="ExtTrans"><font color="#FB7203">Extrude with Translation</font></a><font color="#FB7203">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<a href="../CAAScdAniUseCases/CAAAniMeshExtrudeTrans.htm"><u>use 
+	case</u></a></font></b></p><table border="1" width="100%">
+   <tr>
+     <th width="12%">Mesh Part Name</th>
+     <th width="12%">Attributes Name</th>
+     <th width="10%">Value Type</th>
+     <th width="6%">Legal Values</th>
+     <th width="57%">Meaning</th>
+   </tr>
+   <tr>
+     <td width="12%" align="center">
+     MSHPartExtrTranslation</td>
+     <td width="12%" align="center">Direction</td>
+     <td width="10%" align="center">&nbsp;</td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Selects the direction of extrusion an axis or a line is 
+		specified</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">Condensation</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1,2</td>
+     <td width="57%">If activated, this option lets you condense nodes of the 
+		extruded mesh part and other mesh parts with a user-defined tolerance. </td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">Tolerance</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">The user defined tolerance for condensation</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">Length</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Minimum distance between the mesh elements and the 
+		geometry. Useful for curve-type geometry</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">Length1</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">The distance up to which you want to extrude</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center" rowspan="8">
+     Distribution</td>
+     <td width="12%" align="center">Type</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Type of distribution Uniform Arithmetic Geometric</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">NbNodes</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Number of layers you want to insert</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center" height="21">Symmetric</td>
+     <td width="10%" align="center" height="21"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center" height="21">&nbsp;</td>
+     <td width="57%" height="21">Whether the extruded mesh is symmetric(2) or not(1)</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Size1</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%" rowspan="2">The sizes of the distribution 
+		Arithmetic/Geometric</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Size2</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Ratio</td>
+     <td width="10%" align="center"><font color="#0000FF">Real</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">The ratio of size 1 and size2</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">AbsoluteSag</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Absolute sag value</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">RelativeSag</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Relative sag value</td>
+   </tr>
+   </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+	<p><img border="0" src="images/I_MshExtrRotationP2.gif" width="24" height="24"><b><a name="ExtRot"><font color="#FB7203">Extrude with Rotation</font></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<font color="#FB7203">
+	<a href="../CAAScdAniUseCases/CAAAniMeshExtrudeRot.htm"><u>use 
+	case</u></a></font></b></p><table border="1" width="100%">
+   <tr>
+     <th width="12%">Mesh Part Name</th>
+     <th width="12%">Attributes Name</th>
+     <th width="10%">Value Type</th>
+     <th width="6%">Legal Values</th>
+     <th width="57%">Meaning</th>
+   </tr>
+   <tr>
+     <td width="12%" align="center">
+     MSHPartExtrTranslation</td>
+     <td width="12%" align="center">Direction</td>
+     <td width="10%" align="center">&nbsp;</td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specifies the axis of extrusion by rotation.</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">Angle</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">The starting angle from which you want to extrude. Useful 
+		curved geometry</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">Angle1</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">The angle up to which you want to extrude</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">Condensation</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1,2</td>
+     <td width="57%">If activated(2), this option lets you condense nodes of the 
+		extruded mesh part and other mesh parts with a user-defined tolerance. 
+		(1) will deactivate the option</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">Tolerance</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">The user defined tolerance for condensation</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center" ROWSPAN="8">
+     Distribution</td>
+     <td width="12%" align="center">Type</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Type of distribution Uniform Arithmetic Geometric</td>
+   </tr>
+	<tr>
+     <td width="12%" align="center">NbNodes</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Number of layers you want to insert</td>
+   </tr>
+	<tr>
+     <td width="12%" align="center" height="21">Symmetric</td>
+     <td width="10%" align="center" height="21"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center" height="21">&nbsp;</td>
+     <td width="57%" height="21">Whether the extruded mesh is symmetric or not</td>
+   </tr>
+	<tr>
+     <td width="12%" align="center">Size1</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%" rowspan="2">The sizes of the distribution 
+		Arithmetic/Geometric</td>
+   </tr>
+	<tr>
+     <td width="12%" align="center">Size2</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     </tr>
+	<tr>
+     <td width="12%" align="center">Ratio</td>
+     <td width="10%" align="center"><font color="#0000FF">Real</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">The ratio of size 1 and size2</td>
+   </tr>
+	<tr>
+     <td width="12%" align="center">AbsoluteSag</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Absolute sag value</td>
+   </tr>
+	<tr>
+     <td width="12%" align="center">RelativeSag</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Relative sag value</td>
+   </tr>
+   </table>
+ 	<p>&nbsp;</p>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <p>&nbsp;</p>
+	<p><img border="0" src="images/I_MshExtrSymmetryP2.gif" width="24" height="24"><b><a name="ExtSymm"><font color="#FB7203">Extrude with Symmetry</font></a><font color="#FB7203">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<a href="../CAAScdAniUseCases/CAAAniMeshExtrudeSymm.htm"><u>use 
+	case</u></a></font></b></p><table border="1" width="100%">
+   <tr>
+     <th width="12%">Mesh Part Name</th>
+     <th width="12%">Attributes Name</th>
+     <th width="10%">Value Type</th>
+     <th width="6%">Legal Values</th>
+     <th width="57%">Meaning</th>
+   </tr>
+   <tr>
+     <td width="12%" align="center">
+     MSHPartExtrTranslation</td>
+     <td width="12%" align="center">Direction</td>
+     <td width="10%" align="center">&nbsp;</td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specifies the plane of symmetry.</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">Condensation</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">If activated, this option lets you condense nodes of the 
+		extruded mesh part and other mesh parts with a user-defined tolerance. </td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">Tolerance</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">The user defined tolerance for condensation</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center" ROWSPAN="8">
+     Distribution</td>
+     <td width="12%" align="center">Type</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Type of distribution Uniform Arithmetic Geometric</td>
+   </tr>
+	<tr>
+     <td width="12%" align="center">NbNodes</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Number of layers you want to insert</td>
+   </tr>
+	<tr>
+     <td width="12%" align="center" height="21">Symmetric</td>
+     <td width="10%" align="center" height="21"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center" height="21">&nbsp;</td>
+     <td width="57%" height="21">Whether the extruded mesh is symmetric or not</td>
+   </tr>
+	<tr>
+     <td width="12%" align="center">Size1</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%" rowspan="2">The sizes of the distribution 
+		Arithmetic/Geometric</td>
+   </tr>
+	<tr>
+     <td width="12%" align="center">Size2</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     </tr>
+	<tr>
+     <td width="12%" align="center">Ratio</td>
+     <td width="10%" align="center"><font color="#0000FF">Real</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">The ratio of size 1 and size2</td>
+   </tr>
+	<tr>
+     <td width="12%" align="center">AbsoluteSag</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Absolute sag value</td>
+   </tr>
+	<tr>
+     <td width="12%" align="center">RelativeSag</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Relative sag value</td>
+   </tr>
+   </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <p>&nbsp;</p>
+	<p><img border="0" src="images/I_MshExtrSpineP2.gif" width="24" height="24"><b><a name="ExtSpine"><font color="#FB7203">Extrude along a Spine</font></a><font color="#FB7203">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<a href="../CAAScdAniUseCases/CAAAniMeshExtrudeSpine.htm"><u>use 
+	case</u></a></font></b></p><table border="1" width="100%">
+   <tr>
+     <th width="12%">Mesh Part Name</th>
+     <th width="12%">Attributes Name</th>
+     <th width="10%">Value Type</th>
+     <th width="6%">Legal Values</th>
+     <th width="57%">Meaning</th>
+   </tr>
+   <tr>
+     <td width="12%" align="center">
+     MSHPartExtrSpine</td>
+     <td width="12%" align="center">Direction</td>
+     <td width="10%" align="center">&nbsp;</td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Lets you select the direction of extrusion ( spine)</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">Condensation</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1,2</td>
+     <td width="57%">If activated, this option lets you condense nodes of the 
+		extruded mesh part and other mesh parts with a user-defined tolerance. </td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">Tolerance</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">The user defined tolerance for condensation</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">Length</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specifies the start value of the extrusion</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">Length1</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specifies the end value of the extrusion</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">Point</td>
+     <td width="10%" align="center">&nbsp;</td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specifies the reference point on the spine for the 
+		extrusion.<br>
+		By default, the anchor point is the projection on the spine of the 
+		center of gravity of the mesh to be extruded</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center" ROWSPAN="8">
+     Distribution</td>
+     <td width="12%" align="center">Type</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Type of distribution Uniform Arithmetic Geometric</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">NbNodes</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Number of layers you want to insert</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center" height="21">Symmetric</td>
+     <td width="10%" align="center" height="21"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center" height="21">&nbsp;</td>
+     <td width="57%" height="21">Whether the extruded mesh is symmetric or not</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Size1</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%" rowspan="2">The sizes of the distribution 
+		Arithmetic/Geometric</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Size2</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">Ratio</td>
+     <td width="10%" align="center"><font color="#0000FF">Real</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">The ratio of size 1 and size2</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">AbsoluteSag</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Absolute sag value</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">RelativeSag</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Relative sag value</td>
+   </tr>
+   </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <p>&nbsp;</p>
+	<p><img border="0" src="images/I_MshCoatingP2.gif" width="24" height="24"><b><a name="Coating1D"><font color="#FB7203">Coating 1D Mesh</font></a><font color="#FB7203">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<a href="../CAAScdAniUseCases/CAAAniMeshCoating1D.htm"><u>use 
+	case</u></a></font></b></p><table border="1" width="100%">
+   <tr>
+     <th width="12%">Mesh Part Name</th>
+     <th width="12%">Attributes Name</th>
+     <th width="10%">Value Type</th>
+     <th width="6%">Legal Values</th>
+     <th width="57%">Meaning</th>
+   </tr>
+   <tr>
+     <td width="12%" align="center">
+     MSHPart1DCoating</td>
+     <td width="12%" align="center">ExtractionType</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1-6</td>
+     <td width="57%">Specifies the Type of extraction. All Edges(1), 
+		Boundary Edges(2), Internal Edges(3), Constrained Edges(4), Non 
+		Constrained Edges(5), None(6)</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">
+     <b>LocalSpecifications</b></td>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="10%" align="center">&nbsp;</td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">&nbsp;</td>
+   </tr>
+   <TR>
+     <td width="12%" align="center">
+     MSHCoatingLocalSpecification</td>
+     <td width="12%" align="center">ConnectorList</td>
+     <td width="10%" align="center">&nbsp;</td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specifies the edges you want to include or exclude</td>
+   </TR>
+   <tr>
+     <td width="12%" align="center">
+     &nbsp;</td>
+     <td width="12%" align="center">LocalExtractionType</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1,2</td>
+     <td width="57%">Specifies whether you want to include (1) or exclude (2) 
+		the edge</td>
+   </tr>
+   </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <p>&nbsp;</p>
+	<p><img border="0" src="images/I_MshCoating2DP2.gif" width="24" height="24"><b><a name ="Coating2D"><font color="#FB7203">Coating 2D Mesh</font></a><font color="#FB7203">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<a href="../CAAScdAniUseCases/CAAAniMeshCoating2D.htm"><u>use 
+	case</u></a></font></b></p><table border="1" width="100%">
+   <tr>
+     <th width="12%">Mesh Part Name</th>
+     <th width="12%">Attributes Name</th>
+     <th width="10%">Value Type</th>
+     <th width="6%">Legal Values</th>
+     <th width="57%">Meaning</th>
+   </tr>
+   <tr>
+     <td width="12%" align="center">
+     MSHPart2DCoating</td>
+     <td width="12%" align="center">ExtractionType</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1,2</td>
+     <td width="57%">Specifies the Type of extraction. Boundary Faces(1), 
+		None(2)</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">
+     <b>LocalSpecifications</b></td>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="10%" align="center">&nbsp;</td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">&nbsp;</td>
+   </tr>
+   <TR>
+     <td width="12%" align="center">
+     MSHCoatingLocalSpecification</td>
+     <td width="12%" align="center">ConnectorList</td>
+     <td width="10%" align="center">&nbsp;</td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specifies the faces you want to include or exclude</td>
+   </TR>
+   <tr>
+     <td width="12%" align="center">
+     &nbsp;</td>
+     <td width="12%" align="center">LocalExtractionType</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1,2</td>
+     <td width="57%">Specifies whether you want to include (1) or exclude (2) 
+		the edge</td>
+   </tr>
+   </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <p>&nbsp;</p>
+	<p><img border="0" src="images/I_MshWeldSpotP2.gif" width="24" height="24"><b><a name="SpotWelding"><font color="#FB7203">Spot Welding Connection Mesh</font></a><font color="#FB7203">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<a href="../CAAScdAniUseCases/CAAAniMeshSpotWelding.htm"><u>use 
+	case</u></a></font></b></p><table border="1" width="100%">
+   <tr>
+     <th width="12%">Mesh Part Name</th>
+     <th width="12%">Attributes Name</th>
+     <th width="10%">Value Type</th>
+     <th width="6%">Legal Values</th>
+     <th width="57%">Meaning</th>
+   </tr>
+   <tr>
+     <td width="12%" align="center">
+     MSHPartConnWeldSpot</td>
+     <td width="12%" align="center">MiddleCombination</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Decides how the connection is modeled Rigid(3), Beam(4), 
+		rigid-spring-rigid(196867), spring-rigid-spring(66305), Hexahedron(10)</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">CompatibleMesh</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1,2</td>
+     <td width="57%">Decides whether the nodes are created by orthogonally 
+		projecting welding points on the mesh parts(2) or not</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">MaximalGap</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specifies the radius value of a sphere which has the 
+		welding spot as center. It must be an intersection between each face and 
+		the solid thus defined</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">SpotDiameter</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specifies the sport diameter for the hexahedron</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">StopUpdateOnError</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1,2</td>
+     <td width="57%">Stop the update mesh process (2), do not stop(1)</td>
+   </tr>
+   </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <p>&nbsp;</p>
+	<p><img border="0" src="images/I_MshWeldSeamP2.gif" width="24" height="24"><b><a name="SeamWelding"><font color="#FB7203">Seam Welding Connection Mesh</font></a><font color="#FB7203">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<a href="../CAAScdAniUseCases/CAAAniMeshSeamWelding.htm"><u>use 
+	case</u></a></font></b></p><table border="1" width="100%">
+   <tr>
+     <th width="12%">Mesh Part Name</th>
+     <th width="12%">Attributes Name</th>
+     <th width="10%">Value Type</th>
+     <th width="6%">Legal Values</th>
+     <th width="57%">Meaning</th>
+   </tr>
+   <tr>
+     <td width="12%" align="center">
+     MSHPartConnWeldSeam</td>
+     <td width="12%" align="center">MiddleCombination</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font>&nbsp;</td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Decides how the connection is modeled Contact(2), Rigid, 
+		Beam(4), Rigid-Spring-Rigid(196867), Spring-Rigid-Spring(66305), 
+		Shell(9), Hexahedron(10)</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">CompatibleMesh</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Decides whether the nodes are created by orthogonally 
+		projecting welding points on the mesh parts(2) or not(1)</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">MaximalGap</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specifies the radius value of a sphere which has the 
+		welding spot as center. It must be an intersection between each face and 
+		the solid thus defined.</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">MeshStep</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specifies the mesh progression along the welding 
+		seam</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">Width</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specifies the width of the hexahedron</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">StopUpdateOnError</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1,2</td>
+     <td width="57%">Stop the update mesh process (2), do not stop(1)</td>
+   </tr>
+   </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+	<p><img border="0" src="images/I_MshWeldSurfP2.gif" width="24" height="24"><b><a name="SurfWelding"><font color="#FB7203">Surface Welding Connection Mesh</font></a><font color="#FB7203">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<a href="../CAAScdAniUseCases/CAAAniMeshSurfaceWelding.htm"><u>
+	use case</u></a></font></b></p><table border="1" width="100%">
+   <tr>
+     <th width="12%">Mesh Part Name</th>
+     <th width="12%">Attributes Name</th>
+     <th width="10%">Value Type</th>
+     <th width="6%">Legal Values</th>
+     <th width="57%">Meaning</th>
+   </tr>
+   <tr>
+     <td width="12%" align="center">
+     MSHPartConnWeldSurf</td>
+     <td width="12%" align="center">MaximalGap</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specifies the radius value of a sphere which has the 
+		welding spot as center. It must be an intersection between each face and 
+		the solid thus defined.</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">MeshStep</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specifies the mesh progression along the welding 
+		seam</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">StopUpdateOnError</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1,2</td>
+     <td width="57%">Stop the update mesh process (2), do not stop(1)</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">MiddleCombination</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">10</td>
+     <td width="57%">Decides how the connection is modeled Hexahedron</td>
+   </tr>
+   </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <p>&nbsp;</p>
+	<p><img border="0" src="images/I_MshPointPointP2.gif" width="24" height="24"><b><a name="NodesToNodes"><font color="#FB7203">Nodes to Nodes Connection Mesh</font></a><font color="#FB7203">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<u>
+	<a href="../CAAScdAniUseCases/CAAAniMeshNodesToNodesConnection.htm">
+	<u>use case</u></a></u></font></b></p><table border="1" width="100%">
+   <tr>
+     <th width="12%">Mesh Part Name</th>
+     <th width="12%">Attributes Name</th>
+     <th width="10%">Value Type</th>
+     <th width="6%">Legal Values</th>
+     <th width="57%">Meaning</th>
+   </tr>
+   <tr>
+     <td width="12%" align="center">
+     MSHPartConnPointPoint</td>
+     <td width="12%" align="center">MiddleCombination</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">13, 12</td>
+     <td width="57%">How the connection mesh is modeled Rigid(13), DOF Equal(12)</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">Tolerance</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specifies the distance between nodes to be connected</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">StopUpdateOnError</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Stop the update mesh process (2), do not stop(1)</td>
+   </tr>
+   </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <p>&nbsp;</p>
+	<p><img border="0" src="images/I_MshHalfPointP2.gif" width="24" height="24"><b><a name="NodesInterface"><font color="#FB7203">Node Interface Mesh</font></a><font color="#FB7203">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<a href="../CAAScdAniUseCases/CAAAniMeshNodesInterface.htm"><u>
+	use case</u></a></font></b></p><table border="1" width="100%">
+   <tr>
+     <th width="12%">Mesh Part Name</th>
+     <th width="12%">Attributes Name</th>
+     <th width="10%">Value Type</th>
+     <th width="6%">Legal Values</th>
+     <th width="57%">Meaning</th>
+   </tr>
+   <tr>
+     <td width="12%" align="center">
+     &nbsp;</td>
+     <td width="12%" align="center">MiddleCombination</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1</td>
+     <td width="57%">How the mesh is modeled Spring(1)</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">Tolerance</td>
+     <td width="10%" align="center"><font color="#0000FF">Double</font></td>
+     <td width="6%" align="center">&nbsp;</td>
+     <td width="57%">Specifies the distance between nodes to be connected</td>
+   </tr>
+   <tr>
+     <td width="12%" align="center">&nbsp;</td>
+     <td width="12%" align="center">StopUpdateOnError</td>
+     <td width="10%" align="center"><font color="#0000FF">Integer</font></td>
+     <td width="6%" align="center">1, 2</td>
+     <td width="57%">Stop the update mesh process (2), do not stop(1)</td>
+   </tr>
+   </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <p>&nbsp;</p>
+		<p>&nbsp;</p>
+		<p>&nbsp;</p>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>History</h3>
+ <table border="0" width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Mar 2001]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+

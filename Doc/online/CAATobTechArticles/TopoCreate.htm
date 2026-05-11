@@ -1,0 +1,340 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>How to Associate Topology With Geometry</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Geometric Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2>Topology</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>How to Associate Topology With Geometry</h3>
+      <em>Rules Between Topological and Geometric Objects</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>The topology describes the limitation of a geometry. Hence, topological
+      objects are related to geometric objects within specified rules, which are
+      detailed here
+      <ul>
+        <li><a href="#Introduction"><strong>Introduction</strong></a></li>
+        <li><a href="#Representing"><strong>Representing Geometry</strong></a>
+          <ul>
+            <li><a href="#CATEdgeCurve">A CATEdgeCurve Represents CATCurves</a></li>
+            <li><a href="#CATMacroPoint">A CATMacroPoint Represents CATPoints</a></li>
+          </ul>
+        </li>
+        <li><a href="#Bound"><strong>The Cell Geometry Depends on What It Bounds</strong></a>
+          <ul>
+            <li><a href="#Volume">What Is Related To a Volume</a></li>
+            <li><a href="#Edge">What Is Related To an Edge</a></li>
+            <li><a href="#Vertex">What Is Related To a Vertex</a></li>
+          </ul>
+        </li>
+        <li><a href="#Diagram"><strong>Diagram</strong></a></li>
+        <li><a href="#MainSteps"><strong>Main Steps to Create Cells Related to
+          Geometry</strong></a></li>
+        <li><a href="#Wire"><strong>Example: Wire Creation</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Introduction"></a>Introduction</h3>
+<p>The topology is a building set for limiting the space. Vertex bound edges,
+which bound faces, which bound volumes. How to map these topological entities to
+geometric entities in order to limit the geometric space?
+<ul>
+  <li>a CATMacroPoint corresponds to the geometric support of a vertex,</li>
+  <li>a CATEdgeCurve corresponds to the geometric support of an edge,</li>
+  <li>a CATSurface corresponds to the geometric support of a face.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Representing"></a>Representing Geometry</h3>
+<h4><a name="CATEdgeCurve"></a>A CATEdgeCurve Represents CATCurves</h4>
+<p>Consider the intersection curve of two surfaces. From the topological point
+of view, its geometry is represented by a CATEdgeCurve. From a geometric point
+of view, this curve may be seen as a curve on the first surface or as a curve on
+the second surface.</p>
+<p>Hence, <i>a CATEdgeCurve is the geometric representation of the topological
+edge, which may be seen under several representations</i>.</p>
+<p>When the curve is not the result of an intersection, the CATEdgeCurve may
+contain CATCurves that are not CATPCurves.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="CATMacroPoint"></a>A CATMacroPoint Represents CATPoints</h4>
+<p>Consider now the intersection point of two CATEdgeCurves. From the
+topological point of view, its geometry is represented by a CATMacroPoint. From
+a geometric point of view, this point may be seen as a point on the first edge
+curve (called CATPointOnEdgeCurve or POEC) or as a POEC on the second edge
+curve.</p>
+<p>Hence, a <i>CATMacroPoint is the geometric representation of the topological
+vertex, which may be seen under several representations</i>.</p>
+<p>When the curve is not the result of an intersection, the CATMacroPoint may
+contain CATPoints that are not CATPointOnEdgeCurves.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Bound"></a>The Cell Geometry Depends on What It Bounds</h3>
+<p>Here is detailed the precise rules of the geometry-topology relations,
+according to the type of domains that a cell bounds.</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Volume"></a>What Is Related to a Volume</h4>
+<p>The geometric entity corresponding to a volume is the whole space, which is
+the same for all volumes. It is the reason why we do not have to precise it.</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Face"></a>What Is Related to a Face</h4>
+<p>The geometric entity corresponding to a face is a CATSurface.</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Edge"></a>What Is Related to an Edge</h4>
+<p>The geometric entity corresponding to an edge is a CATEdgeCurve. Imagine you
+want to use this CATEdgeCurve as geometry for the topology. Depending on how the
+edge is used to border (or not) a cell of higher dimension, the CATEdgeCurve
+will represent different types of curve.
+<ul>
+  <li>The edge will only border a face: the edge curve represents (at least) a
+    CATPCurve.</li>
+  <li>The edge will border several faces: the edge curve represents (at least)
+    as many CATPCurves as there are faces bounded by this edge.</li>
+  <li>The edge belongs to a CATWire: the edge curve represents any type of
+    CATCurves.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Vertex"></a>What Is Related to a Vertex</h4>
+<p>The geometric entity corresponding to a vertex is a CATMacroPoint. Imagine
+you want to use this CATMacroPoint as geometry for the topology. Depending on
+how the vertex is used to border (or not) a cell of higher dimension, this
+CATMacroPoint will represent different types of points.
+<ul>
+  <li>If the vertex will border an edge: the macro point represents (at least) a
+    POEC corresponding to this limit of the edge.</li>
+  <li>If the vertex will border several edges: the macro point represents (at
+    least) as many POECs as there are edges bounded by this vertex.</li>
+  <li>If the vertex will be drowned in a face (it will belong to a
+    CATVertexInFace domain): the macro point represents (at least) a
+    CATPointOnSurface. Note that for the moment, the CATVertexInFace also
+    directly refers to the CATPointOnSurface, but this will be removed.</li>
+  <li>If the vertex will be drowned in a volume (it will belong to a
+    CATPointInVolume domain): the macro-point represents (at least) any type of
+    CATPoints.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Diagram"></a>Diagrams</h3>
+<p>The following diagrams summarize the different configurations between the
+geometry and the topology.</p>
+<table>
+  <caption>Fig. 1: Geomery associated with topology: the case of the Shell
+    domain</caption>
+  <tr>
+    <td><img src="images/TopoGeom1.gif" width="479" height="359"></td>
+    <td></td>
+  </tr>
+</table>
+<table>
+  <caption>Fig. 2: Geomery associated with topology: the case of the Wire and
+    VertexInVolume domain</caption>
+  <tr>
+    <td><img src="images/TopoGeom2.gif" width="479" height="359"></td>
+    <td></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="MainSteps"></a>Main Steps to Create Cells Related to Geometry</h3>
+<p>We suppose in all these examples that a CATGeoFactory and a CATBody have been
+already created. These examples only detail the cell construction. You must then
+create the domain (Lump, Shell, Wire, VertexInVolume) containing the cells and
+add it to the body to complete it. For code examples, see.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+
+<h4>Main Steps to Create a Vertex</h4>
+<ol>
+  <li>From a geometric point, eventually create a POEC or CATPointOnSurface, and
+    relate it to a CATMacroPoint.</li>
+  <li>Create the CATVertex and associate it with the macro-point.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+
+<h4>Main Steps to Create an Edge</h4>
+<ol>
+  <li>From a CATCurve, eventually create a CATPCurve, and relate it to a
+    CATEdgeCurve.</li>
+  <li>Determine two parameters on the curve. Create the POECs and relate them to
+    a CATMacroPoint.</li>
+  <li>Create the vertices (CATVertex) and associate them with their
+    corresponding macro-points.</li>
+  <li>Create the edges, associate them with their CATEdgeCurves and border them
+    with their vertices.</li>
+</ol>
+<p>Note: A CATEdgeCurve cannot be directly created. Only its derived types
+(CATSimCurve, CATIntCurve, CATMergedCurve can be instantiated). For determining
+the choice of one of these objects, see About Edge Curves.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+
+<h4>Main Steps to Create a Face</h4>
+<ol>
+  <li>Follows the steps of the preceding section to create the vertices and the
+    edges. The edges must be associated with CATEdgeCurves containing
+    CATPCurves.</li>
+  <li>Create a CATLoop.</li>
+  <li>Create a CATFace, associate it with its CATSurface and border it by the
+    edges, building up the loop.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+
+<h4>Main Steps to Create a Volume</h4>
+<ol>
+  <li>Follows the steps of the preceding section to create the vertices, edges
+    and faces.</li>
+  <li>Create a CATShell.</li>
+  <li>Create a CATVolume and border it by the faces, building up the shell.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+
+<h3><a name="Wire"></a>Example: Wire Creation</h3>
+<p>This section details step by step the creation of a Wire containing one edge.
+<ol>
+  <li><b>Geometry Creation</b></li>
+  <pre>CATCartesianPoint * Point1=factory-&gt;CreateCartesianPoint(0,0,0);
+CATCartesianPoint * Point2=factory-&gt;CreateCartesianPoint(0,10,0);
+CATLine *           Line  =factory-&gt;CreateLine(Point1,Point2);      </pre>
+  <li><b>CATEdgeCurve Creation</b></li>
+  <pre>CATSimCurve *           SimCurve  =factory-&gt;CreateSimCurve(Line);</pre>
+  <li><b>CATPointOnEdgeCurve and CATMacroPoint Creation</b></li>
+  <pre>CATCrvParam       Param
+CATCrvLimit       Limit = Line-&gt;GetLimits;
+Limit.GetLow(Param);
+CATPointOnEdgeCurve *
+                   Poec1 = factory-&gt;CreatePointOnEdgeCurve(Line,Param,SimCurve);
+Limit.GetHigh(Param);
+CATPointOnEdgeCurve *
+                   Poec2 = factory-&gt;CreatePointOnEdgeCurve(Line,Param,SimCurve);
+CATMacroPoint      Macro1= factory-&gt;CreateMacroPoint();
+Macro1-&gt;Append(Poec1);
+CATMacroPoint      Macro2= factory-&gt;CreateMacroPoint();
+Macro2-&gt;Append(Poec2);</pre>
+  <li><b>Vertex Creation; Association with the Geometry</b></li>
+  <pre>CATVertex * Vertex1=body-&gt;CreateVertex();
+Vertex1-&gt;SetGeometry(Macro1);
+CATVertex * Vertex2=body-&gt;CreateVertex();
+Vertex2-&gt;SetGeometry(Macro2);</pre>
+  <li><b>CATEdge Creation, Association with the Geometry, Boundary Definition.</b></li>
+  <pre>CATEdge *   Edge= body-&gt;CreateEdge();
+Edge-&gt;SetCurve(SimCurve);
+Edge-&gt;AddBoundingCell(Vertex1,CATSideLeft,NULL,Poec1);
+Edge-&gt;AddBoundingCell(Vertex2,CATSideLeft,NULL,Poec2);</pre>
+  <li><b>Wire Creation.</b></li>
+  <pre>CATWire Wire=body-&gt;CreateWire();</pre>
+  <li><b>Append the Edge into the Wire.</b></li>
+  <pre>Wire-&gt;AddCell(Edge);</pre>
+  <li><b>Append the Wire into the Body.</b></li>
+  <pre>Body-&gt;AddDomain(Wire);</pre>
+</ol>
+<strong>
+<p>Note</strong>: This was detailed for explaining all the capabilities of the
+topological objects. You can use operators such as CATWireOperator or
+CATSkinOperator to directly create domains from geometry.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+
+<h3><a name="InShort"></a>In Short</h3>
+<ul>
+  <li>A CATMacroPoint is the geometry of a CATVertex. It can represent different
+    types of points depending on what type of domains it bounds. In peculiar, a
+    CATVertex bounding a CATEdge&nbsp; is related to a CATMacroPoint
+    representing a CATPointOnEdgeCurve.</li>
+  <li>A CATEdgeCurve is the geometry of a CATEdge. It can represent different
+    types of curves depending on what type of domains it bounds. In peculiar, a
+    CATEdge bounding a CATFace (resp. CATWire) is related to a CATEdgeCurve
+    representing a CATPCurve (resp. CATCurve).</li>
+  <li>Topological operators allow you to easily create domains.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td>[1]</td>
+    <td><a href="../CAAGobTechArticles/GeoObjects.htm">The
+      CGM Objects</a></td>
+  </tr>
+  <tr>
+    <td>[2]</td>
+    <td><a href="TopoConcepts.htm">Topology Concepts</a></td>
+  </tr>
+  <tr>
+    <td>[3]</td>
+    <td><a href="TopoModel.htm">The CGM Topological Model</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

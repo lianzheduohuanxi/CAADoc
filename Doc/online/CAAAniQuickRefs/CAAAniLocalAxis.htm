@@ -1,0 +1,246 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Local Axes</title>
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Analysis Solution</h1>
+    </td>
+    <td valign="top">
+      <h2>Analysis Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Local Axes</h3>
+      <em>The definition of local axes in the Field Model</em></td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article explains the kind of local axes provided with the analysis
+      modeler. These axes are used for the preprocessing in order to define
+      vectors, tensors in a specific coordinate axis system.
+      <ul>
+        <li><a href="#Cartesian"><b>Cartesian Axis</b></a></li>
+        <li><b><a href="#Cylindr">Cylindrical Axis</a></b></li>
+        <li><b><a href="#Spheric">Spherical Axis</a></b></li>
+        <li><b><a href="#Guid">Guidelines for Creating an Accessing an Axis</b></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p>The local axis are manipulated with the <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisBase', 'class', 'CATAnalysisExplicitAxis');return false;">CATAnalysisExplicitAxis</a>
+class. This class is build by derivation of CATAnalysisExplicitEntity and have
+some dedicated methods to convert coordinates system. The associated category of
+the entity is &quot;AXIS&quot;. Three kind of axis definition exist as described
+after. For each kind, the three points defining the axis can be expressed as
+coordinates or as existing nodes. An axis is considered as valid if the three
+points of the definition allow to build a 3D axis, this means points have to be
+non collinear and non coincident.</p>
+<p>The physical types that define the points for an axis based on coordinates
+are:</p>
+<ul>
+  <li>ORIGIN_COORDINATE defines the center.</li>
+  <li>LOCAL_XZ_COORDINATE defines a point that lies on the XZ plane.</li>
+  <li>LOCAL_Z_COORDINATE defines a point on the Z direction.</li>
+</ul>
+<p>A local axis that is defined with coordinates can be defined in another axis
+system. In this case, the physical type LOCAL_AXIS defines the local axis in
+which the coordinates are expressed</p>
+<p>The physical types that define the points for an axis based on coordinates
+are:</p>
+<ul>
+  <li>ORIGIN_NODE defines the node center.</li>
+  <li>LOCAL_XZ_NODE defines a node that lies on the XZ plane.</li>
+  <li>LOCAL_Z_NODE defines a node on the Z direction.</li>
+</ul>
+<p><b>Notes</b>:</p>
+<ol>
+  <li>A local axis that is defined with <b>nodes</b> is always expressed in the
+    global axis system.</li>
+  <li>A cylindrical of spherical axis can manage an optional characteristic
+    called &quot;REVERSE&quot;. If REVERSE is not valuated the radial direction
+    is defined from the center to the point, else, the direction is defined from
+    the point to the center.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Cartesian"></a>Cartesian Axis</h4>
+<p>Two physical types of axes can be used:</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="50%">
+      <p><b>AXIS_RECTANGULAR_3D_NODE</b></p>
+      <ul>
+        <li>ORIGIN_NODE</li>
+        <li>LOCAL_XZ_NODE</li>
+        <li>LOCAL_Z_NODE</li>
+      </ul>
+    </td>
+    <td width="50%"><b>AXIS_RECTANGULAR_3D_COORDINATE</b>
+      <ul>
+        <li>ORIGIN_COORDINATE</li>
+        <li>LOCAL_XZ_COORDINATE</li>
+        <li>LOCAL_Z_COORDINATE</li>
+        <li>LOCAL_AXIS</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<p align="left">For example the point P is is defined by it's coordinates (X, Y,
+Z) in such a local axis.</p>
+<p align="center"><img border="1" src="images/AxeCartesien.jpg" width="443" height="200"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Cylindr"></a> <b>Cylindrical </b>Axis</h4>
+<p>Two physical types of axes can be used:</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="50%">
+      <p><b>AXIS_CYLINDRICAL_3D_NODE</b></p>
+      <ul>
+        <li>ORIGIN_NODE</li>
+        <li>LOCAL_XZ_NODE</li>
+        <li>LOCAL_Z_NODE</li>
+        <li>REVERSE</li>
+      </ul>
+    </td>
+    <td width="50%"><b>AXIS_CYLINDRICAL_3D_COORDINATE</b>
+      <ul>
+        <li>ORIGIN_COORDINATE</li>
+        <li>LOCAL_XZ_COORDINATE</li>
+        <li>LOCAL_Z_COORDINATE</li>
+        <li>LOCAL_AXIS</li>
+        <li>REVERSE</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<p>For example the point P is is defined by it's coordinates (R, <img border="0" src="images/Theta.gif" width="16" height="20">,
+Z) in such a local axis (defined without reverse).</p>
+<p align="center"><img border="1" src="images/AxeCylindrical.jpg" width="457" height="213"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Spheric"></a>Spherical Axis</h4>
+<p>Two physical types of axes can be used:</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="50%">
+      <p align="left"><b>AXIS_SPHERICAL_3D_NODE</b></p>
+      <ul>
+        <li>ORIGIN_NODE</li>
+        <li>LOCAL_XZ_NODE</li>
+        <li>LOCAL_Z_NODE</li>
+        <li>REVERSE</li>
+      </ul>
+    </td>
+    <td width="50%">
+      <p align="left"><b>AXIS_SPHERICAL_3D_COORDINATE</b></p>
+      <ul>
+        <li>ORIGIN_COORDINATE</li>
+        <li>LOCAL_XZ_COORDINATE</li>
+        <li>LOCAL_Z_COORDINATE</li>
+        <li>LOCAL_AXIS</li>
+        <li>REVERSE</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<p>For example the point P is is defined by it's coordinates (R, <img border="0" src="images/Theta.gif" width="16" height="20">,
+<img border="0" src="images/Phy.gif" width="19" height="22">) in such a local
+axis (defined without reverse).</p>
+<p align="center"><img border="1" src="images/AxeSpherical.jpg" width="433" height="190"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Guid"></a>Guidelines for Creating and Accessing an Axis</h4>
+<p>To create an axis, to kinds of scenario can be described:</p>
+<p>You create a feature that is build by derivation of &quot;AnalysisAxis&quot;.
+In this case you can implement on the feature the CATISamExplicitation Interface
+that will create an CATAnalysisExplicitAxis inside the field model.</p>
+<p>You create a feature that defines some characteristics base on implicit axis
+defined on a geometry (Cylinder...), in this case you can build in the Field
+model an entity in which the characteristics will be expressed in a global axis
+system or in a local axis system.</p>
+<p>For the second case, in the implementation of CATISamExplicitation of your
+entity that we will call <u>EntityXXX</u> in the next lines:</p>
+<ul>
+  <li>Create your entity <u>EntityXXX</u></li>
+  <li>Retrieve the ExplicitSet associated to the feature &quot;AxisSet&quot;
+    created by default at the CATAnalysis document initialization. (For this,
+    use CATISamExplicit::GetExplicitObjects() ).</li>
+  <li>Create a local axis as an CATAnalysisExplicitEntity with the ExplicitSet
+    retrieved previously, this new entity will be called here <u>EntityAxis</u></li>
+  <li>As child of the <u>EntityXXX</u>, create a characteristic with physical
+    type &quot;LOCAL_AXIS&quot; and valuate this characteristic with the <u>EntityAxis.</u>
+    For this, extract the explicit pointer by using
+    EntityAxis.GetExplicitPointer() and valuate the characteristic with this
+    pointer.</li>
+  <li>As children of the <u>EntityXXX</u>, create other required
+    characteristics, and manage the apply on the finite element support.</li>
+  <li>At the end of the implementation of CATISamExplicitation, after the
+    UpdateExplicitList, add the local axis created to the &quot;output explicit
+    List&quot;. This will allow the local axis to support undo/redo and standard
+    update mechanism.</li>
+</ul>
+<p>A standard sample of CATISamExplicitation can be found in the <a href="#Ref2">references</a>.</p>
+<p align="right"><a href="#Top">[Top]</a></p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top"><a name="Ref1"></a>[1]</td>
+    <td valign="top"><a href="../CAAAniTechArticles/CAAAniAnalysisOverview.htm">Analysis
+      Modeler Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="Ref2"></a>[2]</td>
+    <td valign="top"><a href="../CAAAniUseCases/CAAAniSampleExplicit.htm">Sample
+      for CATISamExplicitation</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="Ref3"></a>[3]</td>
+    <td valign="top"><a href="CAAAniFaq.htm#ExpPtr">Manupulating explicit
+      pointers</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

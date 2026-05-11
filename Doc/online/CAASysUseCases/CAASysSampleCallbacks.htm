@@ -1,0 +1,554 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>The Callback Mechanism</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Middleware Abstraction</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>The Callback Mechanism</h3>
+      <em>Making objects collaborate</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to set callbacks, that is, how to subscribe or
+      listen to events, and how to publish events to the subscribers or
+      listeners.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAASysCallback Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAASysCallback Do</a></li>
+            <li><a href="#How">How to Launch CAASysCallback</a></li>
+            <li><a href="#Where">Where to Find the CAASysCallback Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how the callback mechanism&nbsp; [<a href="#References">1</a>]
+works.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAASysCallback Case</h3>
+<p>CAASysCallback is a use case of the CAASystem.edu framework that illustrates System framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAASysCallback Do</h4>
+<p>This use case shows how to implement the publish/subscribe design pattern
+using the example of an event publisher played by an alarm that can ring, and an
+event subscriber or listener played by a burglar that approaches a place when
+there is something to steal, but fortunately protected by an alarm. The alarm
+ringing makes the burglar run away.</p>
+<p>This article deals with one of the scenarios of CAASysCallback. You can refer
+to the module to see the others.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAASysCallback</h4>
+<p>To launch CAASysCallback, you will need to set up the build time environment,
+then compile CAASysCallback along with its prerequisites, set up the run time
+environment, and then execute the use case [<a href="#References">2</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAASysCallback Code</h4>
+<p>The CAASysCallback use case is made of a several classes located in the
+CAASysCallback.m module of the CAASystem.edu framework:</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAASystem.edu\CAASysCallback.m\</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAASystem.edu/CAASysCallback.m/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To create an event publisher, an event subscriber or listener, and a scenario
+to make them play together, there are four steps:</p>
+<table width="100%">
+  <tr>
+    <th>#</th>
+    <th>Step</th>
+    <th>Where</th>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step1">1</a></td>
+    <td valign="top">Creating an Event</td>
+    <td valign="top"><i>CAASysRingingNotification</i> class</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step2">2</a></td>
+    <td valign="top">Creating an Event Publisher</td>
+    <td valign="top"><i>CAASysAlarm</i> class</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step3">3</a></td>
+    <td valign="top">Creating an Event Subscriber or Listener</td>
+    <td valign="top"><i>CAASysBurglar</i> class</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step4">4</a></td>
+    <td valign="top">Create a Publish/Subscribe Scenario</td>
+    <td valign="top">CAASysScenario.cpp file</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Creating an Event</h4>
+<p>The event to create is the ringing of the alarm. It is created as a
+notification class that the alarm class will then instantiate and publish. Its
+header file is as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATNotification.h&quot;
+
+class CAASysRingNotification : public CATNotification
+{
+  CATDeclareClass;
+  public:
+    CAASysRingNotification();
+    virtual ~CAASysRingNotification();
+  private:
+    CAASysRingNotification(const CAASysRingNotification &amp;iObjectToCopy);
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>This class simply derives from <i>CATNotification</i>. The <code>CATDeclareClass</code>
+macro makes <i>CAASysRingNotification</i> part of a component. The copy
+constructor is set as private and is not implemented to prevent the compiler to
+create one as public, and thus prevent from illegal copies of the notification
+instances.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CAASysRingNotification.h&quot;
+
+CATImplementClass(CAASysRingNotification,
+                  <b>Implementation</b>,
+                  CATBaseUnknown,
+                  CATNull);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>CATImplementClass</code> macro declares that CAASysRingNotification
+is an <code>Implementation</code>, that is, a component main class, that
+OM-derives from <i>CATBaseUnknown</i>. The last argument must always be set to <code>CATNull</code>
+if the second one is set to <code>Implementation</code>.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CAASysRingNotification::CAASysRingNotification()
+{}
+
+CAASysRingNotification::~CAASysRingNotification()
+{}</pre>
+    </td>
+  </tr>
+</table>
+<p><a name="CAASysRingNotification class constructor"></a>The <i>CAASysRingNotification</i> class constructor use the default
+constructor of the <i>CATNotification </i>class.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATNotification(int iAutomaticDelete=CATNotificationDeleteOff);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>It means that the <code>iAutomaticDelete</code> value is <code>CATNotificationDeleteOff</code>,
+and consequently the notification must be deleted by those which have created
+it. You can read the referenced article for a comparison between the callback
+and send/receive mechanism about the <i>CATNotification</i> class creation and
+usage [<a href="#References">3</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Creating an Event Publisher</h4>
+<p>The alarm class header file is as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATBaseUnknown.h&quot;
+
+class CAASysAlarm: public CATBaseUnknown 
+{
+  CATDeclareClass;
+  public:
+    CAASysAlarm(char * iAlarmPlaceName);
+    virtual ~CAASysAlarm();
+    void <b>StartRinging</b>();
+    char *GetPlace();
+
+  private:
+    CAASysAlarm ();
+    CAASysAlarm(const CAASysAlarm &amp;iObjectToCopy);
+  
+  private:
+    char * _pAlarmPlaceName;
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>The method <code>StartRinging</code> is the publishing method for the <i>CAASysRingNotification</i>
+instances.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CAASysAlarm.h&quot;
+#include &quot;CAASysRingNotification.h&quot;
+#include &quot;CATCallbackManager.h&quot;
+
+CATImplementClass(CAASysAlarm, <b>Implementation</b>, CATBaseUnknown, CATNull);
+
+CAASysAlarm::CAASysAlarm(char * iAlarmPlaceName) 
+{  
+  ... // Creates the data member: the place where the alarm will ring
+}
+
+CAASysAlarm::~CAASysAlarm()
+{
+  ... // Deletes the data member
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The constructor simply instantiates the data member, and the destructor
+deletes it.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+void CAASysAlarm::StartRinging() 
+{
+  CATCallbackManager * pCBManager = ::GetDefaultCallbackManager(this) ;
+  if ( NULL != pCBManager )
+  {
+    CAASysRingNotification * pNotification = new CAASysRingNotification();
+    pCBManager-&gt;DispatchCallbacks(pNotification, this);
+    pNotification-&gt;Release();
+    pNotification = NULL ;
+  }
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>StartRinging</code> method publishes the notification that states
+that the alarm is ringing. To do this, the global function <code>GetDefaultCallbackManager</code>
+retrieves the callback manager associated by default with the alarm class
+instance, and this callback uses its <code>DispatchCallbacks</code> method to
+inform its subscribers or listeners that the alarm is ringing by means of the <i>CAASysRingNotification</i>
+notification created.</p>
+<p>You can note that the <i>CAASysRingNotification</i>
+ class instance is deleted just after the <code>DispatchCallbacks</code> call
+such as explained in the <i><a href="#CAASysRingNotification class constructor">CAASysRingNotification</a></i><a href="#CAASysRingNotification class constructor">
+class constructor</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Creating an Event Subscriber or Listener</h4>
+<p>The event subscriber or listener is the burglar class. Its header file is as
+follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATBaseUnknown.h&quot;
+#include &quot;CATEventSubscriber.h&quot;
+
+class CAASysAlarm;
+
+class CAASysBurglar: public CATBaseUnknown
+{
+  public:
+    CAASysBurglar(char * iBurglarName);
+    virtual ~CAASysBurglar();
+
+    void <b>Approach</b>(CAASysAlarm *iAlarm);
+    void <b>RunAway</b> (CATCallbackEvent  iEventAlarm,
+                  void             *iAlarm,
+                  CATNotification  *iNotifAlarm,
+                  CATSubscriberData iBurglarData,
+                  CATCallback       iCallBack);
+
+  private:
+    CAASysBurglar ();
+    CAASysBurglar(const CAASysBurglar &amp;iObjectToCopy);
+  
+  private:
+    CAASysAlarm * _pAlarm;
+    char        * _pBurglarName;
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>Approach</code> method sets the callback and the <code>RunAway</code>
+method is the callback method, that is, is called when the event referred to by
+the <code>Approach</code> method happens.</p>
+<p>The burglar source file is as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CAASysBurglar::~CAASysBurglar() 
+{
+  if ( NULL != _pAlarm) 
+  {
+    ::RemoveSubscriberCallbacks(this, _pAlarm);
+    _pAlarm=NULL;
+  };
+  ... // delete the data member
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The destructor uses the global function <code>RemoveSubscriberCallbacks</code>
+to remove the callbacks set by the <i>CAASysBurglar</i> class instance for the <i>CAASysAlarm</i>
+notification.</p>
+<p>The <code>Approach</code> method that sets the callback is as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+void CAASysBurglar::Approach(CAASysAlarm *iAlarm) 
+{
+  if ( iAlarm !=  _pAlarm )
+  {
+    if ( NULL != _pAlarm) 
+    {
+      ::RemoveSubscriberCallbacks(this, _pAlarm);
+    };
+    _pAlarm=iAlarm;
+
+    if ( NULL !=  iAlarm )
+    {
+      CATCallback idCB ;
+      idCB = ::AddCallback(this,
+                           iAlarm,
+                           &quot;CAASysRingNotification&quot;,
+                           (CATSubscriberMethod)&amp;CAASysBurglar::RunAway,
+                            NULL);
+    }  
+  }
+}...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>Approach</code> begins by removing possible callbacks set by the <i>CAASysBurglar</i>
+class instance for the <i>CAASysAlarm</i> notification, and then uses the global
+function <code>AddCallback</code> to set the callback. <code>AddCallback</code>
+has the following parameters:</p>
+<table>
+  <tr>
+    <td><code>this</code></td>
+    <td>The event subscriber or listener</td>
+  </tr>
+  <tr>
+    <td><code>iAlarm</code></td>
+    <td>The event publisher to subscribe to, or listen</td>
+  </tr>
+  <tr>
+    <td><code>CAASysRingNotification</code></td>
+    <td>The notification that represents the event</td>
+  </tr>
+  <tr>
+    <td><code>(CATSubscriberMethod)&amp;CAASysBurglar::RunAway</code></td>
+    <td>The method to call back whenever the event happens</td>
+  </tr>
+  <tr>
+    <td><code>NULL</code></td>
+    <td>Possible useful data for the <code>RunAway</code> method</td>
+  </tr>
+</table>
+<p>The callback method <code>RunAway</code> is as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+void CAASysBurglar::RunAway(CATCallbackEvent  iEventAlarm,
+                            void             *iAlarm,
+                            CATNotification  *iNotifAlarm,
+                            CATSubscriberData iBurglarData,
+                            CATCallback       iCallBack)
+{
+  CAASysAlarm *AlarmIsRinging = (CAASysAlarm *)iAlarm;
+  printf(&quot;Burglar %s run away %s and very quickly.\n&quot;, 
+                _pBurglarName, AlarmIsRinging-&gt;GetPlace());
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>Its signature has the following parameters:</p>
+<table>
+  <tr>
+    <td><code>iEventAlarm</code></td>
+    <td>The published event</td>
+  </tr>
+  <tr>
+    <td><code>iAlarm</code></td>
+    <td>The event publisher</td>
+  </tr>
+  <tr>
+    <td><code>iNotifAlarm</code></td>
+    <td>The notification that represents the event</td>
+  </tr>
+  <tr>
+    <td><code>iBurglarData</code></td>
+    <td>Possible useful data for the <code>RunAway</code> method</td>
+  </tr>
+  <tr>
+    <td><code>iCallBack</code></td>
+    <td>The callback identifier</td>
+  </tr>
+</table>
+<p><code>RunAway</code> is dedicated to the action to undertake when the alarm
+begins ringing. This action is up to you. It's limited here to a trace.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Creating a Publish/Subscribe Scenario</h4>
+<p>The following scenario creates an event publisher <code>Alarm</code>, and an
+event subscriber or listener <code>Burglar</code>. The burglar approaches the
+place where <code>Alarm</code> is active, and sets a callback on this object.
+Then <code>Alarm</code> rings.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+int main() 
+{
+  cout &lt;&lt; endl &lt;&lt; &quot;The CAASysCallback program begins ....&quot;&lt;&lt; endl&lt;&lt;endl;
+  CAASysAlarm Alarm(&quot;House&quot;);
+  CAASysBurglar Burglar(&quot;Peter&quot;);
+  Burglar.Approach(&amp;Alarm);
+  Alarm.StartRinging();
+  cout &lt;&lt; endl &lt;&lt; &quot;The CAASysCallback program is finished&quot; &lt;&lt; endl &lt;&lt; endl;
+  return(0);
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>Below is a listing of the traces produced by this program.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>The CAASysCallback program begins ....
+
+Alarm House is created.
+Burglar Peter is alive.
+Burglar Peter approachs slowly House and opens his ears.
+Alarm House starts ringing.
+Burglar Peter run away House and very quickly.
+
+The CAASysCallback program is finished
+
+Burglar Peter is dead.
+Alarm House is deleted.</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>The callback mechanism enables publish/subscribe between objects. Any object
+can publish events, and any object can subscribe to events published by any
+other object. The publisher delegates to its callback manager the job of calling
+the subscribers on their requested methods, and the management of the subscriber
+list.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAASysTechArticles/CAASysCallbacks.htm">The
+      Callback Mechanism</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAASysTechArticles/CAASysCallbackversusSendReceive.htm">Callback
+      versus Send/Receive Mechanism</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong> [Fev 2004]</td>
+    <td valign="top">Document updated to enhance comments about the
+      CATNotification class usage</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

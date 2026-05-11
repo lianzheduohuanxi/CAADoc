@@ -1,0 +1,228 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>DMUpstcopypastekeepabsoluteposition.CATscript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2001</font>
+<font color="#0000FF">Option Explicit</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose     : Copy and paste products while keeping their absolute position.</font>
+<font color="#008000">'   Assumptions : Products to copy/paste have to be selected.</font>
+<font color="#008000">'   Author      : </font>
+<font color="#008000">'   Languages   : VBScript</font>
+<font color="#008000">'   Locales     : English</font>
+<font color="#008000">'   CATIA Level : V5R7</font>
+<font color="#008000">' ***********************************************************************</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'</font>
+<font color="#008000">' Purpose:  Define the product of two matrix.</font>
+<font color="#008000">'</font>
+<font color="#008000">' Inputs :  matrix1  Array       array corresponding to the first matrix</font>
+<font color="#008000">'           matrix2  Array       array corresponding to the second matrix</font>
+<font color="#008000">'</font>
+<font color="#008000">' Outputs:  res      Array       array corresponding to the product</font>
+<font color="#008000">'</font>
+<font color="#008000">' ***********************************************************************</font>
+<font color="#0000FF">Sub </font>MatrixProduct ( ByVal matrix1, ByVal matrix2, ByRef res )
+
+<font color="#0000FF">  Dim </font>a(11)
+<font color="#0000FF">  Dim </font>b(11)
+<font color="#0000FF">  Dim </font>I<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">  For </font>I = 0<font color="#0000FF"> to </font>11
+    a(I) = matrix1(I)
+    b(I) = matrix2(I)
+<font color="#0000FF">  Next</font>
+  
+  res( 0) = a(0)*b(0) + a(1)*b(3) + a(2)*b(6)
+  res( 3) = a(3)*b(0) + a(4)*b(3) + a(5)*b(6)
+  res( 6) = a(6)*b(0) + a(7)*b(3) + a(8)*b(6)
+  res( 1) = a(0)*b(1) + a(1)*b(4) + a(2)*b(7)
+  res( 4) = a(3)*b(1) + a(4)*b(4) + a(5)*b(7)
+  res( 7) = a(6)*b(1) + a(7)*b(4) + a(8)*b(7)
+  res( 2) = a(0)*b(2) + a(1)*b(5) + a(2)*b(8)
+  res( 5) = a(3)*b(2) + a(4)*b(5) + a(5)*b(8)
+  res( 8) = a(6)*b(2) + a(7)*b(5) + a(8)*b(8)
+  res( 9) = a( 9)*b(0) + a(10)*b(3) + a(11)*b(6) + b( 9)
+  res(10) = a( 9)*b(1) + a(10)*b(4) + a(11)*b(7) + b(10)
+  res(11) = a( 9)*b(2) + a(10)*b(5) + a(11)*b(8) + b(11)
+
+<font color="#0000FF">End Sub</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'</font>
+<font color="#008000">' Purpose:  Define the inverse of a position matrix.</font>
+<font color="#008000">'</font>
+<font color="#008000">' Inputs :  matrix   Array       array corresponding to the matrix</font>
+<font color="#008000">'</font>
+<font color="#008000">' Outputs:  inverse  Array       array corresponding to the inverse of the matrix</font>
+<font color="#008000">'</font>
+<font color="#008000">' ***********************************************************************</font>
+<font color="#0000FF">Sub </font>MatrixInverse ( ByVal matrix, ByRef inverse )
+
+<font color="#0000FF">  Dim </font>a(11)
+<font color="#0000FF">  Dim </font>I<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">  For </font>I = 0<font color="#0000FF"> to </font>11
+    a(I) = matrix(I)
+<font color="#0000FF">  Next</font>
+  
+  inverse( 0) = a(4)*a(8) - a(7)*a(5)
+  inverse( 1) = a(2)*a(7) - a(8)*a(1)
+  inverse( 2) = a(1)*a(5) - a(4)*a(2)
+  inverse( 3) = a(5)*a(6) - a(8)*a(3)
+  inverse( 4) = a(0)*a(8) - a(6)*a(2)
+  inverse( 5) = a(2)*a(3) - a(5)*a(0)
+  inverse( 6) = a(3)*a(7) - a(6)*a(4)
+  inverse( 7) = a(1)*a(6) - a(7)*a(0)
+  inverse( 8) = a(0)*a(4) - a(1)*a(3)
+  inverse( 9) = -(a( 9)*inverse(0)+a(10)*inverse(3)+a(11)*inverse(6))
+  inverse(10) = -(a( 9)*inverse(1)+a(10)*inverse(4)+a(11)*inverse(7))
+  inverse(11) = -(a( 9)*inverse(2)+a(10)*inverse(5)+a(11)*inverse(8))
+
+<font color="#0000FF">End Sub</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'</font>
+<font color="#008000">' Purpose:  Print the content of a matrix.</font>
+<font color="#008000">'</font>
+<font color="#008000">' Inputs :  sName    String      name of the matrix</font>
+<font color="#008000">'           matrix   Array       array corresponding to the matrix</font>
+<font color="#008000">'</font>
+<font color="#008000">' ***********************************************************************</font>
+<font color="#0000FF">Sub </font>MatrixPrint ( ByVal sName, ByVal matrix )
+
+<font color="#0000FF">  Dim </font>a(11)
+<font color="#0000FF">  Dim </font>I<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">  For </font>I = 0<font color="#0000FF"> to </font>11
+<font color="#0000FF">    If </font>((matrix(I) &lt; 0.001) AND (matrix(I) &gt; -0.001))<font color="#0000FF"> Then</font>
+      a(I) = 0.0
+    Else
+      a(I) = matrix(I)
+<font color="#0000FF">    End If</font>
+<font color="#0000FF">  Next</font>
+
+  Msgbox sName+" = "+_
+    Cstr(a( 0))+",  "+Cstr(a( 1))+",  "+Cstr(a( 2))+",  "+Cstr(a( 3))+",  "+Cstr(a( 4))+",  "+Cstr(a( 5))+",  "+_
+    Cstr(a( 6))+",  "+Cstr(a( 7))+",  "+Cstr(a( 8))+",  "+Cstr(a( 9))+",  "+Cstr(a(10))+",  "+Cstr(a(11))
+
+<font color="#0000FF">End Sub</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'</font>
+<font color="#008000">' Purpose:  Retrieve the absolute position of a product.</font>
+<font color="#008000">'</font>
+<font color="#008000">' Inputs :  oProduct Product     the product</font>
+<font color="#008000">'           oRoot    Product     the root product</font>
+<font color="#008000">'</font>
+<font color="#008000">' Outputs:  position Array       array corresponding to position of the product</font>
+<font color="#008000">'</font>
+<font color="#008000">' ***********************************************************************</font>
+<font color="#0000FF">Sub </font>GetAbsPosition ( ByRef oProduct, ByRef oRoot, ByRef position )
+
+<font color="#0000FF">  If </font>(oProduct.Name = oRoot.Name)<font color="#0000FF"> Then</font>
+    position( 0) = 1.0
+    position( 1) = 0.0
+    position( 2) = 0.0
+    position( 3) = 0.0
+    position( 4) = 1.0
+    position( 5) = 0.0
+    position( 6) = 0.0
+    position( 7) = 0.0
+    position( 8) = 1.0
+    position( 9) = 0.0
+    position(10) = 0.0
+    position(11) = 0.0
+  Else
+<font color="#0000FF">    Dim </font>positionToFather(11)
+<font color="#0000FF">    Dim </font>fatherAbsolutePosition(11)
+    oProduct.Position.GetComponents positionToFather
+    GetAbsPosition oProduct.Parent.Parent, oRoot, fatherAbsolutePosition
+    MatrixProduct positionToFather, fatherAbsolutePosition, position
+<font color="#0000FF">  End If</font>
+
+<font color="#0000FF">End Sub</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'</font>
+<font color="#008000">' Purpose:  Main.</font>
+<font color="#008000">'</font>
+<font color="#008000">' ***********************************************************************</font>
+<font color="#0000FF">Sub </font>CATMain()
+
+  <font color="#008000">' Retrieve the Groups collection</font>
+<font color="#0000FF">  Dim </font>cGroups<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">  Set </font>cGroups = CATIA.ActiveDocument.Product.GetTechnologicalObject("Groups")
+
+  <font color="#008000">' Create a group with selected products</font>
+<font color="#0000FF">  Dim </font>oGroup<font color="#0000FF"> As </font>Group
+<font color="#0000FF">  Set </font>oGroup = cGroups.AddFromSel
+<font color="#0000FF">  If </font>(oGroup.CountExplicit = 0)<font color="#0000FF"> Then</font>
+    Msgbox "No product selected"
+  Else
+
+    <font color="#008000">' Acquire the component to paste onto</font>
+<font color="#0000FF">    Dim </font>oSelection<font color="#0000FF"> As </font>Selection
+<font color="#0000FF">    Set </font>oSelection = CATIA.ActiveDocument.Selection
+    oSelection.Clear
+<font color="#0000FF">    Dim </font>sIID(0)
+    sIID(0) = "Product"
+<font color="#0000FF">    Dim </font>sOutputState<font color="#0000FF"> As </font>String
+    sOutputState = oSelection.SelectElement2(sIID, "Select the component to paste onto", true)
+<font color="#0000FF">    If </font>(sOutputState = "ok" OR sOutputState = "Normal") Then
+
+      <font color="#008000">' Retrieve the product to paste onto (i.e. the father)</font>
+<font color="#0000FF">      If </font>(oSelection.Count &gt; 0)<font color="#0000FF"> Then</font>
+<font color="#0000FF">        Dim </font>oRoot<font color="#0000FF"> As </font>Product
+<font color="#0000FF">        Set </font>oRoot = CATIA.ActiveDocument.Product
+<font color="#0000FF">        Dim </font>oFatherProduct<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">        Set </font>oFatherProduct = oSelection.Item(1).Value
+<font color="#0000FF">        Dim </font>cFatherProduct<font color="#0000FF"> As </font>Products
+<font color="#0000FF">        Set </font>cFatherProduct = oFatherProduct.Products
+
+        <font color="#008000">' Compute the inverse of the father position</font>
+<font color="#0000FF">        Dim </font>fatherAbsolutePosition(11)
+        GetAbsPosition oFatherProduct, oRoot, fatherAbsolutePosition
+<font color="#0000FF">        Dim </font>inverseOfFatherAbsolutePosition(11)
+        MatrixInverse fatherAbsolutePosition, inverseOfFatherAbsolutePosition
+
+<font color="#0000FF">        Dim </font>oProductToCopy<font color="#0000FF"> As </font>Product
+<font color="#0000FF">        Dim </font>oCopiedProduct<font color="#0000FF"> As </font>Product
+<font color="#0000FF">        Dim </font>productAbsolutePosition(11)
+<font color="#0000FF">        Dim </font>positionToFather(11)
+<font color="#0000FF">        Dim </font>oPosition<font color="#0000FF"> As </font>Position
+<font color="#0000FF">        Dim </font>J<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">        For </font>J = 1<font color="#0000FF"> to </font>oGroup.CountExplicit
+
+          <font color="#008000">' Retrieve the next product to be copied</font>
+<font color="#0000FF">          Set </font>oProductToCopy = oGroup.ItemExplicit(J)
+
+          <font color="#008000">' Compute the absolute position of the product</font>
+          GetAbsPosition oProductToCopy, oRoot, productAbsolutePosition
+
+          <font color="#008000">' Compute the relative position of the product with respect to father</font>
+          MatrixProduct productAbsolutePosition, inverseOfFatherAbsolutePosition, positionToFather
+
+          <font color="#008000">' Copy/Paste the product</font>
+          oSelection.Clear
+          oSelection.Add oProductToCopy
+          oSelection.Copy
+          oSelection.Clear
+          oSelection.Add oFatherProduct
+          oSelection.Paste
+
+          <font color="#008000">' Move the product to get the right position</font>
+<font color="#0000FF">          Set </font>oCopiedProduct = cFatherProduct.Item(cFatherProduct.Count)
+          oCopiedProduct.Position.SetComponents positionToFather
+
+<font color="#0000FF">        Next</font>
+<font color="#0000FF">      End If</font>
+<font color="#0000FF">    End If</font>
+
+<font color="#0000FF">  End If</font>
+
+  <font color="#008000">' Clear</font>
+  cGroups.Remove oGroup
+<font color="#0000FF">  Set </font>oGroup = Nothing
+
+<font color="#0000FF">End Sub</font>
+
+</pre></body></html>
+
+

@@ -1,0 +1,612 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Managing Multi-Selection</title>
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Commands</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Managing Multi-Selection</h3>
+      <em>Retrieving existing objects from mouse click or trap selection</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article details the multi-selection in a state command
+      class.&nbsp;
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The Numeric Command Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does the Numeric Command Do</a></li>
+            <li><a href="#How">How to Launch the Numeric Command</a></li>
+            <li><a href="#Where">Where to Find the Numeric Command Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>The goal of this article is to show and explain the several ways to select a
+set of objects in a <i>CATStateCommand</i> command. The selection is possible by
+using a <i>CATPathElementAgent </i>object. This object is a <i>CATDialogAgent</i>
+whose the behaviors to enable the multi selection are the following:</p>
+<ul>
+  <li>CATDlgEngMultiAcquisition</li>
+</ul>
+<blockquote>
+  <p>Accepts indication or multi-selection with a polygon trap without an user
+  interface.</p>
+</blockquote>
+<ul>
+  <li>CATDlgEngMultiAcquisitionSelModes</li>
+</ul>
+<blockquote>
+  <p>Accepts indication or multi-selection, with the help of an user interface.
+  The end user can select the selection mode. Triggered as soon as a selection
+  is performed.&nbsp;</p>
+</blockquote>
+<ul>
+  <li>CATDlgEngMultiAcquisitionCtrl</li>
+</ul>
+<blockquote>
+  <p>Accepts indication or multi-selection, with the help of an user interface.
+  The end user can select the selection mode. Triggered as soon as the end user
+  validates the selection.&nbsp;</p>
+</blockquote>
+<ul>
+  <li>CATDlgEngMultiAcquisitionUserCtrl</li>
+</ul>
+<blockquote>
+  <p>Accepts indication or multi-selection, with the help of an user interface.
+  Triggered as soon as a selection is performed unless the end user toggle to
+  the CATDlgEngMultiAcquisitionCtrl behavior thanks to the user interface.&nbsp;</p>
+</blockquote>
+<p>This use case shows the usage of the last three behaviors.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The Numeric Command Use Case</h3>
+<p>The Numeric command is a use case of the CAADialogEngine.edu framework that
+illustrates the DialogEngine framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does the Numeric Command Do</h4>
+<p>The&nbsp; <i>CAADegAnalysisNumericCmd</i> is a state dialog command which
+uses three <i>CATPathElementAgent: </i>One for each behavior to test.
+Its&nbsp;UML statechart diagram [<a href="#References">1</a>] is the following:</p>
+<table>
+  <caption><i><a name="Fig.1">Fig.1</a>: The UML state chart for the Numeric
+    command</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAADlgMultiSel_UML.jpg" width="707" height="530"></td>
+  </tr>
+</table>
+<p>The dialog is as follows:</p>
+<p>Select the Numeric command&nbsp; in the Mathematical Analysis toolbar of the
+&quot;CAA V5: Geometrical Analysis&quot; workbench. The active state becomes <code>stChoiceBehaviorState.</code></p>
+<p><img border="0" src="images/CAADlgMultiSel_1.jpg" width="392" height="336"></p>
+<p>The&nbsp; &quot;Agent Behavior Choice&quot; dialog box appears: [<a href="#Fig.2">Fig.2</a>]</p>
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAADlgMultiSel_10.jpg" width="223" height="132"><a name="Fig.2">Fig.2</a></td>
+  </tr>
+</table>
+<p>If the end user clicks Ok, the current state becomes:</p>
+<ul>
+  <li><code>StMultiAcquisitionSelModesState</code>, if the first radio button is
+    selected</li>
+  <li><code>StMultiAcquisitionStateCtrl</code>, if the second radio button is
+    selected</li>
+  <li><code>StMultiAcquisitionStateUserCtrl</code>, if the last radio button is
+    selected</li>
+</ul>
+<p>If the end user clicks the Cancel button or closes the &quot;Agent Behavior
+Choice&quot; dialog box, the active state becomes the NULL state. The command is
+canceled.</p>
+<p>The end user has chosen the first behavior, <code>CATDlgEngMultiAcquisitionSelModes</code>,
+so the active state is <code>StMultiAcquisitionStateSelModes</code>.&nbsp;The
+&quot;Tools Palette&quot; toolbar appears with a set of selection modes as
+follows:</p>
+<p><img border="0" src="images/CAADlgMultiSel_3.jpg" width="394" height="334"></p>
+To valuate the selection's agent there is two possibilities:
+<ul>
+  <li>Selection such as the Select toolbar</li>
+  <ul>
+    <li>The first icon by indicating or making a trap ( completely in)</li>
+    <li>The second icon by making a trap (completely in)</li>
+    <li>The third icon by making a trap (completely or partially in)</li>
+    <li>The forth icon by making a polygon trap ( completely in)</li>
+    <li>The five icon by selecting object under a paint stroke</li>
+  </ul>
+  <li>Use the Search command&nbsp;</li>
+</ul>
+<p>After the selection, the current state becomes <code><a href="#StEndChoiceState">StEndChoiceState</a></code>.&nbsp;</p>
+<p>The end user has chosen the second behavior, <code>CATDlgEndMultiAcquisitionCtrl</code>,
+so the active state is <code>StMultiAcquisitionCtrlState</code>. The &quot;Tools
+Palette&quot; toolbar appears as follows:</p>
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAADlgMultiSel_5.jpg" width="394" height="261"><a name="Fig.3">Fig.3</a></td>
+  </tr>
+</table>
+<p>The Tools Palette contains:</p>
+<ul>
+  <li>A row of icons to choose the selection mode (such as the Select toolbar)
+    <ul>
+      <li>The first icon by indicating or making a trap ( completely in)</li>
+      <li>The second icon by making a trap (completely in)</li>
+      <li>The third icon by making a trap (completely or partially in)</li>
+      <li>The forth icon by making a polygon trap ( completely in)</li>
+      <li>The five icon by selecting object under a paint stroke</li>
+    </ul>
+    <p>Notice that you can always also use the Search command to fill the <i>CATPathElementAgent</i>.&nbsp;</p>
+  </li>
+  <li>A &quot;Selection&quot; editor
+    <ul>
+      <li>if one element selected, its complete path is displayed</li>
+      <li>
+        <p>otherwise the count of selected elements is displayed&nbsp;</li>
+    </ul>
+  </li>
+  <li>A &quot;List Of Selected Item&quot; button&nbsp;which is grayed on the
+    Fig.3. It enables to display all the path when there are several.</li>
+  <li>A Finish button to end the selection.&nbsp;</li>
+</ul>
+<p>In using the Ctrl key, you can de-select an element already selected or add a
+new element in the current selection.</p>
+<p>The end user has chosen the third and last behavior, <code>CATDlgEngMultiAcquisitionUserCtrl</code>,
+so the active state is <code>StMultiAcquisitionUserCtrlState</code>. The
+&quot;Tools Palette&quot; toolbar appears as follows:</p>
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAADlgMultiSel_2.jpg" width="362" height="282"><a name="Fig.4">Fig.4</a></td>
+  </tr>
+</table>
+<p>Tools Palette contains:</p>
+<ul>
+  <li>A row of icons to choose the selection mode&nbsp; (same as the previous
+    behavior)
+    <ul>
+      <li>The first icon by indicating or making a trap ( completely in)</li>
+      <li>The second icon by making a trap (completely in)</li>
+      <li>The third icon by making a trap (completely or partially in)</li>
+      <li>The forth icon by making a polygon trap ( completely in)</li>
+      <li>The five icon by selecting object under a paint stroke</li>
+    </ul>
+    <p>Notice that you have always the possibility to use the Search command to
+    fill the <i>CATPathElementAgent</i></p>
+  </li>
+  <li>If the end user clicks the &quot;Control Mode&quot; button, the agent gets
+    the <code>CATDlgEndMultiAcquisitionCtrl</code> behavior otherwise the agent
+    is valuated after the first multi-selection or indication.&nbsp;</li>
+</ul>
+<blockquote>
+  <p>If the end user pushes the &quot;Control Mode&quot; button the
+  &quot;Selection&quot; editor, the &quot;List Of Selected Item&quot; and
+  &quot;Finish&quot; buttons are available.</p>
+</blockquote>
+<p><a name="StEndChoiceState"></a> The active state is <code>StEndChoiceState</code>.
+The end user has finished the selection. The count by type of selected elements
+are displayed in the &quot;Count of Selected Element&quot; dialog box:</p>
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAADlgMultiSel_9.jpg" width="112" height="139"><a name="Fig.4">Fig.4</a></td>
+    <td><img border="0" src="images/CAADlgMultiSel_8.jpg" width="392" height="336"></td>
+  </tr>
+</table>
+<p>If the end user clicks the Close button, the Numeric command is canceled.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How"></a>How to Launch the Numeric Command</h4>
+<p>See the section entitled &quot;How to Launch the CAAGeometry Use Case&quot;
+in the &quot;<a href="../CAASysUseCases/CAASysCAAGeometryOverview.htm">The
+CAAGeometry Sample</a>&quot; use case for a detailed description of how this use
+case should be launched.</p>
+<p>Then, in the window where you run the mkrun command, do not type the module
+name on the command line, but type CNEXT instead. When the application is ready,
+do the following:
+<ul>
+  <li>On the <b>Start </b>menu, select <b>Infrastructure</b> and click <b>CAA
+    V5: Geometrical Analysis</b>
+  <li>Launch the <b>Point</b> command and indicates some points in the viewer
+  <li>Click <b>OK</b> or <b>Cancel</b> in the Point Definition dialog box
+  <li>Launch the <b>Numeric</b> <img border="0" src="images/CAADegAnalysisNumericIcon.jpg" width="22" height="22">command
+    <ul>
+      <li>The <b>Agent behavior choice</b> dialog box appears</li>
+      <li>Choose a behavior</li>
+      <li>Click <b>OK</b> to validate the choice, The <b>Count Of Selected
+        Elements</b> dialog box appears</li>
+      <li>You have chosen the first behavior
+        <ul>
+          <li>indicate a point or use a trap</li>
+        </ul>
+      </li>
+      <li>You have chosen the second behavior, the <b>Tools Palette </b>dialog
+        box appears
+        <ul>
+          <li>indicate a point or use a trap</li>
+          <li>indicate a point or use a trap, to modify the selection</li>
+          <li>Ctrl Key + indicate a point or use a trap , to modify the
+            selection</li>
+          <li>Click <b>Finish</b> to end the selection</li>
+        </ul>
+      </li>
+      <li>You have chosen the third behavior, the <b>Tools Palette </b>dialog
+        box appears
+        <ul>
+          <li>indicate a point or use a trap</li>
+        </ul>
+      </li>
+      <li>Click <b>Close</b> in the <b>Count Of Selected Elements</b> dialog
+        box&nbsp;</li>
+    </ul>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the Numeric Command Code</h4>
+<p>The Numeric command is made of three classes:</p>
+<ul>
+  <li><i>CAADegAnalysisNumericCmd , </i>the<i> CATStateCommand&nbsp;</i></li>
+  <li><i>CAADegAnalysisNumericDlg</i>, the dialog box [<a href="#Fig.4">Fig.4</a>]
+    to display the count of selected object. This class is not explained here.</li>
+  <li><i>CAADegChoiceBehaviorDlg</i>, the dialog box [<a href="#Fig.2">Fig.2</a>]
+    to choose the behavior of the selection's agent. This class is not explained
+    here.</li>
+</ul>
+<p>located in the CAADegGeoCommands.m module of the CAADialogEngine.edu
+framework:</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAADialogEngine.edu\CAADegGeoCommands.m\</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There is five logical steps:&nbsp;</p>
+<ol>
+  <li><a href="#Step1">Declaring the Selection Agents</a></li>
+  <li><a href="#Step2">Instantiating the Selection Agents</a></li>
+  <li><a href="#Step3">Creating the States and the Transitions</a></li>
+  <li><a href="#Step4">Retrieving the Selected Objects</a></li>
+  <li><a href="#Step5">Releasing the Selection Agents</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Declaring the Selection Agents</h4>
+<p>The state command class derives from CATStateCommand.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>class CAADegCreateNumericCmd : public CATStateCommand
+{
+  ...
+  private :
+    <b>CATPathElementAgent</b>  * _daMultiAcquisitionSelModes ;  
+    CATPathElementAgent  * _daMultiAcquisitionCtrl ;
+    CATPathElementAgent  * _daMultiAcquisitionUserCtrl ;
+
+    ...</pre>
+    </td>
+  </tr>
+</table>
+<p>A pointer for each selection agent is declared as a private data member.
+Selection agents are instances of the <i>CATPathElementAgent</i> class.&nbsp;</p>
+<ul>
+  <li><code>_daMultiAcquisitionSelModes</code> will be used for the <code>CATDlgEngMultiAcquisitionSelModes
+    </code>behavior<code>,&nbsp;</code></li>
+  <li><code>_daMultiAcquisitionCtrl</code> for the <code>CATDlgEngMultiAcquisitionCtrl
+    </code>behavior<code> </code>and&nbsp;</li>
+  <li>_daMultiAcquisitionUserCtrl for the <code>CATDlgEngMultiAcquisitionUserCtrl
+    </code>behavior<code>.</code></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Instantiating the Selection Agents</h4>
+<p>The selection agents are instantiated in the command <code>BuildGraph</code>
+method.</p>
+<p>For the <code>_daMultiAcquisitionSelModes </code>agent,&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAADegCreateNumericCmd::BuildGraph()
+{
+  ...
+   _daMultiAcquisitionSelModes = new <b>CATPathElementAgent</b>(&quot;PathEltMultiAcquisitionSelModes&quot;);
+
+   _daMultiAcquisitionSelModes -&gt;<b>SetBehavior</b>( CATDlgEngWithPSOHSO |CATDlgEngWithPrevaluation       
+                              <b>CATDlgEngMultiAcquisitionSelModes</b> ); 
+   
+   _daMultiAcquisitionSelModes -&gt;<b>AddElementType</b>(IID_CAAISysPoint);
+   _daMultiAcquisitionSelModes -&gt;AddElementType(IID_CAAISysLine);
+   _daMultiAcquisitionSelModes -&gt;AddElementType(IID_CAAISysEllipse);
+   _daMultiAcquisitionSelModes -&gt;AddElementType(IID_CAAISysCircle);
+   _daMultiAcquisitionSelModes -&gt;AddElementType(IID_CAAISysPlane);
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The character string <code>PathEltMultiAcquisitionSelModes</code> defined as
+the argument of the <i>CATPathElementAgent</i> constructor is the selection
+agent identifier. This identifier can be used to assign undo/redo prompts
+replacing the Undo and Redo items in the Edit menu. To affect a specific
+behavior to the <i>CATPathElementAgent</i> object, use the <code>SetBehavior </code>method.
+The <code>CATDlgEngWithPSOHSO</code> and <code>CATDlgEngWithPrevaluation</code>&nbsp;
+styles enables to pre-highlight the available elements and to highlight the
+selected elements. The <code>CATDlgEngMultiAcquisitionSelModes</code> indicates
+a multi-selection. At last, thanks to the <code>AddElementType</code> method,
+the selection agent is valued only when an object that implements one of these
+five interfaces is selected. The selection agent remains impassive when any
+object that doesn't implement this interface is selected.</p>
+<p>For the <code>_daMultiAcquisitionCtrl</code> agent, only the behavior
+changes:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+   _daMultiAcquisitionCtrl = new CATPathElementAgent(&quot;PathEltMultiAcquisitionCtrl&quot;);
+
+   _daMultiAcquisitionCtrl-&gt;SetBehavior( CATDlgEngWithPSOHSO | CATDlgEngWithPrevaluation              
+                              <b>CATDlgEngMultiAcquisitionCtrl</b> ); 
+   
+   _daMultiAcquisitionCtrl-&gt;AddElementType(IID_CAAISysPoint);
+   _daMultiAcquisitionCtrl-&gt;AddElementType(IID_CAAISysLine);
+   _daMultiAcquisitionCtrl-&gt;AddElementType(IID_CAAISysEllipse);
+   _daMultiAcquisitionCtrl-&gt;AddElementType(IID_CAAISysCircle);
+   _daMultiAcquisitionCtrl-&gt;AddElementType(IID_CAAISysPlane);
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>And for the <code>_daMultiAcquisitionUserCtrl</code> agent :</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+   _daMultiAcquisitionUserCtrl = new CATPathElementAgent(&quot;PathEltMultiAcquisitionUserCtrl&quot;);
+
+   _daMultiAcquisitionUserCtrl -&gt;SetBehavior( CATDlgEngWithPSOHSO | CATDlgEngWithPrevaluation                
+                              <b>CATDlgEngMultiAcquisitionUserCtrl </b>); 
+  
+   _daMultiAcquisitionUserCtrl -&gt;AddElementType(IID_CAAISysPoint);
+   _daMultiAcquisitionUserCtrl -&gt;AddElementType(IID_CAAISysLine);
+   _daMultiAcquisitionUserCtrl -&gt;AddElementType(IID_CAAISysEllipse);
+   _daMultiAcquisitionUserCtrl -&gt;AddElementType(IID_CAAISysCircle);
+   _daMultiAcquisitionUserCtrl -&gt;AddElementType(IID_CAAISysPlane);
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Creating the States and the Transitions</h4>
+<p>After the agent's creation, the states are created and the agents are
+associated with them.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>   ...
+   CATDialogState *stMultiAcquisitionSelModesState = 
+                   AddDialogState(&quot;stMultiAcquisitionSelModesStateId&quot;);
+   stMultiAcquisitionSelModesStateId-&gt;<b>AddDialogAgent</b>(_daMultiAcquisitionSelModes);
+   ...
+
+   CATDialogState *stMultiAcquisitionCtrlState = 
+                   AddDialogState(&quot;stMultiAcquisitionCtrlStateId&quot;);
+   stMultiAcquisitionCtrlState-&gt;<b>AddDialogAgent</b>(_daMultiAcquisitionCtrl);
+   ...
+   CATDialogState *stMultiAcquisitionUserCtrlState = 
+                   AddDialogState(&quot;stMultiAcquisitionUserCtrlStateId&quot;);
+   stMultiAcquisitionUserCtrlState-&gt;<b>AddDialogAgent</b>(_daMultiAcquisitionUserCtrl);
+   ...
+  </pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>AddDialogState</code> method creates a new dialog state and adds it
+to the states managed by the dialog command. The <code>AddDialogAgent</code>
+method adds the selection agent to the state. <code>stMultiAcquisitionSelModesStateId,
+stMultiAcquisitionCtrlStateId </code>and<code> stMultiAcquisitionUserCtrlStateId</code>
+are identifiers used to set a prompt displayed in the status bar when the state
+is active.</p>
+<p>At last, the transitions are created:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>   ...
+   CATDialogTransition *pTransition32 =    AddTransition
+   (
+      stMultiAcquisitionSelModesState,
+      stEndState,
+      <b>IsOutputSetCondition</b>(_daMultiAcquisitionSelModes), 
+      Action((ActionMethod) &amp; 
+        CAADegAnalysisNumericCmd::<b>DisplaySelectedElement</b>,NULL,NULL,(void*)<b>1</b>)
+   ) ; 
+   ...</pre>
+      <pre>   CATDialogTransition *pTransition42 =    AddTransition
+   (
+      stMultiAcquisitionCtrlState,
+      stEndState,
+      <b>IsOutputSetCondition</b>(_daMultiAcquisitionCtrl), 
+      Action((ActionMethod) &amp; 
+        CAADegAnalysisNumericCmd::<b>DisplaySelectedElement</b>,NULL,NULL,(void*)<b>2</b>)
+   ) ; </pre>
+      <pre>   ...
+   CATDialogTransition *pTransition52 =    AddTransition
+   (
+      stMultiAcquisitionUserCtrlState,
+      stEndState,
+      <b>IsOutputSetCondition</b>(_daMultiAcquisitionUserCtrl), 
+      Action((ActionMethod) &amp; 
+        CAADegAnalysisNumericCmd::<b>DisplaySelectedElement</b>,NULL,NULL,(void*)<b>3</b>)
+   ) ; 
+   ...
+  </pre>
+    </td>
+  </tr>
+</table>
+<h4><a name="Step4"></a>Retrieving the Selected Objects</h4>
+<p>In the <code>DisplaySelectedElement</code><b> </b>Action method, executed
+when the transitions, defined in the previous step, are triggered. <code>iData</code>
+is the value set in the transition.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATBoolean CAADegAnalysisNumericCmd::DisplaySelectedElement(void * iData)
+{
+
+  int CaseAgent = (int ) iData ;
+  
+  ...
+
+  <b>CATSO * pSO = NULL ;</b>
+  
+  if ( 1 == CaseAgent ) pSO = _daMultiAcquisitionSelModes-&gt;<b>GetListOfValues</b>();
+  if ( 2 == CaseAgent ) pSO = _daMultiAcquisitionCtrl-&gt;<b>GetListOfValues</b>();
+  if ( 3 == CaseAgent ) pSO = _daMultiAcquisitionUserCtrl-&gt;<b>GetListOfValues</b>();
+
+  if ( NULL != pSO )
+  {
+     int lg = pSO-&gt;<b>GetSize</b>();
+     
+     for ( int i=0 ; i &lt; lg ; i++)
+     {
+       CATPathElement * pPath = (CATPathElement*) (*pSO)[i] ;
+   
+ ...
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>To retrieve the selected element use the <code>GetListOfValues</code> method
+on the current agent. The list is a <i>CATSO</i> object.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step5"></a>Releasing the Selection Agents</h4>
+<p>A pointer to each selection agent was created in the command <code>BuildGraph</code>
+method as a data member to be accessed and used in different methods.&nbsp;It
+should be released when it becomes useless. This can be done in the command
+destructor, as shown here. This could also be done in the <code>Cancel</code>
+method called just before the destructor.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CAADegCreateNumericCmd::~CAADegCreateNumericCmd()
+{
+  ...
+  if ( NULL != _daMultiAcquisitionSelModes  )  
+  {
+     _daMultiAcquisitionSelModes  -&gt; <b>RequestDelayedDestruction</b>()  ;
+     _daMultiAcquisitionSelModes  = NULL ;
+  }
+  if ( NULL != _daMultiAcquisitionCtrl )
+  {
+     _daMultiAcquisitionCtrl -&gt; RequestDelayedDestruction()  ;
+     _daMultiAcquisitionCtrl = NULL ;
+  }
+  if ( NULL != _daMultiAcquisitionUserCtrl )
+  {
+     _daMultiAcquisitionUserCtrl -&gt; RequestDelayedDestruction()  ;
+     _daMultiAcquisitionUserCtrl = NULL ;
+  }
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows how to use a <i>CATPathElementAgent </i>to have
+multi-selection in a <i>CATStateCommand</i>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADegTechArticles/CAADegUMLDescription.htm">Describing
+      State Dialog Commands Using UML</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Sep 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong> [Nov 2002]</td>
+    <td valign="top">Document updated for new selection modes</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>3</strong> [May 2003]</td>
+    <td valign="top">Document updated for new behaviors and Tools Palette
+      introduction</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

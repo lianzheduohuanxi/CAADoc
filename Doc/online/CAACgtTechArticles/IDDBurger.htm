@@ -1,0 +1,248 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us"/>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0"/>
+<meta name="ProgId" content="FrontPage.Editor.Document"/>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css"/>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>The Burger Order Dialog Box Use Case</title>
+</head>
+<body onload="">
+
+<table class="DocHeader">
+	<tr>
+    <td class="DocHeader1">
+		<h1><a name="Top"></a>The Burger Order Dialog Box Use Case</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+  <tr>
+    <td>
+      <h2>Abstract</h2>
+      <p>This article discusses the CAAIDDBurger.m module of the CAACodeGenTools.edu framework. It shows how to design and manipulate a dialog box using the Rich Application Presentation Designer - IDD, and how to build the interactive application needed to display and run it. </p>
+      <ul>
+        <li><a href="#Learn">What You Will Learn With This Use Case</a></li>
+        <li><a href="#UseCase">The CAAIDDBurger Use Case</a>
+          <ul>
+            <li><a href="#What">What Does CAAIDDBurger Do</a></li>
+            <li><a href="#How">How to Launch CAAIDDBurger</a></li>
+            <li><a href="#Where">Where to Find the CAAIDDBurger Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step">Step-by-Step</a></li>
+        <li><a href="#References">References</a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Learn"></a>What You Will Learn With This Use Case</h2>
+<p>This integration example is intended to cover the tasks needed in order to design a basic calculator dialog box with the designer. These tasks are:</p>
+<ul>
+  <li>Running Rich Application Presentation Designer.</li>
+  <li>Designing dialog box and setting the widgets' behaviors and styles.</li>
+  <li>Arranging the dialog widgets in the dialog box.</li>
+	<li>Simulating dialog widgets behavior</li>
+	<li>Integrating and executing a dialog box file</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="UseCase"></a>The CAAIDDBurger Use Case</h2>
+<p>CAAIDDBurger is a use case of the CAACodeGenTools.edu framework that 
+illustrates Rich Application Presentation Designer's capabilities.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="What"></a>What Does CAAIDDBurger Do</h3>
+<p>This example shows how to manipulate some widgets of the Dialog framework in a dialog box, editing their properties, simulat<span lang="fr">ing</span> 
+their behavior using the Rich Application Presentation Designer. The Burger Order Dialog Box is a fast-food order
+dialog box. It allows you to select what you wish to eat and drink.</p>
+<p>Below is the how the dialog box looks like:</p>
+<p>
+<img src="images/IDDBurger1.png" alt="Burger Order - Entry Box" width="592" height="328"/></p>
+
+    <p>&nbsp;</p>
+
+<p>The Dialog framework objects that you can use for selecting a value or an
+attribute and that react to your selection are controls like radio buttons,
+combos or spinners. The different controls are gathered in frames. For example,
+the Hamburger frame includes a slider to select the number of hamburgers you
+want, radio buttons to choose the cooking, and click buttons to add condiments.
+Separators help to distinguish the three frames, and above, labels help to
+understand what their contents refer to. Labels can also be used for other
+Dialog framework objects such as the combo to choose the fries size, or the
+editor to choose the fries quantity. A selector list with a scrollbar allows
+you to select a drink within the list and a spinner lets you order the number of
+drinks you want. These objects are shown below:</p>
+<p>
+<img src="images/IDDBurger2.png" alt="Burger Order Objects" width="767" height="448"/></p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="How"></a>How to Launch CAAIDDBurger</h3>
+<p>To launch CAAIDDBurger, you will need to set up the build time environment,
+then compile CAAIDDBurger along with its prerequisites, set up the run time
+environment, and then execute the use case [<a href="#References">1</a>] and [<a href="#References">2</a>].</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Where"></a>Where to Find the CAAIDDBurger Code</h3>
+<p>The CAAIDDBurger use case is made of a several classes located in the CAAIDDBurger.m module of the CAACodeGenTools.edu framework:</p>
+<p><code>InstallRootFolder\CAADoc\CAACodeGenTools.edu\CAAIDDBurger.m\</code></p>
+<p>where <code>InstallRootFolder</code> [<a href="#References">1</a>] is the folder where the API CD-ROM is installed.</p>
+<p>The CAAIDDBurger.m module includes four files:</p>
+<table>
+  <tr>
+    <td>CAABurgerApplication.cpp</td>
+    <td>&nbsp;The interactive application (the one that launches the dialog) source file</td>
+  </tr>
+  <tr>
+    <td>CAAIDDBurgerDialog.DSGen</td>
+    <td>&nbsp;The Dassault Systemes code generation file (design file)</td>
+  </tr>
+</table>
+<p>The designer will automatically generate the C++ files (header and implementation) associated to a designed dialog box which are:</p>
+<table>
+  <tr>
+    <td style="width: 171px">CAAIDDBurgerDialog.h</td>
+    <td>The dialog box header file</td>
+  </tr>
+  <tr>
+    <td style="width: 171px">CAAIDDBurgerDialog.cpp</td>
+    <td>The dialog box source file</td>
+  </tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Step"></a>Step-by-Step</h2>
+<ol>
+  <li><a href="#Step1">Designing The Burger Dialog Box and Setting their properties</a></li>
+  <li><a href="#Step2">The Burger Dialog box code view </a></li>
+	<li><a href="#Step3">The Burger Dialog box dialog simulation </a></li>
+	<li><a href="#Step4">The Burger Dialog box execution </a></li>
+</ol>
+
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Step1"></a>Designing The Burger Dialog Box and Setting their properties</h3>
+
+<p>If you open CAAIDDBurger use case with Microsoft Visual Studio as shown in  [<a href="#References">1</a>] and [<a href="#References">2</a>], 
+you will find the CAAIDDBurger.m module that includes CAAIDDBurguerDialog.DSGen, double 
+click on it for displaying the burger dialog box in design view. To design it you select your 
+desired widget, drag and drop it inside dialog box, then choose properties in the context menu to edit selected widget characteristics. For more 
+details see [<a href="#References">3</a>]</p> <script type="text/javascript">insertLinkToTop();</script>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Step2"></a>The Burger Dialog Box code view </h3>
+<p>The designer creates a source and header files that are generated from the designer file (.DSGen). Each file 
+is accessible from context menu on the design surface : 
+<p><img src="images/GoToCodeViewExt.png" alt="" width="236" height="129"/></p>
+<p>Designing choices are translated in generated files; 
+Furthermore design and code are permanently synchronized. Let's 
+have a look at the beginning of CAAIDDBurgerDialog.h:</p>
+<pre class="code">// BEGIN OF HEADER CODE
+// ----------------------------------------
+    
+#ifndef CAAIDDBurgerDialog_h
+#define CAAIDDBurgerDialog_h
+
+#include "CATDlgDialog.h"
+class CATDlgFrame;
+
+// Begin of User Code
+// End of User Code
+
+class  CAAIDDBurgerDialog : public CATDlgDialog {
+
+public:
+	CAAIDDBurgerDialog(CATDialog * iParent, const CATString& iDialogName);
+	
+	virtual ~CAAIDDBurgerDialog();
+	void Build();
+.....
+private:
+	CATDlgFrame* _Frame3;
+	CATDlgSelectorList* _SelectorList1;
+	CATDlgLabel* _Label6;
+	CATDlgSpinner* _Spinner1;
+	CATDlgFrame* _Frame2;
+         ....
+};
+#endif
+</pre>
+<p>Chosen widgets included in dialog box are declared as members in the header file and instanciated in the source file<span lang="fr">.</span></p>
+
+
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Step3"></a>The Burger Dialog simulation</h3>
+<p>The designer is able to show the burger dialog box's behavior when it is resized; to test the burger application
+quickly and accurately, use simulate context menu on design view.</p>
+<p><img src="images/IDDBurgerSimul1.png" alt="" width="643" height="444"/></p>
+
+<p> <img src="images/IDDBurgerSimul2.png" alt="" width="473" height="280"/></p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Step4"></a>The Burger Dialog box execution </h3>
+<p>Thanks to the interactive application CAAIDDBurgerApplication the Burger dialog box can be displayed and run as a standalone application.
+The dialog box is created in the BeginApplication method, it is first instantiated, then initialized using its Build method, 
+and set as visible. Finally, when you build the application as shown in [<a href="#References">1</a>], 
+you get the application compiled with its behavior.
+
+ </p>
+<pre class="code">void CAAIDDBurgerApplication::BeginApplication()
+{
+  ....
+  // Creation of designed child dialog box
+  CAAIDDBurgerDialog * pMainWindow ;
+  pMainWindow = new CAAIDDBurgerDialog(pDocument, "BurgerId");
+
+  ....
+
+  // Constructs all Dialog'objects of the window
+  pMainWindow->Build();
+
+  // Make dialog visible
+  pMainWindow->SetVisibility(CATDlgShow);
+}
+</pre>
+
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+  <tr>
+    <td>[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a Use Case</a></td>
+  </tr>
+    <tr>
+    <td>[2]</td>
+    <td><a href="../CAACgtTechArticles/CAACgtDialogDesigner02b.htm">
+	Starting Rich Application Presentation Designer</a></td>
+  </tr>
+  <tr>
+    <td>[3]</td>
+    <td><a href="../CAACgtTechArticles/CAACgtDialogDesigner03.htm">
+	Interaction Techniques</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+  <tr>
+    <td>Version: <strong>1</strong> [<span lang="fr">May</span> 20<span lang="fr">1</span>0]</td>
+    <td>Document created by am2</td>
+  </tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+</body>
+</html>

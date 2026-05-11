@@ -1,0 +1,476 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Using Persistent Parameters</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>3D PLM PPR Hub Open Gateway</h1>
+     </td>
+     <td>
+     <h2>Knowledge Modeler</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Using Persistent Parameters</h3>
+     <p><em>How to create and modify persistent parameters</em></td>
+   </tr>
+   <tr>
+     <td class="use" colspan="2">Use Case</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This article explains how to create and manage persistent parameters, 
+     i.e., literals that you can save in a permanent binary form (a CATPart 
+     document for example) that persists after they are deleted from memory. 
+     Later you can load the persistent objects from persistent storage and 
+     reconstruct them in memory.</p>
+     <ul>
+       <li><a href="#Learn"><b>What You Will Learn With This Use Case</b></a></li>
+       <li><a href="#UseCase"><b>The CAALifParametersPersistent Use Case</b></a></li>
+       <ul>
+         <li><a href="#What">What Does CAALifParametersPersistent Do</a></li>
+         <li><a href="#How">How to Launch CAALifParametersPersistent</a></li>
+         <li><a href="#Where">Where to Find the CAALifParametersPersistent Code</a></li>
+       </ul>
+       </li>
+       <li><a href="#Step"><b>Step-by-Step</b></a></li>
+       <li><a href="#InShort"><b>In Short</b></a></li>
+       <li><a href="#References"><b>References</b></a></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+ <p>In this use case, you will learn how to create and modify parameters of 
+ simple, dimension and enumerated types.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="UseCase"></a>The CAALifParametersPersistent Use Case</h3>
+ <p>CAALifParametersPersistent is a use case of the CAALiteralFeatures.edu 
+ framework that illustrates KnowledgeInterfaces framework capabilities.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="What"></a>What Does CAALifParametersPersistent Do</h4>
+ <p>The CAALifParametersPersistent use case is divided into five parts:</p>
+ <ol type="I">
+   <li>Creating and managing simple type parameters
+   <ol>
+     <li>creates four simple type parameters:
+     <ul>
+       <li>intParam - which is an integer with an initial value of&nbsp; 2</li>
+       <li>realParam - which is a real with an initial value of 2.3 </li>
+       <li>stringParam - which is a string with an initial value of &quot;Bonjour&quot;</li>
+       <li>booleanParam - which is a boolean with an initial value of true (CATCke::True).</li>
+     </ul>
+     </li>
+     <li>displays the name and the value of each simple type parameter.</li>
+     <li>modifies each simple type parameter</li>
+   </ol>
+   </li>
+   <li>Creating and managing length and angle parameters
+   <ol>
+     <li>creates two dimension type parameters:
+     <ul>
+       <li>lengthParam - which is a length with an initial value of&nbsp; 2</li>
+       <li>angleParam - which is an angle with an initial value of 3.1416</li>
+     </ul>
+     </li>
+     <li>displays the name and value of each dimension type parameter.</li>
+   </ol>
+   </li>
+   <li>Creating and managing magnitude type parameters
+   <ol>
+     <li>creates one magnitude type parameter
+     <ul>
+       <li>volumeParam - which is a VOLUME magnitude with an initial value of 
+       20.5</li>
+     </ul>
+     </li>
+     <li>displays the name and the value of volumeParam</li>
+     <li>modifies the volumeParam value</li>
+   </ol>
+   </li>
+   <li>Creating and managing enumerated type parameter
+   <ol>
+     <li>creates the ListOfPeople1 enum parameter.</li>
+     <li>modifies it.</li>
+   </ol>
+   </li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="How"></a>How to Launch CAALifParametersPersistent</h4>
+ <p>To launch CAALifParametersPersistent, you will need to set up the build time 
+ environment, then compile CAALifParametersPersistent along with its 
+ prerequisites, set up the run time environment, and then execute the use case 
+ which main program is CAALifParametersMain. This program encompasses several 
+ use cases [<a href="#References">1</a>].</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Where"></a>Where to Find the CAALifParametersPersistent Code</h4>
+ <p>The CAALifParametersPersistent use case is made of the&nbsp; CAALifParametersPersistent.cpp 
+ file located 
+ in the CAALifParameters.m module of the CAALiteralFeatures.edu framework:</p>
+ <table>
+   <tr>
+     <td>Windows</td>
+     <td><code>InstallRootDirectory\CAALiteralFeatures.edu\CAALifParameters.m\</code></td>
+   </tr>
+   <tr>
+     <td>Unix</td>
+     <td><code>InstallRootDirectory/CAALiteralFeatures.edu/CAALifParameters.m/</code></td>
+   </tr>
+ </table>
+ <p>where <code>InstallRootDirectory</code> is the directory where the CAA 
+ CD-ROM is installed.</p>
+ <p>The main program related to this use case is CAALifParametersMain.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Step"></a>Step-by-Step</h3>
+ <p>CAALifParametersPersistent is divided into five steps:</p>
+ <ol>
+   <li><a href="#Step2">Creating and Managing Simple Type Parameters</a></li>
+   <li><a href="#Step3">Creating and Managing Dimension Type Parameters</a></li>
+   <li><a href="#Step4">Creating and Managing Magnitude Type Parameters</a></li>
+   <li><a href="#Step5">Creating and Managing Enumerated Type Parameters</a></li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step2"></a>Creating and Managing Simple Type Parameters</h4>
+ <p>Simple type parameters are integers, reals, strings or booleans.</p>
+ <ol>
+   <li><i>Creating simple type parameters</i>
+   <p>To create a simple type parameter, you should use one of the methods 
+   below:<ol>
+     <li>CATICkeParmFactory::CreateInteger</li>
+     <li>CATICkeParmFactory::CreateReal</li>
+     <li>CATICkeParmFactory::CreateString</li>
+     <li>or CATICkeParmFactory CreateBoolean.</li>
+   </ol>
+   <p>Each method takes the parameter name as its first argument, the parameter 
+   value as its second argument.</p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>CATCke::Boolean CAALifParametersPersistent(CATICkeParmFactory_var ispFact)
+{
+// ------------------------------
+// Simple type parameters
+// ------------------------------
+
+   // Create a real
+   // Parameter name is &quot;realParam&quot;, parameter value is 2.3
+   CATICkeParm_var spPp2 = ispFact-&gt;CreateReal (&quot;realParam&quot;,2.3);
+   ...
+   // Create a boolean
+   // Parameter name is &quot;booleanParam&quot;, parameter value is CATCke::True
+   CATICkeParm_var spPp4 = ispFact-&gt;CreateBoolean (&quot;booleanParam&quot;,CATCke::True);</pre>
+       </td>
+     </tr>
+   </table>
+   <p>If the second argument of&nbsp; CATICkeParmFactory::CreateInteger is 
+   passed as a real, its is converted to an integer. Likewise, if the second 
+   argument of CATICkeParmFactory::CreateReal is passed as an integer, the 
+   method converts it to a real.</p>
+   <p>The value of a boolean is either CATCke::True or CATCke::False.</li>
+   <li><i>Retrieving and displaying parameter values</i></li>
+   <p>There are three methods to retrieve and display a parameter value whatever 
+   its type:
+   <ol>
+     <li>CATICkeInst::Show which displays the end user view of the parameter 
+     value (i.e the parameter value with the units and settings specified in the 
+     Tools-&gt;Options...-&gt;General Units tab).</li>
+     <li>CATICkeInst::AsType which:
+     <ul>
+       <li>either returns the parameter value when the parameter is of the 
+       appropriate type </li>
+       <li>or converts the parameter value to a value with the type expected.</li>
+       <ul>
+         <li>CATICkeInst::AsInteger converts:
+         <ul>
+           <li>a real to an integer </li>
+           <li>a boolean to 0 or 1 </li>
+           <li>an enum to its rank </li>
+         </ul>
+         </li>
+         <li>CATICkeInst::AsReal converts
+         <ul>
+           <li>an integer to a real </li>
+           <li>a boolean to 0 or 1 </li>
+           <li>an enum to its rank </li>
+         </ul>
+         </li>
+       </ul>
+       </li>
+     </ul>
+     </li>
+     <li>CATIParmAsStored::ValueStored which returns the value in model units [<a href="#References">3</a>].</li>
+   </ol>
+   <p>Here is a code extract illustrating how to use these methods.</p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+// Display the name and value of realParam
+cout &lt;&lt; spPp2-&gt;Name().CastToCharPtr() &lt;&lt; &quot; value is: &quot; &lt;&lt; endl;
+cout &lt;&lt; spPp2-&gt;Show ().CastToCharPtr()&lt;&lt; &quot; (with CATICkeParm::Show)&quot; &lt;&lt; endl ;
+cout &lt;&lt; spPp2-&gt;Value()-&gt;AsReal ()   &lt;&lt; &quot; (with CATICkeInst::AsReal)&quot; &lt;&lt; endl;</pre>
+       </td>
+     </tr>
+   </table>
+   </li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step3"></a>Creating and Managing Dimension Type Parameters</h4>
+ <ol>
+   <li><i>Creating length and angle type parameters</i><p>They are created by 
+   the following methods:<ol>
+     <li>CATICkeParmFactory::CreateLength</li>
+     <li>CATICkeParmFactory ::CreateAngle</li>
+   </ol>
+   <p>The value passed as the second argument should be specified in MKS units, 
+   i.e, in meters for a length type parameter and in radians for an angle type 
+   parameters.</p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+// ------------------------------------------------
+// Dimension type parameters (Length and Angle) 
+// ------------------------------------------------
+ 
+  // Create and display a Length type parameter
+  // Parameter name is &quot;lengthParam&quot;, parameter value is 2
+  CATICkeParm_var spPp5 = ispFact-&gt;CreateLength (&quot;lengthParam&quot;,2);
+  ...
+  
+  // Create and display an Angle type parameter
+  // Parameter name is &quot;angleParam&quot;, parameter value is 3.1416
+  CATICkeParm_var spPp6 = ispFact-&gt;CreateAngle (&quot;angleParam&quot;,3.1416);
+  ...
+</pre>
+       </td>
+     </tr>
+   </table>
+   </li>
+   <li><i>Retrieving Parameter Values</i>
+   <p>The portion of code below</p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+// Display the name and value of lengthParam
+cout &lt;&lt; spPp5-&gt;Name().CastToCharPtr() &lt;&lt; &quot; value is: &quot; &lt;&lt; endl;
+cout &lt;&lt; spPp5-&gt;Show ().CastToCharPtr() &lt;&lt; &quot; (with CATICkeParm::Show)&quot; &lt;&lt; endl ;
+cout &lt;&lt; spPp5-&gt;Value()-&gt;AsReal () &lt;&lt; &quot; (with CATICkeInst::AsReal)&quot; &lt;&lt; endl;
+
+CATIParmAsStored_var spPps5 = spPp5;
+cout &lt;&lt; spPps5-&gt;ValueStored() ;
+cout &lt;&lt; &quot; (with CATIParmAsStored::ValueStored (in mm)) &quot; &lt;&lt; endl;</pre>
+       </td>
+     </tr>
+   </table>
+   <p>displays in the standard output:</p>
+   <pre>lengthParam value is:
+2 (with CATICkeParm::Show)
+2.0 (with CATICkeInst::AsReal)</pre>
+   </li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step4"></a>Creating and Managing Magnitude Type Parameters</h4>
+ <p>Dimension other than lengths and angles are created by using the 
+ CATIParmFactory::CreateDimension method.</p>
+ <p>To create a magnitude type parameter:</p>
+ <ul>
+   <li>you must specify a magnitude as the first argument of the 
+   CATICkeParmFactory::CreateDimension method</li>
+   <li>use the CATParmDictionary-&gt;FindMagnitude method to get&nbsp; this 
+   magnitude</li>
+   <li>use the CATCkeGlobalFunctions::GetParmDictionary method to retrieve the 
+   CATParmDictionary.</li>
+ </ul>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+// ------------------------------
+// Magnitude type parameters
+// ------------------------------
+
+CATICkeParm_var
+  spPp7 = ispFact-&gt;CreateDimension(
+CATCkeGlobalFunctions::GetParmDictionary()-&gt;FindMagnitude(&quot;VOLUME&quot;),
+                                                 &quot;volumeParam&quot;,20.5);</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step5"></a>Creating and Managing Enumerated Type Parameters</h4>
+ <p>An enumerated type is a user-defined type consisting of a set of named 
+ constants called enumerators. By default, the first enumerator has a value of 
+ 1, and each successive enumerator is one larger than the value of the previous 
+ one.</p>
+ <p>Here are the steps required to create then modify an enumerated type 
+ parameter:</p>
+ <ol>
+   <li><i>Create the list of objects making up the enumerated type parameter</i>
+   <p>In the example above, we create the ListOfPeople enum type which defines 
+   the list of strings below:<br>
+   <code>enum ListOfPeople {John, Emmanuel, Pierre, Frederic}</code></p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+// ------------------------------
+// Enum type parameters
+// ------------------------------
+
+   //  Create the list of items making up the enum
+   CATListOfCATUnicodeString pLst;
+   pLst.Append(&quot;John&quot;);
+   pLst.Append(&quot;Emmanuel&quot;);
+   pLst.Append(&quot;Pierre&quot;);
+   pLst.Append(&quot;Frederic&quot;);
+</pre>
+       </td>
+     </tr>
+   </table>
+   </li>
+   <li><i>Create the enumerated type</i>
+   <p>You must use CATICkeParmFactory::CreateEnumereType which takes as its 
+   first argument the name of the parameter and as its second argument the 
+   object list</p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+// Create the enumerated type
+CATIEnumere_var 
+   spTypeEnumere = ispFact-&gt;CreateEnumereType(&quot;ListOfPeople&quot;,pLst);  </pre>
+       </td>
+     </tr>
+   </table>
+   </li>
+   <li><i>Create the enumerated object itself</i>
+   <p>You must use the CATICkeParmFactory::CreateEnumere method which takes as 
+   its third argument the object (from the list) to be assigned to the enum 
+   parameter. </p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+// Create the object of type &quot;ListOfPeople&quot; 
+//     ListOfPeople1 is the object name
+//     Pierre is the value assigned to the enum at creation
+CATICkeParm_var spPp8 = ispFact-&gt;CreateEnumere (spTypeEnumere,
+                                               &quot;ListOfPeople1&quot;,&quot;Pierre&quot;);
+cout &lt;&lt; spPp8-&gt;Value()-&gt;AsInteger () &lt;&lt; endl; // Returns 3</pre>
+       </td>
+     </tr>
+   </table>
+   <p>Note that the CATICkeInst::AsInteger method returns 3, i.e. the rank of 
+   &quot;Pierre&quot; in the enumerated list.</li>
+   <li><i>Modify the enum value</i>
+   <p>To modify the value of an enum, you must use
+   <ul>
+     <li>either the CATICkeParm::Valuate method and specify in the argument the 
+     rank of the object to be assigned to the enum. </li>
+     <li>
+     <p style="margin-bottom: 10">or the CATICkeParm::Valuate method and specify 
+     in the argument the object to be assigned to the enum.</li>
+   </ul>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+// Assign the first value of the list to the enum 
+spPp8-&gt;Valuate (1);
+cout &lt;&lt; spPp8-&gt;Name().CastToCharPtr() ;
+cout &lt;&lt; &quot; enum new value is (John): &quot; &lt;&lt; endl;
+cout &lt;&lt; spPp8-&gt;Show().CastToCharPtr() &lt;&lt; endl;
+cout &lt;&lt; spPp8-&gt;Name().CastToCharPtr() ;
+cout &lt;&lt; &quot; enum new value is (Frederic): &quot; &lt;&lt; endl;
+// Assign the &quot;frederic&quot; string to the enum
+spPp8-&gt;Valuate (&quot;Frederic&quot;);</pre>
+       </td>
+     </tr>
+   </table>
+   </li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="InShort"></a>In Short</h3>
+ <p>To create a parameter you must use the <code>CATICkeParmFactory::CreateType</code> 
+ appropriate method.</p>
+ <p>To create a magnitude type parameter:</p>
+ <ul>
+   <li>you must specify a magnitude as the first argument of the 
+   CATICkeParmFactory::CreateDimension method</li>
+   <li>use the CATParmDictionary-&gt;FindMagnitude method to get&nbsp; this 
+   magnitude</li>
+   <li>use the CATCkeGlobalFunctions::GetParmDictionary method to retrieve the 
+   CATParmDictionary.</li>
+ </ul>
+ <p>To modify a parameter, you must use the CATICkeParm::Valuate method.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>References</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td>
+     <a href="../CAADocUseCases/CAADocRunSample.htm">
+     Building and Launching a CAA V5 Use Case</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[2]</td>
+     <td><a href="CAALifFirstApplication.htm">Getting Started with Literal 
+     Programming</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[3]</td>
+     <td><a href="../CAALifTechArticles/CAALifUnits.htm">About Units</a></td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+  </body>
+
+</html>

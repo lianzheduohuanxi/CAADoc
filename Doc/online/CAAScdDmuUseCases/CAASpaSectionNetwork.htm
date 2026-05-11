@@ -1,0 +1,128 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Creating a Network of Sections</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>DMU Space Analysis</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Creating a Network of Sections</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<table border="0" width="100%">
+  <tr>
+    <td valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" height="32"></td>
+    <td>
+      <p><a name="Learn"></a>This macro shows you how to use sections to create
+      a network of sections. The macro assumes that a CATProduct has been
+      loaded.</p>
+      <!----------------------------------comment------------------------------------->
+      <p>This image shows the product before the use of the macro :</p>
+      <p align="center"><img border="0" src="images/CAASpaSectionNetwork1-sm.gif"></p>
+      <p>&nbsp;</p>
+      <p>This image shows the result of the macro :</p>
+      <p align="center"><img border="0" src="images/CAASpaSectionNetwork2-sm.gif"></p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" height="32"></td>
+    <td>
+      <p><a name="How"></a>CAASpaSectionNetwork is launched in CATIA [<a href="#References">1</a>].
+      A previously opened document is needed.</p>
+      <p><a href="CAASpaSectionNetworkSource.htm" target="Source">CAASpaSectionNetwork.CATScript</a>
+      is located in the CAAScdDmuUseCases module. <a href="macros/CAASpaSectionNetwork.CATScript">Execute
+      macro</a> (Windows only).</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" height="32"></td>
+    <td>
+      <p><a name="Step"></a>CAASpaSectionNetwork includes several steps:</p>
+      <ol>
+        <li><a href="#Sections">Retrieving the sections collection</a></li>
+        <li><a href="#Master">Management of a master section</a></li>
+        <li><a href="#Network">Creation of the network</a></li>
+      </ol>
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Sections"></a>Retrieving the sections collection</h4>
+      <p>The <i>cSections</i> collection (see <code><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'Sections'); return false;">Sections</a></code>
+      ) is the factory to create <code><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'Section'); return false;">Section</a></code>
+      object : this collection is retrieved using the <code><a href="#" onclick="javascript:CAAlink('IDL', 'ProductStructureInterfaces', 'Product', 'GetTechnologicalObject'); return false;">GetTechnologicalObject</a></code>
+      method, with the string <code>&quot;Sections&quot;</code>, on the root
+      product of the active document.</p>
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Master"></a>Management of a master section</h4>
+      <p>The master section will be used to compute position and size of the
+      network.</p>
+      <p>The <i>oMasterSection</i> object is created using <code><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'Sections', 'Add'); return false;">Add</a></code>
+      method on the <i>cSections</i> collection to take into account all
+      components.</p>
+      <p>The <i>Position</i> matrix is retrieved using <code><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'Section', 'Position'); return false;">Position</a></code>
+      method on the <i>oMasterSection</i> object and the size is read using <code><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'Section', 'Height'); return false;">Height</a></code>
+      and the <code><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'Section', 'Width'); return false;">Width</a></code>
+      methods.</p>
+      <p>The <i>oMasterSection</i> object is removed using <code><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'Sections', 'Remove'); return false;">Remove</a></code>
+      method on the <i>cSections</i> collection.</p>
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Network"></a>Creation of the network</h4>
+      <p>A loop is done to create ten <i>oSection</i> objects using <code><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'Sections', 'Add'); return false;">Add</a></code>
+      method on the <i>cSections</i> collection.</p>
+      <p>The type of the section is forced using <code><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'Section', 'Type'); return false;">Type</a></code>
+      and the position is modified using <code><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'Section', 'Position'); return false;">Position</a></code>
+      method on the <i>oSection</i> object.</p>
+    </td>
+  </tr>
+</table>
+<!----------------------------------comment------------------------------------->
+<p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" height="32"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to use sections in order to create a network of
+sections. Specifically, it has illustrated how to :</p>
+<ul>
+  <li>create and use sections</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying
+      a Macro</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAScdDmuTechArticles/CAADmuTocSPA.htm">Space
+      Analysis automation objects</a></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<p align="center"><a href="../CAAScdBase/CAADmuScriptHome.htm">DMU
+Navigator Home</a> <a href="../CAAScdBase/CAASpaScriptHome.htm">DMU
+Space Analysis Home</a> <a href="../CAAScdBase/CAAKiiScriptHome.htm">DMU
+Kinematics Simulation Home</a></p>
+<!----------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

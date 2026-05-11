@@ -1,0 +1,130 @@
+Option Explicit
+'---------------------------------------------------------------------------
+'COPYRIGHT DASSAULT SYSTEMES 2011
+
+' ****************************************************************************
+'
+' Purpose:       To edit stiffeners.
+'
+' Assumptions:   The Part document CAASfdEditStiffener.CATPart should be active
+'
+' Author:
+' Languages:     VBScript
+' Version:       V5R21
+' Locales:       English
+' CATIA Level:   V5R21
+'
+' ****************************************************************************
+Sub CATMain()
+
+  Dim ObjPart As Part
+  Set ObjPart = CATIA.ActiveDocument.Part
+      
+  Dim FactoryObj As SfmFactory
+  Set FactoryObj = ObjPart.GetCustomerFactory("SfmFactory")
+  
+  Dim ManagerObj As SfmManager
+  Set ManagerObj = FactoryObj.GetManager
+  
+  'RETRIEVING THE SUPERSTIFFENERS
+  Dim SuperStiffeners As References
+  Set SuperStiffeners = ManagerObj.GetSuperStiffeners
+
+  Dim SuperStiffener1, SuperStiffener2, SuperStiffener3 As SfmStiffener
+  Set SuperStiffener1 = SuperStiffeners.Item(1)
+  Set SuperStiffener2 = SuperStiffeners.Item(3)
+  Set SuperStiffener3 = SuperStiffeners.Item(4)
+  
+  'Retrieving The Seamed Stiffeners on Deck
+  Dim SplitStiffeners As References
+  Set SplitStiffeners = SuperStiffener2.SplitProfiles
+  
+  Dim SplitStiffener1, SplitStiffener2 As Reference
+  Set SplitStiffener1 = SplitStiffeners.Item(1)
+  Set SplitStiffener2 = SplitStiffeners.Item(2)
+  
+  Dim SelctionObj As Selection
+  Set SelctionObj = CATIA.ActiveDocument.Selection
+  
+  'DECK STIFFENER
+  SelctionObj.Add SplitStiffener1
+  Dim DeckStiffener1 As SfmStiffener
+  Set DeckStiffener1 = SelctionObj.FindObject("CATIASfmStiffener")
+  
+  'Checking Name and the Support
+  Dim stiffname As String
+  stiffname = DeckStiffener1.Name
+
+  Dim DeckStiffSupport As Reference
+  Set DeckStiffSupport = DeckStiffener1.Support
+  'Applying Material and Grade
+  DeckStiffener1.Material = "Aluminium"
+  DeckStiffener1.Grade = "A47"
+    
+  'Retrieving and Modifying the side and section Orientation
+  Dim SideOrient, SectionOrient As Long
+  SideOrient = DeckStiffener1.SideOrientation
+  SectionOrient = DeckStiffener1.SectionOrientation
+  
+  Dim DeckStiff1SideOrnt, DeckStiff1SectionOrnt As Long
+  DeckStiff1SectionOrnt = -1
+  DeckStiff1SideOrnt = 6
+  DeckStiffener1.SideOrientation = DeckStiff1SideOrnt
+  DeckStiffener1.SectionOrientation = DeckStiff1SectionOrnt
+  
+  'Modifying the Section
+  Dim DeckStiffSectionName As String
+  DeckStiffSectionName = DeckStiffener1.SectionName
+  DeckStiffener1.SectionName = "WT15x54"
+  
+  'SHELL STIFFENER
+  SelctionObj.Add SuperStiffener1
+  Dim ShellStiffener1 As SfmStiffener
+  Set ShellStiffener1 = SelctionObj.FindObject("CATIASfmStiffener")
+
+  'Retrieving and Modifying Websupport of ShellStiffener
+  Dim ShellStiffWebSupport As Reference
+  Set ShellStiffWebSupport = ShellStiffener1.WebSupport
+  
+  Dim webSupport1 As AnyObject
+  Set webSupport1 = ObjPart.FindObjectByName("LONG.0")
+  Dim webSupportRef1 As Reference
+  Set webSupportRef1 = ObjPart.CreateReferenceFromObject(webSupport1)
+  ShellStiffener1.WebSupport = webSupportRef1
+
+  'Getting MoldedSurface Of ShellStiffener
+  Dim ShellStiffMoldedSurface As Reference
+  Set ShellStiffMoldedSurface = ShellStiffener1.GetMoldedSurface
+  
+  'Modifying Anchor Point
+  Dim ShellStiffAnchorPt As String
+  ShellStiffAnchorPt = ShellStiffener1.AnchorPoint
+  ShellStiffener1.AnchorPoint = "catStrWebCenter"
+  
+  'Getting And Setting Profile Limit
+  Dim StiffNewLimit As AnyObject
+  Set StiffNewLimit = ObjPart.FindObjectByName("CROSS.90")
+  Dim StiffNewLimitRef As Reference
+  Set StiffNewLimitRef = ObjPart.CreateReferenceFromObject(StiffNewLimit)
+  ShellStiffener1.SetProfileLimit 1, StiffNewLimitRef
+  
+  Dim ShellStiffLimitRef As Reference
+  Set ShellStiffLimitRef = ShellStiffener1.GetProfileLimit(1)
+  
+  'Returning and Setting the AngleMode
+  Dim StiffAngleMode As Integer
+  StiffAngleMode = ShellStiffener1.AngleMode
+  Dim StiffAngleMode2 As Long
+  StiffAngleMode2 = 2
+  Dim AngleModeValidity As Boolean
+  AngleModeValidity = ShellStiffener1.IsAngleModeValid(StiffAngleMode2)
+  ShellStiffener1.AngleMode = StiffAngleMode2
+  
+  'Getting WebSupportOffset of ShellStiffener
+  ShellStiffener1.webSupportOffset = "30"
+  Dim ShellStiffwebSupportOffset As Double
+  ShellStiffwebSupportOffset = ShellStiffener1.webSupportOffset
+
+  'Updating The Part with All Modifications
+  ObjPart.Update
+End Sub

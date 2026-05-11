@@ -1,0 +1,364 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>System Interface CATICommunicator</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../System.htm" href="../System.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "System";	}
+		function getCurrentObjectName() { 
+ 	return "CATICommunicator"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>System Interface CATICommunicator</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATICommunicator_18035','CATICommunicator','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATICommunicator</b>
+</p>
+<p>
+<b><i> Interface to represent the logical connexion to the backbone bus.</i></b><br>
+
+ <b>Role</b>: This interface provides all the main services to exchange
+ messages with the  backbone bus:
+ <ul>
+  <li> Gets a connexion to the bus </li>
+  <li> Declares itself on the bus </li>
+  <li> Sends a message on the bus </li>
+  <li> Receives a message from other applications connected to the bus (via the bus)</li>
+  <li> Declares the messages the process may handle </li>
+  <li> Associates handlers to these messages </li>
+  <li> Removes these handlers  </li>
+  <li> Disconnects from the bus </li>
+ </ul>
+ <br>
+ <b>Example of code</b>:
+ <ul>
+ <li> Get a connexion to the backbone bus with the <script type="text/javascript"> activateLinkAnchor('CATGetBackboneConnection','','CATGetBackboneConnection') </script> global method </li> <li> Declare to be a backbone application with the 
+<script type="text/javascript"> activateLinkAnchor('','Declare','Declare') </script> method</li> <br>
+ To receive message an application should:
+ <ul>
+ <li> Declare to be interested in receiving messages thanks the 
+      
+<script type="text/javascript"> activateLinkAnchor('','DeclareEventManaged','DeclareEventManaged') </script> method </li> <li> Declare an handler for message class it want to receive thanks 
+       to the  
+<script type="text/javascript"> activateLinkAnchor('','AssociateHandler','AssociateHandler') </script> </li> method </ul>
+ <br>
+ To send message an application should:
+ <ul>
+ <li> used the 
+<script type="text/javascript"> activateLinkAnchor('','SendRequest','SendRequest') </script> method </li> </ul>
+ <li> Disconnect to the backbone bus thanks the 
+<script type="text/javascript"> activateLinkAnchor('','Disconnect','Disconnect') </script> method </li> </ul>
+ <br> 
+   
+<dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATIStreamMsg','','CATIStreamMsg') </script>, <script type="text/javascript"> activateLinkAnchor('CATIBBStreamer','','CATIBBStreamer') </script>, <script type="text/javascript"> activateLinkAnchor('CATICommMsg','','CATICommMsg') </script>, <script type="text/javascript"> activateLinkAnchor('CATIMessageReceiver','','CATIMessageReceiver') </script>, <script type="text/javascript"> activateLinkAnchor('CATBBMessage','','CATBBMessage') </script>, <script type="text/javascript"> activateLinkAnchor('CATICommunicatorLoop','','CATICommunicatorLoop') </script>
+</dl>
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#AssociateHandler(CATApplicationClass,CATMessageClass,CATIMessageReceiver*)"><b>AssociateHandler</b></a>(CATApplicationClass,CATMessageClass,CATIMessageReceiver*)
+<dd>   Declares an handler for a backbone message class.
+ <dt> o 
+    <a href="#Declare(CATApplicationClass,CATApplicationType)"><b>Declare</b></a>(CATApplicationClass,CATApplicationType)
+<dd>   Declares an application as a backbone application.
+ <dt> o 
+    <a href="#DeclareEventManaged(CATMessageClass)"><b>DeclareEventManaged</b></a>(CATMessageClass)
+<dd>   Declares a backbone message class the application is interested with to receive.
+ <dt> o 
+    <a href="#Disconnect()"><b>Disconnect</b></a>()
+<dd>   Logical disconnection from the backbone bus.
+ <dt> o 
+    <a href="#GetLastErrorId(int*)"><b>GetLastErrorId</b></a>(int*)
+<dd>   Gets the last error.
+ <dt> o 
+    <a href="#GetRequestAnswer(CATICommMsg*,CATICommMsg**,int)"><b>GetRequestAnswer</b></a>(CATICommMsg*,CATICommMsg**,int)
+<dd>   Permits to wait for the answer of a synchronous backbone message.
+ <dt> o 
+    <a href="#RemoveHandler(CATApplicationClass,CATMessageClass,CATIMessageReceiver*)"><b>RemoveHandler</b></a>(CATApplicationClass,CATMessageClass,CATIMessageReceiver*)
+<dd>   Removes a backbone message handler.
+ <dt> o 
+    <a href="#SendRequest(CATApplicationClass,CATICommMsg*)"><b>SendRequest</b></a>(CATApplicationClass,CATICommMsg*)
+<dd>   Emits a backbone message on the backbone bus.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="AssociateHandler"></a><a name="AssociateHandler(CATApplicationClass,CATMessageClass,CATIMessageReceiver*)"></a> <dt> o <b>AssociateHandler</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>AssociateHandler</b>(<td><script type="text/javascript"> activateLink('CATApplicationClass','CATApplicationClass')</script> <td><tt>iAppClassReceiver</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATMessageClass','CATMessageClass')</script> <td><tt>iMsgClass</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATIMessageReceiver','CATIMessageReceiver*')</script> <td><tt>iReceiver</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+  Declares an handler for a backbone message class.
+ <br><b>Role</b>: Permits to associate a handler object to any arriving message 
+ of class iMsgClass sent for the iAppClassReceiver application.
+ If a message of class iMsgClass incomes to the application iAppClassReceiver,
+ iReceiver will be called  on the 
+<script type="text/javascript"> activateLinkAnchor('CATIMessageReceiver','HandleMessage','CATIMessageReceiver.HandleMessage') </script> method  to process the message.
+ <br>
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAppClassReceiver</tt>
+   <dd>   The  identificator under which the receiver application is known on 
+   the backbone bus.
+ </dd>
+    <dt><tt> iMsgClass</tt>
+   <dd>   The message class of the future incoming messages to which we want to 
+   associate a handler
+ </dd>
+    <dt><tt> iReceiver</tt>
+   <dd>   This object will be called in the future when a message of type 
+   iMsgClass sent to the application iAppClassReceiver will arrive on the receiver application
+</dd>
+</dl>
+</dl>
+</dl>
+<a name="Declare"></a><a name="Declare(CATApplicationClass,CATApplicationType)"></a> <dt> o <b>Declare</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>Declare</b>(<td><script type="text/javascript"> activateLink('CATApplicationClass','CATApplicationClass')</script> <td><tt>iAppClass</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATApplicationType','CATApplicationType')</script> <td><tt>iAppType</tt><td><tt>=CATStandardApp</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+  Declares an application as a backbone application.
+ <br><b>Role</b>: This service should be called only once for a given application during
+ a connexion.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAppClass</tt>
+   <dd>   The identificator under which the application is known on 
+   the backbone bus.
+ </dd>
+    <dt><tt> iAppType</tt>
+   <dd>   <b>Legal Values</b>:<tt>CATStandardApp</tt></dd>
+</dl>
+</dl>
+</dl>
+<a name="DeclareEventManaged"></a><a name="DeclareEventManaged(CATMessageClass)"></a> <dt> o <b>DeclareEventManaged</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>DeclareEventManaged</b>(<td><script type="text/javascript"> activateLink('CATMessageClass','CATMessageClass')</script> <td><tt>iMsgClass</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+  Declares a backbone message class the application is interested with to receive.
+ <br><b>Role</b>: Permits an application to declare that it is interested with receiving
+ message of class iMsgClass 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMsgClass</tt>
+   <dd>   iMsgClass is the class name of the message class the application wishes to receive</dd>
+</dl>
+</dl>
+</dl>
+<a name="Disconnect"></a><a name="Disconnect()"></a> <dt> o <b>Disconnect</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>Disconnect</b>(<td>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+  Logical disconnection from the backbone bus.
+ <br><b>Role</b>: This method permits the disconnection from the bus. It's the end of 
+ the connexion done by the 
+<script type="text/javascript"> activateLinkAnchor('CATGetBackboneConnection','','CATGetBackboneConnection') </script>  global method.
+</dl>
+<a name="GetLastErrorId"></a><a name="GetLastErrorId(int*)"></a> <dt> o <b>GetLastErrorId</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetLastErrorId</b>(<td><script type="text/javascript"> activateLink('int','int*')</script> <td><tt>oLastError</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+  Gets the last error.
+ <br><b>Role</b>: This method permits to get the last error.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oLastError</tt>
+   <dd> <b>Legal Values</b>:
+  <ul>
+    <li>CATBBErr_PortNotFound  : Unable to contact given port</li>
+    <li>CATBBErr_UnableToGetPort  : Unable to declare on given port</li>
+    <li>CATBBErr_AnswerPortAcceptFailed  : failed because invalid answer port</li>
+    <li>CATBBErr_ErrorWaitingForPort  : error during WaitForPort operation</li>
+    <li>CATBBErr_InitSendSocketInvalid  : Try to send a message on a close or invalid socket
+                                          during the declaration phase,
+                                          contact to bus probably lost </li>
+    <li>CATBBErr_SendSocketInvalid  : Try to send a message on a close or invalid socket,
+                                      contact to bus probably lost</li>
+    <li>CATBBErr_RcvSocketInvalid  : Try to receive a message from a close or invalid socket,
+                                     contact to bus probably lost</li>
+    <li>CATBBErr_MessageClassNotFound  : message class not found</li>
+    <li>CATBBErr_DataStreamingFailure  : error during stream operation</li>
+    <li>CATBBErr_DataUntreamingFailure  : error during unstream operation</li>
+    <li>CATBBErr_MustImplementCATIStreamMsg  : message object doesn't implements CATIStreamMsg</li>
+    <li>CATBBErr_MustNeedAnAnswer  : message object doesn't need answers</li>
+    <li>CATBBErr_UnableToInstanciateMsg  : unable to instanciate message object</li>
+    <li>CATBBErr_ReentranceConditionFound  : </li>
+    <li>CATBBErr_TimeoutOccurred  : </li>
+    <li>CATBBErr_TargetApplicationNotPresent  : </li>
+  </ul>
+</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetRequestAnswer"></a><a name="GetRequestAnswer(CATICommMsg*,CATICommMsg**,int)"></a> <dt> o <b>GetRequestAnswer</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetRequestAnswer</b>(<td><script type="text/javascript"> activateLink('CATICommMsg','CATICommMsg*')</script> <td><tt>iMsg</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATICommMsg','CATICommMsg**')</script> <td><tt>oAnswer</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>timeout</tt><td><tt>=-1</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+  Permits to wait for the answer of a synchronous backbone message.
+ 
+ <br><b>Role</b>: This method permits to wait for the answer of a given  
+  backbone message.
+ We advise user to avoid as much as possible synchronous messages and the use
+ of GetRequestAnswer.  
+ <br>Using  synchronous messages and waiting to the answers has the following 
+ disadvantages :
+ <br> - costs more resources
+ <br> - may generate interblocking conditions ( two applications waiting for each other)
+ <p>
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMsg</tt>
+   <dd>   synchronous backbone request needing a immediate answer
+ </dd>
+    <dt><tt> oAnswer</tt>
+   <dd>   Answer to the iMsg request 
+</dd>
+</dl>
+</dl>
+</dl>
+<a name="RemoveHandler"></a><a name="RemoveHandler(CATApplicationClass,CATMessageClass,CATIMessageReceiver*)"></a> <dt> o <b>RemoveHandler</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>RemoveHandler</b>(<td><script type="text/javascript"> activateLink('CATApplicationClass','CATApplicationClass')</script> <td><tt>iAppClass</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATMessageClass','CATMessageClass')</script> <td><tt>iMsgClass</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATIMessageReceiver','CATIMessageReceiver*')</script> <td><tt>iReceiver</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+  Removes a backbone message handler.
+ <br><b>Role</b>: This method permits to remove the handler iReceiver of the message
+ identified by its target application iAppClass and its class iMsgClass.
+ <br> This method cancels  effects of the corresponding 
+<script type="text/javascript"> activateLinkAnchor('','AssociateHandler','AssociateHandler') </script> method. <br>
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAppClass</tt>
+   <dd>   The identificator under which the application is known on the backbone bus
+ </dd>
+    <dt><tt> iMsgClass</tt>
+   <dd>   The message class to which iReceiver is associated
+ </dd>
+    <dt><tt> iReceiver</tt>
+   <dd>   The object which handles the message 
+</dd>
+</dl>
+</dl>
+</dl>
+<a name="SendRequest"></a><a name="SendRequest(CATApplicationClass,CATICommMsg*)"></a> <dt> o <b>SendRequest</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SendRequest</b>(<td><script type="text/javascript"> activateLink('CATApplicationClass','CATApplicationClass')</script> <td><tt>iAppClass</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATICommMsg','CATICommMsg*')</script> <td><tt>iMsg</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+  Emits a backbone message on the backbone bus.
+ <br><b>Role</b>: This method permits to send messages to other backbone 
+ applications via the backbone bus.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAppClass</tt>
+   <dd>   Target application of the message
+ </dd>
+    <dt><tt> iMsg</tt>
+   <dd>   Backbone message to emit
+</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATICommunicator.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATSysCommunication</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

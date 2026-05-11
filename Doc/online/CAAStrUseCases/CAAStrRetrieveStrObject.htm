@@ -1,0 +1,767 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Structure Design</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Design</h1>
+    </td>
+    <td valign="top">
+      <h2>Structure</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Retrieving the Structure Plate and Member data</h3>
+      <i>How to retrieve the plate and member data&nbsp;</i></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAStrRetrieveObjectData use case.</p>
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><a href="#UseCase"><strong>The CAA</strong><b>StrRetrieveObjectData</b><strong>
+          Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAStrRetrieveObjectData Do</a></li>
+            <li><a href="#How">How to Launch CAAStrRetrieveObjectData</a></li>
+            <li><a href="#Where">Where to Find the CAAStrRetrieveObjectData Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<!---------------------------------comment------------------------------------->
+<table width="100%">
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to initialize CATIA session, get
+the root product and query the structure plates and members under the root, and
+get the plate and member data from a design document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAStrRetrieveObjectData Use Case</h3>
+<p>CAAStrRetrieveObjectData is a use case of the CAAStructureInterfaces.edu
+framework that illustrates StructureInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAStrRetrieveObjectData Do</h4>
+<p>The goal of&nbsp; CAAStrRetrieveObjectData is to show you how to use the
+StructureInterfaces methods to query and obtain structure plate and member
+information from the objects in a design document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAStrRetrieveObjectData</h4>
+<p>To launch CAAStrRetrieveObjectData, you will need to set up the build time
+environment, then compile CAAStrRetrieveObjectData along with its prerequisites,
+set up the run time environment, and then execute the sample. This is fully
+described in the referenced article [<a href="#References">1</a>]. When
+launching the use case, you must pass the following arguments:</p>
+<ul>
+  <li><b>CAAStrObjectMain.CATProduct</b> - the entire pathname, name and
+    extension (.CATProduct) of the input drawing. Normally, it should be stored
+    in the CNext/resources/graphic directory of the CAAStructureInterfaces.edu
+    framework. This simple structure design document contains two structure
+    plates and five members.</li>
+</ul>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img border="0" src="images/CAAStrObject.jpg" width="473" height="502"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAStrRetrieveObjectData Code</h4>
+<p>CAAStrRetrieveObjectData code is located in the CAAStrRetrieveObjectData.m
+use case module of the CAAStructureInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAStructureInterfaces.edu\CAAStrRetrieveObjectData.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAStructureInterfaces.edu/CAAStrRetrieveObjectData.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the root directory of your CAA V5
+installation. It is made of&nbsp; one unique source files named
+CAAStrRetrieveObjectDataMain.cpp.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are seven logical steps in CAAStrRetrieveObjectData :</p>
+<ol>
+  <li><a href="#Prolog">Prolog</a></li>
+  <li><a href="#Initializing">Initializing the Environment</a></li>
+  <li><a href="#Structure Plate">Retrieving the Structure Plate's Data</a></li>
+  <li><a href="#Structure Member">Retrieving the Structure Member's Data</a></li>
+  <li><a href="#Remove the Open Document">Remove the Open Document and Delete
+    the CATIA Session</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Prolog"></a>Prolog</h4>
+<p>In this use case, we open an input document containing some Equipment and
+Piping Design objects.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Initializing"></a>Initializing the Environment</h4>
+<p>The CAAStrRetrieveObjectDataMain is a standalone batch program . The
+initialization of the CATIA session and retrieving pointer of the root product
+involves the following code</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>/* ----------------------------- */
+/* Initialize the CATIA session  */
+/* ----------------------------- */
+CATSession* pSession = NULL;
+rc = ::Create_Session(&quot;CAA2_Sample_Session&quot;, pSession);</pre>
+      <pre>/* ------------------------------------- */
+/* Load an existing CATProduct document  */
+/* ------------------------------------- */
+CATDocument* pDoc = NULL;
+rc = CATDocumentServices::Open(argv[1], pDoc);</pre>
+      <pre>/* ------------------------------------ */
+/* Retrieve pointer of the root Product */
+/* ------------------------------------ */
+CATIDocRoots* piDocRootsOnDoc = NULL;
+rc = pDoc-&gt;QueryInterface(IID_CATIDocRoots, (void**) &amp;piDocRootsOnDoc);</pre>
+      <pre>CATListValCATBaseUnknown_var* pRootProducts = piDocRootsOnDoc-&gt;GiveDocRoots();
+CATIProduct_var spRootProduct = NULL_var;
+
+if (pRootProducts &amp;&amp; pRootProducts-&gt;Size())
+{  
+  spRootProduct = (*pRootProducts)[1];
+  delete pRootProducts;
+  pRootProducts = NULL;
+}</pre>
+      <pre>if (NULL != piDocRootsOnDoc)
+  piDocRootsOnDoc-&gt;Release();
+	
+// Get CATIProduct handle on the root product.
+CATIProduct *piProductOnRoot = NULL;
+rc = spRootProduct-&gt;QueryInterface(IID_CATIProduct,(void**)&amp;piProductOnRoot);
+</pre>
+      <pre>&nbsp;</pre>
+    </td>
+  </tr>
+</table>
+<p>This code performs the following functions:</p>
+<ul>
+  <li>Creating a session, named &quot;CAA2_Sample_Session&quot;.</li>
+  <li>Loading the input document.</li>
+  <li>Retrieving the pointer to the root product.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Structure Plate"></a>Retrieving the Structure Plate's Data</h4>
+<p>Retrieves plates and their characteristics</p>
+<table class="code" width="782" height="1695">
+  <tr>
+    <td width="774" height="1691">
+      <pre>
+/* ------------------------------------------- */
+/*  Retrieves plates and plate data */
+/* ------------------------------------------- */
+CATListValCATBaseUnknown_var* ListPlate =
+    piProductOnRoot-&gt;GetAllChildren(&quot;CATIStructurePlate&quot;);
+
+  if(NULL != ListPlate)
+  {		
+    int numberOfChildren = ListPlate-&gt;Size();</pre>
+      <pre>    /* ------------------------------------------ */
+    /*   For each plate, get its information      */
+    /* ------------------------------------------ */</pre>
+      <pre>    CATIProduct_var spChild = NULL_var;
+    for (int i = 1; i &lt;= numberOfChildren; i++)
+    {
+      CATIProduct_var spChild = (*ListPlate)[i];
+      if (NULL_var != spChild)
+      {
+        CATIStructurePlate *piStrPlate = NULL;
+	spChild-&gt;QueryInterface(IID_CATIStructurePlate, (void**)&amp;piStrPlate);
+	if (piStrPlate)
+	{ 
+	  //-----------------------
+	  // Get Plate's material
+	  //-----------------------
+	  CATIMaterialFeature *oMatFeat = NULL;
+	  rc = piStrPlate-&gt;GetMaterial(&amp;oMatFeat);
+	  if (FAILED(rc))
+	  {
+	    cout &lt;&lt; &quot; CAAStrRetrieveObjectDataMain : &quot;;
+	    cout &lt;&lt; &quot; Failed to get Plate's material &quot; &lt;&lt; endl &lt;&lt; flush;
+	  }
+	  if (NULL != oMatFeat)
+	  {
+	    oMatFeat-&gt;Release(); oMatFeat = NULL;
+	  }
+
+	  //----------------------
+	  // Get Plate's thickness
+	  //----------------------
+	  double  Thickness = 0.0;
+	  rc = piStrPlate-&gt;GetThickness(Thickness);
+	  if (FAILED(rc))
+	  {
+	    cout &lt;&lt; &quot; CAAStrRetrieveObjectDataMain : &quot;;
+	    cout &lt;&lt; &quot; Failed to get Plate's thickness &quot; &lt;&lt; endl &lt;&lt; flush;
+	  }
+
+	  //----------------------
+	  // Get Plate's offset
+	  //----------------------
+	  double  Offset = 0.0;
+	  rc = piStrPlate-&gt;GetInternalOffset(Offset);
+	  if (FAILED(rc))
+	  {
+	    cout &lt;&lt; &quot; CAAStrRetrieveObjectDataMain : &quot;;
+	    cout &lt;&lt; &quot; Failed to get Plate's offset &quot; &lt;&lt; endl &lt;&lt; flush;
+	  }
+
+	  //----------------------------
+	  // Get Plate's support
+	  //----------------------------
+	  CATISpecObject *pSupport = NULL;
+	  rc = piStrPlate-&gt;GetSupport(&amp;pSupport);
+	  if (FAILED(rc))
+	  {
+	    cout &lt;&lt; &quot; CAAStrRetrieveObjectDataMain : &quot;;
+	    cout &lt;&lt; &quot; Failed to get Plate's support type &quot; &lt;&lt; endl &lt;&lt; flush;
+	  }
+	  if (NULL != pSupport)
+	  {
+	    pSupport-&gt;Release(); pSupport = NULL;
+	  }
+
+	  //------------------------------
+	  // Get Plate's extrusion vector
+	  //------------------------------
+	  CATMathDirection ExtrusionVector;
+	  rc = piStrPlate-&gt;GetExtrusionDirection(ExtrusionVector);
+	  if (FAILED(rc))
+	  {
+	    cout &lt;&lt; &quot; CAAStrRetrieveObjectDataMain : &quot;;
+	    cout &lt;&lt; &quot; Failed to get Plate's extrusion vector &quot; &lt;&lt; endl &lt;&lt; flush;
+	  }
+
+	  //-----------------------
+	  // Get Plate's vertices
+	  //-----------------------
+	  CATListValCATMathPoint ListOfVertices;
+	  rc = piStrPlate-&gt;GetListOfVertices(ListOfVertices);
+	  if (FAILED(rc))
+	  {
+	    cout &lt;&lt; &quot; CAAStrRetrieveObjectDataMain : &quot;;
+	    cout &lt;&lt; &quot; Failed to get Plate's vertices &quot; &lt;&lt; endl &lt;&lt; flush;
+	  }</pre>
+      <pre>          //-----------------------------
+	  // Get List Attribute Names
+	  //-----------------------------
+	  CATListValCATUnicodeString *oListOfAttributeNames = NULL;
+	  rc = piStrPlate-&gt;ListAttributeName(&amp;oListOfAttributeNames);
+	  if (FAILED(rc))
+	  {
+	    cout &lt;&lt; &quot; CAAStrRetrieveObjectDataMain : &quot;;
+	    cout &lt;&lt; &quot; Failed to get Plate's list attribute names&quot; &lt;&lt; endl &lt;&lt; flush;
+	  }
+	  else
+	  {
+	    if (oListOfAttributeNames)
+	    {
+	      int ListSize = oListOfAttributeNames-&gt;Size();
+	      for (int j = 1; j &lt;= ListSize; j++)
+	      {
+		CATUnicodeString uName = (*oListOfAttributeNames)[j];
+		cout &lt;&lt; &quot; ATTRIBUTE NAME : &quot; &lt;&lt; uName &lt;&lt; endl &lt;&lt; flush;
+	      }
+	    }
+	  }
+
+	  //-----------------------------
+	  // Get Plate's Attribute Value
+	  //-----------------------------
+	  if (oListOfAttributeNames)
+	  {
+	    int ListSize = oListOfAttributeNames-&gt;Size();
+	    for (int i = 1; i &lt;= ListSize; i++)
+	    {
+	      CATICkeParm *opParm = NULL;
+	      CATUnicodeString ipName = (*oListOfAttributeNames)[i];
+	      rc = piStrPlate-&gt;GetAttribute(ipName, &amp;opParm);
+	      if (FAILED(rc))
+	      {
+		cout &lt;&lt; &quot; CAAStrRetrieveObjectDataMain : &quot;;
+		cout &lt;&lt; &quot; Failed to get Plate's attribute &quot; &lt;&lt; endl &lt;&lt; flush;
+	      }
+	      if (NULL != opParm)
+	      {
+		opParm-&gt;Release(); opParm = NULL;
+	      }
+	    }
+	    oListOfAttributeNames-&gt;RemoveAll();
+	    delete oListOfAttributeNames;
+	    oListOfAttributeNames = NULL;
+	  }
+
+	  piStrPlate-&gt;Release();
+	  piStrPlate= NULL;
+        }
+      }
+    }
+    delete ListPlate;	ListPlate=NULL;
+  }	</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Structure Member"></a>Retrieving the Structure Member's Data</h4>
+<p>To retrieve the data on each structure member object, it involves the
+following code.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>/* ---------------------------------------------------------- */
+/* Retrieves all the member object under the root             */
+/* ---------------------------------------------------------- */
+CATListValCATBaseUnknown_var* ListMember =
+	piProductOnRoot-&gt;GetAllChildren(&quot;CATIStructureMember&quot;);
+  if(NULL != ListMember)
+  {		
+    int numberOfChildren = ListMember-&gt;Size();
+
+    /* ------------------------------------------ */
+    /*   For each member, get its information     */
+    /* ------------------------------------------ */
+    CATIProduct_var spChild = NULL_var;
+    for (int i = 1; i &lt;= numberOfChildren; i++)
+    {
+      CATIProduct_var spChild = (*ListMember)[i];
+      if (NULL_var != spChild)
+      {
+        CATIStructureMember *piStrMember = NULL;
+	spChild-&gt;QueryInterface(IID_CATIStructureMember, (void**)&amp;piStrMember);
+	if (piStrMember)
+	{ 
+          //-----------------------------
+	  // Get List Attribute Names
+	  //-----------------------------
+	  CATListValCATUnicodeString *oListOfAttributeNames = NULL;
+	  rc = piStrMember-&gt;ListAttributeName(&amp;oListOfAttributeNames);
+	  if (FAILED(rc))
+	  {
+	    cout &lt;&lt; &quot; CAAStrRetrieveObjectDataMain : &quot;;
+	    cout &lt;&lt; &quot; Failed to get member's list attribute names&quot; &lt;&lt; endl &lt;&lt; flush;
+	  }
+	  
+	  //------------------------
+	  // Get Member's Attribute
+	  //------------------------
+          if (oListOfAttributeNames)
+	  {
+	    int ListSize = oListOfAttributeNames-&gt;Size();
+	    for (int i = 1; i &lt;= ListSize; i++)
+	    {
+	      CATICkeParm *opParm = NULL;
+	      CATUnicodeString ipName = (*oListOfAttributeNames)[i];
+	      rc = piStrMember-&gt;GetAttribute(ipName, &amp;opParm);
+	      if (FAILED(rc))
+	      {
+		cout &lt;&lt; &quot; CAAStrRetrieveObjectDataMain : &quot;;
+		cout &lt;&lt; &quot; Failed to get member's attribute &quot; &lt;&lt; endl &lt;&lt; flush;
+	      }
+	      if (NULL != opParm)
+	      {
+		opParm-&gt;Release(); opParm = NULL;
+	      }
+	    }
+	    oListOfAttributeNames-&gt;RemoveAll();
+	    delete oListOfAttributeNames;
+	    oListOfAttributeNames = NULL;
+	  }
+
+	  //----------------------
+          // Get Member's Section
+	  //----------------------
+	  CATDocument *oCATDocument = NULL;
+	  rc = piStrMember-&gt;GetSection(oCATDocument);
+	  if (FAILED(rc))
+          {
+	    cout &lt;&lt; &quot; CAAStrRetrieveObjectDataMain : &quot;;
+	    cout &lt;&lt; &quot; Failed to get member's section &quot; &lt;&lt; endl &lt;&lt; flush;
+	  }
+	  oCATDocument = NULL;
+
+	  //---------------------------
+	  // Get Member's Section Name
+	  //---------------------------
+	  CATUnicodeString oName;
+	  rc = piStrMember-&gt;GetSectionName(oName);
+	  if (FAILED(rc))
+	  {
+	    cout &lt;&lt; &quot; CAAStrRetrieveObjectDataMain : &quot;;
+	    cout &lt;&lt; &quot; Failed to get member's section name &quot; &lt;&lt; endl &lt;&lt; flush;
+	  }
+
+	  //--------------------------
+	  // Get Member's Family Name
+	  //--------------------------
+	  oName = &quot;&quot;;
+	  rc = piStrMember-&gt;GetFamilyName(oName);
+	  if (FAILED(rc))
+	  {
+	    cout &lt;&lt; &quot; CAAStrRetrieveObjectDataMain : &quot;;
+	    cout &lt;&lt; &quot; Failed to get member's family name &quot; &lt;&lt; endl &lt;&lt; flush;
+	  }
+
+	  //---------------------------
+	  // Get Member's Catalog Name
+	  //---------------------------
+	  oName = &quot;&quot;;
+	  rc = piStrMember-&gt;GetCatalogName(oName);
+	  if (FAILED(rc))
+	  {
+	    cout &lt;&lt; &quot; CAAStrRetrieveObjectDataMain : &quot;;
+	    cout &lt;&lt; &quot; Failed to get member's catalog name &quot; &lt;&lt; endl &lt;&lt; flush;
+	  }
+
+	  //---------------------------
+	  // Get Member's Profile Type
+	  //---------------------------
+	  oName = &quot;&quot;;
+	  rc = piStrMember-&gt;GetProfileType(oName);
+	  if (FAILED(rc))
+	  {
+	    cout &lt;&lt; &quot; CAAStrRetrieveObjectDataMain : &quot;;
+	    cout &lt;&lt; &quot; Failed to get member's profile type &quot; &lt;&lt; endl &lt;&lt; flush;
+	  }
+
+          //----------------------------
+	  // Get Member's Start Cutback
+	  //----------------------------
+	  CatStrCutbackType oCutbackType;
+	  CATICkeParm *oCutback = NULL;
+	  rc = piStrMember-&gt;GetStartCutback(oCutbackType, &amp;oCutback);
+	  if (FAILED(rc))
+	  {
+	    cout &lt;&lt; &quot; CAAStrRetrieveObjectDataMain : &quot;;
+	    cout &lt;&lt; &quot; Failed to get member's start cutback type &quot; &lt;&lt; endl &lt;&lt; flush;
+	  }
+	  if (NULL != oCutback)
+	  {
+	    oCutback-&gt;Release(); oCutback = NULL;
+	  }
+
+	  //--------------------------
+	  // Get Member's End Cutback
+	  //--------------------------
+	  CatStrCutbackType oECutbackType;
+	  CATICkeParm *oECutback = NULL;
+	  rc = piStrMember-&gt;GetEndCutback(oECutbackType, &amp;oECutback);
+	  if (FAILED(rc))
+	  {
+	    cout &lt;&lt; &quot; CAAStrRetrieveObjectDataMain : &quot;;
+	    cout &lt;&lt; &quot; Failed to get member's end cutback type &quot; &lt;&lt; endl &lt;&lt; flush;
+	  }
+	  if (NULL != oECutback)
+	  {
+	    oECutback-&gt;Release(); oECutback = NULL;
+	  }
+
+	  //-------------------------------
+	  // Get Member's Current SetPoint
+	  //-------------------------------
+	  CatStrPlacementPoint oSetPoint;
+	  rc = piStrMember-&gt;GetCurrentSetPoint(oSetPoint);
+	  if (FAILED(rc))
+	  {
+	    cout &lt;&lt; &quot; CAAStrRetrieveObjectDataMain : &quot;;
+	    cout &lt;&lt; &quot; Failed to get member's current set point(CatStrPlacementPoint) &quot; &lt;&lt; endl &lt;&lt; flush;
+	  }
+
+	  //------------------------------
+	  // GetMember's Current SetPoint
+	  //------------------------------
+	  CATUnicodeString uSetPoint;
+	  rc = piStrMember-&gt;GetCurrentSetPoint(uSetPoint);
+	  if (FAILED(rc))
+	  {
+	    cout &lt;&lt; &quot; CAAStrRetrieveObjectDataMain : &quot;;
+	    cout &lt;&lt; &quot; Failed to get member's current set point(CATUnicodeString)&quot; &lt;&lt; endl &lt;&lt; flush;
+	  }
+
+	  //--------------------
+	  // Get Member's Angle
+	  //--------------------
+	  CATICkeParm *oAngleParm = NULL;
+	  rc = piStrMember-&gt;GetAngle(&amp;oAngleParm);
+	  if (FAILED(rc))
+	  {
+	    cout &lt;&lt; &quot; CAAStrRetrieveObjectDataMain : &quot;;
+	    cout &lt;&lt; &quot; Failed to get member's angle &quot; &lt;&lt; endl &lt;&lt; flush;
+	  }
+	  if (NULL != oAngleParm)
+	  {
+	    oAngleParm-&gt;Release(); oAngleParm = NULL;
+	  }
+	  
+	  //---------------------------------
+	  // Get Member's Section Orientation
+	  //---------------------------------
+	  CatStrMaterialOrientation oSectionOrientation;
+	  rc = piStrMember-&gt;GetSectionOrientation(oSectionOrientation);
+	  if (FAILED(rc))
+	  {
+	    cout &lt;&lt; &quot; CAAStrRetrieveObjectDataMain : &quot;;
+	    cout &lt;&lt; &quot; Failed to get member's section orientation(CatStrMaterialOrientation) &quot; &lt;&lt; endl &lt;&lt; flush;
+	  }
+
+	  //---------------------------------
+	  // Get Member's Section Orientation
+	  //---------------------------------
+	  CATMathVector oU;
+	  CATMathVector oV;
+	  rc = piStrMember-&gt;GetSectionOrientation(oU, oV);
+	  if (FAILED(rc))
+	  {
+	    cout &lt;&lt; &quot; CAAStrRetrieveObjectDataMain : &quot;;
+  	    cout &lt;&lt; &quot; Failed to get member's section orientation&quot; &lt;&lt; endl &lt;&lt; flush;
+	  }
+
+	  //---------------------------------
+	  // Get Member's Side Orientation
+	  //---------------------------------
+	  CatStrMaterialOrientation oSideOrientation;
+	  rc = piStrMember-&gt;GetSideOrientation(oSideOrientation);
+	  if (FAILED(rc))
+	  {
+	    cout &lt;&lt; &quot; CAAStrRetrieveObjectDataMain : &quot;;
+	    cout &lt;&lt; &quot; Failed to get member's side orientation&quot; &lt;&lt; endl &lt;&lt; flush;
+	  }
+	  
+          //--------------------------------
+	  // Get Member's Start Coordinates
+	  //--------------------------------
+	  CATMathPoint oStartMath;
+	  rc = piStrMember-&gt;GetStartCoord(oStartMath);
+	  if (FAILED(rc))
+	  {
+	    cout &lt;&lt; &quot; CAAStrRetrieveObjectDataMain : &quot;;
+	    cout &lt;&lt; &quot; Failed to get member's start coordinates&quot; &lt;&lt; endl &lt;&lt; flush;
+	  }
+
+	  //------------------------------
+	  // Get Member's End Coordinates
+	  //------------------------------
+	  CATMathPoint oEndMath;
+	  rc = piStrMember-&gt;GetEndCoord(oEndMath);
+	  if (FAILED(rc))
+	  {
+	    cout &lt;&lt; &quot; CAAStrRetrieveObjectDataMain : &quot;;
+	    cout &lt;&lt; &quot; Failed to get member's end coordinates&quot; &lt;&lt; endl &lt;&lt; flush;
+	  }
+
+	  //---------------------------
+	  // Get Member's Start Offset
+	  //---------------------------
+	  CATICkeParm *oStartOffset = NULL;
+	  rc = piStrMember-&gt;GetStartOffset(&amp;oStartOffset);
+	  if (FAILED(rc))
+	  {
+	    cout &lt;&lt; &quot; CAAStrRetrieveObjectDataMain : &quot;;
+	    cout &lt;&lt; &quot; Failed to get member's start offset &quot; &lt;&lt; endl &lt;&lt; flush;
+	  }
+	  if (NULL != oStartOffset)
+	  {
+	    oStartOffset-&gt;Release(); oStartOffset = NULL;
+	  }
+
+	  //-------------------------
+	  // Get Member's End Offset
+	  //-------------------------
+	  CATICkeParm *oEndOffset = NULL;
+	  rc = piStrMember-&gt;GetEndOffset(&amp;oEndOffset);
+	  if (FAILED(rc))
+	  {
+	    cout &lt;&lt; &quot; CAAStrRetrieveObjectDataMain : &quot;;
+	    cout &lt;&lt; &quot; Failed to get member's end offset &quot; &lt;&lt; endl &lt;&lt; flush;
+	  }
+	  if (NULL != oEndOffset)
+	  {
+	    oEndOffset-&gt;Release(); oEndOffset = NULL;
+	  }
+
+	  //-------------------------
+	  // Get Member's support
+	  //-------------------------
+	  CATISpecObject *oMemSupport = NULL;
+	  rc = piStrMember-&gt;GetMemberSupport(&amp;oMemSupport);
+	  if (FAILED(rc))
+	  {
+	    cout &lt;&lt; &quot; CAAStrRetrieveObjectDataMain : &quot;;
+	    cout &lt;&lt; &quot; Failed to get member's support &quot; &lt;&lt; endl &lt;&lt; flush;
+	  }
+	  if (NULL != oMemSupport)
+	  {
+	    oMemSupport-&gt;Release(); oMemSupport = NULL;
+	  }
+
+	  //--------------------------
+	  // Get Member's section axis
+	  //--------------------------
+	  CATMathAxis oMemberSectionAxis;
+	  rc = piStrMember-&gt;GetMemberSectionAxis(oMemberSectionAxis);
+	  if (FAILED(rc))
+	  {
+	    cout &lt;&lt; &quot; CAAStrRetrieveObjectDataMain : &quot;;
+	    cout &lt;&lt; &quot; Failed to get member's section axis &quot; &lt;&lt; endl &lt;&lt; flush;
+	  }
+	  else
+	  {
+	    cout &lt;&lt; &quot; Get member's reference object OK &quot; &lt;&lt; endl &lt;&lt; flush;
+	    CATMathVector oFirstVector;
+	    oMemberSectionAxis.GetFirstDirection(oFirstVector);
+	    CATMathVector oSecondVector;
+	    oMemberSectionAxis.GetSecondDirection(oSecondVector);
+	    CATMathVector oThirdVector;
+	    oMemberSectionAxis.GetThirdDirection(oThirdVector);
+	  }
+	  
+          //-------------------------
+	  // Get Member's reference
+	  //-------------------------
+	  CATISpecObject *oMemReference = NULL;
+	  rc = piStrMember-&gt;GetMemberReference(&amp;oMemReference);
+	  if (FAILED(rc))
+	  {
+	    cout &lt;&lt; &quot; CAAStrRetrieveObjectDataMain : &quot;;
+	    cout &lt;&lt; &quot; Failed to get member's reference &quot; &lt;&lt; endl &lt;&lt; flush;
+	  }
+	  if (NULL != oMemReference)
+	  {
+	    oMemReference-&gt;Release(); oMemReference = NULL;
+	  }
+	  
+	  //-----------------------
+	  // Get Member's Material
+	  //-----------------------
+	  CATIMaterialFeature *oMatFeat = NULL;
+	  rc = piStrMember-&gt;GetMaterial(&amp;oMatFeat);
+	  if (FAILED(rc))
+	  {
+	    cout &lt;&lt; &quot; CAAStrRetrieveObjectDataMain : &quot;;
+	    cout &lt;&lt; &quot; Failed to get member's material &quot; &lt;&lt; endl &lt;&lt; flush;
+	  }
+	  if (NULL != oMatFeat)
+	  {
+	    oMatFeat-&gt;Release(); oMatFeat = NULL;
+	  }
+
+	  piStrMember-&gt;Release();
+	  piStrMember = NULL;
+        }
+      }
+    }
+    delete ListMember;	ListMember=NULL;
+  }
+}	
+&nbsp;</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Remove the Open Document"></a>Remove the Open Document and Delete
+CATIA Session</h4>
+<p>Never forget to delete a created session and removes the opened documents
+after the usage .</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>/* -------------------------------------------- */
+/*     Ends the session                         */
+/* -------------------------------------------- */
+	
+// remove opened document
+rc = CATDocumentServices::Remove (*pDoc);
+if (!SUCCEEDED(rc)) return 6;
+		
+rc = ::Delete_Session(&quot;CAA2_Sample_Session&quot;);
+if (SUCCEEDED(rc))
+  cout &lt;&lt; &quot; Delete Session Succeeded &quot; &lt;&lt; endl &lt;&lt; flush;
+</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated how to use the Structure interfaces to query
+the data on the structure objects on a design document.&nbsp; Specifically, it
+has illustrated:</p>
+<ul>
+  <li>Initializing a session</li>
+  <li>Retrieving the root product&nbsp;</li>
+  <li>Querying all the structure plate object under the root and retrieve the
+    plate's data</li>
+  <li>Querying all the structure member object under the root and retrieve the
+    member's data</li>
+  <li>Removing open document and delete session</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [August 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong> [March 2004]</td>
+    <td valign="top">Added method GetMemberReference, GetMemberSupport and GetMemberSectionAxis</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>
+

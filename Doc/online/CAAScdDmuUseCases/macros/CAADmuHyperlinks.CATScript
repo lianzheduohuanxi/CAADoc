@@ -1,0 +1,35 @@
+' COPYRIGHT DASSAULT SYSTEMES 2006
+Option Explicit
+
+' ***********************************************************************
+'   Purpose     : Create a hyperlink on a product.
+'   Assumptions : A CATProduct document should be active.
+'   Author      : 
+'   Languages   : VBScript
+'   Locales     : English 
+'   CATIA Level : V5R17
+' ***********************************************************************
+
+Sub CATMain()
+
+  ' Retrieve the Hyperlinks collection
+  Dim TheHyperlinks As Hyperlinks
+  Set TheHyperlinks = CATIA.ActiveDocument.Product.GetTechnologicalObject("Hyperlinks")
+
+  ' Create a hyperlink on active product
+  Dim MyHyperlink As Hyperlink
+  Set MyHyperlink = TheHyperlinks.Add(CATIA.ActiveDocument.Product)
+  MyHyperlink.Name = "My hyperlink on my product"
+
+  ' Associate two URL with MyHyperlink
+  Dim Url1 As String
+  Url1 = "http://www.mycompany.com"
+  MyHyperlink.AddUrl(Url1)
+  Dim Url2 As String
+  Url2 = "http://www.3ds.com"
+  MyHyperlink.AddUrl(Url2)
+
+  ' remove first URL on MyHyperlink
+  MyHyperlink.RemoveObject(1)
+  
+End Sub

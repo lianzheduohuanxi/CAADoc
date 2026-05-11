@@ -1,0 +1,717 @@
+<html>
+
+  <head>
+  <meta http-equiv="Content-Language" content="en-us">
+  <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+  <meta name="ProgId" content="FrontPage.Editor.Document">
+  <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+  <title>Checking the Consistent Set of Files for V5 Documents</title>
+  </head>
+
+  <body>
+
+   <table width="100%">
+     <tr>
+       <td valign="top">
+       <h1>3D PLM PPR Hub Open Gateway</h1>
+       </td>
+       <td valign="top">
+       <h2>File XPDM (PX1)</h2>
+       </td>
+       <td rowspan="2" align="right" valign="top">
+       <h3><a name="Top"></a>Checking the Consistent Set of Files for V5 Documents</h3>
+       <p>How to retrieve root files and all their associated files? </td>
+     </tr>
+     <tr>
+       <td class="use" colspan="2">Use Case</td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <table class="abstract">
+     <tr>
+       <td>
+       <h3>Abstract</h3>
+       <p>Most of scenarios to integrate CATIA V5 to an external PDM system 
+       require to know the root files, and to know the set of files pointed by 
+       each root. In this manner, you have the consistent set of files for a 
+       given document. This article explains and illustrates the methods of the 
+       CATxPDMInterface framework to retrieve the root files of a given 
+       directory, and to display their associated files. </p>
+       <ul>
+         <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+         <li><a href="#UseCase"><strong>The CAAxPDMRetrieveConsistentSet Use 
+         Case</strong></a>
+         <ul>
+           <li><a href="#What">What Does CAAxPDMRetrieveConsistentSet Do</a></li>
+           <li><a href="#How">How to Launch CAAxPDMRetrieveConsistent Set</a></li>
+           <li><a href="#Where">Where to Find the CAAxPDMRetrieveConsistentSet 
+           Code</a></li>
+         </ul>
+         </li>
+         <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+         <li><a href="#InShort"><strong>In Short</strong></a></li>
+         <li><a href="#References"><strong>References</strong></a></li>
+       </ul>
+       </td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+   <p>This use case is intended to show you how to use the CATxPDMInterface 
+   framework capabilities to retrieve the root files and all their associated 
+   files. Mainly through samples, you will learn the meaning and the limits of 
+   two methods of the <i>CATxPDMFileServices</i> class:</p>
+   <ul>
+     <li><b><code>SearchRootItems</code>: to 
+     retrieve, recursively or not, the root files in a given directory
+     </b></li>
+     <li><b><code>GetConsistentSetOfItems</code>: 
+     to retrieve all the files pointed by a root file according to the current 
+     activated locators (other folders, Search order). The method returns a list 
+     for the existing pointed files, and another one for the missing pointed 
+     files.</b></li>
+   </ul>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="UseCase"></a>The CAAxPDMRetrieveConsistentSet Use Case</h3>
+   <p>CAAxPDMRetrieveConsistentSet is a use case of the CAAxPDMInterfaces.edu 
+   framework that illustrates CATxPDMInterfaces framework capabilities. <b>Be 
+   careful</b>, such as all use cases illustrating the CATxPDMInterfaces 
+   framework, the current one requires a PX1 license. </p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h4><a name="What"></a>What Does CAAxPDMRetrieveConsistentSet Do</h4>
+   <p>CAAxPDMRetrieveConsistentSet begins by opening a session, then retrieves 
+   all the root items of a given directory, and for each root displays:</p>
+   <ul>
+     <li>The complete file name of the root file&nbsp; </li>
+     <li>The complete file name of all its existing pointed files</li>
+     <li>The complete file name of all its missing pointed files&nbsp; </li>
+   </ul>
+   <p>Finally, the session is closed.</p>
+   <p>Hereunter are given the output for some<code> </code>directories located 
+   in the following directory:</p>
+   <table>
+     <tr>
+       <td>Windows</td>
+       <td><code>InstallRootDirectory\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet
+       </code></td>
+     </tr>
+     <tr>
+       <td>Unix</td>
+       <td><code>InstallRootDirectory/CAAxPDMInterfaces.edu/InputData/RetrieveConsistentSet
+       </code></td>
+     </tr>
+   </table>
+   <p>where <code>InstallRootDirectory</code> is the directory where the CAA 
+   CD-ROM is installed.</p>
+   <p>But before, some explanations about the RetrieveConsistentSet<code> </code>
+   directory contents are necessary.</p>
+   <table border="0" style="border-collapse: collapse" bordercolor="#111111" 
+   id="AutoNumber1">
+     <caption><a name="Fig.1">Fig.1</a>: The RetrieveConsistentSet&nbsp; 
+     directory Contents</caption>
+     <tr>
+       <td><img border="0" src="images/CAAxPDMDirectoryRCS.gif" width="663" height="343"> </td>
+       </td>
+     </tr>
+   </table>
+   <p>Except the empty <code>RetrieveConsistentSet00D</code> directory, all the 
+   others contain either Product, Part, Text, Drawing or Exel files. The 
+   relationships between these files are detailed just below. </p>
+   <table border="0" style="border-collapse: collapse" bordercolor="#111111" 
+   id="AutoNumber2">
+     <tr>
+       <td>
+       <p align="center"><a name="Fig.2">Fig.2</a>: Ref/Ref link</td>
+       <td>
+       <p align="center"><a name="Fig.3">Fig.3</a>:Contextual Part</td>
+     </tr>
+     <tr>
+       <td colspan="2"><img border="0" src="images/CAAxPDMProduct1.gif" width="667" height="287"></td>
+     </tr>
+   </table>
+   <ul>
+     <li>On Fig.2: outside the assembly context, an element of Part2 has been 
+     copied into Part1 using the Copy As Result with link option. </li>
+     <li>On Fig.3: there is a contextual Part. In assembly context, an element 
+     of Part3 has been copied into Part4 using the Copy As Result with link 
+     option. </li>
+   </ul>
+   <table border="0" style="border-collapse: collapse" bordercolor="#111111" 
+   id="AutoNumber2">
+     <tr>
+       <td align="center"><a name="Fig.4">Fig.4</a> Missing File</td>
+       <td align="center"><a name="Fig.5">Fig.5</a> Assembly Drawing</td>
+     </tr>
+     <tr>
+       <td colspan="2"><img border="0" src="images/CAAxPDMProduct2.gif" width="659" height="289"></td>
+     </tr>
+   </table>
+   <ul>
+     <li>On Fig.4: <code>ProductMissingFile</code>.<code>Product</code> had 
+     contained two Parts: Part5 and Missing. But the last one has been deleted.
+     </li>
+     <li>On Fig.5: It is a assembly drawing. There is a kink between the Drawing 
+     and the Part.</li>
+   </ul>
+   <table border="0" style="border-collapse: collapse" bordercolor="#111111" 
+   id="AutoNumber3">
+     <tr>
+       <td>
+       <p align="center"><a name="Fig.6">Fig.6</a> Part with Design Table</td>
+     </tr>
+     <tr>
+       <td><img border="0" src="images/CAAxPDMProduct3.gif" width="295" height="143"></td>
+     </tr>
+   </table>
+   <ul>
+     <li>Fig.6: there is a design table associated with the Part </li>
+   </ul>
+   <p>Now we have explained the data, it is possible to understand the result of 
+   the code applied to the different directories. </p>
+   <p><b>RetrieveConsistentSet00A no recursively </b></p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+<b>Identifying roots in directory :</b> E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\<font 
+       color="#FF0000"><b>RetrieveConsistentSet00A</b></font>
+<b>Not Recursive way</b>
+There are <b>2 root(s)</b> in this directory
+
+<b>1 E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\RetrieveConsistentSet00A\ProductWithContLink.CATProduct</b>
+<b><font color="#0000FF">Number of items in consistent set:3</font>
+<font color="#33CC33">-Found items:3</font></b>
+1 E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\RetrieveConsistentSet00A\ProductWithContLink.CATProduct
+2 E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\RetrieveConsistentSet00A\RetrieveConsistentSet012\Part4.CATPart
+3 E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\RetrieveConsistentSet00A\RetrieveConsistentSet012\Part3.CATPart
+
+2<b> E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\RetrieveConsistentSet00A\ProductWithoutContLink.CATProduct</b>
+<b><font color="#0000FF">Number of items in consistent set:3</font>
+<font color="#33CC33">-Found items:3</font></b>
+1 E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\RetrieveConsistentSet00A\ProductWithoutContLink.CATProduct
+2 E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\RetrieveConsistentSet00A\RetrieveConsistentSet011\Part2.CATPart
+3 E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\RetrieveConsistentSet00A\RetrieveConsistentSet011\Part1.CATPart
+...</pre>
+       </td>
+     </tr>
+   </table>
+   <p>On [<a href="#Fig.1">Fig.1</a>] you can see that the <b>
+   <code>RetrieveConsistentSet00A</code> 
+   directory contains two files: <code>ProductWithContLink.CATProduct</code> and
+   <code>ProductWithoutContLink.CATProduct</code>. There are no links between 
+   them, so there are two roots in this directory. The associated files of <code>
+   ProductWithContLink.CATProduct</code> are into the<code> 
+   RetrieveConsistentSet012 </code>directory<code> </code>[<a href="#Fig.3">Fig.3</a>], 
+   and those of the <code>ProductWithoutContLink.CATProduct</code> are into the<code> 
+   RetrieveConsistentSet011 </code>directory [<a href="#Fig.2">Fig.2</a>]. There 
+   are no missing files. </b></p>
+   <p>On this first output you can see that the list of found items, <b>
+   returned by the <code>GetConsistentSetOfItems</code> 
+   method, </b>contains the<b> root 
+   itself. It is consistent with the <code>
+   GetListOfDependantFile</code> method of the <i>SendToService</i> idl 
+   interface. </b></p>
+   <p><b>RetrieveConsistentSet00B no recursively </b></p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+<b>Identifying roots in directory : </b>E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\<b><font 
+       color="#FF0000">RetrieveConsistentSet00B</font></b>
+<b>Not Recursive way</b>
+There are <b>2 root(s)</b> in this directory
+
+<b>1 E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\RetrieveConsistentSet00B\MyText.txt</b>
+<b><font color="#0000FF">Number of items in consistent set:1</font></b>
+<font color="#33CC33"><b>-Found items:1</b></font>
+1 E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\RetrieveConsistentSet00B\MyText.txt
+
+<b>2 E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\RetrieveConsistentSet00B\Part6.CATPart</b>
+<b><font color="#0000FF">Number of items in consistent set:2</font></b>
+<b><font color="#33CC33">-Found items:2</font></b>
+1 E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\RetrieveConsistentSet00B\Part6.CATPart
+2 E:\CAAxPDMInterfaces.tst\FunctionTests\InputData\RetrieveConsistentSet00B\DesignTable1.xls
+...</pre>
+       </td>
+     </tr>
+   </table>
+   <p>On [<a href="#Fig.1">Fig.1</a>] you can see that the <b>
+   <code>RetrieveConsistentSet00B</code> 
+   directory contains three files:</b> <code>MyText.txt</code>, <code>
+   Part6.CATPart</code> and <code>DesignTable1.xls</code>. But on [<a 
+   href="#Fig.6">Fig.6</a>] you can see that <code>DesignTable1.xls</code> is 
+   pointed by <code>Part6.CATPart</code>: So, there are only two roots: <code>
+   MyText.txt</code> and <code>Part6.CATPart</code>. Both are not pointed by 
+   another file in the<code> </code><b><code>
+   RetrieveConsistentSet00B</code> directory.</b></p>
+   <p><b><a name="RetrieveConsistentSet00C"></a>RetrieveConsistentSet00C no 
+   recursively </b></p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+<b>Identifying roots in directory :</b> E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\<font 
+       color="#FF0000"><b>RetrieveConsistentSet00C</b></font>
+<b>Not Recursive way</b>
+<b>ERROR:</b> Impossible to open directory E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\RetrieveConsistentSet00C.
+...</pre>
+       </td>
+     </tr>
+   </table>
+   <p>The <b><code>RetrieveConsistentSet00C</code> 
+   directory does not exist, so the <code>SearchRootItems</code> method returns 
+   an error. The error message contains the not found directory. </b></p>
+   <p><b>RetrieveConsistentSet00D no recursively </b></p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+<b>Identifying roots in directory :</b> E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\<font 
+       color="#FF0000"><b>RetrieveConsistentSet00D</b></font>
+<b>Not Recursive way</b>
+There are <b>0 root(s) </b>in this directory
+
+...</pre>
+       </td>
+     </tr>
+   </table>
+   <p>On [<a href="#Fig.1">Fig.1</a>] you can see that the <b>
+   <code>RetrieveConsistentSet00D</code> 
+   directory contains no file. In this case the <code>SearchRootItems</code> 
+   method returns 0 root, and not an error.</b></p>
+   <p><b>RetrieveConsistentSet00E no recursively </b></p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+<b>Identifying roots in directory :</b> E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\<font 
+       color="#FF0000"><b>RetrieveConsistentSet00E</b></font>
+<b>Not Recursive way</b>
+There are <b>1 root(s)</b> in this directory
+
+<b>1 E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\RetrieveConsistentSet00E\Drawing1.CATDrawing
+<font color="#0000FF">Number of items in consistent set:3</font>
+<font color="#33CC33">-Found items:3</font></b>
+1 E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\RetrieveConsistentSet00E\Drawing1.CATDrawing
+2 E:\CAAxPDMInterfaces.tst\FunctionTests\InputData\RetrieveConsistentSet00E\ProductForDraftingAss.CATProduct
+3 E:\CAAxPDMInterfaces.tst\FunctionTests\InputData\RetrieveConsistentSet00E\Part7.CATPart
+...</pre>
+       </td>
+     </tr>
+   </table>
+   <p>On [<a href="#Fig.1">Fig.1</a>] you can see that the <b>
+   <code>RetrieveConsistentSet00E</code> 
+   directory contains three files: <code>Drawing</code>
+   <code>1.CATDrawing</code>, <code>Part7.CATPart</code> 
+   and <code>ProductForDraftingAss</code><code>.CATProduct</code>. 
+   On </b>[<a href="#Fig.5">Fig.5</a>] you can see that only <b><code>
+   Drawing</code><code>1</code> 
+   <code>.CATDrawing </code>is without links, so it is 
+   the only one root of this<code> </code>directory. On the same figure, you can 
+   see that <code>Drawing1</code> 
+   <code>.CATDrawing </code>has two links: one to<code>
+   </code><code>Part7.CATPart</code> and one to 
+   the Product. So there are three items in the found items list: the root 
+   itself, <code>Part7.CATPart</code> and <code>ProductForDraftingAss</code></b><code>.CATProduct</code><b> 
+   There is no missing item.</b></p>
+   <p><b>RetrieveConsistentSet00A/RetrieveConsistentSet011 no recursively </b>&nbsp;</p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+<b>Identifying roots in directory : </b>E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\<font 
+       color="#FF0000"><b>RetrieveConsistentSet00A\RetrieveConsistentSet011</b></font>
+<b>Not Recursive way</b>
+There are <b>1 root(s)</b> in this directory
+
+<b>1 E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\RetrieveConsistentSet00A\RetrieveConsistentSet011\Part1.CATPart</b>
+<font color="#0000FF"><b>Number of items in consistent set:2</b></font>
+<b>-Found items:2</b>
+1 E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\RetrieveConsistentSet00A\RetrieveConsistentSet011\Part1.CATPart
+2 E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\RetrieveConsistentSet00A\RetrieveConsistentSet011\Part2.CATPart
+... </pre>
+       </td>
+     </tr>
+   </table>
+   <p>On [<a href="#Fig.1">Fig.1</a>] you can see that the <b>
+   <code>RetrieveConsistentSet011</code> 
+   directory contains two files: <code>Part1.CATPart</code> and <code>
+   Part2.CATPart</code>. On </b>[<a href="#Fig.2">Fig.2</a>] you can see 
+   that only <b><code>Part1.CATPart</code> is 
+   without links, so it is the only one root. On the same figure, you can see 
+   that <code>Part1.CATPart</code> has only one link to <code>Part2.CATPart</code>. 
+   So there are two items in the found items list: the root itself and <code>
+   Part2.CATPart.</code> There is no missing item. </b></p>
+   <p><b>RetrieveConsistentSet00A/RetrieveConsistentSet012 no recursively </b>&nbsp;</p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+<b>Identifying roots in directory :</b> E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\<font 
+       color="#FF0000"><b>RetrieveConsistentSet00A\RetrieveConsistentSet012</b></font>
+<b>Not Recursive way</b>
+There are <b>1 root(s)</b> in this directory
+
+<b>1 E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\RetrieveConsistentSet00A\RetrieveConsistentSet012\Part4.CATPart</b>
+<b><font color="#0000FF">Number of items in consistent set:3</font>
+<font color="#33CC33">-Found items:3</font></b>
+1 E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\RetrieveConsistentSet00A\RetrieveConsistentSet012\Part4.CATPart
+2 E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\RetrieveConsistentSet00A\ProductWithContLink.CATProduct
+3 E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\RetrieveConsistentSet00A\RetrieveConsistentSet012\Part3.CATPart
+...</pre>
+       </td>
+     </tr>
+   </table>
+   <p>On [<a href="#Fig.1">Fig.1</a>] you can see that the <b>
+   <code>RetrieveConsistentSet012</code> 
+   directory contains two files: <code>Part3.CATPart</code> and <code>
+   Part4.CATPart</code>. On </b>[<a href="#Fig.3">Fig.3</a>] you can see 
+   that only <b><code>Part4.CATPart</code> is 
+   without links, so it is the only one root. On the same figure, you can see 
+   that <code>Part4.CATPart</code> has two links: on to<code> </code>
+   <code>Part2.CATPart</code> and one to the 
+   Product. So there are three items in the found item list: the root itself,
+   <code>Part3.CATPart</code> and </b><code>
+   ProductWithContLink.CATProduct</code><b> There 
+   is no missing item.</b></p>
+   <p><b>RetrieveConsistentSet00A/RetrieveConsistentSet013 no recursively </b>&nbsp;</p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+<b>Identifying roots in directory :</b> E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\<font 
+       color="#FF0000"><b>RetrieveConsistentSet00A\RetrieveConsistentSet013</b></font>
+<b>Not Recursive way</b>
+There are <b>1 root(s)</b> in this directory
+
+<b>1 E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\RetrieveConsistentSet00A\RetrieveConsistentSet013\ProductMissingFile.CATProduct</b>
+<b><font color="#0000FF">Number of items in consistent set:3</font>
+<font color="#33CC33">-Found items:2</font></b>
+1 E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\RetrieveConsistentSet00A\RetrieveConsistentSet013\ProductMissingFile.CATProduct
+2 E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\RetrieveConsistentSet00A\RetrieveConsistentSet013\Part5.CATPart
+<b><font color="#FF0000">-Missing items:1</font></b>
+1 E:\CAAxPDMInterfaces.tst\FunctionTests\InputData\RetrieveConsistentSet001\RetrieveConsistentSet013\Missing.CATPart
+...</pre>
+       </td>
+     </tr>
+   </table>
+   <p>On [<a href="#Fig.1">Fig.1</a>] you can see that the <b>
+   <code>RetrieveConsistentSet013</code> 
+   directory contains two files: <code>ProductMissing</code> 
+   <code>.CATProduct</code> and <code>Part5.CATPart</code>. 
+   On </b>[<a href="#Fig.4">Fig.4</a>] you can see that only <b><code>
+   ProductMissing</code><code>.CATProduct</code> 
+   is without links, so it is the only one root. On the same figure, you can see 
+   that<code> ProductMissing</code><code>.CATProduct</code> 
+   points to two files<code> </code><code>
+   Part5.CATPart</code> and <code>Missing.CATPart</code>. The first one is into 
+   the found items list, and the second one is into the missing items list: the
+   <code>Missing.CATPart</code> has been deleted.</b></p>
+   <p><b>RetrieveConsistentSet00A&nbsp; recursively </b></p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+<b>Identifying roots in directory :</b> E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\RetrieveConsistentSet00A
+<b>Recursive way</b>
+There are <b>3 root(s)</b> in this directory
+
+<b>1 E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\RetrieveConsistentSet00A\ProductWithContLink.CATProduct</b>
+<font color="#0000FF"><b>Number of items in consistent set:3</b></font>
+-<b><font color="#33CC33">Found items:3</font></b>
+1 E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\RetrieveConsistentSet00A\ProductWithContLink.CATProduct
+2 E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\RetrieveConsistentSet00A\RetrieveConsistentSet012\Part4.CATPart
+3 E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\RetrieveConsistentSet00A\RetrieveConsistentSet012\Part3.CATPart
+
+<b>2 E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\RetrieveConsistentSet00A\ProductWithoutContLink.CATProduct</b>
+<b><font color="#0000FF">Number of items in consistent set:3</font></b>
+-<font color="#33CC33"><b>Found items:3</b></font>
+1 E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\RetrieveConsistentSet00A\ProductWithoutContLink.CATProduct
+2 E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\RetrieveConsistentSet00A\RetrieveConsistentSet011\Part2.CATPart
+3 E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\RetrieveConsistentSet00A\RetrieveConsistentSet011\Part1.CATPart
+
+<b>3 E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\RetrieveConsistentSet00A\RetrieveConsistentSet013\ProductMissingFile.CATProduct</b>
+<b><font color="#0000FF">Number of items in consistent set:3</font></b>
+-<b><font color="#33CC33">Found items:2</font></b>
+1 E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\RetrieveConsistentSet00A\RetrieveConsistentSet013\ProductMissingFile.CATProduct
+2 E:\CAAxPDMInterfaces.edu\InputData\RetrieveConsistentSet\RetrieveConsistentSet00A\RetrieveConsistentSet013\Part5.CATPart
+-<b><font color="#33CC33">Missing items:1</font></b>
+1 E:\CAAxPDMInterfaces.tst\FunctionTests\InputData\RetrieveConsistentSet001\RetrieveConsistentSet013\Missing.CATPart
+...</pre>
+       </td>
+     </tr>
+   </table>
+   <p>In this last case, the roots are looking for into the <code>
+   RetrieveConsistentSet00A </code>directory and into all its sub directories:
+   <code>RetrieveConsistentSet011</code>, <code>RetrieveConsistentSet012</code> 
+   and <code>RetrieveConsistentSet013</code>. If you consider the two figures:
+   <a href="#Fig.2">Fig.2</a> and <a href="#Fig.4">Fig.4</a> you can see that 
+   there is no problem to consider <b><code>
+   ProductMissingFile</code> and <code>ProductWithoutContLink</code> like roots 
+   because they are pointed by nobody. But if you look at&nbsp; </b>
+   <a href="#Fig.3">Fig.3</a> there is an ambiguite: <b>
+   <code>ProductWithContLink</code> points <code>
+   Part4</code> and <code>Part4</code> points <code>ProductWithContLink</code>. 
+   In this case, the <code>SearchRootItems</code> method chooses the product as 
+   root: it is the first file opened by the end user in assembly context. 
+   </b></p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h4><a name="How"></a>How to Launch CAAxPDMRetrieveConsistentSet</h4>
+   <p>To launch CAAxPDMRetrieveConsistentSet, you will need to set up the build 
+   time environment, then compile CAAxPDMRetrieveConsistentSet along with its 
+   prerequisites, set up the run time environment, and then execute the use case 
+   [<a href="#References">1</a>]. To launch it, execute the following command:</p>
+   <pre>mkrun -c &quot;CAAxPDMRetrieveConsistentSet DirectoryPath [-r]&quot;</pre>
+   <p>where </p>
+   <ul>
+     <li><code>DirectoryPath</code> is&nbsp;the <b>complete path </b>of a file 
+     directory. You can use&nbsp;those specified in the <a href="#What">What Does 
+     CAAxPDMRetrieveConsistentSet Do</a> section</li>
+     <li>The last option<code> [<b>-r</b>]</code> is optional. If you specify 
+     it, the root are searched recursively in the specified directory</li>
+   </ul>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h4><a name="Where"></a>Where to Find the CAAxPDMRetrieveConsistentSet Code</h4>
+   <p>The CAAxPDMRetrieveConsistentSet use case is made of one single file, the 
+   CAAxPDMRetrieveConsistentSetMain.cpp file, located in the 
+   CAAxPDMRetrieveConsistentSet.m module of the CAAxPDMInterfaces.edu framework:</p>
+   <table>
+     <tr>
+       <td>Windows</td>
+       <td><code>InstallRootDirectory\CAAxPDMInterfaces.edu\CAAxPDMRetrieveConsistentSet.m\</code></td>
+     </tr>
+     <tr>
+       <td>Unix</td>
+       <td><code>InstallRootDirectory/CAAxPDMInterfaces.edu/CAAxPDMRetrieveConsistentSet.m/</code></td>
+     </tr>
+   </table>
+   <p>where <code>InstallRootDirectory</code> is the directory where the CAA 
+   CD-ROM is installed.</p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="Step"></a>Step-by-Step</h3>
+   <p>There are forth logical steps in CAAxPDMRetrieveConsistentSet:</p>
+   <ol>
+     <li><a href="#Prolog">Prolog</a></li>
+     <li><a href="#Retrieving the Root Files">Retrieving the Root Files</a></li>
+     <li><a href="#Retrieving its Pointed and Missing Files">Retrieving the 
+     Existing and Missing Pointed Files </a></li>
+     <li><a href="#Epilog">Epilog</a></li>
+   </ol>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h4><a name="Prolog"></a>Prolog</h4>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+HRESULT rc=S_OK ;
+CATUnicodeString <b>directory</b>  ;
+CATBoolean <b>RecursiveScan</b> = FALSE ;
+char * pSessionName = &quot;CAA_Sample_Session&quot;;
+CATSession *pSession = NULL;
+rc = ::<b>Create_Session</b>(pSessionName,pSession);
+...</pre>
+       </td>
+     </tr>
+   </table>
+   <p>CAAxPDMRetrieveConsistentSet begins by creating a session. From the 
+   command line is extracted the directory to analyze, and the recursiveness 
+   option. Refer to the code to see how <b><code>
+   directory</code></b>&nbsp; and <code>RecursiveScan</code> are 
+   initialized. </p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <h4><a name="Retrieving the Root Files"></a>Retrieving the Root 
+   Files</h4>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+   CATListOfCATUnicodeString iListOfDirectory;
+   CATListValCATIxPDMItem_var oListOfRootItem;
+   iListOfDirectory.<b>Append</b>(directory);
+   HRESULT hr = <b>CATxPDMFileServices::SearchRootItems</b>(iListOfDirectory,
+                                                 RecursiveScan,oListOfRootItem);
+..</pre>
+       </td>
+     </tr>
+   </table>
+   <p><code>SearchRootItems</code> is a static method of the <i>
+   CATxPDMFileServices</i> class. Its argument are the following:</p>
+   <ul>
+     <li><code>iListOfDirectory</code>, the list of directories to scan. This 
+     list contains only one element, <code>directory</code>, the input directory 
+     initialized in the <a href="#Prolog">Prolog</a> step. </li>
+     <li><code>RecursiveScan</code> is a boolean. <code>TRUE</code>, the roots 
+     are recursively searched in the input directory, and its sub-directories, 
+     otherwise only in the input directory. </li>
+     <li><code>oListOfRootItem</code> is the output list of roots, each one 
+     handled by a <i>CATIxPDMItem </i>pointer</li>
+   </ul>
+   <p>Then, such as all methods of the <i>CATxPDMFileServices</i> class, the
+   <code>SearchRootItems</code> method returns a <i>CATError</i> class instance 
+   in case of failure. You retrieve this error thanks to <b>
+   <code>CATGetLastError</code>, a </b>
+   global function [<a href="#References">2</a>]. Refer to the <b>
+   <code><a href="#RetrieveConsistentSet00C">
+   RetrieveConsistentSet00C</a></code> </b>case in the <a href="#What">
+   What Does CAAxPDMCheckDocType Do</a> section for an illustration</p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+   if (FAILED(hr))
+   {
+      CATError * pError = CATError::<b>CATGetLastError</b>(hr);
+      if ( NULL != pError )
+      {
+         CATUnicodeString ErrorMessage = pError-&gt;GetNLSMessage() ;
+      }
+...</pre>
+       </td>
+     </tr>
+   </table>
+   <p>Finally, there is a loop on each root item to analyze its pointed files. 
+   The <code>GetDocFileName</code> method enables us to display the complete 
+   file path of the current root file. </p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+   int size = oListOfRootItem.Size();
+   CATUnicodeString FileName;
+   for (int i=1;i&lt;=size;i++)
+   {
+      CATIxPDMItem_var <b>spCurrentRootItem</b> = oListOfRootItem[i];
+      if (!!spCurrentRootItem )
+      {
+         spCurrentRootItem -&gt;<b>GetDocFileName</b>(FileName);
+         
+...</pre>
+       </td>
+     </tr>
+   </table>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h4><a name="Retrieving its Pointed and Missing Files"></a>
+   Retrieving its existing and Missing Pointed Files </h4>
+   <p>You retrieve the files pointed by a root thanks to <code>
+   GetConsistentSetOfItems</code> a static method of the <i>CATxPDMFileServices</i> 
+   class. </p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+ CATListValCATIxPDMItem_var oListOfPointedItem;
+ CATListValCATIxPDMItem_var oListOfMissingItem;
+ if (SUCCEEDED(CATxPDMFileServices::<b>GetConsistentSetOfItems</b>(spCurrentRootItem,
+                                             oListOfPointedItem,oListOfMissingItem)))
+ {
+    int sizeListOfPointedItem=oListOfPointedItem.Size();
+    int sizeListOfMissingItem=oListOfMissingItem.Size();
+
+    if (sizeListOfPointedItem)
+    {
+       for (int j=1;j&lt;=sizeListOfPointedItem ;j++)
+       {
+          CATIxPDMItem_var spCurrentPointedItem = oListOfPointedItem[j];
+          if (!!spCurrentPointedItem)
+          {
+             spCurrentPointedItem-&gt;<b>GetDocFileName</b>(FileName);
+       ...
+    }
+    if (sizeListOfMissingItem)
+    {
+       for (int j=1;j&lt;=sizeListOfMissingItem ;j++)
+       {
+          CATIxPDMItem_var spCurrentMissingItem= oListOfMissingItem[j];
+          if (!!spCurrentMissingItem)
+          {
+          </pre>
+       </td>
+     </tr>
+   </table>
+   <p>The <code>GetConsistentSetOfItems</code> method returns two lists of smart 
+   pointers on the <i>CATIxPDMItem</i> interface pointer: </p>
+   <ul>
+     <li><code>oListOfPointedItem</code> : The&nbsp; existing files pointed by 
+     the root</li>
+     <li><code>oListOfMissingItem</code> : The&nbsp; missing files pointed by 
+     the root</li>
+   </ul>
+   <p>The two lists form the consistent set of files for a root. This API can be 
+   useful before using the SendTo API. If there is at least one missing file, 
+   the SendTo applied to the root file will be not consistent. </p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <h4><a name="Epilog"></a>Epilog</h4>
+   <p>The session is closed using the global function named <code>Delete_Session</code>.</p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+rc = ::Delete_Session(pSessionName);
+...</pre>
+       </td>
+     </tr>
+   </table>
+   <p><code>pSessionName</code> is the name of the session declared and used&nbsp; 
+   in the <a href="#Prolog">Prolog</a> section. </p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="InShort"></a>In Short</h3>
+   <p>You have learned that using function of the <i>CATxPDMFileServices</i> 
+   class you can:</p>
+   <ul>
+     <li>Retrieve all the root of a directory and its contained directories</li>
+     <li>Retrieve the existing and missing files pointed by a root document. The 
+     result of these two lists is dependent of the current locators.</li>
+   </ul>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="References"></a>References</h3>
+   <table width="100%">
+     <tr>
+       <td valign="top">[1]</td>
+       <td>
+       <a href="../CAADocUseCases/CAADocRunSample.htm">
+       Building and Launching a CAA V5 Use Case</a></td>
+     </tr>
+     <tr>
+       <td valign="top">[2]</td>
+       <td>
+       <a href="../CAASysTechArticles/CAASysErrors.htm">
+       Managing Errors Using HRESULT</a></td>
+     </tr>
+     <tr>
+       <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="History"></a>History</h3>
+   <table width="100%">
+     <tr>
+       <td valign="top">Version: <strong>1</strong> [Feb 2005]</td>
+       <td valign="top">Document created</td>
+     </tr>
+     <tr>
+       <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <p><i>Copyright © 2005, Dassault Systèmes. All rights reserved.</i></p>
+
+  </body>
+
+</html>
+
