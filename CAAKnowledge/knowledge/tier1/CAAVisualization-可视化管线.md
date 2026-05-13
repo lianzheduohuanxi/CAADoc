@@ -275,3 +275,14 @@ CAAVisualization (可视化)
 6. **所有权树**：CAAIVisModelObject 的 AddChild/RemChild 构建装配关系
 7. **两个框架层次**：Basics 用于入门（直接 Rep 操作），Manager 用于生产（接口分离）
 8. **通知传递**：Application::AnalyseNotification 接收所有子对象事件并分发
+
+---
+
+## 相关资源
+
+- 完整方法签名: [api-reference/interfaces/CATVisManager.htm](../api-reference/interfaces/CATVisManager.htm)
+- 完整方法签名: [api-reference/interfaces/CATExtIVisu.htm](../api-reference/interfaces/CATExtIVisu.htm)
+- 完整方法签名: [api-reference/interfaces/CATIVisModelObject.htm](../api-reference/interfaces/CATIVisModelObject.htm)
+- 完整方法签名: [api-reference/interfaces/CATIVisModelCGRObject.htm](../api-reference/interfaces/CATIVisModelCGRObject.htm)
+- 结构化查询: [knowledge_base.json → method_index](../data/knowledge_base.json)
+- 使用案例: [use-cases/](../use-cases/)

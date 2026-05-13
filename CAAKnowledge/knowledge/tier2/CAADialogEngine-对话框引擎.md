@@ -662,3 +662,14 @@ AddAnalyseNotificationCB(NULL, "CAADegBoxCreationChoiceNotification",
 7. **Check Header 需要在构造函数中通过 CATAfrCheckHeaderAccessor 配置**，包括 Check/Uncheck 命令和资源文件。
 
 8. **跨文档 Agent 和本 Agent 可以放在同一个 State 中**，用户可任意顺序操作。
+
+---
+
+## 相关资源
+
+- 完整方法签名: [api-reference/interfaces/CATStateCommand.htm](../api-reference/interfaces/CATStateCommand.htm)
+- 完整方法签名: [api-reference/interfaces/CATDialogAgent.htm](../api-reference/interfaces/CATDialogAgent.htm)
+- 完整方法签名: [api-reference/interfaces/CATISO.htm](../api-reference/interfaces/CATISO.htm)
+- 完整方法签名: [api-reference/interfaces/CATCSO.htm](../api-reference/interfaces/CATCSO.htm)
+- 结构化查询: [knowledge_base.json → method_index](../data/knowledge_base.json)
+- 使用案例: [use-cases/caadegusecases/](../use-cases/caadegusecases/)

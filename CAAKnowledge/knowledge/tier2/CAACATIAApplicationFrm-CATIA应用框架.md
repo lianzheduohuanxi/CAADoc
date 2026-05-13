@@ -648,3 +648,14 @@ void CAACafCircleWindowCmd::CreateCircle() {
 6. **搜索系统使用 CATIIniSearchEngine + CATIIniSearchContext + CATIIniSearchServices** 三个组件协作，结果通过 CATPSO 可视化。
 
 7. **特征树操作通过 CATNavigController** 完成，需要从 SpecTreeWindow 获取。
+
+---
+
+## 相关资源
+
+- 完整方法签名: [api-reference/interfaces/CATIDocumentEdit.htm](../api-reference/interfaces/CATIDocumentEdit.htm)
+- 完整方法签名: [api-reference/interfaces/CATIWebWindow.htm](../api-reference/interfaces/CATIWebWindow.htm)
+- 完整方法签名: [api-reference/interfaces/CATIPSO.htm](../api-reference/interfaces/CATIPSO.htm)
+- 完整方法签名: [api-reference/interfaces/CATISearchServices.htm](../api-reference/interfaces/CATISearchServices.htm)
+- 结构化查询: [knowledge_base.json → method_index](../data/knowledge_base.json)
+- 使用案例: [use-cases/](../use-cases/)

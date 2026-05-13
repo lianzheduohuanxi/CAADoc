@@ -243,3 +243,17 @@ agent 可以从 CAASystem.edu 学到 CAA 最基础的编程范式：
 5. **如何管理集合** — CATBaseUnknown* 多态集合 + QueryInterface
 6. **如何发送通知** — CATNotification 子类化
 7. **导出宏模式** — `ExportedByXXX` 控制 dllimport/dllexport
+
+---
+
+## 相关资源
+
+- 完整方法签名: [api-reference/interfaces/CAAISysAccess.htm](../api-reference/interfaces/CAAISysAccess.htm)
+- 完整方法签名: [api-reference/interfaces/CAAISysCollection.htm](../api-reference/interfaces/CAAISysCollection.htm)
+- 完整方法签名: [api-reference/interfaces/CAAISysGeomFactory.htm](../api-reference/interfaces/CAAISysGeomFactory.htm)
+- 完整方法签名: [api-reference/interfaces/CAAISysPoint.htm](../api-reference/interfaces/CAAISysPoint.htm)
+- 完整方法签名: [api-reference/interfaces/CAAISysLine.htm](../api-reference/interfaces/CAAISysLine.htm)
+- 完整方法签名: [api-reference/interfaces/CAAISysCircle.htm](../api-reference/interfaces/CAAISysCircle.htm)
+- 完整方法签名: [api-reference/interfaces/CAAISysPlane.htm](../api-reference/interfaces/CAAISysPlane.htm)
+- 结构化查询: [knowledge_base.json → method_index](../data/knowledge_base.json)
+- 使用案例: [use-cases/](../use-cases/)

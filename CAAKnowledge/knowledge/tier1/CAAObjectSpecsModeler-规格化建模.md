@@ -623,3 +623,14 @@ CAAOsmSquare               CATIBuild        CAAOsmBuildUpdate
 5. **Build/Update 是同步的**：`Update()` 立即调用 `Build()`，调用者可以紧接着读取计算结果
 
 6. **CCP 操作需要格式初始化**：即使是批处理模式也需要 `SpecBindNativeFormat`
+
+---
+
+## 相关资源
+
+- 完整方法签名: [api-reference/interfaces/CATOsmSUHandler.htm](../api-reference/interfaces/CATOsmSUHandler.htm)
+- 完整方法签名: [api-reference/interfaces/CATISpecObject.htm](../api-reference/interfaces/CATISpecObject.htm)
+- 完整方法签名: [api-reference/interfaces/CATIBuild.htm](../api-reference/interfaces/CATIBuild.htm)
+- 完整方法签名: [api-reference/interfaces/CATIPLMEntity.htm](../api-reference/interfaces/CATIPLMEntity.htm)
+- 结构化查询: [knowledge_base.json → method_index](../data/knowledge_base.json)
+- 使用案例: [use-cases/caascdstrusecases/](../use-cases/caascdstrusecases/)
