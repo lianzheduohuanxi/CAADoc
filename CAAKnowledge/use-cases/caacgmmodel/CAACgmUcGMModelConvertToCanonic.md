@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Extracting the Canonical Representation of a Curve"
-category: use-case case"
+category: "use-case case"
 module: "CAACgmModel"
-tags: ["CAAGMModelInterfaces", "CATICGMConvertCurveToCanonic", "CAAGMModelConvertToCanonic"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelConvertToCanonic.htmmd"
+tags: "["CAAGMModelInterfaces", "CATICGMConvertCurveToCanonic", "CAAGMModelConvertToCanonic"]"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelConvertToCanonic.htm"
 converted: "2026-05-11T17:33:48.288651"
-```
-
 ---
 # Extracting the Canonical Representation of a Curve
 
@@ -35,7 +32,7 @@ With the code below:
     CATMathSetOfPointsND Points(3,NbPoints);
     double eps = 0.01*piGeomFactory->GetResolution(#);
     Points.Reset(#);
-```vbscript
+```cpp
     for (CATLONG32 k=0; k < NbPoints; k++)
 
 ```
@@ -72,9 +69,8 @@ a spline is created. This spline passes through the points which are all aligned
     * [90, 90, ε]
 The code below creates a curve whose type is CATLineType
 
-The code below creates a curve whose type is CATLineType
     CATICGMConvertCurveToCanonic * pCrvToCanonicOpe1 = NULL;
-```vbscript
+```cpp
     pCrvToCanonicOpe1 =::CATCGMCreateConvertCurveToCanonic(piGeomFactory,pConfig,pSpline1,Lim1);
 
 ```
@@ -85,7 +81,7 @@ CATICGMConvertCurveToCanonic * pCrvToCanonicOpe1 = NULL;
 pCrvToCanonicOpe1 =::CATCGMCreateConvertCurveToCanonic(piGeomFactory,pConfig,pSpline1,Lim1);
     pCrvToCanonicOpe1->Run(#);
     CATCurve * pCrv1 = pCrvToCanonicOpe1->GetResult(oCrvLim1);
-```vbscript
+```cpp
     if (pCrv1==NULL ||!pCrv1->IsATypeOf(CATLineType))
 
 ```

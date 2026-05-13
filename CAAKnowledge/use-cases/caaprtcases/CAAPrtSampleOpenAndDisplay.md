@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Opening and Displaying an Image File"
-category: use-case case"
+category: "use-case case"
 module: "CAAPrtUseCases"
-tags: ["CAAPrtApplication", "CAAPrtWheatField", "CAAPrtDialog", "CAAPrint"]
-source_file: "Doc/online/CAAPrtUseCases/CAAPrtSampleOpenAndDisplay.htmmd"
+tags: "["CAAPrtApplication", "CAAPrtWheatField", "CAAPrtDialog", "CAAPrint"]"
+source_file: "Doc/online/CAAPrtUseCases/CAAPrtSampleOpenAndDisplay.htm"
 converted: "2026-05-11T17:17:56.117863"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -100,7 +97,6 @@ where:
 
 The CAAPrtApplication use case is made of an application class and of a window class whose header and source files are located in the CAAPrtApplication.m module of the CAAPrint.edu framework:
 
-The CAAPrtApplication use case is made of an application class and of a window class whose header and source files are located in the CAAPrtApplication.m module of the CAAPrint.edu framework:
 Windows | `InstallRootDirectory/CAAPrint.edu/CAAPrtApplication.m`
 
 The CAAPrtApplication use case is made of an application class and of a window class whose header and source files are located in the CAAPrtApplication.m module of the CAAPrint.edu framework:
@@ -173,7 +169,7 @@ The file conversion to a 2D representation can now take place.
       ...
 The file conversion to a 2D representation can now take place.
       CAT2DRep * pRep = NULL;
-```vbscript
+```cpp
       pRep = new **CATPrint2DRep**(pImage, Parameters);
 
 ```

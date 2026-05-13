@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Making Your Document Independent Command Available in All Workbenches"
-category: use-case case"
+category: "use-case case"
 module: "CAAAfrUseCases"
-tags: ["CAAAfrGeneralWksAddinHeader", "CAAAfrGeneralViewFBStr", "CAAAfrViewerFeedbackStr", "CAAAfrGeneralView", "CAAAfrGeneralWksTlb", "CAAAfrGeneralWksMbr", "CATIWorkbenchAddin", "CAAMmrGeneralSearchStr", "CAAAfrGeneralEditMnu", "CAAAfrViewerFeedbackHdr", "CAAAfrGeneralEditSearchStr", "CAASearch", "CAAAfrGeneralWksAddin", "CAACafSearchCmd", "CAAApplicationFrame", "CAACafSearch", "CAAAfrSearchHdr", "CAAAfrSearchStr", "CATIAfrGeneralWksAddin"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleGeneralWksAddin.htmmd"
+tags: "["CAAAfrGeneralWksAddinHeader", "CAAAfrGeneralViewFBStr", "CAAAfrViewerFeedbackStr", "CAAAfrGeneralView", "CAAAfrGeneralWksTlb", "CAAAfrGeneralWksMbr", "CATIWorkbenchAddin", "CAAMmrGeneralSearchStr", "CAAAfrGeneralEditMnu", "CAAAfrViewerFeedbackHdr", "CAAAfrGeneralEditSearchStr", "CAASearch", "CAAAfrGeneralWksAddin", "CAACafSearchCmd", "CAAApplicationFrame", "CAACafSearch", "CAAAfrSearchHdr", "CAAAfrSearchStr", "CATIAfrGeneralWksAddin"]"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleGeneralWksAddin.htm"
 converted: "2026-05-11T17:17:55.744995"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -201,7 +198,7 @@ void CreateCommands(#);
 
 ```vbscript
 MacDeclareHeader(CAAAfrGeneralWksAddinHeader);
-```vbscript
+```cpp
     CATImplementClass(CAAAfrGeneralWksAdn, DataExtension,
 ```
 
@@ -211,7 +208,7 @@ MacDeclareHeader(CAAAfrGeneralWksAddinHeader);
     #include <TIE_**CATIAfrGeneralWksAddin**.h>
 ```vbscript
 MacDeclareHeader(CAAAfrGeneralWksAddinHeader);
-```vbscript
+```cpp
 CATImplementClass(CAAAfrGeneralWksAdn, DataExtension,
 ```
 
@@ -223,10 +220,9 @@ CATBaseUnknown, **CAAAfrGeneralWksAddin**);
 
     {}
 
-```vbscript
+```cpp
 TIE_CATIAfrGeneralWksAddin(CAAAfrGeneralWksAdn);
 CAAAfrGeneralWksAdn::CAAAfrGeneralWksAdn(#)
-    CAAAfrGeneralWksAdn::CAAAfrGeneralWksAdn(#)
 ```
 
     {}
@@ -245,7 +241,6 @@ CAAAfrGeneralWksAdn::CAAAfrGeneralWksAdn(#)
 
 The _CAAAfrGeneralWksAdn_ class states that it implements the _CATIAfrGeneralWksAddin_ interface thanks to the `TIE_``CATIAfrGeneralWksAddin` macro. The `CATImplementClass` macro declares that the _CAAAfrGeneralWksAdn_ class is a data extension, thanks to the `DataExtension` keyword, that extends _CAAAfrGeneralWksAddin_. The third argument must always be set as _CATBaseUnknown_ or _CATNull_ for any kind of extension.
 
-The _CAAAfrGeneralWksAdn_ class states that it implements the _CATIAfrGeneralWksAddin_ interface thanks to the `TIE_``CATIAfrGeneralWksAddin` macro. The `CATImplementClass` macro declares that the _CAAAfrGeneralWksAdn_ class is a data extension, thanks to the `DataExtension` keyword, that extends _CAAAfrGeneralWksAddin_. The third argument must always be set as _CATBaseUnknown_ or _CATNull_ for any kind of extension.
   3. Updating the Dictionary
 
 Update the interface dictionary, that is a file named, for example, CAAApplicationFrame.dico, whose directory's pathname is concatenated at run time in the CATDictionaryPath environment variable, and containing the following declaration to state that the _CAAAfrGeneralWksAddin_ component implements the _CATIAfrGeneralWksAddin_ interface, and whose code is located in the libCAAAfrGeneralWksAddin shared library or DLL.
@@ -275,7 +270,7 @@ The command header class, named CAAAfrGeneralWksAddinHeader, is created using th
 
 ---
 
-```vbscript
+```cpp
 MacDeclareHeader(CAAAfrGeneralWksAddinHeader);
 The `MacDeclareHeader` macro creates the header file and the source file for the CAAAfrGeneralWksAddinHeader class, and associates with this class the resource files CAAAfrGeneralWksAddinHeader.CATNls and CAAAfrGeneralWksAddinHeader.CATRsc. See Providing the Resources.
 
@@ -325,7 +320,7 @@ CATCmdContainer * CAAAfrGeneralWksAdn::CreateToolbars(#)
           NewAccess(CATCmdContainer, pCAAAfrGeneralWksTlb, CAAAfrGeneralWksTlb);
 
           NewAccess(CATCmdStarter, pCAAAfrSearchStr, CAAMmrGeneralSearchStr);
-```vbscript
+```cpp
           SetAccessCommand(pCAAAfrSearchStr, "**CAAAfrSearchHdr** ");
           SetAccessChild(pCAAAfrGeneralWksTlb, pCAAAfrSearchStr);
 
@@ -367,7 +362,7 @@ CATCmdContainer * CAAAfrGeneralWksAdn::CreateToolbars(#)
           NewAccess(CATCmdContainer,pCAAAfrGeneralWksMbr,CAAAfrGeneralWksMbr);
 
           NewAccess(CATCmdContainer,pCAAAfrGeneralEditMnu,**CATAfrEditMnu**);
-```vbscript
+```cpp
                SetAccessChild(pCAAAfrGeneralWksMbr,pCAAAfrGeneralEditMnu);
 
                NewAccess(CATCmdStarter,pCAAAfrGeneralEditSearchStr,CAAAfrGeneralEditSearchStr);
@@ -378,9 +373,9 @@ CATCmdContainer * CAAAfrGeneralWksAdn::CreateToolbars(#)
 
                **SetAccessAnchorName**(pCAAAfrGeneralEditSearchStr,"CATAfrEditSearchStr");
 
-```vbscript
+```cpp
 NewAccess(CATCmdStarter,pCAAAfrGeneralEditSearchStr,CAAAfrGeneralEditSearchStr);
-```vbscript
+```cpp
 SetAccessChild(pCAAAfrGeneralEditMnu,pCAAAfrGeneralEditSearchStr);
 SetAccessCommand(pCAAAfrGeneralEditSearchStr,"**CAAAfrSearchHdr** ");
           NewAccess(CATCmdContainer,pCAAAfrGeneralView,**CATAfrView**);
@@ -448,7 +443,6 @@ The CAAAfrGeneralWksAdn.CATNls:
 
 The CAAAfrGeneralWksAddinHeader.CATNls:
 
-The CAAAfrGeneralWksAddinHeader.CATNls:
     CAAAfrGeneralWksAddinHeader.CAAAfrSearchHdr.Category  = "Edit" ;
     CAAAfrGeneralWksAddinHeader.CAAAfrSearchHdr.Title     = "Search Demonstrator..." ;
     CAAAfrGeneralWksAddinHeader.CAAAfrSearchHdr.ShortHelp = "Search Demonstrator" ;

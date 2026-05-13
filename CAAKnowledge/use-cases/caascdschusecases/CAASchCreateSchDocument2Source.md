@@ -18,7 +18,7 @@ Option Explicit
 '   CATIA Level:  V5R15 
 ' *****************************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ```
@@ -26,7 +26,7 @@ Sub CATMain(#)
     ' ------------------------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sSavePath As String 
-```vbscript
+```cpp
     sSavePath=CATIA.SystemService.Environ("CATSavePath")
 
     If (Not CATIA.FileSystem.FolderExists(sSavePath)) Then
@@ -48,7 +48,7 @@ Sub CATMain(#)
     '--------------------------------------------------------------------------
     ' Create a CATProduct document
     '--------------------------------------------------------------------------
-```vbscript
+```cpp
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Add ("CATProduct")
     '
@@ -69,7 +69,7 @@ Sub CATMain(#)
     Dim strDocName As String
     strRootName = "Sample_SchematicRoot"
 ```
-```vbscript
+```cpp
     strDocName = CATIA.FileSystem.ConcatenatePaths(sSavePath, _
 	             "SampleOutput_SchDoc02.CATProduct")
 ```
@@ -101,7 +101,7 @@ Sub CATMain(#)
 
          objSchDoc.Close
 
-```vbscript
+```cpp
          Set objSchDoc = CATIA.Documents.Open (strDocName)
 
          Set objPrdRoot = Nothing
@@ -149,7 +149,7 @@ End Sub
 
 ```
 
-```vbscript
+```cpp
 Option Explicit
 ' COPYRIGHT DASSAULT SYSTEMES 2004
 
@@ -161,7 +161,7 @@ Option Explicit
 '   CATIA Level:  V5R15 
 ' *****************************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ```
@@ -169,7 +169,7 @@ Sub CATMain(#)
     ' ------------------------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sSavePath As String 
-```vbscript
+```cpp
     sSavePath=CATIA.SystemService.Environ("CATSavePath")
 
     If (Not CATIA.FileSystem.FolderExists(sSavePath)) Then
@@ -191,7 +191,7 @@ Sub CATMain(#)
     '--------------------------------------------------------------------------
     ' Create a CATProduct document
     '--------------------------------------------------------------------------
-```vbscript
+```cpp
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Add ("CATProduct")
     '
@@ -212,7 +212,7 @@ Sub CATMain(#)
     Dim strDocName As String
     strRootName = "Sample_SchematicRoot"
 ```
-```vbscript
+```cpp
     strDocName = CATIA.FileSystem.ConcatenatePaths(sSavePath, _
 	             "SampleOutput_SchDoc02.CATProduct")
 ```
@@ -244,7 +244,7 @@ Sub CATMain(#)
 
          objSchDoc.Close
 
-```vbscript
+```cpp
          Set objSchDoc = CATIA.Documents.Open (strDocName)
 
          Set objPrdRoot = Nothing

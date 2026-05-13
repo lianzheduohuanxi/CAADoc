@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Assembled Solution"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CATIA", "CAAAniPreProAsmbldSol", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProAsmbldSol.htmmd"
+tags: "["CATIA", "CAAAniPreProAsmbldSol", "CAAScdAniUseCases"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProAsmbldSol.htm"
 converted: "2026-05-11T17:31:51.786958"
-```
-
 ---
 ## Analysis Modeler
 
@@ -39,7 +36,7 @@ This use case shows you how to create an assembled solution. Here use of Edit/Se
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     sSep=CATIA.SystemService.Environ("ADL_ODT_SLASH")
 ```
@@ -50,7 +47,7 @@ This use case shows you how to create an assembled solution. Here use of Edit/Se
 ```
 
 ```vbscript
-```vbscript
+```cpp
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 ```
@@ -70,7 +67,7 @@ This use case shows you how to create an assembled solution. Here use of Edit/Se
 ```vbscript
     ' -----------------------------------------------------------
     ' Open the Analysis document
-```vbscript
+```cpp
     Set analysisDocument1 = CATIA.Documents.Open(sDocPath & sSep & "online" & sSep & "CAAScdAniUseCases" &
 ```
 ```
@@ -84,7 +81,7 @@ This use case shows you how to create an assembled solution. Here use of Edit/Se
 ```vbscript
 ' -----------------------------------------------------------
 ' Open the Analysis document
-```vbscript
+```cpp
 Set analysisDocument1 = CATIA.Documents.Open(sDocPath & sSep & "online" & sSep & "CAAScdAniUseCases" &
 ```
 ```
@@ -213,7 +210,7 @@ According to the general [ Analysis Document](../use-cases/caascdaniusecases/CAA
 ```vbscript
 ```vbscript
     'Retrieve the analysis manager object from the analysis document
-```vbscript
+```cpp
     Set documents1 = CATIA.Documents
     Set analysisDocument2 = documents1.Item("Analysis1.CATAnalysis")
     Set analysisManager2 = analysisDocument2.Analysis

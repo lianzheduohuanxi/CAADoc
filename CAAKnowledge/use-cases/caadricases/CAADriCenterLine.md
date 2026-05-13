@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Center Lines in a CATDrawing Document"
-category: use-case case"
+category: "use-case case"
 module: "CAADriUseCases"
-tags: ["CAADrwCenterLineCmd", "CAADrwAddin", "CAADrwCenterLine", "CAAUseCaseCommands", "CATI2Dxxx", "CAADraftingInterfaces", "CATIA", "CATI2Dxx", "CATIDrwAnnotationFactory"]
-source_file: "Doc/online/CAADriUseCases/CAADriCenterLine.htmmd"
+tags: "["CAADrwCenterLineCmd", "CAADrwAddin", "CAADrwCenterLine", "CAAUseCaseCommands", "CATI2Dxxx", "CAADraftingInterfaces", "CATIA", "CATI2Dxx", "CATIDrwAnnotationFactory"]"
+source_file: "Doc/online/CAADriUseCases/CAADriCenterLine.htm"
 converted: "2026-05-11T17:31:50.937531"
-```
-
 ---
 # Mechanical Design
 
@@ -149,7 +146,7 @@ AddCSOClient(_ObjectAgent);
 CATDialogState* pState1 = GetInitialState("Sel circle");
 pState1->AddDialogAgent(_ObjectAgent);
        AddTransition(pState1, NULL, IsOutputSetCondition(_ObjectAgent),
-```vbscript
+```cpp
                      Action((ActionMethod)&CAADrwCenterLineCmd::CreateCtrLine, NULL, NULL));
 
 ```
@@ -179,7 +176,7 @@ boolean CAADrwCenterLineCmd::CreateCtrLine(void *iData)
 CATPathElement *pElemPath = NULL;
 if (NULL != pObjSO)
           pObjSO->InitElementList(#);
-```vbscript
+```cpp
           while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement(#))  )
 
 ```
@@ -202,7 +199,7 @@ while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement(#))  )
                 if (NULL != piDrwFact)
                 {
                    // Let's create the center line
-```vbscript
+```cpp
 if (NULL != piDrwFact)
                    piDrwFact->**CreateDrwCenterLine**((CATBaseUnknown *)piElementRef);
                    piDrwFact->Release(#);

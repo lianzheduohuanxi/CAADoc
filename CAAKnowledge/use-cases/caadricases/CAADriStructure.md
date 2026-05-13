@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Sheets and Views in a CATDrawing Document"
-category: use-case case"
+category: "use-case case"
 module: "CAADriUseCases"
-tags: ["CATIDftStandardManager", "CATIDftDrawing", "CATIDftDrawingFormat", "CATIDftDocumentServices", "CATIContainer_var", "CATIA", "CATIDftViewMakeUp", "CAADrwStructure", "CATIDrawing", "CATIStringList", "CATIDftView", "CATIDftSheetFormat", "CATIDrwFactory", "CATIUnknownList", "CATISpecObject_var", "CATIView", "CATISpecObject", "CATI2DWFFactory_var", "CATIDftFormat_var", "CAADraftingInterfaces"]
-source_file: "Doc/online/CAADriUseCases/CAADriStructure.htmmd"
+tags: "["CATIDftStandardManager", "CATIDftDrawing", "CATIDftDrawingFormat", "CATIDftDocumentServices", "CATIContainer_var", "CATIA", "CATIDftViewMakeUp", "CAADrwStructure", "CATIDrawing", "CATIStringList", "CATIDftView", "CATIDftSheetFormat", "CATIDrwFactory", "CATIUnknownList", "CATISpecObject_var", "CATIView", "CATISpecObject", "CATI2DWFFactory_var", "CATIDftFormat_var", "CAADraftingInterfaces"]"
+source_file: "Doc/online/CAADriUseCases/CAADriStructure.htm"
 converted: "2026-05-11T17:31:51.020431"
-```
-
 ---
 # Mechanical Design
 
@@ -87,7 +84,6 @@ When you launch the use case, pass the full pathname of the file into which you 
 
 The CAADrwStructure use case is made of a single source file named CAADrwStructure.cpp located in the CAADrwStructure.m module of the CAADraftingInterfaces.edu framework:
 
-The CAADrwStructure use case is made of a single source file named CAADrwStructure.cpp located in the CAADrwStructure.m module of the CAADraftingInterfaces.edu framework:
 Windows | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwStructure.m/`
 
 The CAADrwStructure use case is made of a single source file named CAADrwStructure.cpp located in the CAADrwStructure.m module of the CAADraftingInterfaces.edu framework:
@@ -159,7 +155,7 @@ This section represents the usual sequence for creating a CATIA document.
     CATIDftDrawing *piDftDrawing = NULL;
     CATIDftDocumentServices *piDftDocServices = NULL;
     CATIContainer_var spDrwCont;
-```vbscript
+```cpp
     if (SUCCEEDED(pDoc->QueryInterface(IID_CATIDftDocumentServices, (void **)&piDftDocServices)))
 
 ```
@@ -170,7 +166,7 @@ CATIDftDocumentServices *piDftDocServices = NULL;
 CATIContainer_var spDrwCont;
 if (SUCCEEDED(pDoc->QueryInterface(IID_CATIDftDocumentServices, (void **)&piDftDocServices)))
 ```vbscript
-```vbscript
+```cpp
       if (SUCCEEDED(piDftDocServices->**GetDrawing**(IID_CATIDftDrawing, (void **)&piDftDrawing)))
 
 ```
@@ -181,7 +177,7 @@ if (SUCCEEDED(pDoc->QueryInterface(IID_CATIDftDocumentServices, (void **)&piDftD
 CATIContainer_var spDrwCont;
 if (SUCCEEDED(pDoc->QueryInterface(IID_CATIDftDocumentServices, (void **)&piDftDocServices)))
 ```vbscript
-```vbscript
+```cpp
 if (SUCCEEDED(piDftDocServices->**GetDrawing**(IID_CATIDftDrawing, (void **)&piDftDrawing)))
         if (piDftDrawing)
 
@@ -191,7 +187,7 @@ if (SUCCEEDED(piDftDocServices->**GetDrawing**(IID_CATIDftDrawing, (void **)&piD
 
         {
           // Gets the drawing container.
-```vbscript
+```cpp
 if (SUCCEEDED(piDftDocServices->**GetDrawing**(IID_CATIDftDrawing, (void **)&piDftDrawing)))
 ```vbscript
 if (piDftDrawing)
@@ -266,7 +262,7 @@ for (unsigned int indice = 0; indice < nbrstd; indice ++)
 ```
 
           {
-```vbscript
+```cpp
 for (unsigned int indice = 0; indice < nbrstd; indice ++)
 wchar_t *wstd = NULL;
 if ( SUCCEEDED ( piListstd->Item ( indice, &wstd ) ) && wstd )
@@ -319,7 +315,7 @@ piListstd->Release(#); piListstd=NULL;
      // Get available formats from drawing
     CATIDftDrawingFormats *piDftFormats = NULL;
     CATUnicodeString myFormatName;
-```vbscript
+```cpp
     if (SUCCEEDED(piDftDrawing->QueryInterface(IID_CATIDftDrawingFormats,(void **)&piDftFormats)))
 
 ```
@@ -328,7 +324,7 @@ piListstd->Release(#); piListstd=NULL;
 CATIDftDrawingFormats *piDftFormats = NULL;
 CATUnicodeString myFormatName;
 if (SUCCEEDED(piDftDrawing->QueryInterface(IID_CATIDftDrawingFormats,(void **)&piDftFormats)))
-```vbscript
+```cpp
       CATLISTV(CATISpecObject_var) spListFormat;
 ```vbscript
       if (SUCCEEDED(piDftFormats->**GetAvailableFormats**(spListFormat)))
@@ -338,9 +334,9 @@ if (SUCCEEDED(piDftDrawing->QueryInterface(IID_CATIDftDrawingFormats,(void **)&p
 ```
 
       {
-```vbscript
+```cpp
 if (SUCCEEDED(piDftDrawing->QueryInterface(IID_CATIDftDrawingFormats,(void **)&piDftFormats)))
-```vbscript
+```cpp
 CATLISTV(CATISpecObject_var) spListFormat;
 if (SUCCEEDED(piDftFormats->**GetAvailableFormats**(spListFormat)))
 ```
@@ -349,7 +345,7 @@ if (SUCCEEDED(piDftFormats->**GetAvailableFormats**(spListFormat)))
 ```
 
         // Gets the first format in the list.
-```vbscript
+```cpp
 CATLISTV(CATISpecObject_var) spListFormat;
 ```vbscript
 if (SUCCEEDED(piDftFormats->**GetAvailableFormats**(spListFormat)))
@@ -440,7 +436,7 @@ if( SUCCEEDED( piListOfSheet->Item(i, &item) ) )
 ```vbscript
 if( SUCCEEDED( piListOfSheet->Item(i, &item) ) )
 ```vbscript
-```vbscript
+```cpp
 if (item)
             if (SUCCEEDED(item->QueryInterface (IID_CATIDftSheetFormat,(void **)&piDftSheetFormat)))
 ```
@@ -453,7 +449,7 @@ if (item)
 ```vbscript
 if (item)
 ```vbscript
-```vbscript
+```cpp
 if (SUCCEEDED(item->QueryInterface (IID_CATIDftSheetFormat,(void **)&piDftSheetFormat)))
               if (FAILED(piDftSheetFormat->**SetSheetFormat**(myFormatName)))
 ```
@@ -464,7 +460,7 @@ if (SUCCEEDED(item->QueryInterface (IID_CATIDftSheetFormat,(void **)&piDftSheetF
 
               {
                 // Memory clean.
-```vbscript
+```cpp
 if (SUCCEEDED(item->QueryInterface (IID_CATIDftSheetFormat,(void **)&piDftSheetFormat)))
 ```vbscript
 if (FAILED(piDftSheetFormat->**SetSheetFormat**(myFormatName)))
@@ -538,7 +534,7 @@ AddSheet method on CATIDftDrawing interface creates the sheet and add it to the 
     // Create a view with Make Up
 CATIDrwFactory_var spDrwFact = spDrwCont;
     CATIDftViewMakeUp *piNewViewMU = NULL;
-```vbscript
+```cpp
     if (NULL_var != spDrwFact && SUCCEEDED(spDrwFact -> **CreateViewWithMakeUp**(IID_CATIDftViewMakeUp, (void **)&piNewViewMU)))
 
 ```
@@ -556,7 +552,7 @@ if (NULL_var != spDrwFact && SUCCEEDED(spDrwFact -> **CreateViewWithMakeUp**(IID
 
       {
         // Get the view from the MakeUp
-```vbscript
+```cpp
 if (NULL_var != spDrwFact && SUCCEEDED(spDrwFact -> **CreateViewWithMakeUp**(IID_CATIDftViewMakeUp, (void **)&piNewViewMU)))
 ```vbscript
 if (piNewViewMU)
@@ -610,8 +606,7 @@ The CATIDrwFactory is implemented by the drawing container. A MakeUp object is a
     ...
     // Activate this new view in the new sheet
     CATIDftView *piDftNewView=NULL;
-CATIDftView *piDftNewView=NULL;
-```vbscript
+```cpp
     if (SUCCEEDED(piNewView->QueryInterface(IID_CATIDftView,(void **)&piDftNewView)))
 
 ```

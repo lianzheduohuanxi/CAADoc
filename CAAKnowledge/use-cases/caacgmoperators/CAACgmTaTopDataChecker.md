@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "How to Use the CGM Data Checker"
 category: "tutorial"
 module: "CAACgmOperators"
-tags: ["CATINTCurve", "CATIntCurveType", "CATICPath", "CATIntCurve", "CATIA"]
-source_file: "Doc/online/CAACgmOperators/CAACgmTaTopDataChecker.htmmd"
+tags: "["CATINTCurve", "CATIntCurveType", "CATICPath", "CATIntCurve", "CATIA"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmTaTopDataChecker.htm"
 converted: "2026-05-11T17:33:48.656134"
-```
-
 ---
 tags: ["CATINTCurve", "CATIntCurveType", "CATICPath", "CATIntCurve", "CATIA"]
 source_file: "Doc/online/CAACgmOperators/CAACgmTaTopDataChecker.htmmd"
@@ -70,8 +67,7 @@ Into:
 **Step 3**
     1. Exit CATIA, activate the CATCAADataCheck variable plus the appropriate rule variables as described below:
 
-1. Exit CATIA, activate the CATCAADataCheck variable plus the appropriate rule variables as described below:
-```vbscript
+```cpp
            set CATCAADataCheck=1
 
 ```
@@ -80,7 +76,7 @@ to activate all the rules.
 
            set CATCAADataCheck=1
 ```vbscript
-```vbscript
+```cpp
            set CATCGMCleanerRules=_XXX_1;YYY_1_ ;...
 
 ```
@@ -88,7 +84,7 @@ to activate all the rules.
 ```
 
 to activate only a set of rules. XXX_1, YYYY_1 are the rule identifiers.
-```vbscript
+```cpp
     2. Restart CATIA.
 The Topological Checks Body should not contain any touched topology A cell is touched when it is intended to be used in some specific operations like the "smart duplication" (see the CATSmartBodyDuplicator in the Encyclopedia). Note there is other operators that require touched objects as their input data. After the operation has completed the touched cells should return to an untouched status. If they remain touched, further operations on the initial body may lead to unexpected results. A valid topology should not contain any touched cells. The CD traces are similar to the ones below: **CGM Rule: TRE_1**
 ```
@@ -96,7 +92,7 @@ Short msg: "Residual touched cells checking failed.";
 Extended msg: "Residual touched cells on ... checking failed.";
 
 ---
-```vbscript
+```cpp
 2. Restart CATIA.
 The Topological Checks Body should not contain any touched topology A cell is touched when it is intended to be used in some specific operations like the "smart duplication" (see the CATSmartBodyDuplicator in the Encyclopedia). Note there is other operators that require touched objects as their input data. After the operation has completed the touched cells should return to an untouched status. If they remain touched, further operations on the initial body may lead to unexpected results. A valid topology should not contain any touched cells. The CD traces are similar to the ones below: **CGM Rule: TRE_1**
 ```

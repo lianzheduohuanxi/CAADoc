@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Detail Of C++ API Changes"
 category: "api-changes"
 module: "CAACenAPIChanges"
-tags: ["CAA2Usage", "CAA2Level"]
-source_file: "Doc/online/CAACenAPIChanges/CAACenAPIChangeDetail.htmmd"
+tags: "["CAA2Usage", "CAA2Level"]"
+source_file: "Doc/online/CAACenAPIChanges/CAACenAPIChangeDetail.htm"
 converted: "2026-05-11T17:33:50.031668"
-```
-
 ---
 |  |  Detail Of V5-6R2018 C++ API Changes _What changes in the API compared with CAA V5-6R2017_
 ---|---|---
@@ -35,7 +32,6 @@ MINMV | Method is no more virtual. If occurs on a U1 class, may require modifica
 MINMV | Method is no more virtual. If occurs on a U1 class, may require modifications in Imakefile.mk of client code. If occurs on a U2 class, see details on the documentation of the concerned resource modification.
 Framework | Header | Class | Method | Signature | Modification | To Do
 
-Framework | Header | Class | Method | Signature | Modification | To Do
 AutomationInterfaces | CATScriptUtilities.h | CATScriptUtilities | ExecuteScript | static HRESULT ExecuteScript(const CATUnicodeString& iLibraryName,CatScriptLibraryType iType,const CATUnicodeString& iProgramName,CATVariant & oResult,const CATUnicodeString& iFunctionName ="CATMain",CATVariant* iParams = NULL,unsigned int iParamCount = 0,CATBoolean iAutomaticReplay = TRUE | MHBDM | The type of the last parameter is now an enum with 3 values instead of a CATBoolean. Please note that the default value (iAutomaticReplay = TRUE) produces the same behaviour as before.
 Dialog | CATDlgBlackBox.h | CATDlgBlackBox | CATDlgBlackBox | CATDlgBlackBox(CATDialog*pParent,const CATString& rObjectName,CATDlgStyle nStyle=NULL) | MHBDM | Constructor and destructor are now protected. A CATDlgWindows cannot be constructed directly anymore: it can only be constructed as the base class of one of its derived classes.
 Dialog | CATDlgBlackBox.h | CATDlgBlackBox | ExecuteScript | virtual ~CATDlgBlackBox(#) | MHBDM | Destructor is now protected.

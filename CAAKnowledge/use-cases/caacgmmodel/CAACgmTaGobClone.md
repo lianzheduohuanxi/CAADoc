@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "The Clone and Transformation Managers"
-category: use-case
+category: "use-case"
 module: "CAACgmModel"
-tags: ["CATIA", "CATICGMObjects", "CATICGMObject"]
-source_file: "Doc/online/CAACgmModel/CAACgmTaGobClone.htmmd"
+tags: "["CATIA", "CATICGMObjects", "CATICGMObject"]"
+source_file: "Doc/online/CAACgmModel/CAACgmTaGobClone.htm"
 converted: "2026-05-11T17:33:47.903606"
-```
-
 ---
 # The Clone and Transformation Managers
 
@@ -31,7 +28,6 @@ The copy and paste of geometric objects that takes into account their forward li
 
 CATCloneManager is a class representing an operator that manages the copy and paste of a set of objects implementing the CATICGMObject interface, that is to say the persistent objects provided by the CGM offering. This operation, that also takes into account the forward linked object, is called a **cloning** , and is especially useful to design your own cut, copy, paste applications.
 
-CATCloneManager is a class representing an operator that manages the copy and paste of a set of objects implementing the CATICGMObject interface, that is to say the persistent objects provided by the CGM offering. This operation, that also takes into account the forward linked object, is called a **cloning** , and is especially useful to design your own cut, copy, paste applications.
 Why is there a specific class for this process, instead of a method in each class of each geometric object? This could be the easiest way to do when the objects to clone are isolated, that is, have no links with other objects. But take now two curves C1 and C2 laying on the same surface. You want to globally copy the set of the three objects C1, C2 and the underlying surface. If the copy process was at the geometric object level, the surface would be twice copied, and the resulting objects would not represent an exact image of the global initial set.
 
 To prevent from this kind of configuration, the cloning process has a global knowledge of the objects to clone. Therefore, the role of the **CATCloneManager** is to federate the way to copy and paste objects and their forward linked objects. In particular, the manager clones a list of selected objects, without unnecessarily duplicating the forward common linked objects.
@@ -50,7 +46,7 @@ The copy and paste is not made at the creation of the clone process, or when obj
 
 After the run, you can retrieve the cloned object corresponding to each object of the input list.
 
-```vbscript
+```cpp
 If there are topological objects to clone (topological objects are kind of geometric objects), the CATCloneManager creates, under request, the topological journal associated with the cloning operation.
 
 ```
@@ -59,7 +55,7 @@ The CATCloneManager instances are transient, and therefore cannot be streamed.
 
 ### Two Modes of Cloning
 
-```vbscript
+```cpp
 If there are topological objects to clone (topological objects are kind of geometric objects), the CATCloneManager creates, under request, the topological journal associated with the cloning operation.
 The CATCloneManager instances are transient, and therefore cannot be streamed.
 The cloning process can be done as a single copy or a full copy. This mode is ruled by the **CATCloneManagerType:**

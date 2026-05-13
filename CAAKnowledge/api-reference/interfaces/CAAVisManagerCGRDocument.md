@@ -1,23 +1,17 @@
 ---
 title: "CAAVisManagerCGRDocument"
-type: "interface"
+type: "LocalClass"
 module: "CAAVisualization"
-category: api-reference
 base: "CAAVisManagerDocument"
-method_count: 1
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 0
+source_file: "CAAVisualization.edu/CAAVisManagerAppli.m/LocalInterfaces/CAAVisManagerCGRDocument.h"
 ---
+
 # CAAVisManagerCGRDocument
 
-**基类**: CAAVisManagerDocument  
-**模块**: CAAVisualization  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 1
+> The CGR document. This class defines a document which load a CGR file and allows to visualize it into a 3D viewer. As it derives from the basic class of any document type CAAVisModelDocument it inherits from its behavior and its management. Inheritance: CAAVisManagerCGRDocument CAAVisModelDocument (Local Framework) Main Method: CreateModel : read the CGR file and visualize the CGR model into a 3D viewer.
 
-> =============================================================================
+**基类**: CAAVisManagerDocument | **模块**: CAAVisualization | **方法数**: 0
 
 ## 依赖
 
@@ -25,24 +19,4 @@ verified: true
 
 ---
 
-## Interface Overview
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-This interface is used in the following use cases:
-
-- [CAAVisSampleVisManager](../../use-cases/caaviscases/CAAVisSampleVisManager.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAVisualization.edu/CAAVisManagerAppli.m/LocalInterfaces/CAAVisManagerCGRDocument.h`

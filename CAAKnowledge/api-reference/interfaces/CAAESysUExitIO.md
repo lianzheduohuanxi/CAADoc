@@ -1,25 +1,17 @@
 ---
 title: "CAAESysUExitIO"
-type: "interface"
+type: "LocalClass"
 module: "CAASystem"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAESysUExitIO → CATBaseUnknown"
 method_count: 3
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAASystem.edu/CAASysUExitIO.m/LocalInterfaces/CAAESysUExitIO.h"
 ---
+
 # CAAESysUExitIO
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAESysUExitIO → CATBaseUnknown  
-**模块**: CAASystem  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 3
+> Data extension of the CATUExitIO component and implementing the CATIUExitIO interface. The component CATUExitIO is defined in the System FW.
 
-> The component CATUExitIO is defined in the System FW.
+**基类**: CATBaseUnknown | **模块**: CAASystem | **方法数**: 3
 
 ## 依赖
 
@@ -27,28 +19,53 @@ verified: true
 - `CATIUExitIO.h`
 - `CATBoolean.h`
 
+## 虚方法
+
+### OnOpen
+
+```cpp
+virtual HRESULT OnOpen(const CATUnicodeString *iFileName, CATAccessRight iMode, HRESULT *oGranted, CATFileSystemError *oError) ;
+```
+
+Enables to perform some operations on the file to open This method is called when a file is physically open
+
+| 参数 | 类型 |
+|------|------|
+| *iFileName | `const CATUnicodeString` |
+| iMode | `CATAccessRight` |
+| *oGranted | `HRESULT` |
+| *oError | `CATFileSystemError` |
+
+
+### CreationMask
+
+```cpp
+virtual HRESULT CreationMask(const CATUnicodeString *iFileName, DWORD *oMode, CATFileSystemError *oError) ;
+```
+
+This method is not implemented
+
+| 参数 | 类型 |
+|------|------|
+| *iFileName | `const CATUnicodeString` |
+| *oMode | `DWORD` |
+| *oError | `CATFileSystemError` |
+
+
+### OnClose
+
+```cpp
+virtual HRESULT OnClose(const CATUnicodeString *iFileName, CATFileSystemError *oError) ;
+```
+
+Enables to perform some operations on the file to close This method is called when a file is physically close
+
+| 参数 | 类型 |
+|------|------|
+| *iFileName | `const CATUnicodeString` |
+| *oError | `CATFileSystemError` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAASystem.edu/CAASysUExitIO.m/LocalInterfaces/CAAESysUExitIO.h`

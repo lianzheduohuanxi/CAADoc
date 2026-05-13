@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Introduction to XML"
-category: tech-article
+category: "tech-article"
 module: "CAAXmlTechArticles"
-tags: ["CATIDOMElements", "CATIDOMText"]
-source_file: "Doc/online/CAAXmlTechArticles/CAAXmlIntroduction.htmmd"
+tags: "["CATIDOMElements", "CATIDOMText"]"
+source_file: "Doc/online/CAAXmlTechArticles/CAAXmlIntroduction.htm"
 converted: "2026-05-11T17:33:45.680797"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 

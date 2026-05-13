@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAAArrCreateContourArea.CATScript"
 category: "use-case"
 module: "CAAScdArrUseCases"
-tags: ["CAAArrCreateContourArea", "CATIA"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateContourAreaSource.htmmd"
+tags: "["CAAArrCreateContourArea", "CATIA"]"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateContourAreaSource.htm"
 converted: "2026-05-11T17:31:51.546099"
-```
-
 ---
 tags: ["CAAArrCreateContourArea", "CATIA"]
 source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateContourAreaSource.htmmd"
@@ -16,7 +13,7 @@ converted: "2026-05-11T17:31:51.546099"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     '// COPYRIGHT DASSAULT SYSTEMES  2000
     '******************************************************************************
     ' Purpose:       This CATScript demonstrates how to create an Area with
@@ -35,7 +32,7 @@ converted: "2026-05-11T17:31:51.546099"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -62,7 +59,7 @@ converted: "2026-05-11T17:31:51.546099"
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
        Dim objRootProd       As Product
        Set objProdDoc      = CATIA.Documents.Add("Product")
        Set objRootProd     = objProdDoc.Product

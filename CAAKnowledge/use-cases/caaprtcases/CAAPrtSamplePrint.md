@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Adding Print Standard Functions to Your Application"
-category: use-case case"
+category: "use-case case"
 module: "CAAPrtUseCases"
-tags: ["CATIA", "CAAPrtDialog", "CAAPrint", "CAAPrtApplication", "CAAPrtApplicationUse"]
-source_file: "Doc/online/CAAPrtUseCases/CAAPrtSamplePrint.htmmd"
+tags: "["CATIA", "CAAPrtDialog", "CAAPrint", "CAAPrtApplication", "CAAPrtApplicationUse"]"
+source_file: "Doc/online/CAAPrtUseCases/CAAPrtSamplePrint.htm"
 converted: "2026-05-11T17:17:56.124848"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -195,7 +192,6 @@ The `SetVisibility` method displays the dialog box. The Capture toolbar manages 
 
 The file conversion to a 2D representation can now take place.
 
-The file conversion to a 2D representation can now take place.
     void CAAPrtDialog::AlbumCB(CATCommand           * iSendingCommand,
                                 CATNotification      * iSentNotification,
                                 CATCommandClientData   iUsefulData)

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAASchPlaceComponent.CATScript"
 category: "use-case"
 module: "CAAScdSchUseCases"
-tags: ["CATIASchCompatibility", "CAASCH_Sample", "CAASCH_RouteForPlacement2", "CAAScdSchUseCases", "CATIASchGRRComp", "CATIA", "CAASchPlaceComponent", "CATIASchCompatible", "CATIASchComponent", "CATIASchCompGraphic", "CATIASchComponent2"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchPlaceComponentSource.htmmd"
+tags: "["CATIASchCompatibility", "CAASCH_Sample", "CAASCH_RouteForPlacement2", "CAAScdSchUseCases", "CATIASchGRRComp", "CATIA", "CAASchPlaceComponent", "CATIASchCompatible", "CATIASchComponent", "CATIASchCompGraphic", "CATIASchComponent2"]"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchPlaceComponentSource.htm"
 converted: "2026-05-11T17:31:51.438458"
-```
-
 ---
 tags: ["CATIASchCompatibility", "CAASCH_Sample", "CAASCH_RouteForPlacement2", "CAAScdSchUseCases", "CATIASchGRRComp", "CATIA", "CAASchPlaceComponent", "CATIASchCompatible", "CATIASchComponent", "CATIASchCompGraphic", "CATIASchComponent2"]
 source_file: "Doc/online/CAAScdSchUseCases/CAASchPlaceComponentSource.htmmd"
@@ -16,7 +13,7 @@ converted: "2026-05-11T17:31:51.438458"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGHT DASSAULT SYSTEMES 2004
     ' *****************************************************************************
     '   Purpose:      Schematic component placement in free space and connected to
@@ -32,7 +29,7 @@ converted: "2026-05-11T17:31:51.438458"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -45,7 +42,7 @@ converted: "2026-05-11T17:31:51.438458"
         ' -------------------------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String
-```vbscript
+```cpp
         sDocPath=CATIA.SystemService.Environ("CATDocView")
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -71,7 +68,7 @@ converted: "2026-05-11T17:31:51.438458"
 ```vbscript
         ' -------------------------------------------------------------------------
         ' Open the schematic document
-```vbscript
+```cpp
         Dim sCtlgFilePath
         sCtlgFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
@@ -84,12 +81,12 @@ converted: "2026-05-11T17:31:51.438458"
                 "online/CAAScdSchUseCases/samples/CAASCH_Sample.catalog")
 
 ```vbscript
-```vbscript
+```cpp
 sCtlgFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
         Dim objSchCtlgDoc As Document
         Set objSchCtlgDoc = CATIA.Documents.Open(sCtlgFilePath)
 ```
@@ -103,7 +100,7 @@ sCtlgFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```vbscript
 ```vbscript
         ' Open main schematic P&ID; design document (for new component instances created here)
-```vbscript
+```cpp
         Dim sFilePath
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
@@ -116,12 +113,12 @@ sCtlgFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
                 "online/CAAScdSchUseCases/samples/CAASCH_RouteForPlacement2.CATProduct")
 
 ```vbscript
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
         Dim objSchDoc As Document
         Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
@@ -202,7 +199,7 @@ strMessage = strMessage & _
         ' y-axis = (0.0,1.0)
         ' origin = (100.0,300.0)
         '--------------------------------------------------------------------------
-```vbscript
+```cpp
         Dim db6Array(6) As CATSafeArrayVariant
 ```
 ```
@@ -216,7 +213,7 @@ strMessage = strMessage & _
 ```vbscript
 ' origin = (100.0,300.0)
 '--------------------------------------------------------------------------
-```vbscript
+```cpp
 Dim db6Array(6) As CATSafeArrayVariant
 ```
 ```
@@ -273,7 +270,7 @@ Dim db6Array(6) As CATSafeArrayVariant
                ' the design document
                ' Note that the target document is an input to PlaceInSpace
                '-------------------------------------------------------------------
-```vbscript
+```cpp
                Set objSchComp2Ref = objSchRoot.GetInterface ("CATIASchComponent2",objSchCntblRef)
                If ( Not ( objSchComp2Ref Is Nothing ) ) Then
 ```
@@ -285,7 +282,7 @@ Dim db6Array(6) As CATSafeArrayVariant
 ```
 
 ```vbscript
-```vbscript
+```cpp
 Set objSchComp2Ref = objSchRoot.GetInterface ("CATIASchComponent2",objSchCntblRef)
 ```
 ```
@@ -349,7 +346,7 @@ strMessage = strMessage &  "Got catalog component reference of the symbol" & vbC
                ' first one. That is to "place" a new instance B connecting to
                ' the existing instance A.
                '-------------------------------------------------------------------
-```vbscript
+```cpp
                Dim objCompRefPlaceInfo As AnyObject
                Dim objCompatInfo As AnyObject
                Dim objFinalPlaceInfo As AnyObject
@@ -366,7 +363,7 @@ strMessage = strMessage &  "Got catalog component reference of the symbol" & vbC
                   strMessage = strMessage &  "Got catalog component reference of the second symbol" & vbCr
                End If
 ```vbscript
-```vbscript
+```cpp
                '-------------------------------------------------------------------
                '  Preparing to place B on A.
                '  1- need to retreive a CATIASchCompatibility interface handle
@@ -386,13 +383,13 @@ strMessage = strMessage &  "Got catalog component reference of the symbol" & vbC
 ```vbscript
                If ( Not ( objSchCompInstA Is Nothing ) ) Then
 ```vbscript
-```vbscript
+```cpp
                   Set objSchCompatInstA = objSchRoot.GetInterface ("CATIASchCompatible", _
 ```
 ```
 
                     objSchCompInstA)
-```vbscript
+```cpp
                   Set objSchCompGraphInstA = objSchRoot.GetInterface ("CATIASchCompGraphic", _
                     objSchCompInstA)
 ```
@@ -475,7 +472,7 @@ Set objCompRefPlaceInfo = objSchCompCVRef.QueryConnectAbility _
                     objCompRefPlaceInfo, objCompatInfo, bYesCompat
 
 ```vbscript
-```vbscript
+```cpp
                   Dim db2Pt(2) As CATSafeArrayVariant
 ```vbscript
 ```
@@ -601,7 +598,7 @@ End If  '----If ( Not ( objSchRoot Is Nothing )...
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' -----------------------------------------------------------------------------
     ' | Find the first symbol used for the input schematic component.
     ' | Input: objSchCompGraphArg:  the schematic component
@@ -626,7 +623,7 @@ End If  '----If ( Not ( objSchRoot Is Nothing )...
           Set objSchLSymbols = objSchCompGraphArg.ListGraphicalImages
           If ( Not ( objSchLSymbols Is Nothing ) ) Then
 ```
-```vbscript
+```cpp
              Set GetComponentImage = objSchLSymbols.Item (1,"CATIASchGRRComp")
           End If
 ```

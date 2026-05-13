@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Silhouette"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperatorsSilhouette", "CATICGMTopSilhouette", "CAAGMOperatorsInterfaces"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopSilhouette.htmmd"
+tags: "["CAAGMOperatorsSilhouette", "CATICGMTopSilhouette", "CAAGMOperatorsInterfaces"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopSilhouette.htm"
 converted: "2026-05-11T17:33:49.314941"
-```
-
 ---
 tags: ["CAAGMOperatorsSilhouette", "CATICGMTopSilhouette", "CAAGMOperatorsInterfaces"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcTopSilhouette.htmmd"

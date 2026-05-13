@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Retrieving Data of an Element of a V4 Document"
-category: use-case case"
+category: "use-case case"
 module: "CAAV4iUseCases"
-tags: ["CAADoc", "CAACATIAV4Interfaces", "CAAV4iEduV4GetTubingData", "CAAV4iEduGetTubingData", "CAAV4iEduV4DataAccess", "CAAV4iGetTubingData", "CATIAV4Interfaces"]
-source_file: "Doc/online/CAAV4iUseCases/CAAV4iGetTubingDataUseCase.htmmd"
+tags: "["CAADoc", "CAACATIAV4Interfaces", "CAAV4iEduV4GetTubingData", "CAAV4iEduGetTubingData", "CAAV4iEduV4DataAccess", "CAAV4iGetTubingData", "CATIAV4Interfaces"]"
+source_file: "Doc/online/CAAV4iUseCases/CAAV4iGetTubingDataUseCase.htm"
 converted: "2026-05-11T17:33:45.764869"
-```
-
 ---
 # 3D PLM PPR Hub Open Gateway
 
@@ -80,7 +77,6 @@ You can use the model TUBING`.model` and TUBING2.model located in `CAADoc/``CAA`
 #### Where to Find the CAAV4iEduGetTubingData Code
 
 The CAAV4iEduGetTubingData use case is made of a single file located in the CAAV4iEduGetTubingData.m module of the CAACATIAV4Interfaces.edu framework:
-The CAAV4iEduGetTubingData use case is made of a single file located in the CAAV4iEduGetTubingData.m module of the CAACATIAV4Interfaces.edu framework:
   Windows | `InstallRootDirectory/`CAACATIAV4Interfaces`.edu/`CAAV4iEduGetTubingData`.m/`
 
 The CAAV4iEduGetTubingData use case is made of a single file located in the CAAV4iEduGetTubingData.m module of the CAACATIAV4Interfaces.edu framework:
@@ -94,7 +90,6 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 There are 3 logical steps in CAAV4iEduV4DataAccess :
 
-There are 3 logical steps in CAAV4iEduV4DataAccess :
   1. Opening the model
   2. Scanning the model
   3. Retrieving the data
@@ -125,7 +120,7 @@ __
       CATV4iV4Element* setElem=NULL;
       CATV4iV4Element* element=NULL;
       int end =0;
-```vbscript
+```cpp
       if (! CATV4iGetMaster(doc, masterElem, ier) )
 
 ```
@@ -136,7 +131,7 @@ CATV4iV4Element* element=NULL;
 int end =0;
 if (! CATV4iGetMaster(doc, masterElem, ier) )
 ```vbscript
-```vbscript
+```cpp
         if (! CATV4iGisset(masterElem, setElem, end, ier) )
 
 ```
@@ -147,7 +142,7 @@ if (! CATV4iGetMaster(doc, masterElem, ier) )
 int end =0;
 if (! CATV4iGetMaster(doc, masterElem, ier) )
 ```vbscript
-```vbscript
+```cpp
 if (! CATV4iGisset(masterElem, setElem, end, ier) )
           if (! CATV4iGisels(setElem, NULL, element, end, ier) )
 
@@ -171,7 +166,7 @@ CATV4iGisels retrieves the first element of the set _setElem_.
 
 ---
 
-```vbscript
+```cpp
 If _element_ has been correctly created by CATV4iGisels, the data can be retrieved.
 _element- >Id(#)_ retrieves the identificator of the _element_ ,
 _element- >GetType(...)_ retrieves the primary and the secondary types of _element_

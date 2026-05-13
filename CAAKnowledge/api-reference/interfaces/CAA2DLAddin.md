@@ -1,52 +1,38 @@
 ---
 title: "CAA2DLAddin"
-type: "interface"
+type: "LocalClass"
 module: "CAADrafting2DLInterfaces"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAA2DLAddin → CATBaseUnknown"
 method_count: 2
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAADrafting2DLInterfaces.edu/CAA2DLAddin.m/LocalInterfaces/CAA2DLAddin.h"
 ---
+
 # CAA2DLAddin
 
-**基类**: CATBaseUnknown  
-**继承链**: CAA2DLAddin → CATBaseUnknown  
-**模块**: CAADrafting2DLInterfaces  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 2
-
-> =============================================================================
+**基类**: CATBaseUnknown | **模块**: CAADrafting2DLInterfaces | **方法数**: 2
 
 ## 依赖
 
 - `CATBaseUnknown.h`
 
+## 虚方法
+
+### CreateCommands
+
+```cpp
+virtual void CreateCommands() ;
+```
+
+CATIWorkbenchAddin CATI2DLMainWkbAddin
+
+
+### CreateToolbars
+
+```cpp
+virtual CATCmdContainer * CreateToolbars() ;
+```
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAADrafting2DLInterfaces.edu/CAA2DLAddin.m/LocalInterfaces/CAA2DLAddin.h`

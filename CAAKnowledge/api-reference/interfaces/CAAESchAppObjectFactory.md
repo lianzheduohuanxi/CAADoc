@@ -1,61 +1,49 @@
 ---
 title: "CAAESchAppObjectFactory"
-type: "interface"
+type: "LocalClass"
 module: "CAASchPlatformModeler"
-category: api-reference
 base: "CATEASchAppObjectFactory2"
-inheritance_chain: "CAAESchAppObjectFactory → CATEASchAppObjectFactory2"
 method_count: 2
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAASchPlatformModeler.edu/CAASchAppBase.m/LocalInterfaces/CAAESchAppObjectFactory.h"
 ---
+
 # CAAESchAppObjectFactory
 
-**基类**: CATEASchAppObjectFactory2  
-**继承链**: CAAESchAppObjectFactory → CATEASchAppObjectFactory2  
-**模块**: CAASchPlatformModeler  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 2
-
-> =============================================================================
+**基类**: CATEASchAppObjectFactory2 | **模块**: CAASchPlatformModeler | **方法数**: 2
 
 ## 依赖
 
 - `CATEASchAppObjectFactory2.h`
 
+## 虚方法
+
+### AppCreateCompRef
+
+```cpp
+virtual HRESULT AppCreateCompRef(const char *iAppCompClassType, const CATDocument *iDoc, IUnknown **oAppComp) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iAppCompClassType | `const char` |
+| *iDoc | `const CATDocument` |
+| **oAppComp | `IUnknown` |
+
+
+### AppCreateRoute2
+
+```cpp
+virtual HRESULT AppCreateRoute2(const char *iAppRouteClassType, const CATDocument *iDoc, const CATUnicodeString *iLogLineID, IUnknown **oAppRoute) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iAppRouteClassType | `const char` |
+| *iDoc | `const CATDocument` |
+| *iLogLineID | `const CATUnicodeString` |
+| **oAppRoute | `IUnknown` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATEASchAppObjectFactory2**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-This interface is used in the following use cases:
-
-- [CAASchSample1](../../use-cases/caaschcases/CAASchSample1.md)
-- [CAASchSample3](../../use-cases/caaschcases/CAASchSample3.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAASchPlatformModeler.edu/CAASchAppBase.m/LocalInterfaces/CAAESchAppObjectFactory.h`

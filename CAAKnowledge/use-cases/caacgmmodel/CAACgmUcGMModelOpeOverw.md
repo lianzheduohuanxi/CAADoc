@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "How to Use Geometric Operators"
-category: use-case article"
+category: "use-case article"
 module: "CAACgmModel"
-tags: ["CATICGMProjectionCrvSur", "CATICGMProjectionPtSur", "CATICGMConfusionPtOnSurPtOnSur", "CATICGMDistanceMinPtSur", "CATICGMIntersectionSurSur", "CATICGMDistanceMinPtCrv", "CATICGMProjectionPtCrv", "CATICGMIntersectionCrvCrv", "CATICGMContainer", "CATICGMInclusionPtCrv", "CATICGMMassProperties1D", "CATICGMDistanceMinCrvCrv", "CATICGMLocalAnalysis1D", "CATIA", "CATICGMConfusionPtOnCrvPtOnCrv", "CATICGMInclusionPtSur", "CATICGMIntersectionCrvSur", "CATICGMReflectCurve", "CATICGMLocalAnalysis2D", "CATICGMEdgeCurveComputation"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelOpeOverw.htmmd"
+tags: "["CATICGMProjectionCrvSur", "CATICGMProjectionPtSur", "CATICGMConfusionPtOnSurPtOnSur", "CATICGMDistanceMinPtSur", "CATICGMIntersectionSurSur", "CATICGMDistanceMinPtCrv", "CATICGMProjectionPtCrv", "CATICGMIntersectionCrvCrv", "CATICGMContainer", "CATICGMInclusionPtCrv", "CATICGMMassProperties1D", "CATICGMDistanceMinCrvCrv", "CATICGMLocalAnalysis1D", "CATIA", "CATICGMConfusionPtOnCrvPtOnCrv", "CATICGMInclusionPtSur", "CATICGMIntersectionCrvSur", "CATICGMReflectCurve", "CATICGMLocalAnalysis2D", "CATICGMEdgeCurveComputation"]"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelOpeOverw.htm"
 converted: "2026-05-11T17:33:48.309647"
-```
-
 ---
 # How to Use Geometric Operators
 
@@ -28,7 +25,6 @@ Geometric operators are transient objects that allow you to create new objects f
 
 Using geometric operators is an easy way to create or analyze geometric objects. While the geometric objects provide basic services, that are easily computed by the objects themselves, the geometric operators do more complex operations using advanced mathematics tools. As an example, evaluations from parameters to Cartesian coordinates is offered by the geometric curve or surface, whereas the torsion or curvature are computed by a geometric operator.
 
-Using geometric operators is an easy way to create or analyze geometric objects. While the geometric objects provide basic services, that are easily computed by the objects themselves, the geometric operators do more complex operations using advanced mathematics tools. As an example, evaluations from parameters to Cartesian coordinates is offered by the geometric curve or surface, whereas the torsion or curvature are computed by a geometric operator.
 All these operators never modify the input objects, they create new ones.
 
 The geometric operators work inside one geometric container: the input and output objects must belong to the same geometric container.
@@ -78,7 +74,6 @@ The geometric operators can be used in two modes, BASIC (the default mode) or AD
 
 To operate in this mode, you must:
 
-To operate in this mode, you must:
     1. Create the operator with the appropriate global function (`for example CATCGMCreateIntersection`), and specify the BASIC mode (or without specifying any mode: by default, the operator is created with the BASIC mode). The global function executes the requested operation and returns the corresponding operator instance.
     2. Get the result(s)
     3. Delete the operator instance (see How to Delete a Geometric Operator).

@@ -24,13 +24,13 @@ Language="VBScript"
 '   CATIA Level:  V5R6 
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
     ' Set the CATIA popup file alerts to False
     ' It prevents to stop the macro at each alert during its execution
 ```
-```vbscript
+```cpp
     CATIA.DisplayFileAlerts = False
 
     ' Set the file system object containig the folder
@@ -40,7 +40,7 @@ Sub CATMain(#)
     ' ----------------------------------------------------------- 
 ```
     ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
     Dim sDocPath As String 
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 '    If (Not oFileSys.FolderExists(sDocPath)) Then
@@ -83,7 +83,7 @@ Sub CATMain(#)
 ```
         If InStr(oFile.Name, ".CATDrawing") <> 0 Then
 
-```vbscript
+```cpp
             ' Set and open a Drawing document
             Dim oDoc As Document 
             Set oDoc = CATIA.Documents.Open(oFile.Path)
@@ -129,13 +129,13 @@ Language=&quot;VBScript&quot;
 '   CATIA Level:  V5R6 
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
     ' Set the CATIA popup file alerts to False
     ' It prevents to stop the macro at each alert during its execution
 ```
-```vbscript
+```cpp
     CATIA.DisplayFileAlerts = False
 
     ' Set the file system object containig the folder
@@ -145,7 +145,7 @@ Sub CATMain(#)
     ' ----------------------------------------------------------- 
 ```
     ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
     Dim sDocPath As String 
     sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
 '    If (Not oFileSys.FolderExists(sDocPath)) Then
@@ -188,7 +188,7 @@ Sub CATMain(#)
 ```
         If InStr(oFile.Name, &quot;.CATDrawing&quot;) &lt;&gt; 0 Then
 
-```vbscript
+```cpp
             ' Set and open a Drawing document
             Dim oDoc As Document 
             Set oDoc = CATIA.Documents.Open(oFile.Path)

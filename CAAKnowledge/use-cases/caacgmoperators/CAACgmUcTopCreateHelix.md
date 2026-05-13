@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating an Helix"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperatorsOverview", "CAAGMOperatorsInterfaces", "CAAGMOperatorsCreateHelix", "CAADoc", "CATICGMDynMassProperties1D", "CATICGMObject", "CAAGMModelGemBrowser", "CAATopCreateHelix"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopCreateHelix.htmmd"
+tags: "["CAAGMOperatorsOverview", "CAAGMOperatorsInterfaces", "CAAGMOperatorsCreateHelix", "CAADoc", "CATICGMDynMassProperties1D", "CATICGMObject", "CAAGMModelGemBrowser", "CAATopCreateHelix"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopCreateHelix.htm"
 converted: "2026-05-11T17:33:49.138578"
-```
-
 ---
 tags: ["CAAGMOperatorsOverview", "CAAGMOperatorsInterfaces", "CAAGMOperatorsCreateHelix", "CAADoc", "CATICGMDynMassProperties1D", "CATICGMObject", "CAAGMModelGemBrowser", "CAATopCreateHelix"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcTopCreateHelix.htmmd"
@@ -68,18 +65,18 @@ You get the helix below: ![Helix](images/CAACgmTophelix1.gif) | Note that the or
 1,                            /* the orientation with respect to the axis */
 0);                            /* the radius evolution = number of mm/turn*/
 You get the helix below: ![Helix](images/CAACgmTophelix1.gif) | Note that the origin point (B) does not belong to the helix as the start angle is set to 90 deg. To have the origin confused with the starting point, you should specify a start angle of 0. ![Helix Seen from Top](images/CAACgmTophelix0.gif)
-```vbscript
+```cpp
 Creating an Helix with a Variable Pitch and a Variable Radius To create an helix with a variable pitch and a variable radius (with a linear or not linear variation), you must use the CATHelix::Set API which takes CATLaws as arguments. Prior to calling this method, you must:
     1. Initialize the data for the helix to be created. To do this, use the CATGeoFactory::CreateHelix method.
 ```
-```vbscript
+```cpp
     2. Compute the length of the initial helix by using the CATICGMDynMassProperties1D operator. A suitable length is required for the CATLaw creation. If you pass an inconsistent length to the CATLaw and CATHelix::Set method, you will get a throw.
 Creating the Radius Law A linear radius law is used as it can be used both for a constant and a linear law.
 ```
 
     // (c) - create the radius linear law: radius is 100
 1. Initialize the data for the helix to be created. To do this, use the CATGeoFactory::CreateHelix method.
-```vbscript
+```cpp
 2. Compute the length of the initial helix by using the CATICGMDynMassProperties1D operator. A suitable length is required for the CATLaw creation. If you pass an inconsistent length to the CATLaw and CATHelix::Set method, you will get a throw.
 Creating the Radius Law A linear radius law is used as it can be used both for a constant and a linear law.
 ```
@@ -176,7 +173,7 @@ if(1==toStore)
        ofstream filetowrite(pfileName, ios::binary ) ;
 
     #else
-```vbscript
+```cpp
 if(1==toStore)
 ofstream filetowrite(pfileName, ios::binary ) ;
        ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;

@@ -1,60 +1,33 @@
 ---
 title: "CAAEVisVisuWireBox"
-type: "interface"
+type: "LocalClass"
 module: "CAAVisualization"
-category: api-reference
 base: "CATExtIVisu"
-inheritance_chain: "CAAEVisVisuWireBox → CATExtIVisu"
 method_count: 1
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAVisualization.edu/CAAVisWireBoxComp.m/LocalInterfaces/CAAEVisVisuWireBox.h"
 ---
+
 # CAAEVisVisuWireBox
 
-**基类**: CATExtIVisu  
-**继承链**: CAAEVisVisuWireBox → CATExtIVisu  
-**模块**: CAAVisualization  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 1
+> Data extension of the CAAVisWireBox component, implementing the CATI3DGeoVisu interface to enable you the visualization of the wire box. This class derives from the CATExtIVisu adaptor class of the CATI3DGeoVisu interface. Visualization Framework
 
-> Data extension of the CAAVisWireBox component, implementing the CATI3DGeoVisu
+**基类**: CATExtIVisu | **模块**: CAAVisualization | **方法数**: 1
 
 ## 依赖
 
 - `CATExtIVisu.h`
 
----
+## 虚方法
 
-## Interface Overview
+### BuildRep
 
-This interface inherits from **CATExtIVisu**. 
+```cpp
+virtual CATRep * BuildRep() ;
+```
 
-**Inherited Methods**: Please refer to the base interface documentation above.
+Constructs the CAT3DRep for the Plane. This rep is kept in the CATExtIVisu code
 
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
 
 ---
 
-## Related Use Cases
-
-This interface is used in the following use cases:
-
-- [CAAVisSampleTempObject](../../use-cases/caaviscases/CAAVisSampleTempObject.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAVisualization.edu/CAAVisWireBoxComp.m/LocalInterfaces/CAAEVisVisuWireBox.h`

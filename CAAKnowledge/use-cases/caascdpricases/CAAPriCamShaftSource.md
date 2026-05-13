@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAAPriCamShaft.CATScript"
 category: "use-case"
 module: "CAAScdPriUseCases"
-tags: ["CATIA", "CAAPriCamShaft"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriCamShaftSource.htmmd"
+tags: "["CATIA", "CAAPriCamShaft"]"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriCamShaftSource.htm"
 converted: "2026-05-11T17:31:51.181070"
-```
-
 ---
 tags: ["CATIA", "CAAPriCamShaft"]
 source_file: "Doc/online/CAAScdPriUseCases/CAAPriCamShaftSource.htmmd"
@@ -16,7 +13,7 @@ converted: "2026-05-11T17:31:51.181070"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGHT DASSAULT SYSTEMES 2001
     '*******************************************************************************
     '  Purpose     : Build of a simplified camshaft
@@ -141,7 +138,7 @@ converted: "2026-05-11T17:31:51.181070"
 
 ```
 
-```vbscript
+```cpp
     Sub CATMain(#)
 ```
 ```
@@ -171,14 +168,14 @@ converted: "2026-05-11T17:31:51.181070"
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
         Set oPartDocument = CATIA.Documents.Add ( "Part" )
         Set oPart         = oPartDocument.Part
         Set oPartBody     = oPart.MainBody
         Set oPlaneYZ      = oPart.CreateReferenceFromGeometry( oPart.OriginElements.PlaneYZ )
         ' -- Shading view Mode
 ```
-```vbscript
+```cpp
         CATIA.ActiveWindow.ActiveViewer.RenderingMode = 1
 ```
 ```
@@ -193,7 +190,7 @@ converted: "2026-05-11T17:31:51.181070"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
         CATIA.ActiveWindow.ActiveViewer.Reframe
 
 ```
@@ -202,7 +199,7 @@ converted: "2026-05-11T17:31:51.181070"
 ```
 
 ```vbscript
-```vbscript
+```cpp
 CATIA.ActiveWindow.ActiveViewer.Reframe
         msgbox "Create First Cam Set"
 ```
@@ -214,7 +211,7 @@ CATIA.ActiveWindow.ActiveViewer.Reframe
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
         CATIA.ActiveWindow.ActiveViewer.Reframe
 
 ```
@@ -223,7 +220,7 @@ CATIA.ActiveWindow.ActiveViewer.Reframe
 ```
 
 ```vbscript
-```vbscript
+```cpp
 CATIA.ActiveWindow.ActiveViewer.Reframe
         msgbox "Create Second Cam Set"
 ```
@@ -235,7 +232,7 @@ CATIA.ActiveWindow.ActiveViewer.Reframe
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
         CATIA.ActiveWindow.ActiveViewer.Reframe
 
 ```
@@ -244,7 +241,7 @@ CATIA.ActiveWindow.ActiveViewer.Reframe
 ```
 
 ```vbscript
-```vbscript
+```cpp
 CATIA.ActiveWindow.ActiveViewer.Reframe
         msgbox "Create Third Cam Set"
 ```
@@ -256,7 +253,7 @@ CATIA.ActiveWindow.ActiveViewer.Reframe
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
         CATIA.ActiveWindow.ActiveViewer.Reframe
 
 ```
@@ -265,7 +262,7 @@ CATIA.ActiveWindow.ActiveViewer.Reframe
 ```
 
 ```vbscript
-```vbscript
+```cpp
 CATIA.ActiveWindow.ActiveViewer.Reframe
         msgbox "Create Fourth Cam Set"
 ```
@@ -277,7 +274,7 @@ CATIA.ActiveWindow.ActiveViewer.Reframe
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
         CATIA.ActiveWindow.ActiveViewer.Reframe
 
 ```
@@ -286,7 +283,7 @@ CATIA.ActiveWindow.ActiveViewer.Reframe
 ```
 
 ```vbscript
-```vbscript
+```cpp
 CATIA.ActiveWindow.ActiveViewer.Reframe
         msgbox "Create Driving Wheel"
 ```
@@ -432,10 +429,7 @@ Set rectPattern1 = oPart.ShapeFactory.AddNewRectPattern(oPad,                 _
                                                                 iCylinderSpacing,     _
                                                                 0.0,                  _
                                                                 1,                    _
-                                                                1,                    _
                                                                 oRefPlaneXY,          _
-                                                                oRefPlaneXY,          _
-                                                                True,                 _
                                                                 True,                 _
                                                                 0.0)
 

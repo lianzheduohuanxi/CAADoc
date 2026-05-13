@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Synchronizing component instances with the catalog reference"
 category: "use-case"
 module: "CAAScdSchUseCases"
-tags: ["CAASchSyncCompInst", "CATIASchComponent", "CAASCH_SyncCompInst", "CAAScdSchUseCases", "CATIA", "CATIASchUpdateInstances"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchSyncCompInst.htmmd"
+tags: "["CAASchSyncCompInst", "CATIASchComponent", "CAASCH_SyncCompInst", "CAAScdSchUseCases", "CATIA", "CATIASchUpdateInstances"]"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchSyncCompInst.htm"
 converted: "2026-05-11T17:31:51.502797"
-```
-
 ---
 ## Schematics Platform Modeler
 
@@ -36,7 +33,7 @@ The macro first loads CAASCH_SyncCompInst.CATProduct. |     ' Open the schema
     Dim sFilePath
 ```vbscript
 ```
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
 ```
@@ -51,7 +48,7 @@ Dim sFilePath
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
@@ -64,7 +61,6 @@ sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 
 ---
 
-Next, the macro acquires the schematic root object from the document. The schematic root is the top node of the object instance tree in a schematic document.
 Next, the macro acquires the schematic root object from the document. The schematic root is the top node of the object instance tree in a schematic document.
 ```vbscript
 ```vbscript
@@ -102,7 +98,6 @@ Next, the macro acquires the schematic root object from the document. The schema
 ---
 
 Then, the SchUpdateInstances interface is requested on the schematic root. This interface provides a method for updating component instances.
-Then, the SchUpdateInstances interface is requested on the schematic root. This interface provides a method for updating component instances.
 ```vbscript
 ```vbscript
     ' Get SchUpdateInstances interface on the schematic root.
@@ -125,7 +120,7 @@ Then, the SchUpdateInstances interface is requested on the schematic root. This 
     If ( Not ( objSchRoot Is Nothing ) ) Then
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
        Set objUpdateInstances = objSchRoot.GetInterface ("CATIASchUpdateInstances",objSchRoot)
     End If
 ```
@@ -137,7 +132,6 @@ Then, the SchUpdateInstances interface is requested on the schematic root. This 
 
 ---
 
-The SchematicRoot interface provides the GetRefComponents method to find a list of all the Schematic eference components in the model. The macro takes the first one in the list and specifically requests for the SchComponent interface.
 The SchematicRoot interface provides the GetRefComponents method to find a list of all the Schematic eference components in the model. The macro takes the first one in the list and specifically requests for the SchComponent interface.
 ```vbscript
 ```vbscript
@@ -171,7 +165,7 @@ The SchematicRoot interface provides the GetRefComponents method to find a list 
 ```vbscript
        ' Get the first reference component
        If ( Not ( objLCompRefs Is Nothing ) )Then
-```vbscript
+```cpp
           Set objCompRef = objLCompRefs.Item (1,"CATIASchComponent")
        End If
 ```
@@ -185,7 +179,6 @@ The SchematicRoot interface provides the GetRefComponents method to find a list 
 ---
 #### Update component instances
 
-The macro calls UpdateAllInstancesFromReference method of SchUpdateInstance interface to update all the component instances for the specified reference component.
 The macro calls UpdateAllInstancesFromReference method of SchUpdateInstance interface to update all the component instances for the specified reference component.
 ```vbscript
 ```vbscript

@@ -1,52 +1,33 @@
 ---
 title: "CAAESysComponentBOA"
-type: "interface"
+type: "LocalClass"
 module: "CAASystem"
-category: api-reference
 base: "CAAISysInterface"
-inheritance_chain: "CAAESysComponentBOA → CAAISysInterface → CATBaseUnknown"
 method_count: 1
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAASystem.edu/CAASysComponentBOA.m/LocalInterfaces/CAAESysComponentBOA.h"
 ---
+
 # CAAESysComponentBOA
 
-**基类**: CAAISysInterface  
-**继承链**: CAAESysComponentBOA → CAAISysInterface → CATBaseUnknown  
-**模块**: CAASystem  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 1
+> Data Extension of base class CAASysComponentBOA for the implementation of the interface CAAISysInterface using the Basic Object Adapter (BOA). See the CAASysUseBOA module which contains a sample to use this interface.
 
-> using the Basic Object Adapter (BOA).
+**基类**: CAAISysInterface | **模块**: CAASystem | **方法数**: 1
 
 ## 依赖
 
 - `CAAISysInterface.h`
 
+## 虚方法
+
+### ToString
+
+```cpp
+virtual HRESULT ToString() ;
+```
+
+CAAISysInterface -------------------
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAASystem.edu/CAASysComponentBOA.m/LocalInterfaces/CAAESysComponentBOA.h`

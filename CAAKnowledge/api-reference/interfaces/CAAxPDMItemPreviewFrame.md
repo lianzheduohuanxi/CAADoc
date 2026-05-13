@@ -1,49 +1,52 @@
 ---
 title: "CAAxPDMItemPreviewFrame"
-type: "interface"
+type: "LocalClass"
 module: "CAAxPDMInterfaces"
-category: api-reference
 base: "CATDlgFrame"
-inheritance_chain: "CAAxPDMItemPreviewFrame → CATDlgFrame"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 3
+source_file: "CAAxPDMInterfaces.edu/CAAxPDMUICommands.m/LocalInterfaces/CAAxPDMItemPreviewFrame.h"
 ---
+
 # CAAxPDMItemPreviewFrame
 
-**基类**: CATDlgFrame  
-**继承链**: CAAxPDMItemPreviewFrame → CATDlgFrame  
-**模块**: CAAxPDMInterfaces  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
-
-> ========================================================================
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATDlgFrame | **模块**: CAAxPDMInterfaces | **方法数**: 3
 
 ## 依赖
 
 - `CATDlgFrame.h`
 - `CATIxPDMItem.h`
 
+## 公共方法
+
+### UpdatePixelIconViewer
+
+```cpp
+void UpdatePixelIconViewer(CATIxPDMItem_var& iItem) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iItem | `CATIxPDMItem_var&` |
+
+
+### Clean
+
+```cpp
+void Clean() ;
+```
+
+
+### SetImage
+
+```cpp
+void SetImage(const CATPixelImage* image) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| image | `const CATPixelImage*` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATDlgFrame**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAxPDMInterfaces.edu/CAAxPDMUICommands.m/LocalInterfaces/CAAxPDMItemPreviewFrame.h`

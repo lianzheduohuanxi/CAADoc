@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Intersecting Curves"
-category: use-case case"
+category: "use-case case"
 module: "CAACgmModel"
-tags: ["CATICGMIntersectionCrvCrv", "CAAGMModelGeometryCreation", "CAAGMModelInterfaces", "CAAGMModelIntersectionOpe"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcIntersectCrvCrv.htmmd"
+tags: "["CATICGMIntersectionCrvCrv", "CAAGMModelGeometryCreation", "CAAGMModelInterfaces", "CAAGMModelIntersectionOpe"]"
+source_file: "Doc/online/CAACgmModel/CAACgmUcIntersectCrvCrv.htm"
 converted: "2026-05-11T17:33:48.444003"
-```
-
 ---
 # Intersecting  Curves
 

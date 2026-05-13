@@ -23,13 +23,13 @@ Public oPartDocument As PartDocument
 Public i As Long
 Public sDocPath As String
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ' -----------------------------------------------------------
 ```
 ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
 sDocPath = CATIA.SystemService.Environ("CATDocView")
 If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
   Err.Raise 9999, , "No Doc Path Defined"
@@ -40,7 +40,7 @@ End If
 ' ------------
 ' Get the part document
 ' ------------
-```vbscript
+```cpp
 Set oPartDocument = CATIA.ActiveDocument
 ' ------------
 ```
@@ -106,13 +106,13 @@ Public oPartDocument As PartDocument
 Public i As Long
 Public sDocPath As String
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ' -----------------------------------------------------------
 ```
 ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
 sDocPath = CATIA.SystemService.Environ(&quot;CATDocView&quot;)
 If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
   Err.Raise 9999, , &quot;No Doc Path Defined&quot;
@@ -123,7 +123,7 @@ End If
 ' ------------
 ' Get the part document
 ' ------------
-```vbscript
+```cpp
 Set oPartDocument = CATIA.ActiveDocument
 ' ------------
 ```

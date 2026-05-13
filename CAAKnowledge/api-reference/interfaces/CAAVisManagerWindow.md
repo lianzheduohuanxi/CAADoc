@@ -1,44 +1,57 @@
 ---
 title: "CAAVisManagerWindow"
-type: "interface"
+type: "LocalClass"
 module: "CAAVisualization"
-category: api-reference
+base: "CATDlgDialog"
 method_count: 4
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAVisualization.edu/CAAVisManagerAppli.m/LocalInterfaces/CAAVisManagerWindow.h"
 ---
+
 # CAAVisManagerWindow
 
-**模块**: CAAVisualization  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 4
+> MDI Window . Events send by it: WINDOW_ACTIVATED    (from uncurrent window to current window) WINDOW_DEACTIVATED  (from current window to uncurrent window) WINDOW_CREATED WINDOW_DELETED VIEWER_SELECTED    (MouseButton1 Down on a Viewer) (sender is viewer) VIEWER_ACTIVATED   (The CurrentViewer has been changed) (sender is viewer) VIEWPOINT_CHANGED  (The main viewpoint of the currentViewer has been changed) (sender is window) Dialog Framework
+
+**基类**: CATDlgDialog | **模块**: CAAVisualization | **方法数**: 4
 
 ## 依赖
 
+- `CATDlgDialog.h`
 - `CATString.h`
 
+## 虚方法
+
+### DuplicateWindow
+
+```cpp
+virtual CAAVisManagerWindow * DuplicateWindow() ;
+```
+
+Duplicator, Not Yet implemented
+
+
+### GetEditor
+
+```cpp
+virtual CAAVisManagerEditor * GetEditor() ;
+```
+
+
+### Build
+
+```cpp
+virtual void Build() ;
+```
+
+
+### DeleteWindow
+
+```cpp
+virtual void DeleteWindow() ;
+```
+
+Methods called by the application
+
+
 ---
 
-## Interface Overview
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-This interface is used in the following use cases:
-
-- [CAAVisSampleVisManager](../../use-cases/caaviscases/CAAVisSampleVisManager.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAVisualization.edu/CAAVisManagerAppli.m/LocalInterfaces/CAAVisManagerWindow.h`

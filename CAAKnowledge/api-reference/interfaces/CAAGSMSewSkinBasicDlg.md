@@ -1,27 +1,15 @@
 ---
 title: "CAAGSMSewSkinBasicDlg"
-type: "interface"
+type: "LocalClass"
 module: "CAAGSMInterfaces"
-category: api-reference
 base: "CATDlgDialog"
-inheritance_chain: "CAAGSMSewSkinBasicDlg → CATDlgDialog"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 5
+source_file: "CAAGSMInterfaces.edu/CAAGsiFeaturesSplSewSkinBasicUI.m/LocalInterfaces/CAAGSMSewSkinBasicDlg.h"
 ---
+
 # CAAGSMSewSkinBasicDlg
 
-**基类**: CATDlgDialog  
-**继承链**: CAAGSMSewSkinBasicDlg → CATDlgDialog  
-**模块**: CAAGSMInterfaces  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATDlgDialog | **模块**: CAAGSMInterfaces | **方法数**: 5
 
 ## 依赖
 
@@ -30,28 +18,62 @@ verified: true
 - `CAAGSMSewSkinBasicCmd.h`
 - `CAAGSMSewSkinBasicUINotifications.h`
 
+## 公共方法
+
+### Build
+
+```cpp
+void Build() ;
+```
+
+
+### HighLightCurrentPanelField
+
+```cpp
+void HighLightCurrentPanelField(int iFieldNumber) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iFieldNumber | `int` |
+
+
+### SetName
+
+```cpp
+void SetName(int iFieldNumber, CATUnicodeString iName) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iFieldNumber | `int` |
+| iName | `CATUnicodeString` |
+
+
+### AnalyseNotifs
+
+```cpp
+void AnalyseNotifs(CATCommand* fromClient, CATNotification* Notif, CATCommandClientData modifId) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| fromClient | `CATCommand*` |
+| Notif | `CATNotification*` |
+| modifId | `CATCommandClientData` |
+
+
+### AutoFieldSelection
+
+```cpp
+void AutoFieldSelection(CATDlgSelectorList* SelectField) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| SelectField | `CATDlgSelectorList*` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATDlgDialog**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAGSMInterfaces.edu/CAAGsiFeaturesSplSewSkinBasicUI.m/LocalInterfaces/CAAGSMSewSkinBasicDlg.h`

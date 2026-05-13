@@ -20,13 +20,13 @@ converted: "2026-05-11T11:27:02.499530"
 '  CATIA Level:  V5R18
 '***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 '----------------------------------------------------------- 
 ```
 'Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
 sDocPath=CATIA.SystemService.Environ("CATDocView")
 If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 Err.Raise 9999,,"No Doc Path Defined"
@@ -35,7 +35,7 @@ End If
 '----------------------------------------------------------- 
 
 'Open the CATAnalysis Document
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Beam.CATAnalysis")
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
@@ -64,7 +64,7 @@ Set oAnalysisEntity1 = oAnalysisEntities.Add("SAMUserMaterial")
 
 'Load the catalog of materials
 ```
-```vbscript
+```cpp
 MaterialFile = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/CatalogForAutomation.CATMaterial")
 Set oMaterial_document = CATIA.Documents.Open(MaterialFile)
 
@@ -119,7 +119,7 @@ anlysisMaterial.PutValue "SAMShearStressLimit", "1e+10"
 
 'Apply the material on the User Material
 linkMode = 0
-```vbscript
+```cpp
 Set oManager = oAnalysisManager.GetItem("CATMatManagerVBExt")
 oManager.ApplyMaterialOnUserMaterial oAnalysisEntity1, oMaterial1, linkMode 
 ```
@@ -129,7 +129,7 @@ End Sub
 
 ```
 
-```vbscript
+```cpp
 'COPYRIGHT DASSAULT SYSTEMES 2000
 
 '***********************************************************************
@@ -143,13 +143,13 @@ End Sub
 '  CATIA Level:  V5R18
 '***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 '----------------------------------------------------------- 
 ```
 'Optional: allows to find the sample wherever it&#39;s installed
-```vbscript
+```cpp
 sDocPath=CATIA.SystemService.Environ("CATDocView")
 If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 Err.Raise 9999,,"No Doc Path Defined"
@@ -158,7 +158,7 @@ End If
 '----------------------------------------------------------- 
 
 'Open the CATAnalysis Document
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online/CAAScdAniUseCases/samples/Beam.CATAnalysis&quot;)
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
@@ -189,7 +189,7 @@ Set oAnalysisEntity1 = oAnalysisEntities.Add(&quot;SAMUserMaterial&quot;)
 
 'Load the catalog of materials
 ```
-```vbscript
+```cpp
 MaterialFile = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online/CAAScdAniUseCases/samples/CatalogForAutomation.CATMaterial&quot;)
 Set oMaterial_document = CATIA.Documents.Open(MaterialFile)
 
@@ -244,7 +244,7 @@ anlysisMaterial.PutValue &quot;SAMShearStressLimit&quot;, &quot;1e+10&quot;
 
 'Apply the material on the User Material
 linkMode = 0
-```vbscript
+```cpp
 Set oManager = oAnalysisManager.GetItem(&quot;CATMatManagerVBExt&quot;)
 oManager.ApplyMaterialOnUserMaterial oAnalysisEntity1, oMaterial1, linkMode 
 ```

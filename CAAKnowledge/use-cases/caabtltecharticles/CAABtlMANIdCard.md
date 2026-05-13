@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "The IdentityCard.h Special File"
 category: "use-case"
 module: "CAABtlTechArticles"
-tags: []
-source_file: "Doc/online/CAABtlTechArticles/CAABtlMANIdCard.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAABtlTechArticles/CAABtlMANIdCard.htm"
 converted: "2026-05-11T17:33:46.051073"
-```
-
 ---
 tags: []
 source_file: "Doc/online/CAABtlTechArticles/CAABtlMANIdCard.htmmd"

@@ -1,57 +1,39 @@
 ---
 title: "CAACafTexturePropertyPageDlg"
-type: "interface"
+type: "LocalClass"
 module: "CAACATIAApplicationFrm"
-category: api-reference
 base: "CATDlgFrame"
-inheritance_chain: "CAACafTexturePropertyPageDlg → CATDlgFrame"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 2
+source_file: "CAACATIAApplicationFrm.edu/CAACafEditTextureProp.m/LocalInterfaces/CAACafTexturePropertyPageDlg.h"
 ---
+
 # CAACafTexturePropertyPageDlg
 
-**基类**: CATDlgFrame  
-**继承链**: CAACafTexturePropertyPageDlg → CATDlgFrame  
-**模块**: CAACATIAApplicationFrm  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> This class is a page of the Edit/Properties Dialog Box. This page is managing by the CAACafTexturePropertyPageEdt editor . Inheritance CATDlgFrame (Dialog Framework) CATDlgBox      (Dialog Framework) CATDialog     (Dialog Framework) CATCommand  ( System Framework) CATBaseUnknown (System Framework) Main Methods: 6 methods called by the CAACafTexturePropertyPageEdt class constructor           -> Initialization Build                 -> Construction of the Dialog object SetPropertyValue      -> Valuation of the Dialog object CommitModification    -> Set the current value to the extract object CancelModification    -> Empty for the sample CloseWindowFromEditor -> Empty for the sample 1 method  called by its Dialog's father destructor            -> delete object which are not dialog object /=========================================================================== CATDialog Framework
 
-> /===========================================================================
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATDlgFrame | **模块**: CAACATIAApplicationFrm | **方法数**: 2
 
 ## 依赖
 
 - `CATDlgFrame.h`
 - `CATEditor.h`
 
+## 公共方法
+
+### Build
+
+```cpp
+void Build() ;
+```
+
+
+### CloseWindowFromEditor
+
+```cpp
+void CloseWindowFromEditor() ;
+```
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATDlgFrame**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAACATIAApplicationFrm.edu/CAACafEditTextureProp.m/LocalInterfaces/CAACafTexturePropertyPageDlg.h`

@@ -1,54 +1,35 @@
 ---
 title: "CAADlgBBMessageNotification"
-type: "interface"
+type: "LocalClass"
 module: "CAADialog"
-category: api-reference
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+base: "CATNotification"
+method_count: 1
+source_file: "CAADialog.edu/CAADlgBBReceiver.m/LocalInterfaces/CAADlgBBMessageNotification.h"
 ---
+
 # CAADlgBBMessageNotification
 
-**模块**: CAADialog  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> Received Message Notification class.
 
-> ----------------------
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATNotification | **模块**: CAADialog | **方法数**: 1
 
 ## 依赖
 
+- `CATNotification.h`
+
+## 公共方法
+
+### GetText
+
+```cpp
+HRESULT GetText(char ** oText) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oText | `char **` |
+
+
 ---
 
-## Interface Overview
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-- [3D PLM Enterprise Architecture](../../use-cases/caadlgcases/CAADlgSampleBBMsg.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAADialog.edu/CAADlgBBReceiver.m/LocalInterfaces/CAADlgBBMessageNotification.h`

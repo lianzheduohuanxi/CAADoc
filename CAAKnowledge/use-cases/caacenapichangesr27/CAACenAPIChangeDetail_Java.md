@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "Detail Of API Changes"
 category: "api-changes"
 module: "CAACenAPIChangesR27"
-version: "V5R27"
-tags: []
-source_file: "Doc/online/CAACenAPIChangesR27/CAACenAPIChangeDetail_Java.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAACenAPIChangesR27/CAACenAPIChangeDetail_Java.htm"
 converted: "2026-05-11T17:33:51.879916"
-```
-
 ---
 |  |  Detail Of V5-6R2017 Java API Changes _What changes in the API compared with CAA V5-6R2012_
 ---|---|---

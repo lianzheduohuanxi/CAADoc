@@ -1,27 +1,15 @@
 ---
 title: "CAAIGSMSewSkinBasic"
-type: "interface"
+type: "ProtectedInterface"
 module: "CAAGSMInterfaces"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAIGSMSewSkinBasic → CATBaseUnknown"
 method_count: 7
-visibility: "protected"
-has_tie_binding: true
-verified: true
+source_file: "CAAGSMInterfaces.edu/ProtectedInterfaces/CAAIGSMSewSkinBasic.h"
 ---
-> **TIE实现**: unknown
 
 # CAAIGSMSewSkinBasic
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAIGSMSewSkinBasic → CATBaseUnknown  
-**模块**: CAAGSMInterfaces  
-**分类**: framework  
-**可见性**: protected  
-**方法数**: 7
-
-> ------------------------------------------------------------------
+**基类**: CATBaseUnknown | **模块**: CAAGSMInterfaces | **方法数**: 7
 
 ## 依赖
 
@@ -29,37 +17,88 @@ verified: true
 - `CATGSMOrientation.h`
 - `CATBaseUnknown.h`
 
-## TIE实现
+## 纯虚方法 (接口契约)
 
-**实现文件**:
-- `CAAEGSMCircleSweepTg.cpp`
-- `CAAEGSMCircleSweepTgAttrBehavior.cpp`
-- `CAAEGSMCircleSweepTgBuild.cpp`
-- `CAAEGSMCircleSweepTgMf3DBehavior.cpp`
-- `CAAEGSMCircleSweepTgReplaceUI.cpp`
+### SetSurfaceToSew
+
+```cpp
+virtual HRESULT SetSurfaceToSew(CATISpecObject_var ispSurfaceToSew) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| ispSurfaceToSew | `CATISpecObject_var` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetSurfaceToSew
+
+```cpp
+virtual HRESULT GetSurfaceToSew(CATISpecObject_var & ospSurfaceToSew) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| ospSurfaceToSew | `CATISpecObject_var &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### SetSurfaceSupport
+
+```cpp
+virtual HRESULT SetSurfaceSupport(CATISpecObject_var ispSupport) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| ispSupport | `CATISpecObject_var` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetSurfaceSupport
+
+```cpp
+virtual HRESULT GetSurfaceSupport(CATISpecObject_var & ospSupport) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| ospSupport | `CATISpecObject_var &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### SetOrientation
+
+```cpp
+virtual HRESULT SetOrientation(CATGSMOrientation iOrientation) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iOrientation | `CATGSMOrientation` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetOrientation
+
+```cpp
+virtual HRESULT GetOrientation(CATGSMOrientation & oOrientation) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oOrientation | `CATGSMOrientation &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### InvertOrientation
+
+```cpp
+virtual HRESULT InvertOrientation() = 0 ;
+```
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
 
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAGSMInterfaces.edu/ProtectedInterfaces/CAAIGSMSewSkinBasic.h`

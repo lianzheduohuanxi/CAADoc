@@ -1,65 +1,53 @@
 ---
 title: "CAAISysPoint"
-type: "interface"
+type: "PublicInterface"
 module: "CAASystem"
-category: api-reference
+base: "CATBaseUnknown"
 method_count: 2
-visibility: "public"
-has_tie_binding: true
-verified: true
+source_file: "CAASystem.edu/PublicInterfaces/CAAISysPoint.h"
 ---
-> **TIE实现**: unknown
 
 # CAAISysPoint
 
-**模块**: CAASystem  
-**分类**: framework  
-**可见性**: public  
-**方法数**: 2
+> Interface which characterizes a point object. Inheritance: CATBaseUnknown (System Framework) Main Method: SetCoord/GetCoord System Framework
+
+**基类**: CATBaseUnknown | **模块**: CAASystem | **方法数**: 2
 
 ## 依赖
 
+- `CATBaseUnknown.h`
 - `CAASysGeoModelInf.h`
 
-## TIE实现
+## 纯虚方法 (接口契约)
 
-**实现文件**:
-- `CAAISysAccess.cpp`
-- `CAAISysCircle.cpp`
-- `CAAISysCircleCenterProperties.cpp`
-- `CAAISysCollection.cpp`
-- `CAAISysColorProperties.cpp`
+### SetCoord
+
+```cpp
+virtual HRESULT SetCoord(const float iX, const float iY, const float iZ) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iX | `const float` |
+| iY | `const float` |
+| iZ | `const float` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetCoord
+
+```cpp
+virtual HRESULT GetCoord(float & oX, float & oY, float & oZ) const = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oX | `float &` |
+| oY | `float &` |
+| oZ | `float &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
 
 ---
 
-## Interface Overview
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-- [3D PLM Enterprise Architecture](../../use-cases/caaafrcases/CAAAfrSampleEditorHdr.md)
-- [3D PLM Enterprise Architecture](../../use-cases/caaafrcases/CAAAfrSampleObjectEdit.md)
-- [CAADegSampleCtxMenu](../../use-cases/caadegcases/CAADegSampleCtxMenu.md)
-- [CAADegSampleMouseMove](../../use-cases/caadegcases/CAADegSampleMouseMove.md)
-- [CAADegSampleMultiSelection](../../use-cases/caadegcases/CAADegSampleMultiSelection.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAASystem.edu/PublicInterfaces/CAAISysPoint.h`

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "About the Model Size and Infinite"
-category: use-case
+category: "use-case"
 module: "CAACgmModel"
-tags: ["CATIA"]
-source_file: "Doc/online/CAACgmModel/CAACgmTaGobModelSizeAndInfinite.htmmd"
+tags: "["CATIA"]"
+source_file: "Doc/online/CAACgmModel/CAACgmTaGobModelSizeAndInfinite.htm"
 converted: "2026-05-11T17:33:47.947121"
-```
-
 ---
 # About the Model Size and Infinite
 

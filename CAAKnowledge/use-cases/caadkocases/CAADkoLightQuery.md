@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Running Light Query"
 category: "use case"
 module: "CAADkoUseCases"
-tags: ["CATIVpmLightQueryManager", "CAAVPMDesktopObjects", "CATIVpmPredicate_var", "CATIVpmQuery_var", "CAADkoLightQuery", "CATIVpmPathExpression_var", "CATIVpmLightQueryManager_var", "CATIVpmFactoryManager_var"]
-source_file: "Doc/online/CAADkoUseCases/CAADkoLightQuery.htmmd"
+tags: "["CATIVpmLightQueryManager", "CAAVPMDesktopObjects", "CATIVpmPredicate_var", "CATIVpmQuery_var", "CAADkoLightQuery", "CATIVpmPathExpression_var", "CATIVpmLightQueryManager_var", "CATIVpmFactoryManager_var"]"
+source_file: "Doc/online/CAADkoUseCases/CAADkoLightQuery.htm"
 converted: "2026-05-11T17:33:45.996993"
-```
-
 ---
 tags: ["CATIVpmLightQueryManager", "CAAVPMDesktopObjects", "CATIVpmPredicate_var", "CATIVpmQuery_var", "CAADkoLightQuery", "CATIVpmPathExpression_var", "CATIVpmLightQueryManager_var", "CATIVpmFactoryManager_var"]
 source_file: "Doc/online/CAADkoUseCases/CAADkoLightQuery.htmmd"
@@ -35,7 +32,6 @@ Abstract This article shows how to run a Light Query to get data on objects and 
 
 * * *
 
-What You Will Learn With This Use Case This use case is intended to show you how to run a Light Query. To get information on the objects found in the memory of the session or in the database, a query has to be run. The information is then used to execute business processes: make some checks, print some reports, modify the objects. The query gets the objects matching a predicate, and all the attributes of those objects are accessible. The objects are loaded in memory.
 What You Will Learn With This Use Case This use case is intended to show you how to run a Light Query. To get information on the objects found in the memory of the session or in the database, a query has to be run. The information is then used to execute business processes: make some checks, print some reports, modify the objects. The query gets the objects matching a predicate, and all the attributes of those objects are accessible. The objects are loaded in memory.
 The first problem with that traditional query is that it is time consuming: all the attribute values are read from the database even though just a few of them will be used, and loading the objects in memory takes time. The second problem is that once the objects are in memory, they can't be removed from the session's server memory. After a while, depending on the number of objects, the memory gets full. To remedy those problems, the Light Query has been implemented. Light Query is using a small structure to hold the attribute values, structure that is deleted once the query is done. The objects are not loaded in memory. The improvements are found on the time spent to execute the query and on the memory spent to execute the process. Inside the Light Query, only the attributes values asked for in input are retrieved. [Top] The CAADkoLightQuery Use Case CAADkoLightQuery is a use case of the CAAVPMDesktopObjects.edu framework that illustrates VPMDesktopObjects, VPMInterfaces and VPMPersistency framework capabilities. [Top] What Does CAADkoLightQuery Do CAADkoLightQuery is a stand-alone executable that runs a Light Query to get a list of Part Instances and print some information about those Part Instances. CATIVpmLightQueryManager is used to run the Light Query and get the Part Instances.
 
@@ -226,10 +222,9 @@ else
 ---
 After that, we get the unique identifiers (UUID) of each Part Instance. This is done by calling the static method getUUIDs on the interface ENOVLightQueryToFullObjectsServices.
 
-After that, we get the unique identifiers (UUID) of each Part Instance. This is done by calling the static method getUUIDs on the interface ENOVLightQueryToFullObjectsServices.
           CATListOfInt Indexes;
           CATLISTV(_SEQUENCE_octet) UUIDs;
-```vbscript
+```cpp
           RC = ENOVLightQueryToFullObjectsServices::getUUIDs( Indexes, UUIDs, oQueryResult );
 ```
 
@@ -237,9 +232,9 @@ After that, we get the unique identifiers (UUID) of each Part Instance. This is 
           for( i=1; i <= nbUUIDs; i++ )
 
           {
-```vbscript
+```cpp
 CATLISTV(_SEQUENCE_octet) UUIDs;
-```vbscript
+```cpp
 RC = ENOVLightQueryToFullObjectsServices::getUUIDs( Indexes, UUIDs, oQueryResult );
 ```
 

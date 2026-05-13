@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAADriDimension.CATScript"
 category: "use-case"
 module: "CAAScdDriUseCases"
-tags: ["CATIA", "CAADriDimension"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriDimensionSource.htmmd"
+tags: "["CATIA", "CAADriDimension"]"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriDimensionSource.htm"
 converted: "2026-05-11T17:31:51.059350"
-```
-
 ---
 ```vbscript
 ```vbscript
@@ -47,7 +44,7 @@ converted: "2026-05-11T17:31:51.059350"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -57,16 +54,16 @@ converted: "2026-05-11T17:31:51.059350"
 ```vbscript
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
         ' Set the CATIA popup file alerts to False
         ' It prevents to stop the macro at each alert during its execution
 ```
-```vbscript
+```cpp
         CATIA.DisplayFileAlerts = False
         ' Optional: allows to find the sample wherever it's installed
 ```
         dim sDocPath As String
-```vbscript
+```cpp
         sDocPath=CATIA.SystemService.Environ("CATDocView")
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
           Err.Raise 9999,,"No Doc Path Defined"
@@ -75,7 +72,7 @@ converted: "2026-05-11T17:31:51.059350"
     '---------------------------------------------------------------------------
     '1/ Read active CATDrawing Document
     '---------------------------------------------------------------------------
-```vbscript
+```cpp
     Dim DrwDoc As DrawingDocument
     Set DrwDoc = CATIA.ActiveDocument
     ' Get Selection Object and clear it
@@ -85,7 +82,7 @@ converted: "2026-05-11T17:31:51.059350"
     Set DrwSelect = DrwDoc.Selection
     ' Variables declaration
 ```
-```vbscript
+```cpp
     Dim ElemDispatch As CATBaseDispatch
     Dim NomObj As String
     Dim numsheet As Long

@@ -1,63 +1,52 @@
 ---
 title: "CAAISysSurfaceProperties"
-type: "interface"
+type: "LocalClass"
 module: "CAASystem"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAISysSurfaceProperties → CATBaseUnknown"
 method_count: 2
-visibility: "local"
-has_tie_binding: true
-verified: true
+source_file: "CAASystem.edu/CAASysDerivationOM.m/LocalInterfaces/CAAISysSurfaceProperties.h"
 ---
-> **TIE实现**: unknown
 
 # CAAISysSurfaceProperties
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAISysSurfaceProperties → CATBaseUnknown  
-**模块**: CAASystem  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 2
-
 > Interface to modify the Surface properties.
+
+**基类**: CATBaseUnknown | **模块**: CAASystem | **方法数**: 2
 
 ## 依赖
 
 - `CATBaseUnknown.h`
 
-## TIE实现
+## 纯虚方法 (接口契约)
 
-**实现文件**:
-- `CAAESysCreateInstanceForRevolSurface.cpp`
-- `CAAESysCreateInstanceForSurface.cpp`
-- `CAAESysRevolAxis.cpp`
-- `CAAESysRevolSurfaceArea.cpp`
-- `CAAESysSurfaceArea.cpp`
+### GetColor
+
+```cpp
+virtual HRESULT GetColor(int & oRed, int & oGreen, int & oBlue) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oRed | `int &` |
+| oGreen | `int &` |
+| oBlue | `int &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### SetColor
+
+```cpp
+virtual HRESULT SetColor(const int iRed, const int iGreen, const int iBlue) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iRed | `const int` |
+| iGreen | `const int` |
+| iBlue | `const int` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
 
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAASystem.edu/CAASysDerivationOM.m/LocalInterfaces/CAAISysSurfaceProperties.h`

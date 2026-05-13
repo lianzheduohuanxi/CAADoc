@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Tetrahedron Filler Mesh Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CATIA", "CAAScdAniUseCases", "CAAAniMeshTetraFiller"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshTetraFiller.htmmd"
+tags: "["CATIA", "CAAScdAniUseCases", "CAAAniMeshTetraFiller"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshTetraFiller.htm"
 converted: "2026-05-11T17:31:51.724099"
-```
-
 ---
 ## Analysis Modeler
 
@@ -38,7 +35,7 @@ This use case shows you how to create tetrahedron filler mesh part in an existin
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
 ```
@@ -48,7 +45,7 @@ This use case shows you how to create tetrahedron filler mesh part in an existin
 ```
 
 ```vbscript
-```vbscript
+```cpp
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 ```
@@ -68,7 +65,7 @@ This use case shows you how to create tetrahedron filler mesh part in an existin
 ```vbscript
     ' -----------------------------------------------------------
     ' Open the Analysis document
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Cube_R13_Freq.CATAnalysis")
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```

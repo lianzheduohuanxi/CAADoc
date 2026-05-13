@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Pad"
 category: "use-case"
 module: "CAAScdPriUseCases"
-tags: ["CAAScdPriUseCases", "CATIA", "CAAPriPad"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriPad.htmmd"
+tags: "["CAAScdPriUseCases", "CATIA", "CAAPriPad"]"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriPad.htm"
 converted: "2026-05-11T17:31:51.225469"
-```
-
 ---
 ## Part Design
 
@@ -17,7 +14,6 @@ converted: "2026-05-11T17:31:51.225469"
 * * *
 
   This macro shows you how to create a pad from a sketch. This macro opens the [CAAPriPad.CATPart](samples/CAAPriPad.CATPart) document that contains a sketch only.
-This macro shows you how to create a pad from a sketch. This macro opens the [CAAPriPad.CATPart](samples/CAAPriPad.CATPart) document that contains a sketch only.
 It creates _Pad_ object from a _Sketch_ __ object with a _ShapeFactory_ method and a update it.
 
 This macro shows you how to create a pad from a sketch. This macro opens the [CAAPriPad.CATPart](samples/CAAPriPad.CATPart) document that contains a sketch only.
@@ -54,7 +50,7 @@ The macro first loads CAAPriPad.CATPart that contains a sketch: Sketch.1  This 
     Dim oPart As Part
 ```vbscript
 ```
-```vbscript
+```cpp
     Set oPart = CATIA.ActiveDocument.Part
 ```
 ```

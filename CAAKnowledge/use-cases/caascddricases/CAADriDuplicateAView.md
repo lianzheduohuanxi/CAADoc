@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Duplicating a Drawing View"
 category: "use-case"
 module: "CAAScdDriUseCases"
-tags: ["CAADriDuplicateAView", "CATIA", "CAADriUseCases", "CAAScdDriUseCases"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriDuplicateAView.htmmd"
+tags: "["CAADriDuplicateAView", "CATIA", "CAADriUseCases", "CAAScdDriUseCases"]"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriDuplicateAView.htm"
 converted: "2026-05-11T17:31:51.071818"
-```
-
 ---
 |
 ## Interactive Drafting
@@ -37,7 +34,7 @@ This macro shows you how to copy a view in drawing document and paste it into an
 
       ...
 ```vbscript
-```vbscript
+```cpp
         ' Set the CATIA popup file alerts to False
 ```
 ```
@@ -45,7 +42,7 @@ This macro shows you how to copy a view in drawing document and paste it into an
 ```vbscript
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
 ' Set the CATIA popup file alerts to False
         ' It prevents to stop the macro at each alert during its execution
 ```
@@ -56,7 +53,7 @@ This macro shows you how to copy a view in drawing document and paste it into an
 ```
 
 ```vbscript
-```vbscript
+```cpp
         CATIA.DisplayFileAlerts = False
 ```
 ```
@@ -83,7 +80,7 @@ The CATIA prompts are disabled thanks to the `DisplayFileAlerts` property of the
         Dim oDrawingSource As DrawingDocument
 ```vbscript
 ```
-```vbscript
+```cpp
         Set oDrawingSource = CATIA.Documents.Open(sDocPath & _
 ```
 ```
@@ -95,12 +92,12 @@ The CATIA prompts are disabled thanks to the `DisplayFileAlerts` property of the
 ```vbscript
 ```vbscript
 ' Open the Drawing document
-```vbscript
+```cpp
 Dim oDrawingSource As DrawingDocument
 Set oDrawingSource = CATIA.Documents.Open(sDocPath & _
         ' Fit in window the opened document
 ```
-```vbscript
+```cpp
         CATIA.ActiveWindow.ActiveViewer.Reframe
 ```
 ```
@@ -245,7 +242,7 @@ The selection object is cleared using the `Clear` method another time.
         Dim oDrawingTarget As DrawingDocument
 ```vbscript
 ```
-```vbscript
+```cpp
         Set oDrawingTarget = CATIA.Documents.Add("Drawing")
 ```
 ```

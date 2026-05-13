@@ -30,7 +30,7 @@ This use case has shown how to edit coping between structure objects.
 *Copyright  1999-2010, Dassault Systmes. All rights reserved.*
 
 ```vbscript
-```vbscript
+```cpp
 Sub CATMain(#)
 
   Dim StrWorkbench As StrWorkbench

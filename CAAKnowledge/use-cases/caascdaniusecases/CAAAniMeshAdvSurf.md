@@ -77,7 +77,7 @@ assign values to its local and global specifications.
 ```vbscript
 ' ----------------------------------------------------------- 
 ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
   sDocPath=CATIA.SystemService.Environ("CATDocView")
 
   If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -86,7 +86,7 @@ assign values to its local and global specifications.
 ```
 ' ----------------------------------------------------------- 
 'Open the Analysis document 
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online/CAAScdAniUseCases/samples/Surface.CATAnalysis&quot;)
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```

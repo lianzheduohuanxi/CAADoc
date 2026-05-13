@@ -1,53 +1,54 @@
 ---
 title: "CAALifApplication"
-type: "interface"
+type: "LocalClass"
 module: "CAALiteralFeatures"
-category: api-reference
 base: "CATInteractiveApplication"
-inheritance_chain: "CAALifApplication → CATInteractiveApplication"
-method_count: 2
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 3
+source_file: "CAALiteralFeatures.edu/CAALifParamFrame.m/LocalInterfaces/CAALifApplication.h"
 ---
+
 # CAALifApplication
 
-**基类**: CATInteractiveApplication  
-**继承链**: CAALifApplication → CATInteractiveApplication  
-**模块**: CAALiteralFeatures  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 2
+> This sample illustrates: 1  - The creation of parameters and formulas 2  - The creation of a manipulator 3  - The display of a parameter constrained by a formula in a dialog frame with a spinner How to launch : Type : CAALifParamFrame Inheritance: CATInteractiveApplication (Dialog Framework) CATApplication (System Framework)
 
-> CATInteractiveApplication (Dialog Framework)
+**基类**: CATInteractiveApplication | **模块**: CAALiteralFeatures | **方法数**: 3
 
 ## 依赖
 
 - `CAALifServices.h`
 - `CATInteractiveApplication.h`
 
+## 虚方法
+
+### BeginApplication
+
+```cpp
+virtual void BeginApplication() ;
+```
+
+
+### EndApplication
+
+```cpp
+virtual int EndApplication() ;
+```
+
+Returns the application return code.
+
+
+## 公共方法
+
+### GetServices
+
+```cpp
+void GetServices(CAALifServices** oServices) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oServices | `CAALifServices**` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATInteractiveApplication**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAALiteralFeatures.edu/CAALifParamFrame.m/LocalInterfaces/CAALifApplication.h`

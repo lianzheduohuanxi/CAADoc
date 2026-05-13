@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Opening an Existing CATIA Document"
 category: "use-case"
 module: "CAAScdInfUseCases"
-tags: ["CAAScdInfUseCases", "CAAInfReadDocument", "CAAInfOpenDocument", "CAAInfCloseDocument", "CATIA", "CAAInfSaveDocument"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfOpenDocument.htmmd"
+tags: "["CAAScdInfUseCases", "CAAInfReadDocument", "CAAInfOpenDocument", "CAAInfCloseDocument", "CATIA", "CAAInfSaveDocument"]"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfOpenDocument.htm"
 converted: "2026-05-11T17:31:52.383001"
-```
-
 ---
 ## Infrastructure
 
@@ -43,7 +40,7 @@ CAAInfOpenDocument includes two steps:
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
           sDocPath=CATIA.SystemService.Environ("CATDocView")
 
           If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -76,7 +73,7 @@ End If
          Dim iPartDoc As Document
 ```vbscript
 ```
-```vbscript
+```cpp
          Set iPartDoc = CATIA.Documents.**Open**(sDocPath & _
 ```
 ```

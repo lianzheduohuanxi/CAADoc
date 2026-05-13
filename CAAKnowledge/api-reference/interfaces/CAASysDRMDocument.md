@@ -1,49 +1,157 @@
 ---
 title: "CAASysDRMDocument"
-type: "interface"
+type: "LocalClass"
 module: "CAAxPDMInterfaces"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAASysDRMDocument → CATBaseUnknown"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 12
+source_file: "CAAxPDMInterfaces.edu/CAAxPDMDRMILB.m/LocalInterfaces/CAASysDRMDocument.h"
 ---
+
 # CAASysDRMDocument
 
-**基类**: CATBaseUnknown  
-**继承链**: CAASysDRMDocument → CATBaseUnknown  
-**模块**: CAAxPDMInterfaces  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> Data extension of the CATSysDRMDocument component and implementing CATIUExitDRMDocument and CATIUExitDRMAuthorization
 
-> CATIUExitDRMDocument and CATIUExitDRMAuthorization
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATBaseUnknown | **模块**: CAAxPDMInterfaces | **方法数**: 12
 
 ## 依赖
 
 - `CATBaseUnknown.h`
 - `CATILockBytes.h`
 
+## 公共方法
+
+### DRMCreateContext
+
+```cpp
+HRESULT DRMCreateContext(const CATUC2Bytes * iDocumentID) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iDocumentID | `const CATUC2Bytes *` |
+
+
+### DRMCloseContext
+
+```cpp
+HRESULT DRMCloseContext() ;
+```
+
+
+### DRMExportEnveloppe
+
+```cpp
+HRESULT DRMExportEnveloppe(void *&oDRMEnvelope, size_t &oDRMEnvelopeSize) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *&oDRMEnvelope | `void` |
+| &oDRMEnvelopeSize | `size_t` |
+
+
+### DRMFreeEnveloppe
+
+```cpp
+HRESULT DRMFreeEnveloppe(void *oDRMEnvelope) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *oDRMEnvelope | `void` |
+
+
+### DRMImportEnveloppe
+
+```cpp
+HRESULT DRMImportEnveloppe(const void *iDRMEnvelope, size_t iDRMEnvelopeSize) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iDRMEnvelope | `const void` |
+| iDRMEnvelopeSize | `size_t` |
+
+
+### DRMGetLibUID
+
+```cpp
+HRESULT DRMGetLibUID(GUID &oUID) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| &oUID | `GUID` |
+
+
+### DRMInitAuthorization
+
+```cpp
+HRESULT DRMInitAuthorization(const CATUC2Bytes * iDocumentID) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iDocumentID | `const CATUC2Bytes *` |
+
+
+### DRMReleaseAuthorization
+
+```cpp
+HRESULT DRMReleaseAuthorization(const CATUC2Bytes * iDocumentID) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iDocumentID | `const CATUC2Bytes *` |
+
+
+### IsGranted
+
+```cpp
+HRESULT IsGranted(DWORD iRightToCheck) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iRightToCheck | `DWORD` |
+
+
+### DRMExportAuthorization
+
+```cpp
+HRESULT DRMExportAuthorization(void *&oDRMAuthorization, size_t &oDRMAuthorizationSize) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *&oDRMAuthorization | `void` |
+| &oDRMAuthorizationSize | `size_t` |
+
+
+### DRMFreeAuthorization
+
+```cpp
+HRESULT DRMFreeAuthorization(void *iDRMAuthorization) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iDRMAuthorization | `void` |
+
+
+### DRMImportAuthorization
+
+```cpp
+HRESULT DRMImportAuthorization(const void *iDRMAuthorization, size_t iDRMAuthorizationSize) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iDRMAuthorization | `const void` |
+| iDRMAuthorizationSize | `size_t` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAxPDMInterfaces.edu/CAAxPDMDRMILB.m/LocalInterfaces/CAASysDRMDocument.h`

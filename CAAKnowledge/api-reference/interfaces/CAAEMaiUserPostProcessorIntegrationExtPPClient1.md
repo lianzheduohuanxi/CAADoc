@@ -1,23 +1,15 @@
 ---
 title: "CAAEMaiUserPostProcessorIntegrationExtPPClient1"
-type: "interface"
+type: "LocalClass"
 module: "CAAManufacturingItf"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAEMaiUserPostProcessorIntegrationExtPPClient1 → CATBaseUnknown"
 method_count: 4
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAManufacturingItf.edu/CAAMaiUserPostProcessorIntegration.m/LocalInterfaces/CAAEMaiUserPostProcessorIntegrationExtPPClient1.h"
 ---
+
 # CAAEMaiUserPostProcessorIntegrationExtPPClient1
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAEMaiUserPostProcessorIntegrationExtPPClient1 → CATBaseUnknown  
-**模块**: CAAManufacturingItf  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 4
+**基类**: CATBaseUnknown | **模块**: CAAManufacturingItf | **方法数**: 4
 
 ## 依赖
 
@@ -27,28 +19,62 @@ verified: true
 - `CATUnicodeString.h`
 - `CATListOfCATUnicodeString.h`
 
+## 虚方法
+
+### GetProviderNames
+
+```cpp
+virtual HRESULT GetProviderNames(CATUnicodeString& oNLSName, CATString& oKeywordName) ;
+```
+
+Gives the Post Processor provider name oNLSName : in native language : "My Post Processor Provider" oKeywordName : "MYPPPROVIDER"
+
+| 参数 | 类型 |
+|------|------|
+| oNLSName | `CATUnicodeString&` |
+| oKeywordName | `CATString&` |
+
+
+### GetListOfPPs
+
+```cpp
+virtual HRESULT GetListOfPPs(CATListOfCATUnicodeString& oNLSList, CATListOfCATString& oKeywordList) ;
+```
+
+Gives the list of PPs managed by the provider oNLSList : in native language oKeywordList : qs keywords
+
+| 参数 | 类型 |
+|------|------|
+| oNLSList | `CATListOfCATUnicodeString&` |
+| oKeywordList | `CATListOfCATString&` |
+
+
+### RunHelp
+
+```cpp
+virtual HRESULT RunHelp(CATString& iPPKeyword) ;
+```
+
+Open method to run PP help
+
+| 参数 | 类型 |
+|------|------|
+| iPPKeyword | `CATString&` |
+
+
+### RunPP
+
+```cpp
+virtual HRESULT RunPP(CATListOfCATUnicodeString& iPPParams) ;
+```
+
+Open method to run PP
+
+| 参数 | 类型 |
+|------|------|
+| iPPParams | `CATListOfCATUnicodeString&` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAManufacturingItf.edu/CAAMaiUserPostProcessorIntegration.m/LocalInterfaces/CAAEMaiUserPostProcessorIntegrationExtPPClient1.h`

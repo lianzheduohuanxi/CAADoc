@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating an ArrangementRun Object"
 category: "use-case"
 module: "CAAScdArrUseCases"
-tags: ["CATIA", "CAAArrCreateRun", "CAAScdArrUseCases"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateRun.htmmd"
+tags: "["CATIA", "CAAArrCreateRun", "CAAScdArrUseCases"]"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateRun.htm"
 converted: "2026-05-11T17:31:51.569560"
-```
-
 ---
 |
 ## Arrangement
@@ -55,7 +52,7 @@ This macro shows you how to create an _ArrangementRun_ under a product. This mac
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
        Dim objRootProd       As Product
        Set objProdDoc      = CATIA.Documents.Add("Product")
        Set objRootProd     = objProdDoc.Product

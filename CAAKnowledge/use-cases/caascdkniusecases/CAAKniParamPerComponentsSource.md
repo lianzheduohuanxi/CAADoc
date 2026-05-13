@@ -34,13 +34,13 @@ Language="VBScript"
 '   revision V5R13
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
  ' Set the CATIA popup file alerts to False
  ' It prevents to stop the macro at each alert during its execution
 ```
-```vbscript
+```cpp
  CATIA.DisplayFileAlerts = False
 
 ```
@@ -52,7 +52,7 @@ Sub CATMain(#)
     ' ----------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,"No Doc Path Defined"
@@ -61,12 +61,12 @@ Sub CATMain(#)
     ' ----------------------------------------------------------- 
 
     ' Open the Part document 
-```vbscript
+```cpp
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 		"online/CAAScdKniUseCases/samples/CAAKniClash.CATProduct")
 ```
-```vbscript
+```cpp
     Dim oDoc As Document
     set oDoc = CATIA.Documents.Open(sFilePath)
 
@@ -116,7 +116,7 @@ Sub CATMain(#)
     Next       
 
  Else 
-```vbscript
+```cpp
     MsgBox "The active document must be a CATProduct"
 End If
 ```
@@ -154,13 +154,13 @@ Language="VBScript"
 '   revision V5R13
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
  ' Set the CATIA popup file alerts to False
  ' It prevents to stop the macro at each alert during its execution
 ```
-```vbscript
+```cpp
  CATIA.DisplayFileAlerts = False
 
 ```
@@ -172,7 +172,7 @@ Sub CATMain(#)
     ' ----------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,"No Doc Path Defined"
@@ -181,12 +181,12 @@ Sub CATMain(#)
     ' ----------------------------------------------------------- 
 
     ' Open the Part document 
-```vbscript
+```cpp
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 		"online/CAAScdKniUseCases/samples/CAAKniClash.CATProduct")
 ```
-```vbscript
+```cpp
     Dim oDoc As Document
     set oDoc = CATIA.Documents.Open(sFilePath)
 
@@ -236,7 +236,7 @@ Sub CATMain(#)
     Next       
 
  Else 
-```vbscript
+```cpp
     MsgBox "The active document must be a CATProduct"
 End If
 ```

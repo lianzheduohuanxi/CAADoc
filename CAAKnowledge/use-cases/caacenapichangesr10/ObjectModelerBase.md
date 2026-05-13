@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "ObjectModelerBase Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR10"
-version: "V5R10"
-tags: []
-source_file: "Doc/online/CAACenAPIChangesR10/ObjectModelerBase.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAACenAPIChangesR10/ObjectModelerBase.htm"
 converted: "2026-05-11T17:33:50.236254"
-```
-
 ---
 | CAA C++ API Modifications|  ObjectModelerBase  |
 ---|---|---

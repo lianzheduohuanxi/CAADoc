@@ -1,56 +1,56 @@
 ---
 title: "CAAMaiMachiningProcessLog"
-type: "interface"
+type: "LocalClass"
 module: "CAAManufacturingItf"
-category: api-reference
 base: "CATIMfgMachiningProcessLog"
-inheritance_chain: "CAAMaiMachiningProcessLog → CATIMfgMachiningProcessLog"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 3
+source_file: "CAAManufacturingItf.edu/CAAMaiMachiningProcessInstantiationLog.m/LocalInterfaces/CAAMaiMachiningProcessLog.h"
 ---
+
 # CAAMaiMachiningProcessLog
 
-**基类**: CATIMfgMachiningProcessLog  
-**继承链**: CAAMaiMachiningProcessLog → CATIMfgMachiningProcessLog  
-**模块**: CAAManufacturingItf  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
-
-> COPYRIGHT DASSAULT SYSTEMES 2004
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATIMfgMachiningProcessLog | **模块**: CAAManufacturingItf | **方法数**: 3
 
 ## 依赖
 
 - `CATIMfgMachiningProcessLog.h`
 
+## 公共方法
+
+### Activate
+
+```cpp
+HRESULT Activate(CATBoolean iActive) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iActive | `CATBoolean` |
+
+
+### IsActive
+
+```cpp
+HRESULT IsActive(CATBoolean& oActive) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oActive | `CATBoolean&` |
+
+
+### Trace
+
+```cpp
+HRESULT Trace(int iContext, const CATListOfCATUnicodeString& iTraces) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iContext | `int` |
+| iTraces | `const CATListOfCATUnicodeString&` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATIMfgMachiningProcessLog**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAManufacturingItf.edu/CAAMaiMachiningProcessInstantiationLog.m/LocalInterfaces/CAAMaiMachiningProcessLog.h`

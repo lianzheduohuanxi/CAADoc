@@ -122,7 +122,7 @@ an object.
 
 *Copyright  2004, Dassault Systmes. All rights reserved.*
 
-```vbscript
+```cpp
 ...
 ' ------------
 ' The string as delimiter between input in the text file
@@ -132,13 +132,13 @@ iDelimiter = &quot;//&quot;
 ' ------------
 ' Get the CATIA file system
 ' ------------
-```vbscript
+```cpp
 Set oCATIAFileSys = CATIA.FileSystem
 ' ------------
 ```
 ' Get the file containing the hole parameters
 ' ------------
-```vbscript
+```cpp
 Set oFile = oCATIAFileSys.GetFile(sDocPath &amp; &quot;/online/CAAScdPriUseCases/macros/CAAPriChangeHole.txt&quot;)
 ' ------------
 ```
@@ -150,7 +150,7 @@ Set oTextSteam = oFile.OpenAsTextStream(&quot;ForReading&quot;)
 ```
 ' Get the part document
 ' ------------
-```vbscript
+```cpp
 Set oPartDocument = CATIA.ActiveDocument
    ...
 ```
@@ -234,7 +234,7 @@ Else
 ...
 ```
 
-```vbscript
+```cpp
 ...
         iHoleInSelection = True
         Do While iHoleInSelection = True

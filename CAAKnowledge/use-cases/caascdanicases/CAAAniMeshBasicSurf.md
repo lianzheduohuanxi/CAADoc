@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Surface Mesh Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CAAAniMeshBasicSurf", "CATIA", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshBasicSurf.htmmd"
+tags: "["CAAAniMeshBasicSurf", "CATIA", "CAAScdAniUseCases"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshBasicSurf.htm"
 converted: "2026-05-11T17:31:51.615517"
-```
-
 ---
 ## Analysis Modeler
 
@@ -38,7 +35,7 @@ This use case shows you how to create Octree triangle mesh part on an existing a
 ```vbscript
     '-----------------------------------------------------------
     'Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
 ```
@@ -48,7 +45,7 @@ This use case shows you how to create Octree triangle mesh part on an existing a
 ```
 
 ```vbscript
-```vbscript
+```cpp
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 ```
@@ -74,7 +71,7 @@ End If
 ```vbscript
 '-----------------------------------------------------------
     'Open the Analysis document
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Surface.CATAnalysis")
 ```
 ```
@@ -85,7 +82,7 @@ End If
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ```

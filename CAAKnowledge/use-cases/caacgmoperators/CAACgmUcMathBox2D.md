@@ -1,13 +1,10 @@
 ---
-```vbscript
-title: "Retrieving the CATMathBox2D of An Edge or a Face "
+title: "Retrieving the CATMathBox2D of An Edge or a Face"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperators2DBoxComputation", "CAAGMOperatorsInterfaces", "CATICGM2DBoxComputation"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcMathBox2D.htmmd"
+tags: "["CAAGMOperators2DBoxComputation", "CAAGMOperatorsInterfaces", "CATICGM2DBoxComputation"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcMathBox2D.htm"
 converted: "2026-05-11T17:33:48.991063"
-```
-
 ---
 tags: ["CAAGMOperators2DBoxComputation", "CAAGMOperatorsInterfaces", "CATICGM2DBoxComputation"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcMathBox2D.htmmd"
@@ -39,7 +36,7 @@ and the code below:
 CATFace *iFace = (CATFace *) piGeomFactory->FindObjectFromTag(9);
 CATEdge *iEdge = (CATEdge *) piGeomFactory->FindObjectFromTag(13);
     CATICGM2DBoxComputation *pComp2DBoxOp = NULL;
-```vbscript
+```cpp
     pComp2DBoxOp = CATCGMCreate2DBoxComputation(piGeomFactory, &topdata;, iFace);
 
 ```

@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "Print Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR7"
-version: "V5R7"
-tags: ["CATIPrinterManager"]
-source_file: "Doc/online/CAACenAPIChangesR7/Print.htmmd"
+tags: "["CATIPrinterManager"]"
+source_file: "Doc/online/CAACenAPIChangesR7/Print.htm"
 converted: "2026-05-11T17:33:52.222046"
-```
-
 ---
 tags: ["CATIPrinterManager"]
 source_file: "Doc/online/CAACenAPIChangesR7/Print.htmmd"

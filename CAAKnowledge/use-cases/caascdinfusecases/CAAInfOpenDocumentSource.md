@@ -20,13 +20,13 @@ Option Explicit
 '   CATIA Level:  V5R7 
 ' *****************************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
     ' -----------------------------------------------------------------------------------------------
 ```
     ' Optional: allows to find the sample wherever it may be installed
-```vbscript
+```cpp
     Dim sDocPath As String
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -38,12 +38,12 @@ Sub CATMain(#)
     'Open the document and add it as the last item of the collection of documents.
     'Create and display a new window for the document.
     'Activate the document and its window.
-```vbscript
+```cpp
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
        "online/CAAScdInfUseCases/samples/CAAInfReadDocument.CATPart")
 ```
-```vbscript
+```cpp
     Dim iPartDoc As Document
     Set iPartDoc = CATIA.Documents.Open(sFilePath)
    
@@ -51,7 +51,7 @@ End Sub
 
 ```
 
-```vbscript
+```cpp
 Option Explicit
 ' COPYRIGHT DASSAULT SYSTEMES 2001
 
@@ -65,13 +65,13 @@ Option Explicit
 '   CATIA Level:  V5R7 
 ' *****************************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
     ' -----------------------------------------------------------------------------------------------
 ```
     ' Optional: allows to find the sample wherever it may be installed
-```vbscript
+```cpp
     Dim sDocPath As String
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -83,12 +83,12 @@ Sub CATMain(#)
     'Open the document and add it as the last item of the collection of documents.
     'Create and display a new window for the document.
     'Activate the document and its window.
-```vbscript
+```cpp
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
        "online/CAAScdInfUseCases/samples/CAAInfReadDocument.CATPart")
 ```
-```vbscript
+```cpp
     Dim iPartDoc As Document
     Set iPartDoc = CATIA.Documents.Open(sFilePath)
    

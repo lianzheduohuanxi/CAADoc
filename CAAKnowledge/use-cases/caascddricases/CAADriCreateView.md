@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Front View in a new Drawing Document"
 category: "use-case"
 module: "CAAScdDriUseCases"
-tags: ["CATIA", "CAADriCreateView", "CAAScdDriUseCases"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriCreateView.htmmd"
+tags: "["CATIA", "CAADriCreateView", "CAAScdDriUseCases"]"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriCreateView.htm"
 converted: "2026-05-11T17:31:51.042883"
-```
-
 ---
 ## Generative Drafting
 
@@ -43,7 +40,7 @@ This macro shows you how to create views in Drawing documents. It retrieves a pa
         Dim oPartToDraw As PartDocument
 ```vbscript
 ```
-```vbscript
+```cpp
         Set oPartToDraw = CATIA.Documents.Open(sDocPath & _
 ```
 ```
@@ -55,7 +52,7 @@ This macro shows you how to create views in Drawing documents. It retrieves a pa
 ```vbscript
 ```vbscript
         ' Create a drawing document: it becomes the active document.
-```vbscript
+```cpp
         Dim oDrawing As DrawingDocument
         Set oDrawing = CATIA.Documents.Add("Drawing")
 ```

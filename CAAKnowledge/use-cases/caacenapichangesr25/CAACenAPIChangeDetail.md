@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "Detail Of C++ API Changes"
-category: use-case
+category: "use-case"
 module: "CAACenAPIChangesR25"
-version: "V5R25"
-tags: ["CATICfgInterval", "CATIConfigurable", "CAA2Usage", "CATICfgFilter", "CATICfgManager", "CATIVpmAttribute", "CAA2Level", "CATICfgAttachable", "CATIVpmAFLManager", "CATICfgSimpleSpecification", "CATICfgUEValidateEff", "CATIVpmFactoryObject", "CATIEnovCMManager"]
-source_file: "Doc/online/CAACenAPIChangesR25/CAACenAPIChangeDetail.htmmd"
+tags: "["CATICfgInterval", "CATIConfigurable", "CAA2Usage", "CATICfgFilter", "CATICfgManager", "CATIVpmAttribute", "CAA2Level", "CATICfgAttachable", "CATIVpmAFLManager", "CATICfgSimpleSpecification", "CATICfgUEValidateEff", "CATIVpmFactoryObject", "CATIEnovCMManager"]"
+source_file: "Doc/online/CAACenAPIChangesR25/CAACenAPIChangeDetail.htm"
 converted: "2026-05-11T17:33:51.832518"
-```
-
 ---
 #
 
@@ -42,7 +38,6 @@ MINMV | Method is no more virtual. If occurs on a U1 class, may require modifica
 MINMV | Method is no more virtual. If occurs on a U1 class, may require modifications in Imakefile.mk of client code. If occurs on a U2 class, see details on the documentation of the concerned resource modification.
 File | Class | Method | Modification | To Do
 
-File | Class | Method | Modification | To Do
 ObjectModelerSystem/PublicInterfaces/sequence_CORBAAny.h |  |  | FHBD | File has been moved into the ObjectModelerCollection framework. Update you application IdentityCard.h and Imakefile.mk files accordingly.
 ObjectModelerSystem/PublicInterfaces/sequence.h
 ObjectModelerSystem/PublicInterfaces/sequence_octet.h
@@ -92,7 +87,6 @@ VPMInterfaces/PublicInterfaces/CATIVpmAFLManager.h | CATIVpmAFLManager | CreateA
 VPMInterfaces/PublicInterfaces/CATIVpmAFLManager.h | CATIVpmAFLManager | GetVpmObjectAttributeNames | INDM | Check that you don't use it
 VPMInterfaces/PublicInterfaces/CATIVpmAttribute.h | CATIVpmAttribute | CheckAttribute | INDM | Check that you don't use it
 VPMInterfaces/PublicInterfaces/CATIVpmAttribute.h | CATIVpmAttribute | CloneMe | INDM | Check that you don't use it
-VPMInterfaces/PublicInterfaces/CATIVpmAttribute.h | CATIVpmAttribute | CloneMe | INDM | Check that you don't use it
 VPMInterfaces/PublicInterfaces/CATIVpmAttribute.h | CATIVpmAttribute | GetAttributeName | INDM | Check that you don't use it
 VPMInterfaces/PublicInterfaces/CATIVpmAttribute.h | CATIVpmAttribute | GetAttributeNames | INDM | Check that you don't use it
 VPMInterfaces/PublicInterfaces/CATIVpmFactoryObject.h | CATIVpmFactoryObject | GetFactoryObject | INDM | Check that you don't use it
@@ -113,33 +107,22 @@ VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | CreateDataRDB | INDM | 
 VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | CreateDataServer | INDM | Check that you don't use it
 VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | CreateDomain | INDM | Check that you don't use it
 VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | CreateExternSite | INDM | Check that you don't use it
-VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | CreateExternSite | INDM | Check that you don't use it
 VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | CreateHost | INDM | Check that you don't use it
 VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | CreateLocalSite | INDM | Check that you don't use it
 VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | CreateReplApplyStatus | INDM | Check that you don't use it
 VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | CreateReplCaptureStatus | INDM | Check that you don't use it
 VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | CreateReplMedia | INDM | Check that you don't use it
 VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | CreateReplPackageDefinition | INDM | Check that you don't use it
-VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | CreateReplPackageDefinition | INDM | Check that you don't use it
 VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | CreateReplSubscribingTarget | INDM | Check that you don't use it
-VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | CreateReplSubscribingTarget | INDM | Check that you don't use it
-VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | CreateReplSubscription | INDM | Check that you don't use it
 VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | CreateReplSubscription | INDM | Check that you don't use it
 VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | CreateServer | INDM | Check that you don't use it
 VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | GenerateSubscription | INDM | Check that you don't use it
 VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | GetAppServer | INDM | Check that you don't use it
 VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | GetBusinessDomain | INDM | Check that you don't use it
-VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | GetBusinessDomain | INDM | Check that you don't use it
-VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | GetDataDomain | INDM | Check that you don't use it
-VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | GetDataDomain | INDM | Check that you don't use it
 VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | GetDataDomain | INDM | Check that you don't use it
 VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | GetDataServer | INDM | Check that you don't use it
-VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | GetDataServer | INDM | Check that you don't use it
-VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | GetDomain | INDM | Check that you don't use it
 VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | GetDomain | INDM | Check that you don't use it
 VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | GetExternSite | INDM | Check that you don't use it
-VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | GetExternSite | INDM | Check that you don't use it
-VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | GetHost | INDM | Check that you don't use it
 VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | GetHost | INDM | Check that you don't use it
 VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | GetLocalSite | INDM | Check that you don't use it
 VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | GetMasterBusinessDomain | INDM | Check that you don't use it
@@ -147,7 +130,6 @@ VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | GetReplApplyStatus | IN
 VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | GetReplCaptureStatus | INDM | Check that you don't use it
 VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | GetReplMedia | INDM | Check that you don't use it
 VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | GetReplPackageDefinition | INDM | Check that you don't use it
-VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | GetReplSubscribingTarget | INDM | Check that you don't use it
 VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | GetReplSubscribingTarget | INDM | Check that you don't use it
 VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | GetReplSubscription | INDM | Check that you don't use it
 VPMInterfaces/PublicInterfaces/VPMIAdmin.h | VPMIAdmin | GetServer | INDM | Check that you don't use it

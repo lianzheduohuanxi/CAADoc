@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Cone"
-category: use-case case"
+category: "use-case case"
 module: "CAACgmModel"
-tags: ["CAAGMModelConeCreation", "CAAGMModelInterfaces"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcConeCreation.htmmd"
+tags: "["CAAGMModelConeCreation", "CAAGMModelInterfaces"]"
+source_file: "Doc/online/CAACgmModel/CAACgmUcConeCreation.htm"
 converted: "2026-05-11T17:33:48.181947"
-```
-
 ---
 # Creating a Frustum of a Right Circular Cone
 

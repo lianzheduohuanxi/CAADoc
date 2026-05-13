@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "New Geometric Modeler Interfaces Layer"
 category: "use-case"
 module: "CAACenQuickRefs"
-tags: ["CATICGMTopWire_h_", "CATIPGMTopBlendInt", "CAA2Usage", "CATICGMxxx", "CATIPGMOperator", "CAACGMItfVisualStudio", "CATIPGMSolidCylinder", "CAA2Level", "CATIPGMTopBlend", "CATICGMTopWire", "CAAMathematics", "CATIA", "CAACGMItfMacros", "CATICGMGeoToTopOperator"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenGobInterfacesMigration.htmmd"
+tags: "["CATICGMTopWire_h_", "CATIPGMTopBlendInt", "CAA2Usage", "CATICGMxxx", "CATIPGMOperator", "CAACGMItfVisualStudio", "CATIPGMSolidCylinder", "CAA2Level", "CATIPGMTopBlend", "CATICGMTopWire", "CAAMathematics", "CATIA", "CAACGMItfMacros", "CATICGMGeoToTopOperator"]"
+source_file: "Doc/online/CAACenQuickRefs/CAACenGobInterfacesMigration.htm"
 converted: "2026-05-11T17:33:46.528911"
-```
-
 ---
 tags: ["CATICGMTopWire_h_", "CATIPGMTopBlendInt", "CAA2Usage", "CATICGMxxx", "CATIPGMOperator", "CAACGMItfVisualStudio", "CATIPGMSolidCylinder", "CAA2Level", "CATIPGMTopBlend", "CATICGMTopWire", "CAAMathematics", "CATIA", "CAACGMItfMacros", "CATICGMGeoToTopOperator"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenGobInterfacesMigration.htmmd"
@@ -86,7 +83,7 @@ class ExportedByPrimitives CATTopWire :public CATGeoToTopOperator
           public:
 
           /** @nodoc */
-```vbscript
+```cpp
 CATCGMVirtualDeclareClass(CATTopWire);
 public:
           CATTopWire(CATGeoFactory *iFactory,
@@ -96,7 +93,7 @@ public:
 
           /** @nodoc */
           ...
-```vbscript
+```cpp
 CATTopWire(CATGeoFactory *iFactory,
 CATTopData * iData);
           virtual ~CATTopWire(#);
@@ -133,7 +130,6 @@ CATTopData *iData,...);
         ...
         extern ExportedByCATGMOperatorsInterfaces IID IID_CATICGMTopWire;
 
-extern ExportedByCATGMOperatorsInterfaces IID IID_CATICGMTopWire;
         class ExportedByCATGMOperatorsInterfaces CATICGMTopWire: public CATICGMGeoToTopOperator
 
         {
@@ -390,7 +386,7 @@ Example:
     // CAA V5
 Searches for the prohibited cast operations.
 Example:
-```vbscript
+```cpp
       _GSDOperator = (CATTopBlendInt*)CATCreateTopBlend (_Factory,...);
 
 ```
@@ -399,13 +395,13 @@ Example:
 which is converted into
 
     // CAA V6 right after migration
-```vbscript
+```cpp
     			_GSDOperator = (CATIPGMTopBlendInt*)CATPGMCreateTopBlend (_Factory,...);
 
 ```
 
 ---
-```vbscript
+```cpp
 _GSDOperator = (CATIPGMTopBlendInt*)CATPGMCreateTopBlend (_Factory,...);
 The CAA V5 code is not correct because the CATCreateTopBlend function  returns a CATTopBlend pointer. Casting it as a derived class CATTopBlendInt is not recommended as nothing guarantees that the returned object type matches. It is a potential source of crash.
 This is how it should be coded:

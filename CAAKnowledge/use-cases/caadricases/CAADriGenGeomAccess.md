@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Editing Generated Geometry in a Generative View"
-category: use-case case"
+category: "use-case case"
 module: "CAADriUseCases"
-tags: ["CATIPrtContainer", "CATISheet_var", "CATIVisProperties", "CATIDftDocumentServices", "CAADRWGeomAccess", "CATIA", "CATILinkableObject_var", "CATIDftGenGeomAccess", "CATIDrawing", "CATIView_var", "CATIDftView", "CATIPrtPart_var", "CAADrwGeomAccess", "CATInit_var", "CATIUnknownList", "CATIView", "CAADraftingInterfaces", "CATIDftSheet", "CATIDftGenGeom", "CATISheet"]
-source_file: "Doc/online/CAADriUseCases/CAADriGenGeomAccess.htmmd"
+tags: "["CATIPrtContainer", "CATISheet_var", "CATIVisProperties", "CATIDftDocumentServices", "CAADRWGeomAccess", "CATIA", "CATILinkableObject_var", "CATIDftGenGeomAccess", "CATIDrawing", "CATIView_var", "CATIDftView", "CATIPrtPart_var", "CAADrwGeomAccess", "CATInit_var", "CATIUnknownList", "CATIView", "CAADraftingInterfaces", "CATIDftSheet", "CATIDftGenGeom", "CATISheet"]"
+source_file: "Doc/online/CAADriUseCases/CAADriGenGeomAccess.htm"
 converted: "2026-05-11T17:31:50.999826"
-```
-
 ---
 # Mechanical Design
 
@@ -89,7 +86,6 @@ When you launch the use case, pass the full pathname of the Drawing file as argu
 
 The CAADrwGeomAccess use case is made of a single source file named CAADrwGeomAccess.cpp located in the CAADrwGeomAccess.m module of the CAADraftingInterfaces.edu framework:
 
-The CAADrwGeomAccess use case is made of a single source file named CAADrwGeomAccess.cpp located in the CAADrwGeomAccess.m module of the CAADraftingInterfaces.edu framework:
 Windows | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwGeomAccess.m/`
 
 The CAADrwGeomAccess use case is made of a single source file named CAADrwGeomAccess.cpp located in the CAADrwGeomAccess.m module of the CAADraftingInterfaces.edu framework:
@@ -162,7 +158,7 @@ return 2;
 
       **CATIDftDocumentServices** *piDftDocServices = NULL;
 CATIDrawing *piDrawing = NULL;
-```vbscript
+```cpp
       if (SUCCEEDED(pDoc->QueryInterface(IID_CATIDftDocumentServices, (void **)&piDftDocServices)))
 
 ```
@@ -198,7 +194,7 @@ The root feature of a drawing document is the Drawing, that is, the feature that
        CATIDftSheet *piSheet = NULL;
        CATIDftView *piCurrentView = NULL;
 
-```vbscript
+```cpp
        if (SUCCEEDED(spSheet->QueryInterface(IID_CATIDftSheet,(void**) & piSheet) ) )
 
 ```
@@ -301,7 +297,7 @@ CATIDftGenGeomAccess *piGenGeomAccess = NULL;
 IUnknown *piGenView = NULL;
 if (NULL != piCurrentView)
 ```vbscript
-```vbscript
+```cpp
           if (SUCCEEDED( piCurrentView->GetApplicativeExtension(IID_CATIDftGenView,&piGenView)))
 
 ```
@@ -312,7 +308,7 @@ if (NULL != piCurrentView)
 IUnknown *piGenView = NULL;
 if (NULL != piCurrentView)
 ```vbscript
-```vbscript
+```cpp
 if (SUCCEEDED( piCurrentView->GetApplicativeExtension(IID_CATIDftGenView,&piGenView)))
              if (SUCCEEDED( piGenView->QueryInterface(IID_CATIDftGenGeomAccess, (void**) & piGenGeomAccess) ) )
 
@@ -321,9 +317,9 @@ if (SUCCEEDED( piCurrentView->GetApplicativeExtension(IID_CATIDftGenView,&piGenV
 ```
 
              {
-```vbscript
+```cpp
 if (SUCCEEDED( piCurrentView->GetApplicativeExtension(IID_CATIDftGenView,&piGenView)))
-```vbscript
+```cpp
 if (SUCCEEDED( piGenView->QueryInterface(IID_CATIDftGenGeomAccess, (void**) & piGenGeomAccess) ) )
 ```
 
@@ -332,7 +328,7 @@ if (SUCCEEDED( piGenView->QueryInterface(IID_CATIDftGenGeomAccess, (void**) & pi
 ```
 
                 // Get a list containing all Generated Geometry of the view.
-```vbscript
+```cpp
 if (SUCCEEDED( piGenView->QueryInterface(IID_CATIDftGenGeomAccess, (void**) & piGenGeomAccess) ) )
 CATIUnknownList * piList = NULL;
                 if( SUCCEEDED( piGenGeomAccess->GetAllGeneratedItems(IID_CATIDftGenGeom, &piList) ) )
@@ -368,7 +364,7 @@ for(unsigned int i=0 ; i<piListSize ; i++)
                       {
 ```vbscript
 for(unsigned int i=0 ; i<piListSize ; i++)
-```vbscript
+```cpp
 if( SUCCEEDED( piList->Item(i, &item) ) )
                          if(SUCCEEDED( item->QueryInterface(IID_CATIDftGenGeom, (void**) & piGenGeom) ) )
 ```
@@ -378,7 +374,7 @@ if( SUCCEEDED( piList->Item(i, &item) ) )
                          {
 ```vbscript
 if( SUCCEEDED( piList->Item(i, &item) ) )
-```vbscript
+```cpp
 if(SUCCEEDED( item->QueryInterface(IID_CATIDftGenGeom, (void**) & piGenGeom) ) )
 ```
 
@@ -390,7 +386,7 @@ if(SUCCEEDED( item->QueryInterface(IID_CATIDftGenGeom, (void**) & piGenGeom) ) )
                                // Color modification
 CATCurve * Curve = NULL;
 if (SUCCEEDED(piGenGeom->GetUnderlyingGeometry(&Curve)))
-```vbscript
+```cpp
                                if(SUCCEEDED( piGenGeom->QueryInterface(IID_CATIVisProperties, (void**) & piVisProp) ) )
 
 ```
@@ -398,7 +394,7 @@ if (SUCCEEDED(piGenGeom->GetUnderlyingGeometry(&Curve)))
                                {
 ```vbscript
 if (SUCCEEDED(piGenGeom->GetUnderlyingGeometry(&Curve)))
-```vbscript
+```cpp
 if(SUCCEEDED( piGenGeom->QueryInterface(IID_CATIVisProperties, (void**) & piVisProp) ) )
 ```
 
@@ -417,7 +413,7 @@ if (SUCCEEDED(piGenGeom->IsCut(&cutInfo)))
     			         ioValues.SetColor( 255,0,0);
 
     			       // Greeen color is applied for generated geometry coming from projection
-```vbscript
+```cpp
 if (cutInfo)
 ioValues.SetColor( 255,0,0);
     			       else
@@ -484,7 +480,7 @@ Note:
       // Ends session and drops document
 rc = CATDocumentServices::**SaveAs**(*pDoc, (char *)fileName);
 ```vbscript
-```vbscript
+```cpp
 rc = CATDocumentServices::**Remove** (*pDoc);
       rc = ::**Delete_Session**("SampleSession");
 
@@ -508,7 +504,6 @@ This section represents the usual sequence for saving a newly created CATIA docu
 
 This use case shows the way to :
 
-This use case shows the way to :
   1. Open a Drawing document.
   2. Get the current view.
   3. Get the Part Document pointed by the generative view and open it.

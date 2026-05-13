@@ -1,49 +1,34 @@
 ---
 title: "CAAVisBaseVisuObjectDocument"
-type: "interface"
+type: "LocalClass"
 module: "CAAVisualization"
-category: api-reference
 base: "CAAVisBaseDocument"
 method_count: 1
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAVisualization.edu/CAAVisBasics.m/LocalInterfaces/CAAVisBaseVisuObjectDocument.h"
 ---
+
 # CAAVisBaseVisuObjectDocument
 
-**基类**: CAAVisBaseDocument  
-**模块**: CAAVisualization  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 1
+> CGR Document class. When opening a CGR file, this document is created to manage the model read from this file. It inherits from CAAVisBaseDocument, so, it also have an associated view. Inheritance: CAAVisBaseVisuObjectDocument CAAVisBaseDocument CATCommand (System Framework) Main Method: CreateModel   : Creates the model, which is in fact a graphical representation, that will be visualized in the view. The creation of the model is here reduced to the reading of the CGR file. OpenCGR       : The effective reading of the CGR file.
 
-> OpenCGR       : The effective reading of the CGR file.
+**基类**: CAAVisBaseDocument | **模块**: CAAVisualization | **方法数**: 1
 
 ## 依赖
 
 - `CAAVisBaseDocument.h`
 - `CAAVisObjectType.h`
 
+## 虚方法
+
+### CreateModel
+
+```cpp
+virtual void CreateModel() ;
+```
+
+Creates the model. Here, it is just a call to OpenCGR.
+
+
 ---
 
-## Interface Overview
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-This interface is used in the following use cases:
-
-- [CAAVisSampleCATSurfacicRep](../../use-cases/caaviscases/CAAVisSampleCATSurfacicRep.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAVisualization.edu/CAAVisBasics.m/LocalInterfaces/CAAVisBaseVisuObjectDocument.h`

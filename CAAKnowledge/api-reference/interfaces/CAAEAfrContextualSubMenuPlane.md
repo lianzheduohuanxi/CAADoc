@@ -1,52 +1,31 @@
 ---
 title: "CAAEAfrContextualSubMenuPlane"
-type: "interface"
+type: "LocalClass"
 module: "CAAApplicationFrame"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAEAfrContextualSubMenuPlane → CATBaseUnknown"
 method_count: 1
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAApplicationFrame.edu/CAAAfrGeoSubMenu.m/LocalInterfaces/CAAEAfrContextualSubMenuPlane.h"
 ---
+
 # CAAEAfrContextualSubMenuPlane
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAEAfrContextualSubMenuPlane → CATBaseUnknown  
-**模块**: CAAApplicationFrame  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 1
+> Implementation of CATIContextualSubMenu for the CAASysPlane object You are adding commands which appears in the <CAASysPlane> object menu of the contextual menu.The plane must implement the CATIEdit interface. see CAAAfrGeoSubMenu.m To do this, we create and arrange command starters that we associate with commands using command headers. These command headers are referred to using their identifiers. Here each command header is defined in the Geometry workshop ****************************************************************************** Usage: This sub menu is merged with the menu associated with CATIEdit, named <CAASysPlane> Object in this case. ****************************************************************************** Explanation: The sub menu must be a data member to manage its life cycle. It can be identical or different from a call to another. . If it is identical, it can be created in the constructor, returned in the GetContextualSubMenu method, and deleted in the destructor. This is the case here . Otherwise, it must be created in the GetContextualSubMenu method. To correctly manage its life cycle, it must be deleted: . whenever calling GetContextualSubMenu . in the destructor when the class itself is deleted ****************************************************************************** Main Methods: Constructor            -> Builds the  sub menu Destructor             -> Deletes it GetContextualSubMenu() -> Returns it ******************************************************************************
 
-> -------------
+**基类**: CATBaseUnknown | **模块**: CAAApplicationFrame | **方法数**: 1
 
 ## 依赖
 
 - `CATBaseUnknown.h`
 
+## 虚方法
+
+### GetContextualSubMenu
+
+```cpp
+virtual CATCmdAccess * GetContextualSubMenu() ;
+```
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAApplicationFrame.edu/CAAAfrGeoSubMenu.m/LocalInterfaces/CAAEAfrContextualSubMenuPlane.h`

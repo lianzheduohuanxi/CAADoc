@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "The Imakefile.mk Special File"
 category: "use-case"
 module: "CAABtlTechArticles"
-tags: []
-source_file: "Doc/online/CAABtlTechArticles/CAABtlMANimakefile.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAABtlTechArticles/CAABtlMANimakefile.htm"
 converted: "2026-05-11T17:33:46.091758"
-```
-
 ---
 tags: []
 source_file: "Doc/online/CAABtlTechArticles/CAABtlMANimakefile.htmmd"
@@ -70,7 +67,6 @@ The Imakefile.mk syntax proposes a set of keyword (one per language) to add such
 
 Syntax and variables Syntax rules
 
-Syntax and variables Syntax rules
   1. A variable can be defined from a previously defined variable.
 
 ```vbscript

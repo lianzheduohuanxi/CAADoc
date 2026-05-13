@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Summary of Commands Around mkmk"
 category: "use-case"
 module: "CAABtlQuickRefs"
-tags: []
-source_file: "Doc/online/CAABtlQuickRefs/CAABtlMANMkThemIx.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAABtlQuickRefs/CAABtlMANMkThemIx.htm"
 converted: "2026-05-11T17:33:49.950844"
-```
-
 ---
 tags: []
 source_file: "Doc/online/CAABtlQuickRefs/CAABtlMANMkThemIx.htmmd"

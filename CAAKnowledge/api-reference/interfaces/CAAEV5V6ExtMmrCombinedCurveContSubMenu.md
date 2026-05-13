@@ -1,23 +1,17 @@
 ---
 title: "CAAEV5V6ExtMmrCombinedCurveContSubMenu"
-type: "interface"
+type: "LocalClass"
 module: "CAAV5V6MechanicalModeler"
-category: api-reference
 base: "CATExtIContextualSubMenu"
-inheritance_chain: "CAAEV5V6ExtMmrCombinedCurveContSubMenu → CATExtIContextualSubMenu"
 method_count: 1
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAV5V6MechanicalModeler.edu/CAAV5V6ExtMmrCombinedCurveUI.m/LocalInterfaces/CAAEV5V6ExtMmrCombinedCurveContSubMenu.h"
 ---
+
 # CAAEV5V6ExtMmrCombinedCurveContSubMenu
 
-**基类**: CATExtIContextualSubMenu  
-**继承链**: CAAEV5V6ExtMmrCombinedCurveContSubMenu → CATExtIContextualSubMenu  
-**模块**: CAAV5V6MechanicalModeler  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 1
+> Implementation of CATIContextualSubMenu for the Combined Curve You are adding commands which appears in the <CombinedCurve> object menu of the contextual menu. To do this, we create and arrange command starters that we associate with commands using command headers. These command headers are referred to using their identifiers. Here each command header is defined in the Part Document workshop Note : CAAEV5V6ExtMmrCombinedCurveContSubMenu is the same use case as CAAEMmrCombinedCurveContSubMenu. The objective is to have the same source delivered in V5 and V6. Any specific code to either V5 or V6 is flagged. ****************************************************************************** Explanation: The sub menu must be a data member to manage its life cycle. It can be identical or different from a call to another. . If it is identical, it can be created in the constructor, returned in the GetContextualSubMenu method, and deleted in the destructor. This is the case here . Otherwise, it must be created in the GetContextualSubMenu method. To correctly manage its life cycle, it must be deleted: . whenever calling GetContextualSubMenu . in the destructor when the class itself is deleted ****************************************************************************** Main Methods: Constructor            -> Builds the  sub menu Destructor             -> Deletes it GetContextualSubMenu() -> Returns it ******************************************************************************
+
+**基类**: CATExtIContextualSubMenu | **模块**: CAAV5V6MechanicalModeler | **方法数**: 1
 
 ## 依赖
 
@@ -25,28 +19,15 @@ verified: true
 - `CATExtIContextualSubMenu.h`
 - `CATBaseUnknown.h`
 
+## 虚方法
+
+### GetContextualSubMenu
+
+```cpp
+virtual CATCmdAccess * GetContextualSubMenu() ;
+```
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATExtIContextualSubMenu**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAV5V6MechanicalModeler.edu/CAAV5V6ExtMmrCombinedCurveUI.m/LocalInterfaces/CAAEV5V6ExtMmrCombinedCurveContSubMenu.h`

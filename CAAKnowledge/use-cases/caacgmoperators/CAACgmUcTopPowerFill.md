@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Fill"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperatorsInterfaces", "CATICGMPowerFill", "CAAGMOperatorsPowerFill"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopPowerFill.htmmd"
+tags: "["CAAGMOperatorsInterfaces", "CATICGMPowerFill", "CAAGMOperatorsPowerFill"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopPowerFill.htm"
 converted: "2026-05-11T17:33:49.275425"
-```
-
 ---
 tags: ["CAAGMOperatorsInterfaces", "CATICGMPowerFill", "CAAGMOperatorsPowerFill"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcTopPowerFill.htmmd"

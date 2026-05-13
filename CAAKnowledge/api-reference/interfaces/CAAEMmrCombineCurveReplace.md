@@ -1,56 +1,65 @@
 ---
 title: "CAAEMmrCombineCurveReplace"
-type: "interface"
+type: "LocalClass"
 module: "CAAMechanicalModeler"
-category: api-reference
 base: "CATSpecReplaceExt"
-inheritance_chain: "CAAEMmrCombineCurveReplace → CATSpecReplaceExt"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 3
+source_file: "CAAMechanicalModeler.edu/CAAMmrCombinedCurveReplace.m/LocalInterfaces/CAAEMmrCombineCurveReplace.h"
 ---
+
 # CAAEMmrCombineCurveReplace
 
-**基类**: CATSpecReplaceExt  
-**继承链**: CAAEMmrCombineCurveReplace → CATSpecReplaceExt  
-**模块**: CAAMechanicalModeler  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> Data extension implementing the CATIReplace interface which  manages the replacement of a Feature by another one for a given Role. This extension extends the CombineCurve Feature.
 
-> This extension extends the CombineCurve Feature.
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATSpecReplaceExt | **模块**: CAAMechanicalModeler | **方法数**: 3
 
 ## 依赖
 
 - `CATSpecReplaceExt.h`
 
+## 公共方法
+
+### IsElementValidForReplace
+
+```cpp
+HRESULT IsElementValidForReplace(const CATUnicodeString& iNameOfRole, const CATBaseUnknown_var& ispElement, CATUnicodeString& oMessage, int& oElementValidity, const CATBaseUnknown_var& ispOldValue=NULL_var) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iNameOfRole | `const CATUnicodeString&` |
+| ispElement | `const CATBaseUnknown_var&` |
+| oMessage | `CATUnicodeString&` |
+| oElementValidity | `int&` |
+| ispOldValue=NULL_var | `const CATBaseUnknown_var&` |
+
+
+### Replace
+
+```cpp
+HRESULT Replace(const CATUnicodeString& iNameOfRole, CATBaseUnknown_var& ispNewElement, const CATBaseUnknown_var& ispOldValue=NULL_var) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iNameOfRole | `const CATUnicodeString&` |
+| ispNewElement | `CATBaseUnknown_var&` |
+| ispOldValue=NULL_var | `const CATBaseUnknown_var&` |
+
+
+### GetRequestedBehavior
+
+```cpp
+HRESULT GetRequestedBehavior(const CATUnicodeString & iAttributeName, CATListPtrIID ** oBehaviorArray, int * oBehaviorSize) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iAttributeName | `const CATUnicodeString &` |
+| oBehaviorArray | `CATListPtrIID **` |
+| oBehaviorSize | `int *` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **the**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **the**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAMechanicalModeler.edu/CAAMmrCombinedCurveReplace.m/LocalInterfaces/CAAEMmrCombineCurveReplace.h`

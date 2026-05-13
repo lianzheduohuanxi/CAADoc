@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAAAsmCreateAssyHole.CATScript"
 category: "use-case"
 module: "CAAScdAsmUseCases"
-tags: ["CAAScdAsmUseCases", "CATIA", "CAAAsmCreateAssyHole"]
-source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmCreateAssyHoleSource.htmmd"
+tags: "["CAAScdAsmUseCases", "CATIA", "CAAAsmCreateAssyHole"]"
+source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmCreateAssyHoleSource.htm"
 converted: "2026-05-11T17:31:50.846178"
-```
-
 ---
 tags: ["CAAScdAsmUseCases", "CATIA", "CAAAsmCreateAssyHole"]
 source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmCreateAssyHoleSource.htmmd"
@@ -20,7 +17,7 @@ converted: "2026-05-11T17:31:50.846178"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' ***********************************************************************
     '   Purpose:      Creates and modifies an assembly hole
     '   Assumtions:   Looks for AssemblyHole.CATProduct in the DocView
@@ -36,7 +33,7 @@ converted: "2026-05-11T17:31:50.846178"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -51,7 +48,7 @@ converted: "2026-05-11T17:31:50.846178"
     ' -----------------------------------------------------------
 
     dim sDocPath As String
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
 ```
@@ -61,7 +58,7 @@ converted: "2026-05-11T17:31:50.846178"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 ```
@@ -83,7 +80,7 @@ converted: "2026-05-11T17:31:50.846178"
     ' Open the Product document
     ' -----------------------------------------------------------
 
-```vbscript
+```cpp
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
@@ -96,12 +93,12 @@ converted: "2026-05-11T17:31:50.846178"
                 "online/CAAScdAsmUseCases/samples/AssemblyHole.CATProduct")
 
 ```vbscript
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
     Dim oDoc As Document
     set oDoc = CATIA.Documents.Open(sFilePath)
 ```
@@ -118,7 +115,7 @@ sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
     ' Get the different products
     ' --------------------------
 
-```vbscript
+```cpp
     Dim oRootProduct As Product
     Set oRootProduct = CATIA.ActiveDocument.Product
 
@@ -135,7 +132,7 @@ sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
     ' Get the positioning sketch to create hole
     ' -----------------------------------------
 
-```vbscript
+```cpp
     Dim oSkelDocument As PartDocument
     Set oSkelDocument = CATIA.Documents.Item("Skeletton.CATPart")
 
@@ -175,7 +172,6 @@ sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
 
     oAssemblyHole.AddAffectedComponent oPlaque1
-oAssemblyHole.AddAffectedComponent oPlaque1
     oAssemblyHole.AddAffectedComponent oPlaque2
 
 ```vbscript

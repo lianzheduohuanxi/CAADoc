@@ -1,47 +1,46 @@
 ---
 title: "CAAVisBaseDocument"
-type: "interface"
+type: "LocalClass"
 module: "CAAVisualization"
-category: api-reference
-method_count: 6
-visibility: "local"
-has_tie_binding: false
-verified: true
+base: "CATBaseUnknown"
+method_count: 2
+source_file: "CAAVisualization.edu/CAAVisBasics.m/LocalInterfaces/CAAVisBaseDocument.h"
 ---
+
 # CAAVisBaseDocument
 
-**模块**: CAAVisualization  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 6
+> Document base class. Each document of our application inherits from CAAVisBaseDocument. The documents are created by the application (CAAVisBaseApplication). Each document has an associated view (CAAVisBaseView) to graphically display its data. The main role of the document is to manage our model, which is a tree of CATRep objects, stored as a CAT3DBagRep * _pRootContainer data member. Inheritance: CAAVisBaseDocument CATBaseUnknown (System Framework) Main Method: CreateDocView : Creates the document view (CAAVisBaseView). DeleteDocView : Deletes the document view. CreateModel   : Creates the model, which is in fact a graphical representation, that will be visualized in the view. DeleteModel   : Deallocates resources used for the model. AddRepToViewer: Adds our graphical representation to the viewer. This method allows our model to be represented in the view.
 
-> Visualization Framework
+**基类**: CATBaseUnknown | **模块**: CAAVisualization | **方法数**: 2
 
 ## 依赖
 
+- `CATBaseUnknown.h`
+
+## 虚方法
+
+### GetView
+
+```cpp
+virtual CAAVisBaseView * GetView() ;
+```
+
+Gets the view associated to the document. There is only one view per document.
+
+
+### InsertModel
+
+```cpp
+virtual void InsertModel(const char *iCGRFileName) ;
+```
+
+Inserts a graphical representation read from a CGR file into the model.
+
+| 参数 | 类型 |
+|------|------|
+| *iCGRFileName | `const char` |
+
+
 ---
 
-## Interface Overview
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-This interface is used in the following use cases:
-
-- [CAAVisSampleCAT3DFaceGP](../../use-cases/caaviscases/CAAVisSampleCAT3DFaceGP.md)
-- [CAAVisSampleCATSurfacicRep](../../use-cases/caaviscases/CAAVisSampleCATSurfacicRep.md)
-- [CAAVisSampleDisplayCgr](../../use-cases/caaviscases/CAAVisSampleDisplayCgr.md)
-- [CAAVisSampleLOD](../../use-cases/caaviscases/CAAVisSampleLOD.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAVisualization.edu/CAAVisBasics.m/LocalInterfaces/CAAVisBaseDocument.h`

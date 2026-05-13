@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Distance Dimension on Interactive Geometry"
-category: use-case case"
+category: "use-case case"
 module: "CAADriUseCases"
-tags: ["CATIDftStandardManager", "CATIDrwAnnotationFactory_var", "CATISheet_var", "CATIDrwAnnotationFactory", "CATIDftDocumentServices", "CATIDrwDimDimension", "CATIContainer_var", "CATIA", "CATIDrawing", "CATIStringList", "CATIView_var", "CAADrwCreateDimCmd", "CATIUnknownList", "CATISpecObject_var", "CAADrwCreateDim", "CATIUnknownListImpl", "CATI2DWFFactory_var", "CAADraftingInterfaces", "CAADRWCreateDim"]
-source_file: "Doc/online/CAADriUseCases/CAADriCreateDim.htmmd"
+tags: "["CATIDftStandardManager", "CATIDrwAnnotationFactory_var", "CATISheet_var", "CATIDrwAnnotationFactory", "CATIDftDocumentServices", "CATIDrwDimDimension", "CATIContainer_var", "CATIA", "CATIDrawing", "CATIStringList", "CATIView_var", "CAADrwCreateDimCmd", "CATIUnknownList", "CATISpecObject_var", "CAADrwCreateDim", "CATIUnknownListImpl", "CATI2DWFFactory_var", "CAADraftingInterfaces", "CAADRWCreateDim"]"
+source_file: "Doc/online/CAADriUseCases/CAADriCreateDim.htm"
 converted: "2026-05-11T17:31:50.950000"
-```
-
 ---
 # Mechanical Design
 
@@ -71,17 +68,17 @@ Fig. 2: The Model created by CAADrwCreateDim batch ![](images/CAADrwCreateDim1.j
 [Top]
 #### How to Launch CAADrwCreateDim
 
-```vbscript
+```cpp
 To launch CAADrwCreateDim, you will need to set up the build time environment, then compile CAADrwCreateDim along with its prerequisites, set up the run time environment, and then execute the use case [1].
 
 When you launch the use case, pass the full pathname of the file into which you you want to store the created document as argument: for example Result.CATDrawing.
 ```
 
-```vbscript
+```cpp
   * With Windows  `e:> CAADrwCreateDim Result.CATDrawing`
 ---
 ```
-```vbscript
+```cpp
   * With UNIX  `$ CAADrwCreateDim /u/users/Result.CATDrawing`
 ---
 ```
@@ -92,7 +89,6 @@ When you launch the use case, pass the full pathname of the file into which you 
 
 The CAADrwCreateDim use case is made of one source file named CAADrwCreateDim.cpp located in the CAADrwCreateDim.m module of the CAADraftingInterfaces.edu framework:
 
-The CAADrwCreateDim use case is made of one source file named CAADrwCreateDim.cpp located in the CAADrwCreateDim.m module of the CAADraftingInterfaces.edu framework:
 Windows | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCreateDim.m/`
 ```
 
@@ -178,7 +174,7 @@ This section represents the usual sequence for creating a CATIA document.
        CATIDftDocumentServices *piDftDocServices = NULL;
        CATIContainer_var spDrwcont = NULL_var;
        CATISpecObject_var spSpecObj = NULL_var;
-```vbscript
+```cpp
        if (SUCCEEDED(pDoc->QueryInterface(IID_CATIDftDocumentServices, (void **)&piDftDocServices)))
 
 ```
@@ -215,7 +211,7 @@ The root feature of a drawing document is the Drawing that is the feature that i
     ...
       if (!!spDrwcont)
        {
-```vbscript
+```cpp
 if (!!spDrwcont)
           CATIDftStandardManager *piStdmgr = NULL;
           HRESULT rc = spDrwcont->QueryInterface(IID_CATIDftStandardManager,(void**)&piStdmgr);
@@ -316,7 +312,6 @@ The reffiles directory is  accessible in runtime view.
        //   - Setting the view as the current one
        //   - Getting the view geometry factory interface
        spSheet->SetCurrentView(spMainView);
-spSheet->SetCurrentView(spMainView);
        CATI2DWFFactory_var spGeomFactory = spMainView;
 
        double X[2] = { 100.0, 200.0};

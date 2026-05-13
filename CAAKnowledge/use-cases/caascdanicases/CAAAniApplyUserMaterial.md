@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating 1D Mesh"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CATIA", "CAAScdAniUseCases", "CAAAniMesh1D", "CAAAniUserMaterial"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniApplyUserMaterial.htmmd"
+tags: "["CATIA", "CAAScdAniUseCases", "CAAAniMesh1D", "CAAAniUserMaterial"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniApplyUserMaterial.htm"
 converted: "2026-05-11T17:31:51.596555"
-```
-
 ---
 ## Analysis Modeler
 
@@ -35,7 +32,7 @@ This use case shows how to create a user material and how to apply analysis mate
     ...
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -47,7 +44,7 @@ This use case shows how to create a user material and how to apply analysis mate
 ```vbscript
     '-----------------------------------------------------------
     'Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
@@ -78,7 +75,7 @@ End If
 ```vbscript
 '-----------------------------------------------------------
     'Open the Analysis document
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Beam.CATAnalysis")
 ```
 ```
@@ -89,7 +86,7 @@ End If
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ```
@@ -222,7 +219,7 @@ According to the general [ Analysis Document](../use-cases/caascdaniusecases/CAA
 ```vbscript
 ```vbscript
     'Load the catalog of materials
-```vbscript
+```cpp
     MaterialFile = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/CatalogForAutomation.CATMaterial")
 
 ```
@@ -231,7 +228,7 @@ According to the general [ Analysis Document](../use-cases/caascdaniusecases/CAA
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Set oMaterial_document = CATIA.Documents.Open(MaterialFile)
 ```
 ```
@@ -336,7 +333,7 @@ Set anlysisMaterial = oMaterial1.CreateAnalysisData("SAMAnisotropicMaterial")
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Set oManager = oAnalysisManager.GetItem("CATMatManagerVBExt")
     oManager.ApplyMaterialOnUserMaterial oAnalysisEntity1, oMaterial1, linkMode
 ```

@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "ProductStructure Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR7"
-version: "V5R7"
-tags: ["CATIProductInSession", "CATIProduct", "CATIMovable"]
-source_file: "Doc/online/CAACenAPIChangesR7/ProductStructure.htmmd"
+tags: "["CATIProductInSession", "CATIProduct", "CATIMovable"]"
+source_file: "Doc/online/CAACenAPIChangesR7/ProductStructure.htm"
 converted: "2026-05-11T17:33:52.234015"
-```
-
 ---
 tags: ["CATIProductInSession", "CATIProduct", "CATIMovable"]
 source_file: "Doc/online/CAACenAPIChangesR7/ProductStructure.htmmd"

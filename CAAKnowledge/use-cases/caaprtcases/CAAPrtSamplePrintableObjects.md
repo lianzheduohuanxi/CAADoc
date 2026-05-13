@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Making Your Components Printable"
-category: use-case case"
+category: "use-case case"
 module: "CAAPrtUseCases"
-tags: ["CAAPrtPrintableString", "CAAPrtStringImage", "CAAPrint", "CAAPrtPrintableObjects", "CATIPrintable"]
-source_file: "Doc/online/CAAPrtUseCases/CAAPrtSamplePrintableObjects.htmmd"
+tags: "["CAAPrtPrintableString", "CAAPrtStringImage", "CAAPrint", "CAAPrtPrintableObjects", "CATIPrintable"]"
+source_file: "Doc/online/CAAPrtUseCases/CAAPrtSamplePrintableObjects.htm"
 converted: "2026-05-11T17:17:56.133823"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 

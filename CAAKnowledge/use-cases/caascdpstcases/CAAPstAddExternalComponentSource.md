@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAAPstAddExternalComponent.CATScript"
 category: "use-case"
 module: "CAAScdPstUseCases"
-tags: ["CAAPstHull", "CATIA", "CAAPstAddExternalComponent"]
-source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddExternalComponentSource.htmmd"
+tags: "["CAAPstHull", "CATIA", "CAAPstAddExternalComponent"]"
+source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddExternalComponentSource.htm"
 converted: "2026-05-11T17:31:52.321783"
-```
-
 ---
 tags: ["CAAPstHull", "CATIA", "CAAPstAddExternalComponent"]
 source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddExternalComponentSource.htmmd"
@@ -16,7 +13,7 @@ converted: "2026-05-11T17:31:52.321783"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGHT DASSAULT SYSTEMES 2000
     ' *****************************************************************************
     '   Purpose:       Create A Product Structure document containing
@@ -34,7 +31,7 @@ converted: "2026-05-11T17:31:52.321783"
 
 ```
 
-```vbscript
+```cpp
     Sub CATMain(#)
 ```vbscript
 ```
@@ -52,7 +49,7 @@ converted: "2026-05-11T17:31:52.321783"
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
          sDocPath=CATIA.SystemService.Environ("CATDocView")
          If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
            Err.Raise 9999,,"No Doc Path Defined"
@@ -66,11 +63,11 @@ converted: "2026-05-11T17:31:52.321783"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
         ' ------------------------------------------------------------------------------------------------
         'Create a new product document object by adding a document with the Product
         'type to the document collection of the CATIA application.
-```vbscript
+```cpp
         Dim oProductDoc As Document
         Set oProductDoc = CATIA.Documents.Add("Product")
         'Retrieve the root product.
@@ -85,7 +82,7 @@ converted: "2026-05-11T17:31:52.321783"
         Set oRootCol = oRoot.Products
         'Open the Part Document
 ```
-```vbscript
+```cpp
         Dim oPartDoc As Document
         Set oPartDoc = CATIA.Documents.Open(sDocPath & "CAAPstHull.CATPart")
         'Add a new component from the already opened part document.

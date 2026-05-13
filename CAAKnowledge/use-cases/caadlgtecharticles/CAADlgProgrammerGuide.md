@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Dialog Programmer's Guide"
-category: tech-article
+category: "tech-article"
 module: "CAADlgTechArticles"
-tags: ["CATIA"]
-source_file: "Doc/online/CAADlgTechArticles/CAADlgProgrammerGuide.htmmd"
+tags: "["CATIA"]"
+source_file: "Doc/online/CAADlgTechArticles/CAADlgProgrammerGuide.htm"
 converted: "2026-05-11T17:17:56.072469"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -78,7 +75,6 @@ The methods of a dialog class are:
 
 The constructor must just provide a NULL pointer for each dialog object or control referred to using a pointer stored as a data member, but must not allocate. This avoids having objects created without their associated resources being loaded. The ` Build` method, which must be called just after the constructor, will instantiate these objects. The constructor just set the dialog window or box parent, its identifier, and its style. The style is here not explicitly set.
 
-The constructor must just provide a NULL pointer for each dialog object or control referred to using a pointer stored as a data member, but must not allocate. This avoids having objects created without their associated resources being loaded. The ` Build` method, which must be called just after the constructor, will instantiate these objects. The constructor just set the dialog window or box parent, its identifier, and its style. The style is here not explicitly set.
     DialogWindow::DialogWindow(pParent, pIdentifier, Style)
 
                 : CATDlgDialog(pParent, pIdentifier, Style),
@@ -92,7 +88,6 @@ DialogWindow::DialogWindow(pParent, pIdentifier, Style)
 
 Since the caller can set the style as a concatenation of the available style parameters, you need to provide callback methods for the OK, Apply, and Cancel push buttons, plan that the dialog box can be set to modal or to non resizable. If you want to explicitly set the style without leaving the caller set it for you, do not provide a style parameter in your constructor, and pass the style in the _CATDlgDialog_ parent class constructor.
 
-Since the caller can set the style as a concatenation of the available style parameters, you need to provide callback methods for the OK, Apply, and Cancel push buttons, plan that the dialog box can be set to modal or to non resizable. If you want to explicitly set the style without leaving the caller set it for you, do not provide a style parameter in your constructor, and pass the style in the _CATDlgDialog_ parent class constructor.
     DialogWindow::DialogWindow(pParent, pIdentifier)
 
                 : CATDlgDialog(pParent, pIdentifier,
@@ -118,7 +113,6 @@ Let's take the example of the CATIA Macro dialog box to go on with a concrete ex
 
 This dialog box is non resizable, and features the Help button in the title bar. Its constructor is as follows.
 
-This dialog box is non resizable, and features the Help button in the title bar. Its constructor is as follows.
     MacroBox::MacroBox(pParent, pIdentifier)
 
             : CATDlgDialog(pParent, pIdentifier,
@@ -167,7 +161,7 @@ The Build method of such as dialog box could be as follows.
     ...
 The Build method of such as dialog box could be as follows.
       _pMacroNameFrame   = new CATDlgFrame(this, "MacroNameFrameId", CATDlgGridLayout);
-```vbscript
+```cpp
         _pMacroNameCombo   = new CATDlgCombo(_pMacroNameFrame, "MacroNameComboId");
 ```
 
@@ -175,7 +169,7 @@ The Build method of such as dialog box could be as follows.
     	_pMacroNameCombo->SetVisibleTextHeight(5);
       _pMacroInFrame     = new CATDlgFrame(this, "MacroInFrameId", CATDlgGridLayout);
 ```vbscript
-```vbscript
+```cpp
         _pMacroInLabel     = new CATDlgLabel(_pMacroInFrame, "MacroInFrameId");
         _pMacroInCombo     = new CATDlgCombo(_pMacroInFrame, "MacroInFrameId");
 ```
@@ -185,7 +179,7 @@ The Build method of such as dialog box could be as follows.
         _pMacroInCombo->SetVisibleTextWidth(17);
 
         CATUnicodeString ucMacroInComboString ;
-```vbscript
+```cpp
         ucMacroInComboString  = **CATMsgCatalog::BuildMessage**("MacroBox",
 
 ```
@@ -199,7 +193,7 @@ ucMacroInComboString  = **CATMsgCatalog::BuildMessage**("MacroBox",
        _pMacroInCombo-->SetField(ucMacroInComboString);
 
       _pDescriptionFrame = new CATDlgFrame(this, "DescriptionFrameId", CATDlgGridLayout);
-```vbscript
+```cpp
         _pDescriptionLabel = new CATDlgLabel(_pDescriptionFrame, "DescriptionLabelId");
 ```
 
@@ -207,7 +201,7 @@ ucMacroInComboString  = **CATMsgCatalog::BuildMessage**("MacroBox",
 
       _pButtonFrame      = new CATDlgFrame(this, "ButtonFrameId", CATDlgGridLayout);
 ```vbscript
-```vbscript
+```cpp
         _pRunButton        = new CATDlgPushButton(_pButtonFrame, "RunButtonId");
         _pCancelButton     = new CATDlgPushButton(_pButtonFrame, "CancelButtonId");
         _pEditButton       = new CATDlgPushButton(_pButtonFrame, "EditButtonId");
@@ -332,7 +326,6 @@ The arguments to pass are a pointer to the push button, a pointer to the notific
 
 The callbacks methods are usually methods of the dialog box class, and should be as follows, for example for the Run push button.
 
-The callbacks methods are usually methods of the dialog box class, and should be as follows, for example for the Run push button.
     MacroBox::RunButton(CATCommand           * pSendingCommand,
                         CATNotification      * pNotification,
                         CATCommandClientData   UsefulData)
@@ -350,7 +343,6 @@ You can retrieve the activated control from the first parameter, and the notific
 
 As a C++ rule, the destructor should delete the pointed data members. For pointed dialog objects that are descendants of the dialog window class,  you shouldn't deal with it, since the children are recursively retrieved form the dialog window instance, and are automatically deleted. You have only to set a NULL pointer to each dialog object member. Usually, a dialog window destructor looks like this:
 
-As a C++ rule, the destructor should delete the pointed data members. For pointed dialog objects that are descendants of the dialog window class,  you shouldn't deal with it, since the children are recursively retrieved form the dialog window instance, and are automatically deleted. You have only to set a NULL pointer to each dialog object member. Usually, a dialog window destructor looks like this:
     MacroBox::~MacroBox(#)
 
     {

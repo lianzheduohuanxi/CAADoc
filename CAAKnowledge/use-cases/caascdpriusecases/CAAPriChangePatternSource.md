@@ -19,7 +19,7 @@ Option Explicit
 '   CATIA Level:  V5R14
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 Dim oPartDocument As PartDocument
@@ -34,7 +34,7 @@ Dim oCircularPattern as CircPattern
 ' ------------
 ' Get the part document
 ' ------------
-```vbscript
+```cpp
 Set oPartDocument = CATIA.ActiveDocument
 ' ------------
 ```
@@ -111,7 +111,7 @@ Option Explicit
 '   CATIA Level:  V5R14
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 Dim oPartDocument As PartDocument
@@ -126,7 +126,7 @@ Dim oCircularPattern as CircPattern
 ' ------------
 ' Get the part document
 ' ------------
-```vbscript
+```cpp
 Set oPartDocument = CATIA.ActiveDocument
 ' ------------
 ```

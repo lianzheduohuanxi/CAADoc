@@ -1,64 +1,66 @@
 ---
 title: "CAAIAfrMRUManagement"
-type: "interface"
+type: "PublicInterface"
 module: "CAAApplicationFrame"
-category: api-reference
+base: "CATBaseUnknown"
 method_count: 3
-visibility: "public"
-has_tie_binding: true
-verified: true
+source_file: "CAAApplicationFrame.edu/PublicInterfaces/CAAIAfrMRUManagement.h"
 ---
-> **TIE实现**: unknown
 
 # CAAIAfrMRUManagement
 
-**模块**: CAAApplicationFrame  
-**分类**: framework  
-**可见性**: public  
-**方法数**: 3
-
-> Local Framework
+**基类**: CATBaseUnknown | **模块**: CAAApplicationFrame | **方法数**: 3
 
 ## 依赖
 
+- `CATBaseUnknown.h`
 - `CATListOfCATUnicodeString.h`
 - `CAAAfrCustCommandHdrModel.h`
 
-## TIE实现
+## 纯虚方法 (接口契约)
 
-**实现文件**:
-- `CAAAfrComboColorNotification.cpp`
-- `CAAAfrGetMRUManager.cpp`
-- `CAAAfrMRUManager.cpp`
-- `CAAAfrMRUManagerNotification.cpp`
-- `CAAEAfrTemporaryObjectColor.cpp`
+### AddElement
+
+```cpp
+virtual HRESULT AddElement(CATUnicodeString &iNewElement) = 0 ;
+```
+
+Adds a new item
+
+| 参数 | 类型 |
+|------|------|
+| &iNewElement | `CATUnicodeString` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetElementList
+
+```cpp
+virtual HRESULT GetElementList(CATListOfCATUnicodeString &ElementList) const = 0 ;
+```
+
+Retrieves the list of items
+
+| 参数 | 类型 |
+|------|------|
+| &ElementList | `CATListOfCATUnicodeString` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### SelectElement
+
+```cpp
+virtual HRESULT SelectElement(int iPosition) = 0 ;
+```
+
+Selects an element of the list
+
+| 参数 | 类型 |
+|------|------|
+| iPosition | `int` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
 
 ---
 
-## Interface Overview
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-- [3D PLM Enterprise Architecture](../../use-cases/caaafrcases/CAAAfrSampleMRUHdr.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAApplicationFrame.edu/PublicInterfaces/CAAIAfrMRUManagement.h`

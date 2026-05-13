@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Using a Tessellation Operator"
 category: "use case"
 module: "CAACgmModel"
-tags: ["CAAGMOperatorsInterfaces", "CATICGMCellTessellator", "CAATesBody", "CAAGMOperatorsTesBody", "CATICGMBodyTessellator", "CATICGMObject", "CAAGMModelGemBrowser", "CATICGMTopSkin", "CATIA"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcTesBody.htmmd"
+tags: "["CAAGMOperatorsInterfaces", "CATICGMCellTessellator", "CAATesBody", "CAAGMOperatorsTesBody", "CATICGMBodyTessellator", "CATICGMObject", "CAAGMModelGemBrowser", "CATICGMTopSkin", "CATIA"]"
+source_file: "Doc/online/CAACgmModel/CAACgmUcTesBody.htm"
 converted: "2026-05-11T17:33:48.537640"
-```
-
 ---
 tags: ["CAAGMOperatorsInterfaces", "CATICGMCellTessellator", "CAATesBody", "CAAGMOperatorsTesBody", "CATICGMBodyTessellator", "CATICGMObject", "CAAGMModelGemBrowser", "CATICGMTopSkin", "CATIA"]
 source_file: "Doc/online/CAACgmModel/CAACgmUcTesBody.htmmd"
@@ -93,7 +90,7 @@ Creating the Geometry Factory The geometry factory (CATGeoFactory) creates and m
 Creating the Topological Body The body is created on the boundary of a geometric sphere (limited to a quarter of hemisphere).
 
     // Creates the geometric sphere ...
-```vbscript
+```cpp
 if (NULL==piGeomFactory) return (1);
 Creating the Topological Body The body is created on the boundary of a geometric sphere (limited to a quarter of hemisphere).
      CATSphere * piSphere=piGeomFactory->**CreateSphere**
@@ -230,7 +227,7 @@ CATCGMTessTrianIter *    pTriangles = NULL;
      int numberOfFaces = faces.Size(#);
 
      // Scan  the result for one face
-```vbscript
+```cpp
 CATLISTP(CATCell) faces;
 piBody->GetAllCells( faces,2); // faces are cells of dimension 2
 int numberOfFaces = faces.Size(#);
@@ -241,7 +238,7 @@ int numberOfFaces = faces.Size(#);
        //
        // for each face, retrieve the tessellation results.
        //
-```vbscript
+```cpp
 for (int i=1 ; i<=numberOfFaces ; i++)
        CATFace * piFace = (CATFace*) faces[i];
        pTessellator -> **GetFace**(piFace,
@@ -309,7 +306,7 @@ if(NULL != pStrips)
       {
 long nbs=0;
 while (0==(pStrips->**IsExhausted**(#)))       // last strip?
-```vbscript
+```cpp
         nbs=CATMax(nbs,pStrips->**GetStriNbPts**(#)); // the result of the current strip
 ```
 
@@ -325,7 +322,6 @@ while (0==(pStrips->**IsExhausted**(#)))       // last strip?
       // from the beginning again to retrieve the results
       //
       pStrips->Reset(#);                          //initialize the strip iterator
-pStrips->Reset(#);                          //initialize the strip iterator
 ```vbscript
       while (0==(pStrips->IsExhausted(#)))        // last one?
 
@@ -356,7 +352,7 @@ pStrips->**GetStriNuPts**(aNuPts);
 nbs=pStrips->GetStriNbPts(#);
 pStrips->**GetStriNuPts**(aNuPts);
 for (int j=0;j<nbs-1;j++)
-```vbscript
+```cpp
         piLn= piGeomFactory->CreateLine(
           CATMathPoint(aCoord[aNuPts[j]][0],
 ```
@@ -369,7 +365,7 @@ for (int j=0;j<nbs-1;j++)
 
       }
       // ..... //
-```vbscript
+```cpp
 CATMathPoint(aCoord[aNuPts[j+1]][0],
 aCoord[aNuPts[j+1]][1],
 aCoord[aNuPts[j+1]][2]) );
@@ -395,7 +391,7 @@ if(1==toStore)
        ofstream filetowrite(pfileName, ios::binary ) ;
 
     #else
-```vbscript
+```cpp
 if(1==toStore)
 ofstream filetowrite(pfileName, ios::binary ) ;
        ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;

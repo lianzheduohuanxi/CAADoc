@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Constraints Object"
-category: tech-article
+category: "tech-article"
 module: "CAAScdMmrTechArticles"
-tags: ["CATIAConstraints"]
-source_file: "Doc/online/CAAScdMmrTechArticles/CAAMmrObjConstraints.htmmd"
+tags: "["CATIAConstraints"]"
+source_file: "Doc/online/CAAScdMmrTechArticles/CAAMmrObjConstraints.htm"
 converted: "2026-05-11T17:31:51.139670"
-```
-
 ---
 # Constraints Object
 
@@ -30,7 +27,7 @@ To retrieve the **Constraints** collection, use the `Connections` method of the 
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
     Set constraints1 = product1.Connections("CATIAConstraints")
 
 ```

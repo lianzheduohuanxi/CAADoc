@@ -17,7 +17,7 @@ Option Explicit
 '   CATIA Level:  V5R15 
 ' *****************************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ```
@@ -26,7 +26,7 @@ Sub CATMain(#)
     ' Optional: allows to find the sample wherever it's installed
 
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -35,7 +35,7 @@ Sub CATMain(#)
 ```
 
     dim sSavePath As String 
-```vbscript
+```cpp
     sSavePath=CATIA.SystemService.Environ("CATSavePath")
 
     CATIA.SystemService.Print "CATSavePath = " & sSavePath
@@ -46,13 +46,13 @@ Sub CATMain(#)
 ```
 
     ' Open main schematic P&ID design document 
-```vbscript
+```cpp
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
             "online/CAAScdSchUseCases/samples/CAASCH_Detail01.CATProduct")
 ```
 
-```vbscript
+```cpp
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
@@ -142,7 +142,7 @@ Sub CATMain(#)
             strMessage = strMessage & "document created" & vbCr
             strMessage = strMessage & "default name = " & strDocName & vbCr
 
-```vbscript
+```cpp
             strDocName = CATIA.FileSystem.ConcatenatePaths(sSavePath, _
 			              "SampleOutput_SchDoc01.CATProduct")
 ```
@@ -166,7 +166,7 @@ End Sub
 
 ```
 
-```vbscript
+```cpp
 Option Explicit
 ' COPYRIGHT DASSAULT SYSTEMES 2004
 
@@ -177,7 +177,7 @@ Option Explicit
 '   CATIA Level:  V5R15 
 ' *****************************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ```
@@ -186,7 +186,7 @@ Sub CATMain(#)
     ' Optional: allows to find the sample wherever it's installed
 
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -195,7 +195,7 @@ Sub CATMain(#)
 ```
 
     dim sSavePath As String 
-```vbscript
+```cpp
     sSavePath=CATIA.SystemService.Environ("CATSavePath")
 
     CATIA.SystemService.Print "CATSavePath = " & sSavePath
@@ -206,13 +206,13 @@ Sub CATMain(#)
 ```
 
     ' Open main schematic P&ID design document 
-```vbscript
+```cpp
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
             "online/CAAScdSchUseCases/samples/CAASCH_Detail01.CATProduct")
 ```
 
-```vbscript
+```cpp
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
@@ -302,7 +302,7 @@ Sub CATMain(#)
             strMessage = strMessage & "document created" & vbCr
             strMessage = strMessage & "default name = " & strDocName & vbCr
 
-```vbscript
+```cpp
             strDocName = CATIA.FileSystem.ConcatenatePaths(sSavePath, _
 			              "SampleOutput_SchDoc01.CATProduct")
 ```

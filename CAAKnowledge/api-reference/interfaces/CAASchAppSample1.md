@@ -1,29 +1,15 @@
 ---
 title: "CAASchAppSample1"
-type: "interface"
+type: "LocalClass"
 module: "CAASchPlatformModeler"
-category: api-reference
 base: "CAASchAppBaseEnv"
-inheritance_chain: "CAASchAppSample1 → CAASchAppBaseEnv"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 1
+source_file: "CAASchPlatformModeler.edu/CAASchAppSample1.m/LocalInterfaces/CAASchAppSample1.h"
 ---
+
 # CAASchAppSample1
 
-**基类**: CAASchAppBaseEnv  
-**继承链**: CAASchAppSample1 → CAASchAppBaseEnv  
-**模块**: CAASchPlatformModeler  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
-
-> -----------------------------------------------------------------------------
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CAASchAppBaseEnv | **模块**: CAASchPlatformModeler | **方法数**: 1
 
 ## 依赖
 
@@ -32,37 +18,20 @@ verified: true
 - `CATISheet.h`
 - `CATString.h`
 
----
+## 公共方法
 
-## Interface Overview
+### DoSample
 
-This interface inherits from **CAASchAppBaseEnv**. 
+```cpp
+int DoSample(const char *iFileToBeLoaded, const char *iPathToOutputFile) ;
+```
 
-**Inherited Methods**: Please refer to the base interface documentation above.
+| 参数 | 类型 |
+|------|------|
+| *iFileToBeLoaded | `const char` |
+| *iPathToOutputFile | `const char` |
 
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
 
 ---
 
-## Related Use Cases
-
-This interface is used in the following use cases:
-
-- [CAASchSample1](../../use-cases/caaschcases/CAASchSample1.md)
-- [CAASchSample2](../../use-cases/caaschcases/CAASchSample2.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAASchPlatformModeler.edu/CAASchAppSample1.m/LocalInterfaces/CAASchAppSample1.h`

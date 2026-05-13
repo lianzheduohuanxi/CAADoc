@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Single Patch NURBS Surface"
-category: use-case case"
+category: "use-case case"
 module: "CAATopUseCases"
-tags: ["CAAGemBrowser", "CATICGMObject", "CATIA", "CAATopOverview", "CAATopNurbsSurfSinglePatch", "CAATopologicalOperators"]
-source_file: "Doc/online/CAATopUseCases/CAATopNurbsSurfSinglePatch.htmmd"
+tags: "["CAAGemBrowser", "CATICGMObject", "CATIA", "CAATopOverview", "CAATopNurbsSurfSinglePatch", "CAATopologicalOperators"]"
+source_file: "Doc/online/CAATopUseCases/CAATopNurbsSurfSinglePatch.htm"
 converted: "2026-05-11T17:31:50.734376"
-```
-
 ---
 # Geometric Modeler
 
@@ -64,7 +61,6 @@ The CAATopNurbsSurfSinglePatch use case:
 
 To launch CAATopNurbsSurfSinglePatch , you will need to set up the build time environment, then compile CAATopNurbsSurfSinglePatch .m along with its prerequisites, set up the run time environment, and then execute the use case [1].
 
-To launch CAATopNurbsSurfSinglePatch , you will need to set up the build time environment, then compile CAATopNurbsSurfSinglePatch .m along with its prerequisites, set up the run time environment, and then execute the use case [1].
 ```vbscript
 If you simply type CAATopNurbsSurfSinglePatch with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example:
 
@@ -108,7 +104,6 @@ There are six steps in CAATopNurbsSurfSinglePatch.cpp:
 
 The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
 
-The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
     CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**(#) ;
 ```vbscript
     if (NULL==piGeomFactory) return (1);
@@ -140,7 +135,6 @@ In the CAATopNurbsSurfSinglePatch sample, a single patch (two nodes along U and 
 
 Therefore the number of poles to be specified along U and V is 5 and the total number of poles is nbPolesU* nbPolesV = 25.
 
-Therefore the number of poles to be specified along U and V is 5 and the total number of poles is nbPolesU* nbPolesV = 25.
     int nbPoleU = 5;
     int nbPoleV = 5;
     CATMathGridOfPoints gridOfPoints(nbPoleU,nbPoleV);
@@ -193,7 +187,6 @@ Displaying the control points allows you to check their position with respect to
 
 Note that CATIA Version 5 does not support periodic NURBS. You can create a periodic NURBS but the geometric modeler does not guarantee that the operations that can be applied to such NURBS surface later on will be performed properly.
 
-Note that CATIA Version 5 does not support periodic NURBS. You can create a periodic NURBS but the geometric modeler does not guarantee that the operations that can be applied to such NURBS surface later on will be performed properly.
     long IsPeriodic= 0;
     long Degree= 4;
     long KnotsCount= 2;
@@ -213,7 +206,6 @@ Note that CATIA Version 5 does not support periodic NURBS. You can create a peri
 
 Prior to creating the NURBS, the control point weights are initialized.
 
-Prior to creating the NURBS, the control point weights are initialized.
     long isRational=1;
     double * aWeights=new double[nbPoleU*nbPoleV];
 ```vbscript
@@ -260,7 +252,6 @@ For how to create a skin, see the [CAATopOverview](CAATopOverview.md) use case[2
 
     // Retrieve the maximum limits
     CATSurLimits surMaxLimits ;
-CATSurLimits surMaxLimits ;
     piSurf1->GetMaxLimits(surMaxLimits) ;
 
     CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration(#);
@@ -304,13 +295,13 @@ The use case ends with the closure of the geometry factory, done by the `::CATCl
 
      {
     #ifdef _WINDOWS_SOURCE
-```vbscript
+```cpp
 if(1==toStore)
        ofstream filetowrite(pfileName, ios::binary ) ;
 ```
 
     #else
-```vbscript
+```cpp
 if(1==toStore)
 ofstream filetowrite(pfileName, ios::binary ) ;
        ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;

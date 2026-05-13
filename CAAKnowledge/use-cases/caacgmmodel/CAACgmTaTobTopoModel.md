@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "The CGM Topological Model"
-category: use-case
+category: "use-case"
 module: "CAACgmModel"
-tags: ["CATIA"]
-source_file: "Doc/online/CAACgmModel/CAACgmTaTobTopoModel.htmmd"
+tags: "["CATIA"]"
+source_file: "Doc/online/CAACgmModel/CAACgmTaTobTopoModel.htm"
 converted: "2026-05-11T17:33:48.051276"
-```
-
 ---
 # The CGM Topological Model
 
@@ -53,10 +50,9 @@ The building up of a CATBody takes several steps:
     * Declare the completion of the CATBody and freeze it (this will be possible only if it satisfies to all the validity criteria, see Validity of the Topological Objects). It now can be used for topological operations, but cannot be modified anymore. It is necessary to make a copy of a frozen CATBody into a non-frozen one, in order to be able to perform modifications. Hence, topological operators do never modify input bodies, but retrieve the result into a new body.
 ### CATDomain and CATCell
 
-```vbscript
+```cpp
 CATDomain and CATCell interfaces implement the concept of topological domains and cells [2]. They offer navigation methods, and all Get and Set methods on their attributes.
 
-CATDomain and CATCell interfaces implement the concept of topological domains and cells [2]. They offer navigation methods, and all Get and Set methods on their attributes.
 The following arrays present the mapping between the concepts and the CGM interfaces.
 ```
 
@@ -198,14 +194,13 @@ Do the following steps for managing the different orientations:
 
     * Define the `CATOrientation` of the CATCell with regards to the geometry orientation (choose the orientation of the underlying geometry as much as possible).
     * Define the CATDomain that bounds the CATCell: set the type of boundary (`CATLocation`). For a CATFace, give the list of the CATEdges by letting the matter on the left when you stand along the face direction.
-```vbscript
+```cpp
     * Set the matter side `CATSide` for each CATCell, with regards to its own orientation or define the `CATOrientation` of the CATCell with regards to the CATDomain it belongs to.
 ### Validity of the Topological Objects
 ```
 
 The validity of the objects is checked at the CATBody completion. The CATBody cannot be frozen if one of the following rules is not fulfilled:
 
-The validity of the objects is checked at the CATBody completion. The CATBody cannot be frozen if one of the following rules is not fulfilled:
     1. The geometry of a CATVertex is a CATMacroPoint and the geometry of the CATEdge is a CATEdgeCurve.
     2. The geometry of the points of the CATMacroPoint and the geometry of the bounded cells must be consistent. Hence:
 

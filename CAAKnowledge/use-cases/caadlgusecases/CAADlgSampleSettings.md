@@ -274,7 +274,7 @@ restore the Dialog object values.
 
 *Copyright  2003, Dassault Systmes. All rights reserved.*
 
-```vbscript
+```cpp
 #include &quot;CATDlgDialog.h&quot;   // To derive from
 ...
 class CATSettingRepository ; // To manage values
@@ -306,7 +306,7 @@ class CAADlgFrameReplaceDlg: public CATDlgDialog
 };
 ```
 
-```vbscript
+```cpp
 CAADlgFrameReplaceDlg::CAADlgFrameReplaceDlg(CATDialog * pParentDlg) :
   CATDlgDialog (pParentDlg,&quot;CAADlgFrameReplaceDlg&quot;,
       CATDlgWndAutoResize | CATDlgWndBtnOKCancel |CATDlgWndNoResize ),
@@ -318,7 +318,7 @@ CAADlgFrameReplaceDlg::CAADlgFrameReplaceDlg(CATDialog * pParentDlg) :
 }
 ```
 
-```vbscript
+```cpp
 CAADlgFrameReplaceDlg::~CAADlgFrameReplaceDlg(#)
 {
     _pSettingFrameReplace = NULL ;
@@ -326,7 +326,7 @@ CAADlgFrameReplaceDlg::~CAADlgFrameReplaceDlg(#)
 }
 ```
 
-```vbscript
+```cpp
 void CAADlgFrameReplaceDlg::Build(#)
 {
    a/ Creating the Dialog objects and Arranging them
@@ -361,7 +361,7 @@ void CAADlgFrameReplaceDlg::Build(#)
 }
 ```
 
-```vbscript
+```cpp
 ...
    AddAnalyseNotificationCB (this, 
                                GetDiaCANCELNotification(#),
@@ -379,7 +379,7 @@ void CAADlgFrameReplaceDlg::Build(#)
 ...
 ```
 
-```vbscript
+```cpp
 void CAADlgFrameReplaceDlg::CloseWindowOK(CATCommand* cmd, CATNotification* evt, CATCommandClientData data)
 {
    ...
@@ -410,7 +410,7 @@ void CAADlgFrameReplaceDlg::CloseWindowOK(CATCommand* cmd, CATNotification* evt,
 }
 ```
 
-```vbscript
+```cpp
 void CAADlgFrameReplaceDlg::CloseWindow(CATCommand* cmd, CATNotification* evt, 
                                                           CATCommandClientData data)
 {

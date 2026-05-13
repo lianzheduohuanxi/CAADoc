@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Selecting a mesh entity (node, element)"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CATIA", "CAAAniMeshSelectFEEntity", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSelectFEEntity.htmmd"
+tags: "["CATIA", "CAAAniMeshSelectFEEntity", "CAAScdAniUseCases"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSelectFEEntity.htm"
 converted: "2026-05-11T17:31:51.695188"
-```
-
 ---
 ## Analysis Modeler
 
@@ -38,7 +35,7 @@ This use case shows you how to select a mesh entity (node, element) using the **
 ```vbscript
     '-----------------------------------------------------------
     'Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
 ```
@@ -48,7 +45,7 @@ This use case shows you how to select a mesh entity (node, element) using the **
 ```
 
 ```vbscript
-```vbscript
+```cpp
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 ```
@@ -74,7 +71,7 @@ End If
 ```vbscript
 '-----------------------------------------------------------
     'Open the Analysis document
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/AllElementsAndNode.CATAnalysis")
 ```
 ```
@@ -85,7 +82,7 @@ End If
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ```
@@ -94,7 +91,7 @@ End If
 ```
 
 ```vbscript
-```vbscript
+```cpp
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```vbscript
 ```

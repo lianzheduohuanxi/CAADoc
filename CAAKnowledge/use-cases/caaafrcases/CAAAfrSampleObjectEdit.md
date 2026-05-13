@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Editing Objects"
-category: use-case case"
+category: "use-case case"
 module: "CAAAfrUseCases"
-tags: ["CAASysPoint", "CAAISysPoint", "CAAAfrGeoEdition", "CAAEAfrEditPoint", "CATIModelEvents", "CAAGeometry", "CATIEdit", "CAAAfrPointEditDlg", "CAAAfrPointEditCmd", "CAAAfrPointEditDlgId", "CAAApplicationFrame"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleObjectEdit.htmmd"
+tags: "["CAASysPoint", "CAAISysPoint", "CAAAfrGeoEdition", "CAAEAfrEditPoint", "CATIModelEvents", "CAAGeometry", "CATIEdit", "CAAAfrPointEditDlg", "CAAAfrPointEditCmd", "CAAAfrPointEditDlgId", "CAAApplicationFrame"]"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleObjectEdit.htm"
 converted: "2026-05-11T17:17:55.785009"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -74,7 +71,6 @@ Do not type the module name on the command line, but type CNEXT instead. When th
 
 The CAAAfrGeoEdition use case is made of three classes located in the CAAAfrGeoEdition.m module of the CAAApplicationFrame.edu framework:
 
-The CAAAfrGeoEdition use case is made of three classes located in the CAAAfrGeoEdition.m module of the CAAApplicationFrame.edu framework:
 Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeoEdition.m/`
 
 The CAAAfrGeoEdition use case is made of three classes located in the CAAAfrGeoEdition.m module of the CAAApplicationFrame.edu framework:
@@ -133,7 +129,7 @@ class CAAEAfrEditPoint : public **CATExtIEdit**
 
 ---
 
-```vbscript
+```cpp
 CAAEAfrEditPoint(const CAAEAfrEditPoint &iObjectToCopy);
 The `CATDeclareClass` macro declares that _CAAEAfrEditPoint_ belongs to a component. It only redefine the Activate method of _CATIEdit_.
 
@@ -152,7 +148,7 @@ The `CATDeclareClass` macro declares that _CAAEAfrEditPoint_ belongs to a compon
 
 ---
 
-```vbscript
+```cpp
 TIE_CATIEdit(CAAEAfrEditPoint);
 The `CATImplementClass` macro reads: _CAAEAfrEditPoint_ is a data extension of _CAASysPoint_. The third argument must always be set as _CATBaseUnknown_ or _CATNull_ for any kind of extension. The TIE macro creates the TIE class for the _CATIEdit_ interface.
 
@@ -185,7 +181,7 @@ if (SUCCEEDED(rc))
              pISysPointOnPoint->**Release**(#);
 
            }
-```vbscript
+```cpp
 if (SUCCEEDED(rc))
 CAAAfrPointEditCmd *  pEdtCmd = new **CAAAfrPointEditCmd**(pISysPointOnPoint);
 pISysPointOnPoint->**Release**(#);
@@ -322,7 +318,7 @@ CATStatusChangeRC CAAAfrPointEditCmd::**Cancel**(CATCommand      * iCmd,
 CATNotification * iNotif)
           _DialogPoint->SetVisibility(CATDlgHide);
           RequestDelayedDestruction(#);
-```vbscript
+```cpp
           return (CATStatusChangeRCCompleted);
 
 ```
@@ -331,7 +327,7 @@ CATNotification * iNotif)
 
 _DialogPoint->SetVisibility(CATDlgHide);
 RequestDelayedDestruction(#);
-```vbscript
+```cpp
 return (CATStatusChangeRCCompleted);
 ```
 
@@ -416,7 +412,7 @@ CATCommandClientData UsefulData)
 
 ---
 
-```vbscript
+```cpp
 CloseBox(#);
 This method is executed whenever the end user clicks the OK push button. It first modifies the point and the display thanks to the `ModifyModelAndVisu` method using the current values of the spinners and calls the `CloseBox` method that takes appropriate actions to close the dialog.
 
@@ -462,7 +458,7 @@ CATCommandClientData UsefulData)
 
 ---
 
-```vbscript
+```cpp
 CloseBox(#);
 This method is executed whenever the end user clicks the Cancel push button. It just restores the point and the display using the point initial coordinates, and closes the dialog.
 
@@ -483,7 +479,7 @@ CATCommandClientData UsefulData)
 
 ---
 
-```vbscript
+```cpp
 CloseBox(#);
 This method is executed whenever the end user closes the dialog. It calls the `CloseBox` method.
 
@@ -498,7 +494,7 @@ void CAAAfrPointEditDlg::CloseBox(#)
            SetVisibility(CATDlgHide);
 
            RemoveAnalyseNotificationCB(this, this->GetDiaOKNotification(#),NULL);
-```vbscript
+```cpp
            RemoveAnalyseNotificationCB(this, this->GetDiaAPPLYNotification(#),NULL);
            RemoveAnalyseNotificationCB(this, this->GetDiaCANCELNotification(#),NULL);
            RemoveAnalyseNotificationCB(this, this->GetWindCloseNotification(#),NULL);
@@ -511,7 +507,7 @@ void CAAAfrPointEditDlg::CloseBox(#)
 
 ---
 
-```vbscript
+```cpp
 SendNotification(GetFather(#),CATDlgDialog::GetWindCloseNotification(#));
 This method hides the dialog, and sends a notification to state that the dialog should be closed This notification is sent to the dialog father, set to the frame window as the first parameter of its constructor. This notification moves from a command to its parent along the command tree structure up to the first command that have set a callback for this notification and for this dialog. Since there are few chances that such a command exists, the notification reaches the command selector that resends it to the active command, which fortunately has set such a callback execute its own `CloseBox` method when such a notification is received from the dialog.
 

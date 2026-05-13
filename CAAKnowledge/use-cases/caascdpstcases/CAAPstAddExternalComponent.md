@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Adding an External Component"
 category: "use-case"
 module: "CAAScdPstUseCases"
-tags: ["CAAPstAddExternalComponent", "CAAScdPstUseCases", "CATIA", "CAAPstHull"]
-source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddExternalComponent.htmmd"
+tags: "["CAAPstAddExternalComponent", "CAAScdPstUseCases", "CATIA", "CAAPstHull"]"
+source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddExternalComponent.htm"
 converted: "2026-05-11T17:31:52.319791"
-```
-
 ---
 |
 ## Product Structure
@@ -39,7 +36,7 @@ This macro shows you how to create a simple product structure that imports an ex
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
 'Create a new product document object by adding a document with the Product
           'type to the document collection of the CATIA application.
 ```
@@ -53,7 +50,7 @@ This macro shows you how to create a simple product structure that imports an ex
           Dim oProductDoc As Document
 ```vbscript
 ```
-```vbscript
+```cpp
           Set oProductDoc = CATIA.Documents.**Add**("Product")
 ```
 ```
@@ -101,7 +98,7 @@ A new Product document is created using the `Add` method of the documents collec
           Dim oPartDoc As Document
 ```vbscript
 ```
-```vbscript
+```cpp
           Set oPartDoc = CATIA.Documents.**Open**(sDocPath & "CAAPstHull.CATPart")
 ```
 ```

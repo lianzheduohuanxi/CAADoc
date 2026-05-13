@@ -1,51 +1,95 @@
 ---
 title: "CAAESysCylinder"
-type: "interface"
+type: "LocalClass"
 module: "CAASystem"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAESysCylinder → CATBaseUnknown"
 method_count: 6
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAASystem.edu/CAASysGeoModelImpl.m/LocalInterfaces/CAAESysCylinder.h"
 ---
+
 # CAAESysCylinder
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAESysCylinder → CATBaseUnknown  
-**模块**: CAASystem  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 6
+> Data extension ofd the CAASysCylinder component and implementing the CAAISysCylinder interface.
+
+**基类**: CATBaseUnknown | **模块**: CAASystem | **方法数**: 6
 
 ## 依赖
 
 - `CATBaseUnknown.h`
 - `CATMathPoint.h`
 
+## 虚方法
+
+### SetRadius
+
+```cpp
+virtual HRESULT SetRadius(const float iRadius) ;
+```
+
+The Cylinder is defined by: ------------------------ A radius -------------------
+
+| 参数 | 类型 |
+|------|------|
+| iRadius | `const float` |
+
+
+### GetRadius
+
+```cpp
+virtual HRESULT GetRadius(float & oRadius) const ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oRadius | `float &` |
+
+
+### SetBasePoint
+
+```cpp
+virtual HRESULT SetBasePoint(const CATMathPoint & iBasePoint) ;
+```
+
+The extrusion line is defined between the base and the top point ----------------------------------------------------------------
+
+| 参数 | 类型 |
+|------|------|
+| iBasePoint | `const CATMathPoint &` |
+
+
+### GetBasePoint
+
+```cpp
+virtual HRESULT GetBasePoint(CATMathPoint & oBasePoint) const ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oBasePoint | `CATMathPoint &` |
+
+
+### SetTopPoint
+
+```cpp
+virtual HRESULT SetTopPoint(const CATMathPoint & iTopPoint) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iTopPoint | `const CATMathPoint &` |
+
+
+### GetTopPoint
+
+```cpp
+virtual HRESULT GetTopPoint(CATMathPoint & oTopPoint) const ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oTopPoint | `CATMathPoint &` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAASystem.edu/CAASysGeoModelImpl.m/LocalInterfaces/CAAESysCylinder.h`

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Remove Faces from a Body"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperatorsInterfaces", "CATICGMAdvancedRemoveFaceOpe", "CAAAdvRemoveFace", "CAAGMOperatorsAdvancedRemoveFace", "CAAGMOperatorsDoc"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcAdvRemoveFace.htmmd"
+tags: "["CAAGMOperatorsInterfaces", "CATICGMAdvancedRemoveFaceOpe", "CAAAdvRemoveFace", "CAAGMOperatorsAdvancedRemoveFace", "CAAGMOperatorsDoc"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcAdvRemoveFace.htm"
 converted: "2026-05-11T17:33:48.878453"
-```
-
 ---
 tags: ["CAAGMOperatorsInterfaces", "CATICGMAdvancedRemoveFaceOpe", "CAAAdvRemoveFace", "CAAGMOperatorsAdvancedRemoveFace", "CAAGMOperatorsDoc"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcAdvRemoveFace.htmmd"
@@ -39,7 +36,7 @@ CATLISTP(CATFace) iFacesToRemove;
     CATICGMAdvancedRemoveFaceOpe * pOp = ::CATCGMCreateAdvancedRemoveFaceOpe(piGeomFactory, &topdata;, piInputBody);
 
     ...
-```vbscript
+```cpp
 CATLISTP(CATFace) iFacesToRemove;
 CATICGMAdvancedRemoveFaceOpe * pOp = ::CATCGMCreateAdvancedRemoveFaceOpe(piGeomFactory, &topdata;, piInputBody);
     pOp->Append(iFacesToRemove);

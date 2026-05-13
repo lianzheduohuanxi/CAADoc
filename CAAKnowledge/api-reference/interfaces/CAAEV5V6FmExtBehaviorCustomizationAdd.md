@@ -1,52 +1,33 @@
 ---
 title: "CAAEV5V6FmExtBehaviorCustomizationAdd"
-type: "interface"
+type: "LocalClass"
 module: "CAAV5V6FeatureModelerExt"
-category: api-reference
 base: "CATFmFeatureCustomizationAdaptor"
-inheritance_chain: "CAAEV5V6FmExtBehaviorCustomizationAdd → CATFmFeatureCustomizationAdaptor"
 method_count: 1
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAV5V6FeatureModelerExt.edu/CAAV5V6FmExtBuildUpdate.m/LocalInterfaces/CAAEV5V6FmExtBehaviorCustomizationAdd.h"
 ---
+
 # CAAEV5V6FmExtBehaviorCustomizationAdd
 
-**基类**: CATFmFeatureCustomizationAdaptor  
-**继承链**: CAAEV5V6FmExtBehaviorCustomizationAdd → CATFmFeatureCustomizationAdaptor  
-**模块**: CAAV5V6FeatureModelerExt  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 1
+> This is the implementation of the CATIFmFeatureBehaviorCustomization interface for the "CAAOsmAdd" feature. A "Build" operation calculates the values of attributes according to their pre-defined function.  Its execution is triggered by the execution of an "Update" operation so as to update all current values.  To perform this "Build" operation, the three attributes of the "CAAOsmAdd" feature are retrieved, the values of the first two, "First" and "Second" are added together and their sum is stored as the value of the "Sum" attribute.  Thus, "Sum" wil have an updated value whenever an "Update" operation is requested.
 
-> as the value of the "Sum" attribute.  Thus, "Sum" wil have an updated value
+**基类**: CATFmFeatureCustomizationAdaptor | **模块**: CAAV5V6FeatureModelerExt | **方法数**: 1
 
 ## 依赖
 
 - `CATFmFeatureCustomizationAdaptor.h`
 
+## 虚方法
+
+### Build
+
+```cpp
+virtual HRESULT Build() ;
+```
+
+Standard constructors and destructors for an implementation class -----------------------------------------------------------------
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATFmFeatureCustomizationAdaptor**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAV5V6FeatureModelerExt.edu/CAAV5V6FmExtBuildUpdate.m/LocalInterfaces/CAAEV5V6FmExtBehaviorCustomizationAdd.h`

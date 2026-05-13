@@ -80,18 +80,18 @@ Thus we saw how to read a CATProduct document, retrieve the interface we are
 
 ```vbscript
 ...
-```vbscript
+```cpp
    Dim objCATIAV5Document0 As Document
    Dim objCATIAV5FeatDocument As Document
    Dim objCATIAV5ArrWorkbench0 As Workbench
    Set objCATIAV5Document0 = CATIA.ActiveDocument
    '//---------- Get Arrworkbench from current document
 ```
-```vbscript
+```cpp
    Set objCATIAV5ArrWorkbench0 = objCATIAV5Document0.GetWorkbench  ( &quot;ArrWorkbench&quot; ) 
    '//---------- Create a new .feat document 
 ```
-```vbscript
+```cpp
    Set objCATIAV5FeatDocument = objCATIAV5ArrWorkbench0.CreateFeatDocument (&quot;CATfct&quot;)
 ...
 ```
@@ -99,25 +99,25 @@ Thus we saw how to read a CATProduct document, retrieve the interface we are
 
 ```vbscript
 ...
-```vbscript
+```cpp
    Dim objCATIAV5ArrWorkbench1 As Workbench
    Dim objCATIAV5ArrNomTree1 As ArrNomenclatureTree
    Dim objCATIAV5ArrNomTopNode As ArrNomenclatures
    '//---------- Get Arrworkbench from the new &quot;.feat&quot; document
 ```
-```vbscript
+```cpp
    Set objCATIAV5ArrWorkbench1 = objCATIAV5FeatDocument.GetWorkbench  ( &quot;ArrWorkbench&quot; ) 
    '//---------- Add a nomenclature hierachy tree to the .feat document 
 ```
-```vbscript
+```cpp
    Set objCATIAV5ArrNomTree1 = objCATIAV5ArrWorkbench1.AddNomenclatureTree
    '//---------- Access the root of the tree
 ```
-```vbscript
+```cpp
    Set objCATIAV5ArrNomTopNode = objCATIAV5ArrNomTree1.BaseNomenclatures
    '//----------  Create nomenclature
 ```
-```vbscript
+```cpp
    Set objCATIAV5oArrNom = objCATIAV5ArrNomTopNode.AddUserNomenclature
             (strFeatIntSysName, strFeatIconName, strFeatNLSName, strFeatSuperTypeName)
 ```

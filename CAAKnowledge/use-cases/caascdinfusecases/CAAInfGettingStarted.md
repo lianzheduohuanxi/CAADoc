@@ -71,7 +71,7 @@ next step (Modifying the Generated Macro):
 
 Language="VBSCRIPT"
 
-```vbscript
+```cpp
 Sub CATMain(#)
     
   
@@ -86,7 +86,7 @@ Sub CATMain(#)
     **
     
 
-```vbscript
+```cpp
 Dim documents1 As Documents
 Set documents1 = CATIA.Documents
 
@@ -298,13 +298,13 @@ execution.
 ```vbscript
 Language=&quot;VBSCRIPT&quot;
 
-```vbscript
+```cpp
 Sub CATMain(#)
 ```
 ```
 
 ```vbscript
-```vbscript
+```cpp
 Dim documents1 As Documents
 Set documents1 = CATIA.Documents
 
@@ -397,7 +397,7 @@ circle2D1.CenterPoint = point2D1
 circle2D1.ReportName = 3
 ```
 
-```vbscript
+```cpp
 CATIASketch3.CloseEdition
     part1.Update
 ```
@@ -415,11 +415,11 @@ Dim shapeFactory1 As Factory
     part1.Update
 ```
 
-```vbscript
+```cpp
 set CATMacroEditor=NOTEPAD
 ```
 
-```vbscript
+```cpp
 export CATMacroEditor=vi
 ```
 
@@ -429,7 +429,7 @@ Language=&quot;VBSCRIPT&quot;
 ```
 
 ```vbscript
-```vbscript
+```cpp
 Sub CATMain(#)
 ...
 ```

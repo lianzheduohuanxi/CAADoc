@@ -7,7 +7,7 @@ source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfCutoutSource.htmm
 converted: "2026-05-11T11:27:02.589140"
 ---
 
-```vbscript
+```cpp
 Sub CATMain(#)
 Dim StrWorkbench As StrWorkbench
 Dim strFactory As StrObjectFactory
@@ -45,7 +45,7 @@ Set CurrentContour = CutoutToEdit.Contour
 
 'Get the Current Direction Element
 ```
-```vbscript
+```cpp
 Dim CurrentDirElement As Reference
 Set CurrentDirElement = CutoutToEdit.DirectionElement
 
@@ -71,7 +71,7 @@ End Sub
 
 ```vbscript
 ```
-```vbscript
+```cpp
 Sub CATMain(#)
 Dim StrWorkbench As StrWorkbench
 Dim strFactory As StrObjectFactory
@@ -109,7 +109,7 @@ Set CurrentContour = CutoutToEdit.Contour
 
 'Get the Current Direction Element
 ```
-```vbscript
+```cpp
 Dim CurrentDirElement As Reference
 Set CurrentDirElement = CutoutToEdit.DirectionElement
 

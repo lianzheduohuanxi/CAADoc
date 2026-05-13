@@ -1,16 +1,13 @@
 ---
-```vbscript
 title: "CAAStrEditCutout.CATScript"
 category: "use-case"
 module: "CAAScdStrUseCases"
-tags: ["CATIA", "CAAStrEditCutout"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfCutoutSource.htmmd"
+tags: "["CATIA", "CAAStrEditCutout"]"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfCutoutSource.htm"
 converted: "2026-05-11T17:31:50.897562"
-```
-
 ---
 ```vbscript
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ```
@@ -22,7 +19,7 @@ Sub CATMain(#)
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
     Dim strFactory As StrObjectFactory
 
     Set doc = CATIA.ActiveDocument
@@ -90,7 +87,7 @@ Set selection1 = doc.Selection
     Set CurrentContour = CutoutToEdit.Contour
     'Get the Current Direction Element
 ```
-```vbscript
+```cpp
     Dim CurrentDirElement As Reference
     Set CurrentDirElement = CutoutToEdit.DirectionElement
     'Set the New Direction Element

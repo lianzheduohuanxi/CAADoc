@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAAPriChangeHoleModule.bas"
 category: "use-case"
 module: "CAAScdPriUseCases"
-tags: ["CAAPriChangeHoleModule", "CATIA", "CAAPriChangeHoleForm", "CAAPriChangeHoleVBA"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangeHoleModuleSource.htmmd"
+tags: "["CAAPriChangeHoleModule", "CATIA", "CAAPriChangeHoleForm", "CAAPriChangeHoleVBA"]"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangeHoleModuleSource.htm"
 converted: "2026-05-11T17:31:51.194040"
-```
-
 ---
 tags: ["CAAPriChangeHoleModule", "CATIA", "CAAPriChangeHoleForm", "CAAPriChangeHoleVBA"]
 source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangeHoleModuleSource.htmmd"
@@ -16,7 +13,7 @@ converted: "2026-05-11T17:31:51.194040"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGTH DASSAULT SYSTEMES 2004
     ' ***********************************************************************
     '   Purpose:      Changes hole description
@@ -39,7 +36,7 @@ converted: "2026-05-11T17:31:51.194040"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -51,7 +48,7 @@ converted: "2026-05-11T17:31:51.194040"
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
     sDocPath = CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
@@ -78,7 +75,7 @@ converted: "2026-05-11T17:31:51.194040"
     ' ------------
     ' Get the part document
     ' ------------
-```vbscript
+```cpp
     Set oPartDocument = CATIA.ActiveDocument
     ' ------------
 ```

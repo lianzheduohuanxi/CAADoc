@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "The Versioning of the Topological Operators"
-category: tech-article
+category: "tech-article"
 module: "CAATopTechArticles"
-tags: []
-source_file: "Doc/online/CAATopTechArticles/TopoVersioning.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAATopTechArticles/TopoVersioning.htm"
 converted: "2026-05-11T17:31:50.815757"
-```
-
 ---
 # Geometric Modeler
 
@@ -59,7 +56,6 @@ The class that manages the operator versioning is the _CATSoftwareConfiguration_
 
 To create an open configuration (a configuration for the current software level), use the default constructor. Notice that you must use the `new` operator.
 
-To create an open configuration (a configuration for the current software level), use the default constructor. Notice that you must use the `new` operator.
     _//_ _Defines an open configuration for the operator_
     CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration(#);
 
@@ -89,7 +85,6 @@ Once created, the configuration instance is given to the topological operator to
 
 We give here an example for creating a `CATTopSkin` operator, that is fully commented in _Overview of the topological operators_ [2].
 
-We give here an example for creating a `CATTopSkin` operator, that is fully commented in _Overview of the topological operators_ [2].
     _// defines the data of the operator: configuration + journal_
     CATTopData topdata(pConfig,NULL);
     _// now creates the operator_
@@ -1110,14 +1105,13 @@ CATCGMJournalList* iJournal)
 #### Case of the Journal
 
 const long* iImposition)
-```vbscript
+```cpp
 If you directly create a CATCGMJournalList, you must now give the software configuration that must be use.
 
 ```
 
 Deprecated Signature | New Signature
 
-Deprecated Signature | New Signature
     CATCGMJournalList::CATCGMJournalList
            (CATCGMJournalList* ioList)
 

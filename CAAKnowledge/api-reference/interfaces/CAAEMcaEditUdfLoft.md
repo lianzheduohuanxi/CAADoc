@@ -1,52 +1,37 @@
 ---
 title: "CAAEMcaEditUdfLoft"
-type: "interface"
+type: "LocalClass"
 module: "CAAMechanicalCommands"
-category: api-reference
 base: "CATExtIEdit"
-inheritance_chain: "CAAEMcaEditUdfLoft → CATExtIEdit"
 method_count: 1
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAMechanicalCommands.edu/CAAMcaUdfEdit.m/LocalInterfaces/CAAEMcaEditUdfLoft.h"
 ---
+
 # CAAEMcaEditUdfLoft
 
-**基类**: CATExtIEdit  
-**继承链**: CAAEMcaEditUdfLoft → CATExtIEdit  
-**模块**: CAAMechanicalCommands  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 1
+> Data extension of the CAAUdfLoft component implementing the CATIEdit interface. CAAUdfLoft is the type of the user feature reference, CAAUserFeatureSample, created by the CAAMcaUdfCreation use case. The command to edit the user feature, instance of the CAAUserFeatureSample, is defined in the CAAMcaUdfEdit.m module How to launch ? In the InstallRootDirectory/CAAMechanicalCommands.edu/InputData you find the following files: 1) CAAUdfLoft.CATPart document which contains the  CAAUserFeatureSample user feature reference without a type 2) CAAUdfModelWithInstances.CATPart document which contains two instances of the CAAUserFeatureSample user feature reference without the CAAUdfLoft type 3) CAAUdfLoftWithType.CATPart document which contains the  CAAUserFeatureSample user feature reference with the CAAUdfLoft type 4) CAAUdfModelWithTypeInst.CATPart document which contains one instance of the CAAUserFeatureSample user feature reference with the CAAUdfLoft type scenarios: in Cnext, open the  CAAUdfModelWithTypeInst.CATPart document, double click on the CAAUserFeatureSampleToEdit feature : the customized dialog box appears in Cnext, open the  CAAUdfModelWithInstances.CATPart document, double click on the CAAUserFeatureSample.1 or on the The Loft with Point2 and Point3 features: the default edit dialog box appears where InstallRootDirectory is the directory where the CAA CD-ROM is installed.
 
-> double click on the CAAUserFeatureSample.1 or on the
+**基类**: CATExtIEdit | **模块**: CAAMechanicalCommands | **方法数**: 1
 
 ## 依赖
 
 - `CATExtIEdit.h`
 
+## 虚方法
+
+### Activate
+
+```cpp
+virtual CATCommand * Activate(CATPathElement * iPath) ;
+```
+
+Activate -------- Creates a state command to modify a feature whose the type is CAAUdfLoft Caution: This interface is implemented on a late type, so to retrieve the object to modify, it is not this, but use the iPath argument.
+
+| 参数 | 类型 |
+|------|------|
+| iPath | `CATPathElement *` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATExtIEdit**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAMechanicalCommands.edu/CAAMcaUdfEdit.m/LocalInterfaces/CAAEMcaEditUdfLoft.h`

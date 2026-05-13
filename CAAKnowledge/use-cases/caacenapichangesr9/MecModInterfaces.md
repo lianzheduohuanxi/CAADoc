@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "MecModInterfaces Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR9"
-version: "V5R9"
-tags: ["CATIDimCst"]
-source_file: "Doc/online/CAACenAPIChangesR9/MecModInterfaces.htmmd"
+tags: "["CATIDimCst"]"
+source_file: "Doc/online/CAACenAPIChangesR9/MecModInterfaces.htm"
 converted: "2026-05-11T17:33:52.940030"
-```
-
 ---
 tags: ["CATIDimCst"]
 source_file: "Doc/online/CAACenAPIChangesR9/MecModInterfaces.htmmd"

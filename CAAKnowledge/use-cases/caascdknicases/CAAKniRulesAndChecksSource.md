@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAAKniRulesAndChecks.CATScript"
 category: "use-case"
 module: "CAAScdKniUseCases"
-tags: ["CATIA", "CAAKniRulesAndChecks", "CAAScdKniUseCases"]
-source_file: "Doc/online/CAAScdKniUseCases/CAAKniRulesAndChecksSource.htmmd"
+tags: "["CATIA", "CAAKniRulesAndChecks", "CAAScdKniUseCases"]"
+source_file: "Doc/online/CAAScdKniUseCases/CAAKniRulesAndChecksSource.htm"
 converted: "2026-05-11T17:31:51.995311"
-```
-
 ---
 tags: ["CATIA", "CAAKniRulesAndChecks", "CAAScdKniUseCases"]
 source_file: "Doc/online/CAAScdKniUseCases/CAAKniRulesAndChecksSource.htmmd"
@@ -30,7 +27,7 @@ converted: "2026-05-11T17:31:51.995311"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' ***********************************************************************
     '   Purpose:      This macro:
     '                 1 - Checks whether the active document is a CATPart
@@ -62,7 +59,7 @@ converted: "2026-05-11T17:31:51.995311"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -75,7 +72,7 @@ converted: "2026-05-11T17:31:51.995311"
         ' -----------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String
-```vbscript
+```cpp
         sDocPath=CATIA.SystemService.Environ("CATDocView")
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
           Err.Raise 9999,,"No Doc Path Defined"
@@ -83,7 +80,7 @@ converted: "2026-05-11T17:31:51.995311"
 ```
         ' -----------------------------------------------------------
         ' Open the Part document
-```vbscript
+```cpp
         Dim sFilePath
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
@@ -100,7 +97,7 @@ Dim sFilePath
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
         Dim oDoc As Document
         set oDoc = CATIA.Documents.Open(sFilePath)
@@ -114,17 +111,17 @@ sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```vbscript
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
      ' Set the CATIA popup file alerts to False
      ' It prevents to stop the macro at each alert during its execution
 ```
-```vbscript
+```cpp
      CATIA.DisplayFileAlerts = False
     ' Retrieve your active document - CATIA is your application
 ```
     ' You get the active document by using the ActiveDocument property
     ' on your application object
-```vbscript
+```cpp
     Dim oActiveDoc As Document
     Set oActiveDoc = CATIA.ActiveDocument
     ' Check whether the document is a CATPart
@@ -195,7 +192,7 @@ Set Check1 = oRelations.CreateCheck  ( "Check.1", "Increase the pad thickness",_
 ```
 ```vbscript
     ' Update the document
-```vbscript
+```cpp
     CATIA.ActiveDocument.Part.Update
 ```
 ```
@@ -203,7 +200,7 @@ Set Check1 = oRelations.CreateCheck  ( "Check.1", "Increase the pad thickness",_
 ```
 
     else
-```vbscript
+```cpp
        MsgBox "The active document must be a CATPart"
 ```vbscript
 ```

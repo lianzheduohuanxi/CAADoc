@@ -1,54 +1,42 @@
 ---
 title: "CAADegChoiceBehaviorDlg"
-type: "interface"
+type: "LocalClass"
 module: "CAADialogEngine"
-category: api-reference
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+base: "CATDlgDialog"
+method_count: 2
+source_file: "CAADialogEngine.edu/CAADegGeoCommands.m/LocalInterfaces/CAADegChoiceBehaviorDlg.h"
 ---
+
 # CAADegChoiceBehaviorDlg
 
-**模块**: CAADialogEngine  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> This class is a dialog box. It allows the end user to choice the behavior of the selection's agent used in the CAADegAnalysisNumericCmd command Dialog Framework
 
-> to choice the behavior of the selection's agent used in
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATDlgDialog | **模块**: CAADialogEngine | **方法数**: 2
 
 ## 依赖
 
+- `CATDlgDialog.h`
+
+## 公共方法
+
+### Build
+
+```cpp
+void Build() ;
+```
+
+
+### GetChoice
+
+```cpp
+void GetChoice(int & oChoice) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oChoice | `int &` |
+
+
 ---
 
-## Interface Overview
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-- [CAADegSampleMultiSelection](../../use-cases/caadegcases/CAADegSampleMultiSelection.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAADialogEngine.edu/CAADegGeoCommands.m/LocalInterfaces/CAADegChoiceBehaviorDlg.h`

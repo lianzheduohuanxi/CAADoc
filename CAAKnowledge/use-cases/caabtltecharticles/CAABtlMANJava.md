@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "mkmk and Java"
 category: "use-case"
 module: "CAABtlTechArticles"
-tags: []
-source_file: "Doc/online/CAABtlTechArticles/CAABtlMANJava.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAABtlTechArticles/CAABtlMANJava.htm"
 converted: "2026-05-11T17:33:46.103916"
-```
-
 ---
 RADE
 
@@ -39,7 +36,6 @@ Multi-Workspace Application Builder
         * Common modules will contain code used by both the client and server
         			(Trace tools for example)
 
-(Trace tools for example)
     		The type of Java modules will be specified in the Imakefile.mk by using
     		the new keyword TYPE. Possible values are CLIENT, SERVER or COMMON. A module
     		without a TYPE specified will be automatically typed as CLIENT.

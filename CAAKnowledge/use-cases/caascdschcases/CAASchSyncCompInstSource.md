@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAASchSyncCompInst.CATScript"
 category: "use-case"
 module: "CAAScdSchUseCases"
-tags: ["CAASchSyncCompInst", "CATIASchComponent", "CAASCH_SyncCompInst", "CAAScdSchUseCases", "CATIA", "CATIASchUpdateInstances"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchSyncCompInstSource.htmmd"
+tags: "["CAASchSyncCompInst", "CATIASchComponent", "CAASCH_SyncCompInst", "CAAScdSchUseCases", "CATIA", "CATIASchUpdateInstances"]"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchSyncCompInstSource.htm"
 converted: "2026-05-11T17:31:51.504791"
-```
-
 ---
 tags: ["CAASchSyncCompInst", "CATIASchComponent", "CAASCH_SyncCompInst", "CAAScdSchUseCases", "CATIA", "CATIASchUpdateInstances"]
 source_file: "Doc/online/CAAScdSchUseCases/CAASchSyncCompInstSource.htmmd"
@@ -16,7 +13,7 @@ converted: "2026-05-11T17:31:51.504791"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGHT DASSAULT SYSTEMES 2007
     ' *****************************************************************************
     '   Purpose:      Update component instances when the catalog ref was modiifed.
@@ -31,7 +28,7 @@ converted: "2026-05-11T17:31:51.504791"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -44,7 +41,7 @@ converted: "2026-05-11T17:31:51.504791"
         ' -------------------------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String
-```vbscript
+```cpp
         sDocPath=CATIA.SystemService.Environ("CATDocView")
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -70,7 +67,7 @@ converted: "2026-05-11T17:31:51.504791"
 ```vbscript
         ' -------------------------------------------------------------------------
         ' Open the schematic document
-```vbscript
+```cpp
         Dim sFilePath
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
@@ -83,12 +80,12 @@ converted: "2026-05-11T17:31:51.504791"
                 "online/CAAScdSchUseCases/samples/CAASCH_SyncCompInst.CATProduct")
 
 ```vbscript
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
         Dim objSchDoc As Document
         Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
@@ -157,7 +154,7 @@ strMessage = strMessage & _
         If ( Not ( objSchRoot Is Nothing ) ) Then
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
            Set objUpdateInstances = objSchRoot.GetInterface ("CATIASchUpdateInstances",objSchRoot)
         End If
 ```
@@ -181,7 +178,7 @@ strMessage = strMessage & _
            ' Get the first reference component
 ```
            If ( Not ( objLCompRefs Is Nothing ) )Then
-```vbscript
+```cpp
               Set objCompRef = objLCompRefs.Item (1,"CATIASchComponent")
            End If
 ```

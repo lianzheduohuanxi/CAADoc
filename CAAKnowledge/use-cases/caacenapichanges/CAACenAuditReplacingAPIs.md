@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAA Authorized APIs Replacing ProtectedInterfaces"
 category: "use-case"
 module: "CAACenAPIChanges"
-tags: ["CATIDOMElement", "CATIDrwSectionCallout", "CATIKinMechanism", "CATIBuildPath", "CATIMfgPrismaticReworkArea", "CATIMfResultManagement", "CATINewStream", "CATIDegreesOfFreedom", "CATILiteralsRoot", "CATIAfrCommandHeaderRep", "CATICkeFunctionFactory", "CATIEwrRouteSegment", "CATIArrNode", "CATIUuid", "CATIDOMText", "CATIRouNode", "CATIMfgActivityContainer", "CATIMfPartExtReferences", "CATISysCacheSettingAtt", "CATIDoF"]
-source_file: "Doc/online/CAACenAPIChanges/CAACenAuditReplacingAPIs.htmmd"
+tags: "["CATIDOMElement", "CATIDrwSectionCallout", "CATIKinMechanism", "CATIBuildPath", "CATIMfgPrismaticReworkArea", "CATIMfResultManagement", "CATINewStream", "CATIDegreesOfFreedom", "CATILiteralsRoot", "CATIAfrCommandHeaderRep", "CATICkeFunctionFactory", "CATIEwrRouteSegment", "CATIArrNode", "CATIUuid", "CATIDOMText", "CATIRouNode", "CATIMfgActivityContainer", "CATIMfPartExtReferences", "CATISysCacheSettingAtt", "CATIDoF"]"
+source_file: "Doc/online/CAACenAPIChanges/CAACenAuditReplacingAPIs.htm"
 converted: "2026-05-11T17:33:50.052303"
-```
-
 ---
 tags: ["CATIDOMElement", "CATIDrwSectionCallout", "CATIKinMechanism", "CATIBuildPath", "CATIMfgPrismaticReworkArea", "CATIMfResultManagement", "CATINewStream", "CATIDegreesOfFreedom", "CATILiteralsRoot", "CATIAfrCommandHeaderRep", "CATICkeFunctionFactory", "CATIEwrRouteSegment", "CATIArrNode", "CATIUuid", "CATIDOMText", "CATIRouNode", "CATIMfgActivityContainer", "CATIMfPartExtReferences", "CATISysCacheSettingAtt", "CATIDoF"]
 source_file: "Doc/online/CAACenAPIChanges/CAACenAuditReplacingAPIs.htmmd"
@@ -26,7 +23,7 @@ If you were using ... | Use instead ...
 
 ```
 
-```vbscript
+```cpp
 If you were using ... | Use instead ...
 AdvancedTopologicalOpe | CATCreateSimilarCurve | AdvancedTopologicalOpe |  CATCreateTopSimilarCurve
 AnalysisMeshingModel | CATMSHSupportManager | AnalysisMeshingModel |  CATIMSHAssociativity

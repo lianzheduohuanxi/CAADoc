@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Extrude with Rotation Mesh Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CAAAniMeshExtrudeRot", "CATIA", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshExtrudeRot.htmmd"
+tags: "["CAAAniMeshExtrudeRot", "CATIA", "CAAScdAniUseCases"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshExtrudeRot.htm"
 converted: "2026-05-11T17:31:51.633976"
-```
-
 ---
 ## Analysis Modeler
 
@@ -43,7 +40,7 @@ This use case shows how to create extrude with rotation mesh part.  This macro o
 '-----------------------------------------------------------
     'Optional: allows to find the sample wherever it's installed
 
-```vbscript
+```cpp
       sDocPath=CATIA.SystemService.Environ("CATDocView")
       sSep=CATIA.SystemService.Environ("ADL_ODT_SLASH")
 
@@ -55,7 +52,7 @@ This use case shows how to create extrude with rotation mesh part.  This macro o
 ```
 
 ```vbscript
-```vbscript
+```cpp
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 ```
@@ -75,7 +72,7 @@ This use case shows how to create extrude with rotation mesh part.  This macro o
 ```vbscript
     '-----------------------------------------------------------
     'Open the Analysis document
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Surface.CATAnalysis")
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```

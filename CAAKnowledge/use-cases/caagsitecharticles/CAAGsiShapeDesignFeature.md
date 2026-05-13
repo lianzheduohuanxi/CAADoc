@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "About Generative Shape Design Features"
-category: tech-article
+category: "tech-article"
 module: "CAAGsiTechArticles"
-tags: ["CATIA"]
-source_file: "Doc/online/CAAGsiTechArticles/CAAGsiShapeDesignFeature.htmmd"
+tags: "["CATIA"]"
+source_file: "Doc/online/CAAGsiTechArticles/CAAGsiShapeDesignFeature.htm"
 converted: "2026-05-11T17:31:50.673531"
-```
-
 ---
 # Shape Design & Styling
 
@@ -48,7 +45,6 @@ This article discusses the Shape Design Features. It will give you a general und
 * * *
 ### What Is a Shape/Wireframe Feature?
 
-The GSMInterfaces Framework exports some capability to create Shape/Wireframe Feature such as Points, Lines, Sweep, Extrapolation...
 The GSMInterfaces Framework exports some capability to create Shape/Wireframe Feature such as Points, Lines, Sweep, Extrapolation...
 Those Objects are Geometrical Features (or Procedures) that have additional properties compare to Geometrical Objects like CATPoint, CATLine, CATPlane, etc.
 
@@ -118,7 +114,6 @@ For Wireframe features here are the subtype of Point, Line, Plane, Circle:
 
 There is common capabilies shared by either V5 features or by Shape/Design features. As we saw above, Shape/Wireframe features can share specification by referring to other features (it can be in another Open Body, another document or it can be a Face of a Solid Feature).
 
-There is common capabilies shared by either V5 features or by Shape/Design features. As we saw above, Shape/Wireframe features can share specification by referring to other features (it can be in another Open Body, another document or it can be a Face of a Solid Feature).
 The Shape/Wireframe features set form a kind of net than is better represented in the Part Editor Viewer. In this editor, you will see the different links between Features that you can't see in the linear tree editor.
 
 Besides, here are the main capability common to Shape/Wireframe features.

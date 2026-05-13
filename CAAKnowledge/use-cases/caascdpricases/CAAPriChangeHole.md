@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Changing the Hole Parameters"
 category: "use-case"
 module: "CAAScdPriUseCases"
-tags: ["CAAScdPriUseCases", "CATIA", "CATIAHole", "CAAPriChangeHole"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangeHole.htmmd"
+tags: "["CAAScdPriUseCases", "CATIA", "CATIAHole", "CAAPriChangeHole"]"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangeHole.htm"
 converted: "2026-05-11T17:31:51.189551"
-```
-
 ---
 |
 ## Part Design
@@ -35,7 +32,6 @@ It modifies the  _Hole_ object from its methods and properties, and updates the 
 
  CAAPriChangeHole includes the following steps:
 
-CAAPriChangeHole includes the following steps:
   1. Prolog
   2. Reading the Hole Parameters
   3. Looking for the Hole Object in the Selection
@@ -60,7 +56,7 @@ Load the CAAPriChangeHole.CATPart document that contains three holes. ![](images
 
     iDelimiter = "//"
 ```vbscript
-```vbscript
+```cpp
     ' ------------
     ' Get the CATIA file system
     ' ------------
@@ -71,7 +67,7 @@ Load the CAAPriChangeHole.CATPart document that contains three holes. ![](images
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Set oCATIAFileSys = CATIA.FileSystem
 ```
 ```
@@ -82,7 +78,7 @@ Load the CAAPriChangeHole.CATPart document that contains three holes. ![](images
     ' ------------
     ' Get the file containing the hole parameters
     ' ------------
-```vbscript
+```cpp
     Set oFile = oCATIAFileSys.GetFile(sDocPath & "/online/CAAScdPriUseCases/macros/CAAPriChangeHole.txt")
     ' ------------
 ```
@@ -94,7 +90,7 @@ Load the CAAPriChangeHole.CATPart document that contains three holes. ![](images
 ```
     ' Get the part document
     ' ------------
-```vbscript
+```cpp
     Set oPartDocument = CATIA.ActiveDocument
 ```
 ```
@@ -327,7 +323,7 @@ An input box asks you to select the desired hole parameters (letter description 
             iHoleInSelection = True
             Do While iHoleInSelection = True
 ```vbscript
-```vbscript
+```cpp
                 iHoleInSelection = CatObjectExistsInSelection(oPartDocument.Selection, "CATIAHole", oHole)
                 If iHoleInSelection = True Then
 

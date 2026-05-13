@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "VPMInterfaces Framework Modifications in V5R14"
 category: "use-case"
 module: "CAACenAPIChangesR14"
-version: "V5R14"
-tags: []
-source_file: "Doc/online/CAACenAPIChangesR14/VPMInterfaces.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAACenAPIChangesR14/VPMInterfaces.htm"
 converted: "2026-05-11T17:33:51.001603"
-```
-
 ---
 tags: []
 source_file: "Doc/online/CAACenAPIChangesR14/VPMInterfaces.htmmd"

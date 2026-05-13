@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "DrawingSheet Object"
-category: tech-article
+category: "tech-article"
 module: "CAAScdDriTechArticles"
-tags: ["CATIA"]
-source_file: "Doc/online/CAAScdDriTechArticles/CAADriObjDrawingSheet.htmmd"
+tags: "["CATIA"]"
+source_file: "Doc/online/CAAScdDriTechArticles/CAADriObjDrawingSheet.htm"
 converted: "2026-05-11T17:31:51.121705"
-```
-
 ---
 # DrawingSheet Object
 
@@ -34,7 +31,7 @@ Use the **Views** property to return the **Views** collection.
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
     Set ViewCollection = CATIA.Documents(2).ActiveSheet.Views
 
 ```
@@ -49,7 +46,7 @@ Use the **Views** property to return the **Views** collection.
 Dim ViewCollection As Object
 ```vbscript
 ```
-```vbscript
+```cpp
 Set ViewCollection = CATIA.Documents(2).ActiveSheet.Views
 ```
 ```
@@ -64,7 +61,7 @@ Use the **DrawingPageSetup** property to retrieve the sheet setup attributes.
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
     Set SheetSetup = CATIA.Documents(2).ActiveSheet.DrawingPageSetup
 
 ```

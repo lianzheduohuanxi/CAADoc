@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAA V5 Frequently Asked Questions"
 category: "use-case"
 module: "CAACenQuickRefs"
-tags: ["CATIA"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenFAQ.htmmd"
+tags: "["CATIA"]"
+source_file: "Doc/online/CAACenQuickRefs/CAACenFAQ.htm"
 converted: "2026-05-11T17:33:46.513396"
-```
-
 ---
 tags: ["CATIA"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenFAQ.htmmd"

@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "DNBInspectInterfaces Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR9"
-version: "V5R9"
-tags: []
-source_file: "Doc/online/CAACenAPIChangesR9/DNBInspectInterfaces.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAACenAPIChangesR9/DNBInspectInterfaces.htm"
 converted: "2026-05-11T17:33:52.872958"
-```
-
 ---
 tags: []
 source_file: "Doc/online/CAACenAPIChangesR9/DNBInspectInterfaces.htmmd"

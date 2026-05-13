@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "Detail Of C++ API Changes"
 category: "api-changes"
 module: "CAACenAPIChangesR26"
-version: "V5R26"
-tags: ["CAA2Usage", "CATIDftDatumFeature", "CAA2Level"]
-source_file: "Doc/online/CAACenAPIChangesR26/CAACenAPIChangeDetail.htmmd"
+tags: "["CAA2Usage", "CATIDftDatumFeature", "CAA2Level"]"
+source_file: "Doc/online/CAACenAPIChangesR26/CAACenAPIChangeDetail.htm"
 converted: "2026-05-11T17:33:51.846182"
-```
-
 ---
 |  |  Detail Of V5-6R2016 C++ API Changes _What changes in the API compared with CAA V5-6R2015_
 ---|---|---
@@ -36,10 +32,9 @@ MINMV | Method is no more virtual. If occurs on a U1 class, may require modifica
 MINMV | Method is no more virtual. If occurs on a U1 class, may require modifications in Imakefile.mk of client code. If occurs on a U2 class, see details on the documentation of the concerned resource modification.
 Framework | Header | Class | Method | Signature | Modification | To Do
 
-Framework | Header | Class | Method | Signature | Modification | To Do
 DraftingInterfaces | CATIDftDatumFeature.h | CATIDftDatumFeature | GetText | virtual HRESULT SetText(const wchar_t*iText)= 0 | INDM | Use the signature with a CATUnicodeString.
 SetText | virtual HRESULT SetText(const wchar_t*iText)= 0 | INDM | Use the signature with a CATUnicodeString.
-```vbscript
+```cpp
 Mathematics | CATMathCircle2D.h | CATMathCircle2D | Set | HRESULT Set(const CATMathPoint2D& iLimit,const CATMathPoint2D& iMiddle,const CATMathPoint2D& iOtherLimit) | INDM | Use the signature that allows to specify a CATTolerance.
 CATMathCircle.h | CATMathCircle | GetParam | int GetParam(const CATMathPoint& iPoint,double*oParam,const double iTol,const double iStartParam,const double iEndParam)const | INDM | Use the signature that allows to specify a CATTolerance.
 ```

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAAAniPreProAsmbldLoads.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CAAAniPreProAsmbldLoads", "CATIA", "CATIAAnalysisSet", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProAsmbldLoadsSource.htmmd"
+tags: "["CAAAniPreProAsmbldLoads", "CATIA", "CATIAAnalysisSet", "CAAScdAniUseCases"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProAsmbldLoadsSource.htm"
 converted: "2026-05-11T17:31:51.781967"
-```
-
 ---
 ```vbscript
 ```vbscript
@@ -32,7 +29,7 @@ converted: "2026-05-11T17:31:51.781967"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -44,7 +41,7 @@ converted: "2026-05-11T17:31:51.781967"
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -73,10 +70,10 @@ converted: "2026-05-11T17:31:51.781967"
 ```vbscript
 End If
 ```vbscript
-```vbscript
+```cpp
 ' -----------------------------------------------------------
     ' Open the CATAnalysis Document
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Assembled_Loads_Solutions.CATAnalysis")
 ```
 ```
@@ -87,7 +84,7 @@ End If
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     Set analysisDocument1 = CATIA.Documents.Open(sFilePath)
 
 ```
@@ -96,7 +93,7 @@ End If
 ```
 
 ```vbscript
-```vbscript
+```cpp
 Set analysisDocument1 = CATIA.Documents.Open(sFilePath)
 ```vbscript
 ```
@@ -188,7 +185,7 @@ Set selection1 = analysisDocument1.Selection
 ```vbscript
 ```vbscript
     'Retrieve the analysis manager object from the analysis document
-```vbscript
+```cpp
     Set documents1 = CATIA.Documents
     Set analysisDocument2 = documents1.Item("Analysis1.CATAnalysis")
     Set analysisManager2 = analysisDocument2.Analysis
@@ -197,7 +194,7 @@ Set selection1 = analysisDocument1.Selection
     'create a reference from the analysis set and add it to the basic component
     For i =1 To selection1.Count
 
-```vbscript
+```cpp
              Set analysisSet = selection1.FindObject("CATIAAnalysisSet")
               Set entity =   analysisSet.AnalysisEntities.Item(1)
               IF ( entity.Type = "SAMLoadAssembly") Then 'DO NOTHING
@@ -209,7 +206,7 @@ Set selection1 = analysisDocument1.Selection
 ```
 
 ```vbscript
-```vbscript
+```cpp
 Set analysisSet = selection1.FindObject("CATIAAnalysisSet")
 ```vbscript
 ```

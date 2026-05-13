@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "The Management of Foreign Data"
-category: use-case
+category: "use-case"
 module: "CAACgmModel"
-tags: ["CATICGMObject", "CATICGMDomainBinder", "CATICGMObjects", "CATIA", "CATIForeignSurface"]
-source_file: "Doc/online/CAACgmModel/CAACgmTaGobAttribute.htmmd"
+tags: "["CATICGMObject", "CATICGMDomainBinder", "CATICGMObjects", "CATIA", "CATIForeignSurface"]"
+source_file: "Doc/online/CAACgmModel/CAACgmTaGobAttribute.htm"
 converted: "2026-05-11T17:33:47.890093"
-```
-
 ---
 # The Management of Foreign Data
 
@@ -79,7 +76,6 @@ The source is:
 
 The dictionary `MyApplicationName.dico` contains the following line:
 
-The dictionary `MyApplicationName.dico` contains the following line:
     MyApplicationName        CATICGMDomainBinder        libXXX
 
 Now, you have to declare the mapping in your attribute class by the mean of the macro `CATCGMDeclareAttribute`, as showed in the header example ` MyAttributeClass.h` below, and the macro `CATCGMImplAttribute`, as in the code example for a persistent (or streamable) `MyAttributeClass.cpp`:
@@ -359,8 +355,7 @@ Hence, the main methods of the CATForeignSurfaceData are:
 
 This class manages the evaluators that are used by the surface evaluators. There are already CATMathLinearXY, CATMathFunctionXY, CATMathPolynomXY are kind of CATMathFunctionXY that are already provided in CGM.
 
-This class manages the evaluators that are used by the surface evaluators. There are already CATMathLinearXY, CATMathFunctionXY, CATMathPolynomXY are kind of CATMathFunctionXY that are already provided in CGM.
-```vbscript
+```cpp
 If needed however, you may derive your own class of function to fit your object behavior, and overload at least the evaluator `Eval` of the value of the function.
 
 ```
@@ -369,7 +364,7 @@ The evaluation of the first and second derivatives may be approximated by defaul
 
 ### How to Proceed
 
-```vbscript
+```cpp
 If needed however, you may derive your own class of function to fit your object behavior, and overload at least the evaluator `Eval` of the value of the function.
 The evaluation of the first and second derivatives may be approximated by default. So do the interval evaluators. It is however strongly recommended to overload the first derivatives evaluation, the best being to also write the second derivatives evaluation. If you overload the interval evaluators you will increase the CPU performances.
 This section summarizes the steps for the integration of your own surface class.

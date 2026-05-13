@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Drawing Table"
 category: "use-case"
 module: "CAAScdDriUseCases"
-tags: ["CATIA", "CAADriDrawingtable", "CAADriDrawingTable", "CAADriUseCases"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriDrawingTable.htmmd"
+tags: "["CATIA", "CAADriDrawingtable", "CAADriDrawingTable", "CAADriUseCases"]"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriDrawingTable.htm"
 converted: "2026-05-11T17:31:51.064833"
-```
-
 ---
 |
 ## Interactive Drafting
@@ -37,7 +34,7 @@ This macro shows you how to create a drawing table in Drawing document. This mac
 
       ...
 ```vbscript
-```vbscript
+```cpp
         ' Set the CATIA popup file alerts to False
 ```
 ```
@@ -45,7 +42,7 @@ This macro shows you how to create a drawing table in Drawing document. This mac
 ```vbscript
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
 ' Set the CATIA popup file alerts to False
         ' It prevents to stop the macro at each alert during its execution
 ```
@@ -56,7 +53,7 @@ This macro shows you how to create a drawing table in Drawing document. This mac
 ```
 
 ```vbscript
-```vbscript
+```cpp
         CATIA.DisplayFileAlerts = False
 ```
 ```
@@ -79,7 +76,7 @@ The CATIA prompts are disabled thanks to the `DisplayFileAlerts` property of the
 ```
 
 ```vbscript
-```vbscript
+```cpp
         Set oDrwDocument = CATIA.Documents.Add("Drawing")
 ```vbscript
 ```

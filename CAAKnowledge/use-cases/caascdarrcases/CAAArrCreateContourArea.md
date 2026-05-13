@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating an ArrangementArea Object with a Rectangular Contour"
 category: "use-case"
 module: "CAAScdArrUseCases"
-tags: ["CAAArrCreateContourArea", "CAAArrCreateItemReservation", "CATIA", "CAAScdArrUseCases"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateContourArea.htmmd"
+tags: "["CAAArrCreateContourArea", "CAAArrCreateItemReservation", "CATIA", "CAAScdArrUseCases"]"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateContourArea.htm"
 converted: "2026-05-11T17:31:51.544106"
-```
-
 ---
 ## Arrangement
 
@@ -55,7 +52,7 @@ This macro shows you how to create an _ArrangementArea_ object with a rectangula
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
        Dim objRootProd       As Product
        Set objProdDoc      = CATIA.Documents.Add("Product")
        Set objRootProd     = objProdDoc.Product

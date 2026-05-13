@@ -1,25 +1,15 @@
 ---
 title: "CAASchAppSampleConnection"
-type: "interface"
+type: "LocalClass"
 module: "CAASchPlatformModeler"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAASchAppSampleConnection → CATBaseUnknown"
 method_count: 4
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAASchPlatformModeler.edu/CAASchAppBase.m/LocalInterfaces/CAASchAppSampleConnection.h"
 ---
+
 # CAASchAppSampleConnection
 
-**基类**: CATBaseUnknown  
-**继承链**: CAASchAppSampleConnection → CATBaseUnknown  
-**模块**: CAASchPlatformModeler  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 4
-
-> -----------------------------------------------------------------------------
+**基类**: CATBaseUnknown | **模块**: CAASchPlatformModeler | **方法数**: 4
 
 ## 依赖
 
@@ -29,28 +19,55 @@ verified: true
 - `CATBooleanDef.h`
 - `CATIConnector.h`
 
+## 虚方法
+
+### AppListConnectors
+
+```cpp
+virtual HRESULT AppListConnectors(CATICStringList *iLCntrClassFilter, CATIUnknownList **oLCntrs) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iLCntrClassFilter | `CATICStringList` |
+| **oLCntrs | `CATIUnknownList` |
+
+
+### AppListConnectables
+
+```cpp
+virtual HRESULT AppListConnectables(CATICStringList *iLCntbleClassFilter, CATIUnknownList **oLCntbles, CATIUnknownList **oLCntrs) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iLCntbleClassFilter | `CATICStringList` |
+| **oLCntbles | `CATIUnknownList` |
+| **oLCntrs | `CATIUnknownList` |
+
+
+### AppAddConnector
+
+```cpp
+virtual HRESULT AppAddConnector(CATISchAppConnector *iCntrToAdd) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iCntrToAdd | `CATISchAppConnector` |
+
+
+### AppRemoveConnector
+
+```cpp
+virtual HRESULT AppRemoveConnector(CATISchAppConnector *iCntrToRemove) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iCntrToRemove | `CATISchAppConnector` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAASchPlatformModeler.edu/CAASchAppBase.m/LocalInterfaces/CAASchAppSampleConnection.h`

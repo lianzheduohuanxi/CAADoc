@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Drafting Modeler Overview"
-category: tech-article
+category: "tech-article"
 module: "CAADriTechArticles"
-tags: ["CATISketchEditor", "CATIDftDrawing", "CATIABase", "CATIADrawingComponent", "CATIDrwAnnotationFactory", "CATI2DWFFactory", "CATIGenerSpec", "CATIDrwAnnotation", "CATIDrwAddIn", "CATI2Dxxx", "CATIDrwFactory", "CATIView", "CATIDftMultiSheet", "CATIDrwAnnotationComponent", "CATIDftGenViewFactory", "CATI2DConstraintFactory", "CAADraftingInterfaces", "CATISketch", "CATIDftSheet"]
-source_file: "Doc/online/CAADriTechArticles/CAADriDraftingOverView.htmmd"
+tags: "["CATISketchEditor", "CATIDftDrawing", "CATIABase", "CATIADrawingComponent", "CATIDrwAnnotationFactory", "CATI2DWFFactory", "CATIGenerSpec", "CATIDrwAnnotation", "CATIDrwAddIn", "CATI2Dxxx", "CATIDrwFactory", "CATIView", "CATIDftMultiSheet", "CATIDrwAnnotationComponent", "CATIDftGenViewFactory", "CATI2DConstraintFactory", "CAADraftingInterfaces", "CATISketch", "CATIDftSheet"]"
+source_file: "Doc/online/CAADriTechArticles/CAADriDraftingOverView.htm"
 converted: "2026-05-11T17:31:51.038395"
-```
-
 ---
 # Mechanical Design
 
@@ -139,7 +136,6 @@ Two kinds of interfaces allow to get information on geometry:
 
 A 2D component is a re-usable set of geometry and annotations. This component is located in a sheet and can be edited like a view. This is why this component is called Detail View. The 2D component can be instantiated several times, each instance providing a component with a specific orientation, position and scale. The detail view can be either in the same drawing as the CATDrawing of the corresponding instances or in a separate CATDrawing.
 
-A 2D component is a re-usable set of geometry and annotations. This component is located in a sheet and can be edited like a view. This is why this component is called Detail View. The 2D component can be instantiated several times, each instance providing a component with a specific orientation, position and scale. The detail view can be either in the same drawing as the CATDrawing of the corresponding instances or in a separate CATDrawing.
 The Catalog Browser command allows to instantiate a ditto from an external CATDrawing document _CATDrawing1_ in a new Drawing document _CATDrawing2._ To do that, a special copy of _Detail Ref_ is created (_Detail Ref2_) and an instance of this copy (Ditto Inst 1). _Detail Ref2_ Detail is a **_no accessible local reference_** of the Reference Detail (Detail Ref)._See figure 1._
 
 _Figure 1_
@@ -217,7 +213,6 @@ if ( SUCCEEDED(rc) )
 
 These objects are created by using 2D wire frame factory defined in SketcherInterface framework. A pointer on _CATI2DWFFactory_ interface may be obtained by using a `QueryInterface` on the view [[1](../CAADriUseCases/CAADriStructure.htm#Step7)].
 
-These objects are created by using 2D wire frame factory defined in SketcherInterface framework. A pointer on _CATI2DWFFactory_ interface may be obtained by using a `QueryInterface` on the view [[1](../CAADriUseCases/CAADriStructure.htm#Step7)].
 Notes:
 
   1. The view has to be activated to deal with 2D geometry. When a view is activated, associated sketch is in open edition, so geometry may be created.

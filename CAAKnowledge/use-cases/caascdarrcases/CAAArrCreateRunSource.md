@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAAArrCreateRun.CATScript"
 category: "use-case"
 module: "CAAScdArrUseCases"
-tags: ["CATIA", "CAAArrCreateRun"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateRunSource.htmmd"
+tags: "["CATIA", "CAAArrCreateRun"]"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateRunSource.htm"
 converted: "2026-05-11T17:31:51.571552"
-```
-
 ---
 tags: ["CATIA", "CAAArrCreateRun"]
 source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateRunSource.htmmd"
@@ -16,7 +13,7 @@ converted: "2026-05-11T17:31:51.571552"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     '// COPYRIGHT DASSAULT SYSTEMES  2000
     '******************************************************************************
     ' Purpose:       This CATScript demonstrates how to create an ArrangementRun
@@ -36,7 +33,7 @@ converted: "2026-05-11T17:31:51.571552"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -63,7 +60,7 @@ converted: "2026-05-11T17:31:51.571552"
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
        Dim objRootProd       As Product
        Set objProdDoc      = CATIA.Documents.Add("Product")
        Set objRootProd     = objProdDoc.Product

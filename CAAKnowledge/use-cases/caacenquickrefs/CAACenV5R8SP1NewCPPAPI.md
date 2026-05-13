@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "New C++ Authorized APIs in CAA V5R8 SP1"
 category: "use-case"
 module: "CAACenQuickRefs"
-tags: ["CATITPSViewList", "CATITPSView", "CATITPSAxisStraightness", "CATIMfgDesignHoleLimits", "CATIBuildProvider", "CATIAApplicationFrame", "CATICfgSpecification", "CATICafTreeSettingAtt", "CATIGSMGridSet", "CATISelectShow"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R8SP1NewCPPAPI.htmmd"
+tags: "["CATITPSViewList", "CATITPSView", "CATITPSAxisStraightness", "CATIMfgDesignHoleLimits", "CATIBuildProvider", "CATIAApplicationFrame", "CATICfgSpecification", "CATICafTreeSettingAtt", "CATIGSMGridSet", "CATISelectShow"]"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R8SP1NewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.633955"
-```
-
 ---
 tags: ["CATITPSViewList", "CATITPSView", "CATITPSAxisStraightness", "CATIMfgDesignHoleLimits", "CATIBuildProvider", "CATIAApplicationFrame", "CATICfgSpecification", "CATICafTreeSettingAtt", "CATIGSMGridSet", "CATISelectShow"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R8SP1NewCPPAPI.htmmd"

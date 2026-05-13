@@ -1,62 +1,75 @@
 ---
 title: "CAAECloPartSelection"
-type: "interface"
+type: "LocalClass"
 module: "CAACommonLayoutItf"
-category: api-reference
 base: "CATECloPartSelectionAdapter"
-inheritance_chain: "CAAECloPartSelection → CATECloPartSelectionAdapter"
 method_count: 3
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAACommonLayoutItf.edu/CAACloPartSelection.m/LocalInterfaces/CAAECloPartSelection.h"
 ---
+
 # CAAECloPartSelection
 
-**基类**: CATECloPartSelectionAdapter  
-**继承链**: CAAECloPartSelection → CATECloPartSelectionAdapter  
-**模块**: CAACommonLayoutItf  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 3
-
-> -----------------------------------------------------------------------
+**基类**: CATECloPartSelectionAdapter | **模块**: CAACommonLayoutItf | **方法数**: 3
 
 ## 依赖
 
+- `CATBaseUnknown.h`
 - `CATUnicodeString.h`
 - `CATECloPartSelectionAdapter.h`
 
+## 虚方法
+
+### FilterPartSelection
+
+```cpp
+virtual HRESULT FilterPartSelection(const CATUnicodeString& iuStandard, const CATUnicodeString& iuSpec, const CATUnicodeString& iuPartType, const CATIUnknownList *iLFilterParameters, const CATIUnknownList *iLSortParameters, const CATIUnknownList *iListDescription, CATIUnknownList*& oListDescription) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iuStandard | `const CATUnicodeString&` |
+| iuSpec | `const CATUnicodeString&` |
+| iuPartType | `const CATUnicodeString&` |
+| *iLFilterParameters | `const CATIUnknownList` |
+| *iLSortParameters | `const CATIUnknownList` |
+| *iListDescription | `const CATIUnknownList` |
+| oListDescription | `CATIUnknownList*&` |
+
+
+### IsExternalProgramNeeded
+
+```cpp
+virtual HRESULT IsExternalProgramNeeded(const CATUnicodeString &iuApplicationContext, const CATUnicodeString &iuStandard, const CATUnicodeString &iuSpec, const CATUnicodeString &iuPartType, int &oiActivate) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| &iuApplicationContext | `const CATUnicodeString` |
+| &iuStandard | `const CATUnicodeString` |
+| &iuSpec | `const CATUnicodeString` |
+| &iuPartType | `const CATUnicodeString` |
+| &oiActivate | `int` |
+
+
+### RefinePartSelection
+
+```cpp
+virtual HRESULT RefinePartSelection(const CATUnicodeString &iuApplicationContext, const CATUnicodeString &iuStandard, const CATUnicodeString &iuSpec, const CATUnicodeString &iuPartType, const CATIUnknownList *iLEnvironmentParameters, const CATIUnknownList *iLFilterParameters, const CATIUnknownList *iLSortParameters, const IUnknown *ipiCatalogObjectToBeSearched, CATListValCATUnicodeString &opListPartNumbersFound) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| &iuApplicationContext | `const CATUnicodeString` |
+| &iuStandard | `const CATUnicodeString` |
+| &iuSpec | `const CATUnicodeString` |
+| &iuPartType | `const CATUnicodeString` |
+| *iLEnvironmentParameters | `const CATIUnknownList` |
+| *iLFilterParameters | `const CATIUnknownList` |
+| *iLSortParameters | `const CATIUnknownList` |
+| *ipiCatalogObjectToBeSearched | `const IUnknown` |
+| &opListPartNumbersFound | `CATListValCATUnicodeString` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATECloPartSelectionAdapter**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-This interface is used in the following use cases:
-
-- [CAACenWhatsNew](../../use-cases/caacenquickrefs/CAACenWhatsNew.md)
-- [CAAECloPartSelection](../../use-cases/caaclocases/CAAECloPartSelection.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAACommonLayoutItf.edu/CAACloPartSelection.m/LocalInterfaces/CAAECloPartSelection.h`

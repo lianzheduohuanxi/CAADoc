@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Implicit Objects"
-category: use-case case"
+category: "use-case case"
 module: "CAACgmModel"
-tags: ["CATICGMContainer", "CAADoc", "CATICGMObject", "CAAGMModelGemBrowser", "CAAGMModelLifeCycleImplicit", "CAAGMModelInterfaces", "CATIA"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGobLifeCycleImplicit.htmmd"
+tags: "["CATICGMContainer", "CAADoc", "CATICGMObject", "CAAGMModelGemBrowser", "CAAGMModelLifeCycleImplicit", "CAAGMModelInterfaces", "CATIA"]"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGobLifeCycleImplicit.htm"
 converted: "2026-05-11T17:33:48.407972"
-```
-
 ---
 # Creating Implicit Objects
 
@@ -136,14 +133,14 @@ The RemoveDependancies option only applies to implicit objects. By using it, you
 
     * Case 1: CATCloneManager in full duplication option
 
-```vbscript
+```cpp
 If you remove pPline with the RemoveDependancies options, piPlane being an implicit object, it is removed. Any attempt to re-use it to create another Pline will result in a throw. Removing the cloned CATPLine will not change anything.
 
 ```
 
     * Case 2: CATCloneManager is single duplication option
 
-```vbscript
+```cpp
 If you remove pPline with the RemoveDependancies options, piPlane being an implicit object, it is removed. Any attempt to re-use it to create another Pline will result in a throw. Removing the cloned CATPLine will not change anything.
 ```vbscript
 If you remove pPline with RemoveDependancies but not piClonedPLine, piPlane will not be removed because it is still pointed to by piClonedPLine and you will be able to re-use it to create a new PLine.
@@ -172,7 +169,7 @@ if(1==toStore)
        ofstream filetowrite(pfileName, ios::binary ) ;
 
     #else
-```vbscript
+```cpp
 if(1==toStore)
 ofstream filetowrite(pfileName, ios::binary ) ;
        ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;

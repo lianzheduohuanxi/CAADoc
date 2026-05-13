@@ -1,29 +1,17 @@
 ---
 title: "CAAECafContextualMenuEllipse"
-type: "interface"
+type: "LocalClass"
 module: "CAACATIAApplicationFrm"
-category: api-reference
 base: "CATExtIContextualMenu"
-inheritance_chain: "CAAECafContextualMenuEllipse → CATExtIContextualMenu"
 method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAACATIAApplicationFrm.edu/CAACafContextualMenu.m/LocalInterfaces/CAAECafContextualMenuEllipse.h"
 ---
+
 # CAAECafContextualMenuEllipse
 
-**基类**: CATExtIContextualMenu  
-**继承链**: CAAECafContextualMenuEllipse → CATExtIContextualMenu  
-**模块**: CAACATIAApplicationFrm  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> Implementation of the CATIContextualMenu interface for the CAASysEllipse object. ****************************************************************************** Usage: Launch a CATIA V5. Create a new CAAGeometry document. Create an ellipse Click the right button: the contextual menu appears. ****************************************************************************** Explanation for contextual menu In general the contextual menu dedicated to your object completes the default contextual menu. This default menu is the same that the default menu of the UI active object. If you call CATExtIContextualMenu::GetContextualMenu, you get the default contextual menu and you can complete it. So to do that, in the constructor of the data extension of your object, you retrieve the contextual menu of CATExtIContextualMenu and you create several items, that you chain to it. The life cycle of the menu is managed by the  CATExtIContextualMenu class. The contextual menu dedicaded to the UI active object is defined in the CAAApplicationFrame.edu/CAAAfrGeoDocument/src/CAAEAfrUIActiveRootObj.cpp ******************************************************************************
 
-> several items, that you chain to it.
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATExtIContextualMenu | **模块**: CAACATIAApplicationFrm | **方法数**: 0
 
 ## 依赖
 
@@ -31,32 +19,4 @@ verified: true
 
 ---
 
-## Interface Overview
-
-This interface inherits from **CATExtIContextualMenu**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-- [3D PLM Enterprise Architecture](../../use-cases/caaafrcases/CAAAfrSampleContextualMenu.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAACATIAApplicationFrm.edu/CAACafContextualMenu.m/LocalInterfaces/CAAECafContextualMenuEllipse.h`

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "About Numbers, Literals, and Units"
 category: "use-case"
 module: "CAAScdInfTechArticles"
-tags: []
-source_file: "Doc/online/CAAScdInfTechArticles/CAAInfLiteralUnits.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfLiteralUnits.htm"
 converted: "2026-05-11T17:31:52.422043"
-```
-
 ---
 ## Infrastructure
 

@@ -69,7 +69,7 @@ a product document.
 ...
    '----------------------------------------------
    'Create a new product document
-```vbscript
+```cpp
    Dim objProdDoc        As ProductDocument
    Dim objRootProd       As Product
    Set objProdDoc      = CATIA.Documents.Add(&quot;Product&quot;)

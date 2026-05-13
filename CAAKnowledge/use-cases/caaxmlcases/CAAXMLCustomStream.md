@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Reading XML from a custom source"
-category: use-case case"
+category: "use-case case"
 module: "CAAXmlUseCases"
-tags: ["CATISAXXMLReader", "CATIXMLInputStream_var", "CAAXMLParser", "CATIXMLSAXFactory", "CATIXMLInputStream", "CAAXMLMultiFileStream", "CATIXMLDOMDocumentBuilder", "CATISAXParser", "CATIXMLDOMDocumentBuilder_var", "CATISAXInputSource", "CATIDOMDocument_var", "CATISAXInputSource_var", "CATIXMLSAXFactory_var", "CAAXMLCustomStream"]
-source_file: "Doc/online/CAAXmlUseCases/CAAXMLCustomStream.htmmd"
+tags: "["CATISAXXMLReader", "CATIXMLInputStream_var", "CAAXMLParser", "CATIXMLSAXFactory", "CATIXMLInputStream", "CAAXMLMultiFileStream", "CATIXMLDOMDocumentBuilder", "CATISAXParser", "CATIXMLDOMDocumentBuilder_var", "CATISAXInputSource", "CATIDOMDocument_var", "CATISAXInputSource_var", "CATIXMLSAXFactory_var", "CAAXMLCustomStream"]"
+source_file: "Doc/online/CAAXmlUseCases/CAAXMLCustomStream.htm"
 converted: "2026-05-11T17:33:45.595301"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -89,7 +86,6 @@ where:
 
 The CAAXMLCustomStream use case is made of several classes located in the CAAXMLCustomStream.m module of the CAAXMLParser.edu framework:
 
-The CAAXMLCustomStream use case is made of several classes located in the CAAXMLCustomStream.m module of the CAAXMLParser.edu framework:
 Windows | `InstallRootDirectory/CAAXMLParser.edu/CAAXMLCustomStream.m/`
 
 The CAAXMLCustomStream use case is made of several classes located in the CAAXMLCustomStream.m module of the CAAXMLParser.edu framework:
@@ -232,7 +228,7 @@ To parse the XML, you will use a DOM parser, so the next step is to instantiate 
     ...
 To parse the XML, you will use a DOM parser, so the next step is to instantiate a V5 DOM component. The V5 DOM component can be created by calling the `CreateCATIXMLDOMDocumentBuilder` global function. This function returns a V5 handler on the _CATIXMLDOMDocumentBuilder_ interface, which is the main interface for the V5 DOM component. Using this interface you will be able to create documents (either by parsing an XML input source, as here, or from scratch) and save existing documents to disk.
     CATIXMLSAXFactory_var factory;
-```vbscript
+```cpp
     hr = **::CreateCATIXMLSAXFactory**(factory);
 
 ```
@@ -303,7 +299,6 @@ The DOM parser can run in two modes: non-validating and validating. You determin
 
     ...
     CATUnicodeString rawOutput;
-CATUnicodeString rawOutput;
 ```vbscript
     hr = builder->**Write**(document, rawOutput);
 

@@ -174,7 +174,7 @@ a generative way.
 &#39;_____________________________________________________________________________________
 &#39; Optional: allows to find the sample wherever it&#39;s installed
 
-```vbscript
+```cpp
   sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
   sSep=CATIA.SystemService.Environ(&quot;ADL_ODT_SLASH&quot;)
 
@@ -184,7 +184,7 @@ a generative way.
 ```
 &#39;_____________________________________________________________________________________
 &#39; Get the collection of documents in session
-```vbscript
+```cpp
   Set documents1 = CATIA.Documents
 &#39; ----------------------------------------------------------- 
 ```
@@ -195,7 +195,7 @@ a generative way.
    
 &#39; if WB name already is &quot;GPSCfg&quot;, not to use StartWorkbench 
 ```
-```vbscript
+```cpp
    WBName = CATIA.GetWorkbenchId if (WBName &lt;&gt; &quot;GPSCfg&quot;) Then 
       CATIA.StartWorkbench(&quot;GPSCfg&quot;)
    End If
@@ -219,12 +219,12 @@ Dim arrayOfVariantOfShort1(0)
                                      &amp; sSep &amp; &quot;samples&quot; &amp; sSep &amp; &quot;basic_assembly.CATProduct&quot;),
 ```
 
-```vbscript
+```cpp
 &quot;CATAnalysisImport&quot;, arrayOfVariantOfShort1
 
 &#39; _____________________________________________________________________________________
 &#39; Reframe All.
-```vbscript
+```cpp
   Set specsAndGeomWindow2 = CATIA.ActiveWindow
   Set viewer3D1 = specsAndGeomWindow2.ActiveViewer
   viewer3D1.Reframe 
@@ -232,7 +232,7 @@ Dim arrayOfVariantOfShort1(0)
 
 &#39; _____________________________________________________________________________________
 &#39; Scan the analysis document:  Retrieve the Pointed documents to extract the reference for preprocessing
-```vbscript
+```cpp
   Set analysisLinkedDocuments1 = analysisManager1.LinkedDocuments
   CATIA.SystemService.Print analysisLinkedDocuments1.Name
   If (analysisLinkedDocuments1.Count &lt;&gt; 1 ) Then
@@ -245,7 +245,7 @@ Dim arrayOfVariantOfShort1(0)
 &#39; _____________________________________________________________________________________
 &#39; Retrieve the CATProduct Document and associated publications and constraints collection.
 
-```vbscript
+```cpp
   Set productDocument1 = analysisLinkedDocuments1.Item(1)
 
   Set product1 = productDocument1.Product
@@ -325,7 +325,7 @@ analysisEntity3.AddSupportFromPublication product1, publication2
 ...
 ```
 
-```vbscript
+```cpp
 ...
 &#39; _____________________________________________________________________________________
 &#39; Create load boundary. Associated to the virtual part
@@ -356,7 +356,7 @@ basicComponent3.SetValue &quot;&quot;, 3, 1, 1, 0.000000
 ...
 &#39; Some examples to read the data on the basic component
 &#39;In this case, direct read 
-```vbscript
+```cpp
 CATIA.SystemService.Print &quot; ForceVector &quot; &amp; basicComponent3.GetValue(&quot;&quot;, 1, 1, 1) 
 CATIA.SystemService.Print &quot; ForceVector &quot; &amp; basicComponent3.GetValue(&quot;&quot;, 2, 1, 1)
 CATIA.SystemService.Print &quot; ForceVector &quot; &amp; basicComponent3.GetValue(&quot;&quot;, 3, 1, 1)
@@ -374,7 +374,7 @@ Set SubList = ParametersList.SubList(basicComponent3,FALSE)
 
 For i = 1 to SubList.Count
 ```
-```vbscript
+```cpp
 	Set Parameter = SubList.Item(i)
 	CATIA.SystemService.Print Parameter.Name  
 	CATIA.SystemService.Print Parameter.ValueAsString

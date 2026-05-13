@@ -173,7 +173,7 @@ of the `Selection` object
 ```vbscript
 ...
 ' Retrieve the active document
-```vbscript
+```cpp
 Dim oDocument As Document
 Set oDocument = CATIA.ActiveDocument
 
@@ -238,7 +238,7 @@ If ObjectSelected = True Then
     Set iFirstPoint = oSelection.Item(1).Value
     ...
 ```
-```vbscript
+```cpp
     Set oView = oSelection.FindObject(&quot;CATIADrawingView&quot;)
     ...
 ```
@@ -295,7 +295,7 @@ oPrintArea.ActivationState = True
 ```vbscript
 ...
 oSelection.Add oSheet
-```vbscript
+```cpp
 CATIA.StartCommand &quot;CATDrwVisualizePrintAreaHdr&quot;
 oSelection.Clear
 ```

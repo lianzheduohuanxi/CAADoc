@@ -320,7 +320,7 @@ customize the standard message.
 
 *Copyright  2000, Dassault Systmes. All rights reserved.*
 
-```vbscript
+```cpp
 #ifndef CAABurgerApplication_h
 #define CAABurgerApplication_h  // To prevent from multiple inclusion
 #include &quot;CATInteractiveApplication.h&quot;
@@ -340,7 +340,7 @@ class CAABurgerApplication : public CATInteractiveApplication
 #endif
 ```
 
-```vbscript
+```cpp
 ...
 void CAABurgerApplication::BeginApplication(#)
 {
@@ -363,7 +363,7 @@ int CAABurgerApplication::EndApplication(#)
 CAABurgerApplication ApplicationInstance(&quot;Burger&quot;);
 ```
 
-```vbscript
+```cpp
 #ifndef CAABurgerDialogBox_h
 #define CAABurgerDialogBox_h   // To prevent from multiple inclusion
 
@@ -403,7 +403,7 @@ class CAABurgerDialogBox : public CATDlgDocument
 #endif
 ```
 
-```vbscript
+```cpp
 ...
 // Methods to execute when a control is activated
     void Rare               (CATCommand           * iSendingCommand,
@@ -429,7 +429,7 @@ class CAABurgerDialogBox : public CATDlgDocument
 };
 ```
 
-```vbscript
+```cpp
 ...
 CAABurgerDialogBox::CAABurgerDialogBox(CATInteractiveApplication * iParentCommand,
                                        const CATString           &amp; iDialogboxId,
@@ -463,7 +463,7 @@ void CAPBurger::Build(#)
 ...
 ```
 
-```vbscript
+```cpp
 ...
   _pHamburgerFrame = new CATDlgFrame(this, &quot;HamburgerFrameId&quot;, CATDlgFraNoTitle | CATDlgGridLayout);
   CATDlgGridConstraints GCFH(1,0,1,1, CATGRID_TOP | CATGRID_BOTTOM);
@@ -487,7 +487,7 @@ void CAPBurger::Build(#)
 ...
 ```
 
-```vbscript
+```cpp
 ...
 // Instantiate and arrange the cooking radio buttons
 //                                     dialog parent     Id for resources 
@@ -531,7 +531,7 @@ void CAPBurger::Build(#)
 ...
 ```
 
-```vbscript
+```cpp
 ...
   AddAnalyseNotificationCB(_pRare, _pRare-&gt;GetRadBModifyNotification(#),
                            (CATCommandMethod)&amp;CAABurgerDialogBox::WellDone, NULL);
@@ -542,7 +542,7 @@ void CAPBurger::Build(#)
 ...
 ```
 
-```vbscript
+```cpp
 void CAABurgerDialogBox::Rare(CATCommand           * pSendingCommand,
                               CATNotification      * pSentNotification,
                               CATCommandClientData   UsefulData)

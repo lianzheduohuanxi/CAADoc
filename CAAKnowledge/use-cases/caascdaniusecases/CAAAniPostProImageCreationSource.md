@@ -19,12 +19,12 @@ converted: "2026-05-11T11:27:02.506805"
 '   CATIA Level:  V5R16
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 ' ----------------------------------------------------------- 
 ```
 ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
   sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -34,7 +34,7 @@ Sub CATMain(#)
 ' ----------------------------------------------------------- 
 
 ' Open the CATAnalysis Document
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Cube_R13_Freq.CATAnalysis")
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
@@ -110,12 +110,12 @@ End Sub
 &#39;   CATIA Level:  V5R16
 &#39; ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 &#39; ----------------------------------------------------------- 
 ```
 &#39; Optional: allows to find the sample wherever it&#39;s installed
-```vbscript
+```cpp
   sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -125,7 +125,7 @@ Sub CATMain(#)
 &#39; ----------------------------------------------------------- 
 
 &#39; Open the CATAnalysis Document
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online/CAAScdAniUseCases/samples/Cube_R13_Freq.CATAnalysis&quot;)
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 

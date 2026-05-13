@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Running Light Expand"
 category: "use case"
 module: "CAADkoUseCases"
-tags: ["CATIVpmLightExpandObject", "CAAVPMDesktopObjects", "CAADkoLightExpand"]
-source_file: "Doc/online/CAADkoUseCases/CAADkoLightExpand.htmmd"
+tags: "["CATIVpmLightExpandObject", "CAAVPMDesktopObjects", "CAADkoLightExpand"]"
+source_file: "Doc/online/CAADkoUseCases/CAADkoLightExpand.htm"
 converted: "2026-05-11T17:33:45.981463"
-```
-
 ---
 tags: ["CATIVpmLightExpandObject", "CAAVPMDesktopObjects", "CAADkoLightExpand"]
 source_file: "Doc/online/CAADkoUseCases/CAADkoLightExpand.htmmd"
@@ -36,7 +33,6 @@ Abstract This article shows how to run a Light Expand to get data on objects and
 * * *
 
 What You Will Learn With This Use Case This use case is intended to show you how to run a Light Expand. An expand is a particular case of query. In the simplest case, a root Product Root Class is expanded to find the structure of Part Instances and Product Instances. Expand consists in finding the instances that are attached under the root PRC, ordering them thanks to their children/parent relationships, and finding the documents attached to those parts. Expand is using Query to find those instances. Expand has the same problems as Query: it is slow, loads in memory all objects found matching the input predicate, using memory that can't be cleaned after the process, and reads all attributes of the objects even if only few of them are useful.
-What You Will Learn With This Use Case This use case is intended to show you how to run a Light Expand. An expand is a particular case of query. In the simplest case, a root Product Root Class is expanded to find the structure of Part Instances and Product Instances. Expand consists in finding the instances that are attached under the root PRC, ordering them thanks to their children/parent relationships, and finding the documents attached to those parts. Expand is using Query to find those instances. Expand has the same problems as Query: it is slow, loads in memory all objects found matching the input predicate, using memory that can't be cleaned after the process, and reads all attributes of the objects even if only few of them are useful.
 After having implemented Light Query to solve those issues, Light Expand has been implemented to take advantage of the improvements provided by Light Query. In particular, the result structure of Light Expand has to be deleted at the end in order to free the memory used by the Light Expand, memory that can be reused further. [Top] The CAADkoLightExpand Use Case CAADkoLightExpand is a use case of the CAAVPMDesktopObjects.edu framework that illustrates VPMDesktopObjects, VPMInterfaces and VPMPersistency framework capabilities. [Top] What Does CAADkoLightExpand Do CAADkoLightExpand is a stand-alone executable that runs a Light Expand to get the product structure made of parts under a root PRC. The interface ENOVILightExpandable is used to run the Light Expand and get the ordered structure. Each object in the result list is accessed via the interface CATIVpmLightExpandObject.
 
   1. In this use case, we set up the Light Expand to get the instances attached under the root PRC. This example focuses on the structure of parts under a PRC. It is possible to expand different kinds of objects and get different kinds of object types in the results.
@@ -64,7 +60,7 @@ Be careful when using the following API (ENOVLightQueryToFullObjectsServices::ge
           CATListOfInt Indexes;
           CATLISTV(CATBaseUnknown_var) FactoryObjects;
 ```vbscript
-```vbscript
+```cpp
           RC = ENOVLightQueryToFullObjectsServices::getFactoryObjects( Indexes, FactoryObjects, oQueryResult );
 
 ```
@@ -72,9 +68,9 @@ Be careful when using the following API (ENOVLightQueryToFullObjectsServices::ge
 ```
 
 ---
-```vbscript
+```cpp
 CATLISTV(CATBaseUnknown_var) FactoryObjects;
-```vbscript
+```cpp
 RC = ENOVLightQueryToFullObjectsServices::getFactoryObjects( Indexes, FactoryObjects, oQueryResult );
 ```
 

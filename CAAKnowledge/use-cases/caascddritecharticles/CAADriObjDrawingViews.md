@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "DrawingViews Collection"
-category: tech-article
+category: "tech-article"
 module: "CAAScdDriTechArticles"
-tags: []
-source_file: "Doc/online/CAAScdDriTechArticles/CAADriObjDrawingViews.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAAScdDriTechArticles/CAADriObjDrawingViews.htm"
 converted: "2026-05-11T17:31:51.129194"
-```
-
 ---
 # DrawingViews Collection
 
@@ -25,7 +22,6 @@ A collection of all the [DrawingView](CAADriObjDrawingView.md) objects that are 
 
 Use the Add method to create a new, empty drawing view and add it to the collection. The following example adds a new, empty drawing view to the active drawing sheet.
 
-Use the Add method to create a new, empty drawing view and add it to the collection. The following example adds a new, empty drawing view to the active drawing sheet.
     DrawingViews.Add
 
 Use the Item method to retrieve a drawing view from the collection.

@@ -1,54 +1,58 @@
 ---
 title: "CAAPCurveV4DataSaver"
-type: "interface"
+type: "LocalClass"
 module: "CAACATIAV4Interfaces"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAPCurveV4DataSaver → CATBaseUnknown"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 3
+source_file: "CAACATIAV4Interfaces.edu/CAAV4iEduSaveAsV4.m/LocalInterfaces/CAAPCurveV4DataSaver.h"
 ---
+
 # CAAPCurveV4DataSaver
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAPCurveV4DataSaver → CATBaseUnknown  
-**模块**: CAACATIAV4Interfaces  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATBaseUnknown | **模块**: CAACATIAV4Interfaces | **方法数**: 3
 
 ## 依赖
 
 - `CATBaseUnknown.h`
 
+## 公共方法
+
+### GetData
+
+```cpp
+HRESULT GetData(int & oV4Type, double * & oV4Block) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oV4Type | `int &` |
+| oV4Block | `double * &` |
+
+
+### GetUserIntent
+
+```cpp
+HRESULT GetUserIntent(int & oIntent) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oIntent | `int &` |
+
+
+### GetSplineConstraintData
+
+```cpp
+HRESULT GetSplineConstraintData(int & oV4SplineType, int & oV4BlockLength, double * & oV4BlockData) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oV4SplineType | `int &` |
+| oV4BlockLength | `int &` |
+| oV4BlockData | `double * &` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAACATIAV4Interfaces.edu/CAAV4iEduSaveAsV4.m/LocalInterfaces/CAAPCurveV4DataSaver.h`

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Adding Business Rules to an Interactive Command"
 category: "use case"
 module: "CAADkpUseCases"
-tags: ["CATIAVPMVDALock", "CAAVPMDesktopProduct", "CAADkpCustomCommand", "CATIAVPMVDACommand", "CATIAVPMVDACommandFactory_var", "CATIVpmFactoryObject"]
-source_file: "Doc/online/CAADkpUseCases/CAADkpCustomCommand.htmmd"
+tags: "["CATIAVPMVDALock", "CAAVPMDesktopProduct", "CAADkpCustomCommand", "CATIAVPMVDACommand", "CATIAVPMVDACommandFactory_var", "CATIVpmFactoryObject"]"
+source_file: "Doc/online/CAADkpUseCases/CAADkpCustomCommand.htm"
 converted: "2026-05-11T17:33:46.012499"
-```
-
 ---
 tags: ["CATIAVPMVDALock", "CAAVPMDesktopProduct", "CAADkpCustomCommand", "CATIAVPMVDACommand", "CATIAVPMVDACommandFactory_var", "CATIVpmFactoryObject"]
 source_file: "Doc/online/CAADkpUseCases/CAADkpCustomCommand.htmmd"
@@ -295,7 +292,6 @@ if ( SUCCEEDED( RC ) && pIDAttribute )
         // Do not allocate VPMIQAttribute, the method does it.
 
         VPMIQAttribute * pDescAttribute = NULL;
-VPMIQAttribute * pDescAttribute = NULL;
 ```vbscript
         RC = spUECommand->get_Parameter( "ENOVIA_VPMPartMaster", "V_description", pDescAttribute );
 
@@ -323,7 +319,6 @@ if ( SUCCEEDED( RC ) && pDescAttribute )
 ```
 
         VPMIQAttribute * pNameAttribute = NULL;
-VPMIQAttribute * pNameAttribute = NULL;
 ```vbscript
         RC = spUECommand->get_Parameter( "ENOVIA_VPMPartMaster", "V_name", pNameAttribute );
 
@@ -514,7 +509,7 @@ CATUnicodeString LockString( "Lock" );
     	    // Retrieves the interface of the Lock Command.
 RC = spCommandFactory->Create( LockString, piCommand );
     	    CATIAVPMVDALock * piLockCommand = NULL;
-```vbscript
+```cpp
     	    RC = piCommand->QueryInterface( IID_CATIAVPMVDALock, (void **) & piLockCommand );
 
 ```

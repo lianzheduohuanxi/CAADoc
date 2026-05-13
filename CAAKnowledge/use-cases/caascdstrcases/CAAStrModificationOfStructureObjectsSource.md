@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAAStrModificationOfStructureObjects.CATScript"
 category: "use-case"
 module: "CAAScdStrUseCases"
-tags: ["CATIA", "CAAStrModificationOfStructureObjects"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfStructureObjectsSource.htmmd"
+tags: "["CATIA", "CAAStrModificationOfStructureObjects"]"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfStructureObjectsSource.htm"
 converted: "2026-05-11T17:31:50.903114"
-```
-
 ---
 ```vbscript
 ```vbscript
@@ -30,7 +27,7 @@ converted: "2026-05-11T17:31:50.903114"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -48,7 +45,7 @@ converted: "2026-05-11T17:31:50.903114"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
         Dim strFactory As StrObjectFactory
 
         Set doc = CATIA.ActiveDocument

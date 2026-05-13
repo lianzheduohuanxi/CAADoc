@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Reading an Attribute"
-category: use-case case"
+category: "use-case case"
 module: "CAACgmModel"
-tags: ["CATICGMContainer", "CAAGMModelAttributeRead", "CAADoc", "CATICGMObject", "CAAGMModelAttribute", "CAAGMModelInterfaces", "CAAGMModelAttributeCreation", "CAAGMModelAttributeManagement", "CAAAttributeManagement"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGobAttRead.htmmd"
+tags: "["CATICGMContainer", "CAAGMModelAttributeRead", "CAADoc", "CATICGMObject", "CAAGMModelAttribute", "CAAGMModelInterfaces", "CAAGMModelAttributeCreation", "CAAGMModelAttributeManagement", "CAAAttributeManagement"]"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGobAttRead.htm"
 converted: "2026-05-11T17:33:48.354122"
-```
-
 ---
 # Reading an Attribute
 
@@ -194,7 +191,6 @@ iPersAttr->GetValue(oPersval);
 
 The use case ends with the closure of the file and the CGM container (done by the `::CATCloseCGMContainer` global function).
 
-The use case ends with the closure of the file and the CGM container (done by the `::CATCloseCGMContainer` global function).
     filetoread.close(#);
     CATCloseCGMContainer(piGeomFactory);
 

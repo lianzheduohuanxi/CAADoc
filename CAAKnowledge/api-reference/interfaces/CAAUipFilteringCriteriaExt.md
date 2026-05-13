@@ -1,48 +1,58 @@
 ---
 title: "CAAUipFilteringCriteriaExt"
-type: "interface"
+type: "LocalClass"
 module: "CAAElecRoutingItf"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAUipFilteringCriteriaExt → CATBaseUnknown"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 3
+source_file: "CAAElecRoutingItf.edu/CAAEwrCriteria.m/LocalInterfaces/CAAUipFilteringCriteriaExt.h"
 ---
+
 # CAAUipFilteringCriteriaExt
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAUipFilteringCriteriaExt → CATBaseUnknown  
-**模块**: CAAElecRoutingItf  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
-
-> Usage notes:
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATBaseUnknown | **模块**: CAAElecRoutingItf | **方法数**: 3
 
 ## 依赖
 
 - `CATBaseUnknown.h`
 
+## 公共方法
+
+### ListCriteria
+
+```cpp
+HRESULT ListCriteria(const CATListValCATUnicodeString * iListOfSystems, CATListValCATUnicodeString *& oListOfCriteria) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iListOfSystems | `const CATListValCATUnicodeString *` |
+| oListOfCriteria | `CATListValCATUnicodeString *&` |
+
+
+### ListWires
+
+```cpp
+HRESULT ListWires(const CATListValCATUnicodeString * iListOfSystems, const CATListValCATUnicodeString * iListOfCriteria, CATListValCATUnicodeString *& oListOfWires) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iListOfSystems | `const CATListValCATUnicodeString *` |
+| iListOfCriteria | `const CATListValCATUnicodeString *` |
+| oListOfWires | `CATListValCATUnicodeString *&` |
+
+
+### ListSystems
+
+```cpp
+HRESULT ListSystems(CATListValCATUnicodeString *& oListOfSystems) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oListOfSystems | `CATListValCATUnicodeString *&` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAElecRoutingItf.edu/CAAEwrCriteria.m/LocalInterfaces/CAAUipFilteringCriteriaExt.h`

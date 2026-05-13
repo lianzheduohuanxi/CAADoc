@@ -1,51 +1,134 @@
 ---
 title: "CAAECafGeometryEltSettingAtt"
-type: "interface"
+type: "LocalClass"
 module: "CAACATIAApplicationFrm"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAECafGeometryEltSettingAtt → CATBaseUnknown"
 method_count: 10
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAACATIAApplicationFrm.edu/CAACafCtrlToolsOptions.m/LocalInterfaces/CAAECafGeometryEltSettingAtt.h"
 ---
+
 # CAAECafGeometryEltSettingAtt
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAECafGeometryEltSettingAtt → CATBaseUnknown  
-**模块**: CAACATIAApplicationFrm  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 10
+> Data Extension of  CAACafGeometryEltSettingCtrl to implement the CAAICafGeometryEltSettingAtt. This interface enables to handle each attribut of the setting repository CAACafGeometryElt
+
+**基类**: CATBaseUnknown | **模块**: CAACATIAApplicationFrm | **方法数**: 10
 
 ## 依赖
 
 - `CATBaseUnknown.h`
 - `CAAICafGeometryEltSettingAtt.h`
 
+## 虚方法
+
+### Initialize
+
+```cpp
+virtual HRESULT Initialize() ;
+```
+
+This method calls all Getxxx methods.
+
+
+### GetIdentifierVisibility
+
+```cpp
+virtual HRESULT GetIdentifierVisibility(CATString & oIdVisibility) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oIdVisibility | `CATString &` |
+
+
+### SetIdentifierVisibility
+
+```cpp
+virtual HRESULT SetIdentifierVisibility(const CATString & iIdVisibility) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iIdVisibility | `const CATString &` |
+
+
+### GetInfoIdentifierVisibility
+
+```cpp
+virtual HRESULT GetInfoIdentifierVisibility(CATSettingInfo * oInfo) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oInfo | `CATSettingInfo *` |
+
+
+### GetMaxPointCurve
+
+```cpp
+virtual HRESULT GetMaxPointCurve(int & oMaxPoint) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oMaxPoint | `int &` |
+
+
+### SetMaxPointCurve
+
+```cpp
+virtual HRESULT SetMaxPointCurve(const int iMaxPoint) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iMaxPoint | `const int` |
+
+
+### GetInfoMaxPointCurve
+
+```cpp
+virtual HRESULT GetInfoMaxPointCurve(CATSettingInfo ** oInfoArray, int * oNbInfo) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oInfoArray | `CATSettingInfo **` |
+| oNbInfo | `int *` |
+
+
+### GetImplPointVisibility
+
+```cpp
+virtual HRESULT GetImplPointVisibility(CATString & oImplPointVisibility) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oImplPointVisibility | `CATString &` |
+
+
+### SetImplPointVisibility
+
+```cpp
+virtual HRESULT SetImplPointVisibility(const CATString & iImplPointVisibility) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iImplPointVisibility | `const CATString &` |
+
+
+### GetInfoImplPointVisibility
+
+```cpp
+virtual HRESULT GetInfoImplPointVisibility(CATSettingInfo * oInfo) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oInfo | `CATSettingInfo *` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAACATIAApplicationFrm.edu/CAACafCtrlToolsOptions.m/LocalInterfaces/CAAECafGeometryEltSettingAtt.h`

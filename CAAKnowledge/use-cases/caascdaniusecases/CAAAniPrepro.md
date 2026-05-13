@@ -113,7 +113,7 @@ inside an Analysis document.
 &#39; ----------------------------------------------------------- 
     &#39; Optional: allows to find the sample wherever it&#39;s installed
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,&quot;No Doc Path Defined&quot;
@@ -121,7 +121,7 @@ inside an Analysis document.
 ```
     &#39; ----------------------------------------------------------- 
     &#39; Open the Analysis document 
-```vbscript
+```cpp
     Dim oAnalysisDocument As Document
     Set oAnalysisDocument = CATIA.Documents.Open
         (sDocPath &amp; &quot;/CAAScdAniUseCases/samples/AnalysisCrank.CATAnalysis&quot;)

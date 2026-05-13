@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Managing the Graphical Representation of a Schematic Reference Component"
 category: "use-case"
 module: "CAAScdSchUseCases"
-tags: ["CAAScdSchUseCases", "CAASchCompRefGraphic", "CATIA", "CATIASchGRR", "CATIASchCompGraphic", "CAASCH_Detail03"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchCompRefGraphic.htmmd"
+tags: "["CAAScdSchUseCases", "CAASchCompRefGraphic", "CATIA", "CATIASchGRR", "CATIASchCompGraphic", "CAASCH_Detail03"]"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchCompRefGraphic.htm"
 converted: "2026-05-11T17:31:51.330224"
-```
-
 ---
 ## Schematics Platform Modeler
 
@@ -46,7 +43,7 @@ The macro first loads CAASCH_Detail03.CATProduct. |     ...
     Dim sFilePath
 ```vbscript
 ```
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
 ```
@@ -61,7 +58,7 @@ Dim sFilePath
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
@@ -167,7 +164,7 @@ Using the GetRefComponents method, a list of existing schematic reference compon
           ' Get a SchCompGraphic interface handle from a reference
           ' component
           '--------------------------------------------------------------------
-```vbscript
+```cpp
           Set objCompRefGraphic = objLCompRefs.Item (1,"CATIASchCompGraphic")
 ```
 ```
@@ -272,7 +269,7 @@ The macro finds the first member of the list of graphical representations obtain
 ```
 ```vbscript
                  If (intNbGraphic > 1) Then
-```vbscript
+```cpp
                     Set objGRR = objLGraphic.Item(intNbGraphic,"CATIASchGRR")
                     If ( Not (objGRR Is Nothing ) ) Then
 ```

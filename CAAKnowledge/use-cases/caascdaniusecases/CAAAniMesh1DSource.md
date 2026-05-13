@@ -20,13 +20,13 @@ converted: "2026-05-11T11:27:02.511341"
 '  CATIA Level:  V5R16
 '***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 '----------------------------------------------------------- 
 ```
 'Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
 sDocPath=CATIA.SystemService.Environ("CATDocView")
 If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 Err.Raise 9999,,"No Doc Path Defined"
@@ -35,7 +35,7 @@ End If
 '----------------------------------------------------------- 
 
 'Open the CATAnalysis Document
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Beam.CATAnalysis")
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
@@ -108,13 +108,13 @@ End Sub
 '  CATIA Level:  V5R16
 '***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 '----------------------------------------------------------- 
 ```
 'Optional: allows to find the sample wherever it&#39;s installed
-```vbscript
+```cpp
 sDocPath=CATIA.SystemService.Environ("CATDocView")
 If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 Err.Raise 9999,,"No Doc Path Defined"
@@ -123,7 +123,7 @@ End If
 '----------------------------------------------------------- 
 
 'Open the CATAnalysis Document
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online/CAAScdAniUseCases/samples/Beam.CATAnalysis&quot;)
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 

@@ -286,7 +286,7 @@ method of *CATIVisProperties* interface.
 
  
 
-```vbscript
+```cpp
 CATDocument *pPartDoc = NULL;
    rc = CATDocumentServices::OpenDocument(InputPathName, pPartDoc);
    ...
@@ -299,7 +299,7 @@ CATDocument *pPartDoc = NULL;
 ```
 
 ```vbscript
-```vbscript
+```cpp
 &nbsp;&nbsp;&nbsp;&nbsp;  CATIDescendants_var spDescOnSurfacicSet = ListOfSurfacicSets[1];
 &nbsp;&nbsp;&nbsp;&nbsp;  if (NULL_var != spDescOnSurfacicSet)
 ```
@@ -316,7 +316,7 @@ CATDocument *pPartDoc = NULL;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  ...
 ```
 
-```vbscript
+```cpp
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  spBody-&gt;GetAllCells(ListOfCells,2);
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  for (int i=1;i&lt;=NbCells;i++)
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  {
@@ -328,7 +328,7 @@ CATDocument *pPartDoc = NULL;
 			...
 ```
 
-```vbscript
+```cpp
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  spBody-&gt;GetAllCells(ListOfCells,1);
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  for (int i=1;i&lt;=NbCells;i++)
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  {
@@ -344,7 +344,7 @@ CATDocument *pPartDoc = NULL;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  ...
 ```
 
-```vbscript
+```cpp
 &nbsp;  CATDocument *pProcessDoc = NULL;
 &nbsp;  rc = CATDocumentServices::New(&quot;Process&quot;, pProcessDoc );
 &nbsp;  ...
@@ -365,7 +365,7 @@ CATDocument *pPartDoc = NULL;
 &nbsp;&nbsp;&nbsp;  ...
 ```
 
-```vbscript
+```cpp
 &nbsp;  CATIMfgMultiAxisAlgorithm *piMMSweepingAlgo =NULL;
 &nbsp;  ::CATInstantiateComponent (&quot;CATMfgAlgoMultiAxisSweeping&quot;, CATIMfgMultiAxisAlgorithm::ClassId(#), (void**)&amp; piMMSweepingAlgo);
 &nbsp;  ...
@@ -401,7 +401,7 @@ CATDocument *pPartDoc = NULL;
 &nbsp;  rc = piMMSweepingAlgo-&gt;ComputeToolPath(spTPContainer,spSweepingTP);
 ```
 
-```vbscript
+```cpp
 CATIMfgMultiAxisAlgorithm *piMMContourDriven =NULL;
 &nbsp;  ::CATInstantiateComponent (&quot;CATMfgAlgoMultiAxisContourDriven&quot;, CATIMfgMultiAxisAlgorithm::ClassId(#), (void**)&amp; piMMContourDriven);
 &nbsp;  ...
@@ -432,7 +432,7 @@ CATIMfgMultiAxisAlgorithm *piMMContourDriven =NULL;
 &nbsp;  rc = piMMContourDriven-&gt;ComputeToolPath(spTPContainer,spContourDrivenTP);
 ```
 
-```vbscript
+```cpp
 &nbsp;  ...
 &nbsp;  CATIPrtContainer_var spPrtContainer = ispPartContainer;
 &nbsp;  if (NULL_var != spPrtContainer)

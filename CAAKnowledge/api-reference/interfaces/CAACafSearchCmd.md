@@ -1,52 +1,60 @@
 ---
 title: "CAACafSearchCmd"
-type: "interface"
+type: "LocalClass"
 module: "CAACATIAApplicationFrm"
-category: api-reference
-method_count: 1
-visibility: "local"
-has_tie_binding: false
-verified: true
+base: "CATStateCommand"
+method_count: 3
+source_file: "CAACATIAApplicationFrm.edu/CAACafSearch.m/LocalInterfaces/CAACafSearchCmd.h"
 ---
+
 # CAACafSearchCmd
 
-**模块**: CAACATIAApplicationFrm  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 1
+> State command which creates some queries and displayes a dialog box to choose a criterion and a context and enables the end user to launch the query. Illustrates: Creation of a State command Use of a Search AI Use of a CATPanelState Usage: Select a criterion and a context in the dialog box and then launch the query.
 
-> Visualization Framework
+**基类**: CATStateCommand | **模块**: CAACATIAApplicationFrm | **方法数**: 3
 
 ## 依赖
 
+- `CATStateCommand.h`
 - `CATListOfCATUnicodeString.h`
 
+## 虚方法
+
+### BuildGraph
+
+```cpp
+virtual void BuildGraph() ;
+```
+
+BuildGraph ----------- Implements the statechart. It is called once, even if the command is in repeat mode
+
+
+## 公共方法
+
+### LaunchQuery
+
+```cpp
+CATBoolean LaunchQuery(void * iDummy) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iDummy | `void *` |
+
+
+### GetCriteriaText
+
+```cpp
+HRESULT GetCriteriaText(CATListOfCATUnicodeString ** oCriteriaTextList) ;
+```
+
+GetCriteriaText -------------- This method is called by the dialog box to retrieve the text of each criterion to display in the combo.
+
+| 参数 | 类型 |
+|------|------|
+| oCriteriaTextList | `CATListOfCATUnicodeString **` |
+
+
 ---
 
-## Interface Overview
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-- [3D PLM Enterprise Architecture](../../use-cases/caaafrcases/CAAAfrSampleGeneralWksAddin.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAACATIAApplicationFrm.edu/CAACafSearch.m/LocalInterfaces/CAACafSearchCmd.h`

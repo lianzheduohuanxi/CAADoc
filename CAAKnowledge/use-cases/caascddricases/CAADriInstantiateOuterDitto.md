@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Instantiating a Ditto in a Drawing View from Another Drawing Document"
 category: "use-case"
 module: "CAAScdDriUseCases"
-tags: ["CAADriScriptUseCases", "CAADriInstantiateOuterDitto", "CAADriInstantiateDittoTarget", "CAADriInstantiateDittoSource", "CATIA", "CAADriUseCases", "CAAScdDriUseCases"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriInstantiateOuterDitto.htmmd"
+tags: "["CAADriScriptUseCases", "CAADriInstantiateOuterDitto", "CAADriInstantiateDittoTarget", "CAADriInstantiateDittoSource", "CATIA", "CAADriUseCases", "CAAScdDriUseCases"]"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriInstantiateOuterDitto.htm"
 converted: "2026-05-11T17:31:51.089278"
-```
-
 ---
 ## Interactive Drafting
 
@@ -39,7 +36,7 @@ This macro shows you how to instantiate a ditto into a view from an existing dit
 
       ...
 ```vbscript
-```vbscript
+```cpp
         ' Set the CATIA popup file alerts to False
 ```
 ```
@@ -47,7 +44,7 @@ This macro shows you how to instantiate a ditto into a view from an existing dit
 ```vbscript
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
 ' Set the CATIA popup file alerts to False
         ' It prevents to stop the macro at each alert during its execution
 ```
@@ -58,7 +55,7 @@ This macro shows you how to instantiate a ditto into a view from an existing dit
 ```
 
 ```vbscript
-```vbscript
+```cpp
         CATIA.DisplayFileAlerts = False
 ```
 ```
@@ -85,7 +82,7 @@ The CATIA prompts are disabled thanks to the `DisplayFileAlerts` property of the
         Dim oDrawingSource As DrawingDocument
 ```vbscript
 ```
-```vbscript
+```cpp
         Set oDrawingSource = CATIA.Documents.Open(sDocPath & _
 ```
 ```
@@ -223,7 +220,7 @@ The selection object is cleared using the `Clear` method another time.
         Dim oDrawingTarget As DrawingDocument
 ```vbscript
 ```
-```vbscript
+```cpp
         Set oDrawingTarget = CATIA.Documents.Open(sDocPath & _
 ```
 ```
@@ -235,7 +232,7 @@ The selection object is cleared using the `Clear` method another time.
 ```vbscript
 ```vbscript
 ' Open the drawing document where the ditto will be instantiated
-```vbscript
+```cpp
 Dim oDrawingTarget As DrawingDocument
 Set oDrawingTarget = CATIA.Documents.Open(sDocPath & _
         CATIA.ActiveWindow.ActiveViewer.Reframe

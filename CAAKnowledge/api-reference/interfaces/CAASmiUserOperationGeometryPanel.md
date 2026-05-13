@@ -1,65 +1,103 @@
 ---
 title: "CAASmiUserOperationGeometryPanel"
-type: "interface"
+type: "ProtectedInterface"
 module: "CAASurfaceMachiningItf"
-category: api-reference
 base: "CATDlgFrame"
-inheritance_chain: "CAASmiUserOperationGeometryPanel → CATDlgFrame"
-method_count: 0
-visibility: "protected"
-has_tie_binding: false
-verified: true
+method_count: 6
+source_file: "CAASurfaceMachiningItf.edu/ProtectedInterfaces/CAASmiUserOperationGeometryPanel.h"
 ---
+
 # CAASmiUserOperationGeometryPanel
 
-**基类**: CATDlgFrame  
-**继承链**: CAASmiUserOperationGeometryPanel → CATDlgFrame  
-**模块**: CAASurfaceMachiningItf  
-**分类**: framework  
-**可见性**: protected  
-**方法数**: 0
-
-> ===================================================================
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATDlgFrame | **模块**: CAASurfaceMachiningItf | **方法数**: 6
 
 ## 依赖
 
 - `CAASmiUserOperationGeomUIEnv.h`
 - `CATDlgFrame.h`
 
+## 公共方法
+
+### SelectCurve
+
+```cpp
+void SelectCurve(CATCommand *iPublisher, CATNotification *iNotification, CATCommandClientData iUsefulData) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iPublisher | `CATCommand` |
+| *iNotification | `CATNotification` |
+| iUsefulData | `CATCommandClientData` |
+
+
+### SelectZone
+
+```cpp
+void SelectZone(CATCommand *iPublisher, CATNotification *iNotification, CATCommandClientData iUsefulData) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iPublisher | `CATCommand` |
+| *iNotification | `CATNotification` |
+| iUsefulData | `CATCommandClientData` |
+
+
+### RemoveAll
+
+```cpp
+void RemoveAll(CATCommand *iPublisher, CATNotification *iNotification, CATCommandClientData iUsefulData) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iPublisher | `CATCommand` |
+| *iNotification | `CATNotification` |
+| iUsefulData | `CATCommandClientData` |
+
+
+### NewZone
+
+```cpp
+void NewZone(CATCommand *iPublisher, CATNotification *iNotification, CATCommandClientData iUsefulData) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iPublisher | `CATCommand` |
+| *iNotification | `CATNotification` |
+| iUsefulData | `CATCommandClientData` |
+
+
+### Export
+
+```cpp
+void Export(CATCommand *iPublisher, CATNotification *iNotification, CATCommandClientData iUsefulData) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iPublisher | `CATCommand` |
+| *iNotification | `CATNotification` |
+| iUsefulData | `CATCommandClientData` |
+
+
+### UpdateButtons
+
+```cpp
+void UpdateButtons(CATCallbackEvent iEvent, void *iFrom, CATNotification *iNotification, CATSubscriberData iClientData, CATCallback iCallBack) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iEvent | `CATCallbackEvent` |
+| *iFrom | `void` |
+| *iNotification | `CATNotification` |
+| iClientData | `CATSubscriberData` |
+| iCallBack | `CATCallback` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATDlgFrame**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-This interface is used in the following use cases:
-
-- [CAASmiUserOperationWithUserMF](../../use-cases/caasmicases/CAASmiUserOperationWithUserMF.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAASurfaceMachiningItf.edu/ProtectedInterfaces/CAASmiUserOperationGeometryPanel.h`

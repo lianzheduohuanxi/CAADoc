@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "GSMInterfaces Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR7"
-version: "V5R7"
-tags: ["CATIGSMExtrude", "CATIGSMRevol", "CATIGSMLineNormal", "CATIGSMFactory", "CATIGSMCircleCtrRad", "CATIGSMProject", "CATIGSMLineAngle", "CATIGSMLineTangency", "CATIGSMLinePtDir", "CATIGSMDirection", "CATIGSMLinePtPt", "CATIGSMConnect", "CATIGSMCorner", "CATIGSMHelix", "CATIGSMAssemble", "CATIGSMSweepUnspec", "CATIGSMCircleCtrPt", "CATIGSMOffset", "CATIGSMSweepConic", "CATIGSMCurvePar"]
-source_file: "Doc/online/CAACenAPIChangesR7/GSMInterfaces.htmmd"
+tags: "["CATIGSMExtrude", "CATIGSMRevol", "CATIGSMLineNormal", "CATIGSMFactory", "CATIGSMCircleCtrRad", "CATIGSMProject", "CATIGSMLineAngle", "CATIGSMLineTangency", "CATIGSMLinePtDir", "CATIGSMDirection", "CATIGSMLinePtPt", "CATIGSMConnect", "CATIGSMCorner", "CATIGSMHelix", "CATIGSMAssemble", "CATIGSMSweepUnspec", "CATIGSMCircleCtrPt", "CATIGSMOffset", "CATIGSMSweepConic", "CATIGSMCurvePar"]"
+source_file: "Doc/online/CAACenAPIChangesR7/GSMInterfaces.htm"
 converted: "2026-05-11T17:33:52.089534"
-```
-
 ---
 tags: ["CATIGSMExtrude", "CATIGSMRevol", "CATIGSMLineNormal", "CATIGSMFactory", "CATIGSMCircleCtrRad", "CATIGSMProject", "CATIGSMLineAngle", "CATIGSMLineTangency", "CATIGSMLinePtDir", "CATIGSMDirection", "CATIGSMLinePtPt", "CATIGSMConnect", "CATIGSMCorner", "CATIGSMHelix", "CATIGSMAssemble", "CATIGSMSweepUnspec", "CATIGSMCircleCtrPt", "CATIGSMOffset", "CATIGSMSweepConic", "CATIGSMCurvePar"]
 source_file: "Doc/online/CAACenAPIChangesR7/GSMInterfaces.htmmd"

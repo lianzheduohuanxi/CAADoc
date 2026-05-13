@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Warm Start Incremental Backup"
-category: tech-article
+category: "tech-article"
 module: "CAAAfrTechArticles"
-tags: ["CATIContainer", "CATIdent", "CAAMyCommand", "CATInit"]
-source_file: "Doc/online/CAAAfrTechArticles/CAAAfrWarmstart.htmmd"
+tags: "["CATIContainer", "CATIdent", "CAAMyCommand", "CATInit"]"
+source_file: "Doc/online/CAAAfrTechArticles/CAAAfrWarmstart.htm"
 converted: "2026-05-11T17:17:55.951704"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -109,7 +106,6 @@ CNext02.roll contains:
 
 This file contains all modifications on the documents since they were copied to CNext02.roll. Moreover, it contains opening and closure orders on documents.
 
-This file contains all modifications on the documents since they were copied to CNext02.roll. Moreover, it contains opening and closure orders on documents.
 Fig.2 shows how operations in this file are grouped in lots. Each lot is a "transaction" done on a document. The ith transaction can concern a document, and the i+1th another one.
 
 It should be noted that this file can reach a great size if the end user works a long time without saving documents.
@@ -324,7 +320,6 @@ To deactivate the warm start, you should use the `Deactivate` method of the _CAT
 
 _CAAMyCommand_ derives from CATCommand, but it can be _CATStateCommand_ or _CATDlgDialog._ The unique common point is that the command is shared or exclusive. The `Activate` method is called by the focus manager once the command is activated or reactivated after a deactivation by a shared command. In the two cases the deactivated state is tested, because the command which has interrupted the _CAAMyCommand_ command might have reactivated the warm start.
 
-_CAAMyCommand_ derives from CATCommand, but it can be _CATStateCommand_ or _CATDlgDialog._ The unique common point is that the command is shared or exclusive. The `Activate` method is called by the focus manager once the command is activated or reactivated after a deactivation by a shared command. In the two cases the deactivated state is tested, because the command which has interrupted the _CAAMyCommand_ command might have reactivated the warm start.
     CATStatusChangeRC CAAMyCommand::Activate( CATCommand *iCmd,CATNotification *iNotif)
 
     {
@@ -365,7 +360,7 @@ if (SUCCEEDED(rc) && (0 != WarningMessageToDisplay.GetLengthInChar(#)) )
 ```
 
              {
-```vbscript
+```cpp
 if (SUCCEEDED(rc) && (0 != WarningMessageToDisplay.GetLengthInChar(#)) )
 CATApplicationFrame *pFrame = CATApplicationFrame::**GetFrame**(#);
 if ( (NULL != pFrame ) && ( NULL != pFrame->**GetMainWindow**(#) ))
@@ -374,7 +369,7 @@ if ( (NULL != pFrame ) && ( NULL != pFrame->**GetMainWindow**(#) ))
 ```
 
                                             "AutoSaveId",
-```vbscript
+```cpp
 if ( (NULL != pFrame ) && ( NULL != pFrame->**GetMainWindow**(#) ))
 CATDlgNotify * pNotify = new **CATDlgNotify**(
 pFrame->GetMainWindow(#),
@@ -433,7 +428,7 @@ If the command saves or closes one or several documents, it can try to activate 
 
 ```
 
-```vbscript
+```cpp
 If the command saves or closes one or several documents, it can try to activate or re-initialize the warm start. The activation will succeed if the following conditions are met:
   1. Warm Start option is activated, Fig.1
   2. Command is launched from a workbench which authorizes the warm start,
@@ -463,7 +458,7 @@ if (SUCCEEDED(rc) && (0 != WarningMessageToDisplay.GetLengthInChar(#)) )
 ```
 
              {
-```vbscript
+```cpp
 if (SUCCEEDED(rc) && (0 != WarningMessageToDisplay.GetLengthInChar(#)) )
 CATApplicationFrame *pFrame = CATApplicationFrame::**GetFrame**(#);
 if ( (NULL != pFrame ) && ( NULL != pFrame->**GetMainWindow**(#) ))
@@ -472,7 +467,7 @@ if ( (NULL != pFrame ) && ( NULL != pFrame->**GetMainWindow**(#) ))
 ```
 
                                             "AutoSaveId",
-```vbscript
+```cpp
 if ( (NULL != pFrame ) && ( NULL != pFrame->**GetMainWindow**(#) ))
 CATDlgNotify * pNotify = new **CATDlgNotify**(
 pFrame->GetMainWindow(#),
@@ -543,7 +538,7 @@ if ( SUCCEEDED(rc) && (NULL !=pAppliContainer) )
        CATIContainer * pIContainer =  (CATIContainer *) pAppliContainer ;
 
        **CATInit** * pInitOnApplicativeContainer = NULL ;
-```vbscript
+```cpp
 if ( SUCCEEDED(rc) && (NULL !=pAppliContainer) )
 CATIContainer * pIContainer =  (CATIContainer *) pAppliContainer ;
        rc = pIContainer->QueryInterface(IID_CATInit, (void**) & pInitOnApplicativeContainer);

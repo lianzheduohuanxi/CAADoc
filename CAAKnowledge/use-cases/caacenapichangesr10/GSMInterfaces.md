@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "GSMInterfaces Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR10"
-version: "V5R10"
-tags: ["CATIGSMCorner"]
-source_file: "Doc/online/CAACenAPIChangesR10/GSMInterfaces.htmmd"
+tags: "["CATIGSMCorner"]"
+source_file: "Doc/online/CAACenAPIChangesR10/GSMInterfaces.htm"
 converted: "2026-05-11T17:33:50.182470"
-```
-
 ---
 tags: ["CATIGSMCorner"]
 source_file: "Doc/online/CAACenAPIChangesR10/GSMInterfaces.htmmd"

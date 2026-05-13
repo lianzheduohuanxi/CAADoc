@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAASchCompRefGraphic.CATScript"
 category: "use-case"
 module: "CAAScdSchUseCases"
-tags: ["CAAScdSchUseCases", "CAASchCompRefGraphic", "CATIA", "CATIASchGRR", "CATIASchCompGraphic", "CAASCH_Detail03"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchCompRefGraphicSource.htmmd"
+tags: "["CAAScdSchUseCases", "CAASchCompRefGraphic", "CATIA", "CATIASchGRR", "CATIASchCompGraphic", "CAASCH_Detail03"]"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchCompRefGraphicSource.htm"
 converted: "2026-05-11T17:31:51.333715"
-```
-
 ---
 tags: ["CAAScdSchUseCases", "CAASchCompRefGraphic", "CATIA", "CATIASchGRR", "CATIASchCompGraphic", "CAASCH_Detail03"]
 source_file: "Doc/online/CAAScdSchUseCases/CAASchCompRefGraphicSource.htmmd"
@@ -16,7 +13,7 @@ converted: "2026-05-11T17:31:51.333715"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGHT DASSAULT SYSTEMES 2004
     ' *****************************************************************************
     '   Purpose:      Add/List graphical representations to a reference component.
@@ -31,7 +28,7 @@ converted: "2026-05-11T17:31:51.333715"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -44,7 +41,7 @@ converted: "2026-05-11T17:31:51.333715"
         ' -------------------------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String
-```vbscript
+```cpp
         sDocPath=CATIA.SystemService.Environ("CATDocView")
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -70,7 +67,7 @@ converted: "2026-05-11T17:31:51.333715"
 ```vbscript
         ' -------------------------------------------------------------------------
         ' Open the schematic document
-```vbscript
+```cpp
         Dim sFilePath
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
@@ -83,12 +80,12 @@ converted: "2026-05-11T17:31:51.333715"
                 "online/CAAScdSchUseCases/samples/CAASCH_Detail03.CATProduct")
 
 ```vbscript
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
         Dim objSchDoc As Document
         Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
@@ -184,7 +181,7 @@ strMessage = strMessage & _
               ' Get a SchCompGraphic interface handle from a reference
               ' component
               '--------------------------------------------------------------------
-```vbscript
+```cpp
               Set objCompRefGraphic = objLCompRefs.Item (1,"CATIASchCompGraphic")
 ```
 ```
@@ -329,7 +326,7 @@ strMessage = strMessage & _
 ```
 ```vbscript
                      If (intNbGraphic > 1) Then
-```vbscript
+```cpp
                         Set objGRR = objLGraphic.Item(intNbGraphic,"CATIASchGRR")
                         If ( Not (objGRR Is Nothing ) ) Then
 ```
@@ -431,7 +428,7 @@ End If '--- If ( Not ( objSchRoot Is Nothing )...
           Set objSchLSymbols = objSchRootArg.GetUnassociatedSymbols
           If ( Not ( objSchLSymbols Is Nothing ) ) Then
 ```
-```vbscript
+```cpp
              Set GetComponentSymbol = objSchLSymbols.Item (1,"CATIASchGRR")
           End If
 ```

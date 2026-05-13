@@ -1,16 +1,13 @@
 ---
-```vbscript
 title: "CAAStrCreateCutout.CATScript"
 category: "use-case"
 module: "CAAScdStrUseCases"
-tags: ["CATIA", "CATIAStrFeatureFactory", "CAAStrCreateCutout"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfCutoutSource.htmmd"
+tags: "["CATIA", "CATIAStrFeatureFactory", "CAAStrCreateCutout"]"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfCutoutSource.htm"
 converted: "2026-05-11T17:31:50.874115"
-```
-
 ---
 ```vbscript
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ```
@@ -28,7 +25,7 @@ Sub CATMain(#)
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
       Dim strFactory As StrObjectFactory
 
       Set doc = CATIA.ActiveDocument
@@ -44,7 +41,7 @@ Sub CATMain(#)
       Set sketch1 = rootProduct.CreateReferenceFromName("Product1/Grid/!Sketch.1")
       '*************************First Cutout**************************************************
 ```
-```vbscript
+```cpp
       Dim PlateToCut1 As StrPlate
       Set PlateToCut1 = strPlates.Item("Plate_052")
 
@@ -62,7 +59,7 @@ Sub CATMain(#)
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
       Set Factory1 = Selection1.FindObject("CATIAStrFeatureFactory")
 
       Dim dir1 As Reference
@@ -72,7 +69,7 @@ Sub CATMain(#)
       Set Cutout1 = Factory1.AddCutoutWithAfterFormingMode(sketch1, dir1)
       '*************************Second  Cutout**************************************************
 ```
-```vbscript
+```cpp
       Dim PlateToCut2 As StrPlate
       Set PlateToCut2 = strPlates.Item("Plate_053")
 
@@ -90,7 +87,7 @@ Sub CATMain(#)
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
       Set Factory2 = Selection2.FindObject("CATIAStrFeatureFactory")
 
       Dim Sur1 As Reference

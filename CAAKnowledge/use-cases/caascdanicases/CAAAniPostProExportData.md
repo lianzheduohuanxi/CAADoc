@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Exporting Data on Images"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CATIA", "CAAAniPostProExportData", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPostProExportData.htmmd"
+tags: "["CATIA", "CAAAniPostProExportData", "CAAScdAniUseCases"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPostProExportData.htm"
 converted: "2026-05-11T17:31:51.747550"
-```
-
 ---
 ## Analysis Modeler
 
@@ -43,7 +40,7 @@ This use case shows you how to export data on images using VB. The macro opens a
 ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
 
-```vbscript
+```cpp
       sDocPath=CATIA.SystemService.Environ("CATDocView")
       sOut = CATIA.SystemService.Environ("CATTemp")
 
@@ -55,7 +52,7 @@ This use case shows you how to export data on images using VB. The macro opens a
 ```
 
 ```vbscript
-```vbscript
+```cpp
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 ```
@@ -75,7 +72,7 @@ This use case shows you how to export data on images using VB. The macro opens a
 ```vbscript
     ' -----------------------------------------------------------
     ' Open the Analysis document
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Cube_R13_Freq.CATAnalysis")
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```
@@ -99,7 +96,7 @@ Open the Analysis document. The Analysis document is fetched in the documentatio
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Set fileSystem1 = CATIA.FileSystem
 ```vbscript
 ```
@@ -214,7 +211,7 @@ Property set is retrieved from the list of analysis sets. From the property set 
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Set fileSystem1 = CATIA.FileSystem
 ```vbscript
 ```

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Application Object"
-category: tech-article
+category: "tech-article"
 module: "CAAScdInfTechArticles"
-tags: ["CATIA"]
-source_file: "Doc/online/CAAScdInfTechArticles/CAAInfObjApplication.htmmd"
+tags: "["CATIA"]"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfObjApplication.htm"
 converted: "2026-05-11T17:31:52.425072"
-```
-
 ---
 # Application Object
 

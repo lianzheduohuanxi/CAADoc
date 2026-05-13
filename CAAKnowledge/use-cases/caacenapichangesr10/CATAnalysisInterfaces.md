@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "CATAnalysisInterfaces Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR10"
-version: "V5R10"
-tags: ["CATISamEditOccurrences", "CATISamAnalysisEntity"]
-source_file: "Doc/online/CAACenAPIChangesR10/CATAnalysisInterfaces.htmmd"
+tags: "["CATISamEditOccurrences", "CATISamAnalysisEntity"]"
+source_file: "Doc/online/CAACenAPIChangesR10/CATAnalysisInterfaces.htm"
 converted: "2026-05-11T17:33:50.114425"
-```
-
 ---
 tags: ["CATISamEditOccurrences", "CATISamAnalysisEntity"]
 source_file: "Doc/online/CAACenAPIChangesR10/CATAnalysisInterfaces.htmmd"

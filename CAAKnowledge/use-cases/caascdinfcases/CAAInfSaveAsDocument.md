@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Saving a New CATIA Document"
 category: "use-case"
 module: "CAAScdInfUseCases"
-tags: ["CAAInfSaveAsDocument", "CAAScdInfUseCases", "CAAInfReadDocument", "CAAInfCloseDocument", "CAAInfCreateDocument", "CATIA", "CAAInfWriteDocument3", "CAAInfSaveDocument", "CAAInfWriteDocument2", "CAAInfWriteDocument1"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfSaveAsDocument.htmmd"
+tags: "["CAAInfSaveAsDocument", "CAAScdInfUseCases", "CAAInfReadDocument", "CAAInfCloseDocument", "CAAInfCreateDocument", "CATIA", "CAAInfWriteDocument3", "CAAInfSaveDocument", "CAAInfWriteDocument2", "CAAInfWriteDocument1"]"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfSaveAsDocument.htm"
 converted: "2026-05-11T17:31:52.389482"
-```
-
 ---
 |
  ## Infrastructure
@@ -47,7 +44,7 @@ This macro shows you how to save a new CATIA document that is currently in the s
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
          DocPath=CATIA.SystemService.Environ("CATDocView")
          If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
                  Err.Raise 9999,,"No Doc Path Defined"
@@ -86,7 +83,7 @@ End If
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
          sTmpPath=CATIA.SystemService.Environ("CATTemp")
          If (Not CATIA.FileSystem.FolderExists(sTmpPath)) Then
              Err.Raise 9999,,"No Tmp Path Defined"
@@ -132,7 +129,7 @@ End If
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
           Set oFirstNewPartDoc = CATIA.Documents.**Add**("Part")
          'The document just created is the active one.
 ```
@@ -143,7 +140,7 @@ End If
 
 ```
 
-```vbscript
+```cpp
           **CATIA.ActiveDocument.SaveAs(sTmpPath & _
             "/CAAInfWriteDocument1.CATPart")
 ```
@@ -171,7 +168,7 @@ End If
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
           Set oSecondNewPartDoc = CATIA.Documents.Add("Part")
          'Save the new document using the variable name defined for it.
 ```
@@ -206,7 +203,7 @@ End If
            Dim iThirdPartDoc As Document
 ```vbscript
 ```
-```vbscript
+```cpp
            Set iThirdPartDoc = CATIA.Documents.Open(sDocPath & _
 ```
 ```
@@ -218,12 +215,12 @@ End If
 ```vbscript
 ```vbscript
 'Open an existing document.
-```vbscript
+```cpp
 Dim iThirdPartDoc As Document
 Set iThirdPartDoc = CATIA.Documents.Open(sDocPath & _
           'Save the new document by specifying its name.
 ```
-```vbscript
+```cpp
            CATIA.Documents.Item("CAAInfReadDocument.CATPart").SaveAs(sTmpPath & _
 ```
 ```

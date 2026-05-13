@@ -91,7 +91,7 @@ Thus we saw how to read a Product document, retrieve the interface we are
 
 ```vbscript
 ...
-```vbscript
+```cpp
    Dim objCATIAV5Document As Document
    Dim objCATIAV5ArrWorkbench As Workbench
    Dim objCATIAV5ArrBOMReport As ArrBOMReport
@@ -101,16 +101,16 @@ Thus we saw how to read a Product document, retrieve the interface we are
 
 ```vbscript
 ...
-```vbscript
+```cpp
    Set objCATIAV5Document = CATIA.ActiveDocument
 
    '//---------- Get ArrWorkbench from current document
 ```
-```vbscript
+```cpp
    Set objCATIAV5ArrWorkbench = objCATIAV5Document.GetWorkbench(&quot;ArrWorkbench&quot;)
    '//---------- Get CATIAArrBOMReport from ArrWorkbench
 ```
-```vbscript
+```cpp
    Set objCATIAV5ArrBOMReport = objCATIAV5ArrWorkbench.FindInterface (&quot;CATIAArrBOMReport&quot;,objCATIAV5Document)
    '//---------- Generate the report
 ```

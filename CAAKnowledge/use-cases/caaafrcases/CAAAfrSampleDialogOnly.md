@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Command that Consists in a Dialog Window"
-category: use-case case"
+category: "use-case case"
 module: "CAAAfrUseCases"
-tags: ["CAAAfrBoundingEltHdr", "CAAAfrBoundingElementId", "CAAAfrGeoCommands", "CAAGeometry", "CAAAfrGeoAnalysisWkbHeader", "CATISO", "CAAAfrBoundingElementCmd", "CAAAfrBoundingElement", "CAAApplicationFrame"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleDialogOnly.htmmd"
+tags: "["CAAAfrBoundingEltHdr", "CAAAfrBoundingElementId", "CAAAfrGeoCommands", "CAAGeometry", "CAAAfrGeoAnalysisWkbHeader", "CATISO", "CAAAfrBoundingElementCmd", "CAAAfrBoundingElement", "CAAApplicationFrame"]"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleDialogOnly.htm"
 converted: "2026-05-11T17:17:55.713101"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -95,7 +92,6 @@ Do not type the module name on the command line, but type CNEXT instead. When th
 
 The CAAAfrBoundingElementCmd use case is made of a single class named _CAAAfrBoundingElementCmd_ located in the CAAAfrGeoCommands.m module of the CAAApplicationFrame.edu framework:
 
-The CAAAfrBoundingElementCmd use case is made of a single class named _CAAAfrBoundingElementCmd_ located in the CAAAfrGeoCommands.m module of the CAAApplicationFrame.edu framework:
 Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeoCommands.m/`
 
 The CAAAfrBoundingElementCmd use case is made of a single class named _CAAAfrBoundingElementCmd_ located in the CAAAfrGeoCommands.m module of the CAAApplicationFrame.edu framework:
@@ -142,7 +138,7 @@ class CAAAfrBoundingElementCmd : public CATDlgDialog
 ```
 
         ...
-```vbscript
+```cpp
 CAAAfrBoundingElementCmd(#);
 virtual ~CAAAfrBoundingElementCmd(#);
 private :
@@ -286,20 +282,20 @@ This step is mandatory. If the end user closes the current document and the comm
     ...
 4. Declaring the callback for a document's closure
 This step is mandatory. If the end user closes the current document and the command is alive: it will not be automatically deleted once it is not seen by the command selector. So your command must set a callback when the document will send the "close" event.
-```vbscript
+```cpp
      if ( (NULL != _pEditor) && (NULL != **CATFrmLayout::GetCurrentLayout**(#)) )
 
 ```
 
       {
          ::AddCallback(this,
-```vbscript
+```cpp
 if ( (NULL != _pEditor) && (NULL != **CATFrmLayout::GetCurrentLayout**(#)) )
                         CATFrmLayout::GetCurrentLayout(#),
 ```
 
     		  **CATFrmEditor::EDITOR_CLOSE_ENDED**(#),
-```vbscript
+```cpp
 if ( (NULL != _pEditor) && (NULL != **CATFrmLayout::GetCurrentLayout**(#)) )
 CATFrmLayout::GetCurrentLayout(#),
     		  (CATSubscriberMethod)&CAAAfrBoundingElementCmd::EditorClose,

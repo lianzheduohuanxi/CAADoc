@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Customizing the Surface Machining Operation Editor"
-category: use-case case"
+category: "use-case case"
 module: "CAASmiUseCases"
-tags: ["CATIMfgMacroEditorActivity", "CAASmiUserOperationUI", "CAAToolAngle", "CAAESmiUserOperationToolEditor", "CATICkeParamFrame_var", "CAASmgOperation", "CAAApproachDistance", "CAAESmiUserOperationStrategyEditor", "CATIMacroEditorActivity", "CAAESmiUserOperationMacroEditor", "CATIMfgResourceFactory", "CATIMfgStrategyActivity", "CATIMfgActivity", "CAAMaiToolEditionCustomization", "CATIMfgActivityParameters", "CATIMfgTool", "CAAStep", "CAASurfaceMachiningItf", "CATIMfgToolActivity"]
-source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationUI.htmmd"
+tags: "["CATIMfgMacroEditorActivity", "CAASmiUserOperationUI", "CAAToolAngle", "CAAESmiUserOperationToolEditor", "CATICkeParamFrame_var", "CAASmgOperation", "CAAApproachDistance", "CAAESmiUserOperationStrategyEditor", "CATIMacroEditorActivity", "CAAESmiUserOperationMacroEditor", "CATIMfgResourceFactory", "CATIMfgStrategyActivity", "CATIMfgActivity", "CAAMaiToolEditionCustomization", "CATIMfgActivityParameters", "CATIMfgTool", "CAAStep", "CAASurfaceMachiningItf", "CATIMfgToolActivity"]"
+source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationUI.htm"
 converted: "2026-05-11T17:31:51.261386"
-```
-
 ---
 # Machining
 
@@ -76,7 +73,6 @@ This use case customizes three tab pages of the **CAASmgOperation** editing pane
 
 This use case is a part of _Surface Machining Operation Sample_ [1]. You should build all the modules of this sample at a time to be able to launch it [2].
 
-This use case is a part of _Surface Machining Operation Sample_ [1]. You should build all the modules of this sample at a time to be able to launch it [2].
 Don't forget to edit the interface dictionary located in:
 
 Windows | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CNext/code/dictionary/`
@@ -242,7 +238,7 @@ if (!!spParamFrame)
         }
 
         //CAAApproachDistance
-```vbscript
+```cpp
 if (pDlgFrame)
 pDlgFrame->SetGridConstraints( 0, 1, 1, 1, CATGRID_4SIDES);
         oRC = pActivityParameters->FindElement("CAAApproachDistance",spBaseParm);
@@ -306,7 +302,7 @@ HRESULT CAAESmiUserOperationToolEditor::CreateDefaultTool (CATBaseUnknown_var & 
 ```
 
       {
-```vbscript
+```cpp
 if (!!spResourceContainer)
         CATIMfgResourceFactory * pResourceFactory = NULL;
         oRC = spResourceContainer->QueryInterface(IID_CATIMfgResourceFactory, (void**) &pResourceFactory);

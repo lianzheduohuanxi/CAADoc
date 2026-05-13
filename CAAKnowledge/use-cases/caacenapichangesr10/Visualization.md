@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "Visualization Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR10"
-version: "V5R10"
-tags: ["CATIVisu"]
-source_file: "Doc/online/CAACenAPIChangesR10/Visualization.htmmd"
+tags: "["CATIVisu"]"
+source_file: "Doc/online/CAACenAPIChangesR10/Visualization.htm"
 converted: "2026-05-11T17:33:50.275018"
-```
-
 ---
 tags: ["CATIVisu"]
 source_file: "Doc/online/CAACenAPIChangesR10/Visualization.htmmd"

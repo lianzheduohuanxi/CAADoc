@@ -1,64 +1,105 @@
 ---
 title: "CAAISysCircle"
-type: "interface"
+type: "PublicInterface"
 module: "CAASystem"
-category: api-reference
+base: "CATBaseUnknown"
 method_count: 6
-visibility: "public"
-has_tie_binding: true
-verified: true
+source_file: "CAASystem.edu/PublicInterfaces/CAAISysCircle.h"
 ---
-> **TIE实现**: unknown
 
 # CAAISysCircle
 
-**模块**: CAASystem  
-**分类**: framework  
-**可见性**: public  
-**方法数**: 6
+> Interface which characterizes a circle object. Inheritance: CATBaseUnknown (System Framework) Main Method: SetCenter/GetCenter SetRadius/GetRadius SetPlanar/GetPlanar
 
-> Mathematics framework
+**基类**: CATBaseUnknown | **模块**: CAASystem | **方法数**: 6
 
 ## 依赖
 
+- `CATBaseUnknown.h`
 - `CAASysGeoModelInf.h`
 
-## TIE实现
+## 纯虚方法 (接口契约)
 
-**实现文件**:
-- `CAAISysAccess.cpp`
-- `CAAISysCircle.cpp`
-- `CAAISysCircleCenterProperties.cpp`
-- `CAAISysCollection.cpp`
-- `CAAISysColorProperties.cpp`
+### SetCenter
+
+```cpp
+virtual HRESULT SetCenter(const CATMathPoint & iCenter) = 0 ;
+```
+
+The circle is defined by: ------------------------ A point center -------------------
+
+| 参数 | 类型 |
+|------|------|
+| iCenter | `const CATMathPoint &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetCenter
+
+```cpp
+virtual HRESULT GetCenter(CATMathPoint & oCenter) const = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oCenter | `CATMathPoint &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### SetRadius
+
+```cpp
+virtual HRESULT SetRadius(const float iRadius) = 0 ;
+```
+
+A radius -------------------
+
+| 参数 | 类型 |
+|------|------|
+| iRadius | `const float` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetRadius
+
+```cpp
+virtual HRESULT GetRadius(float & oRadius) const = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oRadius | `float &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### SetPlanar
+
+```cpp
+virtual HRESULT SetPlanar(const CATMathVector & iNormal, const CATMathVector & iAxis) = 0 ;
+```
+
+A repere defined by its 2 vectors ---------------------------------- iNormal represents the normal of the plane iAxis   represents the beginning of the circle.
+
+| 参数 | 类型 |
+|------|------|
+| iNormal | `const CATMathVector &` |
+| iAxis | `const CATMathVector &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetPlanar
+
+```cpp
+virtual HRESULT GetPlanar(CATMathVector & oNormal, CATMathVector & oAxis) const = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oNormal | `CATMathVector &` |
+| oAxis | `CATMathVector &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
 
 ---
 
-## Interface Overview
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-- [CAADegSampleMouseMove](../../use-cases/caadegcases/CAADegSampleMouseMove.md)
-- [CAADegSampleMultiSelection](../../use-cases/caadegcases/CAADegSampleMultiSelection.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAASystem.edu/PublicInterfaces/CAAISysCircle.h`

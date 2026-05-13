@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Constraints on Published Elements"
 category: "use-case"
 module: "CAAScdAsmUseCases"
-tags: ["CAAScdAsmUseCases", "CAAAsmCstOnPublish", "CATIA"]
-source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmCstOnPublish.htmmd"
+tags: "["CAAScdAsmUseCases", "CAAAsmCstOnPublish", "CATIA"]"
+source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmCstOnPublish.htm"
 converted: "2026-05-11T17:31:50.852164"
-```
-
 ---
 |
 ## Assembly
@@ -52,7 +49,7 @@ The macro first loads CAAAsmCstOnPublish.CATProduct that contains two Part: Plat
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
     Set oRootProduct=CATIA.ActiveDocument.Product
 
     Dim oPlate As Product
@@ -136,7 +133,6 @@ Set oConstraint1 = oConstraints0.AddBiEltCst  ( catCstTypeDistance, oPlateRef, o
 
 The _Publication_ object corresponding to the top surface of the plate is fetched in the _Publications_ collection of tthe `oPlate` _Product_ object using its name: "Top". A reference on the underlying published object is then obtained using the `Valuation` method of the _Publication_ object. We proceed the same way for the bottom face of the head of the screw.
 
-The _Publication_ object corresponding to the top surface of the plate is fetched in the _Publications_ collection of tthe `oPlate` _Product_ object using its name: "Top". A reference on the underlying published object is then obtained using the `Valuation` method of the _Publication_ object. We proceed the same way for the bottom face of the head of the screw.
 Using those 2 references an offset constraint is created using the `AddBiEltCst` method of the _Constraints_ collection. `AddBiEltSct` is used to create constraints involving two elements, valuating the first argument to catCstTypeDistance creates a distance (or offset) constraint between the two objects passed as second and third arguments. Constraint types are defined in the _CatConstraintType_ enum.
 
 The `Dimension` method is used on the resulting _Constraint_ object to specify the value of the distance (here 2 mm) and the `Orientation` method allows to specify the orientation for the second geometric element with regard to the first one. Constraint orientations are defined in the _CatConstraintOrientation_ enum.

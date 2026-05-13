@@ -19,13 +19,13 @@ converted: "2026-05-11T11:27:02.556654"
 '   CATIA Level:  V5R17
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ' ----------------------------------------------------------- 
 ```
 ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
 sDocPath=CATIA.SystemService.Environ("CATDocView")
 sOut = CATIA.SystemService.Environ("CATTemp")
 
@@ -36,7 +36,7 @@ End If
 ' ----------------------------------------------------------- 
 
 ' Open the CATAnalysis Document
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Assembled_Loads_Solutions.CATAnalysis")
 Set analysisDocument1 = CATIA.Documents.Open(sFilePath)
 
@@ -88,7 +88,7 @@ safeArray = Array(#)
 'The exported loads are transferred to their respective
 'sub-analysis with AnalysisImport interface
 For i =1 To selection1.Count
-```vbscript
+```cpp
           Set manager = selection1.FindObject("CATIAAnalysisManager")
    
 ```
@@ -130,13 +130,13 @@ End Sub
 '   CATIA Level:  V5R17
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ' ----------------------------------------------------------- 
 ```
 ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
 sDocPath=CATIA.SystemService.Environ("CATDocView")
 sOut = CATIA.SystemService.Environ(&quot;CATTemp&quot;)
 
@@ -147,7 +147,7 @@ End If
 ' ----------------------------------------------------------- 
 
 ' Open the CATAnalysis Document
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online/CAAScdAniUseCases/samples/Assembled_Loads_Solutions.CATAnalysis&quot;)
 Set analysisDocument1 = CATIA.Documents.Open(sFilePath)
 
@@ -199,7 +199,7 @@ safeArray = Array(#)
 'The exported loads are transferred to their respective
 'sub-analysis with AnalysisImport interface
 For i =1 To selection1.Count
-```vbscript
+```cpp
           Set manager = selection1.FindObject("CATIAAnalysisManager")
    
 ```

@@ -18,7 +18,7 @@ Option Explicit
 '   CATIA Level:  V5R15 
 ' *****************************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ```
@@ -26,7 +26,7 @@ Sub CATMain(#)
     ' ------------------------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -36,25 +36,25 @@ Sub CATMain(#)
 
     ' ------------------------------------------------------------------------- 
     ' Open the schematic document 
-```vbscript
+```cpp
     Dim sCtlgFilePath
     sCtlgFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
             "online/CAAScdSchUseCases/samples/CAASCH_Sample.catalog")
 ```
 
-```vbscript
+```cpp
     Dim objSchCtlgDoc As Document
     Set objSchCtlgDoc = CATIA.Documents.Open(sCtlgFilePath)
 
     ' Open main schematic P&ID design document (for new component instances created here)
 ```
-```vbscript
+```cpp
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
             "online/CAAScdSchUseCases/samples/CAASCH_RouteForPlacement2.CATProduct")
 ```
 
-```vbscript
+```cpp
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
@@ -102,7 +102,7 @@ Sub CATMain(#)
     ' y-axis = (0.0,1.0)
     ' origin = (100.0,300.0)
     '--------------------------------------------------------------------------
-```vbscript
+```cpp
     Dim db6Array(6) As CATSafeArrayVariant
     db6Array(0)=1.0
 ```
@@ -138,7 +138,7 @@ Sub CATMain(#)
            ' the design document
            ' Note that the target document is an input to PlaceInSpace
            '-------------------------------------------------------------------
-```vbscript
+```cpp
            Set objSchComp2Ref = objSchRoot.GetInterface ("CATIASchComponent2",objSchCntblRef)
            If ( Not ( objSchComp2Ref Is Nothing ) ) Then
 ```
@@ -179,7 +179,7 @@ Sub CATMain(#)
            ' first one. That is to "place" a new instance B connecting to 
            ' the existing instance A.
            '-------------------------------------------------------------------
-```vbscript
+```cpp
            Dim objCompRefPlaceInfo As AnyObject  
            Dim objCompatInfo As AnyObject  
            Dim objFinalPlaceInfo As AnyObject
@@ -204,11 +204,11 @@ Sub CATMain(#)
            '-------------------------------------------------------------------
 
            If ( Not ( objSchCompInstA Is Nothing ) ) Then
-```vbscript
+```cpp
               Set objSchCompatInstA = objSchRoot.GetInterface ("CATIASchCompatible", _
                 objSchCompInstA)
 ```
-```vbscript
+```cpp
               Set objSchCompGraphInstA = objSchRoot.GetInterface ("CATIASchCompGraphic", _
                 objSchCompInstA)
 ```
@@ -256,7 +256,7 @@ Sub CATMain(#)
               objSchCompatInstA.IsTargetOKForPlace objSchGRRCompInstA, _
                 objCompRefPlaceInfo, objCompatInfo, bYesCompat
 
-```vbscript
+```cpp
               Dim db2Pt(2) As CATSafeArrayVariant
 
 ```
@@ -323,7 +323,7 @@ Private Function GetComponentImage (objSchCompGraphArg As SchCompGraphic) As Sch
       Set objSchLSymbols = objSchCompGraphArg.ListGraphicalImages
       If ( Not ( objSchLSymbols Is Nothing ) ) Then
 ```
-```vbscript
+```cpp
          Set GetComponentImage = objSchLSymbols.Item (1,"CATIASchGRRComp")
       End If
 ```
@@ -333,7 +333,7 @@ End Function
 
 ```
 
-```vbscript
+```cpp
 Option Explicit
 ' COPYRIGHT DASSAULT SYSTEMES 2004
 
@@ -345,7 +345,7 @@ Option Explicit
 '   CATIA Level:  V5R15 
 ' *****************************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ```
@@ -353,7 +353,7 @@ Sub CATMain(#)
     ' ------------------------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -363,25 +363,25 @@ Sub CATMain(#)
 
     ' ------------------------------------------------------------------------- 
     ' Open the schematic document 
-```vbscript
+```cpp
     Dim sCtlgFilePath
     sCtlgFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
             "online/CAAScdSchUseCases/samples/CAASCH_Sample.catalog")
 ```
 
-```vbscript
+```cpp
     Dim objSchCtlgDoc As Document
     Set objSchCtlgDoc = CATIA.Documents.Open(sCtlgFilePath)
 
     ' Open main schematic P&ID design document (for new component instances created here)
 ```
-```vbscript
+```cpp
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
             "online/CAAScdSchUseCases/samples/CAASCH_RouteForPlacement2.CATProduct")
 ```
 
-```vbscript
+```cpp
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
@@ -429,7 +429,7 @@ Sub CATMain(#)
     ' y-axis = (0.0,1.0)
     ' origin = (100.0,300.0)
     '--------------------------------------------------------------------------
-```vbscript
+```cpp
     Dim db6Array(6) As CATSafeArrayVariant
     db6Array(0)=1.0
 ```
@@ -465,7 +465,7 @@ Sub CATMain(#)
            ' the design document
            ' Note that the target document is an input to PlaceInSpace
            '-------------------------------------------------------------------
-```vbscript
+```cpp
            Set objSchComp2Ref = objSchRoot.GetInterface ("CATIASchComponent2",objSchCntblRef)
            If ( Not ( objSchComp2Ref Is Nothing ) ) Then
 ```
@@ -506,7 +506,7 @@ Sub CATMain(#)
            ' first one. That is to "place" a new instance B connecting to 
            ' the existing instance A.
            '-------------------------------------------------------------------
-```vbscript
+```cpp
            Dim objCompRefPlaceInfo As AnyObject  
            Dim objCompatInfo As AnyObject  
            Dim objFinalPlaceInfo As AnyObject
@@ -531,11 +531,11 @@ Sub CATMain(#)
            '-------------------------------------------------------------------
 
            If ( Not ( objSchCompInstA Is Nothing ) ) Then
-```vbscript
+```cpp
               Set objSchCompatInstA = objSchRoot.GetInterface ("CATIASchCompatible", _
                 objSchCompInstA)
 ```
-```vbscript
+```cpp
               Set objSchCompGraphInstA = objSchRoot.GetInterface ("CATIASchCompGraphic", _
                 objSchCompInstA)
 ```
@@ -583,7 +583,7 @@ Sub CATMain(#)
               objSchCompatInstA.IsTargetOKForPlace objSchGRRCompInstA, _
                 objCompRefPlaceInfo, objCompatInfo, bYesCompat
 
-```vbscript
+```cpp
               Dim db2Pt(2) As CATSafeArrayVariant
 
 ```
@@ -650,7 +650,7 @@ Private Function GetComponentImage (objSchCompGraphArg As SchCompGraphic) As Sch
       Set objSchLSymbols = objSchCompGraphArg.ListGraphicalImages
       If ( Not ( objSchLSymbols Is Nothing ) ) Then
 ```
-```vbscript
+```cpp
          Set GetComponentImage = objSchLSymbols.Item (1,"CATIASchGRRComp")
       End If
 ```

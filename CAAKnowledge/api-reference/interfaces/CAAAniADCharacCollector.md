@@ -1,29 +1,15 @@
 ---
 title: "CAAAniADCharacCollector"
-type: "interface"
+type: "LocalClass"
 module: "CAAAnalysisInterfaces"
-category: api-reference
 base: "CATECharacCollector"
-inheritance_chain: "CAAAniADCharacCollector → CATECharacCollector"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 8
+source_file: "CAAAnalysisInterfaces.edu/CAAAniAeroDTransition.m/LocalInterfaces/CAAAniADCharacCollector.h"
 ---
+
 # CAAAniADCharacCollector
 
-**基类**: CATECharacCollector  
-**继承链**: CAAAniADCharacCollector → CATECharacCollector  
-**模块**: CAAAnalysisInterfaces  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
-
-> ----------------------------------------------------------------------
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATECharacCollector | **模块**: CAAAnalysisInterfaces | **方法数**: 8
 
 ## 依赖
 
@@ -35,28 +21,109 @@ verified: true
 - `CATAnalysisExplicitSet.h`
 - `CATSamDimension.h`
 
+## 公共方法
+
+### GetAvailablePhysicalTypes
+
+```cpp
+HRESULT GetAvailablePhysicalTypes(int & oNumber, const CATSamPhysicalType* & oPhysicalTypes, const CATString* & oUnits) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oNumber | `int &` |
+| oPhysicalTypes | `const CATSamPhysicalType* &` |
+| oUnits | `const CATString* &` |
+
+
+### GetAvailableVersions
+
+```cpp
+HRESULT GetAvailableVersions(const CATSamPhysicalType iPhysicalType, int & oNumber, const CATSamCharacVersion* & oVersions) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iPhysicalType | `const CATSamPhysicalType` |
+| oNumber | `int &` |
+| oVersions | `const CATSamCharacVersion* &` |
+
+
+### GetAvailablePositions
+
+```cpp
+HRESULT GetAvailablePositions(const CATSamPhysicalType iPhysicalType, const CATSamCharacVersion & iVersion, int & oNumber, const CATString* & oPositions) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iPhysicalType | `const CATSamPhysicalType` |
+| iVersion | `const CATSamCharacVersion &` |
+| oNumber | `int &` |
+| oPositions | `const CATString* &` |
+
+
+### GetNumberOfOccurrences
+
+```cpp
+HRESULT GetNumberOfOccurrences(int & oNumberOfOccurrences) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oNumberOfOccurrences | `int &` |
+
+
+### GetCurrentOccurrence
+
+```cpp
+HRESULT GetCurrentOccurrence(int & oOccurrenceNumber) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oOccurrenceNumber | `int &` |
+
+
+### SetCurrentOccurrence
+
+```cpp
+HRESULT SetCurrentOccurrence(const int iOccurrenceNumber) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iOccurrenceNumber | `const int` |
+
+
+### GetCharacCollector
+
+```cpp
+HRESULT GetCharacCollector(const CATSamPhysicalType iPhysicalType, const CATSamCharacVersion & iVersion, const CATString & iPosition, const char* const iEntityFlags, const CATAnalysisCharacCollector* & oCharacCollector, const CATBoolean iCollectValues = TRUE, const CATSamPhysicalType iEntiyPhysicalTypeToCollect = CATSamPhysicalTypeNone) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iPhysicalType | `const CATSamPhysicalType` |
+| iVersion | `const CATSamCharacVersion &` |
+| iPosition | `const CATString &` |
+| iEntityFlags | `const char* const` |
+| oCharacCollector | `const CATAnalysisCharacCollector* &` |
+| TRUE | `const CATBoolean iCollectValues =` |
+| CATSamPhysicalTypeNone | `const CATSamPhysicalType iEntiyPhysicalTypeToCollect =` |
+
+
+### Update
+
+```cpp
+HRESULT Update(CATBoolean iFullUpdate = TRUE) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| TRUE | `CATBoolean iFullUpdate =` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATECharacCollector**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAAnalysisInterfaces.edu/CAAAniAeroDTransition.m/LocalInterfaces/CAAAniADCharacCollector.h`

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Sheet"
 category: "use-case"
 module: "CAAScdDriUseCases"
-tags: ["CAAScdPriUseCases", "CATIA", "CAADriSheet", "CAAPriPad"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriSheet.htmmd"
+tags: "["CAAScdPriUseCases", "CATIA", "CAADriSheet", "CAAPriPad"]"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriSheet.htm"
 converted: "2026-05-11T17:31:51.105743"
-```
-
 ---
 ## Drafting
 
@@ -17,7 +14,6 @@ converted: "2026-05-11T17:31:51.105743"
 * * *
 
   This macro shows you how to create a sheet in a drawing. This macro opens the CAADriSheet.CATDrawing document that contains a sheet only.
-This macro shows you how to create a sheet in a drawing. This macro opens the CAADriSheet.CATDrawing document that contains a sheet only.
 It creates _DrawingSheet_ object from the _DrawingSheets_ __ collection with the Add method and a activate it.
 
 This macro shows you how to create a sheet in a drawing. This macro opens the CAADriSheet.CATDrawing document that contains a sheet only.

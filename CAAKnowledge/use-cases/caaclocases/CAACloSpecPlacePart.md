@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Placing Spec Parts"
 category: "use case"
 module: "CAACloUseCases"
-tags: ["CAACommonLayoutItf", "CATIPspDefinePhysicalPart", "CAACloSpecPlace", "CATIProduct", "CAACloPlacePart", "CAACloEduRuns", "CAACloSpecPlacePartMain", "CAAPspUtilities", "CATIPspPlacePartOnRun", "CAAPlantShipInterfaces", "CAAPspBaseEnvProtected", "CAACloSpecPlacePart", "CATIPspLogicalLine", "CATICloPartRules", "CATIA"]
-source_file: "Doc/online/CAACloUseCases/CAACloSpecPlacePart.htmmd"
+tags: "["CAACommonLayoutItf", "CATIPspDefinePhysicalPart", "CAACloSpecPlace", "CATIProduct", "CAACloPlacePart", "CAACloEduRuns", "CAACloSpecPlacePartMain", "CAAPspUtilities", "CATIPspPlacePartOnRun", "CAAPlantShipInterfaces", "CAAPspBaseEnvProtected", "CAACloSpecPlacePart", "CATIPspLogicalLine", "CATICloPartRules", "CATIA"]"
+source_file: "Doc/online/CAACloUseCases/CAACloSpecPlacePart.htm"
 converted: "2026-05-11T17:33:49.530102"
-```
-
 ---
 tags: ["CAACommonLayoutItf", "CATIPspDefinePhysicalPart", "CAACloSpecPlace", "CATIProduct", "CAACloPlacePart", "CAACloEduRuns", "CAACloSpecPlacePartMain", "CAAPspUtilities", "CATIPspPlacePartOnRun", "CAAPlantShipInterfaces", "CAAPspBaseEnvProtected", "CAACloSpecPlacePart", "CATIPspLogicalLine", "CATICloPartRules", "CATIA"]
 source_file: "Doc/online/CAACloUseCases/CAACloSpecPlacePart.htmmd"
@@ -46,7 +43,6 @@ Overview CAACloSpecPlacePart is a use case of the CAACommonLayoutItf.edu framewo
 
     CAACloSpecPlacePart  MyRootDirectory/CAACommonLayoutItf.edu/CNext/resources/graphic/CAACloEduRuns/CAACloEduRuns.CATProduct1
 
-CAACloSpecPlacePart  MyRootDirectory/CAACommonLayoutItf.edu/CNext/resources/graphic/CAACloEduRuns/CAACloEduRuns.CATProduct1
 where MyRootDirectory is the pathname of the root directory where you copied and built the use case. [Top] Where to Find CAACloSpecPlacePart Files The CAACloSpecPlacePart code consists of three files located in the CAACloSpecPlacePart.m use case module of the CAACommonLayoutItf.edu framework:
 
     InstallRootDirectory/CAACommonLayoutItf.edu/CAACloSpecPlacePart.m/LocalInterfaces/CAACloSpecPlacePart.h
@@ -136,7 +132,7 @@ if (argc > 1)
         if (FileToBeLoaded.IsNull(#))
         {
 
-```vbscript
+```cpp
 if (FileToBeLoaded.IsNull(#))
            cout << "**** must input the file name of " << endl;
            cout << "a CATProduct with Piping application objects " << endl;
@@ -167,7 +163,7 @@ else
 CATCatch (CATError, pError)
         cout << "error in main " << endl;
 
-```vbscript
+```cpp
         rcError = CATReturnError(pError);
 
 ```
@@ -250,7 +246,7 @@ CATTry
         cout << "Product environment created." << endl;
 
         //  Initialize Tubing Design application
-```vbscript
+```cpp
 CreateCATProductEnv(iuFileToBeLoaded);
 cout << "Product environment created." << endl;
         ApplicationInit("CATTubing");
@@ -259,7 +255,7 @@ cout << "Product environment created." << endl;
 ```
 
         // Place a part in space.
-```vbscript
+```cpp
 ApplicationInit("CATTubing");
 cout << "Tubing application initialized." << endl;
         HRESULT rcSpace = PlaceSpecPartInSpace(#);
@@ -276,7 +272,7 @@ cout << "rcSpace = " << rcSpace << endl;
 
       } // end CATTry
 
-```vbscript
+```cpp
 if (SUCCEEDED(rcSpace))
 rc = CATReturnSuccess;
     	CATCatch (CATError, pError)
@@ -288,7 +284,7 @@ CATCatch (CATError, pError)
         cout << "CAACloSpecPlacePart::DoSample *** Error Caught ***" << endl;
         cout << pError;
 
-```vbscript
+```cpp
         rc = CATReturnError(pError);
 
 ```
@@ -304,7 +300,7 @@ rc = CATReturnError(pError);
 
     }
 
-```vbscript
+```cpp
 [Top] Parts in Space CAACloSpecPlacePart places an union in space. The union is placed by the method PlaceSpecPartInSpace. PlaceSpecPartInSpace first performs setup necessary for placing any part. It calls GetChildObject to find the tubing work package (TubingWP.1) which is a child of the data model's root product. It finds the tubing line in TubingWP.1 using the method GetALogicalLine. Both GetChildObject and GetALogicalLine are part of CAAPspBaseEnvProtected. It gets a tubing application object and derives CATIPspDefinePhysicalPart, CATIPspPlacePartOnRun and CATICloPartRules interface objects respectively from the application object. After accomplishing its setup duties PlaceSpecPartInSpace begins its major work of placing a union. The first step is to find the correct union in the catalog. The CATIPspDefinePhysicalPart method GetPartNumbers is used to find a list of PartNumbers. GetPartNumbers takes standard, Part Type, Specification name and Logical Line as input arguments and the List of PartNumbers is returned in the output argument, oListPartNumbers. For finding the reference part in the catalog the CATIPspPlacePartOnRun interface’s method GetReferencePartFromCatalog is used. GetReferencePartFromCatalog takes standard as an input to help decode attribute values. It also can accept a specification ("spec"). In the sample the spec is set to null so no specification is used. If spec is set the catalog search will be limited to parts that meet the given specification. Part type and part number are the key arguments that define the part which is being looked for. The part number is taken from the List of part numbers returned by the GetPartNumbers method; here the first part number in the list is passed as an argument. The parent product is also sent to GetReferencePartFromCatalog. This helps GetReferencePartFromCatalog decode various names more efficiently. The found reference product is returned in the argument, piReferencePart. And the corresponding catalog part name is returned in the last argument, uCatalogPartName.  In order to get the Function types the CATICloPartRules interface’s GetPartFunctions method is used. It takes the reference product piReferencePart returned by GetReferencePartFromCatalog, the standard, the specification name and nominal size as input arguments and returns list of function types and list of section types lFunctionTypes and lSectionTypes respectively as output arguments. The second part placement step is to position and properly place an instance product in the data model. This is accomplished using PlacePartInSpace. PlacePartInSpace accepts the same standard for input as was used for GetReferencePartFromCatalog. It accepts the first function type from the list of the function types returned by the GetPartFunctions method which tracks the purpose of the instance part. The reference part is sent to PlacePartInSpace to define the part being placed. The logical line defines the tubing line into which the new part will become a member. The new part ID can be specified. In the sample code the ID is null which instructs the part placement engine to generate the part ID according to its preset rules. Up direction, horizontal orientation and position all define how the new part is positioned. The new instance part is returned in piInstancePart. Catalog part name returned by GetReferencePartFromCatalog needs to be set on the new part this is done by the CATIPspPlacePartOnRun interface’s SetCatalogPartName method which takes new part instance piInstancePart and catalog name uCatalogPartName as input arguments. The specification is set on the part instance by using CATIPspDefinePhysicalPart interface’s SetSpecification method which takes new part instance piInstancePart and specification name uSpecNameas input arguments. Apart from using PlaceSpecPartInSpace method, user can use other part placement APIs available in the CATIPspPlacePartOnRun to place part on run, on connector and then set specification using SetSpecification method to spec driven part.  The code for PlaceSpecPartInSpace is shown below.
 
 ```
@@ -356,7 +352,7 @@ HRESULT rc = CATReturnFailure;
         // Get application object.
 CATMathDirection ctrUp;
 CATTry
-```vbscript
+```cpp
         piAppObject = new CATObject("CATTubing");
 
 ```
@@ -373,7 +369,7 @@ CATTry
 cout << "piAppObject = " << piAppObject << endl;
 if (piAppObject)
 ```vbscript
-```vbscript
+```cpp
           piParentProduct = (CATIProduct*)GetChildObject(IID_CATIProduct, "TubingWP.1");
 
 ```
@@ -390,7 +386,7 @@ if (piAppObject)
           cout << "piLogicalLine = " << piLogicalLine << endl;
 
           if (
-```vbscript
+```cpp
                 SUCCEEDED(piAppObject->QueryInterface(IID_CATIPspDefinePhysicalPart,(void**)&piDefPhyPart))  &&
                 SUCCEEDED(piAppObject->QueryInterface(IID_CATIPspPlacePartOnRun,(void**)&piPlacePart))  &&
                 SUCCEEDED(piAppObject->QueryInterface(IID_CATICloPartRules,(void**)&piPartRules))
@@ -399,9 +395,9 @@ if (piAppObject)
 
               )
            {
-```vbscript
+```cpp
 SUCCEEDED(piAppObject->QueryInterface(IID_CATIPspDefinePhysicalPart,(void**)&piDefPhyPart))  &&
-```vbscript
+```cpp
 SUCCEEDED(piAppObject->QueryInterface(IID_CATIPspPlacePartOnRun,(void**)&piPlacePart))  &&
 SUCCEEDED(piAppObject->QueryInterface(IID_CATICloPartRules,(void**)&piPartRules))
 ```
@@ -506,7 +502,7 @@ if (piInstancePart)
 ```
 
               // Verification
-```vbscript
+```cpp
               // Specification set and Function type used, can be verified by saving the document and
               // Launching the CATIA. (Go to properties of the placed part, by right clicking the mouse.)
 
@@ -543,7 +539,7 @@ CATCatch (CATError, pError)
 
         cout << pError;
 
-```vbscript
+```cpp
         rc = CATReturnError(pError);
 
 ```

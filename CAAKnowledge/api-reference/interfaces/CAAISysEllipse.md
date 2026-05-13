@@ -1,63 +1,107 @@
 ---
 title: "CAAISysEllipse"
-type: "interface"
+type: "PublicInterface"
 module: "CAASystem"
-category: api-reference
+base: "CATBaseUnknown"
 method_count: 6
-visibility: "public"
-has_tie_binding: true
-verified: true
+source_file: "CAASystem.edu/PublicInterfaces/CAAISysEllipse.h"
 ---
-> **TIE实现**: unknown
 
 # CAAISysEllipse
 
-**模块**: CAASystem  
-**分类**: framework  
-**可见性**: public  
-**方法数**: 6
+> Interface which characterizes an ellipse object. Inheritance: CATBaseUnknown (System Framework) Main Method: SetCenter/GetCenter SetRadius/GetRadius SetPlanar/GetPlanar System Framework
 
-> local Framework
+**基类**: CATBaseUnknown | **模块**: CAASystem | **方法数**: 6
 
 ## 依赖
 
+- `CATBaseUnknown.h`
 - `CAASysGeoModelInf.h`
 
-## TIE实现
+## 纯虚方法 (接口契约)
 
-**实现文件**:
-- `CAAISysAccess.cpp`
-- `CAAISysCircle.cpp`
-- `CAAISysCircleCenterProperties.cpp`
-- `CAAISysCollection.cpp`
-- `CAAISysColorProperties.cpp`
+### SetCenter
+
+```cpp
+virtual HRESULT SetCenter(const CATMathPoint & iCenter) = 0 ;
+```
+
+The ellipse is represented by: ------------------------------ A Point center ---------------
+
+| 参数 | 类型 |
+|------|------|
+| iCenter | `const CATMathPoint &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetCenter
+
+```cpp
+virtual HRESULT GetCenter(CATMathPoint & oCenter) const = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oCenter | `CATMathPoint &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### SetRadius
+
+```cpp
+virtual HRESULT SetRadius(const float iXRadius, const float iYRadius) = 0 ;
+```
+
+A radius along X and Y axis ---------------------------
+
+| 参数 | 类型 |
+|------|------|
+| iXRadius | `const float` |
+| iYRadius | `const float` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetRadius
+
+```cpp
+virtual HRESULT GetRadius(float & oXRadius, float & oYRadius) const = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oXRadius | `float &` |
+| oYRadius | `float &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### SetPlanar
+
+```cpp
+virtual HRESULT SetPlanar(const CATMathVector & iNormal, const CATMathVector & iAxis) = 0 ;
+```
+
+A Repere -------- iNormal defined the normal of the plane iAxis   defined the X axis. The Y axis = iNormal ^ iAxis .
+
+| 参数 | 类型 |
+|------|------|
+| iNormal | `const CATMathVector &` |
+| iAxis | `const CATMathVector &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetPlanar
+
+```cpp
+virtual HRESULT GetPlanar(CATMathVector & oNormal, CATMathVector & oAxis) const = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oNormal | `CATMathVector &` |
+| oAxis | `CATMathVector &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
 
 ---
 
-## Interface Overview
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-- [CAADegSampleMultiSelection](../../use-cases/caadegcases/CAADegSampleMultiSelection.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAASystem.edu/PublicInterfaces/CAAISysEllipse.h`

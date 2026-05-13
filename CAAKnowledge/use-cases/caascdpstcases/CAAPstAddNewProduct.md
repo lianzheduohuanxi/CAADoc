@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Adding a New Product"
 category: "use-case"
 module: "CAAScdPstUseCases"
-tags: ["CAAPstPad1_2", "CAAPstAddNewProduct", "CATIA", "CAAScdPstUseCases", "CAAPstPad1_1"]
-source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddNewProduct.htmmd"
+tags: "["CAAPstPad1_2", "CAAPstAddNewProduct", "CATIA", "CAAScdPstUseCases", "CAAPstPad1_1"]"
+source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddNewProduct.htm"
 converted: "2026-05-11T17:31:52.326450"
-```
-
 ---
 |
 ## Product Structure
@@ -41,7 +38,7 @@ This macro shows you how to create a simple product structure containing two par
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
 'Create a new product document by adding a document with the Product type
           'to the document collection of the CATIA application.
 ```
@@ -55,7 +52,7 @@ This macro shows you how to create a simple product structure containing two par
           Dim oProductDoc As Document
 ```vbscript
 ```
-```vbscript
+```cpp
           Set oProductDoc = CATIA.Documents.**Add**("Product")
 ```
 ```
@@ -165,7 +162,7 @@ A new product is added to the collection using the `AddNewProduct` method of the
         oChildProduct1.**AddMasterShapeRepresentation** sDocPath & "CAAPstPad1_1.CATPart"
 
 ```vbscript
-```vbscript
+```cpp
         CATIA.ActiveWindow.ActiveViewer.**Reframe**
 ```
 ```
@@ -242,7 +239,7 @@ A second new product is added to the collection in the same way as the first. Th
         oChildProduct2.**AddMasterShapeRepresentation** sDocPath & "CAAPstPad1_2.CATPart"
 
 ```vbscript
-```vbscript
+```cpp
         CATIA.ActiveWindow.ActiveViewer.**Reframe**(#)
 ```
 ```

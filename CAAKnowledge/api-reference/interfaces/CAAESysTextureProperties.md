@@ -1,50 +1,72 @@
 ---
 title: "CAAESysTextureProperties"
-type: "interface"
+type: "LocalClass"
 module: "CAASystem"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAESysTextureProperties → CATBaseUnknown"
 method_count: 4
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAASystem.edu/CAASysGeoModelImpl.m/LocalInterfaces/CAAESysTextureProperties.h"
 ---
+
 # CAAESysTextureProperties
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAESysTextureProperties → CATBaseUnknown  
-**模块**: CAASystem  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 4
+> Data extension implementing the CAAITextureProperties interface. Inheritance: CATBaseUnknown (System Framework)
+
+**基类**: CATBaseUnknown | **模块**: CAASystem | **方法数**: 4
 
 ## 依赖
 
 - `CATBaseUnknown.h`
 
+## 虚方法
+
+### GetMetal
+
+```cpp
+virtual HRESULT GetMetal(int & oIsMetal) ;
+```
+
+Texture properties are: A metal property ---------------- 0 : the object is not metallic 1 : the object is metallic
+
+| 参数 | 类型 |
+|------|------|
+| oIsMetal | `int &` |
+
+
+### SetMetal
+
+```cpp
+virtual HRESULT SetMetal(const int iIsMetal) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iIsMetal | `const int` |
+
+
+### GetRough
+
+```cpp
+virtual HRESULT GetRough(int & oIsRough) ;
+```
+
+A Roughness property -------------------- 0 : The object is smooth 1 : The object is rough
+
+| 参数 | 类型 |
+|------|------|
+| oIsRough | `int &` |
+
+
+### SetRough
+
+```cpp
+virtual HRESULT SetRough(const int iIsRough) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iIsRough | `const int` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAASystem.edu/CAASysGeoModelImpl.m/LocalInterfaces/CAAESysTextureProperties.h`

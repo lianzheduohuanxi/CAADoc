@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Point on a Wire"
 category: "use case"
 module: "CAACgmModel"
-tags: ["CAAGMModelInterfaces", "CATICGMBodyFromLengthOnWire", "CAAGMModelBodyfromLengthOnWire"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcTopGMModelPtOnWire.htmmd"
+tags: "["CAAGMModelInterfaces", "CATICGMBodyFromLengthOnWire", "CAAGMModelBodyfromLengthOnWire"]"
+source_file: "Doc/online/CAACgmModel/CAACgmUcTopGMModelPtOnWire.htm"
 converted: "2026-05-11T17:33:48.597676"
-```
-
 ---
 Creating a Point on a Wire
 
@@ -56,7 +53,6 @@ familiar with geometric modeler use cases, go to
     and the code below:
 
     CATICGMBodyFromLengthOnWire* pPointOnWire = ::CATCGMCreateBodyFromLengthOnWire(
-CATICGMBodyFromLengthOnWire* pPointOnWire = ::CATCGMCreateBodyFromLengthOnWire(
     	piGeomFactory,
 
             &topdata;,

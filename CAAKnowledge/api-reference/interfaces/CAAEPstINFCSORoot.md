@@ -1,57 +1,54 @@
 ---
 title: "CAAEPstINFCSORoot"
-type: "interface"
+type: "LocalClass"
 module: "CAAProductStructure"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAEPstINFCSORoot → CATBaseUnknown"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 2
+source_file: "CAAProductStructure.edu/CAAPstINFCommands.m/LocalInterfaces/CAAEPstINFCSORoot.h"
 ---
+
 # CAAEPstINFCSORoot
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAEPstINFCSORoot → CATBaseUnknown  
-**模块**: CAAProductStructure  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> Data extension of the CAAPstINFRoot component, implementing the CATICSOFilter interface to enable the selection of the contextual menu commands. Illustrates programming the CSO Filter on an object by implementing the CATICSOFilter interface of the ApplicationFrame framework. Inheritance: CATBaseUnknown (System Framework)
 
-> System Framework
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATBaseUnknown | **模块**: CAAProductStructure | **方法数**: 2
 
 ## 依赖
 
 - `CATBaseUnknown.h`
 - `CATLISTV_CATBaseUnknown.h`
 
+## 公共方法
+
+### CommandIsAvailable
+
+```cpp
+HRESULT CommandIsAvailable(const char *ipHeaderID, const CATCSO *ipCSO) ;
+```
+
+Defines what commands are available in the contextual menu for the Root object.
+
+| 参数 | 类型 |
+|------|------|
+| *ipHeaderID | `const char` |
+| *ipCSO | `const CATCSO` |
+
+
+### AvailableElements
+
+```cpp
+HRESULT AvailableElements(const char *ipHeaderID, const CATCSO *ipCSO, CATListValCATBaseUnknown_var **iospAvailableElements) ;
+```
+
+Returns the available objects from the current selection.
+
+| 参数 | 类型 |
+|------|------|
+| *ipHeaderID | `const char` |
+| *ipCSO | `const CATCSO` |
+| **iospAvailableElements | `CATListValCATBaseUnknown_var` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAProductStructure.edu/CAAPstINFCommands.m/LocalInterfaces/CAAEPstINFCSORoot.h`

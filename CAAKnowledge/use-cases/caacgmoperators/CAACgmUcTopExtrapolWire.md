@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Extrapolating a Wire"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperatorsInterfaces", "CATICGMExtrapolateBody", "CATICGMWireExtrapolationOp", "CAATopTangExtrapol", "CAAGMOperatorsTangExtrapol"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopExtrapolWire.htmmd"
+tags: "["CAAGMOperatorsInterfaces", "CATICGMExtrapolateBody", "CATICGMWireExtrapolationOp", "CAATopTangExtrapol", "CAAGMOperatorsTangExtrapol"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopExtrapolWire.htm"
 converted: "2026-05-11T17:33:49.169875"
-```
-
 ---
 Extrapolating a Wire
 

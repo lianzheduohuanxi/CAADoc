@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "ObjectSpecsModeler Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR7"
-version: "V5R7"
-tags: ["CATICatalog", "CATISpecObject"]
-source_file: "Doc/online/CAACenAPIChangesR7/ObjectSpecsModelerSP.htmmd"
+tags: "["CATICatalog", "CATISpecObject"]"
+source_file: "Doc/online/CAACenAPIChangesR7/ObjectSpecsModelerSP.htm"
 converted: "2026-05-11T17:33:52.203426"
-```
-
 ---
 tags: ["CATICatalog", "CATISpecObject"]
 source_file: "Doc/online/CAACenAPIChangesR7/ObjectSpecsModelerSP.htmmd"

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAAArrCreateItemReservation.CATScript"
 category: "use-case"
 module: "CAAScdArrUseCases"
-tags: ["CAAArrCreateItemReservation", "CATIA"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateItemReservationSource.htmmd"
+tags: "["CAAArrCreateItemReservation", "CATIA"]"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateItemReservationSource.htm"
 converted: "2026-05-11T17:31:51.552087"
-```
-
 ---
 tags: ["CAAArrCreateItemReservation", "CATIA"]
 source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateItemReservationSource.htmmd"
@@ -16,7 +13,7 @@ converted: "2026-05-11T17:31:51.552087"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     '// COPYRIGHT DASSAULT SYSTEMES  2000
     '******************************************************************************
     ' Purpose:       This CATScript demonstrates how to create an Item Reservation.
@@ -36,7 +33,7 @@ converted: "2026-05-11T17:31:51.552087"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -63,7 +60,7 @@ converted: "2026-05-11T17:31:51.552087"
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
        Dim objRootProd       As Product
        Set objProdDoc      = CATIA.Documents.Add("Product")
        Set objRootProd     = objProdDoc.Product

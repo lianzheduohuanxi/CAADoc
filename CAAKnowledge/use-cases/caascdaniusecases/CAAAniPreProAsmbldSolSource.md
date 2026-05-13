@@ -21,13 +21,13 @@ converted: "2026-05-11T11:27:02.493420"
 '   CATIA Level:  V5R16
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ' ----------------------------------------------------------- 
 ```
 ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
 sDocPath=CATIA.SystemService.Environ("CATDocView")
 sSep=CATIA.SystemService.Environ("ADL_ODT_SLASH")
 
@@ -38,7 +38,7 @@ End If
 ' ----------------------------------------------------------- 
 
 ' Open the CATAnalysis Document
-```vbscript
+```cpp
 Set analysisDocument1 = CATIA.Documents.Open(sDocPath & sSep & "online" & sSep & "CAAScdAniUseCases" & sSep & "samples" & sSep & "Assembled_Loads_Slutions.CATAnalysis")
 
 'Retrieve the Analysis Manager from the analysis document
@@ -107,7 +107,7 @@ selection1.Search "Name=*DISP*,all"
 ```
 
 'Retrieve the analysis manager object from the analysis document
-```vbscript
+```cpp
 Set documents1 = CATIA.Documents
 Set analysisDocument2 = documents1.Item("Analysis1.CATAnalysis")
 Set analysisManager2 = analysisDocument2.Analysis
@@ -176,13 +176,13 @@ End Sub
 '   CATIA Level:  V5R16
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ' ----------------------------------------------------------- 
 ```
 ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
 sDocPath=CATIA.SystemService.Environ("CATDocView")
 sSep=CATIA.SystemService.Environ("ADL_ODT_SLASH")
 
@@ -193,7 +193,7 @@ End If
 ' ----------------------------------------------------------- 
 
 ' Open the CATAnalysis Document
-```vbscript
+```cpp
 Set analysisDocument1 = CATIA.Documents.Open(sDocPath & sSep & "online" & sSep & "CAAScdAniUseCases" & sSep & "samples" & sSep & "Assembled_Loads_Slutions.CATAnalysis")
 
 'Retrieve the Analysis Manager from the analysis document
@@ -262,7 +262,7 @@ selection1.Search "Name=*DISP*,all"
 ```
 
 'Retrieve the analysis manager object from the analysis document
-```vbscript
+```cpp
 Set documents1 = CATIA.Documents
 Set analysisDocument2 = documents1.Item("Analysis1.CATAnalysis")
 Set analysisManager2 = analysisDocument2.Analysis

@@ -1,52 +1,87 @@
 ---
 title: "CAAEAfrCollection"
-type: "interface"
+type: "LocalClass"
 module: "CAAApplicationFrame"
-category: api-reference
+base: "CATBaseUnknown"
 method_count: 5
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAApplicationFrame.edu/CAAAfrGeoModel.m/LocalInterfaces/CAAEAfrCollection.h"
 ---
+
 # CAAEAfrCollection
 
-**模块**: CAAApplicationFrame  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 5
+> Data extension implementing the CAAISysCollection interface which enables to manages the list of objects of the container in the CAAGeometry Document. So this extension extens the container. Inheritance: CATBaseUnknown (System Framework) Main Method: GetNumberOfObjects GetObject AddObject RemoveObject System framework
 
-> RemoveObject
+**基类**: CATBaseUnknown | **模块**: CAAApplicationFrame | **方法数**: 5
 
 ## 依赖
 
+- `CATBaseUnknown.h`
 - `CATCollec.h`
 
+## 虚方法
+
+### GetNumberOfObjects
+
+```cpp
+virtual HRESULT GetNumberOfObjects(int * oCount) ;
+```
+
+GetNumberOfObjects ------------------- Retrieves the number of object in the Collection. Return E_FAIL if the Collection is empty else S_OK
+
+| 参数 | 类型 |
+|------|------|
+| oCount | `int *` |
+
+
+### GetObject
+
+```cpp
+virtual HRESULT GetObject(int iRank, CATBaseUnknown ** oObject) ;
+```
+
+GetObject --------- Retrieves the iRank object in this Collection. Return E_FAIL if the Collection is iRank is bad else S_OK
+
+| 参数 | 类型 |
+|------|------|
+| iRank | `int` |
+| oObject | `CATBaseUnknown **` |
+
+
+### AddObject
+
+```cpp
+virtual HRESULT AddObject(CATBaseUnknown * iObject) ;
+```
+
+AddObject --------- Adds iObject in the Collection, sets link for the display, sets link with the object which has created it (this) and send a notification to prevent that the model contains somethings
+
+| 参数 | 类型 |
+|------|------|
+| iObject | `CATBaseUnknown *` |
+
+
+### RemoveObject
+
+```cpp
+virtual HRESULT RemoveObject(CATBaseUnknown * iObject) ;
+```
+
+RemoveObject ------------ Removes iObject in the Collection, unsets link for the display, unsets link with the object which has created it (this) and send a notification to prevent that the model becomes empty
+
+| 参数 | 类型 |
+|------|------|
+| iObject | `CATBaseUnknown *` |
+
+
+### Empty
+
+```cpp
+virtual HRESULT Empty() ;
+```
+
+RemoveObject ------------ Empties the Collection, unsets link for the display, unsets link with the object which has created it (this)
+
+
 ---
 
-## Interface Overview
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-- [3D PLM Enterprise Architecture](../../use-cases/caaafrcases/CAAAfrSampleEditorHdr.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAApplicationFrame.edu/CAAAfrGeoModel.m/LocalInterfaces/CAAEAfrCollection.h`

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Features in an Applicative Container"
-category: use-case case"
+category: "use-case case"
 module: "CAASchUseCases"
-tags: ["CAASchEduIn", "CAASchAppSample1", "CAASCHEDUApp", "CATISchAppObjectFactory", "CATISchSession", "CATIContainer_var", "CAASCHEDU_SamplePID", "CAASchAppBaseServices", "CAASchApp", "CATISchCompFlow", "CAASchEduOut1", "CATIExtendable_var", "CATISchBaseFactory", "CAASchAppSample1Main", "CAASchPlatformModeler", "CATISpecObject_var", "CAASchAppUtilities", "CATISpecObject", "CATISchAppConnectable", "CATISchComponent"]
-source_file: "Doc/online/CAASchUseCases/CAASchSample1.htmmd"
+tags: "["CAASchEduIn", "CAASchAppSample1", "CAASCHEDUApp", "CATISchAppObjectFactory", "CATISchSession", "CATIContainer_var", "CAASCHEDU_SamplePID", "CAASchAppBaseServices", "CAASchApp", "CATISchCompFlow", "CAASchEduOut1", "CATIExtendable_var", "CATISchBaseFactory", "CAASchAppSample1Main", "CAASchPlatformModeler", "CATISpecObject_var", "CAASchAppUtilities", "CATISpecObject", "CATISchAppConnectable", "CATISchComponent"]"
+source_file: "Doc/online/CAASchUseCases/CAASchSample1.htm"
 converted: "2026-05-11T17:31:51.513274"
-```
-
 ---
 # Equipment & Systems
 
@@ -72,7 +69,6 @@ To launch CAASchAppSample1, you will need to set up the build time environment, 
 
 CAASchAppSample1 code is located in the CAASchAppSample1.m use case module of the CAASchPlatformModeler.edu framework:
 
-CAASchAppSample1 code is located in the CAASchAppSample1.m use case module of the CAASchPlatformModeler.edu framework:
 Windows | `InstallRootDirectory/CAASchPlatformModeler.edu/CAASchAppSample1.m`
 
 CAASchAppSample1 code is located in the CAASchAppSample1.m use case module of the CAASchPlatformModeler.edu framework:
@@ -108,7 +104,6 @@ In this use case, we open an input drawing containing one main sheet and one det
 
 The CAASchAppSample1 code is derived from the CAASchAppBaseEnv base class. The base class contains functionality common to the other CAASchApp samples. Initializing the environment involves the following methods:
 
-The CAASchAppSample1 code is derived from the CAASchAppBaseEnv base class. The base class contains functionality common to the other CAASchApp samples. Initializing the environment involves the following methods:
     CAASchAppSample1::InitEnvironment
     CAASchAppSample1::GetDraftingObjects
     CreateCATProductEnv::CreateCATProductEnv
@@ -133,13 +128,12 @@ These methods perform the following functions:
 
 According to the rules of the Schematics Platform, a reference component is required before a component can be created and placed. The reference component is created by the _CATISchBaseFactory_ interface method CreateSchComponent. This method builds the component reference object from the application reference and a list of graphical representations. It is the responsibility of the Schematics application, in this case CAASCHEDU_SamplePID, to retrieve the application reference object.
 
-According to the rules of the Schematics Platform, a reference component is required before a component can be created and placed. The reference component is created by the _CATISchBaseFactory_ interface method CreateSchComponent. This method builds the component reference object from the application reference and a list of graphical representations. It is the responsibility of the Schematics application, in this case CAASCHEDU_SamplePID, to retrieve the application reference object.
 As one of the requirements of a schematics application, the application must implement the _CATISchAppObjectFactory_ interface. This is the interface used by the application to create the application reference using the method AppCreateCompRef. In this use case, the application reference is already residing in the input document and AppCreateCompRef is used to retrieve it.
 
 Notice the _CATISchAppObjectFactory_ interface pointer is obtained from the _CATISchSession_ interface which is tied to the session.
 
     CATISchSession* piSchSession = NULL;
-```vbscript
+```cpp
     if ( SUCCEEDED( pSession->QueryInterface (IID_CATISchSession,(void**)&piSchSession) ) )
 
 ```
@@ -162,7 +156,6 @@ _CAASCHEDU_SamplePID_ implements the _CATISchAppObjectFactory_ in the files **CA
     //  Find an application object in a container by a specific class type
     //---------------------------------------------------------------------------
     CATISpecObject_var CAASchAppBaseServices::FindAppObjByClass (
-CATISpecObject_var CAASchAppBaseServices::FindAppObjByClass (
        const CATUnicodeString &iUClass, const CATIContainer_var &iCont)
 
     {
@@ -176,7 +169,7 @@ const CATUnicodeString &iUClass, const CATIContainer_var &iCont)
        CATIExtendable_var spApplExtble = NULL_var;
 
        SEQUENCE (CATBaseUnknown_ptr) L0Obj = iCont->
-```vbscript
+```cpp
           ListMembers(CATISpecObject::ClassName(#));
 
 ```
@@ -193,7 +186,7 @@ int SizeOfL0Obj = L0Obj.length(#);
 CATISpecObject *piSpec;
 for (int iObj=0; iObj<SizeOfL0Obj; iObj++)
 ```vbscript
-```vbscript
+```cpp
          piSpec = (CATISpecObject *) L0Obj[iObj];
          if (NULL != piSpec)
 
@@ -205,7 +198,7 @@ for (int iObj=0; iObj<SizeOfL0Obj; iObj++)
 ```vbscript
 for (int iObj=0; iObj<SizeOfL0Obj; iObj++)
 ```vbscript
-```vbscript
+```cpp
 piSpec = (CATISpecObject *) L0Obj[iObj];
 if (NULL != piSpec)
             if (!spObjFound)
@@ -272,10 +265,10 @@ If a component is to be visualized, it needs Graphical Representation (GRR). A c
 
 ```
 
-```vbscript
+```cpp
 If a component is to be visualized, it needs Graphical Representation (GRR). A component may have more than one GRR, but can only display one GRR for a given instance. For this sample, the Component Reference Object to be created will have only one GRR. The GRR is the geometry shown in the first view on the detail sheet.
         CATSchListServices SchList;
-```vbscript
+```cpp
         rc = SchList.CreateCATIUnknownList(&_piLUK);
 
         if ( SUCCEEDED(rc) )
@@ -356,7 +349,7 @@ if (SUCCEEDED(rc) )
           {
 rc = _piBaseFact->CreateSchComponent (_piUKAppRef, _piLUK, &_piSchComp);
 ```vbscript
-```vbscript
+```cpp
 if (SUCCEEDED(rc) )
 if ( _piSchComp)
             rc = _piSchComp->QueryInterface (IID_CATISpecObject,(void **) &_piSpecSchComp);
@@ -370,7 +363,7 @@ if ( _piSchComp)
 ```vbscript
 if ( _piSchComp)
 ```vbscript
-```vbscript
+```cpp
 rc = _piSchComp->QueryInterface (IID_CATISpecObject,(void **) &_piSpecSchComp);
 if (SUCCEEDED(rc))
 ```
@@ -391,7 +384,6 @@ if (SUCCEEDED(rc))
 
 A component such as a valve can have connectors. Some components may have multiple connectors. This sample adds two connectors to the Component Reference Object. In order to do this, the code must use the _CATISchCompConnector_ interface method AddConnector. Once the connector is created, it must be aligned, ( i.e. horizontally, vertically, etc.) See the code for more detail.
 
-A component such as a valve can have connectors. Some components may have multiple connectors. This sample adds two connectors to the Component Reference Object. In order to do this, the code must use the _CATISchCompConnector_ interface method AddConnector. Once the connector is created, it must be aligned, ( i.e. horizontally, vertically, etc.) See the code for more detail.
         rc = piCompCtr->AddConnector (SCHEDUClass_Connector, piGrr, ctr1Loc, &piAppCtr1);
 ```vbscript
 ```vbscript
@@ -573,7 +565,6 @@ cout << "CreateComponent: "
 
 The component reference can now be instantiated on the main sheet of the drawing. This is done with the _CATISchComponent_ interface. The PlaceInSpace __ method is used to do this.
 
-The component reference can now be instantiated on the main sheet of the drawing. This is done with the _CATISchComponent_ interface. The PlaceInSpace __ method is used to do this.
         double aDb6Axis[6] = {1.0,0.0,0.0,1.0,50.0,100.0};
         rc = _piSchComp->PlaceInSpace (NULL, aDb6Axis, &piSchComp);
 ```vbscript

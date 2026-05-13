@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Checking the Confusion of Points on a Surface"
-category: use-case case"
+category: "use-case case"
 module: "CAACgmModel"
-tags: ["CAADoc", "CAAGMModelConfusionOpe", "CATICGMConfusionPtOnSurPtOnSur", "CAAGMModelGemBrowser", "CAAGMModelInterfaces", "CATICGMLocalAnalysis1D", "CATICGMTopSkin"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelConfusionPtSurOpe.htmmd"
+tags: "["CAADoc", "CAAGMModelConfusionOpe", "CATICGMConfusionPtOnSurPtOnSur", "CAAGMModelGemBrowser", "CAAGMModelInterfaces", "CATICGMLocalAnalysis1D", "CATICGMTopSkin"]"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelConfusionPtSurOpe.htm"
 converted: "2026-05-11T17:33:48.280142"
-```
-
 ---
 # Checking the Confusion of Points on a Surface
 

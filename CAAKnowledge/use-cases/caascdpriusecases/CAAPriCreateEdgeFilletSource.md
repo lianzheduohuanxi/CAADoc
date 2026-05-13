@@ -24,7 +24,7 @@ Language="VBSCRIPT"
 '   CATIA Level :  V5R6
 '*****************************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
     Dim oPartDocument As PartDocument
@@ -133,7 +133,7 @@ Language=&quot;VBSCRIPT&quot;
 '   CATIA Level :  V5R6
 '*****************************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
     Dim oPartDocument As PartDocument

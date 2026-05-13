@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Shape Automation Objects"
-category: tech-article
+category: "tech-article"
 module: "CAAScdPriTechArticles"
-tags: []
-source_file: "Doc/online/CAAScdPriTechArticles/CAAPriTocShapes.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAAScdPriTechArticles/CAAPriTocShapes.htm"
 converted: "2026-05-11T17:31:51.248415"
-```
-
 ---
 # Shape Automation Objects
 

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "New C++ Authorized APIs in CAA V5R14 SP1"
 category: "use-case"
 module: "CAACenQuickRefs"
-tags: ["CATIMfgToolAssemblyActivityEditorCustom", "CATICfgVariabilitySpace_var", "CATIUExitCrypt", "CATIAVPMIIProductSpec", "CATIAVPMProductSpecification2", "CATICfgVariabilitySpace"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R14SP1NewCPPAPI.htmmd"
+tags: "["CATIMfgToolAssemblyActivityEditorCustom", "CATICfgVariabilitySpace_var", "CATIUExitCrypt", "CATIAVPMIIProductSpec", "CATIAVPMProductSpecification2", "CATICfgVariabilitySpace"]"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R14SP1NewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.199397"
-```
-
 ---
 tags: ["CATIMfgToolAssemblyActivityEditorCustom", "CATICfgVariabilitySpace_var", "CATIUExitCrypt", "CATIAVPMIIProductSpec", "CATIAVPMProductSpecification2", "CATICfgVariabilitySpace"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R14SP1NewCPPAPI.htmmd"
@@ -23,12 +20,12 @@ The following are the new CAA V5R14 SP1 C++ Authorized APIs, compared with CAA V
     * Class  CATSketchOperators
     * Class  CATTopGeodesicPtPt
     * Class  CATTopSimilarCurve
-```vbscript
+```cpp
     * Global Function  CATCreateGeodesicPointDir
     * Global Function  CATCreateTopSimilarCurve
   * BasicTopologicalOpe framework
 ```
-```vbscript
+```cpp
     * Global Function  CATCreateGeodesicLinePtPt
   * CATAssemblyInterfaces framework
 ```

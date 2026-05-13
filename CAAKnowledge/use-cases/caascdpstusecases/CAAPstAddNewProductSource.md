@@ -21,13 +21,13 @@ Option Explicit
 '   CATIA Level:  V5R6 
 ' *****************************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
     ' -----------------------------------------------------------------------------------------------
 ```
     ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
     Dim sDocPath As String
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -38,7 +38,7 @@ Sub CATMain(#)
    
     'Create a new product document by adding a document with the Product type
     'to the document collection of the CATIA application. 
-```vbscript
+```cpp
     Dim oProductDoc As Document
     Set oProductDoc = CATIA.Documents.Add("Product")
 
@@ -75,7 +75,7 @@ Sub CATMain(#)
     'Add a representation to this product using an existing part and reframe
     'the viewer to display the part completely.
     oChildProduct1.AddMasterShapeRepresentation sDocPath & "CAAPstPad1_1.CATPart"
-```vbscript
+```cpp
     CATIA.ActiveWindow.ActiveViewer.Reframe
 
     'Add another product to the root product's collection.  This adds both
@@ -95,14 +95,14 @@ Sub CATMain(#)
     'the viewer to display the part completely.
     oChildProduct2.AddMasterShapeRepresentation sDocPath & _
        "/online/CAAScdPstUseCases/samples/CAAPstPad1_2.CATPart"
-```vbscript
+```cpp
     CATIA.ActiveWindow.ActiveViewer.Reframe(#)
      
 End Sub
 
 ```
 
-```vbscript
+```cpp
 Option Explicit
 ' COPYRIGHT DASSAULT SYSTEMES 2000
 
@@ -117,13 +117,13 @@ Option Explicit
 '   CATIA Level:  V5R6 
 ' *****************************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
     ' -----------------------------------------------------------------------------------------------
 ```
     ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
     Dim sDocPath As String
     sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -134,7 +134,7 @@ Sub CATMain(#)
    
     'Create a new product document by adding a document with the Product type
     'to the document collection of the CATIA application. 
-```vbscript
+```cpp
     Dim oProductDoc As Document
     Set oProductDoc = CATIA.Documents.Add(&quot;Product&quot;)
 
@@ -171,7 +171,7 @@ Sub CATMain(#)
     'Add a representation to this product using an existing part and reframe
     'the viewer to display the part completely.
     oChildProduct1.AddMasterShapeRepresentation sDocPath &amp; &quot;CAAPstPad1_1.CATPart&quot;
-```vbscript
+```cpp
     CATIA.ActiveWindow.ActiveViewer.Reframe
 
     'Add another product to the root product's collection.  This adds both
@@ -191,7 +191,7 @@ Sub CATMain(#)
     'the viewer to display the part completely.
     oChildProduct2.AddMasterShapeRepresentation sDocPath &amp; _
        &quot;/online/CAAScdPstUseCases/samples/CAAPstPad1_2.CATPart&quot;
-```vbscript
+```cpp
     CATIA.ActiveWindow.ActiveViewer.Reframe(#)
      
 End Sub

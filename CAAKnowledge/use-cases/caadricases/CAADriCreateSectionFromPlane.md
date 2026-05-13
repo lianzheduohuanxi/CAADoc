@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Section View from a Plane"
-category: use-case case"
+category: "use-case case"
 module: "CAADriUseCases"
-tags: ["CATIDftStandardManager", "CATIGeometricalElement", "CATIPrtContainer", "CATIDftDrawing", "CAADrwCreateSectionFromPlane", "CATIDftDocumentServices", "CATIContainer_var", "CATIA", "CATI2DLine_var", "CATIStringList", "CATIDftView", "CATIPrtPart_var", "CATIAlias", "CATInit_var", "CATISpecObject_var", "CATISpecObject", "CATIDescendants", "CAADrwCreatViewFrom3D", "CATIProduct", "CATIDftGenViewFactory"]
-source_file: "Doc/online/CAADriUseCases/CAADriCreateSectionFromPlane.htmmd"
+tags: "["CATIDftStandardManager", "CATIGeometricalElement", "CATIPrtContainer", "CATIDftDrawing", "CAADrwCreateSectionFromPlane", "CATIDftDocumentServices", "CATIContainer_var", "CATIA", "CATI2DLine_var", "CATIStringList", "CATIDftView", "CATIPrtPart_var", "CATIAlias", "CATInit_var", "CATISpecObject_var", "CATISpecObject", "CATIDescendants", "CAADrwCreatViewFrom3D", "CATIProduct", "CATIDftGenViewFactory"]"
+source_file: "Doc/online/CAADriUseCases/CAADriCreateSectionFromPlane.htm"
 converted: "2026-05-11T17:31:50.976131"
-```
-
 ---
 # Mechanical Design
 
@@ -86,7 +83,6 @@ When you launch the use case, pass the full pathname of the Drawing file as argu
 
 The CAADrwCreateSectionFromPlane use case is made of a single source file named CAADrwCreateSectionFromPlane.cpp located in the CAADrwCreateSectionFromPlane.m module of the CAADraftingInterfaces.edu framework:
 
-The CAADrwCreateSectionFromPlane use case is made of a single source file named CAADrwCreateSectionFromPlane.cpp located in the CAADrwCreateSectionFromPlane.m module of the CAADraftingInterfaces.edu framework:
 Windows | ` InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCreateSectionFromPlane.m/`
 
 The CAADrwCreateSectionFromPlane use case is made of a single source file named CAADrwCreateSectionFromPlane.cpp located in the CAADrwCreateSectionFromPlane.m module of the CAADraftingInterfaces.edu framework:
@@ -158,7 +154,6 @@ The other steps to fully initialize the drawing document are included in the spe
     // READ THE PART DOCUMENT AND GET THE APPROPRIATE SKETCH
     // =============================================================
     CATDocument *pDocPart = NULL;
-CATDocument *pDocPart = NULL;
     if( SUCCEEDED(CATDocumentServices::OpenDocument(pfileNamePart, pDocPart)) && pDocPart)
 
     {
@@ -186,7 +181,7 @@ if (piPrtCont)
           // Get the appropriate plane
 CATIPrtPart_var spPart = piPrtCont->GetPart(#);
           CATIDescendants *piDescPart=NULL;
-```vbscript
+```cpp
           if (SUCCEEDED(spPart->QueryInterface(IID_CATIDescendants,(void**)&piDescPart)))
 
 ```
@@ -216,7 +211,7 @@ for (int i = 1; i <= nbChilds; i++)
 ```
 
               {
-```vbscript
+```cpp
 for (int i = 1; i <= nbChilds; i++)
 spFeat = listFeatures[i];
 if (NULL_var != spFeat)
@@ -225,7 +220,7 @@ if (NULL_var != spFeat)
 ```
 
                 {
-```vbscript
+```cpp
 if (NULL_var != spFeat)
 CATPlane* piPlane = NULL;
 if (SUCCEEDED(spFeat->QueryInterface(IID_CATPlane, (void**)&piPlane)))
@@ -234,7 +229,7 @@ if (SUCCEEDED(spFeat->QueryInterface(IID_CATPlane, (void**)&piPlane)))
 ```
 
                   {
-```vbscript
+```cpp
 if (SUCCEEDED(spFeat->QueryInterface(IID_CATPlane, (void**)&piPlane)))
 CATIAlias *piPlaneAlias = NULL;
 if (SUCCEEDED(piPlane->QueryInterface(IID_CATIAlias, (void**)&piPlaneAlias)))
@@ -285,7 +280,7 @@ HRESULT CreateSectionViewFromPlanInDrawingDoc(CATDocument *ipNewDoc, CATPlane*ip
         CATIDftDrawing *piDftDrawing = NULL;
         CATIDftDocumentServices *piDftDocServices = NULL;
         CATIContainer_var spDrwCont;
-```vbscript
+```cpp
         if (SUCCEEDED(ipNewDoc->QueryInterface(IID_CATIDftDocumentServices, (void **)&piDftDocServices)))
 
 ```
@@ -309,13 +304,13 @@ piDftDocServices->Release(#);
 piDftDocServices = NULL;
 if (piDftDrawing)
             CATISpecObject *piDrawingSO=NULL;
-```vbscript
+```cpp
             if (SUCCEEDED(piDftDrawing->QueryInterface(IID_CATISpecObject,(void **)&piDrawingSO)))
 
 ```
 
             {
-```vbscript
+```cpp
 if (piDftDrawing)
 CATISpecObject *piDrawingSO=NULL;
 if (SUCCEEDED(piDftDrawing->QueryInterface(IID_CATISpecObject,(void **)&piDrawingSO)))
@@ -330,7 +325,7 @@ if (SUCCEEDED(piDftDrawing->QueryInterface(IID_CATISpecObject,(void **)&piDrawin
 ```
 
               {
-```vbscript
+```cpp
 if (SUCCEEDED(piDftDrawing->QueryInterface(IID_CATISpecObject,(void **)&piDrawingSO)))
 ```vbscript
 ```vbscript
@@ -383,7 +378,7 @@ for (unsigned int indice = 0; indice < nbrstd; indice ++)
 ```
 
                       {
-```vbscript
+```cpp
 for (unsigned int indice = 0; indice < nbrstd; indice ++)
 wchar_t *wstd = NULL;
 if ( SUCCEEDED ( piListstd->Item ( indice, &wstd ) ) && wstd )
@@ -435,7 +430,7 @@ piDftDrawing->GetActiveSheet(&piDftSheet);
               CATI2DLine_var spFirstLine;
 
               CATIDftGenViewFactory *piDftGenViewFact = NULL;
-```vbscript
+```cpp
               if (piDftSheet && SUCCEEDED(piDftSheet->QueryInterface(IID_CATIDftGenViewFactory,(void **)&piDftGenViewFact)))
 
 ```
@@ -446,7 +441,7 @@ piDftDrawing->GetActiveSheet(&piDftSheet);
 CATIDftGenViewFactory *piDftGenViewFact = NULL;
 if (piDftSheet && SUCCEEDED(piDftSheet->QueryInterface(IID_CATIDftGenViewFactory,(void **)&piDftGenViewFact)))
                 CATIGeometricalElement *piGeomElem = NULL;
-```vbscript
+```cpp
                 if (SUCCEEDED(ipiPlane->QueryInterface(CATIGeometricalElement::ClassId(#), (void**) &piGeomElem)))
 
 ```
@@ -486,7 +481,7 @@ if (NULL_var == spCell && NULL_var != spBody)
 ```
 
                     {
-```vbscript
+```cpp
 CATLISTP(CATCell) AllFaces;
 spBody->GetAllCells(AllFaces, 2);
 int FaceCount = AllFaces.Size(#);
@@ -501,7 +496,7 @@ for (int i = 1 ; i <= FaceCount; i++)
 int FaceCount = AllFaces.Size(#);
 for (int i = 1 ; i <= FaceCount; i++)
 ```vbscript
-```vbscript
+```cpp
 if (AllFaces[i])
                         spCell = CATCell_var(AllFaces[i]);
 ```
@@ -604,7 +599,7 @@ The other arguments are useless in this sample.
     // =================
     if (pNewDoc)
     {
-```vbscript
+```cpp
 if (pNewDoc)
       CATDocumentServices::SaveAs(*pNewDoc, (char *)pfileNameOut);
       CATDocumentServices::Remove (*pNewDoc);
@@ -631,7 +626,6 @@ This section represents the usual sequence for saving a newly created CATIA docu
 
 This use case shows the way to :
 
-This use case shows the way to :
   1. Open a Part document
   2. Retrieve the appropriate sketch in the Part document
   3. Create a Drawing document, and initialize the standard

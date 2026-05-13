@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Pattern"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperatorsPattern", "CAAGMOperatorsInterfaces", "CATICGMTopPattern", "CATICGMSolidCylinder"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopPattern.htmmd"
+tags: "["CAAGMOperatorsPattern", "CAAGMOperatorsInterfaces", "CATICGMTopPattern", "CATICGMSolidCylinder"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopPattern.htm"
 converted: "2026-05-11T17:33:49.266941"
-```
-
 ---
 tags: ["CAAGMOperatorsPattern", "CAAGMOperatorsInterfaces", "CATICGMTopPattern", "CATICGMSolidCylinder"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcTopPattern.htmmd"
@@ -27,7 +24,6 @@ Abstract A pattern is a set of operations repeated by applying a transformation 
 Abstract A pattern is a set of operations repeated by applying a transformation in the same body.
 Operator to be Used To create a pattern, use the CATICGMTopPattern operator in GMOperatorsInterfaces. This operator has to be created by the CATCGMCreateTopPattern global function. Use Case Description The CAAGMOperatorsPattern.m module in CAAGMOperatorsInterfaces.edu illustrates how to create a pattern. This use case is to be run with the PatternTest.NCGM input file which is delivered in CAAGMOperatorsInterfaces.edu/FunctionTests/InputData. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md). Case 1: Pattern Creation from a List of Faces With the input data below: Fig.1 Pattern Operation: Input Data ![Pattern Support](images/CGM_pattern_0.png)
 
-Operator to be Used To create a pattern, use the CATICGMTopPattern operator in GMOperatorsInterfaces. This operator has to be created by the CATCGMCreateTopPattern global function. Use Case Description The CAAGMOperatorsPattern.m module in CAAGMOperatorsInterfaces.edu illustrates how to create a pattern. This use case is to be run with the PatternTest.NCGM input file which is delivered in CAAGMOperatorsInterfaces.edu/FunctionTests/InputData. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md). Case 1: Pattern Creation from a List of Faces With the input data below: Fig.1 Pattern Operation: Input Data ![Pattern Support](images/CGM_pattern_0.png)
 and the code below:
 
     CATLISTP(CATMathTransformation) translationList;

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Boolean Intersection"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperatorsInterfaces", "CATICGMDynBoolean", "CAAGMTopDumpJournal", "CAAGMOperatorsClashIntersect"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcIntersectClash.htmmd"
+tags: "["CAAGMOperatorsInterfaces", "CATICGMDynBoolean", "CAAGMTopDumpJournal", "CAAGMOperatorsClashIntersect"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcIntersectClash.htm"
 converted: "2026-05-11T17:33:48.954937"
-```
-
 ---
 tags: ["CAAGMOperatorsInterfaces", "CATICGMDynBoolean", "CAAGMTopDumpJournal", "CAAGMOperatorsClashIntersect"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcIntersectClash.htmmd"
@@ -82,7 +79,7 @@ Each face of the resulting body results from a modification or an absorption of 
         //
         // Get the parent faces if the order is creation/modification/absorption
         //
-```vbscript
+```cpp
 CATLISTP(CATGeometry) originObjects;
         CATCell * myptr =listOfFaces[k];
         pJournal->FindFirsts(myptr, originObjects, ThroughAllCreateAndModify);

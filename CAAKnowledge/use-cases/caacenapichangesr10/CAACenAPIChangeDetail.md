@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "Detail Of C++ API Changes"
 category: "api-changes"
 module: "CAACenAPIChangesR10"
-version: "V5R10"
-tags: ["CAA2Usage", "CATIAApplicationFrame", "CAA2Level"]
-source_file: "Doc/online/CAACenAPIChangesR10/CAACenAPIChangeDetail.htmmd"
+tags: "["CAA2Usage", "CATIAApplicationFrame", "CAA2Level"]"
+source_file: "Doc/online/CAACenAPIChangesR10/CAACenAPIChangeDetail.htm"
 converted: "2026-05-11T17:33:50.095851"
-```
-
 ---
 |  |  Detail Of V5R10 C++ API Changes _What changes in the API compared with CAA V5R9_
 ---|---|---
@@ -35,7 +31,6 @@ INDM | Method is no more documented. It does not break your code in any way but 
 INDM | Method is no more documented. It does not break your code in any way but means that you are not supposed to use it anymore. Check that you don't use it or look for replacement informations.
 AdvancedMathematics | [R10GA vs R9GA](AdvancedMathematics.md) |
 
-AdvancedMathematics | [R10GA vs R9GA](AdvancedMathematics.md) |
 AdvancedTopologicalOpe | [R10GA vs R9GA](AdvancedTopologicalOpe.md) |
 ApplicationFrame | [R10GA vs R9GA](ApplicationFrame.md) |
 AnalysisMeshingModel | [R10GA vs R9GA](AnalysisMeshingModel.md) |

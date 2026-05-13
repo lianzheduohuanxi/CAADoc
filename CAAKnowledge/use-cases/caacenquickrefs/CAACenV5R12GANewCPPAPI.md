@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "New C++ Authorized APIs in CAA V5R12 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
-tags: ["CATINT32", "CATIAVPMVDAImport", "CATIMeasurablePoint", "CATIElbFactory", "CATIRepeatableCommand", "CATIMfgNavigateMachinableFeatView", "CATIIniSearchDimensionCriterion", "CATIIniSearchIntegerCriterion", "CATIIniSearchRealCriterion", "CATIMfgTPMultipleMotionSynchro", "CATIPspPhysicalProduct", "CATIIniSearchStringCriterion", "CATIPspAttribute", "CATIPspSpatial", "CATITPSViewFactory", "CATIMeasurableCircle", "CATIMf3DAxisSystemManager", "CATISamSupportFilter", "CATIPspCntrFlow", "CATIMfgNavigateActivityView"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R12GANewCPPAPI.htmmd"
+tags: "["CATINT32", "CATIAVPMVDAImport", "CATIMeasurablePoint", "CATIElbFactory", "CATIRepeatableCommand", "CATIMfgNavigateMachinableFeatView", "CATIIniSearchDimensionCriterion", "CATIIniSearchIntegerCriterion", "CATIIniSearchRealCriterion", "CATIMfgTPMultipleMotionSynchro", "CATIPspPhysicalProduct", "CATIIniSearchStringCriterion", "CATIPspAttribute", "CATIPspSpatial", "CATITPSViewFactory", "CATIMeasurableCircle", "CATIMf3DAxisSystemManager", "CATISamSupportFilter", "CATIPspCntrFlow", "CATIMfgNavigateActivityView"]"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R12GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.111006"
-```
-
 ---
 tags: ["CATINT32", "CATIAVPMVDAImport", "CATIMeasurablePoint", "CATIElbFactory", "CATIRepeatableCommand", "CATIMfgNavigateMachinableFeatView", "CATIIniSearchDimensionCriterion", "CATIIniSearchIntegerCriterion", "CATIIniSearchRealCriterion", "CATIMfgTPMultipleMotionSynchro", "CATIPspPhysicalProduct", "CATIIniSearchStringCriterion", "CATIPspAttribute", "CATIPspSpatial", "CATITPSViewFactory", "CATIMeasurableCircle", "CATIMf3DAxisSystemManager", "CATISamSupportFilter", "CATIPspCntrFlow", "CATIMfgNavigateActivityView"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R12GANewCPPAPI.htmmd"
@@ -19,7 +16,7 @@ CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R12 GA
 The following are the new CAA V5R12 GA C++ Authorized APIs, compared with CAA V5R11 at GA level.
 
   * Administration framework
-```vbscript
+```cpp
     * Global Function CATIsInstalled
   * AdvancedTopologicalOpe framework
 ```
@@ -49,7 +46,7 @@ The following are the new CAA V5R12 GA C++ Authorized APIs, compared with CAA V5
   * CATAnalysisResources framework
     * Class CATEAnalysisEntityPreproSubscriber
   * CATAssemblyInterfaces framework
-```vbscript
+```cpp
     * Global Function CATAsmCstSetFeatGetCont
     * Interface CATIAsmCstSetFeatFactory
 ```
@@ -58,7 +55,7 @@ The following are the new CAA V5R12 GA C++ Authorized APIs, compared with CAA V5
     * Interface CATIHvuWkbCfgAddin
   * CATIAV4Interfaces framework
     * Class CATV4iV4Element
-```vbscript
+```cpp
     * Global Function CATV4iGetMaster
     * Global Function CATV4iGirele
     * Global Function CATV4iGiride
@@ -183,7 +180,7 @@ The following are the new CAA V5R12 GA C++ Authorized APIs, compared with CAA V5
   * GeometricObjects framework
     * Macro or #define CATCGMImplAttributeBRep
   * GeometricOperators framework
-```vbscript
+```cpp
     * Global Function CATCreateConfusion
   * InteractiveInterfaces framework
 ```
@@ -269,7 +266,7 @@ The following are the new CAA V5R12 GA C++ Authorized APIs, compared with CAA V5
   * NewTopologicalObjects framework
     * Class CATRecomposeShells
     * Class CATTopSewSkin
-```vbscript
+```cpp
     * Global Function CATCreateRecomposeShells
     * Global Function CATCreateSewSkin
   * OptimizationInterfaces framework
@@ -303,7 +300,7 @@ The following are the new CAA V5R12 GA C++ Authorized APIs, compared with CAA V5
   * TopologicalOperators framework
     * Class CATTopSweepSkinSkinSegment
     * Macro or #define CATTopSweepWireSkinSegment
-```vbscript
+```cpp
     * Global Function CATCreateTopSweepSkinSkinSegment
     * Global Function CATCreateTopSweepWireSkinSegment
   * V5ToV4Geo framework

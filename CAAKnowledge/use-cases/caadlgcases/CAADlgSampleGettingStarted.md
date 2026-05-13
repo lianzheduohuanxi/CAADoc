@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Getting Started with Dialog Boxes"
-category: use-case case"
+category: "use-case case"
 module: "CAADlgUseCases"
-tags: ["CAADlgHelloWindow", "CAADlgHelloWindowId", "CAADlgHelloApplication", "CATInteractiveApplication", "CATIA", "CAADialog"]
-source_file: "Doc/online/CAADlgUseCases/CAADlgSampleGettingStarted.htmmd"
+tags: "["CAADlgHelloWindow", "CAADlgHelloWindowId", "CAADlgHelloApplication", "CATInteractiveApplication", "CATIA", "CAADialog"]"
+source_file: "Doc/online/CAADlgUseCases/CAADlgSampleGettingStarted.htm"
 converted: "2026-05-11T17:17:55.978720"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -52,14 +49,14 @@ CAADlgHelloApplication is a use case of the CAADialog.edu framework that illustr
 #### What Does CAADlgHelloApplication Do
 
 ```vbscript
-```vbscript
+```cpp
 For this example, you will simply display a prompt box that prints "Hello, CAA V5". To do this, derive your own application class, called _CAADlgHelloApplication_ , from the class _CATInteractiveApplication_ [2]. This application will:
 
 ```
 
 ```
 
-```vbscript
+```cpp
 For this example, you will simply display a prompt box that prints "Hello, CAA V5". To do this, derive your own application class, called _CAADlgHelloApplication_ , from the class _CATInteractiveApplication_ [2]. This application will:
   1. create a window to display "Hello, CAA V5" by deriving the class _CATDlgDocument_
   2. makes the window visible.
@@ -255,7 +252,6 @@ _pHelloApplication = NULL ;
 
       CATDlgLabel * pLabel = new **CATDlgLabel**(this,"MessageId");
 
-CATDlgLabel * pLabel = new **CATDlgLabel**(this,"MessageId");
       AddAnalyseNotificationCB(this,
 ```vbscript
                                 GetWindCloseNotification(#),
@@ -265,7 +261,7 @@ CATDlgLabel * pLabel = new **CATDlgLabel**(this,"MessageId");
 
     }
 
-```vbscript
+```cpp
 GetWindCloseNotification(#),
 (CATCommandMethod)&CAADlgHelloWindow::**Exit** , NULL);
     void CAADlgHelloWindow::**Exit**(CATCommand         * iSendingCommand,

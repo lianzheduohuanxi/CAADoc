@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Administrating Assembly Design Workbench Settings with Automation"
 category: "use-case"
 module: "CAAScdAsmUseCases"
-tags: ["CAAScdAsmUseCases", "CATIA", "CAAAsmModifyOptions"]
-source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmModifyOptions.htmmd"
+tags: "["CAAScdAsmUseCases", "CATIA", "CAAAsmModifyOptions"]"
+source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmModifyOptions.htm"
 converted: "2026-05-11T17:31:50.860146"
-```
-
 ---
 |
 ## Assembly
@@ -49,7 +46,7 @@ In addition to using the **Tools- >Options...** command, many settings can be ma
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Set settingControllers1 = CATIA.SettingControllers
 ```
 ```
@@ -61,7 +58,7 @@ In addition to using the **Tools- >Options...** command, many settings can be ma
     ' Assembly / General options
     ' ----------------------------
 
-```vbscript
+```cpp
     Set asmGeneralSetting = settingControllers1.Item("CATAsmGeneralSettingCtrl")
 ```
 ```
@@ -74,7 +71,7 @@ In addition to using the **Tools- >Options...** command, many settings can be ma
 
 ---
 
-```vbscript
+```cpp
 The first object retrieved is the SettingControllers collection object in the settingControllers1 variable. Since the setting controller collection is aggregated to the Application object, simply calling CATIA.SettingControllers returns this collection. The next line retrieves a setting controller in the asmGeneralSetting variable thanks to the Item method of the setting controller collection to which the setting controller identifier CATAsmGeneralSettingCtrl is passed as argument.
 
 ```
@@ -163,7 +160,7 @@ As the value for asmGeneralSetting.SetUpdateStatusModeLock is False in thefirst 
 
     ...
 ```vbscript
-```vbscript
+```cpp
     Set asmConstraintSetting = settingControllers1.Item("CATAsmConstraintSettingCtrl")
 ```
 ```
@@ -182,7 +179,6 @@ Constraints Property Page after Running Macro ![Tools Option Dialog Window for A
 ```vbscript
     asmConstraintSetting.PasteComponentMode = catPasteWithCstOnCopyAndCut
 
-asmConstraintSetting.PasteComponentMode = catPasteWithCstOnCopyAndCut
 ```
 
     paste = asmConstraintSetting.PasteComponentMode
@@ -217,9 +213,9 @@ Here the first line sets value "Always with the assembly constraints" for the se
 
 ```
 
-```vbscript
+```cpp
 newArray(4) = "CATAsmCoincidenceType"
-```vbscript
+```cpp
 newArray(5) = "CATAsmParallelType"
 ```
 

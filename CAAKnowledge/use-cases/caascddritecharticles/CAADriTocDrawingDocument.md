@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Drafting Automation Objects"
-category: tech-article
+category: "tech-article"
 module: "CAAScdDriTechArticles"
-tags: []
-source_file: "Doc/online/CAAScdDriTechArticles/CAADriTocDrawingDocument.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAAScdDriTechArticles/CAADriTocDrawingDocument.htm"
 converted: "2026-05-11T17:31:51.137172"
-```
-
 ---
 # Drafting Automation Objects
 

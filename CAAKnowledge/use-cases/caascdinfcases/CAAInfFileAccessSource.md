@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAAInfFileAccess.CATScript"
 category: "use-case"
 module: "CAAScdInfUseCases"
-tags: ["CATIA", "CAAInfFileAccess"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfFileAccessSource.htmmd"
+tags: "["CATIA", "CAAInfFileAccess"]"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfFileAccessSource.htm"
 converted: "2026-05-11T17:31:52.364041"
-```
-
 ---
 tags: ["CATIA", "CAAInfFileAccess"]
 source_file: "Doc/online/CAAScdInfUseCases/CAAInfFileAccessSource.htmmd"
@@ -16,7 +13,7 @@ converted: "2026-05-11T17:31:52.364041"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGTH DASSAULT SYSTEMES 2001
     ' ***********************************************************************
     '   Purpose:      Create a text file, duplicate it and read the result.
@@ -34,7 +31,7 @@ converted: "2026-05-11T17:31:52.364041"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -63,13 +60,13 @@ converted: "2026-05-11T17:31:52.364041"
 ```vbscript
         ' ------------------------------------------
         ' Get the file system object
-```vbscript
+```cpp
         Dim oFileSys As FileSystem
         Set oFileSys = CATIA.FileSystem
         ' ------------------------------------------
 ```
         ' Retrieve a folder for temporary files
-```vbscript
+```cpp
         Dim sTmpPath As String
         sTmpPath=CATIA.SystemService.Environ("CATTemp")
         If (Not oFileSys.FolderExists(sTmpPath)) Then
@@ -80,7 +77,7 @@ converted: "2026-05-11T17:31:52.364041"
 ```
         ' ------------------------------------------
         ' Delete possibly existing input and output files
-```vbscript
+```cpp
         Dim sFilOu As String ' Output file full path
         sFilOu = CATIA.FileSystem.ConcatenatePaths(sTmpPath, "caatmpfilou.txt")
         If (oFileSys.FileExists(sFilou)) Then
@@ -96,7 +93,7 @@ converted: "2026-05-11T17:31:52.364041"
 Dim sFilOu As String ' Output file full path
 ```vbscript
 ```
-```vbscript
+```cpp
 sFilOu = CATIA.FileSystem.ConcatenatePaths(sTmpPath, "caatmpfilou.txt")
 ```
 ```
@@ -116,7 +113,7 @@ If (oFileSys.FileExists(sFilou)) Then
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
         sFilIn = CATIA.FileSystem.ConcatenatePaths(sTmpPath, "caatmpfilin.txt")
         If (oFileSys.FileExists(sFilIn)) Then
 ```

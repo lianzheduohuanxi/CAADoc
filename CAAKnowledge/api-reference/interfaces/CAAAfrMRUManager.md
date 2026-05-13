@@ -1,54 +1,77 @@
 ---
 title: "CAAAfrMRUManager"
-type: "interface"
+type: "LocalClass"
 module: "CAAApplicationFrame"
-category: api-reference
-method_count: 3
-visibility: "local"
-has_tie_binding: false
-verified: true
+base: "CATBaseUnknown"
+method_count: 4
+source_file: "CAAApplicationFrame.edu/CAAAfrCustCommandHdrModel.m/LocalInterfaces/CAAAfrMRUManager.h"
 ---
+
 # CAAAfrMRUManager
 
-**模块**: CAAApplicationFrame  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 3
+> Implementation class of the CAAAfrMRUManager component. This component is instantiated once in using the global function GetCAAAfrMRUManager. System framework
 
-> COPYRIGHT DASSAULT SYSTEMES 2000
+**基类**: CATBaseUnknown | **模块**: CAAApplicationFrame | **方法数**: 4
 
 ## 依赖
 
+- `CATBaseUnknown.h`
 - `CATListOfCATUnicodeString.h`
 - `CATCallbackManager.h`
 - `CATIniCleanerSettingCtrl.h`
 
+## 虚方法
+
+### AddElement
+
+```cpp
+virtual HRESULT AddElement(CATUnicodeString &iNewElement) ;
+```
+
+CAAIAfrMRUManagement
+
+| 参数 | 类型 |
+|------|------|
+| &iNewElement | `CATUnicodeString` |
+
+
+### GetElementList
+
+```cpp
+virtual HRESULT GetElementList(CATListOfCATUnicodeString &ElementList) const ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| &ElementList | `CATListOfCATUnicodeString` |
+
+
+### SelectElement
+
+```cpp
+virtual HRESULT SelectElement(int iPosition) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iPosition | `int` |
+
+
+## 静态方法
+
+### GetMRUManager
+
+```cpp
+static HRESULT GetMRUManager(CAAAfrMRUManager ** oManager) ;
+```
+
+Retrieves or creates the unic instance class This method must only be called by the global function GetCAAAfrMRUManager defined in PublicInterfaces of this Framework
+
+| 参数 | 类型 |
+|------|------|
+| oManager | `CAAAfrMRUManager **` |
+
+
 ---
 
-## Interface Overview
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-- [3D PLM Enterprise Architecture](../../use-cases/caaafrcases/CAAAfrSampleMRUHdr.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAApplicationFrame.edu/CAAAfrCustCommandHdrModel.m/LocalInterfaces/CAAAfrMRUManager.h`

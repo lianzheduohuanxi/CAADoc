@@ -1,50 +1,31 @@
 ---
 title: "CAAEMmrCombinedCurveContSubMenu"
-type: "interface"
+type: "LocalClass"
 module: "CAAMechanicalModeler"
-category: api-reference
+base: "CATBaseUnknown"
 method_count: 1
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAMechanicalModeler.edu/CAAMmrCombinedCurveUI.m/LocalInterfaces/CAAEMmrCombinedCurveContSubMenu.h"
 ---
+
 # CAAEMmrCombinedCurveContSubMenu
 
-**模块**: CAAMechanicalModeler  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 1
+> Implementation of CATIContextualSubMenu for the Combined Curve You are adding commands which appears in the <CombinedCurve> object menu of the contextual menu. To do this, we create and arrange command starters that we associate with commands using command headers. These command headers are referred to using their identifiers. Here each command header is defined in the Part Document workshop ****************************************************************************** Explanation: The sub menu must be a data member to manage its life cycle. It can be identical or different from a call to another. . If it is identical, it can be created in the constructor, returned in the GetContextualSubMenu method, and deleted in the destructor. This is the case here . Otherwise, it must be created in the GetContextualSubMenu method. To correctly manage its life cycle, it must be deleted: . whenever calling GetContextualSubMenu . in the destructor when the class itself is deleted ****************************************************************************** Main Methods: Constructor            -> Builds the  sub menu Destructor             -> Deletes it GetContextualSubMenu() -> Returns it ******************************************************************************
 
-> Constructor            -> Builds the  sub menu
+**基类**: CATBaseUnknown | **模块**: CAAMechanicalModeler | **方法数**: 1
 
 ## 依赖
 
----
+- `CATBaseUnknown.h`
 
-## Interface Overview
+## 虚方法
 
-**Inherited Methods**: Please refer to the base interface documentation above.
+### GetContextualSubMenu
 
----
+```cpp
+virtual CATCmdAccess * GetContextualSubMenu() ;
+```
 
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
 
 ---
 
-## Related Use Cases
-
-- [3D PLM Enterprise Architecture](../../use-cases/caaafrcases/CAAAfrSampleContextualMenu.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAMechanicalModeler.edu/CAAMmrCombinedCurveUI.m/LocalInterfaces/CAAEMmrCombinedCurveContSubMenu.h`

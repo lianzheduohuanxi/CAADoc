@@ -211,15 +211,15 @@ interface to create contrainst on the elements and also solve dimension system.
 
 *Copyright  2000, Dassault Systmes. All rights reserved.*
 
-```vbscript
+```cpp
 e:&gt; CAASkiBasicGeometries Result.CATPart
 ```
 
-```vbscript
+```cpp
 $ CAASkiBasicGeometries Result.CATPart
 ```
 
-```vbscript
+```cpp
 int main(int    iArgc,   // Number of arguments (1) 
          char** iArgv)   // Path to the new *.CATPart document
 {
@@ -247,7 +247,7 @@ int main(int    iArgc,   // Number of arguments (1)
 ...
 ```
 
-```vbscript
+```cpp
 ...
   CATLISTV(CATISpecObject_var) spRefPlanes = spPart-&gt;GetReferencePlanes(#);
 
@@ -262,7 +262,7 @@ int main(int    iArgc,   // Number of arguments (1)
 ...
 ```
 
-```vbscript
+```cpp
 ...
   CATI2DWFFactory_var sketch2DFactory(spSketch); // Retrieves the 2D factory to create elements
   CATI2DPoint_var spPt_bottom_left, spPt_bottom_right, spPt_top_right, spPt_top_left;
@@ -297,7 +297,7 @@ int main(int    iArgc,   // Number of arguments (1)
 ...
 ```
 
-```vbscript
+```cpp
 ...
   CATI2DConstraintFactory_var spConstraint2DFactory(spSketch);
   spConstraint2DFactory-&gt;CreateConstraint( spLine1, NULL, NULL, NULL, NULL, NULL, NULL, 
@@ -323,7 +323,7 @@ int main(int    iArgc,   // Number of arguments (1)
 ...
 ```
 
-```vbscript
+```cpp
 ...
   CATLISTV(CATI2DWFGeometry_var) spSoftReferences(1);
   spSoftReferences.Append(spPt_bottom_left);
@@ -331,7 +331,7 @@ int main(int    iArgc,   // Number of arguments (1)
 ...
 ```
 
-```vbscript
+```cpp
 ...
   CATI2DAxis_var spSupport;
   spSketch-&gt;GetAbsolute2DAxis(spSupport);
@@ -342,7 +342,7 @@ int main(int    iArgc,   // Number of arguments (1)
 ...
 ```
 
-```vbscript
+```cpp
 ...
   double radius = 10.;
   double pt_center[2]  = {70., 40.};
@@ -364,7 +364,7 @@ int main(int    iArgc,   // Number of arguments (1)
 ...
 ```
 
-```vbscript
+```cpp
 ...
   CATDocumentServices::SaveAs(*pDocument,pFileName);
   pSession-&gt;Delete_Session(pSessionIdent);

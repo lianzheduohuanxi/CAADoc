@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Querying Schematic Document Content"
 category: "use-case"
 module: "CAAScdSchUseCases"
-tags: ["CAASCH_CompRoute01", "CAADoc", "CAASchQueryCompRoute", "CAAScdSchUseCases", "CATIA", "CAASchAppBase", "CAASCHEDUApp", "CAASchPlatformModeler", "CATIASchCntrLocation", "CAASchAppUtilities"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchQueryCompRoute.htmmd"
+tags: "["CAASCH_CompRoute01", "CAADoc", "CAASchQueryCompRoute", "CAAScdSchUseCases", "CATIA", "CAASchAppBase", "CAASCHEDUApp", "CAASchPlatformModeler", "CATIASchCntrLocation", "CAASchAppUtilities"]"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchQueryCompRoute.htm"
 converted: "2026-05-11T17:31:51.448432"
-```
-
 ---
 ## Schematics Platform Modeler
 
@@ -18,7 +15,6 @@ converted: "2026-05-11T17:31:51.448432"
 
  This macro shows you how to query for information from a Schematic design document. The information includes the following:
 
-This macro shows you how to query for information from a Schematic design document. The information includes the following:
   1. A list of all Schematic components (references or instances) in the document.
   2. A list of all Schematic routes in the document.
   3. The placement matrix of a specific Schematic component instance.
@@ -49,7 +45,6 @@ This macro open the CAASCH_CompRoute01.CATProduct document for querying informat
 [CAASchQueryCompRoute.CATScript ](CAASchQueryCompRouteSource.md) is located in the CAAScdSchUseCases module. [Execute macro](macros/CAASchQueryCompRoute.CATScript) (windows only).
  CAASchQueryCompRoute includes the following steps:
 
-CAASchQueryCompRoute includes the following steps:
   1. Prolog
   2. Query for the name of the current document in the session.
   3. Query for a list of Schematic reference components in the document.
@@ -77,7 +72,7 @@ The macro first loads the document: CAASCH_CompRoute01.CATProduct. |     ...
     Dim sFilePath
 ```vbscript
 ```
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
 ```
@@ -92,7 +87,7 @@ Dim sFilePath
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
@@ -312,7 +307,7 @@ For each connector in the returned list, the macro calls the method calls GetPos
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
                         Set objCntr = objLCntrs.Item (iCntr,"CATIASchCntrLocation")
                         If ( Not ( objCntr Is Nothing )) Then
 ```

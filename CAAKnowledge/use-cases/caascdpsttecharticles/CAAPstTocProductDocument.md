@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Product Document Automation Objects"
-category: tech-article
+category: "tech-article"
 module: "CAAScdPstTechArticles"
-tags: ["CATIA", "CATIAFixTogethers"]
-source_file: "Doc/online/CAAScdPstTechArticles/CAAPstTocProductDocument.htmmd"
+tags: "["CATIA", "CATIAFixTogethers"]"
+source_file: "Doc/online/CAAScdPstTechArticles/CAAPstTocProductDocument.htm"
 converted: "2026-05-11T17:31:52.343589"
-```
-
 ---
 # Product Document Automation Objects
 
@@ -44,7 +41,6 @@ converted: "2026-05-11T17:31:52.343589"
 
 The **ProductDocument** object aggregates, or includes, a product tree structure starting with a single product, named the root product, which includes a collection of products. Each of the products of this collection can itself include a collection of products, and so forth.
 
-The **ProductDocument** object aggregates, or includes, a product tree structure starting with a single product, named the root product, which includes a collection of products. Each of the products of this collection can itself include a collection of products, and so forth.
 Each product is positioned in the 3D space thanks to the **Position** object which represents the product's 3D-axis system expressed with respect to the assembly's 3D-axis system. The **Move** object allows the object moving. Constraints can be set to constrain the product's position and move.
 
 The following diagram shows such a tree structure for a (simple) car.
@@ -90,7 +86,7 @@ The two collections of **Constraint** and **FixTogether** objects can be retriev
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
     Set fixTogethers1 = product1.Connections("CATIAFixTogethers")
 
 ```
@@ -105,7 +101,7 @@ The two collections of **Constraint** and **FixTogether** objects can be retriev
 Dim fixTogethers1 As FixTogethers
 ```vbscript
 ```
-```vbscript
+```cpp
 Set fixTogethers1 = product1.Connections("CATIAFixTogethers")
 ```
 ```
@@ -127,7 +123,7 @@ Dim oRootProduct As Product
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
     Dim oMatManager As MaterialManager
     Set oMatManager = oRootProduct.GetItem("CATMatManagerVBExt")
 
@@ -143,7 +139,7 @@ Dim oRootProduct As Product
 Dim oMatManager As MaterialManager
 ```vbscript
 ```
-```vbscript
+```cpp
 Set oMatManager = oRootProduct.GetItem("CATMatManagerVBExt")
 ```
 ```

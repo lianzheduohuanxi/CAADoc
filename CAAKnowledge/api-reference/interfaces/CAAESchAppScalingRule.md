@@ -1,53 +1,34 @@
 ---
 title: "CAAESchAppScalingRule"
-type: "interface"
+type: "LocalClass"
 module: "CAASchPlatformModeler"
-category: api-reference
 base: "CATEASchAppScalingRule"
-inheritance_chain: "CAAESchAppScalingRule → CATEASchAppScalingRule"
 method_count: 1
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAASchPlatformModeler.edu/CAASchAppBase.m/LocalInterfaces/CAAESchAppScalingRule.h"
 ---
+
 # CAAESchAppScalingRule
 
-**基类**: CATEASchAppScalingRule  
-**继承链**: CAAESchAppScalingRule → CATEASchAppScalingRule  
-**模块**: CAASchPlatformModeler  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 1
-
-> =============================================================================
+**基类**: CATEASchAppScalingRule | **模块**: CAASchPlatformModeler | **方法数**: 1
 
 ## 依赖
 
 - `CATEASchAppScalingRule.h`
 - `CATBaseUnknown.h`
 
+## 虚方法
+
+### AppGetScalingPriority
+
+```cpp
+virtual HRESULT AppGetScalingPriority(int *oPriority) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *oPriority | `int` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATEASchAppScalingRule**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAASchPlatformModeler.edu/CAASchAppBase.m/LocalInterfaces/CAAESchAppScalingRule.h`

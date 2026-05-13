@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a CAA V5 Batch"
-category: use-case case"
+category: "use-case case"
 module: "CAABatUseCases"
-tags: ["CAABatBatchSample", "CATIBatchElementCAA", "CATIBatch", "CATIBatchCAA", "CATIBatchElementsCAA", "CAABatchInfrastructure"]
-source_file: "Doc/online/CAABatUseCases/CAABatBatchSample.htmmd"
+tags: "["CAABatBatchSample", "CATIBatchElementCAA", "CATIBatch", "CATIBatchCAA", "CATIBatchElementsCAA", "CAABatchInfrastructure"]"
+source_file: "Doc/online/CAABatUseCases/CAABatBatchSample.htm"
 converted: "2026-05-11T17:33:45.740129"
-```
-
 ---
 # Middleware
 
@@ -68,7 +65,6 @@ Warning: this batch sample does not convert model file to CATPart file. It is on
 
 The parameter file syntax is decided by the batch author, depending on the Batch Infrastructure rules.
 
-The parameter file syntax is decided by the batch author, depending on the Batch Infrastructure rules.
 The parameter file used in this sample is _
  _ |
 
@@ -160,7 +156,6 @@ To launch the use case you have to follow the following steps:
 
 The CAABatBatchSample use case is made of a single function named batchmain located in the CAABatBatchSample.m module of the CAABatchInfrastructure.edu framework:
 
-The CAABatBatchSample use case is made of a single function named batchmain located in the CAABatBatchSample.m module of the CAABatchInfrastructure.edu framework:
 Windows | InstallRootDirectory/CAABatchInfrastructure.edu/ CAABatBatchSample.m/
 
 The CAABatBatchSample use case is made of a single function named batchmain located in the CAABatBatchSample.m module of the CAABatchInfrastructure.edu framework:
@@ -202,7 +197,6 @@ execution.
 #### Using the batch log
 
     CATBatchLogCAA::PutInLog("filepath: ");
-CATBatchLogCAA::PutInLog("filepath: ");
     CATBatchLogCAA::PutInLog(usfile_path.CastToCharPtr(#) );
 
     CATBatchLogCAA::PutInLog("/n");
@@ -308,7 +302,6 @@ CATBatchLogCAA::PutInLog("/n");
 
 An other call could have been:
 
-An other call could have been:
         elem->ParameterCAA(“file1”, inputFile ) ;
 
         elem->ParameterCAA(“file2”, inputFile ) ;
@@ -400,7 +393,6 @@ The output parameters are read in the parameter file.
 #### Renaming input files
 
     char in_filename[CATMaxPathSize];
-char in_filename[CATMaxPathSize];
     char in_dirname[CATMaxPathSize];
 
     char out_fullfilename[CATMaxPathSize];
@@ -416,7 +408,7 @@ char in_filename[CATMaxPathSize];
     {
 CATBatchLogCAA::PutInLog("Output Creation /n");
 for (int ii=1; ii<=listOfV4Files.Size(#); ii++)
-```vbscript
+```cpp
     	memset(in_filename, '/0', CATMaxPathSize);
     	memset(in_dirname, '/0', CATMaxPathSize);
     	memset(out_fullfilename, '/0', CATMaxPathSize);
@@ -427,7 +419,7 @@ for (int ii=1; ii<=listOfV4Files.Size(#); ii++)
 
     	char* ptr = NULL;
     	CATSysStrtok(in_filename, ".", &ptr);
-```vbscript
+```cpp
     	sprintf(out_fullfilename, "%s%c%s.CATPart", us_path.ConvertToChar(#) , dir_delim, in_filename);
 
 ```

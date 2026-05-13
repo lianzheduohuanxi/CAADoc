@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Fillet: Untwist"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperatorsInterfaces", "CATICGMDynAdvancedFillet", "CATICGMDynFillet", "CAATopAdvancedFillets", "CAAGMOperatorsAllFillets"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcFilletUntwist.htmmd"
+tags: "["CAAGMOperatorsInterfaces", "CATICGMDynAdvancedFillet", "CATICGMDynFillet", "CAATopAdvancedFillets", "CAAGMOperatorsAllFillets"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcFilletUntwist.htm"
 converted: "2026-05-11T17:33:48.922069"
-```
-
 ---
 tags: ["CAAGMOperatorsInterfaces", "CATICGMDynAdvancedFillet", "CATICGMDynFillet", "CAATopAdvancedFillets", "CAAGMOperatorsAllFillets"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcFilletUntwist.htmmd"
@@ -63,7 +60,7 @@ NULL);
     CATDynEdgeFilletRibbon * pRibbon = new 	CATDynEdgeFilletRibbon(listEdges, listRadius);
 
     ...
-```vbscript
+```cpp
 CATLISTP(CATDynFilletRadius) listRadius;
 listRadius.Append(pRadius);
 CATDynEdgeFilletRibbon * pRibbon = new 	CATDynEdgeFilletRibbon(listEdges, listRadius);

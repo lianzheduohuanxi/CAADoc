@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating an Open Body"
-category: tech-article article"
+category: "tech-article article"
 module: "CAAGsiTechArticles"
-tags: ["CATIPrtPart", "CAAGsiNozzle", "CATIPrtManagement_var", "CATIPrtContainer", "CATIMechanicalRootFactory", "CAAGSMInterfaces", "CAAGsiUserTools", "CATIContainer_var", "CATIA", "CATIGSMFactory", "CATIGSMTool", "CATIPrtPart_var", "CATIDescendants_var", "CATInit_var", "CATIBasicTool_var", "CATISpecObject_var", "CATIDescendants", "CAAGsiToolkit", "CATIBasicTool", "CATIPrtManagement"]
-source_file: "Doc/online/CAAGsiTechArticles/CAAGsiCreateGSMTool.htmmd"
+tags: "["CATIPrtPart", "CAAGsiNozzle", "CATIPrtManagement_var", "CATIPrtContainer", "CATIMechanicalRootFactory", "CAAGSMInterfaces", "CAAGsiUserTools", "CATIContainer_var", "CATIA", "CATIGSMFactory", "CATIGSMTool", "CATIPrtPart_var", "CATIDescendants_var", "CATInit_var", "CATIBasicTool_var", "CATISpecObject_var", "CATIDescendants", "CAAGsiToolkit", "CATIBasicTool", "CATIPrtManagement"]"
+source_file: "Doc/online/CAAGsiTechArticles/CAAGsiCreateGSMTool.htm"
 converted: "2026-05-11T17:31:50.660543"
-```
-
 ---
 # Shape Design & Styling
 
@@ -41,7 +38,6 @@ This article discusses the Open Body The class CAAGsiUserTools Objec explains ho
 
 An "Open Body" is a mechanical modeler object required as father for any GSD feature to be insert in a part document.
 
-An "Open Body" is a mechanical modeler object required as father for any GSD feature to be insert in a part document.
 This article is intended to help you make your first steps in programming with CATIA Shape Design [1]. Its main intent is to practically describe the creation of the open body
 
 Before creating this open body, you will have to navigate through the feature model of CATIA V5 to find the objects that will enable you to create this open body (also called a GSMTool object) under the part feature.
@@ -104,7 +100,6 @@ We will now first comment the Part document creation and intialization in the me
 
 We first have created a Part document handled using the `_pDoc` smart pointer. We have stored the `_pFact` pointer in the _CAAGsiUserTools_ class in the method `Init` that has to be called before doing anything with a _CAAGsiUserTools_ object.
 
-We first have created a Part document handled using the `_pDoc` smart pointer. We have stored the `_pFact` pointer in the _CAAGsiUserTools_ class in the method `Init` that has to be called before doing anything with a _CAAGsiUserTools_ object.
     HRESULT CAAGsiUserTools::Init(char *& iSessionName)
 
     {
@@ -124,7 +119,7 @@ HRESULT rc = S_OK;
 CATInit_var spInit = **_pDoc** ;
 spInit->Init(TRUE);
 CATIPrtContainer * piPartContainer = (CATIPrtContainer*) spInit->**GetRootContainer**("CATIPrtContainer");
-```vbscript
+```cpp
       rc = piPartContainer -> QueryInterface(IID_CATIGSMFactory, (void**)&**_pFact**);
 
 ```
@@ -141,7 +136,6 @@ Once the Part document is created, it must be initialized thanks to the `Init` m
 
 We need a _CATIPrtPart_ interface pointer onto the Part Container feature to be able to get the current Tool Feature.
 
-We need a _CATIPrtPart_ interface pointer onto the Part Container feature to be able to get the current Tool Feature.
     CATIGSMTool_var CAAGsiUserTools::**CreateGSMTool**(const CATUnicodeString &iName,
                                                    int                    iSetAsCurrent,
                                                    int                    iTopLevel)
@@ -169,7 +163,6 @@ Now that we have retrieved the Part feature, we can retrieve the current tool, t
 
       ...
       CATIGSMTool_var spTool = NULL_var;
-CATIGSMTool_var spTool = NULL_var;
 ```vbscript
       if ( NULL_var != spPart )
 

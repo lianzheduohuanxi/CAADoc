@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Combo Command Header"
-category: use-case case"
+category: "use-case case"
 module: "CAAAfrUseCases"
-tags: ["CAAAfrMRUHeader", "CAAGeometry", "CAAAfrComboColorNotification", "CAAAfrComboColorHeader", "CAAAfrComboColorRep", "CAAAfrComboColorHdr", "CAAIAfrTemporaryObjectColor", "CAAAfrComboRep", "CAAAfrComboRepId", "CATIAfrCommandHeaderRep", "CAAIAfrGeometryWksAddin", "CAAAfrGeoChartWindowAdn", "CAASysGeomRootObj", "CAASysGeoRootObj", "CATImplementHeaderResources", "CAAAfrEduCombo", "CAAApplicationFrame", "CAAAfrCustomizedCommandHeader", "CAAAfrGeoWksAddin2"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleComboHdr.htmmd"
+tags: "["CAAAfrMRUHeader", "CAAGeometry", "CAAAfrComboColorNotification", "CAAAfrComboColorHeader", "CAAAfrComboColorRep", "CAAAfrComboColorHdr", "CAAIAfrTemporaryObjectColor", "CAAAfrComboRep", "CAAAfrComboRepId", "CATIAfrCommandHeaderRep", "CAAIAfrGeometryWksAddin", "CAAAfrGeoChartWindowAdn", "CAASysGeomRootObj", "CAASysGeoRootObj", "CATImplementHeaderResources", "CAAAfrEduCombo", "CAAApplicationFrame", "CAAAfrCustomizedCommandHeader", "CAAAfrGeoWksAddin2"]"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleComboHdr.htm"
 converted: "2026-05-11T17:17:55.651120"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -147,7 +144,6 @@ Do not type the module name on the command line, but type CNEXT instead. When th
 
 The CAAAfrComboColorHeader use case is made of several classes located in three modules of the CAAApplicationFrame.edu framework:
 
-The CAAAfrComboColorHeader use case is made of several classes located in three modules of the CAAApplicationFrame.edu framework:
 Windows | `InstallRootDirectory/CAAApplicationFrame.edu/`
 
 The CAAAfrComboColorHeader use case is made of several classes located in three modules of the CAAApplicationFrame.edu framework:
@@ -186,7 +182,6 @@ The `CAAAfrGeoWksAddin2.``m` module contains an Add-in of the CAAGeometry worksh
 
 There are four logical steps in CAAAfrComboColorHeader:
 
-There are four logical steps in CAAAfrComboColorHeader:
   1. Creating the Component Representing the Current Color in the Combo
   2. Creating the Component Representing the Command Header
   3. Creating the Class Instantiating the Graphic Representation
@@ -386,7 +381,7 @@ Here the CAAAfrComboColorHeader header file:
                       Implementation,
 
                       **CATAfrDialogCommandHeader** ,
-```vbscript
+```cpp
 CATImplementClass(CAAAfrComboColorHeader,
 Implementation,
                       CATNull);
@@ -475,7 +470,7 @@ Here the CAAEAfrCommandHeaderRepForComboColor source file
 
                       **CAAAfrComboColorHeader**);
     };
-```vbscript
+```cpp
 CATImplementClass(CAAEAfrCommandHeaderRepForComboColor,
 DataExtension,
 CATBaseUnknown,
@@ -555,7 +550,7 @@ The combo header has no representation in the menu bar or in a contextual menu, 
 
 This class is the _CAAAfrComboRep_ class. Its main roles are:
 
-```vbscript
+```cpp
   * Set a callback to be informed when the current color on the CAASysGeomRootObj component changes, see Creating the Data Model Representing the Current Color in the Combo step
   * Create a _CATDlgCombo_ instance
 ```
@@ -707,7 +702,7 @@ if ( NULL != _pUIActiveObject )
 ```
 
     	          "CAAAfrComboColorNotification",
-```vbscript
+```cpp
 if ( NULL != _pUIActiveObject )
 _pUIActiveObject,
     	          (CATSubscriberMethod)&CAAAfrComboRep::**ModifiedCB** ,
@@ -786,7 +781,7 @@ HRESULT  CAAAfrComboRep::Build(#)
 
 HRESULT  CAAAfrComboRep::Build(#)
 const CATDialog * pParent = NULL ;
-```vbscript
+```cpp
        _pCombo = new **CATDlgCombo**((CATDialog *)pParent, "CAAAfrEduCombo", CATDlgCmbColor);
 
 ```

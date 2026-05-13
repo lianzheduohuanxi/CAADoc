@@ -1,63 +1,52 @@
 ---
 title: "CAAISysRevolAxis"
-type: "interface"
+type: "LocalClass"
 module: "CAASystem"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAISysRevolAxis → CATBaseUnknown"
 method_count: 2
-visibility: "local"
-has_tie_binding: true
-verified: true
+source_file: "CAASystem.edu/CAASysDerivationOM.m/LocalInterfaces/CAAISysRevolAxis.h"
 ---
-> **TIE实现**: unknown
 
 # CAAISysRevolAxis
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAISysRevolAxis → CATBaseUnknown  
-**模块**: CAASystem  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 2
-
 > Interface to manage an axis of revolution
+
+**基类**: CATBaseUnknown | **模块**: CAASystem | **方法数**: 2
 
 ## 依赖
 
 - `CATBaseUnknown.h`
 
-## TIE实现
+## 纯虚方法 (接口契约)
 
-**实现文件**:
-- `CAAESysCreateInstanceForRevolSurface.cpp`
-- `CAAESysCreateInstanceForSurface.cpp`
-- `CAAESysRevolAxis.cpp`
-- `CAAESysRevolSurfaceArea.cpp`
-- `CAAESysSurfaceArea.cpp`
+### GetAxis
+
+```cpp
+virtual HRESULT GetAxis(float &oX, float &oY, float &oZ) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| &oX | `float` |
+| &oY | `float` |
+| &oZ | `float` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### SetAxis
+
+```cpp
+virtual HRESULT SetAxis(const float iX, const float iY, const float iZ) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iX | `const float` |
+| iY | `const float` |
+| iZ | `const float` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
 
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAASystem.edu/CAASysDerivationOM.m/LocalInterfaces/CAAISysRevolAxis.h`

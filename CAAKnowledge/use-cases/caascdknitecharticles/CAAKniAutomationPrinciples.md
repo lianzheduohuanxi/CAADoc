@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Knowledge Advisor Overview"
 category: "concept"
 module: "CAAScdKniTechArticles"
-tags: ["CATIA"]
-source_file: "Doc/online/CAAScdKniTechArticles/CAAKniAutomationPrinciples.htmmd"
+tags: "["CATIA"]"
+source_file: "Doc/online/CAAScdKniTechArticles/CAAKniAutomationPrinciples.htm"
 converted: "2026-05-11T17:31:52.000294"
-```
-
 ---
 ## Automation
 
@@ -42,7 +39,7 @@ You can retrieve a Parameters object that way:
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
     Set oActiveDoc = CATIA.ActiveDocument
 
     Dim oParams As Parameters

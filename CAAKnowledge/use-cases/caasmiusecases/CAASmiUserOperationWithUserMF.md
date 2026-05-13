@@ -219,7 +219,7 @@ We will see now how to compute the tool path of our operation [3].
 
 *Copyright  2002, Dassault Systmes. All rights reserved.*
 
-```vbscript
+```cpp
 ...
   // Tie the implementation to its interface
   #include &quot;TIE_CATIMfgGeometryActivity.h&quot;
@@ -227,7 +227,7 @@ We will see now how to compute the tool path of our operation [3].
   ...
 ```
 
-```vbscript
+```cpp
 ...
   // Associates a machining feature
   CATIMfgActivity * pActivity = NULL;
@@ -254,7 +254,7 @@ We will see now how to compute the tool path of our operation [3].
   ...
 ```
 
-```vbscript
+```cpp
 ...
   // Loads catalog	  
   CATUnicodeString CatalogFeature ("CAAUserMachiningFeatures.CATfct");	
@@ -268,7 +268,7 @@ We will see now how to compute the tool path of our operation [3].
   ...
 ```
 
-```vbscript
+```cpp
 ...
   // Creates the machining feature (associated in Catalog)	  
   if (SUCCEEDED(oRC))
@@ -283,7 +283,7 @@ We will see now how to compute the tool path of our operation [3].
   ...
 ```
 
-```vbscript
+```cpp
 ...	
   // Adds the feature in the MfgView
   SEQUENCE(CATBaseUnknown_ptr) ListOfMfgView;
@@ -311,7 +311,7 @@ We will see now how to compute the tool path of our operation [3].
   ...
 ```
 
-```vbscript
+```cpp
 ...
   CATIEdit * pEdit = NULL;
   HRESULT RC = _spGuide-&gt;QueryInterface(IID_CATIEdit, (void**) &amp;pEdit);
@@ -325,7 +325,7 @@ We will see now how to compute the tool path of our operation [3].
   ...
 ```
 
-```vbscript
+```cpp
 ...
   CATISmgNcGeometryParameter * pSmgParameter = NULL;
   HRESULT RC = _spGuide-&gt;QueryInterface(IID_CATISmgNcGeometryParameter, (void**) &amp;pSmgParameter);
@@ -338,7 +338,7 @@ We will see now how to compute the tool path of our operation [3].
   ...
 ```
 
-```vbscript
+```cpp
 ...
   // Creates a empty zone
   CATISmgFactory * pSmgFactory = NULL;
@@ -365,7 +365,7 @@ We will see now how to compute the tool path of our operation [3].
   ...
 ```
 
-```vbscript
+```cpp
 ...
   CATISmgNcGeometryParameter * pSmgParameter = NULL;
   HRESULT RC = _spGuide-&gt;QueryInterface(IID_CATISmgNcGeometryParameter, (void**) &amp;pSmgParameter);

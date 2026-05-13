@@ -1,53 +1,112 @@
 ---
 title: "CAADegAnalysisEltTypeCmd"
-type: "interface"
+type: "LocalClass"
 module: "CAADialogEngine"
-category: api-reference
 base: "CATStateCommand"
-inheritance_chain: "CAADegAnalysisEltTypeCmd → CATStateCommand"
-method_count: 1
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 7
+source_file: "CAADialogEngine.edu/CAADegGeoCommands.m/LocalInterfaces/CAADegAnalysisEltTypeCmd.h"
 ---
+
 # CAADegAnalysisEltTypeCmd
 
-**基类**: CATStateCommand  
-**继承链**: CAADegAnalysisEltTypeCmd → CATStateCommand  
-**模块**: CAADialogEngine  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 1
+> State command which highlights the objects of a given type. Illustrates: Creation of a State command Use of CATPathElementAgent and CATDialogAgent Use of the CATPSO Creation of a contextual menu Usage: Right click ==> A contextual menu displays a list of object types. Select a type ==> The objects of this type are highlighted. Graph: Is composed of one state containing 2 agents: a CATPathElementAgent to react to right clicks on an object a CATDialogAgent to react to other right clicks (so on the background) Any right click triggers a transition which displays the contextual menu. Each menu item is associated with a callback which highlights the the objects of the specified type by putting this objects into the Set of Prehighlighted Objects (CATPSO). The CATPSO is emptied at the end of the command. The command ends when the user selects another command. +--------------------------+<--+ ! PathAgent   DialogAgent  !   !  CreateCntxMenu +--------------------------+---+ Inheritance: CATStateCommand (DialogEngine Framework) CATCommand (System Framework) CATEventSubscriber (System Framework) CATBaseUnknown (System Framework) Main Method: BuilGraph CreateCntxMenu : Display the contextual menu ShowLine, ShowPoint, ShowCircle, ShowEllipse ShowPlane: callbacks associated the menu items. Highlight the objects of a given type. DialogEngine Framework
 
-> Visualization Framework
+**基类**: CATStateCommand | **模块**: CAADialogEngine | **方法数**: 7
 
 ## 依赖
 
 - `CATStateCommand.h`
 - `CATPathElement.h`
 
+## 虚方法
+
+### BuildGraph
+
+```cpp
+virtual void BuildGraph() ;
+```
+
+BuildGraph ----------- Implements the statechart. Shows a contextual menu only when you click in the background viewer.
+
+
+## 公共方法
+
+### CreateCntxMenu
+
+```cpp
+CATBoolean CreateCntxMenu(void * iUsefulData) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iUsefulData | `void *` |
+
+
+### ShowPoint
+
+```cpp
+void ShowPoint(CATCommand *iPublishingCommand, CATNotification *iNotification, CATCommandClientData iUsefulData) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iPublishingCommand | `CATCommand` |
+| *iNotification | `CATNotification` |
+| iUsefulData | `CATCommandClientData` |
+
+
+### ShowLine
+
+```cpp
+void ShowLine(CATCommand *iPublishingCommand, CATNotification *iNotification, CATCommandClientData iUsefulData) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iPublishingCommand | `CATCommand` |
+| *iNotification | `CATNotification` |
+| iUsefulData | `CATCommandClientData` |
+
+
+### ShowCircle
+
+```cpp
+void ShowCircle(CATCommand *iPublishingCommand, CATNotification *iNotification, CATCommandClientData iUsefulData) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iPublishingCommand | `CATCommand` |
+| *iNotification | `CATNotification` |
+| iUsefulData | `CATCommandClientData` |
+
+
+### ShowEllipse
+
+```cpp
+void ShowEllipse(CATCommand *iPublishingCommand, CATNotification *iNotification, CATCommandClientData iUsefulData) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iPublishingCommand | `CATCommand` |
+| *iNotification | `CATNotification` |
+| iUsefulData | `CATCommandClientData` |
+
+
+### ShowPlane
+
+```cpp
+void ShowPlane(CATCommand *iPublishingCommand, CATNotification *iNotification, CATCommandClientData iUsefulData) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iPublishingCommand | `CATCommand` |
+| *iNotification | `CATNotification` |
+| iUsefulData | `CATCommandClientData` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATStateCommand**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAADialogEngine.edu/CAADegGeoCommands.m/LocalInterfaces/CAADegAnalysisEltTypeCmd.h`

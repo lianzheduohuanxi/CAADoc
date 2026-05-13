@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "New C++ Authorized APIs in CAA V5-6R2012 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
-tags: ["CATIVpmLightQueryManager", "CATIPrtExplodeServices", "CATIGSMMultiSelAccess", "CATIGSMUIFactory", "CATIGSMGrid", "CATICGMObjectsSaveDiagnosis", "CATIEwrWire", "CATIGSMWorkingSupport", "CATIGSMMultiSelManager", "CATIGSMCartesianGrid", "CATIGSMAutomaticFillGeo", "CATIGSMFactoryGeo", "CATIDdeDxfSettingAtt", "CATIDdeIg2SettingAtt", "CATIGSM3DFurtiveGrid", "CATIA", "CATIGSMTransfer", "CATIGSMWorkingSupportFactory", "CATIGSMWorkingSupportSet"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R22GANewCPPAPI.htmmd"
+tags: "["CATIVpmLightQueryManager", "CATIPrtExplodeServices", "CATIGSMMultiSelAccess", "CATIGSMUIFactory", "CATIGSMGrid", "CATICGMObjectsSaveDiagnosis", "CATIEwrWire", "CATIGSMWorkingSupport", "CATIGSMMultiSelManager", "CATIGSMCartesianGrid", "CATIGSMAutomaticFillGeo", "CATIGSMFactoryGeo", "CATIDdeDxfSettingAtt", "CATIDdeIg2SettingAtt", "CATIGSM3DFurtiveGrid", "CATIA", "CATIGSMTransfer", "CATIGSMWorkingSupportFactory", "CATIGSMWorkingSupportSet"]"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R22GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.519115"
-```
-
 ---
 tags: ["CATIVpmLightQueryManager", "CATIPrtExplodeServices", "CATIGSMMultiSelAccess", "CATIGSMUIFactory", "CATIGSMGrid", "CATICGMObjectsSaveDiagnosis", "CATIEwrWire", "CATIGSMWorkingSupport", "CATIGSMMultiSelManager", "CATIGSMCartesianGrid", "CATIGSMAutomaticFillGeo", "CATIGSMFactoryGeo", "CATIDdeDxfSettingAtt", "CATIDdeIg2SettingAtt", "CATIGSM3DFurtiveGrid", "CATIA", "CATIGSMTransfer", "CATIGSMWorkingSupportFactory", "CATIGSMWorkingSupportSet"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R22GANewCPPAPI.htmmd"
@@ -30,12 +27,12 @@ The following are the new CAA V5-6R2012 GA C++ Authorized APIs, compared with CA
   * ElecRoutingItf framework
     * Interface CATIEwrWire
   * FreeFormOperators framework
-```vbscript
+```cpp
     * Global Function CATCreateCrvFittingToNurbsCrv
     * Global Function CATCreateSurFittingToNurbsSur
   * GMOperatorsInterfaces framework
 ```
-```vbscript
+```cpp
     * Global Function CATCGMCreateCrvFittingToNurbsCrv
     * Global Function CATCGMCreateGeodesicLinePtPt
     * Global Function CATCGMCreateSurFittingToNurbsSur
@@ -86,7 +83,7 @@ The following are the new CAA V5-6R2012 GA C++ Authorized APIs, compared with CA
     * Macro or #define CATGSMWFSweepConic
     * Macro or #define CATGSMWFSweepSegment
     * Macro or #define CATGSMWFSweepUnspec
-```vbscript
+```cpp
     * Global Function CATGSMCreateMultiSelManager
     * Interface CATIGSM3DFurtiveGrid
 ```
@@ -113,8 +110,7 @@ The following are the new CAA V5-6R2012 GA C++ Authorized APIs, compared with CA
     * Macro or #define SDAIAGGR
   * TopologicalOperators framework
     * Macro or #define CATExtrapolateBody_NewR21SP2Methods
-```vbscript
-    * Global Function CATCreateTopPattern
+```cpp
     * Global Function CATCreateTopPattern
     * Global Function CATLoadCATExtrapolateBody
     * Interface CATTopPattern
@@ -137,7 +133,7 @@ History Version: **1** [Sep 2011] | Document created
 * * *
 
 _Copyright © 1999-2011, Dassault Systèmes. All rights reserved._
-```vbscript
+```cpp
 Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.md) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.md) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.md)
 
 ```

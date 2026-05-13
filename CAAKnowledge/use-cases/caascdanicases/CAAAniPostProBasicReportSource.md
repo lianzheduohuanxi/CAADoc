@@ -1,17 +1,14 @@
 ---
-```vbscript
 title: "CAAAniPostProBasicReport.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CATIA", "CAAAniPostProBasicReport", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPostProBasicReportSource.htmmd"
+tags: "["CATIA", "CAAAniPostProBasicReport", "CAAScdAniUseCases"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPostProBasicReportSource.htm"
 converted: "2026-05-11T17:31:51.743555"
-```
-
 ---
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGHT DASSAULT SYSTEMES 2000
     ' ***********************************************************************
     '   Purpose:      To generate basic report
@@ -28,7 +25,7 @@ converted: "2026-05-11T17:31:51.743555"
 
 ```
 
-```vbscript
+```cpp
     Sub CATMain(#)
 ```vbscript
 ```
@@ -36,7 +33,7 @@ converted: "2026-05-11T17:31:51.743555"
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
 
-```vbscript
+```cpp
       sDocPath=CATIA.SystemService.Environ("CATDocView")
       sOut = CATIA.SystemService.Environ("CATTemp")
 
@@ -65,10 +62,10 @@ converted: "2026-05-11T17:31:51.743555"
 ```vbscript
 End If
 ```vbscript
-```vbscript
+```cpp
 ' -----------------------------------------------------------
     ' Open the CATAnalysis Document
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Cube_R13_Freq.CATAnalysis")
 ```
 ```
@@ -79,7 +76,7 @@ End If
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
     Set fileSystem1 = CATIA.FileSystem

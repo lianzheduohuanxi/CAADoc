@@ -30,7 +30,7 @@ This use case has shown how to get weld information set on SDD Split Plate.
 *Copyright  1999-2013, Dassault Syst&#232;mes. All rights reserved.*
 
 ```vbscript
-```vbscript
+```cpp
 Sub CATMain(#)
 
 Dim ObjPart As Part

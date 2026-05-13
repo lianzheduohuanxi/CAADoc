@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Weld Offset Calculation"
 category: "use case"
 module: "CAACloUseCases"
-tags: ["CAACommonLayoutItf", "CAAECloAppWeldOffset", "CAACloSetup", "CATICloAppWeldOffset"]
-source_file: "Doc/online/CAACloUseCases/CAAECloAppWeldOffset.htmmd"
+tags: "["CAACommonLayoutItf", "CAAECloAppWeldOffset", "CAACloSetup", "CATICloAppWeldOffset"]"
+source_file: "Doc/online/CAACloUseCases/CAAECloAppWeldOffset.htm"
 converted: "2026-05-11T17:33:49.540616"
-```
-
 ---
 tags: ["CAACommonLayoutItf", "CAAECloAppWeldOffset", "CAACloSetup", "CATICloAppWeldOffset"]
 source_file: "Doc/online/CAACloUseCases/CAAECloAppWeldOffset.htmmd"
@@ -46,7 +43,6 @@ What You Will Learn With This Use Case This use case is intended to show you how
        * CAAECloAppWeldOffset should be invoked when a weld is placed.
 [Top] Where to Find the CAAECloAppWeldOffset Code CAAECloAppWeldOffset code is located in the CAACloSetup.m use case module of the CAACommonLayoutItf.edu framework: Windows | `InstallRootDirectory/CAACommonLayoutItf.edu/CAACloSetup.m/src/CAAECloAppWeldOffset.cpp`
 ---|---
-Unix | `InstallRootDirectory/CAACommonLayoutItf.edu/CAACloSetup.m/src/CAAECloAppWeldOffset.cpp`
 Unix | `InstallRootDirectory/CAACommonLayoutItf.edu/CAACloSetup.m/src/CAAECloAppWeldOffset.cpp`
 The following contains the dictionary file that references the implementation: Windows | `InstallRootDirectory/CAACommonLayoutItf.edu/CNext/code/dictionary/CAACommonLayoutItf.edu.dico`
 

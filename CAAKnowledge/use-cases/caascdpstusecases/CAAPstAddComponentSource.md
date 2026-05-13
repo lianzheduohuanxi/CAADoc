@@ -22,13 +22,13 @@ Option Explicit
 '   CATIA Level:  V5R6 
 ' *****************************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
     ' -----------------------------------------------------------------------------------------------
 ```
     ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
     Dim sDocPath As String
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -39,7 +39,7 @@ Sub CATMain(#)
    
     'Create a new product document object by adding a document with the Product
     'type to the document collection of the CATIA application. 
-```vbscript
+```cpp
     Dim oProductDoc As Document
     Set oProductDoc = CATIA.Documents.Add("Product")
 
@@ -73,7 +73,7 @@ Sub CATMain(#)
     'Add a master shape representation to the hull using an existing part and
     'reframe the viewer.
     oHull.AddMasterShapeRepresentation sDocPath & "CAAPstHull.CATPart"
-```vbscript
+```cpp
     CATIA.ActiveWindow.ActiveViewer.Reframe
     
     'Add the first funnel to the Titanic's product collection, with part number
@@ -147,7 +147,7 @@ End Sub
 
 ```
 
-```vbscript
+```cpp
 Option Explicit
 ' COPYRIGHT DASSAULT SYSTEMES 2000
 
@@ -163,13 +163,13 @@ Option Explicit
 '   CATIA Level:  V5R6 
 ' *****************************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
     ' -----------------------------------------------------------------------------------------------
 ```
     ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
     Dim sDocPath As String
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -180,7 +180,7 @@ Sub CATMain(#)
    
     'Create a new product document object by adding a document with the Product
     'type to the document collection of the CATIA application. 
-```vbscript
+```cpp
     Dim oProductDoc As Document
     Set oProductDoc = CATIA.Documents.Add("Product")
 
@@ -214,7 +214,7 @@ Sub CATMain(#)
     'Add a master shape representation to the hull using an existing part and
     'reframe the viewer.
     oHull.AddMasterShapeRepresentation sDocPath & "CAAPstHull.CATPart"
-```vbscript
+```cpp
     CATIA.ActiveWindow.ActiveViewer.Reframe
     
     'Add the first funnel to the Titanic's product collection, with part number

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Surface Machining Operations Overview"
-category: tech-article
+category: "tech-article"
 module: "CAASmiTechArticles"
-tags: ["CAASmiConnectUserOperationWithMA", "CAASmgGuide", "CAASmgOperation", "CAASmiUserOperationWithMA", "CAASmgMachiningFeature", "CAASmiUserOperationWithMAToolPath", "CAASmiUserOperationCommand", "CAASmiUserOperationUI", "CAASmiUserOperationWithUserMFToolPath", "CAASurfaceMachiningItf", "CAASmiUserOperationCatalog", "CAASmiUserOperationWithUserMF", "CATIA", "CAASmiUserOperationGeomUI", "CAASmiUserOperationToolPathReplay", "CAASmiUserMachFeatureCatalog", "CAASmgOperationWithMA"]
-source_file: "Doc/online/CAASmiTechArticles/CAASmiOperationSampleOverview.htmmd"
+tags: "["CAASmiConnectUserOperationWithMA", "CAASmgGuide", "CAASmgOperation", "CAASmiUserOperationWithMA", "CAASmgMachiningFeature", "CAASmiUserOperationWithMAToolPath", "CAASmiUserOperationCommand", "CAASmiUserOperationUI", "CAASmiUserOperationWithUserMFToolPath", "CAASurfaceMachiningItf", "CAASmiUserOperationCatalog", "CAASmiUserOperationWithUserMF", "CATIA", "CAASmiUserOperationGeomUI", "CAASmiUserOperationToolPathReplay", "CAASmiUserMachFeatureCatalog", "CAASmgOperationWithMA"]"
+source_file: "Doc/online/CAASmiTechArticles/CAASmiOperationSampleOverview.htm"
 converted: "2026-05-11T17:31:51.295307"
-```
-
 ---
 # Machining
 
@@ -52,7 +49,6 @@ The main intent is to explain:
 
 These use cases include some knowledge from various V5 Frameworks, such as the Object Specs Modeler framework, or the Dialog and Dialog Engine Frameworks. Their intent is to focus on the use of the Surface Machining Infrastructure frameworks. A prerequisite knowledge of other Frameworks may be required to fully understand this use case, some links with other CAA use cases will help you navigate among them.
 
-These use cases include some knowledge from various V5 Frameworks, such as the Object Specs Modeler framework, or the Dialog and Dialog Engine Frameworks. Their intent is to focus on the use of the Surface Machining Infrastructure frameworks. A prerequisite knowledge of other Frameworks may be required to fully understand this use case, some links with other CAA use cases will help you navigate among them.
 Notice that some of these use cases can be put into practice in others Manufacturing Frameworks, like Prismatic Machining.
 
 Before getting to the tutorials, it is important to get an understanding of **the use case scenarios**. This is the goal of the next section.
@@ -122,7 +118,6 @@ When CATIA is opened,
 
 The sample is made of a several modules of the CAASurfaceMachiningItf.edu framework:
 
-The sample is made of a several modules of the CAASurfaceMachiningItf.edu framework:
 Windows | `InstallRootDirectory/CAASurfaceMachiningItf.edu/`
 
 The sample is made of a several modules of the CAASurfaceMachiningItf.edu framework:

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Surface Machining Operation StartUp"
-category: use-case case"
+category: "use-case case"
 module: "CAASmiUseCases"
-tags: ["CATIM3xFeature", "CAAUserOperationCatalog", "CAASmgOperation", "CAASmgMachiningFeature", "CAAApproachDistance", "CAASmgOperationWithMASU", "CATIMfgMachiningFeature", "CAAStep", "CAASurfaceMachiningItf", "CAASmiUserOperationCatalog", "CAASmgOperationSU", "CAAISmiUserMachFeature", "CAAOffset", "CAAToolAngle", "CAASmgOperationWithMA"]
-source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationCatalog.htmmd"
+tags: "["CATIM3xFeature", "CAAUserOperationCatalog", "CAASmgOperation", "CAASmgMachiningFeature", "CAAApproachDistance", "CAASmgOperationWithMASU", "CATIMfgMachiningFeature", "CAAStep", "CAASurfaceMachiningItf", "CAASmiUserOperationCatalog", "CAASmgOperationSU", "CAAISmiUserMachFeature", "CAAOffset", "CAAToolAngle", "CAASmgOperationWithMA"]"
+source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationCatalog.htm"
 converted: "2026-05-11T17:31:51.254402"
-```
-
 ---
 #  Machining
 
@@ -168,7 +165,7 @@ This is done with the following lines in CAAUserOperationCatalog.osm:
 
     		// Second user Startup deriving from MfgUserDefinedMO
     		// --------------------------------------------------
-```vbscript
+```cpp
 synchronize(#)
     		feature CAASmgOperationWithMASU MfgUserDefinedMO@`ManufacturingActivities.feat` #startup #isa(CAASmgOperationWithMA) {
     			AuthorizedItems=["CATIMfgMachiningFeature","CATIM3xFeature"]
@@ -259,14 +256,14 @@ This article provides an example on how to generate and upgrade a catalog of Use
 In this example we generate a catalog named "CAAUserOperationCatalog.CATfct" that contains one startup of a User Defined Operation with the CATFctEditorAssistant on line tool. It derives from the late type "MfgUserDefinedMO" as every user defined operation should do. The "MfgUserDefinedMO" is a standard user defined operation. The corresponding startup of this operation is defined in the ManufacturingActivities.feat catalog.
 
 ```vbscript
-```vbscript
+```cpp
 For this user defined activity we authorized a "CATIMfgMachiningFeature" machining feature, which is a standard machining feature defined in the Manufacturing.feat catalog.
 
 ```
 
 ```
 
-```vbscript
+```cpp
 For this user defined activity we authorized a "CATIMfgMachiningFeature" machining feature, which is a standard machining feature defined in the Manufacturing.feat catalog.
 ```
 

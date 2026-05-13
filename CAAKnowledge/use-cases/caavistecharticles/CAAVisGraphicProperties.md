@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Graphical Properties"
-category: tech-article
+category: "tech-article"
 module: "CAAVisTechArticles"
-tags: ["CATIAVisPropertySet", "CATIA", "CATIProperty", "CATIVisProperties", "CATISelectShow", "CATIVisu", "CAAEPstVisPropertiesPoint"]
-source_file: "Doc/online/CAAVisTechArticles/CAAVisGraphicProperties.htmmd"
+tags: "["CATIAVisPropertySet", "CATIA", "CATIProperty", "CATIVisProperties", "CATISelectShow", "CATIVisu", "CAAEPstVisPropertiesPoint"]"
+source_file: "Doc/online/CAAVisTechArticles/CAAVisGraphicProperties.htm"
 converted: "2026-05-11T17:31:52.277889"
-```
-
 ---
 #  3D PLM Enterprise Architecture
 
@@ -89,7 +86,6 @@ The graphical properties are visual properties, it means that the properties can
 
 The "Using Graphic Attributes" [1] article enables to familiarize you with this class.
 
-The "Using Graphic Attributes" [1] article enables to familiarize you with this class.
   2. The Graphic Primitive, a _CATGraphicPrimitive_
 
 The marker of the point is set at the _CAT3DMarkeGP_ or _CAT2DMarkerGP_ construction class.
@@ -159,7 +155,6 @@ In the visualization process, there are two cases to distinguish, even though th
 
   1. The total revisualization of the model
 
-1. The total revisualization of the model
 After the construction of the graphic representation (_CATRep_ class), realized by the `BuildRep` method, the `SetGraphicAttribut `method is called. The default implementation of this method, those of the _CATExtIVisu_ adapter class, calls successively (*) the following methods:_ _
 
      1. Method not exposed to process the independent properties of the sub-elements : visibility, selectionability, layer and lowint (`CATVPGlobalType`)
@@ -256,7 +251,7 @@ In implementing the _CATIVisProperties_ interface on your feature, you benefit a
 #### The Properties Command
 
 In implementing the _CATIVisProperties_ interface on your feature, you benefit automatically of the _CATIAVisPropertySet_ automation interface .
-```vbscript
+```cpp
 If your feature implements _CATIVisProperties,_ when you launch the Properties Commands, the Graphic tab page appears. Its contents depends on the type of geometry defined by the feature. There are three possible cases:
 
 ```
@@ -319,7 +314,7 @@ The Hide/Show command enables to hide or show the selected features. But to bene
 ### Using CATIVisProperties
 
 The Hide/Show command enables to hide or show the selected features. But to benefit of this functionality on your feature, it must implement the _CATISelectShow  _ interface. It uses the _CATIVisProperties_ to modify the visibility state of the feature.
-```vbscript
+```cpp
 If this section detailed the usage of the _CATIVisProperties_ interface, the "Modifying Object Graphical Properties" article [3] exposes a concrete use case.
 
 ```
@@ -352,7 +347,7 @@ HRESULT rc = pLine ->**QueryInterface**(IID_CATIVisProperties, (void **) & pIVis
 if ( SUCCEEDED(rc) )
        CATVisPropertiesValues MyPropertyOnLine ;
        MyPropertyOnPoint.**SetColor**(255,0,0);
-```vbscript
+```cpp
        rc = pIVisPropertiesOnLine ->**SetPropertiesAtt**(MyPropertyOnLine, CATVPColor ,CATVPLine );
 
 ```
@@ -364,7 +359,6 @@ if ( SUCCEEDED(rc) )
 
 At first, the _CATVisPropertiesValues_ instance, `MyPropertyOnLine`, is valuated with the color thanks to the `SetColor` method. Next calling the `SetPropertiesAtt` method modifies on the _CATIProperty_ interface only the color of the line geometry because the second argument is `CATVPColor` and the third is `CATVPLine`.
 
-At first, the _CATVisPropertiesValues_ instance, `MyPropertyOnLine`, is valuated with the color thanks to the `SetColor` method. Next calling the `SetPropertiesAtt` method modifies on the _CATIProperty_ interface only the color of the line geometry because the second argument is `CATVPColor` and the third is `CATVPLine`.
   3. `**ResetPropertiesAtt**`(`CATVisPropertyType iPropType, CATVisGeomType iGeomType )`
 
 This methods enables to invalidate the property set on the _CATIProperty_. It means that at the next `GetPropertiesAtt `calls, ``the returned properties values will be the standard values. The returned code of the `GetPropertiesAtt `method, S_AUTOMATIC, precises that the returned properties values is the standard. To set new specific properties, a new `SetPropertiesAtt` will be necessary.
@@ -403,7 +397,6 @@ if ( SUCCEEDED(rc) )
 
 In this example, you can see that after the `ResetPropertiesAtt `call`, `for the same key` ``CATVPColor` and `CATVPLine, `the `GetPropertiesAtt `method returns the` ``S_AUTOMATIC `value`. `It means that the color sets on the `MyPropertyOnLine` instance, is the standard color, so the same value as those returned by the `GetStandardProperties `method with the same keys`. `
 
-In this example, you can see that after the `ResetPropertiesAtt `call`, `for the same key` ``CATVPColor` and `CATVPLine, `the `GetPropertiesAtt `method returns the` ``S_AUTOMATIC `value`. `It means that the color sets on the `MyPropertyOnLine` instance, is the standard color, so the same value as those returned by the `GetStandardProperties `method with the same keys`. `
 Note: if any `SetPropertiesAtt` call has been  done on the feature, it has standard values.
 
   4. `**GetStandardProperties**(CATVisPropertiesValues & oValues, CATVisPropertyType iPropType, CATVisGeomType iGeomType )`
@@ -431,7 +424,7 @@ Tells if  a given type of geometry is recognized by the feature.
 ### Implementing CATIVisProperties
 
 Tells if  a given type of geometry is recognized by the feature.
-```vbscript
+```cpp
 If this section detailed the implementation of the _CATIVisProperties_ interface, the "Implementing CATIVisProperties" article exposes a concrete use case. You will find this article in the Product Process Resouce (PPR) part of the CAA encyclopedie.
 
 ```
@@ -493,7 +486,7 @@ Here an example for the point feature:
 unsigned int & oPropertyNumber)
 HRESULT rc = E_FAIL ;
 switch ( iPropertyType )
-```vbscript
+```cpp
         case **CATVPColor** :
         case **CATVPSymbol** :
 ```

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Basic Draft"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsDraftCreation", "CATICGMDynDraft", "CAATopDraft", "CAATopDraftLimitingElement"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcDraft1.htmmd"
+tags: "["CAAGMOperatorsInterfaces", "CAAGMOperatorsDraftCreation", "CATICGMDynDraft", "CAATopDraft", "CAATopDraftLimitingElement"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcDraft1.htm"
 converted: "2026-05-11T17:33:48.896806"
-```
-
 ---
 tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsDraftCreation", "CATICGMDynDraft", "CAATopDraft", "CAATopDraftLimitingElement"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcDraft1.htmmd"
@@ -53,7 +50,7 @@ CATICGMDynDraft* pDraftOpe = CATCGMCreateDynDraft (piGeomFactory, &topdata;, pBo
 
     // (d) Create the CATDynDraftRibbon and CATDynDraftDomain to define a set of parameters:
     // neutral face and pulling direction.
-```vbscript
+```cpp
 CATLISTP(CATDynDraftAngle) facesAndAngles;
 facesAndAngles.Append(pdraftAngle);
     CATDynDraftRibbon * pdraftRibbon  =  new  CATDynDraftRibbon(facesAndAngles );

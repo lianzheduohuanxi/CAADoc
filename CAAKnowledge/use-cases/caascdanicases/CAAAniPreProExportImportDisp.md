@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Export/Import of Displacements"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CAAAniPreProExportImportDisp", "CATIA", "CAAScdAniUseCases", "CATIAAnalysisManager"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProExportImportDisp.htmmd"
+tags: "["CAAAniPreProExportImportDisp", "CATIA", "CAAScdAniUseCases", "CATIAAnalysisManager"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProExportImportDisp.htm"
 converted: "2026-05-11T17:31:51.793943"
-```
-
 ---
 ## Analysis Modeler
 
@@ -38,7 +35,7 @@ This use case shows you how to export displacements from analysis assembly to th
 ```vbscript
 ```vbscript
     ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     sOut = CATIA.SystemService.Environ("CATTemp")
 ```
@@ -49,7 +46,7 @@ This use case shows you how to export displacements from analysis assembly to th
 ```
 
 ```vbscript
-```vbscript
+```cpp
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 ```
@@ -69,7 +66,7 @@ This use case shows you how to export displacements from analysis assembly to th
 ```vbscript
     ' -----------------------------------------------------------
     ' Open the Analysis document
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Assembled_Loads_Solutions.CATAnalysis")
     Set analysisDocument1 = CATIA.Documents.Open(sFilePath)
 ```
@@ -204,11 +201,11 @@ According to the general [ Analysis Document](../use-cases/caascdaniusecases/CAA
 ```
 
 ```vbscript
-```vbscript
+```cpp
               Set manager = selection1.FindObject("CATIAAnalysisManager")
 ```vbscript
 ```
-```vbscript
+```cpp
               'Export the displacements
               fullPath = sOut + sSep +"Displacements" +CStr(i) + ".CATAnalysisExport"
 ```

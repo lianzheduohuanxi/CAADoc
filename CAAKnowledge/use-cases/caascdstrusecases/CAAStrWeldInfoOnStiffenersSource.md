@@ -16,7 +16,7 @@ converted: "2026-05-11T11:27:02.597911"
 '// Mar  Creation                                               Bhupendra Mithe
 '//============================================================================
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 Dim ObjPart As Part
@@ -39,7 +39,7 @@ Set SuperStiffener1 = SuperStiffeners.Item(1)
 
 'Retrieving The Seamed Stiffeners on Deck
 ```
-```vbscript
+```cpp
 Dim SplitStiffeners As References
 Set SplitStiffeners = SuperStiffener1.SplitProfiles
 
@@ -50,7 +50,7 @@ Set SelctionObj = CATIA.ActiveDocument.Selection
 'DECK STIFFENER
 ```
 SelctionObj.Add SplitStiffener1
-```vbscript
+```cpp
 Dim DeckStiffener1 As SfmStiffener
 Set DeckStiffener1 = SelctionObj.FindObject("CATIASfmStiffener")
 
@@ -117,7 +117,7 @@ End Sub
 '// Mar  Creation                                               Bhupendra Mithe
 '//============================================================================
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 Dim ObjPart As Part
@@ -140,7 +140,7 @@ Set SuperStiffener1 = SuperStiffeners.Item(1)
 
 'Retrieving The Seamed Stiffeners on Deck
 ```
-```vbscript
+```cpp
 Dim SplitStiffeners As References
 Set SplitStiffeners = SuperStiffener1.SplitProfiles
 
@@ -151,7 +151,7 @@ Set SelctionObj = CATIA.ActiveDocument.Selection
 'DECK STIFFENER
 ```
 SelctionObj.Add SplitStiffener1
-```vbscript
+```cpp
 Dim DeckStiffener1 As SfmStiffener
 Set DeckStiffener1 = SelctionObj.FindObject("CATIASfmStiffener")
 

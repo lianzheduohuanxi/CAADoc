@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Editors in Toolbar"
-category: use-case case"
+category: "use-case case"
 module: "CAAAfrUseCases"
-tags: ["CAAAfrEltCountRep", "CAAAfrEltCountRepId", "CAAAfrMRUHeader", "CAAGeometry", "CAAAfrComboColorHeader", "CAAAfrGeoModel", "CAAAfrEdtLine", "CAAISysPoint", "CAAAfrPaletteOptions", "CATIAfrCommandHeaderRep", "CAASysCollectionModifNotif", "CAAAfrEltCountHeader", "CAAAfrEdtPoint", "CAAISysLine", "CAASysGeoModelInf", "CAAEAfrCommandHeaderRepForEltCount", "CAASysSampCont", "CATImplementHeaderResources", "CAASysGeomCont"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleEditorHdr.htmmd"
+tags: "["CAAAfrEltCountRep", "CAAAfrEltCountRepId", "CAAAfrMRUHeader", "CAAGeometry", "CAAAfrComboColorHeader", "CAAAfrGeoModel", "CAAAfrEdtLine", "CAAISysPoint", "CAAAfrPaletteOptions", "CATIAfrCommandHeaderRep", "CAASysCollectionModifNotif", "CAAAfrEltCountHeader", "CAAAfrEdtPoint", "CAAISysLine", "CAASysGeoModelInf", "CAAEAfrCommandHeaderRepForEltCount", "CAASysSampCont", "CATImplementHeaderResources", "CAASysGeomCont"]"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleEditorHdr.htm"
 converted: "2026-05-11T17:17:55.729034"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -158,7 +155,7 @@ class ExportedByCAASysGeoModelInf CAAISysCollection : public CATBaseUnknown
 
       public:
         virtual HRESULT GetNumberOfObjects(int * oCount) = 0;
-```vbscript
+```cpp
         virtual HRESULT GetObject    (int iRank,
                                       CATBaseUnknown ** oObject) = 0;
 ```
@@ -179,7 +176,7 @@ This interface is implemented by the CAASysGeomCont component thanks to the _CAA
     TIE_CAAISysCollection(CAAEAfrCollection);
 
     CATBeginImplementClass(CAAEAfrCollection,**DataExtension** ,CATBaseUnknown,**CAASysGeomCont**);
-```vbscript
+```cpp
     CATAddClassExtension(CAASysSampCont) ;
     CATEndImplementClass(CAAEAfrCollection);
 
@@ -189,7 +186,7 @@ This interface is implemented by the CAASysGeomCont component thanks to the _CAA
 
 ---
 
-```vbscript
+```cpp
 CATEndImplementClass(CAAEAfrCollection);
 The _CAAEAfrCollection_ class states that it implements the _CAAISysCollection_ interface thanks to the `TIE_``CAAISysCollection` __ macro. This extension class is dedicated to this component, and the `CATBeginImplementClass` macro declares that the _CAAEAfrCollection_   class is data extension class, thanks to the `DataExtension` keyword, and that it extends the component whose main class is CAASysGeomCont. The third parameter must always be set to _CATBaseUnknown_ , makes no sense, and is unused for extensions.
 
@@ -242,8 +239,7 @@ Here the CAAAfrEltCountHeader header file:
     #include "CATAfrDialogCommandHeader.h"
 
     class ExportedByCAAAfrCustomizedCommandHeader CAAAfrEltCountHeader :
-class ExportedByCAAAfrCustomizedCommandHeader CAAAfrEltCountHeader :
-```vbscript
+```cpp
                                     public **CATAfrDialogCommandHeader**
 
 ```
@@ -296,7 +292,7 @@ Here the CAAAfrEltCountHeader header file:
                       Implementation,
 
                       **CATAfrDialogCommandHeader** ,
-```vbscript
+```cpp
 CATImplementClass(CAAAfrEltCountHeader,
 Implementation,
                       CATNull);
@@ -385,7 +381,7 @@ Here the CAAEAfrCommandHeaderRepForEltCount source file
 
                       **CAAAfrEltCountHeader**);
     };
-```vbscript
+```cpp
 CATImplementClass(CAAEAfrCommandHeaderRepForEltCount,
 DataExtension,
 CATBaseUnknown,
@@ -465,7 +461,7 @@ The EltCount header has no representation in the menu bar or in a contextual men
 
 This class is the _CAAAfrEltCountRep_ class. Its main roles are:
 
-```vbscript
+```cpp
   * Set a callback to be informed when a modification occurs in the list of elements controlled by the CAASysGeomCont component
   * Create two _CATDlgEditor_ instances
 ```
@@ -559,7 +555,7 @@ if ( NULL != _piSysCollection )
 ```
 
     	           "CAASysCollectionModifNotif",
-```vbscript
+```cpp
 if ( NULL != _piSysCollection )
 _piSysCollection,
     	            (CATSubscriberMethod)&CAAAfrEltCountRep::ModifiedCB,
@@ -774,7 +770,7 @@ if (SUCCEEDED(rc))
                         NbLine ++ ;
 
      ...
-```vbscript
+```cpp
 if (SUCCEEDED(rc))
 NbLine ++ ;
            CATUnicodeString stNbPoint ;

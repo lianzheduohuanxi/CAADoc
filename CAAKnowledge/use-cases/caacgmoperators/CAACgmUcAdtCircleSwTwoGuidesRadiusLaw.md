@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Circle Sweep with Two Guides and a Radius Law"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CAAGMOperatorsCircleSweepTwoGuidesRadius", "CAAGMModelGemBrowser", "CATICGMFrFTopologicalSweep", "CAAAdtCircleSweepTwoGuidesRadius"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtCircleSwTwoGuidesRadiusLaw.htmmd"
+tags: "["CAAGMOperatorsInterfaces", "CAADoc", "CAAGMOperatorsCircleSweepTwoGuidesRadius", "CAAGMModelGemBrowser", "CATICGMFrFTopologicalSweep", "CAAAdtCircleSweepTwoGuidesRadius"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtCircleSwTwoGuidesRadiusLaw.htm"
 converted: "2026-05-11T17:33:48.822965"
-```
-
 ---
 tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CAAGMOperatorsCircleSweepTwoGuidesRadius", "CAAGMModelGemBrowser", "CATICGMFrFTopologicalSweep", "CAAAdtCircleSweepTwoGuidesRadius"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtCircleSwTwoGuidesRadiusLaw.htmmd"
@@ -48,7 +45,6 @@ What Does CAAGMOperatorsCircleSweepTwoGuidesRadius Do? The use case:
     * Running the operator and retrieving the resulting body (common to all operators - not discussed below).
 Creating the Two Guides The curves to be used as guides are CATSpline that are simply created from the geometry factory. See [3] for information on how to create a spline. Creating a CATICGMFrFTopologicalSweep Operator Instance The CATICGMFrFTopologicalSweep operator is created by the CATCGMCreateFrFTopologicalCircleSweep global function. The two guides are passed in the form of a list as the third argument of the function.
 
-Creating the Two Guides The curves to be used as guides are CATSpline that are simply created from the geometry factory. See [3] for information on how to create a spline. Creating a CATICGMFrFTopologicalSweep Operator Instance The CATICGMFrFTopologicalSweep operator is created by the CATCGMCreateFrFTopologicalCircleSweep global function. The two guides are passed in the form of a list as the third argument of the function.
     CATLISTP(CATGeometry) guides0;
     CATGeometry * guideGeom1 = (CATGeometry*)pWireBody1 ;
     CATGeometry * guideGeom2 = (CATGeometry*)pWireBody2 ;

@@ -1,64 +1,31 @@
 ---
 title: "CAAGemBrowserDocument"
-type: "interface"
+type: "LocalClass"
 module: "CAATessellation"
-category: api-reference
 base: "CATDlgDocument"
-inheritance_chain: "CAAGemBrowserDocument → CATDlgDocument"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 1
+source_file: "CAATessellation.edu/CAAGemBrowser.m/LocalInterfaces/CAAGemBrowserDocument.h"
 ---
+
 # CAAGemBrowserDocument
 
-**基类**: CATDlgDocument  
-**继承链**: CAAGemBrowserDocument → CATDlgDocument  
-**模块**: CAATessellation  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> 1 - Creates the Graphics Representation as a tree 2 - Attaches the top of the tree in a viewer which allows the user to do 3D manipulations 3 - Displays the tree of Representation
 
-> Visualization Framework
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATDlgDocument | **模块**: CAATessellation | **方法数**: 1
 
 ## 依赖
 
 - `CATDlgDocument.h`
 
----
+## 公共方法
 
-## Interface Overview
+### Build
 
-This interface inherits from **CATDlgDocument**. 
+```cpp
+void Build() ;
+```
 
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
 
 ---
 
-## Related Use Cases
-
-This interface is used in the following use cases:
-
-- [CAACgmUcGemBrowser](../../use-cases/caacgmmodel/CAACgmUcGemBrowser.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAATessellation.edu/CAAGemBrowser.m/LocalInterfaces/CAAGemBrowserDocument.h`

@@ -1,54 +1,33 @@
 ---
 title: "CAAAfrMRURep"
-type: "interface"
+type: "LocalClass"
 module: "CAAApplicationFrame"
-category: api-reference
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+base: "CATAfrCommandHeaderRep"
+method_count: 1
+source_file: "CAAApplicationFrame.edu/CAAAfrCustomizedCommandHeader.m/LocalInterfaces/CAAAfrMRURep.h"
 ---
+
 # CAAAfrMRURep
 
-**模块**: CAAApplicationFrame  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> This class is the representation ( a CATCommand ) of the CAAAfrMRUHeader in the menu bar. The list of the most recent used items are kept by the MRU manager a unique CAAAfrMRUManager class instance during the session.
 
-> System Framework
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATAfrCommandHeaderRep | **模块**: CAAApplicationFrame | **方法数**: 1
 
 ## 依赖
 
+- `CATAfrCommandHeaderRep.h`
+
+## 公共方法
+
+### Build
+
+```cpp
+HRESULT Build() ;
+```
+
+Build ----- This method calls the ModifyListItem method
+
+
 ---
 
-## Interface Overview
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-- [3D PLM Enterprise Architecture](../../use-cases/caaafrcases/CAAAfrSampleMRUHdr.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAApplicationFrame.edu/CAAAfrCustomizedCommandHeader.m/LocalInterfaces/CAAAfrMRURep.h`

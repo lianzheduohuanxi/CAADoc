@@ -19,7 +19,7 @@ Option Explicit
 '   CATIA Level:  V5R7 
 ' *****************************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ```
@@ -28,7 +28,7 @@ Sub CATMain(#)
     'Add the new document to the end of the collection of documents.
     'Create and display a new window for the new document.
     'Activate the new document and the window.
-```vbscript
+```cpp
     Dim oNewPartDoc As Document
     Set oNewPartDoc = CATIA.Documents.Add("Part")
    
@@ -49,7 +49,7 @@ Option Explicit
 '   CATIA Level:  V5R7 
 ' *****************************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ```
@@ -58,7 +58,7 @@ Sub CATMain(#)
     'Add the new document to the end of the collection of documents.
     'Create and display a new window for the new document.
     'Activate the new document and the window.
-```vbscript
+```cpp
     Dim oNewPartDoc As Document
     Set oNewPartDoc = CATIA.Documents.Add("Part")
    

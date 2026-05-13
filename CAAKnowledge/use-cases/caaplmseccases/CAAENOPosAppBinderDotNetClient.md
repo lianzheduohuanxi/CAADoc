@@ -135,7 +135,6 @@ When building the modules with the CAA V5 buildtime environment, the CAAENOPosAp
 
 The following section first explains how to generate the C# client binding for the ENOPosApplicationBinderImpl CAA Web service demonstrated. The remaining sections describe how to configure the generated proxy and how to consume the Web service:
 
-The following section first explains how to generate the C# client binding for the ENOPosApplicationBinderImpl CAA Web service demonstrated. The remaining sections describe how to configure the generated proxy and how to consume the Web service:
   1. Creating the C# Client Binding
   2. Instantiating and Configuring the Generated Proxy
   3. Retrieving User Contexts

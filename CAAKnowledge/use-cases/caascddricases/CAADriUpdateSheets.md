@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Updating all Sheets of all Drawing Documents of a Given Folder"
 category: "use-case"
 module: "CAAScdDriUseCases"
-tags: ["CAADriUpdateSheets", "CATIA", "CAADriUseCases", "CAAScdDriUseCases"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriUpdateSheets.htmmd"
+tags: "["CAADriUpdateSheets", "CATIA", "CAADriUseCases", "CAAScdDriUseCases"]"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriUpdateSheets.htm"
 converted: "2026-05-11T17:31:51.112727"
-```
-
 ---
 |
 ## Generative Drafting
@@ -35,7 +32,7 @@ This macro shows you how to update sheets in Drawing documents. This macro retri
 
       ...
 ```vbscript
-```vbscript
+```cpp
       ' Set the CATIA popup file alerts to False
 ```
 ```
@@ -43,7 +40,7 @@ This macro shows you how to update sheets in Drawing documents. This macro retri
 ```vbscript
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
 ' Set the CATIA popup file alerts to False
       ' It prevents to stop the macro at each alert during its execution
 ```
@@ -54,7 +51,7 @@ This macro shows you how to update sheets in Drawing documents. This macro retri
 ```
 
 ```vbscript
-```vbscript
+```cpp
       CATIA.DisplayFileAlerts = False
 ```
 ```
@@ -83,7 +80,7 @@ The CATIA prompts are disabled thanks to the `DisplayFileAlerts` property of the
       Dim fileSys As FileSystem
 ```vbscript
 ```
-```vbscript
+```cpp
       Set fileSys = CATIA.FileSystem
 ```
 ```
@@ -180,10 +177,10 @@ The folder is retrieved in `folder` from the `fileSys` object using the `GetFold
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
             '  Retrieve in the files collection only the Drawing documents from its extension
             If InStr(oFile.Name, ".CATDrawing") <> 0 Then
-```vbscript
+```cpp
                 ' Set and open a Drawing document
                 Dim oDoc As Document
                 Set oDoc = CATIA.Documents.Open(oFile.Path)
@@ -197,7 +194,7 @@ The folder is retrieved in `folder` from the `fileSys` object using the `GetFold
 ```vbscript
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
 ' Set and open a Drawing document
 Dim oDoc As Document
 Set oDoc = CATIA.Documents.Open(oFile.Path)

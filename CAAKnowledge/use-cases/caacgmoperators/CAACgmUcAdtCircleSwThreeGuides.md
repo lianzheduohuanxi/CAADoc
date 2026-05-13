@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Circle Sweep with Three Guides"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsCircleSweepThreeGuidesUse", "CAAAdtCircleSweepThreeGuides", "CAADoc", "CAAGMOperatorsCircleSweepThreeGuideswith", "CAAGMOperatorsCircleSweepThreeGuidesis", "CAAGMModelGemBrowser", "CAAGMOperatorsCircleSweepThreeGuidesCode", "CAAGMOperatorsCircleSweepThreeGuides", "CATICGMFrFTopologicalSweep", "CAAGMOperatorsCircleSweepThreeGuidesDo"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtCircleSwThreeGuides.htmmd"
+tags: "["CAAGMOperatorsInterfaces", "CAAGMOperatorsCircleSweepThreeGuidesUse", "CAAAdtCircleSweepThreeGuides", "CAADoc", "CAAGMOperatorsCircleSweepThreeGuideswith", "CAAGMOperatorsCircleSweepThreeGuidesis", "CAAGMModelGemBrowser", "CAAGMOperatorsCircleSweepThreeGuidesCode", "CAAGMOperatorsCircleSweepThreeGuides", "CATICGMFrFTopologicalSweep", "CAAGMOperatorsCircleSweepThreeGuidesDo"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtCircleSwThreeGuides.htm"
 converted: "2026-05-11T17:33:48.810459"
-```
-
 ---
 tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsCircleSweepThreeGuidesUse", "CAAAdtCircleSweepThreeGuides", "CAADoc", "CAAGMOperatorsCircleSweepThreeGuideswith", "CAAGMOperatorsCircleSweepThreeGuidesis", "CAAGMModelGemBrowser", "CAAGMOperatorsCircleSweepThreeGuidesCode", "CAAGMOperatorsCircleSweepThreeGuides", "CATICGMFrFTopologicalSweep", "CAAGMOperatorsCircleSweepThreeGuidesDo"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtCircleSwThreeGuides.htmmd"
@@ -47,7 +44,6 @@ What Does CAAGMOperatorsCircleSweepThreeGuidesDo ? The use case:
     * Running the operator and retrieving the resulting body (common to all operators - not discussed below).
 Creating the Three Guides The curves to be used in the wire are CATSpline that are simply created from the geometry factory. See [3] for information on how to create a spline. Creating a CATICGMFrFTopologicalSweep Operator Instance The CATICGMFrFTopologicalSweep operator is created by the CATCGMCreateFrFTopologicalCircleSweep global function. The three guides are passed in the form of a list as the third argument of the function.
 
-Creating the Three Guides The curves to be used in the wire are CATSpline that are simply created from the geometry factory. See [3] for information on how to create a spline. Creating a CATICGMFrFTopologicalSweep Operator Instance The CATICGMFrFTopologicalSweep operator is created by the CATCGMCreateFrFTopologicalCircleSweep global function. The three guides are passed in the form of a list as the third argument of the function.
     CATLISTP(CATGeometry) guides0;
     CATGeometry * guideGeom1 = (CATGeometry*)pWireBody1 ;
     CATGeometry * guideGeom2 = (CATGeometry*)pWireBody2 ;

@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "VPMTpManager Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR9"
-version: "V5R9"
-tags: []
-source_file: "Doc/online/CAACenAPIChangesR9/VPMTpManager.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAACenAPIChangesR9/VPMTpManager.htm"
 converted: "2026-05-11T17:33:53.028350"
-```
-
 ---
 tags: []
 source_file: "Doc/online/CAACenAPIChangesR9/VPMTpManager.htmmd"

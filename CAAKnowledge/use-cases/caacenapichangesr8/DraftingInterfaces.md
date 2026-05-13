@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "DraftingInterfaces Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR8"
-version: "V5R8"
-tags: ["CATIDrwAnnotationFactory", "CATIGenerSpec"]
-source_file: "Doc/online/CAACenAPIChangesR8/DraftingInterfaces.htmmd"
+tags: "["CATIDrwAnnotationFactory", "CATIGenerSpec"]"
+source_file: "Doc/online/CAACenAPIChangesR8/DraftingInterfaces.htm"
 converted: "2026-05-11T17:33:52.501236"
-```
-
 ---
 tags: ["CATIDrwAnnotationFactory", "CATIGenerSpec"]
 source_file: "Doc/online/CAACenAPIChangesR8/DraftingInterfaces.htmmd"

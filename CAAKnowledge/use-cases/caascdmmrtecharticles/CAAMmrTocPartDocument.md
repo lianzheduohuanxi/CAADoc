@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Part Document Automation Objects"
-category: tech-article
+category: "tech-article"
 module: "CAAScdMmrTechArticles"
-tags: []
-source_file: "Doc/online/CAAScdMmrTechArticles/CAAMmrTocPartDocument.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAAScdMmrTechArticles/CAAMmrTocPartDocument.htm"
 converted: "2026-05-11T17:31:51.155629"
-```
-
 ---
 # Part Document Automation Objects
 
@@ -108,7 +105,6 @@ In addition, the **Part** object aggregates:
 
 The **Bodies** collection includes **Body** objects, one being the main body returned by the **MainBody** property of the collection. The part has in addition a current body and a current shape, returned or set using the CurrentBody and the CurrentShape properties of the **Part** object respectively. The current body is the body in which a new shape is added when using the **ShapeFactory** object. The current shape is the shape of the current body after which a new shape is added in the specification tree when using the shape factory. You then need to make current the appropriate body and shape before using the shape factory.
 
-The **Bodies** collection includes **Body** objects, one being the main body returned by the **MainBody** property of the collection. The part has in addition a current body and a current shape, returned or set using the CurrentBody and the CurrentShape properties of the **Part** object respectively. The current body is the body in which a new shape is added when using the **ShapeFactory** object. The current shape is the shape of the current body after which a new shape is added in the specification tree when using the shape factory. You then need to make current the appropriate body and shape before using the shape factory.
 The other collections can be classified in two categories:
 
   1. The collections that only contains objects and have methods to retrieve and possibly remove them, but leave the dedicated factories for object creation, such as **Sketches** , **GeometricElements** , and **Shapes**

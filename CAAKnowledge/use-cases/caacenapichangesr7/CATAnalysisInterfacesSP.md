@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "CATAnalysisInterfaces Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR7"
-version: "V5R7"
-tags: ["CATISamAnalysisManager", "CATISamAnalysisModelFactory", "CATISamAnalysisConnector"]
-source_file: "Doc/online/CAACenAPIChangesR7/CATAnalysisInterfacesSP.htmmd"
+tags: "["CATISamAnalysisManager", "CATISamAnalysisModelFactory", "CATISamAnalysisConnector"]"
+source_file: "Doc/online/CAACenAPIChangesR7/CATAnalysisInterfacesSP.htm"
 converted: "2026-05-11T17:33:51.953399"
-```
-
 ---
 tags: ["CATISamAnalysisManager", "CATISamAnalysisModelFactory", "CATISamAnalysisConnector"]
 source_file: "Doc/online/CAACenAPIChangesR7/CATAnalysisInterfacesSP.htmmd"
@@ -21,7 +17,7 @@ CAA API Modifications|  CATAnalysisInterfaces  |
 ---|---|---|---
 CATAnalysisInterfaces/Protected/CATISamAnalysisConnector.h/CATISamAnalysisConnector/GetImpactingObjects| 5| MHBDM|
 CATAnalysisInterfaces/Protected/CATISamAnalysisConnector.h/CATISamAnalysisConnector/GetStrategy| 5| MHBDM|
-```vbscript
+```cpp
 CATAnalysisInterfaces/Protected/CATISamAnalysisConnector.h/CATISamAnalysisConnector/GetObjects| 5| MHBDM|
 CATAnalysisInterfaces/Protected/CATISamAnalysisManager.h/CATISamAnalysisManager/AddCase| 3| MHBDM|
 ```

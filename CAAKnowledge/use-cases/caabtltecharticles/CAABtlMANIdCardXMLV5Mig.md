@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Migrating Your Identity Cards to XML"
 category: "use-case"
 module: "CAABtlTechArticles"
-tags: []
-source_file: "Doc/online/CAABtlTechArticles/CAABtlMANIdCardXMLV5Mig.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAABtlTechArticles/CAABtlMANIdCardXMLV5Mig.htm"
 converted: "2026-05-11T17:33:46.071110"
-```
-
 ---
 tags: []
 source_file: "Doc/online/CAABtlTechArticles/CAABtlMANIdCardXMLV5Mig.htmmd"

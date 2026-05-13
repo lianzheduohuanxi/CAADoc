@@ -17,7 +17,7 @@ Option Explicit
 '   CATIA Level:  V5R15 
 ' *****************************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ```
@@ -25,7 +25,7 @@ Sub CATMain(#)
     ' ------------------------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -34,13 +34,13 @@ Sub CATMain(#)
 ```
     ' ------------------------------------------------------------------------- 
     ' Open the schematic document 
-```vbscript
+```cpp
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
             "online/CAAScdSchUseCases/samples/CAASCH_Detail02.CATProduct")
 ```
 
-```vbscript
+```cpp
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
@@ -99,18 +99,18 @@ Sub CATMain(#)
        If ( Not ( objLCompRefs Is Nothing ) ) Then
 ```
 
-```vbscript
+```cpp
           Set objCompRef = objLCompRefs.Item (1,"CATIASchComponent")
 
           If ( Not ( objCompRef Is Nothing ) ) Then
 ```
 
-```vbscript
+```cpp
               Set objCompFlow = objSchRoot.GetInterface ( _
                 "CATIASchCompFlow",objCompRef)
 ```
 
-```vbscript
+```cpp
               Set objCntbl = objSchRoot.GetInterface ( _
                 "CATIASchAppConnectable",objCompRef)
 ```
@@ -149,7 +149,7 @@ Sub CATMain(#)
 
              intNbCntr = objLCntr.Count
 ```
-```vbscript
+```cpp
              Set objLCntr1 = objSchTempListFact.CreateListOfObjects
              Set objLCntr2 = objSchTempListFact.CreateListOfObjects
 
@@ -246,7 +246,7 @@ End Sub
 
 ```
 
-```vbscript
+```cpp
 Option Explicit
 ' COPYRIGHT DASSAULT SYSTEMES 2004
 
@@ -257,7 +257,7 @@ Option Explicit
 '   CATIA Level:  V5R15 
 ' *****************************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ```
@@ -265,7 +265,7 @@ Sub CATMain(#)
     ' ------------------------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -274,13 +274,13 @@ Sub CATMain(#)
 ```
     ' ------------------------------------------------------------------------- 
     ' Open the schematic document 
-```vbscript
+```cpp
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
             "online/CAAScdSchUseCases/samples/CAASCH_Detail02.CATProduct")
 ```
 
-```vbscript
+```cpp
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
@@ -339,18 +339,18 @@ Sub CATMain(#)
        If ( Not ( objLCompRefs Is Nothing ) ) Then
 ```
 
-```vbscript
+```cpp
           Set objCompRef = objLCompRefs.Item (1,"CATIASchComponent")
 
           If ( Not ( objCompRef Is Nothing ) ) Then
 ```
 
-```vbscript
+```cpp
               Set objCompFlow = objSchRoot.GetInterface ( _
                 "CATIASchCompFlow",objCompRef)
 ```
 
-```vbscript
+```cpp
               Set objCntbl = objSchRoot.GetInterface ( _
                 "CATIASchAppConnectable",objCompRef)
 ```
@@ -389,7 +389,7 @@ Sub CATMain(#)
 
              intNbCntr = objLCntr.Count
 ```
-```vbscript
+```cpp
              Set objLCntr1 = objSchTempListFact.CreateListOfObjects
              Set objLCntr2 = objSchTempListFact.CreateListOfObjects
 

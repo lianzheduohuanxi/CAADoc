@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Displaying cgr Files"
-category: use-case case"
+category: "use-case case"
 module: "CAAVisUseCases"
-tags: ["CAAVisBaseView", "CAAVisBaseCGRDocument", "CAAVisBaseDocument", "CAAVisBasics", "CAAVisBaseApplication", "CAAVisualization"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleDisplayCgr.htmmd"
+tags: "["CAAVisBaseView", "CAAVisBaseCGRDocument", "CAAVisBaseDocument", "CAAVisBasics", "CAAVisBaseApplication", "CAAVisualization"]"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleDisplayCgr.htm"
 converted: "2026-05-11T17:31:52.093625"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -118,7 +115,6 @@ The preliminary tasks that consist in creating the application and its main wind
 
 The 3D navigation viewer is an instance of the _CATNavigation3DViewer_ class. It is created in the `CreateViewer` method of the _CAAVisBaseView_ class that is called when the application is launched.
 
-The 3D navigation viewer is an instance of the _CATNavigation3DViewer_ class. It is created in the `CreateViewer` method of the _CAAVisBaseView_ class that is called when the application is launched.
     void CAAVisBaseView::CreateViewer(#)
 
     {
@@ -149,7 +145,6 @@ The `Attach4Sides` method attaches the four sides of the viewer to those of the 
 
 The _CAAVisBaseCGRDocument_ constructor stores the cgr file name as a data member, and calls methods to create the representation and to display it in the viewer.
 
-The _CAAVisBaseCGRDocument_ constructor stores the cgr file name as a data member, and calls methods to create the representation and to display it in the viewer.
     CAAVisBaseCGRDocument::CAAVisBaseCGRDocument(const char * fileName,
                                                  CATCommand * iParent,
                                                  CATDialog  * iDialogParent,
@@ -177,7 +172,6 @@ CATString  * iDocumentName)
 
 The representation bag is created thanks to the `CreateModel` method.
 
-The representation bag is created thanks to the `CreateModel` method.
     void CAAVisBaseCGRDocument::CreateModel(#)
 
     {
@@ -211,7 +205,6 @@ This representation is created as a _CAT3DBagRep_ , since the cgr file may need 
 
 The `AddRepToViewer` method displays the created representation.
 
-The `AddRepToViewer` method displays the created representation.
     void CAAVisBaseDocument::AddRepToViewer(#)
 
     {

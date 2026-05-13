@@ -1,27 +1,17 @@
 ---
 title: "CAAEMmrCCDataExtensionModelEvent"
-type: "interface"
+type: "LocalClass"
 module: "CAAMechanicalModeler"
-category: api-reference
 base: "CATExtIModelEvents"
-inheritance_chain: "CAAEMmrCCDataExtensionModelEvent → CATExtIModelEvents"
 method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAMechanicalModeler.edu/CAAMmrCCDataExtension.m/LocalInterfaces/CAAEMmrCCDataExtensionModelEvent.h"
 ---
+
 # CAAEMmrCCDataExtensionModelEvent
 
-**基类**: CATExtIModelEvents  
-**继承链**: CAAEMmrCCDataExtensionModelEvent → CATExtIModelEvents  
-**模块**: CAAMechanicalModeler  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> CATIModelEvents implementation for MmrDataExtensionCont Standard Links between Model and Visu.
 
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATExtIModelEvents | **模块**: CAAMechanicalModeler | **方法数**: 0
 
 ## 依赖
 
@@ -29,26 +19,4 @@ verified: true
 
 ---
 
-## Interface Overview
-
-This interface inherits from **CATExtIModelEvents**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAMechanicalModeler.edu/CAAMmrCCDataExtension.m/LocalInterfaces/CAAEMmrCCDataExtensionModelEvent.h`

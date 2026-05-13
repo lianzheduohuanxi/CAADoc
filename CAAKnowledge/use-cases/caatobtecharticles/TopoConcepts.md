@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Topology Concepts"
 category: "use-case"
 module: "CAATobTechArticles"
-tags: ["CATIA"]
-source_file: "Doc/online/CAATobTechArticles/TopoConcepts.htmmd"
+tags: "["CATIA"]"
+source_file: "Doc/online/CAATobTechArticles/TopoConcepts.htm"
 converted: "2026-05-11T17:33:45.891757"
-```
-
 ---
 tags: ["CATIA"]
 source_file: "Doc/online/CAATobTechArticles/TopoConcepts.htmmd"
@@ -95,7 +92,6 @@ Domains can define outer, inner, or immersed frontiers: vertex in face or vertex
 [Top] Body A _body_ is a set of domains non necessarily connected (with non common boundary of any dimension). Bodies must satisfy the following properties:
 
   1. Any cell bounding a cell in a body also belongs to the body.
-1. Any cell bounding a cell in a body also belongs to the body.
   2. The intersection of the underlying geometry for any two cells in a body is also the underlying geometry for a cell ( and this cell must belong to the body, following the property 1). In other words, "no intersection of the underlying geometries without having a cell representing the intersection".
 
 Fig 6: The intersection of the geometry of two cells is the geometry of a cell of the same body ![](images/TopoBody.gif) | _Property 1_ :

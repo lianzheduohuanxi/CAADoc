@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "BasicTopologicalOpe Changed Classes or Interfaces"
 category: "use-case"
 module: "CAACenQuickRefs"
-tags: ["CATICGMTopLineTangentCrvCrvOperator", "CATICGMTopPolarExtremumOperator", "CATICGMTopSurToNurbsSurOperator", "CATICGMTopCrvToNurbsCrvOperator", "CATICGMTopPointOperator", "CATICGMTopCurveOperator", "CATICGMTopSplineOperator", "CATICGMTopHelixOperator", "CATICGMTopLineOperator", "CATICGMTopEdgePropagation", "CATICGMTopGeodesicLineOperator", "CATICGMComputePointOnWire", "CATICGMTopLineTangentPtCrvOperator", "CATICGMLengthFromBodyOnWire"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenBUBasicTopologicalOpe.htmmd"
+tags: "["CATICGMTopLineTangentCrvCrvOperator", "CATICGMTopPolarExtremumOperator", "CATICGMTopSurToNurbsSurOperator", "CATICGMTopCrvToNurbsCrvOperator", "CATICGMTopPointOperator", "CATICGMTopCurveOperator", "CATICGMTopSplineOperator", "CATICGMTopHelixOperator", "CATICGMTopLineOperator", "CATICGMTopEdgePropagation", "CATICGMTopGeodesicLineOperator", "CATICGMComputePointOnWire", "CATICGMTopLineTangentPtCrvOperator", "CATICGMLengthFromBodyOnWire"]"
+source_file: "Doc/online/CAACenQuickRefs/CAACenBUBasicTopologicalOpe.htm"
 converted: "2026-05-11T17:33:46.253424"
-```
-
 ---
 tags: ["CATICGMTopLineTangentCrvCrvOperator", "CATICGMTopPolarExtremumOperator", "CATICGMTopSurToNurbsSurOperator", "CATICGMTopCrvToNurbsCrvOperator", "CATICGMTopPointOperator", "CATICGMTopCurveOperator", "CATICGMTopSplineOperator", "CATICGMTopHelixOperator", "CATICGMTopLineOperator", "CATICGMTopEdgePropagation", "CATICGMTopGeodesicLineOperator", "CATICGMComputePointOnWire", "CATICGMTopLineTangentPtCrvOperator", "CATICGMLengthFromBodyOnWire"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenBUBasicTopologicalOpe.htmmd"
@@ -183,7 +180,6 @@ CATTopData* iTopData,
 CATBody* iWireBody,
 CATLISTP_CATEdge_* iEdgeList) |  Not supported any longer.
 GMOperatorsInterfaces | Global function | CATCGMCreateTopCrvToNurbsCrvOperator
-GMOperatorsInterfaces | Global function | CATCGMCreateTopCrvToNurbsCrvOperator
 CATCreateTopCrvToNurbsCrvOperator | CATTopCrvToNurbsCrvOperator* CATCreateTopCrvToNurbsCrvOperator(CATGeoFactory* iFactory,
 CATTopData* iTopData,
 CATBody* iWireBody,
@@ -194,7 +190,6 @@ CATCell* iEdgeCell) |  Not supported any longer.
 CATTopData* iTopData,
 CATBody* iWireBody,
 CATCell* iEdgeCell) |  Not supported any longer.
-GMOperatorsInterfaces | Global function | CATCGMCreateTopCrvToNurbsCrvOperator
 GMOperatorsInterfaces | Global function | CATCGMCreateTopCrvToNurbsCrvOperator
 CATCreateTopGeodesicLineOperatorFromDirection | CATTopGeodesicLineOperator* CATCreateTopGeodesicLineOperatorFromDirection(CATGeoFactory* iFactory,
 CATTopData* iTopData,
@@ -564,7 +559,6 @@ CATTopData* iTopData,
 CATBody* iShellBody,
 CATLISTP_CATFace_* iFaceList) |  Not supported any longer.
 GMOperatorsInterfaces | Global function | CATCGMCreateTopSurToNurbsSurOperator
-GMOperatorsInterfaces | Global function | CATCGMCreateTopSurToNurbsSurOperator
 CATCreateTopSurToNurbsSurOperator | CATTopSurToNurbsSurOperator* CATCreateTopSurToNurbsSurOperator(CATGeoFactory* iFactory,
 CATTopData* iTopData,
 CATBody* iSkinBody,
@@ -575,5 +569,4 @@ CATCell* iFaceCell) |  Not supported any longer.
 CATTopData* iTopData,
 CATBody* iSkinBody,
 CATCell* iFaceCell) |  Not supported any longer.
-GMOperatorsInterfaces | Global function | CATCGMCreateTopSurToNurbsSurOperator
 GMOperatorsInterfaces | Global function | CATCGMCreateTopSurToNurbsSurOperator

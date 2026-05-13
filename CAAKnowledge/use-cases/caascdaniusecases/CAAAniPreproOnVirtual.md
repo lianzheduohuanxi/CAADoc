@@ -155,7 +155,7 @@ with a generative way.
 
 *Copyright  2001, Dassault Systmes. All rights reserved.*
 
-```vbscript
+```cpp
 ...
 ' ----------------------------------------------------------- 
 ' Get the collection of documents in session 
@@ -165,11 +165,11 @@ with a generative way.
    
 ' if WB name already is &quot;GPSCfg&quot;, not to use StartWorkbench 
 ```
-```vbscript
+```cpp
    WBName = CATIA.GetWorkbenchId 
    if (WBName &lt;&gt; &quot;GPSCfg&quot;) Then 
 ```
-```vbscript
+```cpp
       CATIA.StartWorkbench(&quot;GPSCfg&quot;)
    End If
 ```
@@ -186,24 +186,24 @@ with a generative way.
 ```
 
 ```vbscript
-```vbscript
+```cpp
 Dim arrayOfVariantOfShort1(0)
    analysisManager1.ImportDefineFile (sDocPath &amp; &quot;/online/CAAScdAniUseCases/samples/AnalysisMechfeat.CATPart&quot;),
 ```
 ```
 
-```vbscript
+```cpp
 &quot;CATAnalysisImport&quot;, arrayOfVariantOfShort1 
 ' _____________________________________________________________________________________ 
 ' Reframe All. 
-```vbscript
+```cpp
    Set specsAndGeomWindow1 = CATIA.ActiveWindow 
    Set viewer3D1 = specsAndGeomWindow1.ActiveViewer 
    viewer3D1.Reframe 
 ```
 ' _____________________________________________________________________________________ 
 ' Scan the analysis document: Retrieve the Pointed documents to extract the reference for preprocessing 
-```vbscript
+```cpp
    Set analysisLinkedDocuments1 = analysisManager1.LinkedDocuments 
    CATIA.SystemService.Print analysisLinkedDocuments1.Name 
    If (analysisLinkedDocuments1.Count &lt;&gt; 1 ) Then 
@@ -214,7 +214,7 @@ Dim arrayOfVariantOfShort1(0)
 ```
 ' _____________________________________________________________________________________ 
 ' Retrieve the CATPart Document and associated publications for preprocessing. 
-```vbscript
+```cpp
    Set TheDoc = analysisLinkedDocuments1.Item(1) 
    CATIA.SystemService.Print TheDoc.FullName 
    Set product1 = TheDoc.Product 
@@ -291,7 +291,7 @@ analysisEntity1.AddSupportFromPublication product1, publication1
 
 ' _____________________________________________________________________________________
 ' Read the Value of the Mass
-```vbscript
+```cpp
   CATIA.SystemService.Print &quot; Mass Applied of the Part: &quot; &amp; basicComponent1.GetValue (&quot;&quot;,0,0,0)
 
 ```

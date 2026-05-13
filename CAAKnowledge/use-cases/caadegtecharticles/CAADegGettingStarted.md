@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Getting Started with State Dialog Commands"
 category: "use-case"
 module: "CAADegTechArticles"
-tags: ["CAAISysPoint", "CATISO", "CAAGeometryHeader", "CAADialogEngine", "CAADegCreateLineCmd", "CATIndicationAgent", "CAADegGeoCommands"]
-source_file: "Doc/online/CAADegTechArticles/CAADegGettingStarted.htmmd"
+tags: "["CAAISysPoint", "CATISO", "CAAGeometryHeader", "CAADialogEngine", "CAADegCreateLineCmd", "CATIndicationAgent", "CAADegGeoCommands"]"
+source_file: "Doc/online/CAADegTechArticles/CAADegGettingStarted.htm"
 converted: "2026-05-11T17:33:49.801485"
-```
-
 ---
 tags: ["CAAISysPoint", "CATISO", "CAAGeometryHeader", "CAADialogEngine", "CAADegCreateLineCmd", "CATIndicationAgent", "CAADegGeoCommands"]
 source_file: "Doc/online/CAADegTechArticles/CAADegGettingStarted.htmmd"
@@ -67,7 +64,7 @@ And the Line command creates the line using the two points input using the mouse
 ---
     * **Lifecycle** : the command lifecycle is managed using its constructor and destructor, and using the methods `Activate`, `Desactivate`, and `Cancel`. `Activate` is called when the Line command takes the focus, `Desactivate` is called when a shared command takes the focus, and thus leaves the Line command on the command stack in its current state, and `Cancel` is called when the command completes, or when an exclusive command takes the focus and requests the Line command to be deleted.
 
-```vbscript
+```cpp
 CmdDeclareResource(CAADegCreateLineCmd,CATStateCommand);
           CATStatusChangeRC Activate   (CATCommand * iCmd, CATNotification * iNotif);
           CATStatusChangeRC Desactivate(CATCommand * iCmd, CATNotification * iNotif);
@@ -239,7 +236,7 @@ Note that:
 Note that:
     2. **Creating the dialog agent**. The Line command uses one instance of the CATIndicationAgent class to read the start point and the end point input by the end user. The end user clicks in the screen plane, but the indication happens in fact in a plane defined thanks to the `SetMathPlane` method that assigns this plane to the dialog agent. In this command, the plane is a projection plane  parallel to the screen plane. It is the default plane, when the `SetMathPlane` is not used.  The point clicked on the screen is projected onto this plane.
 
-```vbscript
+```cpp
            _daIndication = new CATIndicationAgent("PointIndication");
 
 ```
@@ -309,7 +306,7 @@ Condition((ConditionMethod) & CAADegCreateLineCmd::CheckStartPoint)),**
       CATDialogTransition * pSecondTransition = AddTransition(stEndState, NULL,
 
          **AndCondition(IsOutputSetCondition(_daIndication),
-```vbscript
+```cpp
 Condition((ConditionMethod) & CAADegCreateLineCmd::CheckStartPoint)),**
 CATDialogTransition * pSecondTransition = AddTransition(stEndState, NULL,
                       Condition((ConditionMethod) & CAADegCreateLineCmd::CheckEndPoint)),**
@@ -326,7 +323,7 @@ void CAADegCreateLineCmd::BuildGraph(#)
             CATDialogState * stStartState = GetInitialState("stStartPointId");
             CATDialogState * stEndState = AddDialogState("stEndPointId");
 
-```vbscript
+```cpp
             _daIndication = new CATIndicationAgent("StartPointIndication");
 
 ```
@@ -336,7 +333,7 @@ void CAADegCreateLineCmd::BuildGraph(#)
 
             CATDialogTransition * pFirstTransition = AddTransition(stStartState, stEndState,
                AndCondition(IsOutputSetCondition(_daIndication),
-```vbscript
+```cpp
                             Condition((ConditionMethod) & CAADegCreateLineCmd::CheckStartPoint)),
 
 ```
@@ -345,13 +342,13 @@ void CAADegCreateLineCmd::BuildGraph(#)
 
 CATDialogTransition * pFirstTransition = AddTransition(stStartState, stEndState,
 AndCondition(IsOutputSetCondition(_daIndication),
-```vbscript
+```cpp
 Condition((ConditionMethod) & CAADegCreateLineCmd::CheckStartPoint)),
 ```
 
             CATDialogTransition * pSecondTransition = AddTransition(stEndState, NULL,
                AndCondition(IsOutputSetCondition(_daIndication),
-```vbscript
+```cpp
                             Condition((ConditionMethod) & CAADegCreateLineCmd::CheckEndPoint)),
 
 ```
@@ -363,7 +360,6 @@ Condition((ConditionMethod) & CAADegCreateLineCmd::CheckStartPoint)),
 [Top] Providing Condition and Action Methods This is the implementation of the command behavior declared using the `BuildGraph` method. The two condition methods are as follows:
     1. The `CheckStartPoint` method checks that the point can be created, that is, that  the object that holds the point factory, here `_RootObject`, exists.
 
-1. The `CheckStartPoint` method checks that the point can be created, that is, that  the object that holds the point factory, here `_RootObject`, exists.
            CATBoolean CAADegCreateLineCmd::CheckStartPoint(void * iDummy)
 
            {
@@ -437,7 +433,7 @@ The two action methods are as follows:
 
            {
              ... // Include here the code to create the first 3D point
-```vbscript
+```cpp
 1. The `CreatePoint` method is called when the first transition is triggered. It creates the start point as a temporary point and puts it in the Interactive Set of Objects (this is not described here). It then recycles the dialog agent that can be reused for the second state.
 CATBoolean CAADegCreateLineCmd::CreatePoint(void * iDummy)
 ```
@@ -470,7 +466,7 @@ return TRUE;
     * Create the Line command creation function in the CAADegCreateLineCmd.cpp file
     * Create a command header for the Line command and put it in a workshop, a workbench, or an add-in to the appropriate workshop or workbench. You will find information in The Command Headers and in Creating a Workshop for Your Document, Creating Workbenches, and Adding Commands to Existing Workshops and Workbenches
     * Provide the command header resources.
-```vbscript
+```cpp
 [Top] Creating the Line Command Creation Function The `CATCreateClass` macro inserted in the command class CAADegCreateLineCmd.cpp file creates a creation function for the Line command. This enables the command class to be instantiated by the application using a command header. This macro is provided by the CATCreateExternalObject.h header file.
 
 ```
@@ -488,7 +484,7 @@ return TRUE;
     void Geometry::CreateCommands(#)
     {
       ...
-```vbscript
+```cpp
 MacDeclareHeader(CAAGeometryHeader);
 void Geometry::CreateCommands(#)
       new CAAGeometryHeader("Line",                  // Command header identifier

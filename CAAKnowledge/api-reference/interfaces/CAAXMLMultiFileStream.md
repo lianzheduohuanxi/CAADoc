@@ -1,46 +1,38 @@
 ---
 title: "CAAXMLMultiFileStream"
-type: "interface"
+type: "LocalClass"
 module: "CAAXMLParser"
-category: api-reference
+base: "CATBaseUnknown"
 method_count: 1
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAXMLParser.edu/CAAXMLCustomStream.m/LocalInterfaces/CAAXMLMultiFileStream.h"
 ---
+
 # CAAXMLMultiFileStream
 
-**模块**: CAAXMLParser  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 1
-
-> System framework
+**基类**: CATBaseUnknown | **模块**: CAAXMLParser | **方法数**: 1
 
 ## 依赖
 
 - `CATListOfCATUnicodeString.h`
+- `CATBaseUnknown.h`
+
+## 虚方法
+
+### Read
+
+```cpp
+virtual HRESULT Read(unsigned char* ioByteArray, unsigned int iByteArrayCapacity, unsigned int& oSizeRead) ;
+```
+
+Implement the CATIXMLInputStream interface.
+
+| 参数 | 类型 |
+|------|------|
+| ioByteArray | `unsigned char*` |
+| iByteArrayCapacity | `unsigned int` |
+| oSizeRead | `unsigned int&` |
+
 
 ---
 
-## Interface Overview
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-This interface is used in the following use cases:
-
-- [CAAXMLCustomStream](../../use-cases/caaxmlcases/CAAXMLCustomStream.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAXMLParser.edu/CAAXMLCustomStream.m/LocalInterfaces/CAAXMLMultiFileStream.h`

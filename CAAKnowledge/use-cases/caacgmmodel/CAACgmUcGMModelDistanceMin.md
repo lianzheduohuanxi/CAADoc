@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Computing the Minimum Distance between Geometries"
-category: use-case case"
+category: "use-case case"
 module: "CAACgmModel"
-tags: ["CAAGMModelDistanceMinOpe", "CATICGMDistanceMinPtSur", "CAAGMModelInterfaces", "CATICGMDistanceMinCrvCrv", "CATICGMDistanceMinPtCrv"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelDistanceMin.htmmd"
+tags: "["CAAGMModelDistanceMinOpe", "CATICGMDistanceMinPtSur", "CAAGMModelInterfaces", "CATICGMDistanceMinCrvCrv", "CATICGMDistanceMinPtCrv"]"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelDistanceMin.htm"
 converted: "2026-05-11T17:33:48.298158"
-```
-
 ---
 # Computing the Minimum Distance between Geometries
 

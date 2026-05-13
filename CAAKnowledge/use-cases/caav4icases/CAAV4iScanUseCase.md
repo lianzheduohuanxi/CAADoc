@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Scanning a Model to Retrieve V4 Elements"
-category: use-case case"
+category: "use-case case"
 module: "CAAV4iUseCases"
-tags: ["CATIAV4Interfaces", "CAACATIAV4Interfaces", "CAAV4iEduModelScan", "CAAV4iModelScan"]
-source_file: "Doc/online/CAAV4iUseCases/CAAV4iScanUseCase.htmmd"
+tags: "["CATIAV4Interfaces", "CAACATIAV4Interfaces", "CAAV4iEduModelScan", "CAAV4iModelScan"]"
+source_file: "Doc/online/CAAV4iUseCases/CAAV4iScanUseCase.htm"
 converted: "2026-05-11T17:33:45.798397"
-```
-
 ---
 # 3D PLM PPR Hub Open Gateway
 
@@ -83,7 +80,6 @@ At the end of CAAV4iEduModelScan using the input model DITTOS.model, the output 
 #### How to Launch CAAV4iEduModelScan
 
 To launch CAAV4iEduModelScan , you will need to set up the build time environment, then compile CAAV4iEduModelScan along with its prerequisites, set up the run time environment, and then execute the use case [1].
-To launch CAAV4iEduModelScan , you will need to set up the build time environment, then compile CAAV4iEduModelScan along with its prerequisites, set up the run time environment, and then execute the use case [1].
 CAAV4iEduModelScan takes two parameters.
 
 mkrun -c CAAV4iEduModelScan InputModel OutputFile
@@ -101,7 +97,6 @@ You can use the model `DITTOS.model` located in `CAA``CATIAV4Interfaces``.edu/In
 [Top]
 #### Where to Find the CAAV4iEduModelScan Code
 
-The CAAV4iEduModelScan use case is made of a single file located in the CAAV4iEduModelScan.m module of the CAACATIAV4Interfaces.edu framework:
 The CAAV4iEduModelScan use case is made of a single file located in the CAAV4iEduModelScan.m module of the CAACATIAV4Interfaces.edu framework:
   Windows | `InstallRootDirectory/CAACATIAV4Interfaces.edu/`CAAV4iEduModelScan`.m/`
 
@@ -157,7 +152,7 @@ The path of the model passed in argument is converted to a CATString and is used
     ...
       if (! CATV4iGetMaster(doc, wspElem, ier) )
       {
-```vbscript
+```cpp
 if (! CATV4iGetMaster(doc, wspElem, ier) )
 ```vbscript
         while(!endWsp && !ier)
@@ -166,7 +161,7 @@ if (! CATV4iGetMaster(doc, wspElem, ier) )
 ```
 
         {
-```vbscript
+```cpp
 if (! CATV4iGetMaster(doc, wspElem, ier) )
 ```vbscript
 while(!endWsp && !ier)
@@ -201,7 +196,7 @@ Then, while _endWsp_ is false, the identificator of the workspace is printed in 
     ...
           if (! CATV4iGisset(wspElem, setElem, endSet, ier) )
           {
-```vbscript
+```cpp
 if (! CATV4iGisset(wspElem, setElem, endSet, ier) )
 ```vbscript
 ```vbscript
@@ -212,7 +207,7 @@ if (! CATV4iGisset(wspElem, setElem, endSet, ier) )
 ```
 
             {
-```vbscript
+```cpp
 if (! CATV4iGisset(wspElem, setElem, endSet, ier) )
 ```vbscript
 ```vbscript
@@ -249,7 +244,7 @@ Then, while _endSet_ is false, the identificator of the set is printed in the ou
     ...
               if (! CATV4iGisels(setElem, NULL, element, endEls, ier) )
               {
-```vbscript
+```cpp
 if (! CATV4iGisels(setElem, NULL, element, endEls, ier) )
 ```vbscript
                 while(!endEls && !ier)
@@ -258,7 +253,7 @@ if (! CATV4iGisels(setElem, NULL, element, endEls, ier) )
 ```
 
                 {
-```vbscript
+```cpp
 if (! CATV4iGisels(setElem, NULL, element, endEls, ier) )
 ```vbscript
 while(!endEls && !ier)
@@ -270,7 +265,7 @@ while(!endEls && !ier)
 
     ...
 
-```vbscript
+```cpp
 if (element)
 outputFile << "------"<<element->GetId(#)<<endl;
                   if (! CATV4iGisels(setElem, element, nextElement, endEls, ier) )

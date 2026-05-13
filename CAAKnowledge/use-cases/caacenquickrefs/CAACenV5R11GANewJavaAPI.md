@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "New Java Authorized APIs in CAA V5R11 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
-tags: []
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R11GANewJavaAPI.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R11GANewJavaAPI.htm"
 converted: "2026-05-11T17:33:47.090678"
-```
-
 ---
 tags: []
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R11GANewJavaAPI.htmmd"

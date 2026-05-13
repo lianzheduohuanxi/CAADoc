@@ -1,25 +1,15 @@
 ---
 title: "CAAPmiUdfForMfgHole"
-type: "interface"
+type: "LocalClass"
 module: "CAAPrismaticMachiningItf"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAPmiUdfForMfgHole → CATBaseUnknown"
 method_count: 6
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAPrismaticMachiningItf.edu/CAAPmiUserDefFeatureMappedWithMfgFeature.m/LocalInterfaces/CAAPmiUdfForMfgHole.h"
 ---
+
 # CAAPmiUdfForMfgHole
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAPmiUdfForMfgHole → CATBaseUnknown  
-**模块**: CAAPrismaticMachiningItf  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 6
-
-> ===================================================================
+**基类**: CATBaseUnknown | **模块**: CAAPrismaticMachiningItf | **方法数**: 6
 
 ## 依赖
 
@@ -27,28 +17,80 @@ verified: true
 - `CATICkeParm.h`
 - `CATString.h`
 
+## 虚方法
+
+### GetDiameter
+
+```cpp
+virtual HRESULT GetDiameter(CATICkeParm_var &oDiameter) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| &oDiameter | `CATICkeParm_var` |
+
+
+### GetDepth
+
+```cpp
+virtual HRESULT GetDepth(CATICkeParm_var &oDepth) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| &oDepth | `CATICkeParm_var` |
+
+
+### GetOrigin
+
+```cpp
+virtual HRESULT GetOrigin(double& oX, double& oY, double& oZ) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oX | `double&` |
+| oY | `double&` |
+| oZ | `double&` |
+
+
+### GetDirection
+
+```cpp
+virtual HRESULT GetDirection(double& oX, double& oY, double& oZ) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oX | `double&` |
+| oY | `double&` |
+| oZ | `double&` |
+
+
+### get_Parameter
+
+```cpp
+virtual HRESULT get_Parameter(const CATString &iParameterName, double &oParameter) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| &iParameterName | `const CATString` |
+| &oParameter | `double` |
+
+
+### get_Parameter
+
+```cpp
+virtual HRESULT get_Parameter(const CATString &iParameterName, int &oParameter) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| &iParameterName | `const CATString` |
+| &oParameter | `int` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAPrismaticMachiningItf.edu/CAAPmiUserDefFeatureMappedWithMfgFeature.m/LocalInterfaces/CAAPmiUdfForMfgHole.h`

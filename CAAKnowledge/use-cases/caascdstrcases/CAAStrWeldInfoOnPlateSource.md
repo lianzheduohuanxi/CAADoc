@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAAStrWeldInfoOnPlate.CATScript"
 category: "use-case"
 module: "CAAScdStrUseCases"
-tags: ["CATIA", "CAAStrWeldInfoOnPlate"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrWeldInfoOnPlateSource.htmmd"
+tags: "["CATIA", "CAAStrWeldInfoOnPlate"]"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrWeldInfoOnPlateSource.htm"
 converted: "2026-05-11T17:31:50.917575"
-```
-
 ---
 ```vbscript
 ```vbscript
@@ -27,7 +24,7 @@ converted: "2026-05-11T17:31:50.917575"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -38,7 +35,7 @@ converted: "2026-05-11T17:31:50.917575"
     Dim ObjPart As Part
 ```vbscript
 ```
-```vbscript
+```cpp
     Set ObjPart = CATIA.ActiveDocument.Part
 ```
 ```

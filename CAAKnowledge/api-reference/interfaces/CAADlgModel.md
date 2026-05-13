@@ -1,54 +1,46 @@
 ---
 title: "CAADlgModel"
-type: "interface"
+type: "LocalClass"
 module: "CAADialog"
-category: api-reference
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+base: "CATCommand"
+method_count: 2
+source_file: "CAADialog.edu/CAADlgSendReceive.m/LocalInterfaces/CAADlgModel.h"
 ---
+
 # CAADlgModel
 
-**模块**: CAADialog  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> This class derives from CATCommand. It shows how to send notifications by using the SendNotification method, and how to answer to a sending object request by redefining the SendCommandSpecificObject method.
 
-> using the SendNotification method, and how to answer to a sending object
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATCommand | **模块**: CAADialog | **方法数**: 2
 
 ## 依赖
 
+- `CATCommand.h`
+
+## 公共方法
+
+### Add
+
+```cpp
+void Add(CAADlgElement *iNewElement) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iNewElement | `CAADlgElement` |
+
+
+### Remove
+
+```cpp
+void Remove(CAADlgElement *iElemenToRemove) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iElemenToRemove | `CAADlgElement` |
+
+
 ---
 
-## Interface Overview
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-- [3D PLM Enterprise Architecture](../../use-cases/caadlgcases/CAADlgSampleSendReceive.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAADialog.edu/CAADlgSendReceive.m/LocalInterfaces/CAADlgModel.h`

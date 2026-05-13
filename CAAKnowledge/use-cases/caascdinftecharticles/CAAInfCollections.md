@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "About Collections"
 category: "use-case"
 module: "CAAScdInfTechArticles"
-tags: ["CATIA"]
-source_file: "Doc/online/CAAScdInfTechArticles/CAAInfCollections.htmmd"
+tags: "["CATIA"]"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfCollections.htm"
 converted: "2026-05-11T17:31:52.408942"
-```
-
 ---
 ## Infrastructure
 
@@ -27,7 +24,7 @@ converted: "2026-05-11T17:31:52.408942"
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
      Set Doc = CATIA.Documents.Item(6)
 
 ```
@@ -42,7 +39,7 @@ converted: "2026-05-11T17:31:52.408942"
 Dim Doc As Document
 ```vbscript
 ```
-```vbscript
+```cpp
 Set Doc = CATIA.Documents.Item(6)
 ```
 ```
@@ -57,7 +54,7 @@ Set Doc = CATIA.Documents.Item(6)
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
      Set Doc = CATIA.Documents.Item("MyDocument")
 
 ```
@@ -72,7 +69,7 @@ Set Doc = CATIA.Documents.Item(6)
 Dim Doc As Document
 ```vbscript
 ```
-```vbscript
+```cpp
 Set Doc = CATIA.Documents.Item("MyDocument")
 ```
 ```
@@ -81,7 +78,7 @@ Set Doc = CATIA.Documents.Item("MyDocument")
 
 ```
 
-```vbscript
+```cpp
      **For I = 1 To CATIA.Documents.Count**
        **msgbox CATIA.Documents.Item(I).Name**
 ```vbscript
@@ -99,27 +96,27 @@ Next
        I = I + 1
 ```
 
-```vbscript
+```cpp
        **msgbox CATIA.Documents.Item(I).Name**
 I = 0
 ```
 Do
 I = I + 1
-```vbscript
+```cpp
      Until I = **CATIA.Documents.Count**
 
  or you can use the **For Each** instruction to scan the collection, and get rid of the counter:
 ```
 
 ```vbscript
-```vbscript
+```cpp
      For Each Doc In CATIA.Documents
 ```
 ```
 
        **msgbox Doc.Name**
 ```vbscript
-```vbscript
+```cpp
 For Each Doc In CATIA.Documents
 ```vbscript
 ```

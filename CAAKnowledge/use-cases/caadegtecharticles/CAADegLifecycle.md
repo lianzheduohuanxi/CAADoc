@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Managing the State Dialog Command Lifecycle"
 category: "use-case"
 module: "CAADegTechArticles"
-tags: ["CAACmdWithArg", "CAACommandCmd"]
-source_file: "Doc/online/CAADegTechArticles/CAADegLifecycle.htmmd"
+tags: "["CAACmdWithArg", "CAACommandCmd"]"
+source_file: "Doc/online/CAADegTechArticles/CAADegLifecycle.htm"
 converted: "2026-05-11T17:33:49.851891"
-```
-
 ---
 tags: ["CAACmdWithArg", "CAACommandCmd"]
 source_file: "Doc/online/CAADegTechArticles/CAADegLifecycle.htmmd"

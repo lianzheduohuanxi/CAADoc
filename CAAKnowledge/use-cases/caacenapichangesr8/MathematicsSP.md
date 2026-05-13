@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "Mathematics Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR8"
-version: "V5R8"
-tags: []
-source_file: "Doc/online/CAACenAPIChangesR8/MathematicsSP.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAACenAPIChangesR8/MathematicsSP.htm"
 converted: "2026-05-11T17:33:52.621480"
-```
-
 ---
 tags: []
 source_file: "Doc/online/CAACenAPIChangesR8/MathematicsSP.htmmd"

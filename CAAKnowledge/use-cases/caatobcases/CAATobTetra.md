@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Using the Topological Objects"
-category: use-case case"
+category: "use-case case"
 module: "CAATobUseCases"
-tags: ["CAATobTetra", "CATICGMObject", "CAAGemBrowser", "CAAGobCreation", "CATIntersectionSurSur", "CATIntersectionCrvCrv", "CATIA", "CAATopologicalObjects"]
-source_file: "Doc/online/CAATobUseCases/CAATobTetra.htmmd"
+tags: "["CAATobTetra", "CATICGMObject", "CAAGemBrowser", "CAAGobCreation", "CATIntersectionSurSur", "CATIntersectionCrvCrv", "CATIA", "CAATopologicalObjects"]"
+source_file: "Doc/online/CAATobUseCases/CAATobTetra.htm"
 converted: "2026-05-11T17:33:45.845499"
-```
-
 ---
 # Geometric Modeler
 
@@ -104,7 +101,6 @@ The description of the geometry and of the cells is not sufficient to describe t
 
 To launch CAATobTetra, you will need to set up the build time environment, then compile CAATobTetra.m along with its prerequisites, set up the run time environment, and then execute the use case [5].
 
-To launch CAATobTetra, you will need to set up the build time environment, then compile CAATobTetra.m along with its prerequisites, set up the run time environment, and then execute the use case [5].
 ```vbscript
 If you simply type CAATobTetra with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example:
 
@@ -152,7 +148,6 @@ The use case is divided into the following steps:
 
 The geometry factory (CATGeoFactory) creates and manages all the `CATICGMObject` (and the curves and surfaces in particular) [4]. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
 
-The geometry factory (CATGeoFactory) creates and manages all the `CATICGMObject` (and the curves and surfaces in particular) [4]. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
     CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**(#) ;
 ```vbscript
     if (NULL==piGeomFactory) return (1);
@@ -172,25 +167,25 @@ The topology is a logical information describing the boundary of geometric objec
 To create planes, directly use the `CreatePlane` method of the `CATGeoFactory`. If NULL pointers are returned, close the factory and return an error.
       CATPlane * piPlanexy = piGeomFactory->**CreatePlane**(CATMathPoint(#),
                                                         CATMathPoint(1,0,0),
-```vbscript
+```cpp
                                                         CATMathPoint(0,1,0));
 ```
 
       CATPlane * piPlaneyz = piGeomFactory->CreatePlane(CATMathPoint(#),
                                                         CATMathPoint(0,1,0),
-```vbscript
+```cpp
                                                         CATMathPoint(0,0,1));
 ```
 
       CATPlane * piPlanexz = piGeomFactory->CreatePlane(CATMathPoint(#),
                                                         CATMathPoint(1,0,0),
-```vbscript
+```cpp
                                                         CATMathPoint(0,0,1));
 ```
 
       CATPlane * piPlanec  = piGeomFactory->CreatePlane(CATMathPoint(10,0,0),
                                                         CATMathPoint(0,10,0),
-```vbscript
+```cpp
                                                         CATMathPoint(0,0,10));
 ```
 
@@ -199,7 +194,7 @@ To create planes, directly use the `CreatePlane` method of the `CATGeoFactory`. 
 
       {
         ::CATCloseCGMContainer(piGeomFactory);
-```vbscript
+```cpp
 CATMathPoint(0,0,10));
 _// is all right?_
 if (NULL==piPlanexy || NULL==piPlaneyz || NULL==piPlanexz || NULL==piPlanec)
@@ -221,7 +216,6 @@ Now, create `CATPLine` on the planes. A `CATPLine` is a line defined in the para
 
 The following code creates the `CATPLine`.
 
-The following code creates the `CATPLine`.
       _//PLines on Planexy_
       CATSurParam Pxy0,Pxy1,Pxy2;
       _//Gets the curve parameter corresponding to the Mathematical point
@@ -289,13 +283,12 @@ The `CATPCurve` must be used to create the real geometry of the edge: the `CATEd
 
 Fig. 3: The Geometry of the Tetrahedron ![CAATobTetra3.gif /(13932 bytes/)](images/CAATobTetra3.gif) | `EC01` is the edge curve that is the geometry of edge` E01`. It represents `PLxy01` on the plane `Pxy` and `PLxz01` on the plane `Pxz`. These two CATPCurve have the same orientation (1 value) as the orientation of their edge curve. The edge is bounded by two vertices whose geometry are the macro point` MP0` and `MP1`. These macro points are created by concatenation of points on the edge curves (CATPointOnEdgeCurve or Poec): for example `MP1` represents `Poec13s` (start of edge curve `EC13`), `Poec01e` (end of edge curve `EC01`) and `Poec12s` (start of edge curve` EC12` ). `EC20` is the edge curve that is the geometry of edge` E20`. It represents `PLxy20` on the plane `Pxy` and `PLyz01` on the plane `Pyz`. `PLxy20` has the same orientation as the orientation of its edge curve whereas `PLyz01` has the opposite orientation (-1 value).
 
-Fig. 3: The Geometry of the Tetrahedron ![CAATobTetra3.gif /(13932 bytes/)](images/CAATobTetra3.gif) | `EC01` is the edge curve that is the geometry of edge` E01`. It represents `PLxy01` on the plane `Pxy` and `PLxz01` on the plane `Pxz`. These two CATPCurve have the same orientation (1 value) as the orientation of their edge curve. The edge is bounded by two vertices whose geometry are the macro point` MP0` and `MP1`. These macro points are created by concatenation of points on the edge curves (CATPointOnEdgeCurve or Poec): for example `MP1` represents `Poec13s` (start of edge curve `EC13`), `Poec01e` (end of edge curve `EC01`) and `Poec12s` (start of edge curve` EC12` ). `EC20` is the edge curve that is the geometry of edge` E20`. It represents `PLxy20` on the plane `Pxy` and `PLyz01` on the plane `Pyz`. `PLxy20` has the same orientation as the orientation of its edge curve whereas `PLyz01` has the opposite orientation (-1 value).
       _// -----------Creates the Edge Curves, representing several PLines
 
       //_
 _// -----------Creates the Edge Curves, representing several PLines
       CATLISTP(CATCurve)     curves;
-```vbscript
+```cpp
       CATLISTP(CATCrvLimits) limits;
 ```
 
@@ -488,7 +481,6 @@ NULL==piPoec13Start || NULL==piPoec13End)
 
 Appending the points on the edge curves in the corresponding macro points, and the geometry is completed.
 
-Appending the points on the edge curves in the corresponding macro points, and the geometry is completed.
       _// -----------Creates the MacroPoints, representing several points
 
       //_
@@ -562,7 +554,6 @@ if (NULL==piMacro0 || NULL==piMacro1 || NULL==piMacro2 || NULL==piMacro3 )
 
 Before creating any topological entity, you first must create the factory of these entity: this factory is a CATBody, and not the CATGeoFactory. The factory of the CATBody, however, still is the CATGeoFactory.
 
-Before creating any topological entity, you first must create the factory of these entity: this factory is a CATBody, and not the CATGeoFactory. The factory of the CATBody, however, still is the CATGeoFactory.
       _// ----------- Creates the factory of the cells
 
       //_
@@ -591,7 +582,6 @@ if (NULL==piTetra)
 
 Using `Tetra` as the cell factory, we can now create the vertices, and associate them with their geometry (macro point).
 
-Using `Tetra` as the cell factory, we can now create the vertices, and associate them with their geometry (macro point).
       CATVertex *piVertex0=NULL, *piVertex1=NULL, *piVertex2=NULL, *piVertex3=NULL;
       piVertex0 = pi**Tetra** ->**CreateVertex**(#);
 ```vbscript
@@ -638,7 +628,6 @@ return (1);
 
 First create them void.
 
-First create them void.
       CATEdge *piEdge01=NULL, *piEdge12=NULL, *piEdge20=NULL,
 
     	      *piEdge23=NULL, *piEdge30=NULL, *piEdge13=NULL;
@@ -733,7 +722,6 @@ _// Bounds Edge01 by Vertex1,
 
 Once again, first create a void topology. For the loop, indicates whether the loop defines an inner (hole) or outer boundary. In the case of the tetrahedron, the faces do not have any holes, all the loops are external.
 
-Once again, first create a void topology. For the loop, indicates whether the loop defines an inner (hole) or outer boundary. In the case of the tetrahedron, the faces do not have any holes, all the loops are external.
       CATFace *piFacexy=NULL, *piFaceyz=NULL, *piFacexz=NULL, *piFacec=NULL;
       piFacexy = piTetra->**CreateFace**(#);
 ```vbscript
@@ -749,7 +737,7 @@ Once again, first create a void topology. For the loop, indicates whether the lo
       _// The loops define external boundary of the faces (CATLocationOuter)_
       piLoopxy = piTetra->**CreateLoop**(CATLocationOuter);
 ```vbscript
-```vbscript
+```cpp
       piLoopyz = piTetra->CreateLoop(CATLocationOuter);
       piLoopxz = piTetra->CreateLoop(CATLocationOuter);
       piLoopc  = piTetra->CreateLoop(CATLocationOuter);
@@ -840,9 +828,8 @@ _// The first bounding edge Edge20
 
 In the use case, the shell is aimed to bound a volume, it is an external boundary of a future volume (CATLocationOuter). To create a skin body, use the CATLocationIn3DSpace value instead, and directly attach the shell to the body (i.e.: go to step 9 and attach the shell to the body. But you still have to add the face inside the shell with the `AddCell` method)
 
-In the use case, the shell is aimed to bound a volume, it is an external boundary of a future volume (CATLocationOuter). To create a skin body, use the CATLocationIn3DSpace value instead, and directly attach the shell to the body (i.e.: go to step 9 and attach the shell to the body. But you still have to add the face inside the shell with the `AddCell` method)
      CATShell * piShell = NULL;
-```vbscript
+```cpp
       piShell = piTetra->**CreateShell**(**CATLocationOuter**);
 
 ```
@@ -905,7 +892,6 @@ _// Bounds by the faces and add them in the shell at the same time
 
 After creating a void lump (`CreateLump`), add it the already created volume (`AddCell`).
 
-After creating a void lump (`CreateLump`), add it the already created volume (`AddCell`).
      CATLump * piLump = NULL;
       piLump = piTetra->**CreateLump**(#);
 ```vbscript
@@ -1030,7 +1016,6 @@ if (NULL==piDomain)
 
 Now, to retrieve the number of cells of the lump domain, use `CATDomain::GetAllCells`. This method fills a list with the founded cells. To have the number of cells, just ask the list (`Size`). In the tetrahedron case, there is one volume in the lump domain, and the pointer to the volume must not be NULL.
 
-Now, to retrieve the number of cells of the lump domain, use `CATDomain::GetAllCells`. This method fills a list with the founded cells. To have the number of cells, just ask the list (`Size`). In the tetrahedron case, there is one volume in the lump domain, and the pointer to the volume must not be NULL.
       CATLISTP(CATCell) listCells;
       piDomain ->**GetAllCells**(listCells, 3 );
       int nbCells = listCells.**Size**(#);
@@ -1073,7 +1058,6 @@ if (NULL==piVolumeCell)
 
 From the volume to the shell: check that the volume is made of faces by retrieving the dimension of the cells of the domain.
 
-From the volume to the shell: check that the volume is made of faces by retrieving the dimension of the cells of the domain.
       nbDomain = piVolumeCell->GetNbDomains(#);
 ```vbscript
 ```vbscript
@@ -1106,7 +1090,6 @@ if ( 2 != dimShell )
 
 From the shell to the faces: first clean the list with `RemoveAll` that frees the memory of the list, but does not remove the objects. Then, get all the cells (4 faces for the tetrahedron).
 
-From the shell to the faces: first clean the list with `RemoveAll` that frees the memory of the list, but does not remove the objects. Then, get all the cells (4 faces for the tetrahedron).
       listCells.**RemoveAll**(#);
 
       piDomain ->**GetAllCells**(listCells,dimShell);
@@ -1149,14 +1132,13 @@ For each face,
     * `delete` it.
 Using the boundary iterator, the number of edges is computed (4 for the tetrahedron).
 
-Using the boundary iterator, the number of edges is computed (4 for the tetrahedron).
 ```vbscript
       for (int i=1;i<=nbCells;i++)
 
 ```
 
       {
-```vbscript
+```cpp
 for (int i=1;i<=nbCells;i++)
          CATOrientation ori;
          if (NULL==listCells[i])
@@ -1214,7 +1196,7 @@ if (NULL == (piGeom->IsATypeOf(**CATPlaneType**)) ) _// the geometry is a plane!
 ```
 
         }
-```vbscript
+```cpp
 if (NULL == (piGeom->IsATypeOf(**CATPlaneType**)) ) _// the geometry is a plane!..._
 ```vbscript
 return (14);
@@ -1294,13 +1276,13 @@ The use case ends with the closure of the geometry factory, done by the `::CATCl
 
      {
     #ifdef _WINDOWS_SOURCE
-```vbscript
+```cpp
 if(1==toStore)
        ofstream filetowrite(pfileName, ios::binary ) ;
 ```
 
     #else
-```vbscript
+```cpp
 if(1==toStore)
 ofstream filetowrite(pfileName, ios::binary ) ;
        ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;

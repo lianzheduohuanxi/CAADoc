@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Adding Business Rules to a Command"
 category: "use case"
 module: "CAADkoUseCases"
-tags: ["CATIAVPMVDAAddChild", "CAADkoCommandExtenstion", "CAAVPMDesktopObjects", "CATIAVPMAddChild", "CATIAVPMVDACommandExtension", "CATIAVPMVDACommand", "CATIAVPMVDAAddChild_var", "CAADkoCommandExtension", "CATIAVPMVDACommandFactory_var", "CATIAVPMVDACopy", "CATIAVPMVDAExists"]
-source_file: "Doc/online/CAADkoUseCases/CAADkoCommandExtension.htmmd"
+tags: "["CATIAVPMVDAAddChild", "CAADkoCommandExtenstion", "CAAVPMDesktopObjects", "CATIAVPMAddChild", "CATIAVPMVDACommandExtension", "CATIAVPMVDACommand", "CATIAVPMVDAAddChild_var", "CAADkoCommandExtension", "CATIAVPMVDACommandFactory_var", "CATIAVPMVDACopy", "CATIAVPMVDAExists"]"
+source_file: "Doc/online/CAADkoUseCases/CAADkoCommandExtension.htm"
 converted: "2026-05-11T17:33:45.967445"
-```
-
 ---
 tags: ["CATIAVPMVDAAddChild", "CAADkoCommandExtenstion", "CAAVPMDesktopObjects", "CATIAVPMAddChild", "CATIAVPMVDACommandExtension", "CATIAVPMVDACommand", "CATIAVPMVDAAddChild_var", "CAADkoCommandExtension", "CATIAVPMVDACommandFactory_var", "CATIAVPMVDACopy", "CATIAVPMVDAExists"]
 source_file: "Doc/online/CAADkoUseCases/CAADkoCommandExtension.htmmd"
@@ -36,7 +33,7 @@ Abstract This article shows how to extend a server command to perform some check
 What You Will Learn With This Use Case This use case is intended to show you how to implement a single interface to plug in rules before executing a command and after its execution. A command has input parameters, is executed, and can have output parameters. A command is also designed to call some additional code to check specific rules or execute specific actions depending on each customer.
 This additional code is made available to the command by implementing the Prepare and Cleanup methods of the CATIAVPMVDACommandExtension interface in an extension class of the command.
 Before executing, the command will call the Prepare method. At this point, Prepare can have access to all the input parameters of the command. If those parameters, or if other conditions are not satisfactory, Prepare can return an error code to prevent the command from beeing executed.
-```vbscript
+```cpp
 If Prepare returns successfully, and the command is executed, it then calls the Cleanup method. At this point, Cleanup can have access to all input and output parameters. But returning an error code here will have no effect on the command execution, since this execution is completed. [Top] The CAADkoCommandExtenstion Use Case CAADkoCommandExtenstion is a use case of the CAAVPMDesktopObjects.edu framework that illustrates VPMDesktopObjects framework capabilities. [Top] What Does CAADkoCommandExtension Do CAADkoCommandExtension is a data extension of the CATIAVPMAddChild command. The way to extend other server commands is exactly the same, so we just extend one of them. CATIAVPMAddChild is used to create a business object and attach it to a parent business object, for example when creating a Part Instance and attaching it to a Product Root Class.
 
 ```
@@ -208,7 +205,7 @@ We get the factory of command by calling the global function GetCommandFactory(#
     	// Retrieve the interface of this Exists command.
 We get the factory of command by calling the global function GetCommandFactory(#) located in VPMCommandServices. We can then create a command dedicated for searching objects, called Exists command. We have a generic pointer on this command, a CATIAVPMVDACommand pointer. To use it properly, we must get the CATIAVPMVDAExists interface.
     	CATIAVPMVDAExists * piExistsCommand = NULL;
-```vbscript
+```cpp
     	RC = piCommand->QueryInterface( IID_CATIAVPMVDAExists, (void **) & piExistsCommand );
 
 ```
@@ -299,7 +296,7 @@ CATUnicodeString CopyString( "Copy" );
     	    // Retrieves the interface of the Copy Command.
 RC = spCommandFactory->Create( CopyString, piCommand );
     	    CATIAVPMVDACopy * piCopyCommand = NULL;
-```vbscript
+```cpp
     	    RC = piCommand->QueryInterface( IID_CATIAVPMVDACopy, (void **) & piCopyCommand );
 
 ```

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Converting Curves into NURBS"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CAACrvFittingToNurbsCrv", "CAAGMOperatorsCrvFittingToNurbsCrv", "CATICGMCrvFittingToNurbsCrv", "CATICGMObject", "CAAGMModelGemBrowser", "CATIA"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcFrfCrvFittingToNurbsCrv.htmmd"
+tags: "["CAAGMOperatorsInterfaces", "CAADoc", "CAACrvFittingToNurbsCrv", "CAAGMOperatorsCrvFittingToNurbsCrv", "CATICGMCrvFittingToNurbsCrv", "CATICGMObject", "CAAGMModelGemBrowser", "CATIA"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcFrfCrvFittingToNurbsCrv.htm"
 converted: "2026-05-11T17:33:48.934549"
-```
-
 ---
 tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CAACrvFittingToNurbsCrv", "CAAGMOperatorsCrvFittingToNurbsCrv", "CATICGMCrvFittingToNurbsCrv", "CATICGMObject", "CAAGMModelGemBrowser", "CATIA"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcFrfCrvFittingToNurbsCrv.htmmd"
@@ -84,8 +81,7 @@ At this stage, you have just created an instance of operator. Prior to running t
     //
     pCrvFitting1->SetInternalMinLength(14);
 
-pCrvFitting1->SetInternalMinLength(14);
-```vbscript
+```cpp
 If you want to get the converted NURBS, you must Run the operator and retrieve the resulting NURBS by using the GetPNurbs method. To convert a CATPCurve into a CATNurbsCurve, you can use the Set3DCurveCreation method (before applying the Run method), then use the GetNurbsCurve method instead of GetPNurbs.
 
 ```
@@ -108,7 +104,7 @@ if(1==toStore)
        ofstream filetowrite(pfileName, ios::binary ) ;
 
     #else
-```vbscript
+```cpp
 if(1==toStore)
 ofstream filetowrite(pfileName, ios::binary ) ;
        ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;

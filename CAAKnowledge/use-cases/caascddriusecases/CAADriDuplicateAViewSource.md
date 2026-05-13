@@ -20,19 +20,19 @@ Option Explicit
 '   CATIA Level: V5R11
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
     ' Set the CATIA popup file alerts to False
     ' It prevents to stop the macro at each alert during its execution
 ```
-```vbscript
+```cpp
     CATIA.DisplayFileAlerts = False
 
     ' Optional: allows to find the sample wherever it's installed
 ```
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,"No Doc Path Defined"
@@ -40,14 +40,14 @@ Sub CATMain(#)
 ```
 
     ' Open the Drawing document
-```vbscript
+```cpp
     Dim oDrawingSource As DrawingDocument
     Set oDrawingSource = CATIA.Documents.Open(sDocPath & _
              "/online/CAAScdDriUseCases/samples/CAADriDuplicateAView.CATDrawing")
 ```
     
     ' Fit in window the opened document
-```vbscript
+```cpp
     CATIA.ActiveWindow.ActiveViewer.Reframe
     
     ' Retrieve the sheet containing the view to be duplicated
@@ -80,7 +80,7 @@ Sub CATMain(#)
     oSelectionSource.Clear
     
     ' Create the Drawing document where the view will be pasted
-```vbscript
+```cpp
     Dim oDrawingTarget As DrawingDocument
     Set oDrawingTarget = CATIA.Documents.Add("Drawing")
     
@@ -111,7 +111,7 @@ Sub CATMain(#)
     oSelectionTarget.Clear
 
     ' Fit in window the active document    
-```vbscript
+```cpp
     CATIA.ActiveWindow.ActiveViewer.Reframe
     
     ' Clear the variables
@@ -143,19 +143,19 @@ Option Explicit
 '   CATIA Level: V5R11
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
     ' Set the CATIA popup file alerts to False
     ' It prevents to stop the macro at each alert during its execution
 ```
-```vbscript
+```cpp
     CATIA.DisplayFileAlerts = False
 
     ' Optional: allows to find the sample wherever it's installed
 ```
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,"No Doc Path Defined"
@@ -163,14 +163,14 @@ Sub CATMain(#)
 ```
 
     ' Open the Drawing document
-```vbscript
+```cpp
     Dim oDrawingSource As DrawingDocument
     Set oDrawingSource = CATIA.Documents.Open(sDocPath & _
              "/online/CAAScdDriUseCases/samples/CAADriDuplicateAView.CATDrawing")
 ```
     
     ' Fit in window the opened document
-```vbscript
+```cpp
     CATIA.ActiveWindow.ActiveViewer.Reframe
     
     ' Retrieve the sheet containing the view to be duplicated
@@ -203,7 +203,7 @@ Sub CATMain(#)
     oSelectionSource.Clear
     
     ' Create the Drawing document where the view will be pasted
-```vbscript
+```cpp
     Dim oDrawingTarget As DrawingDocument
     Set oDrawingTarget = CATIA.Documents.Add("Drawing")
     
@@ -234,7 +234,7 @@ Sub CATMain(#)
     oSelectionTarget.Clear
 
     ' Fit in window the active document    
-```vbscript
+```cpp
     CATIA.ActiveWindow.ActiveViewer.Reframe
     
     ' Clear the variables

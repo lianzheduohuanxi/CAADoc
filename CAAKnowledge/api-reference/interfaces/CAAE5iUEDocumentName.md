@@ -1,56 +1,51 @@
 ---
 title: "CAAE5iUEDocumentName"
-type: "interface"
+type: "LocalClass"
 module: "CAAProductStructureE5i"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAE5iUEDocumentName → CATBaseUnknown"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 2
+source_file: "CAAProductStructureE5i.edu/CAAE5iUEDocumentName.m/LocalInterfaces/CAAE5iUEDocumentName.h"
 ---
+
 # CAAE5iUEDocumentName
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAE5iUEDocumentName → CATBaseUnknown  
-**模块**: CAAProductStructureE5i  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
-
-> Nov 2005  Creation: DRT
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATBaseUnknown | **模块**: CAAProductStructureE5i | **方法数**: 2
 
 ## 依赖
 
 - `CATBaseUnknown.h`
 
+## 公共方法
+
+### ComputeDocumentName
+
+```cpp
+HRESULT ComputeDocumentName(CATUnicodeString &iDocumentDomain, CATUnicodeString &iDocumentV_ID, CATUnicodeString &iDocumentV_version, CATUnicodeString &iDocumentV_extension, CATUnicodeString &iPartV_ID, CATUnicodeString &iPartV_version, CATUnicodeString &oDocumentName) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| &iDocumentDomain | `CATUnicodeString` |
+| &iDocumentV_ID | `CATUnicodeString` |
+| &iDocumentV_version | `CATUnicodeString` |
+| &iDocumentV_extension | `CATUnicodeString` |
+| &iPartV_ID | `CATUnicodeString` |
+| &iPartV_version | `CATUnicodeString` |
+| &oDocumentName | `CATUnicodeString` |
+
+
+### ComputeDocumentName
+
+```cpp
+HRESULT ComputeDocumentName(CATDocument *iDocument, CATUnicodeString & oDocumentName) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iDocument | `CATDocument` |
+| oDocumentName | `CATUnicodeString &` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAProductStructureE5i.edu/CAAE5iUEDocumentName.m/LocalInterfaces/CAAE5iUEDocumentName.h`

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Contextual Help"
-category: tech-article
+category: "tech-article"
 module: "CAAAfrTechArticles"
-tags: ["CATIAfr_C2", "CATIA_P3", "CAAAfrPointHdr", "CATIA_PLM_Express", "CAAApplicationFrame", "CAAAfrGeometryWksHeader", "CAAGeometry", "CATIA", "CATIA_STUDENT"]
-source_file: "Doc/online/CAAAfrTechArticles/CAAAfrHelpOnLine.htmmd"
+tags: "["CATIAfr_C2", "CATIA_P3", "CAAAfrPointHdr", "CATIA_PLM_Express", "CAAApplicationFrame", "CAAAfrGeometryWksHeader", "CAAGeometry", "CATIA", "CATIA_STUDENT"]"
+source_file: "Doc/online/CAAAfrTechArticles/CAAAfrHelpOnLine.htm"
 converted: "2026-05-11T17:17:55.880772"
-```
-
 ---
 #  3D PLM Enterprise Architecture
 
@@ -346,7 +343,7 @@ This article has demonstrated how to create a documentation directory and descri
 [3] | [Application Property Access](../CAACafTechArticles/CAACafToolsOptions.md)
 [4] | [What Is the Product Line Visual Identity](CAAAfrVisualIdentity.md)
 [5] | [Creating a Product Line Visual Identity](../CAAAfrUseCases/CAAAfrSampleVisualIdentity.md)
-```vbscript
+```cpp
 [6] | [Contextual Help for an Add-On](../CAAAfrUseCases/CAAAfrSampleContextualHelpCATIA.md)
 [Top]
 ```

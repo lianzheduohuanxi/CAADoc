@@ -131,7 +131,7 @@ Private Sub cmdCancel_Click(#)
 ' ------------
 Unload Me
 
-```vbscript
+```cpp
 End Sub
 
 Private Sub UserForm_Initialize(#)
@@ -154,13 +154,13 @@ iDelimiter = "//"
 ' ------------
 ' Get the CATIA file system
 ' ------------
-```vbscript
+```cpp
 Set oCATIAFileSys = CATIA.FileSystem
 ' ------------
 ```
 ' Get the file containing the hole parameters
 ' ------------
-```vbscript
+```cpp
 Set oFile = oCATIAFileSys.GetFile(sDocPath & "/online/CAAScdPriUseCases/macros/CAAPriChangeHole.txt")
 ' ------------
 ```
@@ -321,7 +321,7 @@ Private Sub cmdCancel_Click(#)
 ' ------------
 Unload Me
 
-```vbscript
+```cpp
 End Sub
 
 Private Sub UserForm_Initialize(#)
@@ -344,13 +344,13 @@ iDelimiter = &quot;//&quot;
 ' ------------
 ' Get the CATIA file system
 ' ------------
-```vbscript
+```cpp
 Set oCATIAFileSys = CATIA.FileSystem
 ' ------------
 ```
 ' Get the file containing the hole parameters
 ' ------------
-```vbscript
+```cpp
 Set oFile = oCATIAFileSys.GetFile(sDocPath &amp; &quot;/online/CAAScdPriUseCases/macros/CAAPriChangeHole.txt&quot;)
 ' ------------
 ```

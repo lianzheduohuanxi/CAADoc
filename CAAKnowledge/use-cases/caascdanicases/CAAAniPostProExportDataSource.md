@@ -1,17 +1,14 @@
 ---
-```vbscript
 title: "CAAAniPostProExportData.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CATIA", "CAAAniPostProExportData", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPostProExportDataSource.htmmd"
+tags: "["CATIA", "CAAAniPostProExportData", "CAAScdAniUseCases"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPostProExportDataSource.htm"
 converted: "2026-05-11T17:31:51.749542"
-```
-
 ---
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGHT DASSAULT SYSTEMES 2000
     ' ***********************************************************************
     '   Purpose:      Export data on image
@@ -27,7 +24,7 @@ converted: "2026-05-11T17:31:51.749542"
 
 ```
 
-```vbscript
+```cpp
     Sub CATMain(#)
 ```vbscript
 ```
@@ -35,7 +32,7 @@ converted: "2026-05-11T17:31:51.749542"
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
 
-```vbscript
+```cpp
       sDocPath=CATIA.SystemService.Environ("CATDocView")
       sOut = CATIA.SystemService.Environ("CATTemp")
 
@@ -64,10 +61,10 @@ converted: "2026-05-11T17:31:51.749542"
 ```vbscript
 End If
 ```vbscript
-```vbscript
+```cpp
 ' -----------------------------------------------------------
     ' Open the CATAnalysis Document
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Cube_R13_Freq.CATAnalysis")
 ```
 ```
@@ -77,7 +74,7 @@ End If
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```
 ```
@@ -103,7 +100,7 @@ End If
     Set oAnalysisImage = oAnalysisImages.Add("Material_Fringe", False, False, True)
     ' Retrieve the folder stored in sOut
 ```
-```vbscript
+```cpp
     Set fileSystem1 = CATIA.FileSystem
     Set folder1 = fileSystem1.GetFolder(sout)
 ```

@@ -1,66 +1,22 @@
 ---
 title: "CAAIAfrGeoAnalysisWkbFactory"
-type: "interface"
+type: "LocalClass"
 module: "CAAApplicationFrame"
-category: api-reference
 base: "CATIGenericFactory"
-inheritance_chain: "CAAIAfrGeoAnalysisWkbFactory → CATIGenericFactory"
 method_count: 0
-visibility: "local"
-has_tie_binding: true
-verified: true
+source_file: "CAAApplicationFrame.edu/CAAAfrGeoAnalysisWbench.m/LocalInterfaces/CAAIAfrGeoAnalysisWkbFactory.h"
 ---
-> **TIE实现**: unknown
 
 # CAAIAfrGeoAnalysisWkbFactory
 
-**基类**: CATIGenericFactory  
-**继承链**: CAAIAfrGeoAnalysisWkbFactory → CATIGenericFactory  
-**模块**: CAAApplicationFrame  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> Application using a new document (CAAGeometry) with its own workshop and commands. Interface of the factory that creates the CAAAfrGeoAnalysisWkb workbench. You must define such an interface for each workbench. This interface must derive from CATIGenericFactory. Illustrates: creating a workbench Inheritance: CATIGenericFactory ( ObjectModelerBase Framework ) CATBaseUnknown (System Framework).
 
-> CATBaseUnknown (System Framework).
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATIGenericFactory | **模块**: CAAApplicationFrame | **方法数**: 0
 
 ## 依赖
 
 - `CATIGenericFactory.h`
 
-## TIE实现
-
-**实现文件**:
-- `CAAAfrGeoAnalysisWkb.cpp`
-- `CAAAfrGeoAnalysisWkbFactory.cpp`
-- `CAAIAfrGeoAnalysisWkbAddin.cpp`
-- `CAAIAfrGeoAnalysisWkbFactory.cpp`
-
 ---
 
-## Interface Overview
-
-This interface inherits from **CATIGenericFactory**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAApplicationFrame.edu/CAAAfrGeoAnalysisWbench.m/LocalInterfaces/CAAIAfrGeoAnalysisWkbFactory.h`

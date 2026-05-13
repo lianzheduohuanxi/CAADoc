@@ -1,56 +1,48 @@
 ---
 title: "CAAEV5V6ExtMmrMultiMeasureParmPublisher"
-type: "interface"
+type: "LocalClass"
 module: "CAAV5V6MechanicalModeler"
-category: api-reference
 base: "CATParmPublisherAdapter"
-inheritance_chain: "CAAEV5V6ExtMmrMultiMeasureParmPublisher → CATParmPublisherAdapter"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 2
+source_file: "CAAV5V6MechanicalModeler.edu/CAAV5V6ExtMmrMultiMeasure.m/LocalInterfaces/CAAEV5V6ExtMmrMultiMeasureParmPublisher.h"
 ---
+
 # CAAEV5V6ExtMmrMultiMeasureParmPublisher
 
-**基类**: CATParmPublisherAdapter  
-**继承链**: CAAEV5V6ExtMmrMultiMeasureParmPublisher → CATParmPublisherAdapter  
-**模块**: CAAV5V6MechanicalModeler  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
-
-> CATIParmParmPublisher for CAAV5V6ExtMmrMultiMeasure
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATParmPublisherAdapter | **模块**: CAAV5V6MechanicalModeler | **方法数**: 2
 
 ## 依赖
 
 - `CATParmPublisherAdapter.h`
 
+## 公共方法
+
+### VisitChildren
+
+```cpp
+void VisitChildren(CATIVisitor* , const int recursively = 0) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+|  | `CATIVisitor*` |
+| 0 | `const int recursively =` |
+
+
+### RetrieveDirectChildren
+
+```cpp
+HRESULT RetrieveDirectChildren(CATClassId iIntfName, CATListValCATBaseUnknown_var &iListToFill) const ;
+```
+
+CATIParmDirectAccess
+
+| 参数 | 类型 |
+|------|------|
+| iIntfName | `CATClassId` |
+| &iListToFill | `CATListValCATBaseUnknown_var` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATParmPublisherAdapter**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAV5V6MechanicalModeler.edu/CAAV5V6ExtMmrMultiMeasure.m/LocalInterfaces/CAAEV5V6ExtMmrMultiMeasureParmPublisher.h`

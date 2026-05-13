@@ -1,26 +1,19 @@
 ---
 title: "CAAMfgTPEPolylineSelectionUserCom"
-type: "interface"
+type: "ProtectedInterface"
 module: "CAAToolPathEditorItf"
-category: api-reference
-method_count: 0
-visibility: "protected"
-has_tie_binding: false
-verified: true
+base: "CATStateCommand"
+method_count: 4
+source_file: "CAAToolPathEditorItf.edu/ProtectedInterfaces/CAAMfgTPEPolylineSelectionUserCom.h"
 ---
+
 # CAAMfgTPEPolylineSelectionUserCom
 
-**模块**: CAAToolPathEditorItf  
-**分类**: framework  
-**可见性**: protected  
-**方法数**: 0
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATStateCommand | **模块**: CAAToolPathEditorItf | **方法数**: 4
 
 ## 依赖
 
+- `CATStateCommand.h`
 - `CATPathElementAgent.h`
 - `CATDialogAgent.h`
 - `CATIMfgCompoundTraject.h`
@@ -30,34 +23,48 @@ verified: true
 - `CATIMfgTPECutAreasEditor.h`
 - `CAAMfgTPEAddCmdInCutAreaToolBar.h`
 
+## 公共方法
+
+### BuildGraph
+
+```cpp
+void BuildGraph() ;
+```
+
+
+### LineSelection
+
+```cpp
+CATBoolean LineSelection(void* Data) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| Data | `void*` |
+
+
+### End
+
+```cpp
+CATBoolean End(void *Data) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *Data | `void` |
+
+
+### Valuate
+
+```cpp
+void Valuate(int iSwitch) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iSwitch | `int` |
+
+
 ---
 
-## Interface Overview
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-This interface is used in the following use cases:
-
-- [CAACenWhatsNew](../../use-cases/caacenquickrefs/CAACenWhatsNew.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAToolPathEditorItf.edu/ProtectedInterfaces/CAAMfgTPEPolylineSelectionUserCom.h`

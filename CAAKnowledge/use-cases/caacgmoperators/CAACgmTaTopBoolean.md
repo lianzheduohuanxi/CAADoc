@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Understanding the Boolean Operators"
 category: "use-case"
 module: "CAACgmOperators"
-tags: []
-source_file: "Doc/online/CAACgmOperators/CAACgmTaTopBoolean.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAACgmOperators/CAACgmTaTopBoolean.htm"
 converted: "2026-05-11T17:33:48.639597"
-```
-
 ---
 tags: []
 source_file: "Doc/online/CAACgmOperators/CAACgmTaTopBoolean.htmmd"
@@ -57,7 +54,6 @@ But the overlapping areas can be often avoided, by following some rules that are
 But the overlapping areas can be often avoided, by following some rules that are described in the next section. Methodology Some simple rules can help you to optimize your use of the Boolean operators:
 Use a Different Object for the Same Result The idea is to change the shape of one of the operands (or both) to suppress the overlapping, without changing the final result. Fig. 3: Use a different object for the same result ![Use a Different Object](images/CAACgmTopBoolean3.gif) | In the first example, operating with a bigger B object leads to suppress the overlap.
 
-Use a Different Object for the Same Result The idea is to change the shape of one of the operands (or both) to suppress the overlapping, without changing the final result. Fig. 3: Use a different object for the same result ![Use a Different Object](images/CAACgmTopBoolean3.gif) | In the first example, operating with a bigger B object leads to suppress the overlap.
 In the second example, B is taken smaller to suppress the overlap.
 In the last example, a bigger B again leads to suppress the overlap.
 Share Geometric Elements as Much as Possible A geometric element is shared if several cells directly refer it. In this case the intersections between the cells referring the same geometric element are not run and the overlap is treated as a logical information. A logical information can also be put directly by specialized operators, that precisely know the build of their object. It is the goal of the next section. Match the Faces If you write your own operator, match the cells that you know they will refer the same geometry. The matching can be down by the means of transient attributes, see [2] to learn how to use them. Fig. 4: The shell operator uses attributes to avoid computation of overlapping areas ![Shell Operator](images/CAACgmTopBoolean4.gif) | The principle of the shell operator is to create a new body by digging matter inside an initial body: a thickness is given for each face. If the thickness is null, the face is an opening, leading to a overlapping area. There are three openings in the beside figure. Now, the shell operator exactly knows that F1_B and F1_A, F2_B and F2_A, F3_B and F3_A respectively match, and put attributes to keep this logical information. Hence, the intersection between the geometry of these faces are not run, but directly determined.

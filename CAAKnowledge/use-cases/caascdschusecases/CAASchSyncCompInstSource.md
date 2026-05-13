@@ -17,7 +17,7 @@ Option Explicit
 '   CATIA Level:  V5R18 
 ' *****************************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ```
@@ -25,7 +25,7 @@ Sub CATMain(#)
     ' ------------------------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -35,13 +35,13 @@ Sub CATMain(#)
 
     ' ------------------------------------------------------------------------- 
     ' Open the schematic document 
-```vbscript
+```cpp
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
             "online/CAAScdSchUseCases/samples/CAASCH_SyncCompInst.CATProduct")
 ```
 
-```vbscript
+```cpp
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
@@ -76,7 +76,7 @@ Sub CATMain(#)
 
     If ( Not ( objSchRoot Is Nothing ) ) Then
 ```
-```vbscript
+```cpp
        Set objUpdateInstances = objSchRoot.GetInterface ("CATIASchUpdateInstances",objSchRoot) 
     End If 
 ```
@@ -93,7 +93,7 @@ Sub CATMain(#)
        ' Get the first reference component 
 ```
        If ( Not ( objLCompRefs Is Nothing ) )Then
-```vbscript
+```cpp
           Set objCompRef = objLCompRefs.Item (1,"CATIASchComponent")
        End If
 ```
@@ -119,7 +119,7 @@ End Sub
 
 ```
 
-```vbscript
+```cpp
 Option Explicit
 ' COPYRIGHT DASSAULT SYSTEMES 2007
 
@@ -130,7 +130,7 @@ Option Explicit
 '   CATIA Level:  V5R18 
 ' *****************************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ```
@@ -138,7 +138,7 @@ Sub CATMain(#)
     ' ------------------------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -148,13 +148,13 @@ Sub CATMain(#)
 
     ' ------------------------------------------------------------------------- 
     ' Open the schematic document 
-```vbscript
+```cpp
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
             "online/CAAScdSchUseCases/samples/CAASCH_SyncCompInst.CATProduct")
 ```
 
-```vbscript
+```cpp
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
@@ -189,7 +189,7 @@ Sub CATMain(#)
 
     If ( Not ( objSchRoot Is Nothing ) ) Then
 ```
-```vbscript
+```cpp
        Set objUpdateInstances = objSchRoot.GetInterface ("CATIASchUpdateInstances",objSchRoot) 
     End If 
 ```
@@ -206,7 +206,7 @@ Sub CATMain(#)
        ' Get the first reference component 
 ```
        If ( Not ( objLCompRefs Is Nothing ) )Then
-```vbscript
+```cpp
           Set objCompRef = objLCompRefs.Item (1,"CATIASchComponent")
        End If
 ```

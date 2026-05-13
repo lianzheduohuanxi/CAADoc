@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Arranging Dialog Objects"
-category: tech-article
+category: "tech-article"
 module: "CAADlgTechArticles"
-tags: []
-source_file: "Doc/online/CAADlgTechArticles/CAADlgObjectLayout.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAADlgTechArticles/CAADlgObjectLayout.htm"
 converted: "2026-05-11T17:17:56.052020"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -83,7 +80,6 @@ You can also set its size in order to show all its content, as follows:
 
 When resizing a dialog window, the containers it contains are resized accordingly, and part of  their contents can be modified or hidden. For example, containers or subcontainers whose sizes decrease can hide controls and scrollbars can appear to help display hidden controls. On the opposite, when increasing the dialog window size, the scrollbars can disappear as soon as all the existing controls are displayed.
 
-When resizing a dialog window, the containers it contains are resized accordingly, and part of  their contents can be modified or hidden. For example, containers or subcontainers whose sizes decrease can hide controls and scrollbars can appear to help display hidden controls. On the opposite, when increasing the dialog window size, the scrollbars can disappear as soon as all the existing controls are displayed.
 But when the dialog window is displayed, it is expected to keep the same contents, whether this contents being fully displayed or partly hidden, in order to display consistently to the end user. Nevertheless, two exceptions exist:
 
   1. Two or several objects can be designed to be displayed at the same location, depending on the context. In this case, all these objects must be created when building the dialog window. The appropriate one is then displayed and attached to the tabulation line when necessary, the one previously displayed is concurrently detached and hidden. This is possible using tabulations only with the ReplaceKeepAttachments method

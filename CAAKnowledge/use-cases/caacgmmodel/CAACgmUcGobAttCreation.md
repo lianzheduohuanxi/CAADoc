@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating an Attribute"
-category: use-case case"
+category: "use-case case"
 module: "CAACgmModel"
-tags: ["CAAGeometricObjects", "CAAGobAT", "CAADoc", "CATICGMObject", "CATICGMProjectionPtSur", "CAAGMModelGemBrowser", "CAAGMModelAttribute", "CAAGMModelInterfaces", "CAAGMModelAttributeCreation", "CAAGMModelAttributeManagement"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGobAttCreation.htmmd"
+tags: "["CAAGeometricObjects", "CAAGobAT", "CAADoc", "CATICGMObject", "CATICGMProjectionPtSur", "CAAGMModelGemBrowser", "CAAGMModelAttribute", "CAAGMModelInterfaces", "CAAGMModelAttributeCreation", "CAAGMModelAttributeManagement"]"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGobAttCreation.htm"
 converted: "2026-05-11T17:33:48.342765"
-```
-
 ---
 # Creating an Attribute
 
@@ -75,7 +72,6 @@ The main program peforms the following steps:
 
 The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject (and the curves and surfaces in particular). This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
 
-The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject (and the curves and surfaces in particular). This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
     CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**(#) ;
 ```vbscript
     if (NULL==piGeomFactory) return (1);
@@ -217,7 +213,7 @@ if(1==toStore)
        ofstream filetowrite(pfileName, ios::binary ) ;
 
     #else
-```vbscript
+```cpp
 if(1==toStore)
 ofstream filetowrite(pfileName, ios::binary ) ;
        ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;

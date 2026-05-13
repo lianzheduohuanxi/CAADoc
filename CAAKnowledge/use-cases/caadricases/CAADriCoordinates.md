@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Annotations on View Components"
-category: use-case case"
+category: "use-case case"
 module: "CAADriUseCases"
-tags: ["CATIDrwAnnotationFactory_var", "CATISheet_var", "CATIDftTextProperties", "CATIDftText", "CATIDrwAnnotationFactory", "CATIDftDocumentServices", "CAADrwCoordinates", "CATIA", "CATI2DPoint_var", "CATIDrawing", "CATI2DPoint", "CATIView_var", "CAADRWCoordinates", "CATIDescendants_var", "CATIView", "CATIDrwSubString", "CATIDescendants", "CAADraftingInterfaces", "CATIDrwTextProperties", "CATISheet"]
-source_file: "Doc/online/CAADriUseCases/CAADriCoordinates.htmmd"
+tags: "["CATIDrwAnnotationFactory_var", "CATISheet_var", "CATIDftTextProperties", "CATIDftText", "CATIDrwAnnotationFactory", "CATIDftDocumentServices", "CAADrwCoordinates", "CATIA", "CATI2DPoint_var", "CATIDrawing", "CATI2DPoint", "CATIView_var", "CAADRWCoordinates", "CATIDescendants_var", "CATIView", "CATIDrwSubString", "CATIDescendants", "CAADraftingInterfaces", "CATIDrwTextProperties", "CATISheet"]"
+source_file: "Doc/online/CAADriUseCases/CAADriCoordinates.htm"
 converted: "2026-05-11T17:31:50.944012"
-```
-
 ---
 # Mechanical Design
 
@@ -97,7 +94,6 @@ When you launch the use case, pass the full pathname of the file into which you 
 
 The CAADrwCoordinates use case is made of a single source file named CAADrwCoordinates.cpp located in the CAADrwCoordinates.m module of the CAADraftingInterfaces.edu framework:
 
-The CAADrwCoordinates use case is made of a single source file named CAADrwCoordinates.cpp located in the CAADrwCoordinates.m module of the CAADraftingInterfaces.edu framework:
 Windows | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCoordinates.m/`
 
 The CAADrwCoordinates use case is made of a single source file named CAADrwCoordinates.cpp located in the CAADrwCoordinates.m module of the CAADraftingInterfaces.edu framework:
@@ -147,7 +143,7 @@ char** iArgv)   // Path to the *.CATDrawing document
 HRESULT hr = **::Create_Session**("SampleSession",pSampleSession);
 if (FAILED(hr)) return 1;
 ```vbscript
-```vbscript
+```cpp
        if (!SUCCEEDED(**CATDocumentServices::OpenDocument**(fileName, pDoc)))
 
 ```
@@ -174,7 +170,7 @@ This section represents the usual sequence for reading a CATIA document [2].
        **CATIDftDocumentServices** *piDftDocServices = NULL;
        if (SUCCEEDED(pDoc->QueryInterface(IID_CATIDftDocumentServices, (void **)&piDftDocServices)))
        {
-```vbscript
+```cpp
 if (SUCCEEDED(pDoc->QueryInterface(IID_CATIDftDocumentServices, (void **)&piDftDocServices)))
           piDftDocServices->**GetDrawing**(IID_CATIDrawing, (void **)&piDrawing);
           piDftDocServices->Release(#);
@@ -232,7 +228,7 @@ The view geometry can be retrieved using the _CATIDescendants_ interface. The fi
      for (int ii=1; ii<=pointList.Size(#); ii++)
      {
        // Gets the coordinates
-```vbscript
+```cpp
 for (int ii=1; ii<=pointList.Size(#); ii++)
        CATI2DPoint_var spPoint = pointList[ii];
        double coord[2];
@@ -281,7 +277,7 @@ if (SUCCEEDED(spAnnFactory->CreateDftText(txtpos, &piDftText)))
          delete [] ptxtChar;
          ptxtChar = NULL;
          CATIDrwSubString *piDrwSubString = NULL;
-```vbscript
+```cpp
          if (SUCCEEDED(piDftText->QueryInterface(IID_CATIDrwSubString,(void **)&piDrwSubString)))
 
 ```
@@ -368,7 +364,6 @@ This section represents the usual sequence for saving a CATIA document [2].
 
 This use case shows how to get the view components. The view implements the _CATIDescendants_ interface and the components can be retrieved by using the _GetDirectChildren_ method.
 
-This use case shows how to get the view components. The view implements the _CATIDescendants_ interface and the components can be retrieved by using the _GetDirectChildren_ method.
 This use case shows also how to open a CATDrawing document, get the root feature which implements the _CATIDrawing_ interface. A pointer to this interface is the key to enter and navigate inside the drawing structure, and can be retrieved using the `GetDrawing` method of the _CATIDftDocumentServices_ interface implemented by the document. Retrieving the active view is performed first by retrieving the current sheet thanks to the `GetCurrentSheet` method of the _CATIDrawing_ interface, and then asking the current sheet for the current view using the `GetCurrentView` of _CATISheet_. This current view is scanned using the _GetDirectChildren_ method of _CATIDescendants_.
 The view also implements the _CATIDrwAnnotationFactory_ interface and the texts are created using its `CreateDrwText` method, and set with a bold typeface using the `SetBold` method.
 

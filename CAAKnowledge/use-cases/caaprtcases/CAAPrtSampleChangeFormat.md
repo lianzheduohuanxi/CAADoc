@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Converting Print Files"
-category: use-case case"
+category: "use-case case"
 module: "CAAPrtUseCases"
-tags: ["CAAPrtOut", "CAAPrint", "CAACPrtChangeFormat", "CAAPrtChangeFormat"]
-source_file: "Doc/online/CAAPrtUseCases/CAAPrtSampleChangeFormat.htmmd"
+tags: "["CAAPrtOut", "CAAPrint", "CAACPrtChangeFormat", "CAAPrtChangeFormat"]"
+source_file: "Doc/online/CAAPrtUseCases/CAAPrtSampleChangeFormat.htm"
 converted: "2026-05-11T17:17:56.103894"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -85,7 +82,6 @@ where:
 
 The CAAPrtChangeFormat use case is made of a single source file located in the CAAPrtChangeFormat.m module of the CAAPrint.edu framework:
 
-The CAAPrtChangeFormat use case is made of a single source file located in the CAAPrtChangeFormat.m module of the CAAPrint.edu framework:
 Windows | ` InstallRootDirectory/CAAPrint.edu/CAAPrtChangeFormat.m/src/CAACPrtChangeFormat.cpp`
 
 The CAAPrtChangeFormat use case is made of a single source file located in the CAAPrtChangeFormat.m module of the CAAPrint.edu framework:
@@ -135,10 +131,9 @@ As soon as the input file is retrieved and the output file directory and name ar
 
 As soon as the input file is retrieved and the output file directory and name are set, the print file image can be built from the input file.
 
-As soon as the input file is retrieved and the output file directory and name are set, the print file image can be built from the input file.
     _..._
       CATPrintFileImage *pImage;
-```vbscript
+```cpp
       pImage = new **CATPrintFileImage**(InputName, "CGM");
 
 ```
@@ -157,7 +152,7 @@ The print raster file device should be next instantiated.
       ...
 The print raster file device should be next instantiated.
       CATPrintFileDevice *pDevice;
-```vbscript
+```cpp
       pDevice = new **CATPrintFileDevice**( (const char*) TmpFile, "RASTER" );
 
 ```

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "How to use the Identity Card Interface"
 category: "use case"
 module: "CAADkiUseCases"
-tags: ["CAADkiNotesTab", "CAADkiIdentityCard", "CAAVPMDesktop"]
-source_file: "Doc/online/CAADkiUseCases/CAADkiIdentityCard.htmmd"
+tags: "["CAADkiNotesTab", "CAADkiIdentityCard", "CAAVPMDesktop"]"
+source_file: "Doc/online/CAADkiUseCases/CAADkiIdentityCard.htm"
 converted: "2026-05-11T17:33:45.939442"
-```
-
 ---
 tags: ["CAADkiNotesTab", "CAADkiIdentityCard", "CAAVPMDesktop"]
 source_file: "Doc/online/CAADkiUseCases/CAADkiIdentityCard.htmmd"
@@ -57,7 +54,7 @@ The _ActionListener_ interface/methods shown are as follows:
   * Set up the build time environment [1]
   * Compile CAADkiNotesTab.java along with its prerequisites
 ```
-```vbscript
+```cpp
   * Set up the run time environment
   * Modify the IdentityCardView.properties file declaring an additional view for _CAADkiNotesTab_ to point to the new java class
 ```
@@ -67,7 +64,6 @@ The _ActionListener_ interface/methods shown are as follows:
 
 [Top] Where to Find the _CAADkiIdentityCard_ Code The CAADkiIdentityCard use case is made of a single file located in the CAADkiIdentityCard.mj module of the CAAVPMDesktop.edu framework: Windows | `InstallRootDirectory/CAAVPMDesktop.edu/CAADkiIdentityCard.mj/`
 ---|---
-Unix | `InstallRootDirectory/CAAVPMDesktop.edu/CAADkiIdentityCard.mj/`
 Unix | `InstallRootDirectory/CAAVPMDesktop.edu/CAADkiIdentityCard.mj/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed. [Top] Step-by-Step For demonstration purposes, the code from the CAADkiIdentityCard use case is shown here. There are three logical steps in the CAADkiIdentityCard use case:
 
@@ -90,13 +86,13 @@ These import statements are required for the following operations.
 
     //--- Create a class extending a JPanel implementing the ENOVIIdentityCardInterface
 These import statements are required for the following operations.
-```vbscript
+```cpp
           public class CAADkiNotesTab extends JPanel implements ENOVIIdentityCardInterface
 
 ```
 
           {
-```vbscript
+```cpp
 public class CAADkiNotesTab extends JPanel implements ENOVIIdentityCardInterface
               public CAADkiNotesTab(#) {}
               public void setServerParameters(String marker, String host) {}
@@ -182,7 +178,6 @@ public void setObject(ENOVIObject obj)
 ---
 These import statements are required for the following operations.
 
-These import statements are required for the following operations.
 ```vbscript
         private void showMyView(String notes)
 
@@ -212,7 +207,6 @@ private void showMyView(String notes)
             scrollPane.setPreferredSize(new Dimension(500,250));
             scrollPane.setBorder(
                 BorderFactory.createCompoundBorder(
-                    BorderFactory.createCompoundBorder(
                                     loweredbevel,
                                     raisedbevel),
                     scrollPane.getBorder(#)));
@@ -231,16 +225,15 @@ private void showMyView(String notes)
 
 ---
 
-```vbscript
+```cpp
         public class CAADkiNotesTab extends JPanel implements ENOVIIdentityCardInterface, **ActionListener**
 
-public class CAADkiNotesTab extends JPanel implements ENOVIIdentityCardInterface, **ActionListener**
         public void actionPerformed(ActionEvent e)
 
 ```
 
         {
-```vbscript
+```cpp
 public class CAADkiNotesTab extends JPanel implements ENOVIIdentityCardInterface, **ActionListener**
 public void actionPerformed(ActionEvent e)
             if ("savenotes".equals(e.getActionCommand(#)))

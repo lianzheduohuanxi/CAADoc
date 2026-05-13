@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Reading Migration Report of a Model"
-category: use-case case"
+category: "use-case case"
 module: "CAAV4iUseCases"
-tags: ["CATIAV4Interfaces", "CAACATIAV4Interfaces", "CAAV4iMigrationReportExtraction"]
-source_file: "Doc/online/CAAV4iUseCases/CAAV4iMigrationReportUseCase.htmmd"
+tags: "["CATIAV4Interfaces", "CAACATIAV4Interfaces", "CAAV4iMigrationReportExtraction"]"
+source_file: "Doc/online/CAAV4iUseCases/CAAV4iMigrationReportUseCase.htm"
 converted: "2026-05-11T17:33:45.775884"
-```
-
 ---
 # 3D PLM PPR Hub Open Gateway
 
@@ -119,7 +116,6 @@ You can use the model attribut.CATPart located in CAACATIAV4Interfaces.edu/Input
 #### Where to Find the CAAV4iMigrationReportExtraction Code
 
 The CAAV4iMigrationReportExtraction use case is made of a single file located in the CAAV4iMigrationReportExtraction.m module of the CAACATIAV4Interfaces.edu framework:
-The CAAV4iMigrationReportExtraction use case is made of a single file located in the CAAV4iMigrationReportExtraction.m module of the CAACATIAV4Interfaces.edu framework:
   Windows | `InstallRootDirectory/CAACATIAV4Interfaces.edu/`CAAV4iMigrationReportExtraction`.m/`
 
 The CAAV4iMigrationReportExtraction use case is made of a single file located in the CAAV4iMigrationReportExtraction.m module of the CAACATIAV4Interfaces.edu framework:
@@ -184,7 +180,6 @@ const char *pfileNamePart =  iArgv[2];
 
     ...
     PathReport: Reportfile is present in
-PathReport: Reportfile is present in
     CAACATIAV4Interfaces.edu/CNext/resources/graphic/MigrationReportExtraction/report.txt
 
     Report Structure:

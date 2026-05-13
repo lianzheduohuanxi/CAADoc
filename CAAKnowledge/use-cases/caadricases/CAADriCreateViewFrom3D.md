@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a View from 3D"
-category: use-case case"
+category: "use-case case"
 module: "CAADriUseCases"
-tags: ["CATIDftStandardManager", "CATIDftDrawing", "CATIDftDocumentServices", "CATIContainer_var", "CATIA", "CATITPSList", "CATITPSDocument", "CAADrwCreateViewFrom3D", "CATIStringList", "CATIDftView", "CATITPSView", "CATITPSComponent", "CATISpecObject", "CAADrwCreatViewFrom3D", "CATInit", "CATIDftGenViewFactory", "CAADraftingInterfaces", "CATITPSSet", "CATIDftSheet"]
-source_file: "Doc/online/CAADriUseCases/CAADriCreateViewFrom3D.htmmd"
+tags: "["CATIDftStandardManager", "CATIDftDrawing", "CATIDftDocumentServices", "CATIContainer_var", "CATIA", "CATITPSList", "CATITPSDocument", "CAADrwCreateViewFrom3D", "CATIStringList", "CATIDftView", "CATITPSView", "CATITPSComponent", "CATISpecObject", "CAADrwCreatViewFrom3D", "CATInit", "CATIDftGenViewFactory", "CAADraftingInterfaces", "CATITPSSet", "CATIDftSheet"]"
+source_file: "Doc/online/CAADriUseCases/CAADriCreateViewFrom3D.htm"
 converted: "2026-05-11T17:31:50.983117"
-```
-
 ---
 # Mechanical Design
 
@@ -91,7 +88,6 @@ When you launch the use case, pass the full pathname of the Drawing file as argu
 
 The CAADrwCreateViewFrom3D use case is made of a single source file named CAADrwCreateViewFrom3D .cpp located in the CAADrwCreateViewFrom3D.m module of the CAADraftingInterfaces.edu framework:
 
-The CAADrwCreateViewFrom3D use case is made of a single source file named CAADrwCreateViewFrom3D .cpp located in the CAADrwCreateViewFrom3D.m module of the CAADraftingInterfaces.edu framework:
 Windows | ` InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCreateViewFrom3D.m/`
 
 The CAADrwCreateViewFrom3D use case is made of a single source file named CAADrwCreateViewFrom3D .cpp located in the CAADrwCreateViewFrom3D.m module of the CAADraftingInterfaces.edu framework:
@@ -163,7 +159,6 @@ The other steps to fully initialize the Drawing document are included in the spe
     // READ THE PART DOCUMENT AND GET ACTIVE TPS VIEW
     // ====================================================
       CATDocument *pDocPart = NULL;
-CATDocument *pDocPart = NULL;
       if( SUCCEEDED(CATDocumentServices::OpenDocument(pfileNamePart, pDocPart)) )
 
       {
@@ -173,7 +168,7 @@ if( SUCCEEDED(CATDocumentServices::OpenDocument(pfileNamePart, pDocPart)) )
         if( SUCCEEDED(pDocPart->QueryInterface(IID_CATInit, (void**)&piDocAsInit)) )
 
         {
-```vbscript
+```cpp
 if( SUCCEEDED(CATDocumentServices::OpenDocument(pfileNamePart, pDocPart)) )
 CATInit *piDocAsInit = 0;
 if( SUCCEEDED(pDocPart->QueryInterface(IID_CATInit, (void**)&piDocAsInit)) )
@@ -182,7 +177,7 @@ if( SUCCEEDED(pDocPart->QueryInterface(IID_CATInit, (void**)&piDocAsInit)) )
 ```
 
           {
-```vbscript
+```cpp
 if( SUCCEEDED(pDocPart->QueryInterface(IID_CATInit, (void**)&piDocAsInit)) )
 CATITPSDocument *piTPSDoc= NULL;
 if (SUCCEEDED(piDocAsInit->QueryInterface(IID_CATITPSDocument,(void **)&piTPSDoc)))
@@ -191,7 +186,7 @@ if (SUCCEEDED(piDocAsInit->QueryInterface(IID_CATITPSDocument,(void **)&piTPSDoc
 ```
 
             {
-```vbscript
+```cpp
 if (SUCCEEDED(piDocAsInit->QueryInterface(IID_CATITPSDocument,(void **)&piTPSDoc)))
 CATITPSList *piTPSList = NULL;
 if (SUCCEEDED(piTPSDoc->GetSets(&piTPSList)))
@@ -205,7 +200,7 @@ if (SUCCEEDED(piTPSDoc->GetSets(&piTPSList)))
               {
 unsigned int nbSet;
 piTPSList->Count(&nbSet);
-```vbscript
+```cpp
 if (nbSet > 0)
                 CATITPSComponent *piTPSCmp = NULL;
 ```
@@ -216,7 +211,7 @@ if (nbSet > 0)
 
                 {
 ```vbscript
-```vbscript
+```cpp
 if (nbSet > 0)
 CATITPSComponent *piTPSCmp = NULL;
 ```
@@ -234,7 +229,7 @@ if (SUCCEEDED(piTPSList->Item(0,&piTPSCmp)))
 if (piTPSCmp)
 ```
 
-```vbscript
+```cpp
                     CATITPSSet *piTPSSet = NULL;
 ```vbscript
 ```
@@ -245,7 +240,7 @@ if (piTPSCmp)
                     {
 ```vbscript
 if (piTPSCmp)
-```vbscript
+```cpp
 CATITPSSet *piTPSSet = NULL;
 if (SUCCEEDED(piTPSCmp->QueryInterface(IID_CATITPSSet,(void **)&piTPSSet)))
 ```
@@ -254,7 +249,7 @@ if (SUCCEEDED(piTPSCmp->QueryInterface(IID_CATITPSSet,(void **)&piTPSSet)))
 ```
 
                       {
-```vbscript
+```cpp
 if (SUCCEEDED(piTPSCmp->QueryInterface(IID_CATITPSSet,(void **)&piTPSSet)))
 CATITPSView *piTPSActiveView = NULL;
 if (SUCCEEDED(piTPSSet->GetActiveView (&piTPSActiveView)) && piTPSActiveView)
@@ -307,7 +302,7 @@ HRESULT CreateViewFrom3DInDrawingDoc(CATDocument *ipNewDoc, CATITPSView *ipiTPSA
       CATIDftDrawing *piDftDrawing = NULL;
       CATIDftDocumentServices *piDftDocServices = NULL;
       CATIContainer_var spDrwCont;
-```vbscript
+```cpp
       if (SUCCEEDED(ipNewDoc->QueryInterface(IID_CATIDftDocumentServices, (void **)&piDftDocServices)))
 
 ```
@@ -331,13 +326,13 @@ piDftDocServices->Release(#);
 piDftDocServices = NULL;
 if (piDftDrawing)
           CATISpecObject *piDrawingSO=NULL;
-```vbscript
+```cpp
           if (SUCCEEDED(piDftDrawing->QueryInterface(IID_CATISpecObject,(void **)&piDrawingSO)))
 
 ```
 
           {
-```vbscript
+```cpp
 if (piDftDrawing)
 CATISpecObject *piDrawingSO=NULL;
 if (SUCCEEDED(piDftDrawing->QueryInterface(IID_CATISpecObject,(void **)&piDrawingSO)))
@@ -352,7 +347,7 @@ if (SUCCEEDED(piDftDrawing->QueryInterface(IID_CATISpecObject,(void **)&piDrawin
 ```
 
             {
-```vbscript
+```cpp
 if (SUCCEEDED(piDftDrawing->QueryInterface(IID_CATISpecObject,(void **)&piDrawingSO)))
 ```vbscript
 ```vbscript
@@ -405,7 +400,7 @@ for (unsigned int indice = 0; indice < nbrstd; indice ++)
 ```
 
                     {
-```vbscript
+```cpp
 for (unsigned int indice = 0; indice < nbrstd; indice ++)
 wchar_t *wstd = NULL;
 if ( SUCCEEDED ( piListstd->Item ( indice, &wstd ) ) && wstd )
@@ -464,13 +459,13 @@ double ptOrigin[2] = {150.0,150.0};
 IUnknown *pTPSViewUk = NULL;
 if (SUCCEEDED(ipiTPSActiveView->QueryInterface(IID_IUnknown,(void **)&pTPSViewUk)))
               CATIDftGenViewFactory *piDftGenViewFact = NULL;
-```vbscript
+```cpp
               if (piDftSheet && SUCCEEDED(piDftSheet->QueryInterface(IID_CATIDftGenViewFactory,(void **)&piDftGenViewFact)))
 
 ```
 
               {
-```vbscript
+```cpp
 if (SUCCEEDED(ipiTPSActiveView->QueryInterface(IID_IUnknown,(void **)&pTPSViewUk)))
 CATIDftGenViewFactory *piDftGenViewFact = NULL;
 if (piDftSheet && SUCCEEDED(piDftSheet->QueryInterface(IID_CATIDftGenViewFactory,(void **)&piDftGenViewFact)))
@@ -482,7 +477,7 @@ if (piDftSheet && SUCCEEDED(piDftSheet->QueryInterface(IID_CATIDftGenViewFactory
 ```
 
               }
-```vbscript
+```cpp
 if (piDftSheet && SUCCEEDED(piDftSheet->QueryInterface(IID_CATIDftGenViewFactory,(void **)&piDftGenViewFact)))
 ```vbscript
 hr = piDftGenViewFact->CreateViewFrom3D(ptOrigin, pTPSViewUk, &piDftViewFrom3D);
@@ -535,7 +530,7 @@ The sub program `CreateViewFrom3DInDrawingDoc` creates a View from 3D by using t
     // =================
     if (pNewDoc)
     {
-```vbscript
+```cpp
 if (pNewDoc)
       CATDocumentServices::SaveAs(*pNewDoc, (char *)pfileNameOut);
       CATDocumentServices::Remove (*pNewDoc);
@@ -562,7 +557,6 @@ This section represents the usual sequence for saving a newly created CATIA docu
 
 This use case shows the way to:
 
-This use case shows the way to:
   1. Open a Part document
   2. Retrieve the active TPS view in the Annotation Set
   3. Create a Drawing document, and initialize the standard

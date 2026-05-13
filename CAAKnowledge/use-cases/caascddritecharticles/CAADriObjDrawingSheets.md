@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "DrawingSheets Collection"
-category: tech-article
+category: "tech-article"
 module: "CAAScdDriTechArticles"
-tags: []
-source_file: "Doc/online/CAAScdDriTechArticles/CAADriObjDrawingSheets.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAAScdDriTechArticles/CAADriObjDrawingSheets.htm"
 converted: "2026-05-11T17:31:51.123204"
-```
-
 ---
 # DrawingSheets Collection
 
@@ -24,7 +21,6 @@ A collection of all the [DrawingSheet](CAADriObjDrawingSheet.md) objects that ar
 
 Use the Add method to create a new, empty drawing sheet and add it to the collection. The following example adds a new, empty drawing sheet to the active drawing document.
 
-Use the Add method to create a new, empty drawing sheet and add it to the collection. The following example adds a new, empty drawing sheet to the active drawing document.
     DrawingSheets.Add
 
 Use the AddDetail method to add a detail drawing sheet and add it to the collection. The following example adds a new, empty drawing sheet to the active drawing document.

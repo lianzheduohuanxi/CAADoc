@@ -203,7 +203,7 @@ command to send the model object for which the notification was sent.
 
 *Copyright  2000, Dassault Systmes. All rights reserved.*
 
-```vbscript
+```cpp
 #include &quot;CATNotification.h&quot;
 class CAADlgAddNotification: public CATNotification
 {
@@ -217,7 +217,7 @@ class CAADlgAddNotification: public CATNotification
 };
 ```
 
-```vbscript
+```cpp
 #include &quot;CAADlgAddNotification.h&quot;
 
 CATImplementClass(CAADlgAddNotification, Implementation, CATBaseUnknown,CATNull);
@@ -228,7 +228,7 @@ CAADlgAddNotification::CAADlgAddNotification(#)
 {}
 ```
 
-```vbscript
+```cpp
 void CAADlgModel::Add(CAADlgElement * iNewElement) 
 {
   if ( NULL != iNewElement )
@@ -248,7 +248,7 @@ void CAADlgModel::Add(CAADlgElement * iNewElement)
 }
 ```
 
-```vbscript
+```cpp
 CATNotifPropagationMode CAADlgContainer::AnalyseNotification(CATCommand      *iSending, 
                                                              CATNotification *iReceive) 
 {
@@ -264,14 +264,14 @@ CATNotifPropagationMode CAADlgContainer::AnalyseNotification(CATCommand      *iS
 }
 ```
 
-```vbscript
+```cpp
 void CAADlgViewScreen::WantedFocus(#) 
 {
   RequestStatusChange(CATCommandMsgRequestSharedMode);
 }
 ```
 
-```vbscript
+```cpp
 CATNotifPropagationMode CAADlgViewScreen::AnalyseNotification(CATCommand      *iSending, 
                                                               CATNotification *iReceive) 
 {
@@ -295,7 +295,7 @@ CATNotifPropagationMode CAADlgViewScreen::AnalyseNotification(CATCommand      *i
 }
 ```
 
-```vbscript
+```cpp
 void *CAADlgModel::SendCommandSpecificObject(const char      *iObjectClassNeeded, 
                                              CATNotification *iReceived) 
 {

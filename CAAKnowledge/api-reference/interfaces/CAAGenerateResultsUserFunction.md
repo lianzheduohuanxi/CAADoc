@@ -1,29 +1,17 @@
 ---
 title: "CAAGenerateResultsUserFunction"
-type: "interface"
+type: "ProtectedInterface"
 module: "CAAKnowHow"
-category: api-reference
 base: "CATBaseUnknown"
-```vbscript
-inheritance_chain: "CAAGenerateResultsUserFunction → CATBaseUnknown"
-method_count: 2
-```
-visibility: "protected"
-has_tie_binding: false
-verified: true
+method_count: 0
+source_file: "CAAKnowHow.edu/ProtectedInterfaces/CAAGenerateResultsUserFunction.h"
 ---
+
 # CAAGenerateResultsUserFunction
 
-**基类**: CATBaseUnknown  
-```vbscript
-**继承链**: CAAGenerateResultsUserFunction → CATBaseUnknown  
-**模块**: CAAKnowHow  
-```
-**分类**: framework  
-**可见性**: protected  
-**方法数**: 2
+> CAAGenerateResultsUserFunction is an example of user function which test licensing and send an error if license is not ok (simulation) Usage: new CAAGenerateResultsUserFunction() Add(). Inheritance: Inherits from CATBaseUnknown. Return Codes: None
 
-> ==========================================================================
+**基类**: CATBaseUnknown | **模块**: CAAKnowHow | **方法数**: 0
 
 ## 依赖
 
@@ -32,26 +20,4 @@ verified: true
 
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAKnowHow.edu/ProtectedInterfaces/CAAGenerateResultsUserFunction.h`

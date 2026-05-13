@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating 1D Mesh"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CATIA", "CAAScdAniUseCases", "CAAAniMesh1D"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMesh1D.htmmd"
+tags: "["CATIA", "CAAScdAniUseCases", "CAAAniMesh1D"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMesh1D.htm"
 converted: "2026-05-11T17:31:51.602053"
-```
-
 ---
 ## Analysis Modeler
 
@@ -34,7 +31,7 @@ This use case shows how to create 1D mesh parts in an existing analysis document
     ...
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -46,7 +43,7 @@ This use case shows how to create 1D mesh parts in an existing analysis document
 ```vbscript
     '-----------------------------------------------------------
     'Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
@@ -77,7 +74,7 @@ End If
 ```vbscript
 '-----------------------------------------------------------
     'Open the Analysis document
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Beam.CATAnalysis")
 ```
 ```
@@ -88,7 +85,7 @@ End If
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ```

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Saving and Restoring the Dialog Box State"
-category: use-case case"
+category: "use-case case"
 module: "CAADlgUseCases"
-tags: ["CAADlgDemoWindow", "CAADlgDialogDemonstrator", "CATISpecObject", "CAADlgFrameReplace", "CATInteractiveApplication", "CAADlgDemoApplication", "CAADialog", "CAADlgFrameReplaceDlg"]
-source_file: "Doc/online/CAADlgUseCases/CAADlgSampleSettings.htmmd"
+tags: "["CAADlgDemoWindow", "CAADlgDialogDemonstrator", "CATISpecObject", "CAADlgFrameReplace", "CATInteractiveApplication", "CAADlgDemoApplication", "CAADialog", "CAADlgFrameReplaceDlg"]"
+source_file: "Doc/online/CAADlgUseCases/CAADlgSampleSettings.htm"
 converted: "2026-05-11T17:17:55.997189"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -100,7 +97,6 @@ When the `CAADlgDialogDemonstrator` application is launched:
 
 The CAADlgFrameReplace use case is made of several classes located in the CAADlgDialogDemonstrator.m module of the CAADialog.edu framework:
 
-The CAADlgFrameReplace use case is made of several classes located in the CAADlgDialogDemonstrator.m module of the CAADialog.edu framework:
 Windows | `InstallRootDirectory/CAADialog.edu/CAADlgDialogDemonstrator.m/`
 
 The CAADlgFrameReplace use case is made of several classes located in the CAADlgDialogDemonstrator.m module of the CAADialog.edu framework:
@@ -120,7 +116,6 @@ In the LocalInterfaces and src directory, you will find the following files:
 
 There are four logical steps in the use case:
 
-There are four logical steps in the use case:
   1. Creating the Class Header
   2. Retrieving the Setting Repository
   3. Retrieving the Last Values
@@ -189,7 +184,6 @@ where
 
 In the _CAADlgFrameReplaceDlg_ class constructor you retrieve a setting repository pointer thanks to the static `GetRepository` method. The first and unique argument of this method is the name of the setting file.
 
-In the _CAADlgFrameReplaceDlg_ class constructor you retrieve a setting repository pointer thanks to the static `GetRepository` method. The first and unique argument of this method is the name of the setting file.
     CAADlgFrameReplaceDlg::CAADlgFrameReplaceDlg(CATDialog * pParentDlg) :
       CATDlgDialog (pParentDlg,"CAADlgFrameReplaceDlg",
           CATDlgWndAutoResize | CATDlgWndBtnOKCancel |CATDlgWndNoResize ),
@@ -205,7 +199,7 @@ CATDlgWndAutoResize | CATDlgWndBtnOKCancel |CATDlgWndNoResize ),
 _CurrentSelection(0),_pComboPointType(NULL),_pSpinnerX(NULL),
 ```vbscript
 _pSpinnerY(NULL),_pSpinnerZ(NULL)
-```vbscript
+```cpp
        _pSettingFrameReplace = CATSettingRepository::**GetRepository**("CAADlgFrameReplaceDlg" );
 
 ```
@@ -218,7 +212,6 @@ _pSpinnerY(NULL),_pSpinnerZ(NULL)
 
 In the _CAADlgFrameReplaceDlg_ class destructor you have just to set NULL the `_pSettingFrameReplace` pointer.
 
-In the _CAADlgFrameReplaceDlg_ class destructor you have just to set NULL the `_pSettingFrameReplace` pointer.
     CAADlgFrameReplaceDlg::~CAADlgFrameReplaceDlg(#)
 
     {
@@ -236,7 +229,6 @@ CAADlgFrameReplaceDlg::~CAADlgFrameReplaceDlg(#)
 
 The `Build` method can be divided in three parts:
 
-The `Build` method can be divided in three parts:
     void CAADlgFrameReplaceDlg::Build(#)
 
     {
@@ -273,7 +265,6 @@ For the use case:
 
     ...
           double X(0.0f),Y(0.0f),Z(0.0f);
-double X(0.0f),Y(0.0f),Z(0.0f);
 ```vbscript
           if ( NULL != _pSettingFrameReplace )
 
@@ -422,7 +413,6 @@ To retrieve the values after the session closing use the `SaveRepository` method
 
 When the end user clicks Cancel or closes the window, there is nothing to save. The end user will retrieve the values before the current modifications.
 
-When the end user clicks Cancel or closes the window, there is nothing to save. The end user will retrieve the values before the current modifications.
     void CAADlgFrameReplaceDlg::**CloseWindow**(CATCommand* cmd, CATNotification* evt,
                                                               CATCommandClientData data)
 

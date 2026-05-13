@@ -93,11 +93,11 @@ method of the *DrawingSheet* object.
 
 ```vbscript
 ...
-```vbscript
+```cpp
   ' Set the CATIA popup file alerts to False
   ' It prevents to stop the macro at each alert during its execution
 ```
-```vbscript
+```cpp
   CATIA.DisplayFileAlerts = False
   ...
 ```
@@ -105,7 +105,7 @@ method of the *DrawingSheet* object.
 
 ```vbscript
 ...
-```vbscript
+```cpp
   ' Set the file system object containing the folder
   Dim fileSys As FileSystem
   Set fileSys = CATIA.FileSystem 
@@ -151,7 +151,7 @@ method of the *DrawingSheet* object.
 ```
         If InStr(oFile.Name, &quot;.CATDrawing&quot;) &lt;&gt; 0 Then
 
-```vbscript
+```cpp
             ' Set and open a Drawing document
             Dim oDoc As Document 
             Set oDoc = CATIA.Documents.Open(oFile.Path)

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Sphere"
 category: "use case"
 module: "CAACgmModel"
-tags: ["CAAGMModelInterfaces", "CAAGMModelSphereCreation"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcSphereCreation.htmmd"
+tags: "["CAAGMModelInterfaces", "CAAGMModelSphereCreation"]"
+source_file: "Doc/online/CAACgmModel/CAACgmUcSphereCreation.htm"
 converted: "2026-05-11T17:33:48.523639"
-```
-
 ---
 tags: ["CAAGMModelInterfaces", "CAAGMModelSphereCreation"]
 source_file: "Doc/online/CAACgmModel/CAACgmUcSphereCreation.htmmd"
@@ -59,7 +56,6 @@ CATSphere * pSphere =  piGeomFactory->CreateSphere(axis,radius,
 startMeridianAngle, endMeridianAngle, startParallelAngle, endParallelAngle);
 you get this result: Fig.1 Sphere: meridian and parallel angles ![Major start and end angles of a torus](images/CGM_sphere_0.png)
 
-you get this result: Fig.1 Sphere: meridian and parallel angles ![Major start and end angles of a torus](images/CGM_sphere_0.png)
 Meridian start angle: -72 deg
 Meridian end angle: + 72 deg
 Right-hand rule defines positive angles

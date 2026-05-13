@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Inserting a Shape Design Feature in the Procedural View"
-category: tech-article article"
+category: "tech-article article"
 module: "CAAGsiTechArticles"
-tags: ["CATIPrtPart", "CAAGsiNozzle", "CATIGSMProceduralView_var", "CATIGSMInsertInProceduralView", "CAAGSMInterfaces", "CAAGsiUserTools", "CATIContainer_var", "CATIA", "CATIGSMTool", "CATIPrtPart_var", "CATIDescendants_var", "CATIBasicTool_var", "CATISpecObject_var", "CATISpecObject", "CATIDescendants", "CAAGsiToolkit", "CATIBasicTool", "CATIGSMTool_var", "CATIPrtContainer_var"]
-source_file: "Doc/online/CAAGsiTechArticles/CAAGsiInsertInProceduralView.htmmd"
+tags: "["CATIPrtPart", "CAAGsiNozzle", "CATIGSMProceduralView_var", "CATIGSMInsertInProceduralView", "CAAGSMInterfaces", "CAAGsiUserTools", "CATIContainer_var", "CATIA", "CATIGSMTool", "CATIPrtPart_var", "CATIDescendants_var", "CATIBasicTool_var", "CATISpecObject_var", "CATISpecObject", "CATIDescendants", "CAAGsiToolkit", "CATIBasicTool", "CATIGSMTool_var", "CATIPrtContainer_var"]"
+source_file: "Doc/online/CAAGsiTechArticles/CAAGsiInsertInProceduralView.htm"
 converted: "2026-05-11T17:31:50.666036"
-```
-
 ---
 # Shape Design & Styling
 
@@ -41,7 +38,6 @@ This article discusses the CAAGsiUserTools Object. This use case explains how to
 
 The procedural view is the representation of the associative feature creation in the CATIA V5 frame.
 
-The procedural view is the representation of the associative feature creation in the CATIA V5 frame.
 Once the feature is created , its representation is generated (build, update) and it is visualized in CATIA in the 3D window and in graph
 
 This article is intended to help you make your first steps in programming with CATIA Shape Design [1]. Its main intent is to show you how to insert a feature in procedural view.
@@ -147,7 +143,6 @@ Some additionnal arguments can be setted (which values are default defined)
 
     **HRESULT
      CAAGsiUserTools::InsertInProceduralView**(const CATISpecObject_var &ispObjectToAppend,
-CAAGsiUserTools::InsertInProceduralView**(const CATISpecObject_var &ispObjectToAppend,
                                              const CATISpecObject_var &ispInputParent)
 
     {
@@ -177,7 +172,6 @@ We have stored the _pFact pointer in the CAAGsiUserTools class in the method `In
 
     **CATIGSMTool_var
       CAAGsiUserTools::GetCurrentGSMTool**(const CATUnicodeString &iName,
-CAAGsiUserTools::GetCurrentGSMTool**(const CATUnicodeString &iName,
                                          int iSetAsCurrent)
 
     {

@@ -1,63 +1,53 @@
 ---
 title: "CAAIAfrTemporaryObjectColor"
-type: "interface"
+type: "PublicInterface"
 module: "CAAApplicationFrame"
-category: api-reference
+base: "CATBaseUnknown"
 method_count: 2
-visibility: "public"
-has_tie_binding: true
-verified: true
+source_file: "CAAApplicationFrame.edu/PublicInterfaces/CAAIAfrTemporaryObjectColor.h"
 ---
-> **TIE实现**: unknown
 
 # CAAIAfrTemporaryObjectColor
 
-**模块**: CAAApplicationFrame  
-**分类**: framework  
-**可见性**: public  
-**方法数**: 2
-
-> Local Framework
+**基类**: CATBaseUnknown | **模块**: CAAApplicationFrame | **方法数**: 2
 
 ## 依赖
 
+- `CATBaseUnknown.h`
 - `CAAAfrCustCommandHdrModel.h`
 
-## TIE实现
+## 纯虚方法 (接口契约)
 
-**实现文件**:
-- `CAAAfrComboColorNotification.cpp`
-- `CAAAfrGetMRUManager.cpp`
-- `CAAAfrMRUManager.cpp`
-- `CAAAfrMRUManagerNotification.cpp`
-- `CAAEAfrTemporaryObjectColor.cpp`
+### GetCurrentColor
+
+```cpp
+virtual HRESULT GetCurrentColor(int & oRed, int & oGreen, int & oBlue) const = 0 ;
+```
+
+Returns the current color associated with the UI active object
+
+| 参数 | 类型 |
+|------|------|
+| oRed | `int &` |
+| oGreen | `int &` |
+| oBlue | `int &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### SetCurrentColor
+
+```cpp
+virtual HRESULT SetCurrentColor(int & oRed, int & oGreen, int & oBlue) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oRed | `int &` |
+| oGreen | `int &` |
+| oBlue | `int &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
 
 ---
 
-## Interface Overview
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-- [3D PLM Enterprise Architecture](../../use-cases/caaafrcases/CAAAfrSampleComboHdr.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAApplicationFrame.edu/PublicInterfaces/CAAIAfrTemporaryObjectColor.h`

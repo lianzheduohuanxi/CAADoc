@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Querying for a List of Connected Objects"
 category: "use-case"
 module: "CAAScdSchUseCases"
-tags: ["CAASCH_CompRoute01", "CAADoc", "CAAScdSchUseCases", "CAASchAppBase", "CATIA", "CAASCHEDUApp", "CAASchQueryConnectivity", "CAASchPlatformModeler", "CATIASchAppConnectable", "CAASchAppUtilities"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchQueryConnectivity.htmmd"
+tags: "["CAASCH_CompRoute01", "CAADoc", "CAAScdSchUseCases", "CAASchAppBase", "CATIA", "CAASCHEDUApp", "CAASchQueryConnectivity", "CAASchPlatformModeler", "CATIASchAppConnectable", "CAASchAppUtilities"]"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchQueryConnectivity.htm"
 converted: "2026-05-11T17:31:51.464895"
-```
-
 ---
 ## Schematics Platform Modeler
 
@@ -37,7 +34,6 @@ converted: "2026-05-11T17:31:51.464895"
 [ CAASchQueryConnectivity.CATScript ](CAASchQueryConnectivitySource.md)is located in the CAAScdSchUseCases module. [Execute macro](macros/CAASchQueryConnectivity.CATScript) (Windows only).
  CAASchQueryConnectivity includes the following steps:
 
-CAASchQueryConnectivity includes the following steps:
   1. Prolog
   2. Get a list of Schematic component instances and Schematic route instances in the document.
   3. Query for lists of connected objects.
@@ -60,7 +56,7 @@ The macro first loads the document: CAASCH_CompRoute01.CATProduct.  |     ...
     Dim sFilePath
 ```vbscript
 ```
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
 ```
@@ -75,7 +71,7 @@ Dim sFilePath
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
@@ -211,7 +207,7 @@ Not ( objSchRoot Is Nothing ) ) Then
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
             Set objAppCntbl = objSchRoot.GetInterface ("CATIASchAppConnectable",objPrd)
 
 ```
@@ -303,7 +299,7 @@ If (intNb > 0) Then
 
     ...
 ```vbscript
-```vbscript
+```cpp
                Set objAppCntbl = objSchRoot.GetInterface ("CATIASchAppConnectable",objPrd)
 ```vbscript
 ```

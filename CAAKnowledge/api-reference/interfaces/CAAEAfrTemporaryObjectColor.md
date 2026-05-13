@@ -1,50 +1,52 @@
 ---
 title: "CAAEAfrTemporaryObjectColor"
-type: "interface"
+type: "LocalClass"
 module: "CAAApplicationFrame"
-category: api-reference
+base: "CATBaseUnknown"
 method_count: 2
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAApplicationFrame.edu/CAAAfrCustCommandHdrModel.m/LocalInterfaces/CAAEAfrTemporaryObjectColor.h"
 ---
+
 # CAAEAfrTemporaryObjectColor
 
-**模块**: CAAApplicationFrame  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 2
+> It is mainly an implementation  of the CATIAfrCommandHeaderRep interface on the CAAAfrComboColorHeader command header. This interface enables you to define the dialog object associated with the starter which represents the command header into: a toolbar, the menu bar or a contextual menu. This class is also an implementation  of the CAAIAfrComboColorHeader interface on the same component. This interface "exports" the current r,g,b color composant.
 
-> header into: a toolbar, the menu bar or a contextual menu.
+**基类**: CATBaseUnknown | **模块**: CAAApplicationFrame | **方法数**: 2
 
 ## 依赖
 
+- `CATBaseUnknown.h`
+
+## 虚方法
+
+### GetCurrentColor
+
+```cpp
+virtual HRESULT GetCurrentColor(int & oRed, int & oGreen, int & oBlue) const ;
+```
+
+CAAIAfrTemporaryObjectColor
+
+| 参数 | 类型 |
+|------|------|
+| oRed | `int &` |
+| oGreen | `int &` |
+| oBlue | `int &` |
+
+
+### SetCurrentColor
+
+```cpp
+virtual HRESULT SetCurrentColor(int & oRed, int & oGreen, int & oBlue) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oRed | `int &` |
+| oGreen | `int &` |
+| oBlue | `int &` |
+
+
 ---
 
-## Interface Overview
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-- [3D PLM Enterprise Architecture](../../use-cases/caaafrcases/CAAAfrSampleComboHdr.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAApplicationFrame.edu/CAAAfrCustCommandHdrModel.m/LocalInterfaces/CAAEAfrTemporaryObjectColor.h`

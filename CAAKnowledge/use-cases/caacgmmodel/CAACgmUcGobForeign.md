@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Foreign Surfaces"
-category: use-case case"
+category: "use-case case"
 module: "CAACgmModel"
-tags: ["CAAAmtForeign", "CAAGMModelForeignSurfaceData", "CAADoc", "CAAGobFS", "CAAGobApplicationName", "CAAGMModelCreation", "CAAAdvancedMathematics", "CAAGMModelForeign", "CAAGMModelInterfaces", "CAAAmtForeignFunctionXY", "CAAAmtForeignFct", "CAAAmtForeignFctXY", "CAAAForeignSurfaceSample", "CATICGMDomainBinder", "CATIA", "CATIForeignSurface"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGobForeign.htmmd"
+tags: "["CAAAmtForeign", "CAAGMModelForeignSurfaceData", "CAADoc", "CAAGobFS", "CAAGobApplicationName", "CAAGMModelCreation", "CAAAdvancedMathematics", "CAAGMModelForeign", "CAAGMModelInterfaces", "CAAAmtForeignFunctionXY", "CAAAmtForeignFct", "CAAAmtForeignFctXY", "CAAAForeignSurfaceSample", "CATICGMDomainBinder", "CATIA", "CATIForeignSurface"]"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGobForeign.htm"
 converted: "2026-05-11T17:33:48.383671"
-```
-
 ---
 # Creating Foreign Surfaces
 
@@ -97,7 +94,7 @@ class **ExportedByCAAGMModelForeign** CAAGMModelForeignSurfaceData : public **CA
     //                  + v*iVDirection
     //                  + iHeight*cos(u)*cos(v)*iUDirection^iVDirection,
     // uMin<=u<=uMax, vMin<=v<=vMax. </pre>
-```vbscript
+```cpp
       CAAGMModelForeignSurfaceData(const CATMathPoint  & iOrigin,
                                const CATMathVector & iUDirection,
                                const CATMathVector & iVDirection,
@@ -165,7 +162,6 @@ private :
 
 This section emphasizes on some methods of the .cpp:
 
-This section emphasizes on some methods of the .cpp:
     1. Declaring the Derivation between the CAAGMModelForeignSurfaceData Class and the CATForeignSurfaceDATA Base Class
     2. Streaming and Unstreaming
     3. Cloning
@@ -240,7 +236,7 @@ The clone process [2] is managed by the `CATCloneManager`, that duplicates the `
 CATForeignGeometryData* CAAGMModelForeignSurfaceData::**Clone**(**CATCloneManager** & iCloning) const
              return new CAAGMModelForeignSurfaceData(CATMathPoint(_Origin),
                                                  CATMathVector(_dU),
-```vbscript
+```cpp
                                                  CATMathVector(_dV),
 ```
 
@@ -275,7 +271,7 @@ void CAAGMModelForeignSurfaceData::**Move3D**(**CATTransfoManager** & iTransfo)
 ```
 
              {
-```vbscript
+```cpp
 if ( FALSE == iTransfo.IsIdentity(#) )    // in case of a non-identity tranformation
                  CATMathTransformation* pMathTransfo = NULL;
                  iTransfo.GetMathTransformation( pMathTransfo ) ;

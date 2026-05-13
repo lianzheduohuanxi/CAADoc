@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "How to Use the Topological Operators"
-category: use-case article"
+category: "use-case article"
 module: "CAACgmModel"
-tags: ["CATICGMSolidPrimitive", "CAAGMOperatorsSpline", "CATICGMTopSkin", "CATICGMTopOperator", "CATICGMGeoToTopOperator"]
-source_file: "Doc/online/CAACgmModel/CAACgmTaUseTopoOperators.htmmd"
+tags: "["CATICGMSolidPrimitive", "CAAGMOperatorsSpline", "CATICGMTopSkin", "CATICGMTopOperator", "CATICGMGeoToTopOperator"]"
+source_file: "Doc/online/CAACgmModel/CAACgmTaUseTopoOperators.htm"
 converted: "2026-05-11T17:33:48.060274"
-```
-
 ---
 # How to Use Topological Operators
 
@@ -25,7 +22,6 @@ Build on a common scheme, the topological operators are transient objects used t
 
 Using topological operators is an easy way to create new consistent topological objects. There are two types of operators:
 
-Using topological operators is an easy way to create new consistent topological objects. There are two types of operators:
     1. The operators building topology from geometry. They derive from the `CATICGMGeoToTopOperator` class ( to create wire bodies or skin bodies) or from `CATICGMSolidPrimitive` (to create basic primitives such as cylinder, box, sphere).
     2. The operators only operating on topological objects. They derive from the `CATICGMTopOperator` class. Some of them allows you to create simple bodies (point, line and spline bodies), see the `CAAGMOperatorsSpline` use case.
 

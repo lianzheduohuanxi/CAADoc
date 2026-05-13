@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Setting Controller Reference"
 category: "use-case"
 module: "CAAScdInfTechArticles"
-tags: ["CATImmLogonSettingCtrl", "CATIdeIgesSettingCtrl", "CATIColCollabIdentificationSettingCtrl", "CATIColCollabNetworkSettingCtrl", "CATIColConnectivitySettingCtrl"]
-source_file: "Doc/online/CAAScdInfTechArticles/CAAInfTabPageList.htmmd"
+tags: "["CATImmLogonSettingCtrl", "CATIdeIgesSettingCtrl", "CATIColCollabIdentificationSettingCtrl", "CATIColCollabNetworkSettingCtrl", "CATIColConnectivitySettingCtrl"]"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfTabPageList.htm"
 converted: "2026-05-11T17:31:52.475701"
-```
-
 ---
 ## Infrastructure
 
@@ -26,7 +23,6 @@ converted: "2026-05-11T17:31:52.475701"
 
  Pass it as an argument of the `Item` method of the setting controller collection object when you want to create a setting controller object. Using Automation to administrate your settings in described in [1].
 
-Pass it as an argument of the `Item` method of the setting controller collection object when you want to create a setting controller object. Using Automation to administrate your settings in described in [1].
  Solutions | Workbenches | Property Pages | Objects | Types
 
 Pass it as an argument of the `Item` method of the setting controller collection object when you want to create a setting controller object. Using Automation to administrate your settings in described in [1].

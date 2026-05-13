@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Octree Tetrahedron Mesh Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CATIA", "CAAScdAniUseCases", "CAAAniMeshOctTetra"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshOctTetra.htmmd"
+tags: "["CATIA", "CAAScdAniUseCases", "CAAAniMeshOctTetra"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshOctTetra.htm"
 converted: "2026-05-11T17:31:51.671739"
-```
-
 ---
 ## Analysis Modeler
 
@@ -43,7 +40,7 @@ This macro shows you how to create an octree tetrahedron mesh parts. This macro 
 ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
 
-```vbscript
+```cpp
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 
 ```
@@ -54,7 +51,7 @@ This macro shows you how to create an octree tetrahedron mesh parts. This macro 
 ```
 
 ```vbscript
-```vbscript
+```cpp
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 ```
@@ -74,7 +71,7 @@ This macro shows you how to create an octree tetrahedron mesh parts. This macro 
 ```vbscript
     ' -----------------------------------------------------------
     ' Open the Analysis document
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Cube_R13_Freq.CATAnalysis")
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```

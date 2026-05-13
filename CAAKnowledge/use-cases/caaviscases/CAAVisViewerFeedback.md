@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Viewer Feedback"
-category: use-case case"
+category: "use-case case"
 module: "CAAVisUseCases"
-tags: ["CAAAfrGeneralWksAddin", "CAAApplicationFrame", "CAACafViewerFeedback", "CATIWorkbenchAddin", "CAACafViewerFeedbackCmd", "CAACATIAApplicationFrm", "CATIAlias", "CAACafViewerFeedbackManager", "CATIAfrGeneralWksAddin"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisViewerFeedback.htmmd"
+tags: "["CAAAfrGeneralWksAddin", "CAAApplicationFrame", "CAACafViewerFeedback", "CATIWorkbenchAddin", "CAACafViewerFeedbackCmd", "CAACATIAApplicationFrm", "CATIAlias", "CAACafViewerFeedbackManager", "CATIAfrGeneralWksAddin"]"
+source_file: "Doc/online/CAAVisUseCases/CAAVisViewerFeedback.htm"
 converted: "2026-05-11T17:31:52.253960"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -253,7 +250,6 @@ and contains the following data:
 
 The `SetViewerFeedbackOn `method consists in first to retrieve a viewer:
 
-The `SetViewerFeedbackOn `method consists in first to retrieve a viewer:
     void CAACafViewerFeedbackManager::SetViewerFeedbackOn(#)
 
     {
@@ -317,7 +313,7 @@ if ( NULL != _pCurrentViewer )
 if ( NULL != _pCurrentViewer )
 _pCurrentViewer->**SetFeedbackMode**(TRUE);
 if (0 == _ViewerFeedbackCB)
-```vbscript
+```cpp
                  _ViewerFeedbackCB = ::**AddCallback**(this,
 ```
 
@@ -327,7 +323,7 @@ if (0 == _ViewerFeedbackCB)
                                 **CATViewer** ::**VIEWER_FEEDBACK_UPDATE**(#),
 ```vbscript
 if (0 == _ViewerFeedbackCB)
-```vbscript
+```cpp
 _ViewerFeedbackCB = ::**AddCallback**(this,
 ```
 
@@ -355,7 +351,6 @@ The `SetFeedbackMode` method with `TRUE` actives the feedback mode. It means tha
 
 The `SetViewerFeedbackOn `method consists in to cancel the feedback mode on the current viewer.
 
-The `SetViewerFeedbackOn `method consists in to cancel the feedback mode on the current viewer.
     void CAACafViewerFeedbackManager::SetViewerFeedbackOff(#)
 
     {
@@ -415,7 +410,6 @@ _ViewerFeedbackCB = 0 ;
 
 There are four steps:
 
-There are four steps:
   1. Deactivate the feedback mode: It is done with the `SetFeedbackMode` method with ` FALSE` as argument. It means that now the viewer will do not send notifications when an interaction will occurs.
   2. Remove the graphic representation created in the `ViewerFeedbackCB` method. `_pInformationsToDisplay` is first removed from the viewer and then deleted. The `Destroy` method deletes the graphic representation and its contents, if it is a bag.
   3. Refresh the viewer: It is the role of the `Draw` method
@@ -427,7 +421,6 @@ There are four steps:
 
 The `ViewerFeedbackCB` method consists in to decode the notification contained in the callback event, and to display in the main 2D viewpoint of the viewer, the information of the notification.
 
-The `ViewerFeedbackCB` method consists in to decode the notification contained in the callback event, and to display in the main 2D viewpoint of the viewer, the information of the notification.
     void CAACafViewerFeedbackManager::ViewerFeedbackCB( CATCallbackEvent   event,
                                                   void             * client,
                                                   CATNotification  * iNotification,
@@ -476,7 +469,6 @@ if (NULL != _pInformationsToDisplay)
 
 The `ViewerFeedbackCB` method is called each time the viewer sends an event. So the graphic representation, `_pInformationsToDisplay`, previously created, should be first removed from the viewer and deleted.
 
-The `ViewerFeedbackCB` method is called each time the viewer sends an event. So the graphic representation, `_pInformationsToDisplay`, previously created, should be first removed from the viewer and deleted.
          CATVisViewerFeedbackEvent * pFeedbackEvent = NULL ;
 ```vbscript
          if ( NULL != iNotification )
@@ -487,7 +479,7 @@ The `ViewerFeedbackCB` method is called each time the viewer sends an event. So 
 CATVisViewerFeedbackEvent * pFeedbackEvent = NULL ;
 if ( NULL != iNotification )
 ```vbscript
-```vbscript
+```cpp
             pFeedbackEvent = (**CATVisViewerFeedbackEvent** *) iNotification;
 
 ```
@@ -499,7 +491,7 @@ if ( NULL != iNotification )
 ```vbscript
 if ( NULL != iNotification )
 ```vbscript
-```vbscript
+```cpp
 pFeedbackEvent = (**CATVisViewerFeedbackEvent** *) iNotification;
          if (NULL != pFeedbackEvent)
 ```
@@ -521,11 +513,11 @@ if (NULL != pFeedbackEvent)
 ```
 
              {
-```vbscript
+```cpp
 if (NULL != pFeedbackEvent)
 CATViewer * pViewerPublisher = pFeedbackEvent->**GetViewer**(#);
 if ( (NULL != pViewerPublisher) && ( pViewerPublisher **==** _pCurrentViewer) )
-```vbscript
+```cpp
                 _pInformationsToDisplay = new **CAT2DBagRep**(#);
 ```
 
@@ -568,7 +560,6 @@ If (Xpos,Ypos) are the screen coordinates of the mouse,
 
 where width and height are the support (_CATSupport_) dimensions.
 
-where width and height are the support (_CATSupport_) dimensions.
     int XPos, YPos;
                pFeedbackEvent->**GetMousePosition**(&XPos, &YPos);
 
@@ -674,7 +665,6 @@ if (NULL != pMousePositionTextRep)
 
   2. The intersection point with the selected geometry
 
-2. The intersection point with the selected geometry
 Before to detail the code, a picture to explain the intersection point.
 
  The point symbolized by a bold circle is the intersection point of the line and the nearest selected geometry. This point is in model coordinates.
@@ -754,7 +744,7 @@ if (NULL != SO)
 ```
 
                   {
-```vbscript
+```cpp
 if (NULL != SO)
 int SOSize = SO->**GetSize**(#) ;
 for ( int i= 0 ; i < SOSize ; i++)

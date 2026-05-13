@@ -30,7 +30,7 @@ This use case has shown how to edit Cutouts on structure Objects.
 *Copyright  1999-2010, Dassault Systmes. All rights reserved.*
 
 ```vbscript
-```vbscript
+```cpp
 Dim doc As Document
 
 Dim StrWorkbench As StrWorkbench
@@ -76,7 +76,7 @@ Set CurrentContour = CutoutToEdit.Contour
 
 &#39;Get the Current Direction Element
 ```
-```vbscript
+```cpp
 Dim CurrentDirElement As Reference
 Set CurrentDirElement = CutoutToEdit.DirectionElement
 

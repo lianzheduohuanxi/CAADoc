@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Managing Magnitudes and Units"
-category: tech-article
+category: "tech-article"
 module: "CAADlgTechArticles"
-tags: ["CATInteractiveApplication", "CATIA"]
-source_file: "Doc/online/CAADlgTechArticles/CAADlgManagingUnits.htmmd"
+tags: "["CATInteractiveApplication", "CATIA"]"
+source_file: "Doc/online/CAADlgTechArticles/CAADlgManagingUnits.htm"
 converted: "2026-05-11T17:17:56.047533"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -40,7 +37,6 @@ The figures that are displayed and entered in combos, editors, and spinners of y
 
 CATIA manages the magnitudes required by a number of applications, such as length, mass, or speed. The values of these magnitudes that the end user may enter or select, or that the application may display for modification, can be entered using either combos[1], editors[2], or spinners[3]. These values can be expressed in a wide range of units, allowing the end user to work with the units that are usual to the task, business, or country habits. This is only a faade that hides the internal value storage made according to the International Unit System (SI). By default, values are also expressed using this system in combos, editors, and spinners. If you choose to use a different unit for a given magnitude, you need to specify it. Then, conversions are made whenever a value is displayed between the SI unit of the storage and the chosen unit, and conversely when a value is entered.
 
-CATIA manages the magnitudes required by a number of applications, such as length, mass, or speed. The values of these magnitudes that the end user may enter or select, or that the application may display for modification, can be entered using either combos[1], editors[2], or spinners[3]. These values can be expressed in a wide range of units, allowing the end user to work with the units that are usual to the task, business, or country habits. This is only a faade that hides the internal value storage made according to the International Unit System (SI). By default, values are also expressed using this system in combos, editors, and spinners. If you choose to use a different unit for a given magnitude, you need to specify it. Then, conversions are made whenever a value is displayed between the SI unit of the storage and the chosen unit, and conversely when a value is entered.
 Magnitudes and units [4] to use throughout an application are declared at the application level. The CATInteractiveApplication class supplies two methods, `SetMagnitudeCurrentUnit` and `GetMagnitudeCurrentUnit` to respectively set and get the unit associated with a given magnitude to use in all the combos, editors, and spinners of the application. If an application doesn't specify anything, the default unit system is SI.
 
 Then, for each combo, editor, or spinner, you should set the magnitude to which this control is dedicated. If you want to use for a given control a different unit than the one used for the application, you should set this unit to the control instead of the magnitude. In addition, you can set a precision to the control, that is, the number of digits displayed.
@@ -66,7 +62,7 @@ You can get the application current unit for a given magnitude using the `GetMag
     CATDlgControl::Unit = CurrentLengthUnit;
     CurrentLengthUnit == IntAppliInstance.SetMagnitudeCurrentUnit(CATDlgControl::Length);
 ```vbscript
-```vbscript
+```cpp
     if (CurrentLengthUnit == CATDlgControl::Meter)
 
 ```
@@ -76,7 +72,7 @@ You can get the application current unit for a given magnitude using the `GetMag
       ...  // System used is SI
 CATDlgControl::Unit = CurrentLengthUnit;
 CurrentLengthUnit == IntAppliInstance.SetMagnitudeCurrentUnit(CATDlgControl::Length);
-```vbscript
+```cpp
 if (CurrentLengthUnit == CATDlgControl::Meter)
 ```
 
@@ -166,14 +162,14 @@ These three methods `SetMagnitude`, `SetUnit`, and `SetPrecision`, have their ge
 You may want to display a magnitude value according to the end units elsewhere than in a combo, and editor, or a spinner. This is usually the case if you want to show one or several values in a notification window, possibly in an information, warning, or error message. In this case, no automatic conversion is made from the SI unit system and the end user unit system. You must use the `GetDoubleValueString` method of the interactive application to perform this conversion.
 
 ```vbscript
-```vbscript
+```cpp
 For example, the following code converts a length whose value is stored or retrieved as a double in DoubleValue into a CATUnicodeString that can be used to create a message.
 
 ```
 
 ```
 
-```vbscript
+```cpp
 For example, the following code converts a length whose value is stored or retrieved as a double in DoubleValue into a CATUnicodeString that can be used to create a message.
     double DoubleValue = ...; // Value expressed in SI
     CATUnicodeString ucValue; // Value expressed in the end user unit system
@@ -182,7 +178,7 @@ For example, the following code converts a length whose value is stored or retri
                               // ready for use in a message
 double DoubleValue = ...; // Value expressed in SI
 CATUnicodeString ucValue; // Value expressed in the end user unit system
-```vbscript
+```cpp
     ucValue = IntAppliInstance.GetDoubleValueString(DoubleValue, CATDlgControl::Length);
 
 ```

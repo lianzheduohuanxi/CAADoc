@@ -1,52 +1,40 @@
 ---
 title: "CAAVisBasicApplication"
-type: "interface"
+type: "LocalClass"
 module: "CAAVisualization"
-category: api-reference
 base: "CATInteractiveApplication"
-inheritance_chain: "CAAVisBasicApplication → CATInteractiveApplication"
 method_count: 2
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAVisualization.edu/CAAVisBasicAppli.m/LocalInterfaces/CAAVisBasicApplication.h"
 ---
+
 # CAAVisBasicApplication
 
-**基类**: CATInteractiveApplication  
-**继承链**: CAAVisBasicApplication → CATInteractiveApplication  
-**模块**: CAAVisualization  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 2
+> This sample illustrates how to use Graphic Representation in a Viewer. How to launch : Type : CAAVisBasicAppli Inheritance: CATInteractiveApplication (Dialog Framework) CATApplication (System Framework)
 
-> Inheritance:
+**基类**: CATInteractiveApplication | **模块**: CAAVisualization | **方法数**: 2
 
 ## 依赖
 
 - `CATInteractiveApplication.h`
 
+## 虚方法
+
+### BeginApplication
+
+```cpp
+virtual void BeginApplication() ;
+```
+
+
+### EndApplication
+
+```cpp
+virtual int EndApplication() ;
+```
+
+Returns the application return code.
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATInteractiveApplication**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-This interface is used in the following use cases:
-
-- [CAAVisSampleViewerBasics](../../use-cases/caaviscases/CAAVisSampleViewerBasics.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAVisualization.edu/CAAVisBasicAppli.m/LocalInterfaces/CAAVisBasicApplication.h`

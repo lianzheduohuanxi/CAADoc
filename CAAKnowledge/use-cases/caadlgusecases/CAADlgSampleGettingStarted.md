@@ -186,7 +186,7 @@ test the Dialog objects [4]
 
 *Copyright  2003, Dassault Systmes. All rights reserved.*
 
-```vbscript
+```cpp
 #include &quot;CATInteractiveApplication.h&quot;
 
 class CAADlgHelloApplication: public CATInteractiveApplication {
@@ -202,7 +202,7 @@ class CAADlgHelloApplication: public CATInteractiveApplication {
 };
 ```
 
-```vbscript
+```cpp
 #include &quot;CAADlgHelloApplication.h&quot;
 #include &quot;CAADlgHelloWindow.h&quot;
 
@@ -229,7 +229,7 @@ int CAADlgHelloApplication::EndApplication(#)
 CAADlgHelloApplication ApplicationInstance(&quot;Hello&quot;);
 ```
 
-```vbscript
+```cpp
 #include &quot;CATDlgDocument.h&quot;   
 
 class CATInteractiveApplication;   
@@ -260,7 +260,7 @@ class CAADlgHelloWindow : public CATDlgDocument
 };
 ```
 
-```vbscript
+```cpp
 #include &quot;CAADlgHelloWindow.h&quot;
 
 #include &quot;CATInteractiveApplication.h&quot; 

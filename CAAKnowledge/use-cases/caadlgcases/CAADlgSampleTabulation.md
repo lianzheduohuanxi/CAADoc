@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Dialog Boxes Automatically Resizable"
-category: use-case case"
+category: "use-case case"
 module: "CAADlgUseCases"
-tags: ["CAADlgMoreRadioDlg", "CAADlgMoreButtonDlg", "CAADlgDemoWindow", "CAADlgDialogDemonstrator", "CAADlgDemoApplication", "CATInteractiveApplication", "CAADialog", "CAADlgTabulation", "CAADlgFrameReplaceDlg"]
-source_file: "Doc/online/CAADlgUseCases/CAADlgSampleTabulation.htmmd"
+tags: "["CAADlgMoreRadioDlg", "CAADlgMoreButtonDlg", "CAADlgDemoWindow", "CAADlgDialogDemonstrator", "CAADlgDemoApplication", "CATInteractiveApplication", "CAADialog", "CAADlgTabulation", "CAADlgFrameReplaceDlg"]"
+source_file: "Doc/online/CAADlgUseCases/CAADlgSampleTabulation.htm"
 converted: "2026-05-11T17:17:56.018174"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -78,7 +75,6 @@ When the end user selects the "With more frame A" radio button, the frame entitl
 
 When the end user selects the "With more frame B" radio button, the frame entitled "Frame B" is displayed on the right side.
 
-When the end user selects the "With more frame B" radio button, the frame entitled "Frame B" is displayed on the right side.
   3. The "**Frame Replacement Demonstrator** " Dialog box
 
 According to the selected value in the combo, the frame under the "Combo Frame" frame is not the same: "Coordinates Frame", "Circle Frame" or " Between Frame".
@@ -180,7 +176,6 @@ When the `CAADlgDialogDemonstrator` application is launched:
 
 The CAADlgTabulation use case is made of several classes located in the CAADlgDialogDemonstrator.m module of the CAADialog.edu framework:
 
-The CAADlgTabulation use case is made of several classes located in the CAADlgDialogDemonstrator.m module of the CAADialog.edu framework:
 Windows | `InstallRootDirectory/CAADialog.edu/CAADlgDialogDemonstrator.m/`
 
 The CAADlgTabulation use case is made of several classes located in the CAADlgDialogDemonstrator.m module of the CAADialog.edu framework:
@@ -202,7 +197,6 @@ In the LocalInterfaces and src directory, you will find the following files:
 
 There are three main steps to define the three Dialog boxes of the CAADlgTabulation use case:
 
-There are three main steps to define the three Dialog boxes of the CAADlgTabulation use case:
   1. Defining the Class Constructor
   2. Defining the Build Method
   3. Defining the Callback Method
@@ -236,7 +230,6 @@ Each Dialog box is a class deriving from the _CATDlgDialog_ class. The arguments
 
 The contents of this section depends on the Dialog box.
 
-The contents of this section depends on the Dialog box.
   1. The "**More/Less Push Button Demonstrato** r" Dialog box
   2. The "**More & Radio Button Demonstrator**" Dialog box
   3. The "**Frame Replacement Demonstrator** " Dialog box
@@ -263,7 +256,6 @@ void CAADlgMoreButtonDlg::Build(#)
 
     ...
        CATDlgFrame * pFrameLeftMore = new CATDlgFrame(this, "**FrameLeftMore** ",
-CATDlgFrame * pFrameLeftMore = new CATDlgFrame(this, "**FrameLeftMore** ",
                                                             CATDlgGridLayout );
 
           CATDlgFrame * pFrameBase = new CATDlgFrame(pFrameLeftMore, "**FrameBase** ",
@@ -284,7 +276,7 @@ CATDlgPushButton * pPushButtonMore = new CATDlgPushButton(pFrameLeftMore,
                                                         NULL,0,"Less>>");
           pPushButtonMore->SetTitle(_MoreMsg);
 
-```vbscript
+```cpp
        _pFrameRightMore = new CATDlgFrame(this, "**FrameRightMore** ", CATDlgGridLayout );
 
 ```
@@ -396,14 +388,14 @@ void CAADlgMoreRadioDlg::Build(#)
 
          ... FrameMain contents not explained
 
-```vbscript
+```cpp
       _pFrameDetailA = new CATDlgFrame(this, "**FrameDetailA** ", CATDlgGridLayout);
 
 ```
 
          ... FrameDetailA contents not explained
 
-```vbscript
+```cpp
       _pFrameDetailB = new CATDlgFrame(this, "**FrameDetailB** ", CATDlgGridLayout);
 
 ```
@@ -589,7 +581,6 @@ To be advised that the end user has select a new item in the combo list, you set
 
 In this section, we describe the methods which are called when the frame layout must be changed.
 
-In this section, we describe the methods which are called when the frame layout must be changed.
   1. The "**More/Less Push Button Demonstrato** r" Dialog box
   2. The "**More & Radio Button Demonstrator**" Dialog box
   3. The "**Frame Replacement Demonstrator** " Dialog box
@@ -688,7 +679,7 @@ CATNotification* evt, CATCommandClientData data)
 CATDlgRadioButton * pRadioButton = (CATDlgRadioButton *) cmd ;
 if ( (NULL != _pFrameDetailA) && ( NULL != pRadioButton) )
 ```vbscript
-```vbscript
+```cpp
          if (pRadioButton->GetState(#) == **CATDlgCheck**)
 
 ```
@@ -698,7 +689,7 @@ if ( (NULL != _pFrameDetailA) && ( NULL != pRadioButton) )
          {
 CATDlgRadioButton * pRadioButton = (CATDlgRadioButton *) cmd ;
 if ( (NULL != _pFrameDetailA) && ( NULL != pRadioButton) )
-```vbscript
+```cpp
 if (pRadioButton->GetState(#) == **CATDlgCheck**)
 ```
 
@@ -706,7 +697,7 @@ if (pRadioButton->GetState(#) == **CATDlgCheck**)
             _pFrameDetailA->SetVisibility(**CATDlgShow**);
 
          }
-```vbscript
+```cpp
 if (pRadioButton->GetState(#) == **CATDlgCheck**)
 S**etVerticalAttachment(10,** CATDlgTopOrLeft, _pFrameDetailA, NULL);
 _pFrameDetailA->SetVisibility(**CATDlgShow**);
@@ -777,7 +768,6 @@ int NewCurrentSelection = _pComboPointType->GetSelect(#) ;
 
 The code is the following: See Fig. 6
 
-The code is the following: See Fig. 6
      1. Retrieving the frame to detach : The ` _CurrentSelection` frame in the ` _pListFrame` table. See the Build method
      2. Detaching the old frame (`_CurrentSelection`) from its tabulation and hidding it
      3. Retrieving the frame to attach: The current value in the combo list, `NewCurrentSelection`

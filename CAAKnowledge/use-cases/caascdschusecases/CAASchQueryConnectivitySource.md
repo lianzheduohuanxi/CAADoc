@@ -18,7 +18,7 @@ Option Explicit
 ' *****************************************************************************
 
 '--- strMessage_g is a global variable visible to all private Sub/Function
-```vbscript
+```cpp
 Dim strMessage_g As String
 
 Sub CATMain(#)
@@ -28,7 +28,7 @@ Sub CATMain(#)
     ' ------------------------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -37,13 +37,13 @@ Sub CATMain(#)
 ```
     ' ------------------------------------------------------------------------- 
     ' Open the schematic document 
-```vbscript
+```cpp
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
             "online/CAAScdSchUseCases/samples/CAASCH_CompRoute01.CATProduct")
 ```
 
-```vbscript
+```cpp
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
@@ -119,7 +119,7 @@ Sub CATMain(#)
             Set objPrd = Nothing
             strName = ""
 ```
-```vbscript
+```cpp
             Set objPrd = objSchLComps.Item (intIndex,"CATIAProduct")
             If ( Not ( objPrd Is Nothing ) ) Then
 ```
@@ -128,7 +128,7 @@ Sub CATMain(#)
                  "= " & strName & vbCr
             End If  
             
-```vbscript
+```cpp
             Set objAppCntbl = objSchRoot.GetInterface ("CATIASchAppConnectable",objPrd)
 
             If ( Not ( objAppCntbl Is Nothing ) ) Then
@@ -189,7 +189,7 @@ Sub CATMain(#)
             Set objPrd = Nothing
             strName = ""
 ```
-```vbscript
+```cpp
             Set objPrd = objSchLRoutes.Item (intIndex,"CATIAProduct")
             If ( Not ( objPrd Is Nothing ) ) Then
 ```
@@ -198,7 +198,7 @@ Sub CATMain(#)
                  "= " & strName & vbCr
             End If  
             
-```vbscript
+```cpp
             Set objAppCntbl = objSchRoot.GetInterface ("CATIASchAppConnectable",objPrd)
 
             If ( Not ( objAppCntbl Is Nothing ) ) Then
@@ -269,7 +269,7 @@ Private Sub GenerateALine (objSchRootArg As SchematicRoot, _
           strName = ""
 ```
 
-```vbscript
+```cpp
           Set objPrd = objLCntblArg.Item (intIndex,"CATIAProduct")
     
           Set objCntbl = objSchRootArg.GetInterface ("CATIASchAppConnectable",objPrd)
@@ -296,7 +296,7 @@ Private Sub GenerateALine (objSchRootArg As SchematicRoot, _
           If ( Not ( objGRR Is Nothing ) ) Then
 ```
              
-```vbscript
+```cpp
              Set objCntr = objLCntrArg.Item (intIndex,"CATIASchCntrLocation")
 
              If ( Not ( objCntr Is Nothing ) ) Then
@@ -360,14 +360,14 @@ Private Function GetImage (objSchRootArg As SchematicRoot, _
      '-------------------------------------------------------------------------
      ' Input objSchCntblArg could be a route or a component.  If 
      ' objSchCntblArg is a component, we expect 
-```vbscript
+```cpp
      ' Set objSchRouteGraph = objSchRootArg.GetInterface ( _
      '  "CATIASchRouteGraphic",objSchCntblArg) to fail
 ```
      ' Error handling is to call GetInterface again with "CATIASchCompGraphic"
      ' as input argument.
      '-------------------------------------------------------------------------
-```vbscript
+```cpp
      On Error Resume Next
 
      Set objSchRouteGraph = objSchRootArg.GetInterface ( _
@@ -381,7 +381,7 @@ Private Function GetImage (objSchRootArg As SchematicRoot, _
         If ( objSchRouteGraph Is Nothing ) Then
 ```
 
-```vbscript
+```cpp
            Set objSchCompGraph = objSchRootArg.GetInterface ( _
              "CATIASchCompGraphic",objSchCntblArg)
 ```
@@ -407,7 +407,7 @@ Private Function GetImage (objSchRootArg As SchematicRoot, _
   End If
 
   If ( Not ( objSchLImages Is Nothing ) ) Then
-```vbscript
+```cpp
      Set GetImage = objSchLImages.Item (1,"CATIASchGRR")
   End If
 ```
@@ -417,7 +417,7 @@ End Function
 
 ```
 
-```vbscript
+```cpp
 Option Explicit
 ' COPYRIGHT DASSAULT SYSTEMES 2004
 
@@ -429,7 +429,7 @@ Option Explicit
 ' *****************************************************************************
 
 '--- strMessage_g is a global variable visible to all private Sub/Function
-```vbscript
+```cpp
 Dim strMessage_g As String
 
 Sub CATMain(#)
@@ -439,7 +439,7 @@ Sub CATMain(#)
     ' ------------------------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -448,13 +448,13 @@ Sub CATMain(#)
 ```
     ' ------------------------------------------------------------------------- 
     ' Open the schematic document 
-```vbscript
+```cpp
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
             "online/CAAScdSchUseCases/samples/CAASCH_CompRoute01.CATProduct")
 ```
 
-```vbscript
+```cpp
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
@@ -530,7 +530,7 @@ Sub CATMain(#)
             Set objPrd = Nothing
             strName = ""
 ```
-```vbscript
+```cpp
             Set objPrd = objSchLComps.Item (intIndex,"CATIAProduct")
             If ( Not ( objPrd Is Nothing ) ) Then
 ```
@@ -539,7 +539,7 @@ Sub CATMain(#)
                  "= " & strName & vbCr
             End If  
             
-```vbscript
+```cpp
             Set objAppCntbl = objSchRoot.GetInterface ("CATIASchAppConnectable",objPrd)
 
             If ( Not ( objAppCntbl Is Nothing ) ) Then
@@ -600,7 +600,7 @@ Sub CATMain(#)
             Set objPrd = Nothing
             strName = ""
 ```
-```vbscript
+```cpp
             Set objPrd = objSchLRoutes.Item (intIndex,"CATIAProduct")
             If ( Not ( objPrd Is Nothing ) ) Then
 ```
@@ -609,7 +609,7 @@ Sub CATMain(#)
                  "= " & strName & vbCr
             End If  
             
-```vbscript
+```cpp
             Set objAppCntbl = objSchRoot.GetInterface ("CATIASchAppConnectable",objPrd)
 
             If ( Not ( objAppCntbl Is Nothing ) ) Then
@@ -680,7 +680,7 @@ Private Sub GenerateALine (objSchRootArg As SchematicRoot, _
           strName = ""
 ```
 
-```vbscript
+```cpp
           Set objPrd = objLCntblArg.Item (intIndex,"CATIAProduct")
     
           Set objCntbl = objSchRootArg.GetInterface ("CATIASchAppConnectable",objPrd)
@@ -707,7 +707,7 @@ Private Sub GenerateALine (objSchRootArg As SchematicRoot, _
           If ( Not ( objGRR Is Nothing ) ) Then
 ```
              
-```vbscript
+```cpp
              Set objCntr = objLCntrArg.Item (intIndex,"CATIASchCntrLocation")
 
              If ( Not ( objCntr Is Nothing ) ) Then
@@ -771,14 +771,14 @@ Private Function GetImage (objSchRootArg As SchematicRoot, _
      '-------------------------------------------------------------------------
      ' Input objSchCntblArg could be a route or a component.  If 
      ' objSchCntblArg is a component, we expect 
-```vbscript
+```cpp
      ' Set objSchRouteGraph = objSchRootArg.GetInterface ( _
      '  "CATIASchRouteGraphic",objSchCntblArg) to fail
 ```
      ' Error handling is to call GetInterface again with "CATIASchCompGraphic"
      ' as input argument.
      '-------------------------------------------------------------------------
-```vbscript
+```cpp
      On Error Resume Next
 
      Set objSchRouteGraph = objSchRootArg.GetInterface ( _
@@ -792,7 +792,7 @@ Private Function GetImage (objSchRootArg As SchematicRoot, _
         If ( objSchRouteGraph Is Nothing ) Then
 ```
 
-```vbscript
+```cpp
            Set objSchCompGraph = objSchRootArg.GetInterface ( _
              "CATIASchCompGraphic",objSchCntblArg)
 ```
@@ -818,7 +818,7 @@ Private Function GetImage (objSchRootArg As SchematicRoot, _
   End If
 
   If ( Not ( objSchLImages Is Nothing ) ) Then
-```vbscript
+```cpp
      Set GetImage = objSchLImages.Item (1,"CATIASchGRR")
   End If
 ```

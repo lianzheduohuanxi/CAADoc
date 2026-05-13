@@ -30,13 +30,13 @@ Language="VBScript"
 '   revision V5R13
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
  ' Set the CATIA popup file alerts to False
  ' It prevents to stop the macro at each alert during its execution
 ```
-```vbscript
+```cpp
  CATIA.DisplayFileAlerts = False
 
 ```
@@ -48,7 +48,7 @@ Sub CATMain(#)
     ' ----------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -57,19 +57,19 @@ Sub CATMain(#)
 ```
     ' ----------------------------------------------------------- 
 
-```vbscript
+```cpp
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 		"online/CAAScdKniUseCases/samples/CAAKniSamplePartR13.CATPart")
 ```
-```vbscript
+```cpp
     Dim oDoc As Document
     set oDoc = CATIA.Documents.Open(sFilePath)
 
  
  ' Retrieve your active document
 ```
-```vbscript
+```cpp
  Dim oActiveDoc As Document 
  Set oActiveDoc = CATIA.ActiveDocument 
  
@@ -118,7 +118,7 @@ Sub CATMain(#)
     Next       
 
  Else
-```vbscript
+```cpp
     MsgBox "The active document must be a CATPart"
 End If
 ```
@@ -152,13 +152,13 @@ Language="VBScript"
 '   revision V5R13
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
  ' Set the CATIA popup file alerts to False
  ' It prevents to stop the macro at each alert during its execution
 ```
-```vbscript
+```cpp
  CATIA.DisplayFileAlerts = False
 
 ```
@@ -170,7 +170,7 @@ Sub CATMain(#)
     ' ----------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -179,19 +179,19 @@ Sub CATMain(#)
 ```
     ' ----------------------------------------------------------- 
 
-```vbscript
+```cpp
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 		"online/CAAScdKniUseCases/samples/CAAKniSamplePartR13.CATPart")
 ```
-```vbscript
+```cpp
     Dim oDoc As Document
     set oDoc = CATIA.Documents.Open(sFilePath)
 
  
  ' Retrieve your active document
 ```
-```vbscript
+```cpp
  Dim oActiveDoc As Document 
  Set oActiveDoc = CATIA.ActiveDocument 
  
@@ -240,7 +240,7 @@ Sub CATMain(#)
     Next       
 
  Else
-```vbscript
+```cpp
     MsgBox "The active document must be a CATPart"
 End If
 ```

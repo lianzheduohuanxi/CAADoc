@@ -1,14 +1,10 @@
 ---
-```vbscript
-title: "CATIArrNomenclature, CATIArrNomenclatures, CATIArrNomenclatureTrees 
- Interfaces Use Case"
+title: "CATIArrNomenclature, CATIArrNomenclatures, CATIArrNomenclatureTrees"
 category: "use-case"
 module: "CAAScdArrUseCases"
-tags: ["CAAPslNomenAccessFeat", "CATIA", "CATIArrNomenclatures", "CATIArrNomenclature", "CATIAArrNomenclatureTrees", "CATIArrNomenclatureTrees"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAPslNomenAccessFeat.htmmd"
+tags: "["CAAPslNomenAccessFeat", "CATIA", "CATIArrNomenclatures", "CATIArrNomenclature", "CATIAArrNomenclatureTrees", "CATIArrNomenclatureTrees"]"
+source_file: "Doc/online/CAAScdArrUseCases/CAAPslNomenAccessFeat.htm"
 converted: "2026-05-11T17:31:51.577544"
-```
-
 ---
 ## Arrangement
 
@@ -58,7 +54,7 @@ Once the Product has been loaded, the macro is designed to read the relevant obj
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
        Set objDocument0 = CATIA.ActiveDocument
        Dim objArrWorkbench1 As Workbench
        Set objArrWorkbench1 = objDocument0.GetWorkbench  ( "ArrWorkbench" )

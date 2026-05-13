@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "The Physical Types for Structural Analysis"
-category: tech-article
+category: "tech-article"
 module: "CAAScdAniTechArticles"
-tags: ["CATIAConstraints"]
-source_file: "Doc/online/CAAScdAniTechArticles/CAAAniPreprocessingFeatures.htmmd"
+tags: "["CATIAConstraints"]"
+source_file: "Doc/online/CAAScdAniTechArticles/CAAAniPreprocessingFeatures.htm"
 converted: "2026-05-11T17:31:51.963872"
-```
-
 ---
 # Analysis Solution
 
@@ -238,7 +235,7 @@ Set publication1 = publications1.Item("ClampFace")
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
     Set product1 = TheProductDoc.Product
     Dim constraints1 As Constraints
     Set constraints1 = product1.Connections("CATIAConstraints")// Extract the collection of constraints.
@@ -634,7 +631,6 @@ Analysis Entity Name | Parameter Name | Value Type | Line Column Layer Number
 
   | SAMOccSolutionFilter | SAMOccurrencesFilter | [ 1 , 1 , 1 ]
 
-  | SAMOccSolutionFilter | SAMOccurrencesFilter | [ 1 , 1 , 1 ]
   | SAMImagePointer.1 | BasicComponent | [ 1 , 1 , 1 ]
   | PostProType | Enumere | [ 1 , 1 , 1 ]
   | Parameters | Enumere | [ 1 , 1 , 1 ]

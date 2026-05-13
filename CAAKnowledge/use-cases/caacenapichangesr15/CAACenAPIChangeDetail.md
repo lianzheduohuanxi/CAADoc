@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "Detail Of C++ API Changes"
 category: "api-changes"
 module: "CAACenAPIChangesR15"
-version: "V5R15"
-tags: ["CAA2Usage", "CATIAV4Interfaces", "CAA2Level", "CAACenAPIChangeDetail"]
-source_file: "Doc/online/CAACenAPIChangesR15/CAACenAPIChangeDetail.htmmd"
+tags: "["CAA2Usage", "CATIAV4Interfaces", "CAA2Level", "CAACenAPIChangeDetail"]"
+source_file: "Doc/online/CAACenAPIChangesR15/CAACenAPIChangeDetail.htm"
 converted: "2026-05-11T17:33:51.027962"
-```
-
 ---
 |  |  |  Detail Of V5R15 C++ API Changes _What changes in the API compared with CAA V5R14_
 ---|---|---

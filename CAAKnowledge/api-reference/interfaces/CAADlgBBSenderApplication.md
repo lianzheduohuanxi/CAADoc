@@ -1,56 +1,45 @@
 ---
 title: "CAADlgBBSenderApplication"
-type: "interface"
+type: "LocalClass"
 module: "CAADialog"
-category: api-reference
 base: "CATInteractiveApplication"
-inheritance_chain: "CAADlgBBSenderApplication → CATInteractiveApplication"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 3
+source_file: "CAADialog.edu/CAADlgBBSender.m/LocalInterfaces/CAADlgBBSenderApplication.h"
 ---
+
 # CAADlgBBSenderApplication
 
-**基类**: CATInteractiveApplication  
-**继承链**: CAADlgBBSenderApplication → CATInteractiveApplication  
-**模块**: CAADialog  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> Creates the frame of the application. This frame contains all the code. How to Launch the sample: Type: CAADlgBBReceiver in the first  process CAADlgBBSender   in the second process
 
-> CAADlgBBReceiver in the first  process
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATInteractiveApplication | **模块**: CAADialog | **方法数**: 3
 
 ## 依赖
 
 - `CATInteractiveApplication.h`
 
+## 公共方法
+
+### BeginApplication
+
+```cpp
+void BeginApplication() ;
+```
+
+
+### EndApplication
+
+```cpp
+int EndApplication() ;
+```
+
+
+### OnIdle
+
+```cpp
+void OnIdle() ;
+```
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATInteractiveApplication**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAADialog.edu/CAADlgBBSender.m/LocalInterfaces/CAADlgBBSenderApplication.h`

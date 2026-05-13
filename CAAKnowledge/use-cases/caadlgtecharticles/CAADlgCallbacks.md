@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Using Callbacks to Trigger Actions"
-category: tech-article
+category: "tech-article"
 module: "CAADlgTechArticles"
-tags: []
-source_file: "Doc/online/CAADlgTechArticles/CAADlgCallbacks.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAADlgTechArticles/CAADlgCallbacks.htm"
 converted: "2026-05-11T17:17:56.024159"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -67,14 +64,13 @@ Containment Tree Structure | Command Tree Structure
 
 As an example, let's take one of the push buttons of the Burger window. It is instantiated using the following statements:
 
-As an example, let's take one of the push buttons of the Burger window. It is instantiated using the following statements:
     CATDlgPushButton * pApply;                    // Instantiate the push button
-```vbscript
+```cpp
     pApply = new CATDlgPushButton(this, "Apply_Push_Button");
 
 ```
 
-```vbscript
+```cpp
     ...                                          // Set a callback on it
 CATDlgPushButton * pApply;                    // Instantiate the push button
 ```
@@ -99,7 +95,6 @@ where:
 
 Each time the user pushes on the Apply push button, a activation notification of the Apply push button, instance of the CATDlgPushBActivateNotification class, is emitted, and the callback mechanism is used to trigger the method labelApply. This method has the following signature:
 
-Each time the user pushes on the Apply push button, a activation notification of the Apply push button, instance of the CATDlgPushBActivateNotification class, is emitted, and the callback mechanism is used to trigger the method labelApply. This method has the following signature:
     void Burger::labelApply(
             CATCommand           * ipControl,          // push button
             CATNotification      * ipNotification,     // notification
@@ -118,7 +113,6 @@ The parameters are those you put as parameters of the method `AddAnalyseNotifica
 
 When the user closes the window into which the control was located, you need to remove all the callbacks set on this control. To do this, in the window destructor, use the method `RemoveAnalyseNotificationCB` as follows:
 
-When the user closes the window into which the control was located, you need to remove all the callbacks set on this control. To do this, in the window destructor, use the method `RemoveAnalyseNotificationCB` as follows:
     RemoveAnalyseNotificationCB(pApply,
                                 pApply->GetPushBActivateNotification(#),
                                 NULL)
@@ -132,7 +126,6 @@ When the user closes the window into which the control was located, you need to 
 
 You will often need to create a transient window from your main window or from another transient window. Usually, the transient window is the result of a user action on a push button, or a selection in a list displayed in an editor, or whatever scenario which uses a control you can imagine to request from the user the data your application is expecting.
 
-You will often need to create a transient window from your main window or from another transient window. Usually, the transient window is the result of a user action on a push button, or a selection in a list displayed in an editor, or whatever scenario which uses a control you can imagine to request from the user the data your application is expecting.
 To create and display a transient window, you need to use a callback set on the control you propose to the user. The method called from this callback should then include the instantiation of the transient window. In addition to the different dialog object you will put in this transient window, some of them, when activated, will close the window, whether the data input is complete or the user cancels the data input.
 
 To do this, you need to set callbacks on the controls in the transient window to be able to perform the task appropriate to the user action.
@@ -146,7 +139,7 @@ For example, suppose you create a transient window to key in a character string 
 ```
 
     ...
-```vbscript
+```cpp
     AddAnalyseNotificationCB(          // set callback on the control to
            pPushButton,                // create the transient window
            pPushButton->GetPushBActivateNotification(#),

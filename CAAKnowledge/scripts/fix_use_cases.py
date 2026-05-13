@@ -1,122 +1,217 @@
 #!/usr/bin/env python3
-"""
-CATIA CAA V5 知识库简单修复脚本
-直接修复常见的格式问题
-"""
-import re
-from pathlib import Path
+"""P1: 修复 use-case 文档 — frontmatter、代码块去碎片、内容去重。"""
 
-def fix_use_case_docs():
-    """修复Use-Case文档中的问题"""
-    use_case_dir = Path('CAAKnowledge/use-cases')
-    if not use_case_dir.exists():
-        print(f"目录不存在: {use_case_dir}")
-        return
-    
-    fixed_count = 0
-    
-    for md_file in use_case_dir.rglob('*.md'):
-        try:
-            with open(md_file, 'r', encoding='utf-8', errors='ignore') as f:
-                content = f.read()
-            
-            original = content
-            
-            # 1. 修复 source_file 路径 - 使用正斜杠
-            content = re.sub(
-                r'source_file:\s*"([^"]+)"',
-                lambda m: f'source_file: "{m.group(1).replace(chr(92), "/")}"',
-                content
+import os
+import re
+import sys
+
+USE_CASES_DIR = "/workspace/CAAKnowledge/use-cases"
+
+
+def fix_frontmatter(content):
+    """Fix YAML frontmatter that has ```vbscript leaked into it."""
+    if not content.startswith('---\n```vbscript'):
+        return content
+
+    # Extract the real frontmatter fields from the corrupted block
+    lines = content.split('\n')
+    end_idx = -1
+    for i in range(1, min(len(lines), 30)):
+        if lines[i].strip() == '---':
+            end_idx = i
+            break
+
+    if end_idx < 0:
+        return content
+
+    fm_lines = lines[1:end_idx]
+
+    # Extract fields
+    title = ""
+    category = ""
+    module = ""
+    tags = ""
+    source_file = ""
+    converted = ""
+
+    for line in fm_lines:
+        line = line.strip()
+        if line.startswith('```'):
+            continue
+        m = re.match(r'title:\s*"?(.+?)"?$', line)
+        if m:
+            title = m.group(1).strip().strip('"')
+            continue
+        m = re.match(r'category:\s*"?(.+?)"?$', line)
+        if m:
+            category = m.group(1).strip().strip('"')
+            continue
+        m = re.match(r'module:\s*"?(.+?)"?$', line)
+        if m:
+            module = m.group(1).strip().strip('"')
+            continue
+        m = re.match(r'tags:\s*"?(.+?)"?$', line)
+        if m:
+            tags = m.group(1).strip().strip('"')
+            continue
+        m = re.match(r'source_file:\s*"?(.+?)"?$', line)
+        if m:
+            source_file = m.group(1).strip().strip('"')
+            continue
+        m = re.match(r'converted:\s*"?(.+?)"?$', line)
+        if m:
+            converted = m.group(1).strip().strip('"')
+            continue
+
+    # Fix source_file extension
+    if source_file.endswith('.htmmd'):
+        source_file = source_file.replace('.htmmd', '.htm')
+    if source_file.endswith('.htmlmd'):
+        source_file = source_file.replace('.htmlmd', '.html')
+
+    # Rebuild proper frontmatter
+    new_fm = "---\n"
+    if title:
+        new_fm += f'title: "{title}"\n'
+    if category:
+        new_fm += f'category: "{category}"\n'
+    if module:
+        new_fm += f'module: "{module}"\n'
+    if tags:
+        new_fm += f'tags: "{tags}"\n'
+    if source_file:
+        new_fm += f'source_file: "{source_file}"\n'
+    if converted:
+        new_fm += f'converted: "{converted}"\n'
+    new_fm += "---\n"
+
+    # Body starts after the old ---
+    body = '\n'.join(lines[end_idx + 1:])
+    return new_fm + body
+
+
+def defragment_code_blocks(content):
+    """Merge fragmented code blocks and fix language tags."""
+    lines = content.split('\n')
+    result = []
+    i = 0
+
+    while i < len(lines):
+        line = lines[i]
+
+        # Skip stray ```vbscript that starts a line but isn't a real fence
+        if line.strip() == '```vbscript':
+            # Check if this is inside what should be C++ code
+            look_ahead = []
+            j = i + 1
+            while j < min(len(lines), i + 10):
+                la = lines[j].strip()
+                if la in ('```', '```vbscript', '```cpp'):
+                    break
+                if la:
+                    look_ahead.append(la)
+                j += 1
+
+            # Heuristic: if surrounding lines look like C++, use ```cpp instead
+            is_cpp = any(
+                kw in ' '.join(look_ahead)
+                for kw in ['HRESULT', 'virtual', 'class', '#include', 'CAT', '::']
             )
-            
-            # 2. 移除错误的 ```vbscript```vbscript 配对
-            content = re.sub(r'```vbscript\n```vbscript', '```vbscript', content)
-            
-            # 3. 移除单独的 ```vbscript``` 标签（没有配对的）
-            # 先处理连续的
-            lines = content.split('\n')
-            new_lines = []
-            i = 0
-            while i < len(lines):
-                line = lines[i]
-                # 检测孤立的开始标签
-                if line.strip() == '```vbscript':
-                    # 检查前后
-                    prev_line = new_lines[-1].strip() if new_lines else ''
-                    next_line = lines[i+1].strip() if i+1 < len(lines) else ''
-                    
-                    # 如果前后都是普通文本行（不是代码），跳过这个标签
-                    if (prev_line and not prev_line.startswith("'") and
-                        not prev_line.startswith('Set ') and
-                        not prev_line.startswith('Dim ') and
-                        not prev_line.startswith('CATIA.') and
-                        not prev_line.startswith('Err.') and
-                        not prev_line.startswith('If ') and
-                        not prev_line.startswith('For ') and
-                        next_line and
-                        not next_line.startswith("'") and
-                        not next_line.startswith('Set ') and
-                        not next_line.startswith('Dim ') and
-                        not next_line.startswith('CATIA.') and
-                        not next_line.startswith('Err.') and
-                        not next_line.startswith('If ') and
-                        not next_line.startswith('For ')):
-                        i += 1
-                        continue
-                
-                new_lines.append(line)
-                i += 1
-            
-            content = '\n'.join(new_lines)
-            
-            # 4. 清理连续的空行
-            content = re.sub(r'\n{3,}', '\n\n', content)
-            
-            # 5. 清理HTML表格残留
-            lines = content.split('\n')
-            new_lines = []
-            skip_separator = False
-            
-            for i, line in enumerate(lines):
-                stripped = line.strip()
-                
-                # 检测空单列表格
-                if re.match(r'^(\|\s*)+$', stripped):
-                    new_lines.append(line)
-                    continue
-                
-                # 检测纯分隔符行
-                if re.match(r'^\|?\s*[-=]+\s*\|', stripped):
-                    # 如果前一行是空单列表格，跳过分隔符
-                    if new_lines and re.match(r'^(\|\s*)+$', new_lines[-1].strip()):
-                        continue
-                    new_lines.append(line)
-                    continue
-                
-                new_lines.append(line)
-            
-            content = '\n'.join(new_lines)
-            
-            if content != original:
-                with open(md_file, 'w', encoding='utf-8') as f:
-                    f.write(content)
-                fixed_count += 1
-                
-        except Exception as e:
-            print(f"Error processing {md_file}: {e}")
-    
-    print(f"修复了 {fixed_count} 个 Use-Case 文档")
+            if is_cpp:
+                result.append('```cpp')
+            else:
+                result.append(line)
+            i += 1
+            continue
+
+        result.append(line)
+        i += 1
+
+    return '\n'.join(result)
+
+
+def deduplicate_content(content):
+    """Remove consecutive duplicate paragraphs."""
+    lines = content.split('\n')
+    result = []
+    prev_nonempty = ""
+
+    for line in lines:
+        stripped = line.strip()
+        if stripped and stripped == prev_nonempty and len(stripped) > 20:
+            continue
+        result.append(line)
+        if stripped:
+            prev_nonempty = stripped
+
+    return '\n'.join(result)
+
+
+def fix_code_fence_pairs(content):
+    """Ensure ``` fence pairs are balanced."""
+    lines = content.split('\n')
+    fences = []
+    for i, line in enumerate(lines):
+        stripped = line.strip()
+        if stripped.startswith('```'):
+            fences.append((i, stripped))
+
+    # Check if we have an odd number
+    if len(fences) % 2 != 0:
+        # Find unclosed fence and add closing
+        # Simple approach: if last fence is opener, close it
+        # Actually, let's just check if fence count is odd and add closing at end
+        open_count = sum(1 for _, f in fences if len(f) > 3)  # ```lang opens
+        close_count = sum(1 for _, f in fences if f == '```')  # ``` closes
+
+        if open_count > close_count:
+            lines.append('```')
+
+    return '\n'.join(lines)
+
+
+def process_file(filepath):
+    try:
+        with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
+            content = f.read()
+    except Exception:
+        return
+
+    original = content
+
+    content = fix_frontmatter(content)
+    content = defragment_code_blocks(content)
+    content = deduplicate_content(content)
+    content = fix_code_fence_pairs(content)
+
+    if content != original:
+        with open(filepath, 'w', encoding='utf-8') as f:
+            f.write(content)
+        return True
+    return False
+
 
 def main():
-    print("=" * 60)
-    print("CATIA CAA V5 知识库简单修复")
-    print("=" * 60)
-    
-    fix_use_case_docs()
-    
-    print("\n" + "=" * 60)
-    print("修复完成!")
-    print("=" * 60)
+    stats = {"total": 0, "fixed": 0, "errors": 0}
 
-if __name__ == '__main__':
+    for root, dirs, files in os.walk(USE_CASES_DIR):
+        for fname in files:
+            if not fname.endswith('.md'):
+                continue
+            fpath = os.path.join(root, fname)
+            stats["total"] += 1
+            try:
+                if process_file(fpath):
+                    stats["fixed"] += 1
+            except Exception as e:
+                stats["errors"] += 1
+                if stats["errors"] <= 5:
+                    print(f"  Error: {fpath}: {e}")
+
+    print(f"Total files: {stats['total']}")
+    print(f"Files fixed: {stats['fixed']}")
+    print(f"Errors: {stats['errors']}")
+
+
+if __name__ == "__main__":
     main()

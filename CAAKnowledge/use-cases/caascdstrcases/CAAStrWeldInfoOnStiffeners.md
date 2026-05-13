@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Retrieving Weld Information on Stiffener Objects"
 category: "use-case"
 module: "CAAScdStrUseCases"
-tags: ["CATIA", "CATIASfmStiffener", "CAAScdStrUseCases", "CAAStrWeldInfoOnStiffeners"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrWeldInfoOnStiffeners.htmmd"
+tags: "["CATIA", "CATIASfmStiffener", "CAAScdStrUseCases", "CAAStrWeldInfoOnStiffeners"]"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrWeldInfoOnStiffeners.htm"
 converted: "2026-05-11T17:31:50.922064"
-```
-
 ---
 ## Structure Design
 
@@ -25,7 +22,6 @@ converted: "2026-05-11T17:31:50.922064"
 
   CAAStrWeldInfoOnStiffeners includes the following steps:
 
-CAAStrWeldInfoOnStiffeners includes the following steps:
   1. Prolog
   2. Retrieving Factory Object from Part Document
   3. Getting the Manager from Factory
@@ -42,12 +38,12 @@ CAAStrWeldInfoOnStiffeners includes the following steps:
 
 10. Retrieving Weld Features on the Stiffener with No Operating Element (Weld Use Case 2)
 11. Retrieving Weld Attributes of Weld Use Case 2 Features
-```vbscript
+```cpp
 Opens the CAAStrWeldInfoOnStiffeners.CATPart in CATIA.
 
 ```vbscript
 ```
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -59,7 +55,7 @@ Opens the CAAStrWeldInfoOnStiffeners.CATPart in CATIA.
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
     Set ObjPart = CATIA.ActiveDocument.Part
 
 ```
@@ -72,7 +68,7 @@ Opens the CAAStrWeldInfoOnStiffeners.CATPart in CATIA.
 #### Retrieving Factory Object from Part Document
 
 ```vbscript
-```vbscript
+```cpp
 Set ObjPart = CATIA.ActiveDocument.Part
 ```
 ```
@@ -216,7 +212,7 @@ This step describes how to get the collection of Split Stiffeners and how to get
 This step describes how to get the SfmStiffener object from Reference of split stiffener.
 
 ```vbscript
-```vbscript
+```cpp
     Set SelctionObj = CATIA.ActiveDocument.Selection
 ```vbscript
 ```
@@ -229,7 +225,7 @@ This step describes how to get the SfmStiffener object from Reference of split s
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
     Set DeckStiffener1 = SelctionObj.FindObject("CATIASfmStiffener")
 
 ```
@@ -242,7 +238,7 @@ This step describes how to get the SfmStiffener object from Reference of split s
 #### Retrieving Super Plate which is Used as Support for Stiffener
 
 ```vbscript
-```vbscript
+```cpp
 Set DeckStiffener1 = SelctionObj.FindObject("CATIASfmStiffener")
 ```
 ```
@@ -318,7 +314,6 @@ This step describes how to get the collection of Weld features with operating el
 
 This step describes how to get the weld information set on the Operated split stiffener with operating element.
 
-This step describes how to get the weld information set on the Operated split stiffener with operating element.
     ustrWeldTypeUC1 = WeldUC1.WeldType
     ustrAddedMaterialUC1 = WeldUC1.AddedMaterial
     ustrFitUpUC1 = WeldUC1.FitUp
@@ -357,7 +352,6 @@ This step describes how to get the collection of Weld features with no operating
 
 This step describes how to get the weld information set on the Operated split Stiffener with no operating element.
 
-This step describes how to get the weld information set on the Operated split Stiffener with no operating element.
     ustrWeldTypeUC2 = WeldUC2.WeldType
     ustrAddedMaterialUC2 = WeldUC2.AddedMaterial
     ustrFitUpUC2 = WeldUC2.FitUp

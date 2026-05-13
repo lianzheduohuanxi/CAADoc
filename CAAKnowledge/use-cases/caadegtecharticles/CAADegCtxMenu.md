@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Contextual Menus"
 category: "use-case"
 module: "CAADegTechArticles"
-tags: ["CAAAnalysisEltTypeCmd", "CAAAnalysisLogCmd", "CAAILine", "CAAxxxCmd"]
-source_file: "Doc/online/CAADegTechArticles/CAADegCtxMenu.htmmd"
+tags: "["CAAAnalysisEltTypeCmd", "CAAAnalysisLogCmd", "CAAILine", "CAAxxxCmd"]"
+source_file: "Doc/online/CAADegTechArticles/CAADegCtxMenu.htm"
 converted: "2026-05-11T17:33:49.774351"
-```
-
 ---
 tags: ["CAAAnalysisEltTypeCmd", "CAAAnalysisLogCmd", "CAAILine", "CAAxxxCmd"]
 source_file: "Doc/online/CAADegTechArticles/CAADegCtxMenu.htmmd"
@@ -39,7 +36,7 @@ Contextual Menus with A Dialog Command You can customize contextual menus trigge
 
 * * *
 
-```vbscript
+```cpp
 For Objects Implementing a Given Interface The command we use as example enables the end user to right click only lines, that is object implementing the _CAAILine_ interface. A right click on such objects display a contextual menu with three items, concatenated to the items provided by the window, since we use a _CATFrmGraphAnd3DWindow_ for the document. ![](images/CAACtxMenu1.jpg) | Window's items      Contextual menu's items
 ```
 
@@ -79,14 +76,14 @@ A _CATPathElement_ instance is created as a data member of the dialog command cl
 * * *
 
 ```vbscript
-```vbscript
+```cpp
 For All Objects and the Viewer Background The same command should now react to any object whose representation is right clicked. This includes the viewer background. To do this, replace the `AddElementType` method by the `AcceptOnNotify` method to make the dialog agent match any right click, and remove the `CATDlgEngWithContext` behavior from the `AddElementType` method. The rest of the method is unchanged.
 
 ```
 
 ```
 
-```vbscript
+```cpp
 For All Objects and the Viewer Background The same command should now react to any object whose representation is right clicked. This includes the viewer background. To do this, replace the `AddElementType` method by the `AcceptOnNotify` method to make the dialog agent match any right click, and remove the `CATDlgEngWithContext` behavior from the `AddElementType` method. The rest of the method is unchanged.
     void CAAxxxCmd::BuildGraph(#)
 ```

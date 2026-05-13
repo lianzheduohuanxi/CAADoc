@@ -19,13 +19,13 @@ Option Explicit
 '   CATIA Level:  V5R7 
 ' *****************************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
     ' -----------------------------------------------------------------------------------------------
 ```
     ' Optional: allows to find the sample wherever it may be installed
-```vbscript
+```cpp
     Dim sDocPath As String
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -36,7 +36,7 @@ Sub CATMain(#)
 
     ' -----------------------------------------------------------------------------------------------
     ' Optional: allows to specify where document should be saved
-```vbscript
+```cpp
     Dim sTmpPath As String
     sTmpPath=CATIA.SystemService.Environ("CATTemp")
     If (Not CATIA.FileSystem.FolderExists(sTmpPath)) Then
@@ -49,51 +49,51 @@ Sub CATMain(#)
     'Add the new document to the end of the collection of documents.
     'Create and display a new window for the new document.
     'Activate the new document and the window.
-```vbscript
+```cpp
     Dim oFirstNewPartDoc As Document
     Set oFirstNewPartDoc = CATIA.Documents.Add("Part")
 
     'The document just created is the active one.
 ```
     'Save the new document.
-```vbscript
+```cpp
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sTmpPath, _
        "CAAInfWriteDocument1.CATPart")
 ```
-```vbscript
+```cpp
      CATIA.ActiveDocument.SaveAs(sFilePath)
 
     'Create a second new part document.
 ```
-```vbscript
+```cpp
      Dim oSecondNewPartDoc As Document
      Set oSecondNewPartDoc = CATIA.Documents.Add("Part")
 
     'Save the new document using the variable name defined for it.
 ```
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sTmpPath, _
        "CAAInfWriteDocument2.CATPart")
 ```
      oSecondNewPartDoc.SaveAs(sFilePath)
 
     'Open an existing document.
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
        "online/CAAScdInfUseCases/samples/CAAInfReadDocument.CATPart")
 ```
-```vbscript
+```cpp
      Dim iThirdPartDoc As Document
      Set iThirdPartDoc = CATIA.Documents.Open(sFilePath)
 
     'Save the new document by specifying its name.
 ```
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sTmpPath, _
          "CAAInfWriteDocument3.CATPart")
 ```
-```vbscript
+```cpp
     CATIA.Documents.Item("CAAInfReadDocument.CATPart").SaveAs(sFilePath)
   
 End Sub
@@ -113,13 +113,13 @@ Option Explicit
 '   CATIA Level:  V5R7 
 ' *****************************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
     ' -----------------------------------------------------------------------------------------------
 ```
     ' Optional: allows to find the sample wherever it may be installed
-```vbscript
+```cpp
     Dim sDocPath As String
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -130,7 +130,7 @@ Sub CATMain(#)
 
     ' -----------------------------------------------------------------------------------------------
     ' Optional: allows to specify where document should be saved
-```vbscript
+```cpp
     Dim sTmpPath As String
     sTmpPath=CATIA.SystemService.Environ("CATTemp")
     If (Not CATIA.FileSystem.FolderExists(sTmpPath)) Then
@@ -143,51 +143,51 @@ Sub CATMain(#)
     'Add the new document to the end of the collection of documents.
     'Create and display a new window for the new document.
     'Activate the new document and the window.
-```vbscript
+```cpp
     Dim oFirstNewPartDoc As Document
     Set oFirstNewPartDoc = CATIA.Documents.Add("Part")
 
     'The document just created is the active one.
 ```
     'Save the new document.
-```vbscript
+```cpp
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sTmpPath, _
        "CAAInfWriteDocument1.CATPart")
 ```
-```vbscript
+```cpp
      CATIA.ActiveDocument.SaveAs(sFilePath)
 
     'Create a second new part document.
 ```
-```vbscript
+```cpp
      Dim oSecondNewPartDoc As Document
      Set oSecondNewPartDoc = CATIA.Documents.Add("Part")
 
     'Save the new document using the variable name defined for it.
 ```
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sTmpPath, _
        "CAAInfWriteDocument2.CATPart")
 ```
      oSecondNewPartDoc.SaveAs(sFilePath)
 
     'Open an existing document.
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
        "online/CAAScdInfUseCases/samples/CAAInfReadDocument.CATPart")
 ```
-```vbscript
+```cpp
      Dim iThirdPartDoc As Document
      Set iThirdPartDoc = CATIA.Documents.Open(sFilePath)
 
     'Save the new document by specifying its name.
 ```
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sTmpPath, _
          "CAAInfWriteDocument3.CATPart")
 ```
-```vbscript
+```cpp
     CATIA.Documents.Item("CAAInfReadDocument.CATPart").SaveAs(sFilePath)
   
 End Sub

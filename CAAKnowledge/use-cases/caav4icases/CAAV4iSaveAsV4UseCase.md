@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating V4 Data from a V5 Geometrical Element"
-category: use-case case"
+category: "use-case case"
 module: "CAAV4iUseCases"
-tags: ["CAAGobSurfV4DataSaver", "CAACATIAV4Interfaces", "CAASurfV4DataSaver", "CATIForeignCurve_var", "CAAV4iEduSaveAsV4", "CATIForeignSurface_var", "CATIA", "CATIV4DataSaver"]
-source_file: "Doc/online/CAAV4iUseCases/CAAV4iSaveAsV4UseCase.htmmd"
+tags: "["CAAGobSurfV4DataSaver", "CAACATIAV4Interfaces", "CAASurfV4DataSaver", "CATIForeignCurve_var", "CAAV4iEduSaveAsV4", "CATIForeignSurface_var", "CATIA", "CATIV4DataSaver"]"
+source_file: "Doc/online/CAAV4iUseCases/CAAV4iSaveAsV4UseCase.htm"
 converted: "2026-05-11T17:33:45.786384"
-```
-
 ---
 # 3D PLM PPR Hub Open Gateway
 
@@ -78,7 +75,6 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 There are 4 logical steps in CAAV4iEduSaveAsV4 :
 
-There are 4 logical steps in CAAV4iEduSaveAsV4 :
   1. Read the V5 data of the foreign geometry
   2. Make a V4 data block
   3. Change the SaveAsModel behaviour

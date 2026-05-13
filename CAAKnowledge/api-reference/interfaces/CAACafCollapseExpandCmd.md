@@ -1,52 +1,46 @@
 ---
 title: "CAACafCollapseExpandCmd"
-type: "interface"
+type: "LocalClass"
 module: "CAACATIAApplicationFrm"
-category: api-reference
 base: "CATStateCommand"
-inheritance_chain: "CAACafCollapseExpandCmd → CATStateCommand"
-method_count: 1
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 2
+source_file: "CAACATIAApplicationFrm.edu/CAACafSpecTree.m/LocalInterfaces/CAACafCollapseExpandCmd.h"
 ---
+
 # CAACafCollapseExpandCmd
 
-**基类**: CATStateCommand  
-**继承链**: CAACafCollapseExpandCmd → CATStateCommand  
-**模块**: CAACATIAApplicationFrm  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 1
+> This state command illustrates how to carry out a collapse/expand in the specification tree displayed in a CATFrmNavigGraphicWindow.
 
-> DialogEngine Framework
+**基类**: CATStateCommand | **模块**: CAACATIAApplicationFrm | **方法数**: 2
 
 ## 依赖
 
 - `CATStateCommand.h`
 
+## 虚方法
+
+### BuildGraph
+
+```cpp
+virtual void BuildGraph() ;
+```
+
+BuildGraph ----------- Implements the statechart. It is called once, even if the command is in repeat mode
+
+
+## 公共方法
+
+### ExpandObject
+
+```cpp
+CATBoolean ExpandObject(void * iDummy) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iDummy | `void *` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATStateCommand**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAACATIAApplicationFrm.edu/CAACafSpecTree.m/LocalInterfaces/CAACafCollapseExpandCmd.h`

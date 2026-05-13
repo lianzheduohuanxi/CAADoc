@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "CATAnalysisInterfaces Framework Modifications in CXR14"
 category: "use-case"
 module: "CAACenAPIChangesR14"
-version: "V5R14"
-tags: ["CATISamAnalysisManager", "CATISamAnalysisSet", "CATISamAnalysisModel", "CATISamAnalysisContext"]
-source_file: "Doc/online/CAACenAPIChangesR14/CATAnalysisInterfaces.htmmd"
+tags: "["CATISamAnalysisManager", "CATISamAnalysisSet", "CATISamAnalysisModel", "CATISamAnalysisContext"]"
+source_file: "Doc/online/CAACenAPIChangesR14/CATAnalysisInterfaces.htm"
 converted: "2026-05-11T17:33:50.847843"
-```
-
 ---
 tags: ["CATISamAnalysisManager", "CATISamAnalysisSet", "CATISamAnalysisModel", "CATISamAnalysisContext"]
 source_file: "Doc/online/CAACenAPIChangesR14/CATAnalysisInterfaces.htmmd"

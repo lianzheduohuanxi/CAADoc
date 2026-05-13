@@ -19,7 +19,7 @@ Option Explicit
 '   CATIA Level:  V5R13 
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 Dim oPartDocument As PartDocument
@@ -44,7 +44,7 @@ Dim i as Long
 ' ----------------------------------------------------------- 
 ' Optional: allows to find the sample wherever it's installed
 dim sDocPath As String 
-```vbscript
+```cpp
 sDocPath=CATIA.SystemService.Environ("CATDocView")
 If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
   Err.Raise 9999,,"No Doc Path Defined"
@@ -60,13 +60,13 @@ iDelimiter = "//"
 ' ------------
 ' Get the CATIA file system
 ' ------------
-```vbscript
+```cpp
 Set oCATIAFileSys = CATIA.FileSystem
 ' ------------
 ```
 ' Get the file containing the hole parameters
 ' ------------
-```vbscript
+```cpp
 Set oFile = oCATIAFileSys.GetFile(sDocPath & "/online/CAAScdPriUseCases/macros/CAAPriChangeHole.txt")
 ' ------------
 ```
@@ -78,7 +78,7 @@ Set oTextSteam = oFile.OpenAsTextStream("ForReading")
 ```
 ' Get the part document
 ' ------------
-```vbscript
+```cpp
 Set oPartDocument = CATIA.ActiveDocument
 ' ------------
 ```
@@ -269,7 +269,7 @@ End Function
 
 ```
 
-```vbscript
+```cpp
 Option Explicit
 ' COPYRIGHT DASSAULT SYSTEMES 2004
 
@@ -282,7 +282,7 @@ Option Explicit
 '   CATIA Level:  V5R13 
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 Dim oPartDocument As PartDocument
@@ -308,7 +308,7 @@ Dim i as Long
 ' ----------------------------------------------------------- 
 ' Optional: allows to find the sample wherever it's installed
 dim sDocPath As String 
-```vbscript
+```cpp
 sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
 If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
   Err.Raise 9999,,&quot;No Doc Path Defined&quot;
@@ -324,13 +324,13 @@ iDelimiter = &quot;//&quot;
 ' ------------
 ' Get the CATIA file system
 ' ------------
-```vbscript
+```cpp
 Set oCATIAFileSys = CATIA.FileSystem
 ' ------------
 ```
 ' Get the file containing the hole parameters
 ' ------------
-```vbscript
+```cpp
 Set oFile = oCATIAFileSys.GetFile(sDocPath &amp; &quot;/online/CAAScdPriUseCases/macros/CAAPriChangeHole.txt&quot;)
 ' ------------
 ```
@@ -342,7 +342,7 @@ Set oTextSteam = oFile.OpenAsTextStream(&quot;ForReading&quot;)
 ```
 ' Get the part document
 ' ------------
-```vbscript
+```cpp
 Set oPartDocument = CATIA.ActiveDocument
 ' ------------
 ```

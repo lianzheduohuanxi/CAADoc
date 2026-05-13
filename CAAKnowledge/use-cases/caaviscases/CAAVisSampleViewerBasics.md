@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Understanding the Basics of the Visualization Process"
-category: use-case case"
+category: "use-case case"
 module: "CAAVisUseCases"
-tags: ["CAAVisBasicApplication", "CAAVisBasicAppli", "CAAVisualization", "CAAVisBasicWindow", "CAAVisBAseView"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleViewerBasics.htmmd"
+tags: "["CAAVisBasicApplication", "CAAVisBasicAppli", "CAAVisualization", "CAAVisBasicWindow", "CAAVisBAseView"]"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleViewerBasics.htm"
 converted: "2026-05-11T17:31:52.210579"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -94,13 +91,12 @@ Only the cuboid is taken as an example and described. All the methods belong to 
 
 The 3D navigation viewer is an instance of the _CATNavigation3DViewer_ class. It is created in the `CreateViewer` method of the _CAAVisBasicWindow_ class that is called when the application is launched.
 
-The 3D navigation viewer is an instance of the _CATNavigation3DViewer_ class. It is created in the `CreateViewer` method of the _CAAVisBasicWindow_ class that is called when the application is launched.
     void CAAVisBasicWindow::CreateViewer(#)
 
     {
 The 3D navigation viewer is an instance of the _CATNavigation3DViewer_ class. It is created in the `CreateViewer` method of the _CAAVisBasicWindow_ class that is called when the application is launched.
 void CAAVisBasicWindow::CreateViewer(#)
-```vbscript
+```cpp
       _p3DViewer = new CATNavigation3DViewer(this,
 
 ```

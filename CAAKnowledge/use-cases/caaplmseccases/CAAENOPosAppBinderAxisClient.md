@@ -142,7 +142,6 @@ Here follows a sample command, to be updated with your own environment configura
 
 The following section first explains how to generate the Java client binding for the ENOPosApplicationBinderImpl CAA Web service demonstrated. The remaining sections then describe the code that must be written in order to consume this Web service:
 
-The following section first explains how to generate the Java client binding for the ENOPosApplicationBinderImpl CAA Web service demonstrated. The remaining sections then describe the code that must be written in order to consume this Web service:
   1. Creating the Java Client Binding
   2. Instantiating and Configuring the Generated Proxy
   3. Retrieving User Contexts
@@ -419,7 +418,6 @@ The following code depends on the CAAENOPosApplicationBinderImplWrapper class de
     } **catch** (CATServiceExceptionType c) {
       ...
       System.out.println("/tError code: " + c.getCode(#));
-System.out.println("/tError code: " + c.getCode(#));
       System.out.println("/tError message: " + c.getMessage(#));
 
       **if** (c.getErrorArguments(#) != **null**) {

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Extrema of a Solid"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperatorsInterfaces", "CATICGMTopBodyExtremum", "CAAGMOperatorsBodyExtremum"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopExtrema.htmmd"
+tags: "["CAAGMOperatorsInterfaces", "CATICGMTopBodyExtremum", "CAAGMOperatorsBodyExtremum"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopExtrema.htm"
 converted: "2026-05-11T17:33:49.178885"
-```
-
 ---
 tags: ["CAAGMOperatorsInterfaces", "CATICGMTopBodyExtremum", "CAAGMOperatorsBodyExtremum"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcTopExtrema.htmmd"

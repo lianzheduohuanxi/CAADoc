@@ -1,13 +1,10 @@
 ---
-```vbscript
-title: "Testing the Position of a Point inside a Face or a Volume "
+title: "Testing the Position of a Point inside a Face or a Volume"
 category: "use case"
 module: "CAACgmModel"
-tags: ["CATICGMPositionPtFaceOperator", "CAAGMModelPositionOpe", "CAAGMModelInterfaces", "CATICGMPositionPtVolOperator"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcPtPosition.htmmd"
+tags: "["CATICGMPositionPtFaceOperator", "CAAGMModelPositionOpe", "CAAGMModelInterfaces", "CATICGMPositionPtVolOperator"]"
+source_file: "Doc/online/CAACgmModel/CAACgmUcPtPosition.htm"
 converted: "2026-05-11T17:33:48.514152"
-```
-
 ---
 Testing the Position of a Point inside a Face or a Volume
 
@@ -59,7 +56,6 @@ familiar with geometric modeler use cases, go to
     the code below:
 
     CATICGMPositionPtVolOperator * pPositionPtVolOpe1 =::CATCGMCreatePositionPtVolOperator(piGeomFactory, &topdata;,
-CATICGMPositionPtVolOperator * pPositionPtVolOpe1 =::CATCGMCreatePositionPtVolOperator(piGeomFactory, &topdata;,
     		pOUT, pVolume);
 
     ...
@@ -88,7 +84,7 @@ on the standard output. The code below (pointOnFace relies on a bordering face):
 CATICGMPositionPtVolOperator * pPositionPtVolOpe2 =::CATCGMCreatePositionPtVolOperator(piGeomFactory, &topdata;,
 pointOnFace, pVolume);
     CATLocation loc2 = pPositionPtVolOpe2->GetLocationResult(#);
-```vbscript
+```cpp
     	if (loc2==CATLocationFull)
 
 ```
@@ -121,7 +117,7 @@ The code below:
 The code below:
 CATICGMPositionPtFaceOperator *pPositionPtFaceOpe =::CATCGMCreatePositionPtFaceOperator(piGeomFactory, pConfig,
 surParam, theFaceOnWhichICreateAPoint);
-```vbscript
+```cpp
     if ( (pPositionPtFaceOpe->GetOneResult(#) )==CATLocationInner)
 
 ```

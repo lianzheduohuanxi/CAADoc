@@ -20,13 +20,13 @@ Option Explicit
 '   CATIA Level:  V5R7 
 ' *****************************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
     ' -----------------------------------------------------------------------------------------------
 ```
     ' Optional: allows to find the sample wherever it may be installed
-```vbscript
+```cpp
     Dim sDocPath As String
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -36,23 +36,23 @@ Sub CATMain(#)
     ' ------------------------------------------------------------------------------------------------ 
    
     'Open the document. 
-```vbscript
+```cpp
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
        "online/CAAScdInfUseCases/samples/CAAInfReadDocument.CATPart")
 ```
-```vbscript
+```cpp
     Dim iPartDoc As Document
     Set iPartDoc = CATIA.Documents.Open(sFilePath)
 
     'Close the active document which is the document just opened.
 ```
-```vbscript
+```cpp
      CATIA.ActiveDocument.Close(#)
 
     'Open the same document again.
 ```
-```vbscript
+```cpp
      Set iPartDoc = CATIA.Documents.Open(sFilePath)
 
 ```
@@ -61,19 +61,19 @@ Sub CATMain(#)
      iPartDoc.Close(#)
 
      'Open the same document a third time.
-```vbscript
+```cpp
       Set iPartDoc = CATIA.Documents.Open(sFilePath)
 
      'Close the document by specifying its name.
 ```
-```vbscript
+```cpp
       CATIA.Documents.Item("CAAInfReadDocument.CATPart").Close(#)
    
 End Sub
 
 ```
 
-```vbscript
+```cpp
 Option Explicit
 ' COPYRIGHT DASSAULT SYSTEMES 2001
 
@@ -87,13 +87,13 @@ Option Explicit
 '   CATIA Level:  V5R7 
 ' *****************************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
     ' -----------------------------------------------------------------------------------------------
 ```
     ' Optional: allows to find the sample wherever it may be installed
-```vbscript
+```cpp
     Dim sDocPath As String
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -103,23 +103,23 @@ Sub CATMain(#)
     ' ------------------------------------------------------------------------------------------------ 
    
     'Open the document. 
-```vbscript
+```cpp
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
        "online/CAAScdInfUseCases/samples/CAAInfReadDocument.CATPart")
 ```
-```vbscript
+```cpp
     Dim iPartDoc As Document
     Set iPartDoc = CATIA.Documents.Open(sFilePath)
 
     'Close the active document which is the document just opened.
 ```
-```vbscript
+```cpp
      CATIA.ActiveDocument.Close(#)
 
     'Open the same document again.
 ```
-```vbscript
+```cpp
      Set iPartDoc = CATIA.Documents.Open(sFilePath)
 
 ```
@@ -128,12 +128,12 @@ Sub CATMain(#)
      iPartDoc.Close(#)
 
      'Open the same document a third time.
-```vbscript
+```cpp
       Set iPartDoc = CATIA.Documents.Open(sFilePath)
 
      'Close the document by specifying its name.
 ```
-```vbscript
+```cpp
       CATIA.Documents.Item("CAAInfReadDocument.CATPart").Close(#)
    
 End Sub

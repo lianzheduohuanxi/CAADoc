@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Copings"
 category: "use-case"
 module: "CAAScdStrUseCases"
-tags: ["CATIA", "CATIAStrFeatureFactory", "CAAScdStrUseCases", "CAAStrCreateCoping"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfCoping.htmmd"
+tags: "["CATIA", "CATIAStrFeatureFactory", "CAAScdStrUseCases", "CAAStrCreateCoping"]"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfCoping.htm"
 converted: "2026-05-11T17:31:50.865138"
-```
-
 ---
 ## Structure Design
 
@@ -18,7 +15,6 @@ converted: "2026-05-11T17:31:50.865138"
 
   This macro shows you how to apply coping between structure objects. Here we will see three Cases.
 
-This macro shows you how to apply coping between structure objects. Here we will see three Cases.
   1. Creating Coping on Plate, when it is limited by another plate and surface.
   2. Creating Coping on Stiffener, when it is limited by stiffeners and Plate.
   3. Creating Coping on Stiffener, when it is limited by lateral face of a Plate.
@@ -35,7 +31,6 @@ This macro shows you how to apply coping between structure objects. Here we will
 
   CAAStrCreateCoping includes five steps:
 
-CAAStrCreateCoping includes five steps:
   1. Prolog
   2. Retrieving the Factory from Object on which Coping Is to Be Done
   3. Defining the Limits
@@ -45,7 +40,7 @@ CAAStrCreateCoping includes five steps:
 #### Prolog
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -57,7 +52,7 @@ CAAStrCreateCoping includes five steps:
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
     Dim strFactory As StrObjectFactory
 
     Set doc = CATIA.ActiveDocument
@@ -103,7 +98,7 @@ This step describes how to get Structure Feature Factory. The Factory object is 
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
     Set PlateToNibble = strPlates.Item("Deck_014.2")
 
     Dim PlateSelection As Selection
@@ -120,7 +115,7 @@ This step describes how to get Structure Feature Factory. The Factory object is 
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
     Set FactoryForPlate = PlateSelection.FindObject("CATIAStrFeatureFactory")
 
 ```
@@ -133,7 +128,7 @@ This step describes how to get Structure Feature Factory. The Factory object is 
 #### Defining the Limits
 
 ```vbscript
-```vbscript
+```cpp
 Set FactoryForPlate = PlateSelection.FindObject("CATIAStrFeatureFactory")
 ```
 ```
@@ -235,7 +230,7 @@ In Case2: we will apply coping on Member when it is limited by 2 Members and One
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
     Set MembertoNibble1 = strMembers.Item("BottShell_LStf_003.1")
 
     Dim MemberSelection As Selection
@@ -251,7 +246,7 @@ In Case2: we will apply coping on Member when it is limited by 2 Members and One
     Dim FactoryForMember As StrFeatureFactory
 ```vbscript
 ```
-```vbscript
+```cpp
     Set FactoryForMember = MemberSelection.FindObject("CATIAStrFeatureFactory")
 ```
 ```
@@ -337,7 +332,7 @@ In case3 we will define the extrapolation offset for the lateral face of stiffen
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
     Set MembertoNibble2 = strMembers.Item("Deck_TStf_005.1")
 
     Dim Member2Sel As Selection
@@ -353,7 +348,7 @@ In case3 we will define the extrapolation offset for the lateral face of stiffen
     Dim FactoryForMember2 As StrFeatureFactory
 ```vbscript
 ```
-```vbscript
+```cpp
     Set FactoryForMember2 = Member2Sel.FindObject ("CATIAStrFeatureFactory")
 ```
 ```

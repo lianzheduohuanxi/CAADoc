@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "Detail Of C++ API Changes"
 category: "api-changes"
 module: "CAACenAPIChangesR12"
-version: "V5R12"
-tags: ["CAA2Usage", "CAA2Level"]
-source_file: "Doc/online/CAACenAPIChangesR12/CAACenAPIChangeDetail.htmmd"
+tags: "["CAA2Usage", "CAA2Level"]"
+source_file: "Doc/online/CAACenAPIChangesR12/CAACenAPIChangeDetail.htm"
 converted: "2026-05-11T17:33:50.507188"
-```
-
 ---
 |  |  |  Detail Of V5R12 C++ API Changes _What changes in the API compared with CAA V5R11_
 ---|---|---
@@ -35,7 +31,6 @@ INDM | Method is no more documented. It does not break your code in any way but 
 INDM | Method is no more documented. It does not break your code in any way but means that you are not supposed to use it anymore. Check that you don't use it or look for replacement informations.
 AdvancedTopologicalOpe | [R12GA vs R11GA](AdvancedTopologicalOpe.md) |
 
-AdvancedTopologicalOpe | [R12GA vs R11GA](AdvancedTopologicalOpe.md) |
 CATAnalysisInterfaces | [R12GA vs R11GA](CATAnalysisInterfaces.md) |
 CATSchPlatformInterfaces | [R12GA vs R11GA](CATSchPlatformInterfaces.md) |
 CATSchPlatformModeler | [R12GA vs R11GA](CATSchPlatformModeler.md) |

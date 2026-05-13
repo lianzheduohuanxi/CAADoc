@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Instantiating a Ditto in a Drawing View"
 category: "use-case"
 module: "CAAScdDriUseCases"
-tags: ["CAADriInstantiateInnerDitto", "CAADriInstantiateDittoSource", "CATIA", "CAADriUseCases", "CAAScdDriUseCases"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriInstantiateInnerDitto.htmmd"
+tags: "["CAADriInstantiateInnerDitto", "CAADriInstantiateDittoSource", "CATIA", "CAADriUseCases", "CAAScdDriUseCases"]"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriInstantiateInnerDitto.htm"
 converted: "2026-05-11T17:31:51.080302"
-```
-
 ---
 ## Interactive Drafting
 
@@ -36,7 +33,7 @@ This macro shows you how to instantiate a ditto into a view from a detail view o
 
       ...
 ```vbscript
-```vbscript
+```cpp
         ' Set the CATIA popup file alerts to False
 ```
 ```
@@ -44,7 +41,7 @@ This macro shows you how to instantiate a ditto into a view from a detail view o
 ```vbscript
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
 ' Set the CATIA popup file alerts to False
         ' It prevents to stop the macro at each alert during its execution
 ```
@@ -55,7 +52,7 @@ This macro shows you how to instantiate a ditto into a view from a detail view o
 ```
 
 ```vbscript
-```vbscript
+```cpp
         CATIA.DisplayFileAlerts = False
 ```
 ```
@@ -82,7 +79,7 @@ The CATIA prompts are disabled thanks to the `DisplayFileAlerts` property of the
         Dim oDrawing As DrawingDocument
 ```vbscript
 ```
-```vbscript
+```cpp
         Set oDrawing = CATIA.Documents.Open(sDocPath & _
 ```
 ```

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Parsing XML documents with SAX"
-category: use-case case"
+category: "use-case case"
 module: "CAAXmlUseCases"
-tags: ["CATISAXParser_var", "CAAXMLParser", "CATIXMLSAXFactory", "CAAXMLSAXCountErrHandler", "CAAXMLSAXCountMain", "CATISAXParser", "CAAXMLSAXCountDocHandler", "CATISAXDocumentHandler_var", "CATISAXEntityResolver", "CATISAXErrorHandler_var", "CATISAXErrorHandler", "CAAXMLSAXCount", "CATIXMLSAXFactory_var", "CATISAXDTDHandler", "CATISAXDocumentHandler"]
-source_file: "Doc/online/CAAXmlUseCases/CAAXMLSAXCount.htmmd"
+tags: "["CATISAXParser_var", "CAAXMLParser", "CATIXMLSAXFactory", "CAAXMLSAXCountErrHandler", "CAAXMLSAXCountMain", "CATISAXParser", "CAAXMLSAXCountDocHandler", "CATISAXDocumentHandler_var", "CATISAXEntityResolver", "CATISAXErrorHandler_var", "CATISAXErrorHandler", "CAAXMLSAXCount", "CATIXMLSAXFactory_var", "CATISAXDTDHandler", "CATISAXDocumentHandler"]"
+source_file: "Doc/online/CAAXmlUseCases/CAAXMLSAXCount.htm"
 converted: "2026-05-11T17:33:45.649159"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -52,7 +49,6 @@ The CAAXMLSAXCount Use Case is a use case of the CAAXMLParser.edu framework that
 
 This use case parses an existing XML file and collects statistics about its contents: number of elements, number of attributes, number of characters, number of white space characters, number of processing instructions. Upon completion, it will print a report with these statistics in the console.
 
-This use case parses an existing XML file and collects statistics about its contents: number of elements, number of attributes, number of characters, number of white space characters, number of processing instructions. Upon completion, it will print a report with these statistics in the console.
     Element count = 4
     Attribute count = 9
     Character count = 41
@@ -97,7 +93,6 @@ where:
 
 The CAAXMLSAXCount use case is made of several classes located in the CAAXMLSAXCount.m module of the CAAXMLParser.edu framework:
 
-The CAAXMLSAXCount use case is made of several classes located in the CAAXMLSAXCount.m module of the CAAXMLParser.edu framework:
 Windows | `InstallRootDirectory/CAAXMLParser.edu/CAAXMLSAXCount.m/`
 
 The CAAXMLSAXCount use case is made of several classes located in the CAAXMLSAXCount.m module of the CAAXMLParser.edu framework:
@@ -248,7 +243,7 @@ optionValues.Append("true");
         optionValues.Append("false");
 
     }
-```vbscript
+```cpp
 if (isValidating) {
 optionValues.Append("true");
 optionValues.Append("false");

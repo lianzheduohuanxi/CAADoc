@@ -174,11 +174,11 @@ in a view using the *Add *method of the *Components* object.
 
 ```vbscript
 ...
-```vbscript
+```cpp
     ' Set the CATIA popup file alerts to False
     ' It prevents to stop the macro at each alert during its execution
 ```
-```vbscript
+```cpp
     CATIA.DisplayFileAlerts = False
   ...
 ```
@@ -187,7 +187,7 @@ in a view using the *Add *method of the *Components* object.
 ```vbscript
 ...
     ' Open the drawing document containing the existing ditto
-```vbscript
+```cpp
     Dim oDrawingSource As DrawingDocument
     Set oDrawingSource = CATIA.Documents.Open(sDocPath &amp; _
              &quot;/online/CAAScdDriUseCases/samples/CAADriInstantiateDittoSource.CATDrawing&quot;)
@@ -240,12 +240,12 @@ in a view using the *Add *method of the *Components* object.
 ```vbscript
 ...
     ' Open the drawing document where the ditto will be instantiated
-```vbscript
+```cpp
     Dim oDrawingTarget As DrawingDocument
     Set oDrawingTarget = CATIA.Documents.Open(sDocPath &amp; _
              &quot;/online/CAADriScriptUseCases/samples/CAADriInstantiateDittoTarget.CATDrawing&quot;)
 ```
-```vbscript
+```cpp
     CATIA.ActiveWindow.ActiveViewer.Reframe
   ...
 ```

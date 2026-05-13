@@ -1,53 +1,60 @@
 ---
 title: "CAADegCreateCylinder1Cmd"
-type: "interface"
+type: "LocalClass"
 module: "CAADialogEngine"
-category: api-reference
 base: "CATStateCommand"
-inheritance_chain: "CAADegCreateCylinder1Cmd → CATStateCommand"
-method_count: 1
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 3
+source_file: "CAADialogEngine.edu/CAADegGeoCommands.m/LocalInterfaces/CAADegCreateCylinder1Cmd.h"
 ---
+
 # CAADegCreateCylinder1Cmd
 
-**基类**: CATStateCommand  
-**继承链**: CAADegCreateCylinder1Cmd → CATStateCommand  
-**模块**: CAADialogEngine  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 1
+> State command which creates a Cylinder Illustrates: Creation of a state command Use of a selection Agent Use of an agent to select in another editor. Use of the CATBasicMultiDocumentCommand class Usage: Select a line in the current editor Select a circle in the current or in another editor. The command is ended when you have selected the 2 elements. (The first element can be changed) Graph: +------------------+ !                  ! !                  ! - CATPathElementAgent !                  ! - CATOtherDocumentAgent !                  ! !                  ! +---------+--------+ ! Ok: CreateCylinder ! V NULL
 
-> DialogEngine Framework
+**基类**: CATStateCommand | **模块**: CAADialogEngine | **方法数**: 3
 
 ## 依赖
 
 - `CATStateCommand.h`
 - `CATMathPoint.h`
 
+## 虚方法
+
+### BuildGraph
+
+```cpp
+virtual void BuildGraph() ;
+```
+
+BuildGraph ----------- Implements the statechart. It is called once, even if the command is in repeat mode
+
+
+## 公共方法
+
+### CreateCylinder
+
+```cpp
+CATBoolean CreateCylinder(void * iDummy) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iDummy | `void *` |
+
+
+### GetValuation
+
+```cpp
+void GetValuation(CATMathPoint & oBasePoint, CATMathPoint & oTopPoint, float & oRadius) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oBasePoint | `CATMathPoint &` |
+| oTopPoint | `CATMathPoint &` |
+| oRadius | `float &` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATStateCommand**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAADialogEngine.edu/CAADegGeoCommands.m/LocalInterfaces/CAADegCreateCylinder1Cmd.h`

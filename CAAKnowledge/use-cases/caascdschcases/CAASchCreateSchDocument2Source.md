@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAASchCreateSchDocument2.CATScript"
 category: "use-case"
 module: "CAAScdSchUseCases"
-tags: ["CATIA", "CAASchCreateSchDocument2"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchCreateSchDocument2Source.htmmd"
+tags: "["CATIA", "CAASchCreateSchDocument2"]"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchCreateSchDocument2Source.htm"
 converted: "2026-05-11T17:31:51.347682"
-```
-
 ---
 tags: ["CATIA", "CAASchCreateSchDocument2"]
 source_file: "Doc/online/CAAScdSchUseCases/CAASchCreateSchDocument2Source.htmmd"
@@ -16,7 +13,7 @@ converted: "2026-05-11T17:31:51.347682"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGHT DASSAULT SYSTEMES 2004
     ' *****************************************************************************
     '   Purpose:      Create a schematic document (2).
@@ -32,7 +29,7 @@ converted: "2026-05-11T17:31:51.347682"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -45,7 +42,7 @@ converted: "2026-05-11T17:31:51.347682"
         ' -------------------------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
         dim sSavePath As String
-```vbscript
+```cpp
         sSavePath=CATIA.SystemService.Environ("CATSavePath")
 
         If (Not CATIA.FileSystem.FolderExists(sSavePath)) Then
@@ -87,7 +84,7 @@ Dim strMessage As String
           "Output traces from CAASchCreateSchDocument2.CATScript" & vbCrLf
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
         '--------------------------------------------------------------------------
         ' Create a CATProduct document
         '--------------------------------------------------------------------------
@@ -103,7 +100,7 @@ Dim strMessage As String
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
         Set objSchDoc = CATIA.Documents.Add ("CATProduct")
         '
 ```
@@ -134,7 +131,7 @@ Dim strMessage As String
 ```
 
         strRootName = "Sample_SchematicRoot"
-```vbscript
+```cpp
         strDocName = CATIA.FileSystem.ConcatenatePaths(sSavePath, _
 ```
 ```
@@ -167,7 +164,7 @@ Dim strMessage As String
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
              '---------------------------------------------------------------------
              ' Regular CATProduct is a 3D document and is associated with a 3D
              ' editor and a 3D viewer. On the other hand a schematic document
@@ -202,7 +199,7 @@ Dim strMessage As String
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
              Set objSchDoc = CATIA.Documents.Open (strDocName)
 
              Set objPrdRoot = Nothing

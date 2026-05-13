@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Checking the Confusion of Points on a Curve"
-category: use-case case"
+category: "use-case case"
 module: "CAACgmModel"
-tags: ["CATICGMConfusionPtOnCrvPtOnCrv", "CAADoc", "CAAGMModelConfusionOpe", "CAAGMModelGemBrowser", "CAAGMModelInterfaces", "CATICGMLocalAnalysis1D"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelConfusionPtCrvOpe.htmmd"
+tags: "["CATICGMConfusionPtOnCrvPtOnCrv", "CAADoc", "CAAGMModelConfusionOpe", "CAAGMModelGemBrowser", "CAAGMModelInterfaces", "CATICGMLocalAnalysis1D"]"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelConfusionPtCrvOpe.htm"
 converted: "2026-05-11T17:33:48.267654"
-```
-
 ---
 # Checking the Confusion of Points on a Curve
 
@@ -90,7 +87,7 @@ if (NULL==pCircle )
     CATCrvLimits limits = pCircle->GetLimits(#);
 
     // b - Create two points on this circular circle
-```vbscript
+```cpp
 if (NULL==pCircle )
 CATCrvLimits limits = pCircle->GetLimits(#);
     double l1 = 0.5;

@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "ComponentsCatalogsInterfaces Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR11"
-version: "V5R11"
-tags: ["CATICatalogPersistentQuery"]
-source_file: "Doc/online/CAACenAPIChangesR11/ComponentsCatalogsInterfaces.htmmd"
+tags: "["CATICatalogPersistentQuery"]"
+source_file: "Doc/online/CAACenAPIChangesR11/ComponentsCatalogsInterfaces.htm"
 converted: "2026-05-11T17:33:50.347204"
-```
-
 ---
 tags: ["CATICatalogPersistentQuery"]
 source_file: "Doc/online/CAACenAPIChangesR11/ComponentsCatalogsInterfaces.htmmd"

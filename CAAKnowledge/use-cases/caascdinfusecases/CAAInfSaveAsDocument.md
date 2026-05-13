@@ -125,7 +125,7 @@ where the new document will be stored.
 ```vbscript
 ' Optional: allows to find the sample wherever it may be installed
 
-```vbscript
+```cpp
     Dim sDocPath  As String
     DocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -137,7 +137,7 @@ where the new document will be stored.
 ```vbscript
 ' Optional: allows to specify where document should be saved
 
-```vbscript
+```cpp
     Dim sTmpPath  As String
     sTmpPath=CATIA.SystemService.Environ(&quot;CATTemp&quot;)
     If (Not CATIA.FileSystem.FolderExists(sTmpPath)) Then
@@ -152,14 +152,14 @@ where the new document will be stored.
     'Add the new document to the end of the collection of documents.
     'Create and display a new window for the new document.
     'Activate the new document and the window.
-```vbscript
+```cpp
      Dim oFirstNewPartDoc As Document
      Set oFirstNewPartDoc = CATIA.Documents.Add(&quot;Part&quot;)
 
     'The document just created is the active one.
 ```
     'Save the new document.
-```vbscript
+```cpp
      CATIA.ActiveDocument.SaveAs(sTmpPath &amp; _
        &quot;/CAAInfWriteDocument1.CATPart&quot;)
 ```
@@ -169,7 +169,7 @@ where the new document will be stored.
 ```vbscript
 ...
    'Create a second new part document.
-```vbscript
+```cpp
      Dim oSecondNewPartDoc As Document
      Set oSecondNewPartDoc = CATIA.Documents.Add(&quot;Part&quot;)
 
@@ -184,14 +184,14 @@ where the new document will be stored.
 ```vbscript
 ...
      'Open an existing document.
-```vbscript
+```cpp
       Dim iThirdPartDoc As Document
       Set iThirdPartDoc = CATIA.Documents.Open(sDocPath &amp; _
         &quot;/online/CAAScdInfUseCases/samples/CAAInfReadDocument.CATPart&quot;)
 ```
 
      'Save the new document by specifying its name.
-```vbscript
+```cpp
       CATIA.Documents.Item(&quot;CAAInfReadDocument.CATPart&quot;).SaveAs(sTmpPath &amp; _
         &quot;/CAAInfWriteDocument3.CATPart&quot;)
 ```

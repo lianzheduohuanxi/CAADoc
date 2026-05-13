@@ -1,58 +1,30 @@
 ---
 title: "CAADrwCreateDimSystCmd"
-type: "interface"
+type: "LocalClass"
 module: "CAADraftingInterfaces"
-category: api-reference
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+base: "CATStateCommand"
+method_count: 1
+source_file: "CAADraftingInterfaces.edu/CAADrwCreateDimSyst.m/LocalInterfaces/CAADrwCreateDimSystCmd.h"
 ---
+
 # CAADrwCreateDimSystCmd
 
-**模块**: CAADraftingInterfaces  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
-
-> DialogEngine
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATStateCommand | **模块**: CAADraftingInterfaces | **方法数**: 1
 
 ## 依赖
 
+- `CATStateCommand.h`
 - `CATBooleanDef.h`
 
----
+## 公共方法
 
-## Interface Overview
+### BuildGraph
 
-**Inherited Methods**: Please refer to the base interface documentation above.
+```cpp
+void BuildGraph() ;
+```
 
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
 
 ---
 
-## Related Use Cases
-
-This interface is used in the following use cases:
-
-- [CAADriCreateDimSyst](../../use-cases/caadricases/CAADriCreateDimSyst.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAADraftingInterfaces.edu/CAADrwCreateDimSyst.m/LocalInterfaces/CAADrwCreateDimSystCmd.h`

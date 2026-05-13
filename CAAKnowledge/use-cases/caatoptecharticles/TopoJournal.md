@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "The CGM Journal"
-category: tech-article
+category: "tech-article"
 module: "CAATopTechArticles"
-tags: ["CAATopJournal"]
-source_file: "Doc/online/CAATopTechArticles/TopoJournal.htmmd"
+tags: "["CAATopJournal"]"
+source_file: "Doc/online/CAATopTechArticles/TopoJournal.htm"
 converted: "2026-05-11T17:31:50.799285"
-```
-
 ---
 # Geometric Modeler
 
@@ -44,7 +41,6 @@ Topological and geometric operators create new objects from existing ones. The m
 
 A topological operator operates on topological objects to create new ones. Most of the time, these topological objects are bodies (a body is a set of connected (or not) volumes, faces, edges and vertices, see [1]). It never modifies the input bodies: the resulting body is a new one, but it can share cells with the input bodies, if they are not modified by the operation. This is called the smart concept (see [2]). On request, the operator can describe the way to go from the initial objects, to the resulting body. This information is then put by each operator into a CGM journal.
 
-A topological operator operates on topological objects to create new ones. Most of the time, these topological objects are bodies (a body is a set of connected (or not) volumes, faces, edges and vertices, see [1]). It never modifies the input bodies: the resulting body is a new one, but it can share cells with the input bodies, if they are not modified by the operation. This is called the smart concept (see [2]). On request, the operator can describe the way to go from the initial objects, to the resulting body. This information is then put by each operator into a CGM journal.
 The CGM journal records the creation, modification and deletion of the faces, free edges and free vertices of topological objects. A free edge is an edge bounding at most one face, and a free vertex is a vertex bounding at most one edge. In fact, it is sufficient to follow the modifications of these cells to know how the whole body has been modified. The journal is attached to any topological or geometric operators that operate on topological objects.
 
 The CGM journal is transient. You have to create it before its use and delete it when you have finished. It is possible to compress it to easy its reading.

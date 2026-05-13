@@ -1,29 +1,17 @@
 ---
 title: "CAACafCircleWindowCmd"
-type: "interface"
+type: "LocalClass"
 module: "CAACATIAApplicationFrm"
-category: api-reference
 base: "CATDlgDialog"
-inheritance_chain: "CAACafCircleWindowCmd → CATDlgDialog"
 method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAACATIAApplicationFrm.edu/CAACafUseToolsOptions.m/LocalInterfaces/CAACafCircleWindowCmd.h"
 ---
+
 # CAACafCircleWindowCmd
 
-**基类**: CATDlgDialog  
-**继承链**: CAACafCircleWindowCmd → CATDlgDialog  
-**模块**: CAACATIAApplicationFrm  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> Command which displays the discretization of a circle in taking account of parameters defined in the Element Tools Options page. Illustrates: creating a simple command derived from CATDlgDialog using 2D Viewer Subscribing to callback events form setting controller Inheritance: CATDlgDialog (Dialog Framework) CATDialog   (Dialog Framework) CATCommand  (System Framework) CATBaseUnknown (System Framework)
 
-> Visualization Framework
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATDlgDialog | **模块**: CAACATIAApplicationFrm | **方法数**: 0
 
 ## 依赖
 
@@ -32,26 +20,4 @@ verified: true
 
 ---
 
-## Interface Overview
-
-This interface inherits from **CATDlgDialog**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAACATIAApplicationFrm.edu/CAACafUseToolsOptions.m/LocalInterfaces/CAACafCircleWindowCmd.h`

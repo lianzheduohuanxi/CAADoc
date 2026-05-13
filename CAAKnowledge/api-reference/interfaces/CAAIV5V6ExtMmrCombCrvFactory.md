@@ -1,62 +1,39 @@
 ---
 title: "CAAIV5V6ExtMmrCombCrvFactory"
-type: "interface"
+type: "PublicInterface"
 module: "CAAV5V6MechanicalModeler"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAIV5V6ExtMmrCombCrvFactory → CATBaseUnknown"
 method_count: 1
-visibility: "public"
-has_tie_binding: true
-verified: true
+source_file: "CAAV5V6MechanicalModeler.edu/PublicInterfaces/CAAIV5V6ExtMmrCombCrvFactory.h"
 ---
-> **TIE实现**: unknown
 
 # CAAIV5V6ExtMmrCombCrvFactory
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAIV5V6ExtMmrCombCrvFactory → CATBaseUnknown  
-**模块**: CAAV5V6MechanicalModeler  
-**分类**: framework  
-**可见性**: public  
-**方法数**: 1
+**基类**: CATBaseUnknown | **模块**: CAAV5V6MechanicalModeler | **方法数**: 1
 
 ## 依赖
 
 - `CAAV5V6ExtMmrCombinedCurve.h`
 - `CATBaseUnknown.h`
 
-## TIE实现
+## 纯虚方法 (接口契约)
 
-**实现文件**:
-- `CAAEV5V6ExtMmrCombCrvCkeFeature.cpp`
-- `CAAEV5V6ExtMmrCombCrvFactory.cpp`
-- `CAAEV5V6ExtMmrCombCrvInputDescription.cpp`
-- `CAAEV5V6ExtMmrCombCrvMf3DBehavior.cpp`
-- `CAAEV5V6ExtMmrCombinedCurve.cpp`
+### CreateCombinedCurve
+
+```cpp
+virtual HRESULT CreateCombinedCurve(CATBaseUnknown *ipCurve1, CATBaseUnknown *ipDirection1, CATBaseUnknown *ipCurve2, CATBaseUnknown *ipDirection2, CAAIV5V6ExtMmrCombinedCurve *& opCombinedCurve) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *ipCurve1 | `CATBaseUnknown` |
+| *ipDirection1 | `CATBaseUnknown` |
+| *ipCurve2 | `CATBaseUnknown` |
+| *ipDirection2 | `CATBaseUnknown` |
+| opCombinedCurve | `CAAIV5V6ExtMmrCombinedCurve *&` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
 
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAV5V6MechanicalModeler.edu/PublicInterfaces/CAAIV5V6ExtMmrCombCrvFactory.h`

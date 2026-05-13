@@ -18,11 +18,11 @@ Option Explicit
 ' *****************************************************************************
 
 '------------------------------------------------------------------------------
-```vbscript
+```cpp
 ' These variables are visible to private Sub and CATMain
 '------------------------------------------------------------------------------
 ```
-```vbscript
+```cpp
 Dim objLGRR_g As SchListOfObjects
 Dim objLCntbl_g As SchListOfObjects
 
@@ -33,26 +33,26 @@ Sub CATMain(#)
     ' ------------------------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     strMessage = strMessage &  "sDocPath = " & sDocPath
 ```
 
-```vbscript
+```cpp
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,sDocPath,"No Doc Path Defined"
     End If
 ```
     ' ------------------------------------------------------------------------- 
     ' Open the schematic document 
-```vbscript
+```cpp
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
             "online/CAAScdSchUseCases/samples/CAASCH_Network01.CATProduct")
 ```
 
-```vbscript
+```cpp
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
@@ -146,7 +146,7 @@ Sub CATMain(#)
        For intNetIndex = 1 To intNbNet 
 
          intNbMember = 0
-```vbscript
+```cpp
          Set objLNetMember = Nothing
 
          Set objSchNet = objLNetWork.Item (intNetIndex,"CATIASchNetworkAnalysis")
@@ -173,7 +173,7 @@ Sub CATMain(#)
 
             For intMemIndex = 1 To intNbMember
 
-```vbscript
+```cpp
               Set objMemPrd = objLNetMember.Item (intMemIndex,"CATIAProduct")
               strName = ""
 ```
@@ -207,7 +207,7 @@ Sub CATMain(#)
 
             For intMemIndex = 1 To intNbMember
 
-```vbscript
+```cpp
               Set objMemPrd = objLNetMember.Item (intMemIndex,"CATIAProduct")
               strName = ""
 ```
@@ -285,13 +285,13 @@ Private Sub Find2ComponentInst (objSchRootArg As SchematicRoot)
         strInstName = ""
         intFound = 0
 
-```vbscript
+```cpp
         Set objCntbl = objLCompInst.Item (intIndex,"CATIASchAppConnectable")
 
         If ( Not ( objCntbl Is Nothing ) ) Then
 ```
 
-```vbscript
+```cpp
            Set objPrd = objSchRootArg.GetInterface ( _
              "CATIAProduct", objCntbl)
 ```
@@ -302,7 +302,7 @@ Private Sub Find2ComponentInst (objSchRootArg As SchematicRoot)
            End If 
 
            If ( intFound > 0 ) Then
-```vbscript
+```cpp
              Dim ObjSchCompGraph As SchCompGraphic
              Set objSchCompGraph = objSchRootArg.GetInterface ( _
                "CATIASchCompGraphic",objCntbl)
@@ -346,7 +346,7 @@ Private Function GetComponentImage (objSchCompGraphArg As SchCompGraphic) As Sch
       Set objSchLSymbols = objSchCompGraphArg.ListGraphicalImages
       If ( Not ( objSchLSymbols Is Nothing ) ) Then
 ```
-```vbscript
+```cpp
          Set GetComponentImage = objSchLSymbols.Item (1,"CATIASchGRR")
       End If
 ```
@@ -356,7 +356,7 @@ End Function
 
 ```
 
-```vbscript
+```cpp
 Option Explicit
 ' COPYRIGHT DASSAULT SYSTEMES 2004
 
@@ -368,11 +368,11 @@ Option Explicit
 ' *****************************************************************************
 
 '------------------------------------------------------------------------------
-```vbscript
+```cpp
 ' These variables are visible to private Sub and CATMain
 '------------------------------------------------------------------------------
 ```
-```vbscript
+```cpp
 Dim objLGRR_g As SchListOfObjects
 Dim objLCntbl_g As SchListOfObjects
 
@@ -383,26 +383,26 @@ Sub CATMain(#)
     ' ------------------------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     strMessage = strMessage &  "sDocPath = " & sDocPath
 ```
 
-```vbscript
+```cpp
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,sDocPath,"No Doc Path Defined"
     End If
 ```
     ' ------------------------------------------------------------------------- 
     ' Open the schematic document 
-```vbscript
+```cpp
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
             "online/CAAScdSchUseCases/samples/CAASCH_Network01.CATProduct")
 ```
 
-```vbscript
+```cpp
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
@@ -496,7 +496,7 @@ Sub CATMain(#)
        For intNetIndex = 1 To intNbNet 
 
          intNbMember = 0
-```vbscript
+```cpp
          Set objLNetMember = Nothing
 
          Set objSchNet = objLNetWork.Item (intNetIndex,"CATIASchNetworkAnalysis")
@@ -523,7 +523,7 @@ Sub CATMain(#)
 
             For intMemIndex = 1 To intNbMember
 
-```vbscript
+```cpp
               Set objMemPrd = objLNetMember.Item (intMemIndex,"CATIAProduct")
               strName = ""
 ```
@@ -557,7 +557,7 @@ Sub CATMain(#)
 
             For intMemIndex = 1 To intNbMember
 
-```vbscript
+```cpp
               Set objMemPrd = objLNetMember.Item (intMemIndex,"CATIAProduct")
               strName = ""
 ```
@@ -635,13 +635,13 @@ Private Sub Find2ComponentInst (objSchRootArg As SchematicRoot)
         strInstName = ""
         intFound = 0
 
-```vbscript
+```cpp
         Set objCntbl = objLCompInst.Item (intIndex,"CATIASchAppConnectable")
 
         If ( Not ( objCntbl Is Nothing ) ) Then
 ```
 
-```vbscript
+```cpp
            Set objPrd = objSchRootArg.GetInterface ( _
              "CATIAProduct", objCntbl)
 ```
@@ -652,7 +652,7 @@ Private Sub Find2ComponentInst (objSchRootArg As SchematicRoot)
            End If 
 
            If ( intFound &gt; 0 ) Then
-```vbscript
+```cpp
              Dim ObjSchCompGraph As SchCompGraphic
              Set objSchCompGraph = objSchRootArg.GetInterface ( _
                "CATIASchCompGraphic",objCntbl)
@@ -696,7 +696,7 @@ Private Function GetComponentImage (objSchCompGraphArg As SchCompGraphic) As Sch
       Set objSchLSymbols = objSchCompGraphArg.ListGraphicalImages
       If ( Not ( objSchLSymbols Is Nothing ) ) Then
 ```
-```vbscript
+```cpp
          Set GetComponentImage = objSchLSymbols.Item (1,"CATIASchGRR")
       End If
 ```

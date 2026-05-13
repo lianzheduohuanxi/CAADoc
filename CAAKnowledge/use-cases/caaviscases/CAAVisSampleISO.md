@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Visualizing Temporary Components"
-category: use-case case"
+category: "use-case case"
 module: "CAAVisUseCases"
-tags: ["CAADegGeoCommands", "CATInstantiateComponent", "CATI3DGeoVisu", "CAAVisualization", "CAAVisWireBox", "CAAVisTextModel", "CATIndicationAgent", "CATISO", "CATIA", "CATI2DGeoVisu", "CAAIVisTextModel", "CAADialogEngine", "CAAGeometry", "CAAIVisWireBox", "CAADegClippingByBoxCmd", "CATI3GeoVisu", "CAAVisTemporaryObjects"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleISO.htmmd"
+tags: "["CAADegGeoCommands", "CATInstantiateComponent", "CATI3DGeoVisu", "CAAVisualization", "CAAVisWireBox", "CAAVisTextModel", "CATIndicationAgent", "CATISO", "CATIA", "CATI2DGeoVisu", "CAAIVisTextModel", "CAADialogEngine", "CAAGeometry", "CAAIVisWireBox", "CAADegClippingByBoxCmd", "CATI3GeoVisu", "CAAVisTemporaryObjects"]"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleISO.htm"
 converted: "2026-05-11T17:31:52.128785"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -65,7 +62,7 @@ Here it is the UML diagram [4] of the CAADegClippingByBoxCmd command.
 
 See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)" use case for a detailed description of how this use case should be launched. For the specific scenario:
 
-```vbscript
+```cpp
 Launch CATIA. When the application is ready:
 
 ```
@@ -146,7 +143,7 @@ The `GetEditor` method of the _CATStateCommand_ class, retrieves the current _CA
 In the CAADegClippingByBoxCmd class constructor you will find the three creations.
 
     ...
-```vbscript
+```cpp
       _pCenterBoxModel     = new CATModelForRep3D(#);
 
 ```
@@ -167,7 +164,7 @@ The CAADegClippingByBoxCmd class is a state command class. It implies that the s
 
     ...
 The CAADegClippingByBoxCmd class is a state command class. It implies that the state chart is defined in the `BuildGraph` method of the _CATStateCommand_ class. Here it is an extract which shows the more interesting steps.
-```vbscript
+```cpp
     _daIndication = new **CATIndicationAgent**("Indication");
 
 ```
@@ -355,7 +352,6 @@ if ( _pISO->**IsMember**(_pCenterBoxModel) )
 
 The trihedral component, `_pCenterBoxModel`, is created at the Creating the Three Temporary Components step.
 
-The trihedral component, `_pCenterBoxModel`, is created at the Creating the Three Temporary Components step.
 The `IsMember`  method enables us to valuate a boolean data member, `_CenterBoxModelToRestore` , which will be used in the `Activate` method. It is the only one interest of this call because the `RemoveElement`  method checks that the component exists in the ISO. Note that the last argument of this method is `0`, the default value. Its means that the graphic representation of the trihedral component is deleted by the removal operation.
 
 Now, an extract of the `Activate` method:

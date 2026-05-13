@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAAKniSubListFilter.CATScript"
 category: "use-case"
 module: "CAAScdKniUseCases"
-tags: ["CAAScdKniUseCases", "CATIA", "CAAKniSamplePartR13", "CAAKniSubListFilter"]
-source_file: "Doc/online/CAAScdKniUseCases/CAAKniSubListFilterSource.htmmd"
+tags: "["CAAScdKniUseCases", "CATIA", "CAAKniSamplePartR13", "CAAKniSubListFilter"]"
+source_file: "Doc/online/CAAScdKniUseCases/CAAKniSubListFilterSource.htm"
 converted: "2026-05-11T17:31:51.997304"
-```
-
 ---
 tags: ["CAAScdKniUseCases", "CATIA", "CAAKniSamplePartR13", "CAAKniSubListFilter"]
 source_file: "Doc/online/CAAScdKniUseCases/CAAKniSubListFilterSource.htmmd"
@@ -53,7 +50,7 @@ converted: "2026-05-11T17:31:51.997304"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -63,11 +60,11 @@ converted: "2026-05-11T17:31:51.997304"
 ```vbscript
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
      ' Set the CATIA popup file alerts to False
      ' It prevents to stop the macro at each alert during its execution
 ```
-```vbscript
+```cpp
      CATIA.DisplayFileAlerts = False
      ' Retrieve your active document - CATIA is your application
 ```
@@ -76,7 +73,7 @@ converted: "2026-05-11T17:31:51.997304"
         ' -----------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String
-```vbscript
+```cpp
         sDocPath=CATIA.SystemService.Environ("CATDocView")
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -95,7 +92,7 @@ converted: "2026-05-11T17:31:51.997304"
         Dim sFilePath
 ```vbscript
 ```
-```vbscript
+```cpp
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
 ```
@@ -109,7 +106,7 @@ Dim sFilePath
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
         Dim oDoc As Document
         set oDoc = CATIA.Documents.Open(sFilePath)
@@ -122,7 +119,7 @@ sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
 
 ```vbscript
-```vbscript
+```cpp
 set oDoc = CATIA.Documents.Open(sFilePath)
 ```vbscript
 ```
@@ -136,7 +133,7 @@ set oDoc = CATIA.Documents.Open(sFilePath)
      Dim oActiveDoc As Document
 ```vbscript
 ```
-```vbscript
+```cpp
      Set oActiveDoc = CATIA.ActiveDocument
 ```
 ```
@@ -145,7 +142,7 @@ set oDoc = CATIA.Documents.Open(sFilePath)
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
      ' Check whether the document is a CATPart
      If (InStr(oActiveDoc.Name,".CATPart")) <> 0  Then
         ' Retrieve the collection object which contains
@@ -224,7 +221,7 @@ Next
 ```
 
      Else
-```vbscript
+```cpp
         MsgBox "The active document must be a CATPart"
 ```vbscript
 ```

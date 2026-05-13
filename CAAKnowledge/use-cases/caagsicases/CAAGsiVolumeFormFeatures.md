@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Volume Form Features"
-category: use-case case"
+category: "use-case case"
 module: "CAAGsiUseCases"
-tags: ["CATIGSMProceduralView_var", "CATICkeParm_var", "CATIPrtBooleanFactory", "CATIPrtContainer", "CATIGSMSweepUnspec_var", "CAAGsiVolumeFormFeature", "CAAGSMInterfaces", "CAAGsiVolumeFormFeatures", "CATIMf3DBehavior2", "CATIGSMFactory", "CATIPrtFactory", "CATIGSMProceduralView", "CATIGSMExtrude_var", "CATIPrtFactory_var", "CATIPrtPart_var", "CAAGsiObjectUpdate", "CAAGsiStartVolume", "CATISpecObject_var", "CATIGSMLoft_var", "CATInit"]
-source_file: "Doc/online/CAAGsiUseCases/CAAGsiVolumeFormFeatures.htmmd"
+tags: "["CATIGSMProceduralView_var", "CATICkeParm_var", "CATIPrtBooleanFactory", "CATIPrtContainer", "CATIGSMSweepUnspec_var", "CAAGsiVolumeFormFeature", "CAAGSMInterfaces", "CAAGsiVolumeFormFeatures", "CATIMf3DBehavior2", "CATIGSMFactory", "CATIPrtFactory", "CATIGSMProceduralView", "CATIGSMExtrude_var", "CATIPrtFactory_var", "CATIPrtPart_var", "CAAGsiObjectUpdate", "CAAGsiStartVolume", "CATISpecObject_var", "CATIGSMLoft_var", "CATInit"]"
+source_file: "Doc/online/CAAGsiUseCases/CAAGsiVolumeFormFeatures.htm"
 converted: "2026-05-11T17:31:50.653046"
-```
-
 ---
 # Shape Design & Styling
 
@@ -106,7 +103,6 @@ where:
 
 The CAAGsiVolumeFormFeatures use case is made of main program located in the CAAGsiVolumeFormFeatures.m module of the CAAGSMInterfaces.edu framework:
 
-The CAAGsiVolumeFormFeatures use case is made of main program located in the CAAGsiVolumeFormFeatures.m module of the CAAGSMInterfaces.edu framework:
 Windows | ` InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiVolumeFormFeatures.m/`
 
 The CAAGsiVolumeFormFeatures use case is made of main program located in the CAAGsiVolumeFormFeatures.m module of the CAAGSMInterfaces.edu framework:
@@ -168,7 +164,7 @@ cout << "(CAAGsiVolumeFormFeatures) ERROR: Create_Session" << endl  ;
 TestCaseError = 1 ;
     cout << "The input document " << InputName << " is opened" << endl ;
     CATDocument *pDoc = NULL;
-```vbscript
+```cpp
     rc =CATDocumentServices::OpenDocument(InputName, pDoc) ;
 
     if (NULL == pDoc ) {
@@ -272,7 +268,6 @@ Create extrude volume using CreateExtrude method of CATIGSMFactory
     ....
     // Create Volume Extrude
     CATISpecObject_var SpecSkethToExtrude = ...;
-CATISpecObject_var SpecSkethToExtrude = ...;
     CATISpecObject_var SpecPlaneRef1 = ...;
 
     CATICkeParm_var spCkeLgStart ;
@@ -358,7 +353,6 @@ Create revolve volume using CreateRevol method of CATIGSMFactory
     ....
     // Create Volume revolve
     CATISpecObject_var SpecSkethToRevol = ...;
-CATISpecObject_var SpecSkethToRevol = ...;
     CATISpecObject_var SpecLineRef1 = ...;
 
     CATICkeParm_var spCkeAngStart ;
@@ -371,7 +365,7 @@ CATISpecObject_var SpecSkethToRevol = ...;
 
     << endl ;
     }
-```vbscript
+```cpp
 spCkeAngStart = spCkeFact -> CreateLength( "Ang1" ,(180.0/180.0)*CATPI);
 ```vbscript
 if (NULL_var == spCkeAngStart) {
@@ -390,7 +384,7 @@ cout << "ERROR in creating Cke angle paramater"
     << endl ;
     }
 
-```vbscript
+```cpp
 if (NULL_var == spCkeAngEnd) {
 cout << "ERROR in creating Cke angle paramater"
     CATIGSMRevol_var spRevol1 =
@@ -445,8 +439,6 @@ Create multi-sections volume using CreateLoft method of CATIGSMFactory
 ```vbscript
 ```vbscript
     SpecSection = ... ;spListSections.Append(SpecSection);
-    SpecSection = ... ;spListSections.Append(SpecSection);
-    SpecSection = ... ;spListSections.Append(SpecSection);
 
 ```
 
@@ -457,8 +449,6 @@ Create multi-sections volume using CreateLoft method of CATIGSMFactory
     SpecGuide = ... ;spListGuides.Append(SpecGuide);
 ```vbscript
 ```vbscript
-    SpecGuide = ... ;spListGuides.Append(SpecGuide);
-    SpecGuide = ... ;spListGuides.Append(SpecGuide);
     SpecGuide = ... ;spListGuides.Append(SpecGuide);
 
 ```
@@ -607,7 +597,7 @@ Save part and close the session
 Save part and close the session
     if (NULL != OutputName ) {
 ```vbscript
-```vbscript
+```cpp
        rc = CATDocumentServices::SaveAs (*pDoc, OutputName );
        if (SUCCEEDED(rc)) {
 ```
@@ -620,7 +610,7 @@ Save part and close the session
 ```vbscript
 if (NULL != OutputName ) {
 ```vbscript
-```vbscript
+```cpp
 rc = CATDocumentServices::SaveAs (*pDoc, OutputName );
 if (SUCCEEDED(rc)) {
 ```

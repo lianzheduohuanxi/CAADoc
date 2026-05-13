@@ -1,51 +1,116 @@
 ---
 title: "CAAESchAppConnector"
-type: "interface"
+type: "LocalClass"
 module: "CAASchPlatformModeler"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAESchAppConnector → CATBaseUnknown"
-method_count: 1
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 8
+source_file: "CAASchPlatformModeler.edu/CAASchAppBase.m/LocalInterfaces/CAAESchAppConnector.h"
 ---
+
 # CAAESchAppConnector
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAESchAppConnector → CATBaseUnknown  
-**模块**: CAASchPlatformModeler  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 1
+**基类**: CATBaseUnknown | **模块**: CAASchPlatformModeler | **方法数**: 8
 
 ## 依赖
 
 - `CATBaseUnknown.h`
 - `CATBooleanDef.h`
 
+## 虚方法
+
+### AppIsCntrConnected
+
+```cpp
+virtual HRESULT AppIsCntrConnected(boolean *oBYes) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *oBYes | `boolean` |
+
+
+## 公共方法
+
+### AppGetAssociatedConnectable
+
+```cpp
+HRESULT AppGetAssociatedConnectable(CATISchAppConnectable **oConnectable) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| **oConnectable | `CATISchAppConnectable` |
+
+
+### AppListCompatibleTypes
+
+```cpp
+HRESULT AppListCompatibleTypes(CATICStringList **oLCntrCompatClassTypes) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| **oLCntrCompatClassTypes | `CATICStringList` |
+
+
+### AppListConnections
+
+```cpp
+HRESULT AppListConnections(CATICStringList *iLCntnClassFilter, CATIUnknownList **oLConnections) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iLCntnClassFilter | `CATICStringList` |
+| **oLConnections | `CATIUnknownList` |
+
+
+### AppConnect
+
+```cpp
+HRESULT AppConnect(CATISchAppConnector *iCntrToConnect, CATISchAppConnection **oConnection) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iCntrToConnect | `CATISchAppConnector` |
+| **oConnection | `CATISchAppConnection` |
+
+
+### AppConnectBranch
+
+```cpp
+HRESULT AppConnectBranch(CATISchAppConnector *iCntrToConnect, CATISchAppConnection **oConnection) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iCntrToConnect | `CATISchAppConnector` |
+| **oConnection | `CATISchAppConnection` |
+
+
+### AppDisconnect
+
+```cpp
+HRESULT AppDisconnect(CATISchAppConnector *iCntrToDisConnect) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iCntrToDisConnect | `CATISchAppConnector` |
+
+
+### AppOKToNoShowConnectedCntr
+
+```cpp
+HRESULT AppOKToNoShowConnectedCntr(boolean *oBYes) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *oBYes | `boolean` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAASchPlatformModeler.edu/CAASchAppBase.m/LocalInterfaces/CAAESchAppConnector.h`

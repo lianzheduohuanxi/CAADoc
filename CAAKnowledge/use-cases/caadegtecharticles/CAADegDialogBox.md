@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Using a Dialog Box as Input"
 category: "use-case"
 module: "CAADegTechArticles"
-tags: ["CAACommandCmd", "CAAPointEditor"]
-source_file: "Doc/online/CAADegTechArticles/CAADegDialogBox.htmmd"
+tags: "["CAACommandCmd", "CAAPointEditor"]"
+source_file: "Doc/online/CAADegTechArticles/CAADegDialogBox.htm"
 converted: "2026-05-11T17:33:49.784465"
-```
-
 ---
 tags: ["CAACommandCmd", "CAAPointEditor"]
 source_file: "Doc/online/CAADegTechArticles/CAADegDialogBox.htmmd"
@@ -88,7 +85,7 @@ IsOutputSetCondition(_pdaEditorAgent),
     ...
 
 ---
-```vbscript
+```cpp
 Action(
 (ActionMethod) & CAACommandCmd::CreatePointByBox));
 The `CreatePointByBox` action method uses `_pPointEditor`, the pointer to the dialog box, to retrieve input values. This method should either know the dialog box content to ask the controls to return their value. The dialog box can also explore a method to enable any object to retrieve these values. [Top] Enabling Your Dialog Box for the Power Input Mode The Power Input mode lets the end user enter several values requested by editors or spinners of a dialog box in a single entry field of the main application window when the P2 style is selected. For example, the figure below shows the Hole creation dialog box and how it uses the Power Input field. ![PowerInput.gif /(53540 bytes/)](images/PowerInput.gif) The three spinner entry fields are repeated and concatenated in the status bar:

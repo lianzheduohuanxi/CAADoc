@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "mkmk Commands"
 category: "use-case"
 module: "CAABtlQuickRefs"
-tags: ["CAA2", "CATIA"]
-source_file: "Doc/online/CAABtlQuickRefs/CAABtlMkOthers.htmmd"
+tags: "["CAA2", "CATIA"]"
+source_file: "Doc/online/CAABtlQuickRefs/CAABtlMkOthers.htm"
 converted: "2026-05-11T17:33:50.021658"
-```
-
 ---
 tags: ["CAA2", "CATIA"]
 source_file: "Doc/online/CAABtlQuickRefs/CAABtlMkOthers.htmmd"
@@ -396,7 +393,6 @@ Examples `mkRemoveDo -W /u/users/gus/MyWS -preq -o aix_a` This command deletes a
 Examples `mkRemoveDo -W /u/users/gus/MyWS -preq -o aix_a` This command deletes all _aix_a_ derived objects in the frameworks which have been copied by mkCopyPreq  **mkCreateRuntimeView**
 Purpose They are two kinds of file trees: one for the build time and one for the run time. Some objects are used during the run time like icons, resources files and are stored in the frameworks architecture ($$CAA2 $$FileTree). In order to be used during the run time they must be copied in a run time file tree named RunTimeView. CATIA software knows only the RunTimeView. The **mkCreateRuntimeView** is a command to copy (copy or symbolic link) automatically files from the build time file tree into the run time file tree. ![](images/rtview.gif) CNext.xxx means specific operating systems. In this kind of directories are resources which are available only on some operating systems. These directories are named CNext.specifics_$OS. The following table shows the different values of $OS $OS |  Operating System
 
-Purpose They are two kinds of file trees: one for the build time and one for the run time. Some objects are used during the run time like icons, resources files and are stored in the frameworks architecture ($$CAA2 $$FileTree). In order to be used during the run time they must be copied in a run time file tree named RunTimeView. CATIA software knows only the RunTimeView. The **mkCreateRuntimeView** is a command to copy (copy or symbolic link) automatically files from the build time file tree into the run time file tree. ![](images/rtview.gif) CNext.xxx means specific operating systems. In this kind of directories are resources which are available only on some operating systems. These directories are named CNext.specifics_$OS. The following table shows the different values of $OS $OS |  Operating System
 aix_a | AIX | UNIX
 hpux_a | HP-UX 10
 hpux_b | HP-UX 11

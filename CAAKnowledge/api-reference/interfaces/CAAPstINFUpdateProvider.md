@@ -1,27 +1,17 @@
 ---
 title: "CAAPstINFUpdateProvider"
-type: "interface"
+type: "LocalClass"
 module: "CAAProductStructure"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAPstINFUpdateProvider → CATBaseUnknown"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 4
+source_file: "CAAProductStructure.edu/CAAPstINFModeler.m/LocalInterfaces/CAAPstINFUpdateProvider.h"
 ---
+
 # CAAPstINFUpdateProvider
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAPstINFUpdateProvider → CATBaseUnknown  
-**模块**: CAAProductStructure  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> Implementation of the CATIUpdateProvider interface for a line or wire object, serving as the provider implementation for the inclusion of a user-defined line or wire feature, "CAAPstINFLine" or "CAAPstINFWire", in the update process of the Product root. Illustrates programming the Update method of the CATIUpdateProvider interface of the ObjectSpecsModeler framework. Inheritance: CATBaseUnknown (System Framework)
 
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATBaseUnknown | **模块**: CAAProductStructure | **方法数**: 4
 
 ## 依赖
 
@@ -29,28 +19,55 @@ verified: true
 - `CATListOfCATBaseUnknown.h`
 - `CATIDomain.h`
 
+## 公共方法
+
+### Update
+
+```cpp
+int Update(CATBaseUnknown *ipObj, CATIDomain_var ispDomain = NULL_var) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *ipObj | `CATBaseUnknown` |
+| NULL_var | `CATIDomain_var ispDomain =` |
+
+
+### IsUpToDate
+
+```cpp
+CATBoolean IsUpToDate(CATBaseUnknown *ipObj, CATIDomain_var ispDomain = NULL_var) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *ipObj | `CATBaseUnknown` |
+| NULL_var | `CATIDomain_var ispDomain =` |
+
+
+### SetUpToDate
+
+```cpp
+void SetUpToDate(CATBaseUnknown *ipObj, CATBoolean iFlag) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *ipObj | `CATBaseUnknown` |
+| iFlag | `CATBoolean` |
+
+
+### IsInactive
+
+```cpp
+int IsInactive(CATBaseUnknown *ipObj) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *ipObj | `CATBaseUnknown` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAProductStructure.edu/CAAPstINFModeler.m/LocalInterfaces/CAAPstINFUpdateProvider.h`

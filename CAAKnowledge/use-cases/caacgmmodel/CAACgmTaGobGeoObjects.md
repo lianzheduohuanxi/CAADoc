@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "The Objects of CATIA Geometric Modeler"
-category: use-case
+category: "use-case"
 module: "CAACgmModel"
-tags: ["CATICGMContainer", "CATICGMObject", "CATIContainer", "CATICGMObjects", "CATIA"]
-source_file: "Doc/online/CAACgmModel/CAACgmTaGobGeoObjects.htmmd"
+tags: "["CATICGMContainer", "CATICGMObject", "CATIContainer", "CATICGMObjects", "CATIA"]"
+source_file: "Doc/online/CAACgmModel/CAACgmTaGobGeoObjects.htm"
 converted: "2026-05-11T17:33:47.936600"
-```
-
 ---
 # The Objects of CATIA Geometric Modeler
 
@@ -155,7 +152,7 @@ There mainly are three geometric point interfaces:
     * CATMacroPoint, used to define the geometry of a vertex (the vertex the is topological object of the lowest dimension).
     * CATPointOnEdgeCurve, representing a point on a specific curve called edge curve, used to define the geometry of a topological edge [8].
 
-```vbscript
+```cpp
 Do not confuse CATPoint and CATMathPoint!
 
 ```
@@ -166,7 +163,6 @@ Do not confuse CATPoint and CATMathPoint!
 
 A point on a curve may be represented with 3 coordinates, as a point in a 3D space, or with 1 parameter (usually called `w`) in the space of the curve.
 
-A point on a curve may be represented with 3 coordinates, as a point in a 3D space, or with 1 parameter (usually called `w`) in the space of the curve.
 In the same way, a point on a surface may be represented as a 3D point or with two parameters (usually called `u` and `v`) in the space of the surface.
 
 These parameters have only sense if they are associated with the curve or the surface they parameterize. Hence, the object is responsible for the mapping between the 3D coordinates and the parameter(s), and the user of these objects must never make any assumptions about this mapping.

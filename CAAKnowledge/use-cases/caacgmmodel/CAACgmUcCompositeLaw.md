@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Composite Law"
-category: use-case case"
+category: "use-case case"
 module: "CAACgmModel"
-tags: ["CAAGMModelInterfaces", "CAAGMModelMakeLaws"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcCompositeLaw.htmmd"
+tags: "["CAAGMModelInterfaces", "CAAGMModelMakeLaws"]"
+source_file: "Doc/online/CAACgmModel/CAACgmUcCompositeLaw.htm"
 converted: "2026-05-11T17:33:48.173955"
-```
-
 ---
 # Creating a Composite Law
 
@@ -70,7 +67,6 @@ define the two functions f1 and f2
 
     You can define a user function as a piece of a composite law.
 
-You can define a user function as a piece of a composite law.
     To define a user function, you must create an object deriving from
     CATMathFunctionX, and implement the services below:
 

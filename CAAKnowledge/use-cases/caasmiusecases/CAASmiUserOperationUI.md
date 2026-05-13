@@ -160,7 +160,7 @@ How to customize geometry tab page is described in the next use cases [4]
 
 *Copyright  2002, Dassault Systmes. All rights reserved.*
 
-```vbscript
+```cpp
 ...
 // Tie the implementation to its interface
 #include &quot;TIE_CATIMfgStrategyActivity.h&quot;
@@ -168,7 +168,7 @@ TIE_CATIMfgStrategyActivity( CAAESmiUserOperationStrategyEditor);
 ...
 ```
 
-```vbscript
+```cpp
 ...
   oFrame = new CATDlgFrame (iFather, &quot;StrategyFrame&quot;, CATDlgGridLayout|CATDlgFraNoTitle);
   if (oFrame)
@@ -193,7 +193,7 @@ TIE_CATIMfgStrategyActivity( CAAESmiUserOperationStrategyEditor);
   ...
 ```
 
-```vbscript
+```cpp
 ...
 // Tie the implementation to its interface
 #include &quot;TIE_CATIMfgMacroEditorActivity.h&quot;
@@ -201,7 +201,7 @@ TIE_CATIMfgMacroEditorActivity( CAAESmiUserOperationMacroEditor);
 ...
 ```
 
-```vbscript
+```cpp
 ...
   oFrame = new CATDlgFrame (iFather, &quot;MacrosFrame&quot;, CATDlgGridLayout|CATDlgFraNoTitle);
   if (oFrame)
@@ -235,14 +235,14 @@ TIE_CATIMfgMacroEditorActivity( CAAESmiUserOperationMacroEditor);
  ...
 ```
 
-```vbscript
+```cpp
 ...
 #include &quot;TIE_CATIMfgToolActivity.h&quot;
 TIE_CATIMfgToolActivity( CAAESmiUserOperationToolEditor);
 ...
 ```
 
-```vbscript
+```cpp
 HRESULT CAAESmiUserOperationToolEditor::GetAuthorizedToolTypeList (CATListOfCATUnicodeString &amp; oToolTypeList)
  {
    // Allowed Tools
@@ -253,7 +253,7 @@ HRESULT CAAESmiUserOperationToolEditor::GetAuthorizedToolTypeList (CATListOfCATU
  }
 ```
 
-```vbscript
+```cpp
 HRESULT CAAESmiUserOperationToolEditor::CreateDefaultTool (CATBaseUnknown_var &amp; oTool)
 {
   ...

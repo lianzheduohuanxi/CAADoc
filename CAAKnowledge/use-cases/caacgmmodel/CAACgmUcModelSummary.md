@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "GMOperators List of Use Cases"
-category: use-case
+category: "use-case"
 module: "CAACgmModel"
-tags: ["CAAGMModelPositionOpe", "CAAGMModelConvertSurfaceToC2", "CAAGMModelScanEdgeCurve", "CAAGMModelAnalysisOpe", "CAAGMModelTesMProcMain", "CAAGMModelEdgeCurveComputation", "CAAGMModelAttributeRead", "CAAGMModelConeCreation", "CAAGMModelConfusionOpe", "CAAGMModelNurbs", "CAAGMModelConvertCurveToC2", "CAAGMModelCreation", "CAAGMModelAttribute", "CAAGMModelDistanceMinOpe", "CAAGMModelGemBrowser", "CAAGMModelIntersectionOpe", "CAAGMModelTetra", "CAAGMModelGeometryCreation", "CAAGMModelIntersect", "CAAGMModelSmartDuplicator"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcModelSummary.htmmd"
+tags: "["CAAGMModelPositionOpe", "CAAGMModelConvertSurfaceToC2", "CAAGMModelScanEdgeCurve", "CAAGMModelAnalysisOpe", "CAAGMModelTesMProcMain", "CAAGMModelEdgeCurveComputation", "CAAGMModelAttributeRead", "CAAGMModelConeCreation", "CAAGMModelConfusionOpe", "CAAGMModelNurbs", "CAAGMModelConvertCurveToC2", "CAAGMModelCreation", "CAAGMModelAttribute", "CAAGMModelDistanceMinOpe", "CAAGMModelGemBrowser", "CAAGMModelIntersectionOpe", "CAAGMModelTetra", "CAAGMModelGeometryCreation", "CAAGMModelIntersect", "CAAGMModelSmartDuplicator"]"
+source_file: "Doc/online/CAACgmModel/CAACgmUcModelSummary.htm"
 converted: "2026-05-11T17:33:48.471605"
-```
-
 ---
 # GMModel List of Use Cases
 
@@ -15,7 +12,6 @@ converted: "2026-05-11T17:33:48.471605"
 
 The use cases illustrating the GMModelInterfaces capabilities are delivered in CAAGMModelInterfaces.edu
 
-The use cases illustrating the GMModelInterfaces capabilities are delivered in CAAGMModelInterfaces.edu
 Table.1  CAAGMModelInterfaces.edu: List of Use Cases Module | Purpose | Article
 
 The use cases illustrating the GMModelInterfaces capabilities are delivered in CAAGMModelInterfaces.edu

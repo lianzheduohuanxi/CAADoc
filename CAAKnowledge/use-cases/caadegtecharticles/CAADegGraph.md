@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Implementing the Command Statechart Diagram"
 category: "use-case"
 module: "CAADegTechArticles"
-tags: ["CAACreatePolylineCmd", "CAAILine", "CATI2DPoint", "CAACommandCmd", "CAACreateCircleCmd", "CATI3DCamera", "CATI2DControlPoint", "CATIAxle", "CAAIPoint", "CAACreateLineCmd", "CATIndication", "CATICamera", "CATIndicationAgent"]
-source_file: "Doc/online/CAADegTechArticles/CAADegGraph.htmmd"
+tags: "["CAACreatePolylineCmd", "CAAILine", "CATI2DPoint", "CAACommandCmd", "CAACreateCircleCmd", "CATI3DCamera", "CATI2DControlPoint", "CATIAxle", "CAAIPoint", "CAACreateLineCmd", "CATIndication", "CATICamera", "CATIndicationAgent"]"
+source_file: "Doc/online/CAADegTechArticles/CAADegGraph.htm"
 converted: "2026-05-11T17:33:49.838586"
-```
-
 ---
 tags: ["CAACreatePolylineCmd", "CAAILine", "CATI2DPoint", "CAACommandCmd", "CAACreateCircleCmd", "CATI3DCamera", "CATI2DControlPoint", "CATIAxle", "CAAIPoint", "CAACreateLineCmd", "CATIndication", "CATICamera", "CATIndicationAgent"]
 source_file: "Doc/online/CAADegTechArticles/CAADegGraph.htmmd"
@@ -100,7 +97,7 @@ Any dialog agent has a behavior that you can customize. For example, you can act
     * Their destruction must be requested in the command destructor using the `RequestDelayedDestruction` method.
 [Top] Managing Indication Indication retrieves the coordinates of a 2D point that doesn't exist in the document, but that is indicated by an end user left click in a 2D or a 3D viewer. An indication agent is an instance of the CATIndicationAgent class. Creating an Indication Agent An indication agent is instantiated as follows.
 
-```vbscript
+```cpp
     _daIndicationAgent = new CATIndicationAgent("2DIndicationAgentId");
 
 ```
@@ -130,7 +127,7 @@ If you want to make sure that the plane is not perpendicular to the screen plane
 ```
 
     ...
-```vbscript
+```cpp
 If you want to make sure that the plane is not perpendicular to the screen plane, you can, for example, check that the vector normal to the plane is not perpendicular to the sight direction of the viewpoint. This can be done as follows.
     CATCATBoolean isPlaneNormal = FALSE;
 
@@ -149,7 +146,7 @@ if ( NULL != pCurrentLayout )
 ```
 
       {
-```vbscript
+```cpp
 if ( NULL != pCurrentLayout )
 CATFrmWindow * pCurrentWindow = pCurrentLayout->GetCurrentWindow(#);
 if ( NULL != pCurrentWindow )
@@ -212,7 +209,7 @@ piICamera= NULL ;
 ```
 
 ---
-```vbscript
+```cpp
 if (FALSE == isPlaneNormal) ...
 Enabling for Multi-indication You may allow the end user to indicate a set of points instead of one. This is done by setting the behavior of the indication dialog agent to `CATDlgEngMultiAcquisition` by means of the `SetBehavior` method:
 
@@ -274,7 +271,7 @@ If you do not have define an explicit plane, you retrieve the default plane, wit
 ```
 
     ...
-```vbscript
+```cpp
 If you do not have define an explicit plane, you retrieve the default plane, with the `GetMathPlane` method.
     CATMathPlane Plane = _daIndicationAgent->**GetMathPlane**(#);
     Plane.EvalPoint(IndPoint2D.GetX(#),IndPoint2D.GetY(#), IndPoint3D);
@@ -295,7 +292,7 @@ The end user clicks the Thickness command. The selected face is taken as input t
  The end user selects a face, and the command applies to this face.
 To detect that the end user has selected a representation in a viewer that stands for an object that matches what your state dialog command expects in the current state, and to retrieve this object, use an instance of the _CATPathElementAgent_ class. The path element dialog agent is a generic dialog agent that interprets a user selection, that is a left click on an object's representation in a viewer, as a document's object input, such as the selection of the rear left wheel instance of a car, and of all the objects above it in the document specification tree structure. It retrieves a path element, instance of the _CATPathElement_ class, that is an object that contains an ordered list of pointers starting from the root object of the active document to the selected object. Using the path element; you can navigate to find objects that are above the selected one in the document specification tree structure. [Top] Creating a CATPathElement Instance You can create an instance of a _CATPathElement_ class by simply providing its identifier, as follows:
 
-```vbscript
+```cpp
     _SelectionAgent = new CATPathElementAgent("MySelectionAgentId");
 
 ```
@@ -363,7 +360,6 @@ This puts the object in the PSO and in the HSO. You can use `CATDlgEngWithPSO` o
     * Lexical constraints, such as check if a date is a "MM/DD/YY" string.
 When a dialog agent has such a filter, it applies the filter to check if the end user input is valid. It automatically sets the  cursor as ![NoEntry.gif /(864 bytes/)](images/NoEntry.gif) when the end user moves or locates the mouse above the representation of an object that doesn't match the filter.  Use acquisition filters to provide single-data constraints, such as `0<=N<=100`, and conditions to provide multiple-data constraints, such as `[point1<>point2 ?]`. Using filters simplifies conditions (all single-data constraints are provided as filters) and improves performance (conditions are checked only when each data has been checked). Use a condition method or a filter can seem equivalent, but there is a point to consider. Suppose your dialog agent has the pre-highlight behavior. With the condition method the wrong selected element will be first pre-highlighted and then the condition method will reject it. To re-pre-select an other element a re-initialization will be done, but the wrong element will be always pre-highlighted. With the filter the element will be pre-highlighted only if it is really selectable.  A filter can be created using the `Filter` method of the _CATStateCommand_ class:
 
-When a dialog agent has such a filter, it applies the filter to check if the end user input is valid. It automatically sets the  cursor as ![NoEntry.gif /(864 bytes/)](images/NoEntry.gif) when the end user moves or locates the mouse above the representation of an object that doesn't match the filter.  Use acquisition filters to provide single-data constraints, such as `0<=N<=100`, and conditions to provide multiple-data constraints, such as `[point1<>point2 ?]`. Using filters simplifies conditions (all single-data constraints are provided as filters) and improves performance (conditions are checked only when each data has been checked). Use a condition method or a filter can seem equivalent, but there is a point to consider. Suppose your dialog agent has the pre-highlight behavior. With the condition method the wrong selected element will be first pre-highlighted and then the condition method will reject it. To re-pre-select an other element a re-initialization will be done, but the wrong element will be always pre-highlighted. With the filter the element will be pre-highlighted only if it is really selectable.  A filter can be created using the `Filter` method of the _CATStateCommand_ class:
     CATAcquisitionFilter * CATStateCommand::Filter
                             (FilterMethod iMethod, void * data);
 
@@ -422,7 +418,7 @@ _PointAgent->AddElementType(IID_CATI2DPoint);
 ---
 `TestCtrlPoint` is a Filter method of the _MyCmd_ state command.
 
-```vbscript
+```cpp
 AddTransition(SourceState, TargetState, IsOutputSetCondition(_PointAgent), ...);
     CATBoolean MyCmd::TestCtrlPoint ( CATDialogAgent * iAgent, void * iUsefulData)
 ```
@@ -446,7 +442,7 @@ if ( NULL != iAgent )
 ```
 
          {
-```vbscript
+```cpp
 if ( NULL != iAgent )
 CATBaseUnknown * pSelectedElt= ((CATPathElementAgent *)iAgent)->GetElementValue(#);
 if ( NULL != pSelectedElt )
@@ -575,7 +571,7 @@ Use the `RemoveNotifier` method to remove a given notifier from the notifier set
             (CATCommand * iNotifier, CATCommand * iNotification);
 
 ---
-```vbscript
+```cpp
     * Set `iNotifier` to `NULL` if the notification is notifier (viewer or dialog box) independent
     * Set `iNotification` to `NULL` to receive all the sent notifications, whatever their kind.
 (CATCommand * iNotifier, CATCommand * iNotification);
@@ -592,16 +588,16 @@ A dialog agent is usually associated with one state only, but you can also assoc
     * The end user interaction values only one of them before the transition is triggered
     * The dialog agents are scanned for setting their values in the order they are declared to the state using the `AddDialogAgent` method.
 ```vbscript
-```vbscript
+```cpp
 For example, assume you want to trigger a transition as soon as the end user right clicks. This is easy to do using a dialog agent valued with a `CATContext` notification sent by the right click.
 
 ```
 
 ```
 
-```vbscript
+```cpp
 For example, assume you want to trigger a transition as soon as the end user right clicks. This is easy to do using a dialog agent valued with a `CATContext` notification sent by the right click.
-```vbscript
+```cpp
     _daAgent = new CATDialogAgent("RightClickAgentId");
 ```
 
@@ -678,7 +674,7 @@ With a type query, the returned path list contains only the matching object path
 ---
 CATMathPoint2D point2D = _daIndication->GetValue(#);
 _daIndication->InitializeAcquisition(#);
-```vbscript
+```cpp
 If the dialog agent is recycled using the `InitializeAcquisition` method, you can use it again as if it were never used, that is, using the `IsOutputSetCondition` method. Another way of providing array input with a single dialog agent is to set it as repeatable using the `CATDlgEngRepeat` behavior parameter, and to use the `IsLastModifiedAgentCondition` method instead of the `IsOutputSetCondition` method.
 
 ```
@@ -703,7 +699,7 @@ CATDlgEngWithPrevaluation);
     AddTransition(stRepeatState,
                   stRepeatState,
                   AndCondition(IsOutputSetCondition(_daIndicationP),
-```vbscript
+```cpp
                      Condition((ConditionMethod) & CAACreatePolylineCmd::CheckPointByIndic)),
                   Action((ActionMethod) & CAACreatePolylineCmd::CreateLineByIndic,));
 
@@ -712,7 +708,7 @@ CATDlgEngWithPrevaluation);
 
                   stRepeatState,
                   IsLastModifiedAgentCondition(_daIndicationP),
-```vbscript
+```cpp
                   Action((ActionMethod) & CAACreatePolylineCmd::RubberLine));
 
 ```
@@ -722,14 +718,14 @@ CATDlgEngWithPrevaluation);
 ---
 ```vbscript
 IsLastModifiedAgentCondition(_daIndicationP),
-```vbscript
+```cpp
 Action((ActionMethod) & CAACreatePolylineCmd::RubberLine));
 ```
 
 Both transitions share the same trigger, that is the CATIndication agent valuation or prevaluation, according to the dialog agent behavior. As soon as the dialog agent is valued or prevalued, that is if the end user left clicks or moves the mouse, the first transition is triggered. Its guard condition evaluates. As a composite condition, the first condition evaluates to TRUE if the dialog agent is valued, that is, if the end user has left clicked. If this is the case, and if the other condition evaluates to TRUE, the transition fires to create the line. Otherwise, the second transition is triggered, its guard condition evaluates, and if it evaluates to TRUE, the transition fires to update the rubber band. Note that the target states are also identical, making these transitions self-transitions. To enable for the dialog agent reuse, it must be recycled in both action methods. [Top] Creating Transition with the Same Target State Several transitions may target the same state. If in addition they share the same guard conditions and actions, you may end up with a bulky code like this if you create separate transitions:
 
     AddTransition(**state1** , target, IsOutputSetCondition(_daAgent),
-```vbscript
+```cpp
                   Action(ActionMethod) &MyDialogCommand::action));
     AddTransition(**state2** , target, IsOutputSetCondition(_daAgent),
                   Action(ActionMethod) &MyDialogCommand::action));
@@ -741,9 +737,9 @@ Both transitions share the same trigger, that is the CATIndication agent valuati
 ```
 
 ---
-```vbscript
+```cpp
 Action(ActionMethod) &MyDialogCommand::action));
-```vbscript
+```cpp
 AddTransition(**state3** , target, IsOutputSetCondition(_daAgent),
 Action(ActionMethod) &MyDialogCommand::action));
 ```
@@ -752,7 +748,7 @@ Using the `AddInitialState` method to define a transition avoids repeating the t
 
     CATDialogTransition * **JoinTransition** =
              AddTransition(**state1** , target,
-```vbscript
+```cpp
                            IsOutputSetCondition(_daAgent)
                            Action(ActionMethod) &MyDialogCommand::action));
 ```
@@ -762,7 +758,7 @@ Using the `AddInitialState` method to define a transition avoids repeating the t
     **JoinTransition- >AddInitialState(state2);
 CATDialogTransition * **JoinTransition** =
 AddTransition(**state1** , target,
-```vbscript
+```cpp
 IsOutputSetCondition(_daAgent)
 Action(ActionMethod) &MyDialogCommand::action));
 ```
@@ -791,7 +787,7 @@ Action(...));
 To make it possible to get out of the loop, another transition from the same source state to another target state should exist. Self-transitions are also useful to visualize the object that could be created at the current mouse location if the end user requested to create it. Below are two examples. ![RubberBanding1.gif /(2520 bytes/)](images/RubberBanding1.gif) | The circle is not yet created. The circle center is already created, and the end user moves the mouse. A circle that corresponds to the current mouse location is drawn. It corresponds to the circle that would be created if the end user clicked the mouse at that location. This is made possible thanks to a self-transition looping on a state that expects the circle radius input by means of an indication.
 ```
 
-```vbscript
+```cpp
 Action(...));
 To make it possible to get out of the loop, another transition from the same source state to another target state should exist. Self-transitions are also useful to visualize the object that could be created at the current mouse location if the end user requested to create it. Below are two examples. ![RubberBanding1.gif /(2520 bytes/)](images/RubberBanding1.gif) | The circle is not yet created. The circle center is already created, and the end user moves the mouse. A circle that corresponds to the current mouse location is drawn. It corresponds to the circle that would be created if the end user clicked the mouse at that location. This is made possible thanks to a self-transition looping on a state that expects the circle radius input by means of an indication.
  The state dedicated to get the circle radius has an incoming transition that comes from a previous state that is not detailed here. As long as the end user moves the mouse, the viewer sends a preactivation notification that values a dialog agent and fires the self-transition whose action creates a temporary circle that corresponds to the current mouse location. As soon as the end user indicates a point, the transition that creates the circle fires, the circle is created and the final state is reached.
@@ -809,7 +805,7 @@ _daIndicRadius->SetBehavior(CATDlgEngWithPrevaluation |
 CATDlgEngAcceptOnPrevaluate |
 CATDlgEngWithUndo);
     AddTransition(stGetRadius, stGetRadius,
-```vbscript
+```cpp
                   IsLastModifiedAgentCondition(_daIndicRadius),
                   Action((ActionMethod) & CAACreateCircleCmd::UpdateCircle));
 
@@ -818,7 +814,7 @@ CATDlgEngWithUndo);
 ---
 ```vbscript
 AddTransition(stGetRadius, stGetRadius,
-```vbscript
+```cpp
 IsLastModifiedAgentCondition(_daIndicRadius),
 Action((ActionMethod) & CAACreateCircleCmd::UpdateCircle));
 ```
@@ -838,7 +834,7 @@ The transition is triggered as soon as the dialog agent is prevalued. Dialog age
 
     {
       //        Get current point
-```vbscript
+```cpp
 The transition is triggered as soon as the dialog agent is prevalued. Dialog agent prevaluation takes place when a preactivation notification is received. This is the case with an indication dialog agent as long as the mouse moves without clicking the left button. The `IsLastModifiedAgentCondition` method detects dialog agent prevaluation. Otherwise, using the `IsOutputSetCondition` method, the transition would be triggered only when the agent would be valued, that is once the end user would have clicked. The temporary circle displayed is not stored in the document, but added to the ISO (Interactive Set of Objects). It is created from a previous action, and updated according to the mouse move using the `UpdateCircle` method.
 CATBoolean CAACreateCircleCmd::UpdateCircle(void * iData)
 ```
@@ -881,7 +877,6 @@ _ISO->UpdateElement(_TemporaryCircle);
 return TRUE;
 The `UpdateElement` method updates the ISO with the modified temporary circle, and the dialog agent is recycled before the method returns. The "Get Point" state becomes active again, and the dialog agent can be reused thanks to the  `InitializeAcquisition` method. Note that if the dialog agent were set as repeatable using the `CATDlgEngRepeat` behavior parameter, it would be useless to recycle it. Here is another case with a polyline example. ![RubberBanding2.gif /(2160 bytes/)](images/RubberBanding2.gif) | The polyline is being built. Five line segments are created, and the end user moves the mouse to create the sixth one. The dashed line segment visualizes what would be this line segment if the end user clicked at the current mouse location. This is made possible thanks two self-transitions looping on a state. The first transition expects a point indication to create a line segment, the second one expects a point indication prevaluation to create the rubber band.
 
-The `UpdateElement` method updates the ISO with the modified temporary circle, and the dialog agent is recycled before the method returns. The "Get Point" state becomes active again, and the dialog agent can be reused thanks to the  `InitializeAcquisition` method. Note that if the dialog agent were set as repeatable using the `CATDlgEngRepeat` behavior parameter, it would be useless to recycle it. Here is another case with a polyline example. ![RubberBanding2.gif /(2160 bytes/)](images/RubberBanding2.gif) | The polyline is being built. Five line segments are created, and the end user moves the mouse to create the sixth one. The dashed line segment visualizes what would be this line segment if the end user clicked at the current mouse location. This is made possible thanks two self-transitions looping on a state. The first transition expects a point indication to create a line segment, the second one expects a point indication prevaluation to create the rubber band.
  The state dedicated to get a point of the polyline has an incoming transition that comes from a previous state that is not detailed here. As long as the end user moves the mouse, the viewer sends a preactivation notification that values a dialog agent and fires the self-transition whose action creates a temporary line that corresponds to the current mouse location. As soon as the end user indicates a point, another self-transition fires and the line segment is created. Due to the self-transition, the state remains active to enable another line segment creation. The final state is reached as soon as the end user right clicks.
 Creating Guard Conditions The guard condition is a CATBoolean expression that is evaluated as soon as the transition is triggered, and if it evaluates True, the transition fires and the associated action is executed. A guard condition is declared as the third parameter of the `AddTransition` method. A composite condition can be created by combining elementary conditions. In addition, an exit condition can be set onto the state. It is evaluated before the guard conditions, and if it evaluates False, the guard condition is not evaluated. [Top] Creating Conditions with Unconstrained Data Input An _unconstrained data input_ is either:
 
@@ -896,7 +891,7 @@ To create such a condition, use the `IsOutputSetCondition` method to build a _CA
     **IsOutputSetCondition(** _daAgent**)** , ...);
 
 ---
-```vbscript
+```cpp
 AddTransition(iSourceState, iTargetSstate,
 As soon as the dialog agent is valued, the condition is checked, and since there is no constraint on this value, the condition is evaluates True and the transition fires. The same agent can be reused in self-transitions if it is set as repeatable using the `CATDlgEngRepeat` behavior parameter, for example to trigger the transition when it is prevalued. In these cases, use the `IsLastModifiedAgentCondition` method instead of the `IsOutputSetCondition` method.
 
@@ -923,14 +918,14 @@ The argument can be passed as the second argument of the `Condition` method, or 
 
 ---
 ```vbscript
-```vbscript
+```cpp
 For example, assume that a command creating a line in the 3D space needs to check that the end point input by the end user is not coincident with the start point. This can be checked in the `CheckEndPoint` method of the _CAACreateLineCmd_ class, standing for the Line command.
 
 ```
 
 ```
 
-```vbscript
+```cpp
 For example, assume that a command creating a line in the 3D space needs to check that the end point input by the end user is not coincident with the start point. This can be checked in the `CheckEndPoint` method of the _CAACreateLineCmd_ class, standing for the Line command.
     CATBoolean CAACreateLineCmd::CheckEndPoint(void * iDummy)
 ```
@@ -982,7 +977,7 @@ AddTransition(state2, NULL,
                   ...);
 
 ---
-```vbscript
+```cpp
 IsOutputSetCondition(_daIndicationAgent**),**
 Creating a Condition Class When a condition is intended to be reusable, you can encapsulate it in a _CATStateCondition_ subclass. The condition test is implemented by overloading the `GetStatus` method. For example, the _NoCoincidence_ class is created to check that the two points input to the Line command do not coincide. The NoCoincidence class header file is:
 
@@ -1072,7 +1067,6 @@ _daIndicationAgent);
 ---
 Note that `_CoincidenceCondition` must be a data member of your state dialog command class, and must be deleted in the destructor. [Top] Creating Composite Conditions When CATBoolean expressions, such as `[condition1 AND condition2?]`, are needed, you must write them as _composite conditions_. A composite condition is built by combining conditions using the AND, OR, and NOT operators supplied through the following methods:
 
-Note that `_CoincidenceCondition` must be a data member of your state dialog command class, and must be deleted in the destructor. [Top] Creating Composite Conditions When CATBoolean expressions, such as `[condition1 AND condition2?]`, are needed, you must write them as _composite conditions_. A composite condition is built by combining conditions using the AND, OR, and NOT operators supplied through the following methods:
     CATStateCondition * **AndCondition**(CATStateCondition * iCondition1,
                                      CATStateCondition * iCondition2);
 
@@ -1139,7 +1133,7 @@ AddTransition(...
                          (ActionMethod) &CAACreateLineCmd::RedoCreateLine,**CAAIPoint * EndPoint)**);
 
     // OR
-```vbscript
+```cpp
 AddTransition(...
 (ActionMethod) &CAACreateLineCmd::UndoCreateLine,
 (ActionMethod) &CAACreateLineCmd::RedoCreateLine,**CAAIPoint * EndPoint)**);

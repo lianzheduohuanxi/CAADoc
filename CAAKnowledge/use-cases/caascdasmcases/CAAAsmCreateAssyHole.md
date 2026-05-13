@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating and Modifying an Assembly Hole"
 category: "use-case"
 module: "CAAScdAsmUseCases"
-tags: ["CAAScdAsmUseCases", "CATIA", "CAAAsmCreateAssyHole"]
-source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmCreateAssyHole.htmmd"
+tags: "["CAAScdAsmUseCases", "CATIA", "CAAAsmCreateAssyHole"]"
+source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmCreateAssyHole.htm"
 converted: "2026-05-11T17:31:50.843187"
-```
-
 ---
 ## Assembly
 
@@ -17,7 +14,6 @@ converted: "2026-05-11T17:31:50.843187"
 * * *
 
   This macro shows you how to create an assembly hole and valuate its parameters. This macro opens the [AssemblyHole.CATProduct](samples/AssemblyHole.CATProduct) document that contains three parts: a skeletton, Skeletton.CATPart, and two plates, Plaque1.CATPart and Plaque2.CATPart.
-This macro shows you how to create an assembly hole and valuate its parameters. This macro opens the [AssemblyHole.CATProduct](samples/AssemblyHole.CATProduct) document that contains three parts: a skeletton, Skeletton.CATPart, and two plates, Plaque1.CATPart and Plaque2.CATPart.
 It retrieves each _Product_ object corresponding to the product instances in the assembly and the _Sketch_ object which will define the position of the assembly hole. It creates an _AssemblyHole_ object in the assembly. It sets the main parameters of the new _AssemblyHole_ object. To finish the whole assembly is updated.
 
 This macro shows you how to create an assembly hole and valuate its parameters. This macro opens the [AssemblyHole.CATProduct](samples/AssemblyHole.CATProduct) document that contains three parts: a skeletton, Skeletton.CATPart, and two plates, Plaque1.CATPart and Plaque2.CATPart.
@@ -54,7 +50,7 @@ The macro first loads AssemblyHole.CATProduct that contains three parts: a skele
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
     Set oRootProduct = CATIA.ActiveDocument.Product
 
     Dim oSkeletton As Product
@@ -97,7 +93,7 @@ Once the product document has been loaded, the `oSkeletton`, `oPlaque1` and `oPl
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
     Set oSkelDocument = CATIA.Documents.Item("Skeletton.CATPart")
 
     Dim oBody As Body
@@ -176,7 +172,6 @@ The `oPosSketch` object will be used to determine the positioning point of the h
 
 The _AssemblyFeatures_ collection [2] `oAssemblyFeatures` is retrieved from the root _Product_ using the method `GetTechnologicalObject`. This object allows you to retrieve all the assembly features of `oRootProduct` and to create new ones.
 
-The _AssemblyFeatures_ collection [2] `oAssemblyFeatures` is retrieved from the root _Product_ using the method `GetTechnologicalObject`. This object allows you to retrieve all the assembly features of `oRootProduct` and to create new ones.
 A new _AssemblyHole_ object [2] is created using the `AddAssemblyHole` method.
 
 The first and second arguments define the positioning _Sketch_ [2] and one _Product_ containing it; is could be any instance of Skeletton.CATPart. The third argument is the depth of the hole as a double. The fourth argument is a _Product_ instance of Skeletton.CATPart defining the real position of the hole in the assembly context.
@@ -307,7 +302,6 @@ oDepth.Value = 30.000000
 
 The diameter of the hole is set using the `Diameter` property and the _Length_ object [2].
 
-The diameter of the hole is set using the `Diameter` property and the _Length_ object [2].
 The type is set using `Type` property; hole types are defined in the _CatHoleType_ enum [2]. In the case of a counter bored hole the anchor mode is set by `AnchorMode`; hole anchor modes are defined in the _CatHoleAnchorMode_ enum [2]. The head depth is valuated using `HeadDiameter` property and the _Length_ object.
 
 The Limit is defined by `BottomLimit` property and _Limit_ object [2].

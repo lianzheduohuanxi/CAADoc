@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "XML tips and tricks"
-category: tech-article
+category: "tech-article"
 module: "CAAXmlTechArticles"
-tags: ["CATISAXParser_var", "CATIXMLSAXFactory", "CATIndentationCharacter", "CATIXMLDOMDocumentBuilder", "CATIXMLDOMDocumentBuilder_var", "CATIndentation", "CATISAXEntityResolver", "CATIDOMText", "CATIXMLSAXFactory_var"]
-source_file: "Doc/online/CAAXmlTechArticles/CAAXmlTipsAndTricks.htmmd"
+tags: "["CATISAXParser_var", "CATIXMLSAXFactory", "CATIndentationCharacter", "CATIXMLDOMDocumentBuilder", "CATIXMLDOMDocumentBuilder_var", "CATIndentation", "CATISAXEntityResolver", "CATIDOMText", "CATIXMLSAXFactory_var"]"
+source_file: "Doc/online/CAAXmlTechArticles/CAAXmlTipsAndTricks.htm"
 converted: "2026-05-11T17:33:45.696790"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -51,7 +48,6 @@ The XMLParser framework uses several patterns to help you get used to the API mo
 
 The XMLParser framework uses the HRESULT / CATError mechanism to manage errors.
 
-The XMLParser framework uses the HRESULT / CATError mechanism to manage errors.
     if (FAILED(hr)) {
         CATUnicodeString message = "XMLParser call has failed/n";
         CATError* error = **CATError::CATGetLastError**(hr);
@@ -61,7 +57,7 @@ The XMLParser framework uses the HRESULT / CATError mechanism to manage errors.
             error = NULL;
 
         }
-```vbscript
+```cpp
 if (error != NULL) {
 message.Append(error->GetNLSMessage(#));
 error->Release(#);
@@ -97,7 +93,6 @@ In the same way, when you are building a DOM tree, the parser will also tell you
 
 The XMLParser framework provides several V5 DOM components, which all implement the _CATIXMLDOMDocumentBuilder_ interface, but offer different features (DTD validation, XSD schema validation). If you do not specify which component to use, the default DOM component (XML4C3) will be used.
 
-The XMLParser framework provides several V5 DOM components, which all implement the _CATIXMLDOMDocumentBuilder_ interface, but offer different features (DTD validation, XSD schema validation). If you do not specify which component to use, the default DOM component (XML4C3) will be used.
     CATIXMLDOMDocumentBuilder_var builder;
     HRESULT hr = **::CreateCATIXMLDOMDocumentBuilder**(builder);
 
@@ -105,12 +100,12 @@ The XMLParser framework provides several V5 DOM components, which all implement 
 
 ---
 
-```vbscript
+```cpp
 If you want to use a specific V5 DOM component (say XML4C5 since you want DOM with schema validation), add the CLSID of the component as an extra parameter to your call to `CreateCATIXMLDOMDocumentBuilder`.
 
 ```
 
-```vbscript
+```cpp
 If you want to use a specific V5 DOM component (say XML4C5 since you want DOM with schema validation), add the CLSID of the component as an extra parameter to your call to `CreateCATIXMLDOMDocumentBuilder`.
     CATIXMLDOMDocumentBuilder_var builder;
     HRESULT hr = ::CreateCATIXMLDOMDocumentBuilder(builder**, CLSID_XML4C5_DOM**);
@@ -122,9 +117,8 @@ If you want to use a specific V5 DOM component (say XML4C5 since you want DOM wi
 
 SAX components use the same pattern. The following code instantiates the default SAX component (XML4C3):
 
-SAX components use the same pattern. The following code instantiates the default SAX component (XML4C3):
     CATIXMLSAXFactory_var factory;
-```vbscript
+```cpp
     hr = **::CreateCATIXMLSAXFactory**(factory);
 
 ```
@@ -135,7 +129,6 @@ SAX components use the same pattern. The following code instantiates the default
 
 To use a specific V5 SAX component (say XML4C5 since you want SAX with schema validation), add the CLSID of the component as an extra parameter to your call to `CreateCATIXMLSAXFactory`.
 
-To use a specific V5 SAX component (say XML4C5 since you want SAX with schema validation), add the CLSID of the component as an extra parameter to your call to `CreateCATIXMLSAXFactory`.
     CATIXMLSAXFactory_var factory;
     HRESULT hr = ::CreateCATIXMLSAXFactory(factory, **CLSID_XML4C5_SAX**);
 
@@ -150,7 +143,6 @@ To use a specific V5 SAX component (say XML4C5 since you want SAX with schema va
 
 Several methods of the XMLParser framework (for instance: `CATIXMLDOMDocumentBuilder::Parse`, `CATIXMLDOMDocumentBuilder::Write`, `CATIXMLSAXFactory::CreateParser`) accept options. Options are passed to these methods using two _CATListOfCATUnicodeStrings_. The first one contains the option names, the second one contains the option values. For instance, the following code instructs a DOM component to generate a file, which uses the UTF-16 encoding and indents the output with one TAB character per indentation level:
 
-Several methods of the XMLParser framework (for instance: `CATIXMLDOMDocumentBuilder::Parse`, `CATIXMLDOMDocumentBuilder::Write`, `CATIXMLSAXFactory::CreateParser`) accept options. Options are passed to these methods using two _CATListOfCATUnicodeStrings_. The first one contains the option names, the second one contains the option values. For instance, the following code instructs a DOM component to generate a file, which uses the UTF-16 encoding and indents the output with one TAB character per indentation level:
     CATIXMLDOMDocumentBuilder_var builder;
 
     ...
@@ -233,7 +225,7 @@ To use a validating parser, you need to pass to the parser a document which refe
 
 ---
 
-```vbscript
+```cpp
 If the DTD is specified in an external resource, as in the two first forms, the parser will use the system ID to try to locate the resource. The system ID can be either a URI relative to the position of the XML document, or an absolute URI. You can also use a _CATISAXEntityResolver_ to help the parser locate the external resource. For more information on this possibility, see [4].
 
 ```
@@ -277,7 +269,7 @@ The `CATIXMLDOMDocumentBuilder::WriteToFile` method accepts the "CATEncoding" op
 
 ---
 
-```vbscript
+```cpp
 If you use the "CATEncoding" option, you will have an XML file with an `encoding` attribute set to "UTF-8". This second approach is recommended.
 
 ```
@@ -303,7 +295,7 @@ Humans and XML parsers tend not to treat white space (indentations, line feeds) 
 
 uantity="1">low consumption engine</part><part name="body"
 quantity="1">weight must be < 1200 kg</part></car>
-```vbscript
+```cpp
 If your XML files need to be manually edited by humans or for debugging purposes, you might want to use the `CATIndentation` and `CATIndentationCharacter` options of the `CATIXMLDOMDocumentBuilder::WriteToFile` and `CATIXMLDOMDocumentBuilder::Write` methods. These options enable you to indent the generated XML, making it much easier to read. The `CATIndentationCharacter` specifies the character to use for indentation (tabulation or space), whereas the `CATIndentation` option is a positive integer specifying how many indentation characters to use for each level. Using these options, you will get a more readable XML file:
 
 ```

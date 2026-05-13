@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Preprocessing Data"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CATIA", "CAAAniPrepro", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPrepro.htmmd"
+tags: "["CATIA", "CAAAniPrepro", "CAAScdAniUseCases"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPrepro.htm"
 converted: "2026-05-11T17:31:51.774983"
-```
-
 ---
 ## Analysis Modeler
 
@@ -42,7 +39,7 @@ This macro shows you how to create preprocessing commands on an existing Analysi
      ' -----------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String
-```vbscript
+```cpp
         sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
 ```
@@ -52,7 +49,7 @@ This macro shows you how to create preprocessing commands on an existing Analysi
 ```
 
 ```vbscript
-```vbscript
+```cpp
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 ```
@@ -72,7 +69,7 @@ This macro shows you how to create preprocessing commands on an existing Analysi
 ```vbscript
         ' -----------------------------------------------------------
         ' Open the Analysis document
-```vbscript
+```cpp
         Dim oAnalysisDocument As Document
         Set oAnalysisDocument = CATIA.Documents.Open
 ```

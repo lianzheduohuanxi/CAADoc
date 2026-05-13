@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "New C++ Authorized APIs in CAA V5R14 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
-tags: ["CATICfgUserExit2", "CATIV4IV4WritingSettingAtt", "CATIMf3DBehavior", "CATIAVPMVDAUnlock", "CATISPAMeasureSettingAtt", "CATISchematicInit", "CATIPDAdapterInterfaces", "CATIMciMultiCADSettingAtt", "CATIDftFormat", "CATIMfgActivityInformation", "CATILieToleranceSheetSettingAtt", "CATIArrAttachSubscriber", "CATIStrColorSTDObjectSettingAtt", "CATITPSEditorUIFTASettingAtt", "CATIMfGeometryAccess", "CATIArrAttachmentFactory", "CATIStrMaterialSFDObjectSettingAtt", "CATISPASectioningSettingAtt", "CATIMfTriDimResult", "CATIDftSheetFormat"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R14GANewCPPAPI.htmmd"
+tags: "["CATICfgUserExit2", "CATIV4IV4WritingSettingAtt", "CATIMf3DBehavior", "CATIAVPMVDAUnlock", "CATISPAMeasureSettingAtt", "CATISchematicInit", "CATIPDAdapterInterfaces", "CATIMciMultiCADSettingAtt", "CATIDftFormat", "CATIMfgActivityInformation", "CATILieToleranceSheetSettingAtt", "CATIArrAttachSubscriber", "CATIStrColorSTDObjectSettingAtt", "CATITPSEditorUIFTASettingAtt", "CATIMfGeometryAccess", "CATIArrAttachmentFactory", "CATIStrMaterialSFDObjectSettingAtt", "CATISPASectioningSettingAtt", "CATIMfTriDimResult", "CATIDftSheetFormat"]"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R14GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.180388"
-```
-
 ---
 tags: ["CATICfgUserExit2", "CATIV4IV4WritingSettingAtt", "CATIMf3DBehavior", "CATIAVPMVDAUnlock", "CATISPAMeasureSettingAtt", "CATISchematicInit", "CATIPDAdapterInterfaces", "CATIMciMultiCADSettingAtt", "CATIDftFormat", "CATIMfgActivityInformation", "CATILieToleranceSheetSettingAtt", "CATIArrAttachSubscriber", "CATIStrColorSTDObjectSettingAtt", "CATITPSEditorUIFTASettingAtt", "CATIMfGeometryAccess", "CATIArrAttachmentFactory", "CATIStrMaterialSFDObjectSettingAtt", "CATISPASectioningSettingAtt", "CATIMfTriDimResult", "CATIDftSheetFormat"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R14GANewCPPAPI.htmmd"
@@ -23,7 +20,7 @@ The following are the new CAA V5R14 GA C++ Authorized APIs, compared with CAA V5
     * Class  CATTopSpine
     * Enumeration  CATTopBlendBehaviour_Mode
     * Enumeration  CATTopSpineRelimitation_Type
-```vbscript
+```cpp
     * Global Function  CATCreateTopShellOrientation
     * Global Function  CATCreateTopSpine
   * AnalysisMeshingModel framework
@@ -147,7 +144,7 @@ The following are the new CAA V5R14 GA C++ Authorized APIs, compared with CAA V5
   * CATSmInterfaces framework
     * Interface  CATIStmCatalogSHMObjectSettingAtt
   * CATTPSInterfaces framework
-```vbscript
+```cpp
     * Global Function  CATCreateCATITPSGeometryList
     * Interface  CATITPSBrowserUIDMUTolSettingAtt
 ```
@@ -215,7 +212,7 @@ The following are the new CAA V5R14 GA C++ Authorized APIs, compared with CAA V5
     * Interface  CATISiFiFittingSettingAtt
     * Interface  CATISiFiManipSettingAtt
   * FreeFormOperators framework
-```vbscript
+```cpp
     * Global Function  CATCreateInterproxCrv
     * Global Function  CATCreateInterproxSur
     * Global Function  CATCreateLiss
@@ -238,7 +235,7 @@ The following are the new CAA V5R14 GA C++ Authorized APIs, compared with CAA V5
     * Class  CATMathNurbsCurveTools
     * Class  CATMathNurbsSurfaceTools
     * Enumeration  MathNurbsDimension
-```vbscript
+```cpp
     * Global Function  CATCreateLocalAnalysis
     * Global Function  CATCreateMathNurbsCurveTools
     * Global Function  CATCreateMathNurbsSurfaceTools
@@ -272,7 +269,7 @@ The following are the new CAA V5R14 GA C++ Authorized APIs, compared with CAA V5
     * Macro or #define  CATCGMStreamDumpCommentBEGIN
     * Macro or #define  CATCGMStreamDumpCommentEND
     * Macro or #define  CATCGMStreamDumpXMLCommentBEGIN
-```vbscript
+```cpp
     * Global Function  CATTan
   * MecModInterfaces framework
 ```
@@ -373,7 +370,7 @@ The following are the new CAA V5R14 GA C++ Authorized APIs, compared with CAA V5
     * Class  CATBodyChecker
     * Class  CATLayDownOperator
     * Enumeration  CATFilletLawId
-```vbscript
+```cpp
     * Global Function  CATCreateTopLayDown
   * VPMDesktopObjects framework
 ```

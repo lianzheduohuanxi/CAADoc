@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Inserting Boolean Operations on Volume Features"
-category: use-case case"
+category: "use-case case"
 module: "CAAGsiUseCases"
-tags: ["CAAGSMInterfaces", "CATIPrtBooleanFactory", "CATIPrtContainer", "CAAGsiStartVolumeForBoolean", "CAAGsiVolumeOpe", "CATIPrtPart_var", "CATInit", "CATISpecObject_var", "CATIPrtBooleanFactory_var", "CAAGsiStartForBoolean", "CAAGsiVolumeFormFeatures", "CAAGsiObjectUpdate", "CAAGsiVolumeBooleanOpe"]
-source_file: "Doc/online/CAAGsiUseCases/CAAGsiVolumeBooleanOpe.htmmd"
+tags: "["CAAGSMInterfaces", "CATIPrtBooleanFactory", "CATIPrtContainer", "CAAGsiStartVolumeForBoolean", "CAAGsiVolumeOpe", "CATIPrtPart_var", "CATInit", "CATISpecObject_var", "CATIPrtBooleanFactory_var", "CAAGsiStartForBoolean", "CAAGsiVolumeFormFeatures", "CAAGsiObjectUpdate", "CAAGsiVolumeBooleanOpe"]"
+source_file: "Doc/online/CAAGsiUseCases/CAAGsiVolumeBooleanOpe.htm"
 converted: "2026-05-11T17:31:50.644673"
-```
-
 ---
 # Shape Design & Styling
 
@@ -93,7 +90,6 @@ where:
 
 The CAAGsiVolumeBooleanOpe use case is made of main program located in the CAAGsiVolumeBooleanOpe.m module of the CAAGSMInterfaces.edu framework:
 
-The CAAGsiVolumeBooleanOpe use case is made of main program located in the CAAGsiVolumeBooleanOpe.m module of the CAAGSMInterfaces.edu framework:
 Windows | `InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiVolumeBooleanOpe.m/`
 
 The CAAGsiVolumeBooleanOpe use case is made of main program located in the CAAGsiVolumeBooleanOpe.m module of the CAAGSMInterfaces.edu framework:
@@ -153,7 +149,7 @@ cout << "(CAAGsiVolumeBooleanOpe) ERROR: Create_Session" << endl ;
 TestCaseError = 1 ;
     cout << "The input document " << InputName << " is opened" << endl ;
     CATDocument *pDoc = NULL;
-```vbscript
+```cpp
     rc =CATDocumentServices::OpenDocument(InputName, pDoc) ;
 
     if (NULL == pDoc ) {
@@ -271,7 +267,6 @@ Note: Insert in procedural view is done at creation under the current geometrica
     // Remove
     // ----------------------------------------------------------------------------
     cout << "(CAAGsiVolumeFormFeatures) Remove " << endl;
-cout << "(CAAGsiVolumeFormFeatures) Remove " << endl;
     CATISpecObject_var spSpecExtr3 = ...
 
     CATISpecObject_var spSpecRemove = spBoolPrtFact -> CreateRemove ( spSpecAdd,spSpecExtr3 ,BOOLEAN_OPE_ON_VOLUME ) ;
@@ -308,7 +303,7 @@ Save part and close the session
 Save part and close the session
     if (NULL != OutputName )      {
 ```vbscript
-```vbscript
+```cpp
         rc = CATDocumentServices::SaveAs  (*pDoc, OutputName );
         if (SUCCEEDED(rc))   {
 ```
@@ -321,7 +316,7 @@ Save part and close the session
 ```vbscript
 if (NULL != OutputName )      {
 ```vbscript
-```vbscript
+```cpp
 rc = CATDocumentServices::SaveAs  (*pDoc, OutputName );
 if (SUCCEEDED(rc))   {
 ```
@@ -353,7 +348,6 @@ cout << "ERROR in saving document" << endl ;
 
 This use case has demonstrated the way to perform boolean operation on volume thanks to part design boolean factory. resulting feature add, remove , intersect and Union-Trin are inserted in GS or OGS When then are inserted in OGS the boolean operation are 'absorbant' features
 
-This use case has demonstrated the way to perform boolean operation on volume thanks to part design boolean factory. resulting feature add, remove , intersect and Union-Trin are inserted in GS or OGS When then are inserted in OGS the boolean operation are 'absorbant' features
 We illustrate feature in this use case boolean operation that do not have BRep feature as input . Operations that required BRep feature in input (Ex: Union-Trim) the use of boolean operation interface is similar as presented in the sample.
 
 Note : The BRep features are retrieved in interactive commands through in selecting of sub-element and using Mechanical Modeler agent (Ex:CATFeatureImportAgent)

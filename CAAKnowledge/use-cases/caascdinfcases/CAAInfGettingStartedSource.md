@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAAInfGettingStarted.CATScript"
 category: "use-case"
 module: "CAAScdInfUseCases"
-tags: ["CATIA", "CAAInfGettingStarted"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfGettingStartedSource.htmmd"
+tags: "["CATIA", "CAAInfGettingStarted"]"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfGettingStartedSource.htm"
 converted: "2026-05-11T17:31:52.376020"
-```
-
 ---
 tags: ["CATIA", "CAAInfGettingStarted"]
 source_file: "Doc/online/CAAScdInfUseCases/CAAInfGettingStartedSource.htmmd"
@@ -22,7 +19,7 @@ converted: "2026-05-11T17:31:52.376020"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -34,7 +31,7 @@ converted: "2026-05-11T17:31:52.376020"
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
     Set documents1 = CATIA.Documents
 
     Dim partDocument1 As Document

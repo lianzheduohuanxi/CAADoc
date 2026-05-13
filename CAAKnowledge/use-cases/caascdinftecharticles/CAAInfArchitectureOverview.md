@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Object Architecture Overview"
 category: "concept"
 module: "CAAScdInfTechArticles"
-tags: ["CATIA"]
-source_file: "Doc/online/CAAScdInfTechArticles/CAAInfArchitectureOverview.htmmd"
+tags: "["CATIA"]"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfArchitectureOverview.htm"
 converted: "2026-05-11T17:31:52.406949"
-```
-
 ---
 |
  ## Infrastructure
@@ -82,7 +79,7 @@ converted: "2026-05-11T17:31:52.406949"
 
  ### About Objects, Collections, Properties, and Methods
 
-```vbscript
+```cpp
 For all objects, _Object References_ contains complete reference of inheritance, properties and methods, thus encompassing all other link types between objects.
  Scripting languages such as Visual Basic rely on objects. Most pieces of data you can access are objects. With CATIA or DELMIA, documents, windows, viewers, cameras, parts, sketches, pads, even lines and curves, are represented as objects in Visual Basic. An _object_ is depicted using a blue box in the object diagrams, such as ![](../CAAScrAutomationImages/images/applicat.gif) .
 
@@ -94,36 +91,36 @@ For all objects, _Object References_ contains complete reference of inheritance,
 
  To retrieve or set the value of a property of a given object, write the object reference followed by a period and the property name. For example, you can retrieve in the **DocName** variable the value of  the full name of the active document as follows:
 
-```vbscript
+```cpp
  **DocName = CATIA.ActiveDocument.FullName**
 
  Or you can set this full name from the **DocName** variable as follows:
 ```
 
-```vbscript
+```cpp
  **CATIA.ActiveDocument.FullName = DocName**
 
 Or you can set this full name from the **DocName** variable as follows:
 ```
-```vbscript
+```cpp
  An object reference always starts from the root object, that is the application object which is always set to **CATIA** with in-process access. Then you use the Application object's properties to access the objects. In this case, the application object has the **ActiveDocument** property which holds the active document. You simply need to write **CATIA.ActiveDocument** to refer to the active document. Then the Document object has the **FullName** property to hold its full name. Simply add a period followed by **FullName** , and you get this full name.
 
  In the same way, you can request to see the hidden elements of the active document by setting the value of its **SeeHiddenElements** property to **True** , as follows:
 ```
 
-```vbscript
+```cpp
  **CATIA.ActiveDocument.SeeHiddenElements = True**
 
  A _method_ is an action that you can request an object to do. For example, you can request to save the active document. To do this, the **Document** object includes the **Save** method. Simply request the document to save itself as follows:
 ```
 
-```vbscript
+```cpp
  **CATIA.ActiveDocument.Save**
 
  Methods have often arguments requested by the action. For example, the **SaveAs** method carries out the action of saving a document with another name than the current one. This new name must be provided to perform this action, otherwise the **SaveAs** method cannot work. This name is passed as an argument of the **SaveAs** method. To save the active document with the name **NewName** , proceed as follows:
 ```
 
-```vbscript
+```cpp
  **CATIA.ActiveDocument.SaveAs "NewName"**
 
  You will find in the **object reference** that each method is qualified as either a **Function** or a **Sub** , and with parentheses, even if they have no arguments, as follows:

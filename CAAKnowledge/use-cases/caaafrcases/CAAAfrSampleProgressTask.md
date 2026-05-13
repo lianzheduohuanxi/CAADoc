@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating an Interruptible Task"
-category: use-case case"
+category: "use-case case"
 module: "CAAAfrUseCases"
-tags: ["CATIProgressTask", "CAAAfrProgressTaskSampleCmd", "CAAApplicationFrame", "CAAProgressClock", "CAAGeometry", "CAAAfrProgressTaskSampleId", "CAAAfrProgressTask", "CATIA", "CATIProgressTaskUI"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleProgressTask.htmmd"
+tags: "["CATIProgressTask", "CAAAfrProgressTaskSampleCmd", "CAAApplicationFrame", "CAAProgressClock", "CAAGeometry", "CAAAfrProgressTaskSampleId", "CAAAfrProgressTask", "CATIA", "CATIProgressTaskUI"]"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleProgressTask.htm"
 converted: "2026-05-11T17:17:55.806965"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -51,7 +48,6 @@ CAAAfrProgressTask is a use case of the CAAApplicationFrame.edu framework that i
 
 This use case simulates a long process . The task is composed of fifty steps, each step consisting in to execution of the following code: |
 
-This use case simulates a long process . The task is composed of fifty steps, each step consisting in to execution of the following code: |
 ```vbscript
     for ( int j= 0 ; j<= 5000000 ; j++)
 
@@ -111,7 +107,7 @@ _Fig.3: The "_Progress Task" Command ![](images/CAAAfrProgressTaskCommandDlg.jpg
 
 See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)" use case for a detailed description of how this use case should be launched. For the specific scenario :
 
-```vbscript
+```cpp
 Launch CATIA. When the application is ready:
 
 ```
@@ -135,7 +131,6 @@ Launch CATIA. When the application is ready:
 
 The CAAAfrProgressTask use case is made of a single file located in the CAAAfrProgressTask.m module of the CAAApplicationFrame.edu framework:
 
-The CAAAfrProgressTask use case is made of a single file located in the CAAAfrProgressTask.m module of the CAAApplicationFrame.edu framework:
 Windows | `InstallRootDirectory/``CAAApplicationFrame.edu/CAAAfrProgressTask.m/`
 
 The CAAAfrProgressTask use case is made of a single file located in the CAAAfrProgressTask.m module of the CAAApplicationFrame.edu framework:
@@ -304,7 +299,7 @@ CATDlgGridLayout | CATDlgWndBtnClose )
                                 NULL);
 
       **_pEditor** = CATFrmEditor::GetCurrentEditor(#);
-```vbscript
+```cpp
 AddAnalyseNotificationCB(this, this->GetDiaCLOSENotification(#),
 (CATCommandMethod)&CAAAfrProgressTaskSampleCmd::**ClickClose** ,
 NULL);
@@ -313,7 +308,7 @@ NULL);
 
       {
          ::**AddCallback**(this,
-```vbscript
+```cpp
 if ( (NULL != _pEditor) && (NULL != CATFrmLayout::GetCurrentLayout(#)) )
                     CATFrmLayout::GetCurrentLayout(#),
     		  CATFrmEditor::EDITOR_CLOSE_ENDED(#),
@@ -356,7 +351,7 @@ In the destructor code, it is not necessary to delete the dialog object created 
 CAAAfrProgressTaskSampleCmd::~CAAAfrProgressTaskSampleCmd(#)
        _pInterruptTask   = NULL ;
 
-```vbscript
+```cpp
        if ( (NULL != _pEditor) && ( NULL != CATFrmLayout::GetCurrentLayout(#)) )
 
 ```
@@ -397,7 +392,7 @@ CATCommandClientData  iUsefulData)
 HRESULT rc = QueryInterface(IID_CATIProgressTask,(void**)& pIProgressTask);
 if ( SUCCEEDED(rc) && (NULL != _pInterruptTask ) )
 ```vbscript
-```vbscript
+```cpp
           if ( CATDlgCheck == _pInterruptTask->GetState(#) )
 
 ```
@@ -407,7 +402,7 @@ if ( SUCCEEDED(rc) && (NULL != _pInterruptTask ) )
           {
 ```vbscript
 if ( SUCCEEDED(rc) && (NULL != _pInterruptTask ) )
-```vbscript
+```cpp
 if ( CATDlgCheck == _pInterruptTask->GetState(#) )
 ```
 
@@ -416,7 +411,7 @@ if ( CATDlgCheck == _pInterruptTask->GetState(#) )
 
           }else
           {
-```vbscript
+```cpp
 if ( CATDlgCheck == _pInterruptTask->GetState(#) )
 Task.**Schedule**(pIProgressTask,**TRUE** ,NULL);
              Task.**Schedule**(pIProgressTask,**FALSE** ,NULL);
@@ -498,7 +493,6 @@ CATCallback       iCallBack )
 
 An editor is closed, i.e a document is closed. The layout sends a notification indicating that the publisher is the editor; The variable iFrom is the editor to be closed. If this editor is the same as the one that has launched the current command, it must be deleted.
 
-An editor is closed, i.e a document is closed. The layout sends a notification indicating that the publisher is the editor; The variable iFrom is the editor to be closed. If this editor is the same as the one that has launched the current command, it must be deleted.
   3. The NLS resource file:
 
 The `CAAAfrProgressTaskSampleCmd``.CATNls `file is` `located in the `CAAApplicationFrame.edu/Cnext/resources/msgcatalog `directory. It contains:
@@ -558,7 +552,6 @@ The `CAAAfrProgressTaskSampleCmd``.CATNls `file is` `located in the `CAAApplicat
 
 The _CAAAfrProgressTaskSampleCmd_ class implements the _CATIProgressTask_ interface. This section describes how this is done:
 
-The _CAAAfrProgressTaskSampleCmd_ class implements the _CATIProgressTask_ interface. This section describes how this is done:
   1. Declaring the methods of the _CATIProgressTask_ interface in the header file
   2. Adding the necessary included files in the source file
   3. Coding the PerformTask method
@@ -645,7 +638,7 @@ for ( int i= min ; i <= max ; i++)
 
 CATUnicodeString usMessage ;
 CATUnicodeString usParam[1] ;
-```vbscript
+```cpp
             usMessage = CATMsgCatalog::**BuildMessage**("CAAAfrProgressTaskSampleCmd",
 
 ```
@@ -693,7 +686,6 @@ if ( S_OK != iUI->**IsInterrupted**(&interrupt) || (TRUE == interrupt) )
 
 This method consists in executing the task and giving information to the dialog box managed by the _CATIProgressTaskUI_   interface [Fig 1].
 
-This method consists in executing the task and giving information to the dialog box managed by the _CATIProgressTaskUI_   interface [Fig 1].
 At first, before beginning the task, it is necessary to define the range of the process by using the `SetRange `method.
 
 At each step, the dialog box is modified:
@@ -760,7 +752,6 @@ if ( NULL == oIcon ) return E_FAIL ;
 
 The  I_CAAProgressClock.bmp icon can be found in the CNext/resources/graphic/icons/normal of the CAAApplicationFrame.edu.
 
-The  I_CAAProgressClock.bmp icon can be found in the CNext/resources/graphic/icons/normal of the CAAApplicationFrame.edu.
   6. Modifying the CAAAfrProgressTaskSampleCmd.CATNls file
 
 Each label of the dialog box is prefixed by the keyword `ProgressTaskUI:`
@@ -822,7 +813,7 @@ The `CATImplementClass` macro declares that the _CAAAfrProgressTaskSampleCmd_ cl
     ...
 
 ---
-```vbscript
+```cpp
 TIE_CATIProgressTask(CAAAfrProgressTaskSampleCmd);
 The _CAAAfrProgressTaskSampleCmd_ class states that it implements the _CATIProgressTask_ interface thanks to the `TIE_CATIProgressTask` macro.
 

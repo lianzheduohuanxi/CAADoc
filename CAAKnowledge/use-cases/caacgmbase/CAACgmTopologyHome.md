@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Topology"
 category: "use cases"
 module: "CAACgmBase"
-tags: ["CAAGMOperatorsInterfaces", "CATIA"]
-source_file: "Doc/online/CAACgmBase/CAACgmTopologyHome.htmmd"
+tags: "["CAAGMOperatorsInterfaces", "CATIA"]"
+source_file: "Doc/online/CAACgmBase/CAACgmTopologyHome.htm"
 converted: "2026-05-11T17:33:47.855751"
-```
-
 ---
 tags: ["CAAGMOperatorsInterfaces", "CATIA"]
 source_file: "Doc/online/CAACgmBase/CAACgmTopologyHome.htmmd"

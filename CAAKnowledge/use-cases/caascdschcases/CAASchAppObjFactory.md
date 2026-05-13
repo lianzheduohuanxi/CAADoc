@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Building a Schematic Reference Component"
 category: "use-case"
 module: "CAAScdSchUseCases"
-tags: ["CAADoc", "CAASchPlatformModeler", "CAASchAppObjFactory", "CATIASchCompConnector", "CAASCHEDUCompressFunc", "CAAScdSchUseCases", "CAASCHEDU_SamplePID", "CAASCHEDUFuncString", "CATIA", "CAASchAppBase", "CAASCHEDUApp", "CAASCHEDUConnector", "CATIASchGRR", "CATIASchCompatible", "CAASCH_Detail01", "CATIASchComponent2", "CAASchAppUtilities"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchAppObjFactory.htmmd"
+tags: "["CAADoc", "CAASchPlatformModeler", "CAASchAppObjFactory", "CATIASchCompConnector", "CAASCHEDUCompressFunc", "CAAScdSchUseCases", "CAASCHEDU_SamplePID", "CAASCHEDUFuncString", "CATIA", "CAASchAppBase", "CAASCHEDUApp", "CAASCHEDUConnector", "CATIASchGRR", "CATIASchCompatible", "CAASCH_Detail01", "CATIASchComponent2", "CAASchAppUtilities"]"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchAppObjFactory.htm"
 converted: "2026-05-11T17:31:51.312764"
-```
-
 ---
 ## Schematics Platform Modeler
 
@@ -37,7 +34,6 @@ converted: "2026-05-11T17:31:51.312764"
 [CAASchAppObjFactory.CATScript](CAASchAppObjFactorySource.md) is located in the CAAScdSchUseCases module. [Execute macro](macros/CAASchAppObjFactory.CATScript) (Windows only).
  CAASchAppObjFactory includes the following steps:
 
-CAASchAppObjFactory includes the following steps:
   1. Prolog
   2. Create a schematic reference component
   3. Add two connectors to the reference component
@@ -63,7 +59,7 @@ The macro first loads CAASCH_Detail01.CATProduct that contains 3 schematic compo
     Dim sFilePath
 ```vbscript
 ```
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
 ```
@@ -78,7 +74,7 @@ Dim sFilePath
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
@@ -136,7 +132,6 @@ Next, the macro acquires the schematic root object from the document. The schema
 
 From this schematic root object the following factory objects can be obtained.
 
-From this schematic root object the following factory objects can be obtained.
   1. Application object factory (in this case the application is "CAASCHEDU_SamplePID") creates application objects independent of the Schematic platform.
   2. Schematic base object factory. This factory creates the schematic extensions and associates them to application objects.
   3. Schematic temporary list factory. This factory creates various kinds of lists that are not persistent. They are only available in the current session and are not saved in the model.
@@ -275,7 +270,6 @@ Note that, a temporary list of object is created to contain the graphic represen
 
 To add connectors to the reference component just created, we need a different interface ("CATIASchCompConnector") on the reference component class. Given a different interface handle (on the same reference component) objAppCompRef, we can obtain the necessary interface handle by using the GetInterface method. This method is implemented on the schematic root object class.
 
-To add connectors to the reference component just created, we need a different interface ("CATIASchCompConnector") on the reference component class. Given a different interface handle (on the same reference component) objAppCompRef, we can obtain the necessary interface handle by using the GetInterface method. This method is implemented on the schematic root object class.
 The following data needs to be defined when creating a connector.
 
   1. The x-y coordinates of the connector position with respect to the axis of the symbol.
@@ -300,7 +294,7 @@ The following data needs to be defined when creating a connector.
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
            Dim objSchAppCntr As SchAppConnector
            Dim objSchCntrLoc As SchCntrLocation
 
@@ -325,7 +319,7 @@ The following data needs to be defined when creating a connector.
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
               Dim db2CntrPos (2) As CATSafeArrayVariant
               Dim db2CntrVec (2) As CATSafeArrayVariant
 
@@ -419,7 +413,6 @@ We also need to specify the positioning matrix for the graphical representation 
            ' the design document
            ' Note that the target document is an input to PlaceInSpace
            '-------------------------------------------------------------------
-           '-------------------------------------------------------------------
            ' Component instance (to be created below) orientation matrix.
            ' x-axis = (1.0,0.0)
            ' y-axis = (0.0,1.0)
@@ -432,7 +425,7 @@ We also need to specify the positioning matrix for the graphical representation 
 ```
 
 ```vbscript
-```vbscript
+```cpp
            Dim db6Matrix(6) As CATSafeArrayVariant
 ```vbscript
 ```
@@ -473,7 +466,6 @@ If ( Not ( objSchComp2Ref Is Nothing ) ) Then
 
 To create a schematic route instance we need to specify the x-y coordinates of all the points defining the segments of the route path (a polyline). In this use case, the macro will find a position that matches one of the connector position in the schematic component instance we have just created in previous step, and will use that to define the first point of the route.
 
-To create a schematic route instance we need to specify the x-y coordinates of all the points defining the segments of the route path (a polyline). In this use case, the macro will find a position that matches one of the connector position in the schematic component instance we have just created in previous step, and will use that to define the first point of the route.
 Given a schematic component instance, we can obtain the CATIASchCompatible interface from it. This interface can be used to check whether this component instance can be connected to a specific type of schematic route. In this use case, the type of the route to be created is one that includes a "CAASCHEDUConnector" at each of its two ends.
 
 IsTargetOKForRoute is called for the checking. It returns a flag bCompatible and if this flag is TRUE, then the route we are going to create is compatible with the component instance and can be connected to it. It also returns a list of compatible connectors of the component instance that can be used in the next call GetBestCntrForRoute. This call returns a handle on a connector (of the component instance). The x-y coordinates of the position of this connector defines the first route points.
@@ -524,7 +516,7 @@ Not ( objSchGRRCompInst Is Nothing ) ) Then
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
                Dim objAppCntrCompBest As SchAppConnector
                Dim objLDbOut As SchListOfDoubles
                Dim db2SelectPt(2) As CATSafeArrayVariant
@@ -541,7 +533,7 @@ Not ( objSchGRRCompInst Is Nothing ) ) Then
 Dim objLDbOut As SchListOfDoubles
 ```vbscript
 ```
-```vbscript
+```cpp
 Dim db2SelectPt(2) As CATSafeArrayVariant
                db2SelectPt(0) = 130.0
 ```

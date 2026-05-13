@@ -1,15 +1,10 @@
 ---
-```vbscript
 title: "Contextual Help for an Add-on"
-category: use-case case"
+category: "use-case case"
 module: "CAAAfrUseCases"
-tags: ["CAAAfrDumpCommandHeader", "CAAAfrExploreHdr", "CAAAfrCuboidHdr", "CAAAfrBoundingEltHdr", "CAAGeometry", "CAAAfrGeoAnalysisWkbHeader", "CATIA", "CAAAfrCylinder2Hdr", "CATIAfr_C2", "CAADialogEngine", "CAACATIAApplicationFrame", "CAAAfrGeoChartWindowAdnHeader", "CATIAfrs", "CATIAApplicationFrame", "CAADoc", "CAAVisualization", "CAAAfrGeoCreationWkbHeader", "CAAAfrCylinder1Hdr", "CATIAtoc", "CAAAfrHistogramChartWindowHdr"]
-```vbscript
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleContextualHelpCATIA.htmmd"
+tags: "["CAAAfrDumpCommandHeader", "CAAAfrExploreHdr", "CAAAfrCuboidHdr", "CAAAfrBoundingEltHdr", "CAAGeometry", "CAAAfrGeoAnalysisWkbHeader", "CATIA", "CAAAfrCylinder2Hdr", "CATIAfr_C2", "CAADialogEngine", "CAACATIAApplicationFrame", "CAAAfrGeoChartWindowAdnHeader", "CATIAfrs", "CATIAApplicationFrame", "CAADoc", "CAAVisualization", "CAAAfrGeoCreationWkbHeader", "CAAAfrCylinder1Hdr", "CATIAtoc", "CAAAfrHistogramChartWindowHdr"]"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleContextualHelpCATIA.htm"
 converted: "2026-05-11T17:17:55.660612"
-```
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -237,7 +232,6 @@ This directory contains only the **msgcatalog** directory.
 
 This msgcatalog directory contains the **CommonId2url**.CATNls file.
 
-This msgcatalog directory contains the **CommonId2url**.CATNls file.
     CAAAfrGeometryWksHeader.CAAAfrPointHdr = "GeoWs_C2/GeoWspoint.md" ;
 ```vbscript
 ```vbscript

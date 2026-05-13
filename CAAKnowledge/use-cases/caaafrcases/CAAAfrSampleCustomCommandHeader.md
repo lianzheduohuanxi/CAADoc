@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Customized Command Headers"
-category: use-case case"
+category: "use-case case"
 module: "CAAAfrUseCases"
-tags: ["CAAFindP2", "CAAAfrDumpCommandHeader", "CAASysCollectionEmptyNotif", "CAAAfrGeometryWksHeader", "CAAAfrGeometryWks", "CATImplementHeaderResources", "CAAAfrGeometryWshop", "CAAGeometry", "CAAAfrGeoCommands", "CAASysCollectionFilledNotif", "CAAAfrDumpCmd", "CAAAfrDumpHdr", "CAAISysCollection", "CAAApplicationFrame"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleCustomCommandHeader.htmmd"
+tags: "["CAAFindP2", "CAAAfrDumpCommandHeader", "CAASysCollectionEmptyNotif", "CAAAfrGeometryWksHeader", "CAAAfrGeometryWks", "CATImplementHeaderResources", "CAAAfrGeometryWshop", "CAAGeometry", "CAAAfrGeoCommands", "CAASysCollectionFilledNotif", "CAAAfrDumpCmd", "CAAAfrDumpHdr", "CAAISysCollection", "CAAApplicationFrame"]"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleCustomCommandHeader.htm"
 converted: "2026-05-11T17:17:55.679598"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -218,7 +215,7 @@ if (NULL != _pCollection)
 ```
 
                       "CAASysCollectionEmptyNotif",
-```vbscript
+```cpp
 if (NULL != _pCollection)
 _pCollection,
                       (CATSubscriberMethod)&CAAAfrDumpCommandHeader::AnalyzeEmptyCB,
@@ -311,7 +308,7 @@ _pCollection(NULL)
     CATCommandHeader * CAAAfrDumpCommandHeader::Clone(#)
 
     {
-```vbscript
+```cpp
 _pCollection(NULL)
 CATCommandHeader * CAAAfrDumpCommandHeader::Clone(#)
       return new CAAAfrDumpCommandHeader(this);
@@ -404,7 +401,6 @@ The _CAAAfrDumpCommandHeader_ class is automatically associated with two resourc
 
 The resources are designated using a key built as a concatenation of the command header class name, the command header instance identifier, and the resource keyword, separated by dots. The CAAAfrDumpCommandHeader.CATNls file includes the following for the Point command:
 
-The resources are designated using a key built as a concatenation of the command header class name, the command header instance identifier, and the resource keyword, separated by dots. The CAAAfrDumpCommandHeader.CATNls file includes the following for the Point command:
     CAAAfrDumpCommandHeader.CAAAfrDumpHdr.**Title**     = "Element Count...";
     CAAAfrDumpCommandHeader.CAAAfrDumpHdr.**ShortHelp** = "Element Count";
     CAAAfrDumpCommandHeader.CAAAfrDumpHdr.**Help**      = "Contents of the document";

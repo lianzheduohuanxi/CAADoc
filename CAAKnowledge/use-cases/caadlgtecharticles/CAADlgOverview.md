@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Dialog Overview"
-category: tech-article
+category: "tech-article"
 module: "CAADlgTechArticles"
-tags: ["CATInteractiveApplication"]
-source_file: "Doc/online/CAADlgTechArticles/CAADlgOverview.htmmd"
+tags: "["CATInteractiveApplication"]"
+source_file: "Doc/online/CAADlgTechArticles/CAADlgOverview.htm"
 converted: "2026-05-11T17:17:56.063492"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -66,7 +63,6 @@ Below are the Dialog Framework classes used in dialog windows and arranged in a 
 
 The Dialog framework includes two main class types:
 
-The Dialog framework includes two main class types:
   1. The **containers** to contain and arrange component objects. The containers can be visible or not, and do not react themselves to the user interactions, except for repositioning and resizing. They are **windows** , **boxes** , **bars** and **menus**
   2. The **components** which are atom objects to fill the containers. Most of them are sensitive to user interactions: they are **controls** and **menu items**. Some others are used to separate or name other controls: they are the **indicators**.
 

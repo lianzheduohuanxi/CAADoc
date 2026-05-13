@@ -35,19 +35,19 @@ Language="VBScript"
 
 '---------------------------------------------------------------------------
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
     ' Set the CATIA popup file alerts to False
     ' It prevents to stop the macro at each alert during its execution
 ```
-```vbscript
+```cpp
     CATIA.DisplayFileAlerts = False
 
     ' Optional: allows to find the sample wherever it's installed
 ```
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,"No Doc Path Defined"
@@ -57,7 +57,7 @@ Sub CATMain(#)
 '---------------------------------------------------------------------------
 '1/ Read active CATDrawing Document
 '---------------------------------------------------------------------------
-```vbscript
+```cpp
 Dim DrwDoc As DrawingDocument
 Set DrwDoc = CATIA.ActiveDocument
 
@@ -69,7 +69,7 @@ Set DrwSelect = DrwDoc.Selection
 
 ' Variables declaration
 ```
-```vbscript
+```cpp
 Dim ElemDispatch As CATBaseDispatch
 Dim NomObj As String
 Dim numsheet As Long
@@ -270,19 +270,19 @@ Language=&quot;VBScript&quot;
 
 '---------------------------------------------------------------------------
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
     ' Set the CATIA popup file alerts to False
     ' It prevents to stop the macro at each alert during its execution
 ```
-```vbscript
+```cpp
     CATIA.DisplayFileAlerts = False
 
     ' Optional: allows to find the sample wherever it's installed
 ```
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,&quot;No Doc Path Defined&quot;
@@ -292,7 +292,7 @@ Sub CATMain(#)
 '---------------------------------------------------------------------------
 '1/ Read active CATDrawing Document
 '---------------------------------------------------------------------------
-```vbscript
+```cpp
 Dim DrwDoc As DrawingDocument
 Set DrwDoc = CATIA.ActiveDocument
 
@@ -304,7 +304,7 @@ Set DrwSelect = DrwDoc.Selection
 
 ' Variables declaration
 ```
-```vbscript
+```cpp
 Dim ElemDispatch As CATBaseDispatch
 Dim NomObj As String
 Dim numsheet As Long

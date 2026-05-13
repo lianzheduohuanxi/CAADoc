@@ -320,7 +320,7 @@ converted: "2026-05-11T11:27:02.777035"
 
          
 
-```vbscript
+```cpp
 $ mkrun -c sh
 $ cd your_workspace_root
 $ # Make sure that no previous catalog exists in the runtime view, including in the concatenation
@@ -340,11 +340,11 @@ $ # the mkrun shell
 $ exit
 ```
 
-```vbscript
+```cpp
 CATfctEditorAssistant -create-new-catalog -catalog-name CAAUserOperationCatalog.CATfct -with-client-id CLIENT -using-template delmia
 ```
 
-```vbscript
+```cpp
 /**
 * Copyright Dassault Systemes 2006
 * delmia.osm catalog skeleton
@@ -362,7 +362,7 @@ document `CAAUserOperationCatalog.CATfct` {
 }
 ```
 
-```vbscript
+```cpp
 ...
 		// User Startup deriving from MfgUserDefinedMO
 		// --------------------------------------------------
@@ -383,7 +383,7 @@ document `CAAUserOperationCatalog.CATfct` {
         ...
 ```
 
-```vbscript
+```cpp
 ...
 		// User Startup deriving from MfgUserDefinedMO
 		// --------------------------------------------------
@@ -412,6 +412,6 @@ document `CAAUserOperationCatalog.CATfct` {
         ...
 ```
 
-```vbscript
+```cpp
 CATfctEditorAssistant -update-catalog -catalog-name CAAUserOperationCatalog.CATfct -with-client-id CLIENT -with-osm CAAUserOperationCatalog.osm
 ```

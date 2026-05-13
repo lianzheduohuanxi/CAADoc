@@ -1,48 +1,38 @@
 ---
 title: "CATTestListViewAppli"
-type: "interface"
+type: "LocalClass"
 module: "CAACATIAApplicationFrm"
-category: api-reference
 base: "CATInteractiveApplication"
-inheritance_chain: "CATTestListViewAppli → CATInteractiveApplication"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 2
+source_file: "CAACATIAApplicationFrm.edu/CAACafDlgView.m/LocalInterfaces/CATTestListViewAppli.h"
 ---
+
 # CATTestListViewAppli
 
-**基类**: CATInteractiveApplication  
-**继承链**: CATTestListViewAppli → CATInteractiveApplication  
-**模块**: CAACATIAApplicationFrm  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> Application class. This is the main object in the process. It avoids writing a main function. Event loop is managed automatically by deriving from CATInteractiveApplication. CATTestListViewAppli only creates the main window and subscribes to the window closing to terminate the application. Inheritance: CATInteractiveApplication (Dialog Framework) CATApplication (System Framework) Main Method: BeginApplication: Contains the whole application code. CATIAApplicationFrame Framework
 
-> BeginApplication: Contains the whole application code.
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATInteractiveApplication | **模块**: CAACATIAApplicationFrm | **方法数**: 2
 
 ## 依赖
 
 - `CATInteractiveApplication.h`
 
+## 公共方法
+
+### BeginApplication
+
+```cpp
+void BeginApplication() ;
+```
+
+
+### EndApplication
+
+```cpp
+int EndApplication() ;
+```
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATInteractiveApplication**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAT** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAACATIAApplicationFrm.edu/CAACafDlgView.m/LocalInterfaces/CATTestListViewAppli.h`

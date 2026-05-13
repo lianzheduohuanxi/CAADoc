@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Editing Generated Shapes in Generative Views"
-category: use-case case"
+category: "use-case case"
 module: "CAADriUseCases"
-tags: ["CATIDftDocumentServices", "CATIDftPattern", "CATIDftView", "CATIProduct", "CATIDftDrawing", "CAADraftingInterfaces", "CATIA", "CAADrwGenShape", "CATIDrwGenDrawShape", "CATIUnknownList"]
-source_file: "Doc/online/CAADriUseCases/CAADriGenShape.htmmd"
+tags: "["CATIDftDocumentServices", "CATIDftPattern", "CATIDftView", "CATIProduct", "CATIDftDrawing", "CAADraftingInterfaces", "CATIA", "CAADrwGenShape", "CATIDrwGenDrawShape", "CATIUnknownList"]"
+source_file: "Doc/online/CAADriUseCases/CAADriGenShape.htm"
 converted: "2026-05-11T17:31:51.006322"
-```
-
 ---
 # Mechanical Design
 
@@ -85,7 +82,6 @@ When you launch the use case, pass the full pathname of the Drawing file as argu
 
 The CAADrwGenShape use case is made of a single source file named CAADrwGenShape.cpp located in the CAADrwGenShape.m module of the CAADraftingInterfaces.edu framework:
 
-The CAADrwGenShape use case is made of a single source file named CAADrwGenShape.cpp located in the CAADrwGenShape.m module of the CAADraftingInterfaces.edu framework:
 Windows | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwGenShape.m/`
 
 The CAADrwGenShape use case is made of a single source file named CAADrwGenShape.cpp located in the CAADrwGenShape.m module of the CAADraftingInterfaces.edu framework:
@@ -141,7 +137,7 @@ int rc =0;
 
     CATDocument* pDocDrawing = NULL;
 
-```vbscript
+```cpp
     if (FAILED(CATDocumentServices::OpenDocument(pfileNameDrawing, pDocDrawing)))
 
 ```
@@ -162,10 +158,9 @@ This section represents the usual sequence for loading a CATIA document [2].
 
     ...
     CATIDftDrawing *piDrawing = NULL;
-CATIDftDrawing *piDrawing = NULL;
     CATIDftDocumentServices *piDftDocServices = NULL;
 
-```vbscript
+```cpp
     if (SUCCEEDED(pDocDrawing->QueryInterface(IID_CATIDftDocumentServices, (void **)&piDftDocServices)))
 
 ```
@@ -175,7 +170,7 @@ CATIDftDrawing *piDrawing = NULL;
 CATIDftDocumentServices *piDftDocServices = NULL;
 if (SUCCEEDED(pDocDrawing->QueryInterface(IID_CATIDftDocumentServices, (void **)&piDftDocServices)))
 ```vbscript
-```vbscript
+```cpp
       if (SUCCEEDED(piDftDocServices->GetDrawing(IID_CATIDftDrawing, (void **)&piDrawing)))
 
 ```
@@ -183,9 +178,9 @@ if (SUCCEEDED(pDocDrawing->QueryInterface(IID_CATIDftDocumentServices, (void **)
 ```
 
       {
-```vbscript
+```cpp
 if (SUCCEEDED(pDocDrawing->QueryInterface(IID_CATIDftDocumentServices, (void **)&piDftDocServices)))
-```vbscript
+```cpp
 if (SUCCEEDED(piDftDocServices->GetDrawing(IID_CATIDftDrawing, (void **)&piDrawing)))
 ```
 
@@ -194,7 +189,7 @@ if (SUCCEEDED(piDftDocServices->GetDrawing(IID_CATIDftDrawing, (void **)&piDrawi
 ```
 
       }
-```vbscript
+```cpp
 if (SUCCEEDED(piDftDocServices->GetDrawing(IID_CATIDftDrawing, (void **)&piDrawing)))
 piDftDocServices->Release(#);
 piDftDocServices=NULL;
@@ -236,7 +231,7 @@ The root feature of a drawing document is the Drawing, that is, the feature that
       // ===========================================
       if (piDrawing)
       {
-```vbscript
+```cpp
 if (piDrawing)
         CATIDftView *piCurrentView = NULL;
         if (SUCCEEDED(piDrawing->GetActiveView(&piCurrentView)))
@@ -256,14 +251,14 @@ if (SUCCEEDED(piDrawing->GetActiveView(&piCurrentView)))
 ```
 
           {
-```vbscript
+```cpp
 if (NULL != piCurrentView)
             CATIUnknownList * piList = NULL;
             if (SUCCEEDED( piCurrentView->GetComponents(IID_CATIDrwGenDrawShape,&piList)))
 ```
 
             {
-```vbscript
+```cpp
 if (NULL != piCurrentView)
 CATIUnknownList * piList = NULL;
 if (SUCCEEDED( piCurrentView->GetComponents(IID_CATIDrwGenDrawShape,&piList)))
@@ -304,7 +299,7 @@ for(unsigned int i=0 ; i<piListSize ; i++)
                   {
 ```vbscript
 for(unsigned int i=0 ; i<piListSize ; i++)
-```vbscript
+```cpp
 if( SUCCEEDED( piList->Item(i, &item) ) )
                     if(SUCCEEDED( item->QueryInterface(IID_CATIDrwGenDrawShape, (void**) & piGenShape) ) )
 ```
@@ -391,8 +386,7 @@ This sample show how to retrieve points defining the contours by using GetDescri
 
     ...
     IUnknown *piUnk=NULL;
-IUnknown *piUnk=NULL;
-```vbscript
+```cpp
     if (SUCCEEDED(piGenShape->GetProduct(IID_CATIProduct,&piUnk)))
 
 ```
@@ -401,13 +395,13 @@ IUnknown *piUnk=NULL;
 IUnknown *piUnk=NULL;
 if (SUCCEEDED(piGenShape->GetProduct(IID_CATIProduct,&piUnk)))
       CATIProduct *piProd =NULL;
-```vbscript
+```cpp
       if (SUCCEEDED(piUnk->QueryInterface(IID_CATIProduct,(void **)&piProd)))
 
 ```
 
       {
-```vbscript
+```cpp
 if (SUCCEEDED(piGenShape->GetProduct(IID_CATIProduct,&piUnk)))
 CATIProduct *piProd =NULL;
 if (SUCCEEDED(piUnk->QueryInterface(IID_CATIProduct,(void **)&piProd)))
@@ -416,7 +410,7 @@ if (SUCCEEDED(piUnk->QueryInterface(IID_CATIProduct,(void **)&piProd)))
 ```
 
         // Get part instance name on which generated shape is associated.
-```vbscript
+```cpp
 if (SUCCEEDED(piUnk->QueryInterface(IID_CATIProduct,(void **)&piProd)))
 CATUnicodeString instanceName;
         if (SUCCEEDED (piProd->GetPrdInstanceName( instanceName ) ))
@@ -450,7 +444,6 @@ piProd->Release(#);piProd=NULL;
     ...
     // Get Pattern used by the generated shape,
     CATIDftPattern *piDftPattern=NULL;
-CATIDftPattern *piDftPattern=NULL;
 ```vbscript
     if (SUCCEEDED(piGenShape->GetPattern(&piDftPattern)))
 
@@ -485,7 +478,7 @@ This section represents the usual sequence to retrieve the Pattern [3].
       // Ends session and drops document
 rc = CATDocumentServices::**SaveAs**(*pDoc, (char *)fileName);
 ```vbscript
-```vbscript
+```cpp
 rc = CATDocumentServices::**Remove** (*pDoc);
       rc = ::**Delete_Session**("SampleSession");
 
@@ -509,7 +502,6 @@ This section represents the usual sequence for saving a newly created CATIA docu
 
 This use case shows the way to :
 
-This use case shows the way to :
   1. Open a Drawing document.
   2. Get all Generated Shape in the current view.
   3. Get Geometry defining the Generated Shape.

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "New C++ Authorized APIs in CAA V5R18 SP1"
 category: "use-case"
 module: "CAACenQuickRefs"
-tags: ["CATIMfgActivityToolVisu", "CATImmENOVIAProvider", "CATIPLMIdentificator", "CATICfgCatLnk", "CATIA"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R18SP1NewCPPAPI.htmmd"
+tags: "["CATIMfgActivityToolVisu", "CATImmENOVIAProvider", "CATIPLMIdentificator", "CATICfgCatLnk", "CATIA"]"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R18SP1NewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.368948"
-```
-
 ---
 tags: ["CATIMfgActivityToolVisu", "CATImmENOVIAProvider", "CATIPLMIdentificator", "CATICfgCatLnk", "CATIA"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R18SP1NewCPPAPI.htmmd"
@@ -23,7 +20,7 @@ The following are the new CAA V5R18 SP1 C++ Authorized APIs, compared with CAA V
   * CATPDMBase framework
     * Class CATPDMCATIAServices
     * Class CATPDMCSServices
-```vbscript
+```cpp
     * Global Function E2ESendTo
   * CATPDMBaseInterfaces framework
 ```
@@ -41,7 +38,7 @@ The following are the new CAA V5R18 SP1 C++ Authorized APIs, compared with CAA V
   * Mathematics framework
     * Macro or #define CATTolerance_ControlDefault
     * Macro or #define CATToleranceCheckDefault
-```vbscript
+```cpp
     * Global Function CATToleranceError
   * VPMInterfaces framework
 ```
@@ -59,7 +56,7 @@ History Version: **1** [Aug 2007] | Document created
 * * *
 
 _Copyright © 1999-2007, Dassault Systèmes. All rights reserved._
-```vbscript
+```cpp
 Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.md) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.md) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.md)
 
 ```

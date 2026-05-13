@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "Detail Of C++ API Changes"
 category: "api-changes"
 module: "CAACenAPIChangesR14"
-version: "V5R14"
-tags: ["CAA2Usage", "CAA2Level"]
-source_file: "Doc/online/CAACenAPIChangesR14/CAACenAPIChangeDetail.htmmd"
+tags: "["CAA2Usage", "CAA2Level"]"
+source_file: "Doc/online/CAACenAPIChangesR14/CAACenAPIChangeDetail.htm"
 converted: "2026-05-11T17:33:50.826300"
-```
-
 ---
 |  |  |  Detail Of V5R14 C++ API Changes _What changes in the API compared with CAA V5R13_
 ---|---|---
@@ -36,7 +32,6 @@ MINMV | Method is no more virtual. If occurs on a U1 class, may require modifica
 MINMV | Method is no more virtual. If occurs on a U1 class, may require modifications in Imakefile.mk of client code. If occurs on a U2 class, see details on the documentation of the concerned resource modification.
 CATAnalysisBase | [R14GA vs R13GA](CATAnalysisBase.md)
 
-CATAnalysisBase | [R14GA vs R13GA](CATAnalysisBase.md)
 CATAnalysisInterfaces | [R14GA vs R13GA](CATAnalysisInterfaces.md) |
 CATSchPlatformModeler | [R14GA vs R13GA](CATSchPlatformModeler.md) |
 ConstraintModeler | [R14GA vs R13GA](ConstraintModeler.md) |

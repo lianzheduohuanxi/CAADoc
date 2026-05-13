@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Geometric Modeler"
 category: "use case"
 module: "CAATobUseCases"
-tags: ["CAATobReverseEdgeOrientation", "CATICGMObject", "CAATopologicalObjects", "CATICGMContainer"]
-source_file: "Doc/online/CAATobUseCases/CAATopReverseEdgeOrientation.htmmd"
+tags: "["CAATobReverseEdgeOrientation", "CATICGMObject", "CAATopologicalObjects", "CATICGMContainer"]"
+source_file: "Doc/online/CAATobUseCases/CAATopReverseEdgeOrientation.htm"
 converted: "2026-05-11T17:33:45.870486"
-```
-
 ---
 tags: ["CAATobReverseEdgeOrientation", "CATICGMObject", "CAATopologicalObjects", "CATICGMContainer"]
 source_file: "Doc/online/CAATobUseCases/CAATopReverseEdgeOrientation.htmmd"
@@ -42,7 +39,6 @@ What You Will Learn With This Use Case This use case is intended to make you und
 
 [Top] How to Launch CAATobReverseEdgeOrientation To launch CAATobReverseEdgeOrientation , you will need to set up the build time environment, then compile CAATobReverseEdgeOrientation.m along with its prerequisites, set up the run time environment, and then execute the use case [1]. With Windows CAATobReverseEdgeOrientation `e:/tobereversed.NCGM" e/outputFile.NCGM` With UNIX CAATobReverseEdgeOrientation `/u/`tobereversed`.NCGM e/outputFile.NCGM` where tobereversed.NCGM is an input file delivered in the CAATopologicalObjects.edu/FunctionTests/InputData file and outputFile.NCGM the file where you want to store the created data. [Top] WWhere to Find the CAATobReverseEdgeOrientation Code The CAATobReverseEdgeOrientation use case is made of a main named ReverseEdgeOrientationOpe.cpp located in the CAATobReverseEdgeOrientation .m module of the CAATopologicalObjects.edu framework: Windows | `InstallRootDirectory/CAATopologicalObjects.edu/CAATobReverseEdgeOrientation .m/`
 ---|---
-Unix | `InstallRootDirectory/CAATopologicalObjects.edu/CAATobReverseEdgeOrientation .m/`
 Unix | `InstallRootDirectory/CAATopologicalObjects.edu/CAATobReverseEdgeOrientation .m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed. [Top] Step-by-Step There are three main steps in ReverseEdgeOrientation.cpp:
 
@@ -149,7 +145,7 @@ if(curside  ==  CATSideRight)
 
          { newside = CATSideRight;}
          ...
-```vbscript
+```cpp
 if(curside  ==  CATSideRight)
 else if (curside  ==  CATSideLeft)
          ReplEdg -> SetSideOnFace(duplicatedFace, newside);
@@ -178,13 +174,13 @@ while ( ( CurCurve = EdgeCurveIterator.Next(#) )  )
      if(1==toStore)
      {
     #ifdef _WINDOWS_SOURCE
-```vbscript
+```cpp
 if(1==toStore)
        ofstream filetowrite(pFileName1, ios::binary ) ;
 ```
 
     #else
-```vbscript
+```cpp
 if(1==toStore)
 ofstream filetowrite(pFileName1, ios::binary ) ;
        ofstream filetowrite(pFileName1,ios::out,filebuf::openprot) ;

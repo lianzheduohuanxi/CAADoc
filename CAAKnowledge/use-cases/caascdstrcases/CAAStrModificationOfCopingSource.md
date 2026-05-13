@@ -1,16 +1,13 @@
 ---
-```vbscript
 title: "CAAStrEditCoping.CATScript"
 category: "use-case"
 module: "CAAScdStrUseCases"
-tags: ["CATIA", "CAAStrEditCoping"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfCopingSource.htmmd"
+tags: "["CATIA", "CAAStrEditCoping"]"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfCopingSource.htm"
 converted: "2026-05-11T17:31:50.893073"
-```
-
 ---
 ```vbscript
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ```
@@ -22,7 +19,7 @@ Sub CATMain(#)
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
     Dim strFactory As StrObjectFactory
 
     Set doc = CATIA.ActiveDocument

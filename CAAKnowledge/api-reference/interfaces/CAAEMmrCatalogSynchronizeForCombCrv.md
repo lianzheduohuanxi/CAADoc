@@ -1,51 +1,94 @@
 ---
 title: "CAAEMmrCatalogSynchronizeForCombCrv"
-type: "interface"
+type: "LocalClass"
 module: "CAAMechanicalModeler"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAEMmrCatalogSynchronizeForCombCrv → CATBaseUnknown"
 method_count: 6
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAMechanicalModeler.edu/CAAMmrCatalogCombCrv.m/LocalInterfaces/CAAEMmrCatalogSynchronizeForCombCrv.h"
 ---
+
 # CAAEMmrCatalogSynchronizeForCombCrv
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAEMmrCatalogSynchronizeForCombCrv → CATBaseUnknown  
-**模块**: CAAMechanicalModeler  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 6
+**基类**: CATBaseUnknown | **模块**: CAAMechanicalModeler | **方法数**: 6
 
 ## 依赖
 
 - `CATBaseUnknown.h`
 - `CATICkeType.h`
 
+## 虚方法
+
+### GetAlias
+
+```cpp
+virtual HRESULT GetAlias(CATUnicodeString& oAlias) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oAlias | `CATUnicodeString&` |
+
+
+### GetEmbeddedPreview
+
+```cpp
+virtual HRESULT GetEmbeddedPreview(CATPixelImage** oImage) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oImage | `CATPixelImage**` |
+
+
+### GetKeywordValue
+
+```cpp
+virtual HRESULT GetKeywordValue(const CATUnicodeString& iKeywordName, int& oKeyWordValue) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iKeywordName | `const CATUnicodeString&` |
+| oKeyWordValue | `int&` |
+
+
+### GetKeywordValue
+
+```cpp
+virtual HRESULT GetKeywordValue(const CATUnicodeString& iKeywordName, const CATICkeType* iKeywordType, double& oKeyWordValue) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iKeywordName | `const CATUnicodeString&` |
+| iKeywordType | `const CATICkeType*` |
+| oKeyWordValue | `double&` |
+
+
+### GetKeywordValue
+
+```cpp
+virtual HRESULT GetKeywordValue(const CATUnicodeString& iKeywordName, CATCke::Boolean & oKeyWordValue) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iKeywordName | `const CATUnicodeString&` |
+| oKeyWordValue | `CATCke::Boolean &` |
+
+
+### GetKeywordValue
+
+```cpp
+virtual HRESULT GetKeywordValue(const CATUnicodeString& iKeywordName, CATUnicodeString& oKeyWordValue) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iKeywordName | `const CATUnicodeString&` |
+| oKeyWordValue | `CATUnicodeString&` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAMechanicalModeler.edu/CAAMmrCatalogCombCrv.m/LocalInterfaces/CAAEMmrCatalogSynchronizeForCombCrv.h`

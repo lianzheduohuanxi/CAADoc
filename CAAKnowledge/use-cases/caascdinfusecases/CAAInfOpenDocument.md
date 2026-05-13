@@ -62,7 +62,7 @@ interactive session.
 
 ```vbscript
 ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
      Dim sDocPath As String
      sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
 
@@ -74,7 +74,7 @@ interactive session.
 
 ```vbscript
 ...
-```vbscript
+```cpp
     Dim iPartDoc As Document
     Set iPartDoc = CATIA.Documents.Open(sDocPath &amp; _
        &quot;/online/CAAScdInfUseCases/samples/CAAInfReadDocument.CATPart&quot;)

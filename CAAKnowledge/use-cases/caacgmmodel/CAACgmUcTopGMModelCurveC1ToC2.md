@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Breaking a C1 Curve into C2 Pieces"
 category: "use case"
 module: "CAACgmModel"
-tags: ["CAAGMModelConvertCurveToC2", "CAAGMModelInterfaces", "CATICGMNurbsCurveTools", "CATIA", "CATICGMMathNurbsCurveTools"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcTopGMModelCurveC1ToC2.htmmd"
+tags: "["CAAGMModelConvertCurveToC2", "CAAGMModelInterfaces", "CATICGMNurbsCurveTools", "CATIA", "CATICGMMathNurbsCurveTools"]"
+source_file: "Doc/online/CAACgmModel/CAACgmUcTopGMModelCurveC1ToC2.htm"
 converted: "2026-05-11T17:33:48.589667"
-```
-
 ---
 tags: ["CAAGMModelConvertCurveToC2", "CAAGMModelInterfaces", "CATICGMNurbsCurveTools", "CATIA", "CATICGMMathNurbsCurveTools"]
 source_file: "Doc/online/CAACgmModel/CAACgmUcTopGMModelCurveC1ToC2.htmmd"
@@ -81,7 +78,6 @@ aWeights);
     ---
 
     three pieces are created. Assembling these three pieces and analyzing the
-three pieces are created. Assembling these three pieces and analyzing the
     wire with the CATIA GSD "Curve Smooth" capability  gives this result:
 
       Fig.2 Point on a Wire: Result

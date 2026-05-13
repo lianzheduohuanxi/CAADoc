@@ -1,13 +1,10 @@
 ---
-```vbscript
-title: "Creating a Non-Manifold Wire "
+title: "Creating a Non-Manifold Wire"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperatorsTopWireAssembly", "CAAGMOperatorsInterfaces", "CATICGMHybAssemble", "CATICGMHybProject"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopNonManifoldWire.htmmd"
+tags: "["CAAGMOperatorsTopWireAssembly", "CAAGMOperatorsInterfaces", "CATICGMHybAssemble", "CATICGMHybProject"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopNonManifoldWire.htm"
 converted: "2026-05-11T17:33:49.211399"
-```
-
 ---
 tags: ["CAAGMOperatorsTopWireAssembly", "CAAGMOperatorsInterfaces", "CATICGMHybAssemble", "CATICGMHybProject"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcTopNonManifoldWire.htmmd"
@@ -33,7 +30,7 @@ If the command cannot complete due to the non-manifold nature of the input bodie
     * Use Case Description
     * References
 ---
-```vbscript
+```cpp
 If the command cannot complete due to the non-manifold nature of the input bodies, it is necessary to remove some sub-elements in order to obtain appropriate manifold bodies. But the operation which consists in removing sub-elements can only be applied to manifold domains. If your body is not made up of correct manifold domains, you won't be able to clean or transform your initial body. Note that CGM services allow you to create non-manifold bodies while usually the interactive commands break the created bodies into appropriate domains. That way, the resulting bodies are non-manifold-like but contain sub-elements easy to be manipulated.  This use case illustrates how to create a non-manifold wire and project it onto a plane.
 Operator to be Used You can create a non-manifold wire by assembling lines using the CATICGMHybAssemble operator. This wire can be projected onto a surface by using the CATICGMHybProject operator. Use Case Description The CAAGMOperatorsTopWireAssembly.m module in CAAGMOperatorsInterfaces.edu illustrates how to create a non-manifold wire and project it onto a plane.If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md). The code below creates a multi-domain wire from three lines:
 

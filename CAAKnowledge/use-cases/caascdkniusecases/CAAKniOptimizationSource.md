@@ -31,13 +31,13 @@ Language="VBScript"
 '   CATIA Level:  V5R7 
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ' Set the CATIA popup file alerts to False
 ' It prevents to stop the macro at each alert during its execution
 ```
-```vbscript
+```cpp
 CATIA.DisplayFileAlerts = False
 
 ```
@@ -45,7 +45,7 @@ CATIA.DisplayFileAlerts = False
 ' Retrieve your active document - CATIA is your application 
 ' You get the active document by using the ActiveDocument property
 ' on your application object
-```vbscript
+```cpp
 Dim oActiveDoc As Document 
 Set oActiveDoc = CATIA.ActiveDocument 
  
@@ -153,12 +153,12 @@ If (InStr(oActiveDoc.Name,".CATPart")) <> 0  Then
         msgbox "After optimisation :" & oFx.Name & " =  " & oFx.Value & " and " & oX.Name & " = " & oX.Value
 			       
         ' Update the document
-```vbscript
+```cpp
         CATIA.ActiveDocument.Part.Update 
 
 else 
 ```
-```vbscript
+```cpp
    MsgBox "The active document must be a CATPart"
 End If
 ```
@@ -192,13 +192,13 @@ Language="VBScript"
 '   CATIA Level:  V5R7 
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ' Set the CATIA popup file alerts to False
 ' It prevents to stop the macro at each alert during its execution
 ```
-```vbscript
+```cpp
 CATIA.DisplayFileAlerts = False
 
 ```
@@ -206,7 +206,7 @@ CATIA.DisplayFileAlerts = False
 ' Retrieve your active document - CATIA is your application 
 ' You get the active document by using the ActiveDocument property
 ' on your application object
-```vbscript
+```cpp
 Dim oActiveDoc As Document 
 Set oActiveDoc = CATIA.ActiveDocument 
  
@@ -314,12 +314,12 @@ If (InStr(oActiveDoc.Name,".CATPart")) &lt;&gt; 0  Then
         msgbox "After optimisation :" & oFx.Name & " =  " & oFx.Value & " and " & oX.Name & " = " & oX.Value
 			       
         ' Update the document
-```vbscript
+```cpp
         CATIA.ActiveDocument.Part.Update 
 
 else 
 ```
-```vbscript
+```cpp
    MsgBox "The active document must be a CATPart"
 End If
 ```

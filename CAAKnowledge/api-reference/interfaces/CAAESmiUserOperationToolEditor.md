@@ -1,65 +1,73 @@
 ---
 title: "CAAESmiUserOperationToolEditor"
-type: "interface"
+type: "LocalClass"
 module: "CAASurfaceMachiningItf"
-category: api-reference
 base: "CATIMfgToolActivity"
-inheritance_chain: "CAAESmiUserOperationToolEditor → CATIMfgToolActivity"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 4
+source_file: "CAASurfaceMachiningItf.edu/CAASmiUserOperationUI.m/LocalInterfaces/CAAESmiUserOperationToolEditor.h"
 ---
+
 # CAAESmiUserOperationToolEditor
 
-**基类**: CATIMfgToolActivity  
-**继承链**: CAAESmiUserOperationToolEditor → CATIMfgToolActivity  
-**模块**: CAASurfaceMachiningItf  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
-
-> CAAESmiUserOperationToolEditor.h
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATIMfgToolActivity | **模块**: CAASurfaceMachiningItf | **方法数**: 4
 
 ## 依赖
 
 - `CATIMfgToolActivity.h`
 - `CATListOfCATUnicodeString.h`
 
+## 公共方法
+
+### GetAuthorizedToolTypeList
+
+```cpp
+HRESULT GetAuthorizedToolTypeList(CATListOfCATUnicodeString & oToolTypeList) ;
+```
+
+Gives informations relative to tools on the Activity.
+
+| 参数 | 类型 |
+|------|------|
+| oToolTypeList | `CATListOfCATUnicodeString &` |
+
+
+### CreateDefaultTool
+
+```cpp
+HRESULT CreateDefaultTool(CATBaseUnknown_var & oTool) ;
+```
+
+Creates default tool for an Activity.
+
+| 参数 | 类型 |
+|------|------|
+| oTool | `CATBaseUnknown_var &` |
+
+
+### GetFirstToolCompensation
+
+```cpp
+HRESULT GetFirstToolCompensation(int & oFirstNumber) ;
+```
+
+Useless
+
+| 参数 | 类型 |
+|------|------|
+| oFirstNumber | `int &` |
+
+
+### GetSecondToolCompensation
+
+```cpp
+HRESULT GetSecondToolCompensation(int & oSecondNumber) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oSecondNumber | `int &` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATIMfgToolActivity**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-This interface is used in the following use cases:
-
-- [CAASmiUserOperationUI](../../use-cases/caasmicases/CAASmiUserOperationUI.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAASurfaceMachiningItf.edu/CAASmiUserOperationUI.m/LocalInterfaces/CAAESmiUserOperationToolEditor.h`

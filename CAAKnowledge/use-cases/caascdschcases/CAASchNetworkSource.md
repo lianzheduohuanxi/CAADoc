@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAASchNetwork.CATScript"
 category: "use-case"
 module: "CAAScdSchUseCases"
-tags: ["CATIAProduct", "CATIASchNetworkAnalysis", "CAAScdSchUseCases", "CATIA", "CATIASchGRR", "CAASchNetwork", "CATIASchCompGraphic", "CAASCH_Network01", "CATIASchAppConnectable"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchNetworkSource.htmmd"
+tags: "["CATIAProduct", "CATIASchNetworkAnalysis", "CAAScdSchUseCases", "CATIA", "CATIASchGRR", "CAASchNetwork", "CATIASchCompGraphic", "CAASCH_Network01", "CATIASchAppConnectable"]"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchNetworkSource.htm"
 converted: "2026-05-11T17:31:51.409527"
-```
-
 ---
 tags: ["CATIAProduct", "CATIASchNetworkAnalysis", "CAAScdSchUseCases", "CATIA", "CATIASchGRR", "CAASchNetwork", "CATIASchCompGraphic", "CAASCH_Network01", "CATIASchAppConnectable"]
 source_file: "Doc/online/CAAScdSchUseCases/CAASchNetworkSource.htmmd"
@@ -16,7 +13,7 @@ converted: "2026-05-11T17:31:51.409527"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGHT DASSAULT SYSTEMES 2004
     ' *****************************************************************************
     '   Purpose:      Network analysis.
@@ -25,7 +22,7 @@ converted: "2026-05-11T17:31:51.409527"
     '   CATIA Level:  V5R15
     ' *****************************************************************************
     '------------------------------------------------------------------------------
-```vbscript
+```cpp
     ' These variables are visible to private Sub and CATMain
     '------------------------------------------------------------------------------
 ```
@@ -52,7 +49,7 @@ converted: "2026-05-11T17:31:51.409527"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -65,7 +62,7 @@ converted: "2026-05-11T17:31:51.409527"
         ' -------------------------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String
-```vbscript
+```cpp
         sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
 ```
@@ -77,7 +74,7 @@ converted: "2026-05-11T17:31:51.409527"
         strMessage = strMessage &  "sDocPath = " & sDocPath
 
 ```vbscript
-```vbscript
+```cpp
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```vbscript
 ```
@@ -97,7 +94,7 @@ converted: "2026-05-11T17:31:51.409527"
 ```vbscript
         ' -------------------------------------------------------------------------
         ' Open the schematic document
-```vbscript
+```cpp
         Dim sFilePath
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
@@ -110,12 +107,12 @@ converted: "2026-05-11T17:31:51.409527"
                 "online/CAAScdSchUseCases/samples/CAASCH_Network01.CATProduct")
 
 ```vbscript
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
         Dim objSchDoc As Document
         Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
@@ -338,7 +335,7 @@ For intNetIndex = 1 To intNbNet
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
              Set objLNetMember = Nothing
 
              Set objSchNet = objLNetWork.Item (intNetIndex,"CATIASchNetworkAnalysis")
@@ -394,7 +391,7 @@ If ( Not ( objLNetMember Is Nothing ) ) Then
 ```vbscript
                 For intMemIndex = 1 To intNbMember
 
-```vbscript
+```cpp
                   Set objMemPrd = objLNetMember.Item (intMemIndex,"CATIAProduct")
 ```
 ```
@@ -485,7 +482,7 @@ If ( Not ( objLNetMember Is Nothing ) ) Then
 ```vbscript
                 For intMemIndex = 1 To intNbMember
 
-```vbscript
+```cpp
                   Set objMemPrd = objLNetMember.Item (intMemIndex,"CATIAProduct")
 ```
 ```
@@ -651,7 +648,7 @@ For intIndex = 1 To intNbComp
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
             Set objCntbl = objLCompInst.Item (intIndex,"CATIASchAppConnectable")
 
 ```
@@ -766,7 +763,7 @@ Set objSchCompGraph = objSchRootArg.GetInterface ( _
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' -----------------------------------------------------------------------------
     ' | Find the first symbol used for the input schematic component.
     ' | Input: objSchCompGraph:  the schematic component
@@ -791,7 +788,7 @@ Set objSchCompGraph = objSchRootArg.GetInterface ( _
           Set objSchLSymbols = objSchCompGraphArg.ListGraphicalImages
           If ( Not ( objSchLSymbols Is Nothing ) ) Then
 ```
-```vbscript
+```cpp
              Set GetComponentImage = objSchLSymbols.Item (1,"CATIASchGRR")
           End If
 ```

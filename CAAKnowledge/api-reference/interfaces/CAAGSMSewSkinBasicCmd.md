@@ -1,27 +1,15 @@
 ---
 title: "CAAGSMSewSkinBasicCmd"
-type: "interface"
+type: "LocalClass"
 module: "CAAGSMInterfaces"
-category: api-reference
 base: "CATMMUIPanelStateCmd"
-inheritance_chain: "CAAGSMSewSkinBasicCmd → CATMMUIPanelStateCmd"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 18
+source_file: "CAAGSMInterfaces.edu/CAAGsiFeaturesSplSewSkinBasicUI.m/LocalInterfaces/CAAGSMSewSkinBasicCmd.h"
 ---
+
 # CAAGSMSewSkinBasicCmd
 
-**基类**: CATMMUIPanelStateCmd  
-**继承链**: CAAGSMSewSkinBasicCmd → CATMMUIPanelStateCmd  
-**模块**: CAAGSMInterfaces  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATMMUIPanelStateCmd | **模块**: CAAGSMInterfaces | **方法数**: 18
 
 ## 依赖
 
@@ -29,28 +17,184 @@ verified: true
 - `CATMMUIPanelStateCmd.h`
 - `CATShowAttribut.h`
 
+## 公共方法
+
+### CreateStartFeat
+
+```cpp
+void CreateStartFeat() ;
+```
+
+
+### BuildGraph
+
+```cpp
+void BuildGraph() ;
+```
+
+
+### Highlight_Field1
+
+```cpp
+CATBoolean Highlight_Field1(void *) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| * | `void` |
+
+
+### Highlight_Field2
+
+```cpp
+CATBoolean Highlight_Field2(void *) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| * | `void` |
+
+
+### Reset_Highlight
+
+```cpp
+CATBoolean Reset_Highlight(void *) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| * | `void` |
+
+
+### ClearSelection
+
+```cpp
+CATBoolean ClearSelection(void * data) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| data | `void *` |
+
+
+### GetMode
+
+```cpp
+int GetMode() ;
+```
+
+
+### GetActiveField
+
+```cpp
+int GetActiveField() ;
+```
+
+
+### SetActiveField
+
+```cpp
+void SetActiveField(int ActiveField) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| ActiveField | `int` |
+
+
+### UpdatePanelFields
+
+```cpp
+void UpdatePanelFields() ;
+```
+
+
+### CheckOKSensitivity
+
+```cpp
+void CheckOKSensitivity() ;
+```
+
+
+### SynchronizeViewWithModel
+
+```cpp
+CATBoolean SynchronizeViewWithModel(void* data) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| data | `void*` |
+
+
+### UndoClearSelection
+
+```cpp
+CATBoolean UndoClearSelection(void *) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| * | `void` |
+
+
+### OkAction
+
+```cpp
+CATBoolean OkAction(void * data) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| data | `void *` |
+
+
+### PreviewAction
+
+```cpp
+CATBoolean PreviewAction(void *data) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *data | `void` |
+
+
+### CancelAction
+
+```cpp
+CATBoolean CancelAction(void* iData) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iData | `void*` |
+
+
+### UpdateOKAction
+
+```cpp
+CATBoolean UpdateOKAction(void*data) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+|  | `void*data` |
+
+
+### ErrorPanel
+
+```cpp
+void ErrorPanel(CATUnicodeString Title, CATUnicodeString Text, int iType) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| Title | `CATUnicodeString` |
+| Text | `CATUnicodeString` |
+| iType | `int` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATMMUIPanelStateCmd**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAGSMInterfaces.edu/CAAGsiFeaturesSplSewSkinBasicUI.m/LocalInterfaces/CAAGSMSewSkinBasicCmd.h`

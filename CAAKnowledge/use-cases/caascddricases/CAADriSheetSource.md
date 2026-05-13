@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAADriSheet.CATScript"
 category: "use-case"
 module: "CAAScdDriUseCases"
-tags: ["CATIA", "CAADriSheet", "CAAScdDriUseCases"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriSheetSource.htmmd"
+tags: "["CATIA", "CAADriSheet", "CAAScdDriUseCases"]"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriSheetSource.htm"
 converted: "2026-05-11T17:31:51.107736"
-```
-
 ---
 tags: ["CATIA", "CAADriSheet", "CAAScdDriUseCases"]
 source_file: "Doc/online/CAAScdDriUseCases/CAADriSheetSource.htmmd"
@@ -16,7 +13,7 @@ converted: "2026-05-11T17:31:51.107736"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGHT DASSAULT SYSTEMES 2001
     ' ***********************************************************************
     '   Purpose:      Creates constraints between assembly Parts using Publications
@@ -34,7 +31,7 @@ converted: "2026-05-11T17:31:51.107736"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -47,7 +44,7 @@ converted: "2026-05-11T17:31:51.107736"
         ' -----------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String
-```vbscript
+```cpp
         sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
 ```
@@ -57,7 +54,7 @@ converted: "2026-05-11T17:31:51.107736"
 ```
 
 ```vbscript
-```vbscript
+```cpp
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 ```
@@ -77,7 +74,7 @@ converted: "2026-05-11T17:31:51.107736"
 ```vbscript
         ' -----------------------------------------------------------
         ' Open the Drawing document
-```vbscript
+```cpp
         Dim oDoc As Document
         set oDoc = CATIA.Documents.Open(sDocPath & _
 ```

@@ -1,56 +1,31 @@
 ---
 title: "CAAOsmAddOp"
-type: "interface"
+type: "LocalClass"
 module: "CAAObjectSpecsModeler"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAOsmAddOp → CATBaseUnknown"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 1
+source_file: "CAAObjectSpecsModeler.edu/CAAOsmBuildUpdate.m/LocalInterfaces/CAAOsmAddOp.h"
 ---
+
 # CAAOsmAddOp
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAOsmAddOp → CATBaseUnknown  
-**模块**: CAAObjectSpecsModeler  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> This is the implementation of the CATIBuild interface for the "CAAOsmAddOp" feature. A "Build" operation calculates the values of attributes according to their pre-defined function.  Its execution is triggered by the execution of an "Update" operation so as to update all current values.  To perform this "Build" operation, the three attributes of the "CAAOsmAdd" feature are retrieved, the values of the first two, "First" and "Second" are added together and their sum is stored as the value of the "Sum" attribute.  Thus, "Sum" wil have an updated value whenever an "Update" operation is requested.
 
-> 1 - ERROR in QueryInterface
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATBaseUnknown | **模块**: CAAObjectSpecsModeler | **方法数**: 1
 
 ## 依赖
 
 - `CATBaseUnknown.h`
 
+## 公共方法
+
+### Build
+
+```cpp
+HRESULT Build() ;
+```
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAObjectSpecsModeler.edu/CAAOsmBuildUpdate.m/LocalInterfaces/CAAOsmAddOp.h`

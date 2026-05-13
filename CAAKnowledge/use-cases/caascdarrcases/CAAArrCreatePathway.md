@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating an ArrangementPathway Object"
 category: "use-case"
 module: "CAAScdArrUseCases"
-tags: ["CATIA", "CAAArrCreatePathway", "CAAScdArrUseCases"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreatePathway.htmmd"
+tags: "["CATIA", "CAAArrCreatePathway", "CAAScdArrUseCases"]"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreatePathway.htm"
 converted: "2026-05-11T17:31:51.563057"
-```
-
 ---
 |
 ## Arrangement
@@ -55,7 +52,7 @@ This macro shows you how to create an _ArrangementPathway_ under a product. This
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
        Dim objRootProd       As Product
        Set objProdDoc      = CATIA.Documents.Add("Product")
        Set objRootProd     = objProdDoc.Product

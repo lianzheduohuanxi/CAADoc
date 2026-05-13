@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating or Computing an Edge Curve"
-category: use-case case"
+category: "use-case case"
 module: "CAACgmModel"
-tags: ["CATICGMComputeEdgeCurve", "CATICGMObject", "CAAGMModelInterfaces", "CAAGMModelTetra", "CATICGMEdgeCurveComputation", "CAAGMModelEdgeCurveComputation"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcEdgeCurveCreation.htmmd"
+tags: "["CATICGMComputeEdgeCurve", "CATICGMObject", "CAAGMModelInterfaces", "CAAGMModelTetra", "CATICGMEdgeCurveComputation", "CAAGMModelEdgeCurveComputation"]"
+source_file: "Doc/online/CAACgmModel/CAACgmUcEdgeCurveCreation.htm"
 converted: "2026-05-11T17:33:48.198981"
-```
-
 ---
 # Creating or Computing an Edge Curve
 

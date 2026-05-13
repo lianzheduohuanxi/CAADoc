@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "VPMInterfaces Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR8"
-version: "V5R8"
-tags: ["CATIConfigurable", "CATIVpmAttribute", "CATICfgManager", "CATIVpmAggrAttribute", "CATIVpmServices", "CATICfgModification"]
-source_file: "Doc/online/CAACenAPIChangesR8/VPMInterfacesSP.htmmd"
+tags: "["CATIConfigurable", "CATIVpmAttribute", "CATICfgManager", "CATIVpmAggrAttribute", "CATIVpmServices", "CATICfgModification"]"
+source_file: "Doc/online/CAACenAPIChangesR8/VPMInterfacesSP.htm"
 converted: "2026-05-11T17:33:52.772477"
-```
-
 ---
 tags: ["CATIConfigurable", "CATIVpmAttribute", "CATICfgManager", "CATIVpmAggrAttribute", "CATIVpmServices", "CATICfgModification"]
 source_file: "Doc/online/CAACenAPIChangesR8/VPMInterfacesSP.htmmd"

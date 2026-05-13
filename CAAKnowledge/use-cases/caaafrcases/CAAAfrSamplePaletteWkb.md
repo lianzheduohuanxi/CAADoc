@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Using the "Tools Palette" Toolbar for a Workbench"
-category: use-case case"
+category: "use-case case"
 module: "CAAAfrUseCases"
-tags: ["CAAAfrGeoCreationWkb_Palette", "CAAAfrGeoCreationWkb", "CATIAfrPaletteOptions", "CAAEAfrPaletteOptions", "CAAAfrPaletteOptions", "CAAGeometry", "CAAAfrEltCountHeader", "CAAAfrEltCountHdr", "CATIAfrCmdPaletteOptions", "CAAApplicationFrame"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSamplePaletteWkb.htmmd"
+tags: "["CAAAfrGeoCreationWkb_Palette", "CAAAfrGeoCreationWkb", "CATIAfrPaletteOptions", "CAAEAfrPaletteOptions", "CAAAfrPaletteOptions", "CAAGeometry", "CAAAfrEltCountHeader", "CAAAfrEltCountHdr", "CATIAfrCmdPaletteOptions", "CAAApplicationFrame"]"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSamplePaletteWkb.htm"
 converted: "2026-05-11T17:17:55.792002"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -93,7 +90,6 @@ Then, in the window where you run the mkrun command, do not type the module name
 
 The CAAAfrPaletteOptions use case is made of a single class,_CAAEAfrPaletteOptions_ , located in the CAAAfrPaletteOptions.m module of the CAAApplicationFrame.edu framework:
 
-The CAAAfrPaletteOptions use case is made of a single class,_CAAEAfrPaletteOptions_ , located in the CAAAfrPaletteOptions.m module of the CAAApplicationFrame.edu framework:
 Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrPaletteOptions.m/`
 
 The CAAAfrPaletteOptions use case is made of a single class,_CAAEAfrPaletteOptions_ , located in the CAAAfrPaletteOptions.m module of the CAAApplicationFrame.edu framework:
@@ -156,9 +152,9 @@ Here is the CAAEAfrPaletteOptions.cpp file
     CATImplementClass(CAAEAfrPaletteOptions,
 
                       **DataExtension** ,
-```vbscript
+```cpp
 TIE_CATIAfrPaletteOptions(CAAEAfrPaletteOptions);
-```vbscript
+```cpp
 CATImplementClass(CAAEAfrPaletteOptions,
 ```
 
@@ -167,7 +163,7 @@ CATImplementClass(CAAEAfrPaletteOptions,
 
                       **CAAAfrGeoCreationWkb_Palette**);
 
-```vbscript
+```cpp
 CATImplementClass(CAAEAfrPaletteOptions,
 CATBaseUnknown,
     CAAEAfrPaletteOptions::CAAEAfrPaletteOptions(#):CATBaseUnknown(#){}
@@ -195,9 +191,9 @@ Now, lets us see the `GetPaletteOptions` implementation.
     CATLISTP(CATCommandHeader) CAAEAfrPaletteOptions::GetPaletteOptions(#)
 
     {
-```vbscript
+```cpp
 CATLISTP(CATCommandHeader) CAAEAfrPaletteOptions::GetPaletteOptions(#)
-```vbscript
+```cpp
         CATLISTP(CATCommandHeader) TheListToReturn ;
 
 ```

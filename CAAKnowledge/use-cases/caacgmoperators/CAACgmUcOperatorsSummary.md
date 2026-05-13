@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "GMOperators List of Use Cases"
 category: "use-case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsDraftCreation", "CAAGMOperatorsCompatible", "CAAGMOperatorsBodyExtremum", "CAAGMOperatorsShellOrientation", "CAAGMOperatorsCornerCreation", "CAAGMOperatorsSilhouette", "CAAGMOperatorsFaceReplaceSurface", "CAAGMOperatorsPattern", "CAAGMOperatorsCheckForPart", "CAAGMOperatorsNurbsSurfMultiPatch", "CAAGMOperatorsProgressBar", "CAAGMOperatorsAllFillets", "CAAGMOperatorsCheckGnOK", "CAAGMOperatorsExtractFace", "CAAGMOperatorsInDegree", "CAAGMOperatorsProperties", "CAAGMOperatorsBoundaryCreation", "CAAGMOperatorsWireAssembly", "CAAGMOperatorsIntersectShellShell"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcOperatorsSummary.htmmd"
+tags: "["CAAGMOperatorsInterfaces", "CAAGMOperatorsDraftCreation", "CAAGMOperatorsCompatible", "CAAGMOperatorsBodyExtremum", "CAAGMOperatorsShellOrientation", "CAAGMOperatorsCornerCreation", "CAAGMOperatorsSilhouette", "CAAGMOperatorsFaceReplaceSurface", "CAAGMOperatorsPattern", "CAAGMOperatorsCheckForPart", "CAAGMOperatorsNurbsSurfMultiPatch", "CAAGMOperatorsProgressBar", "CAAGMOperatorsAllFillets", "CAAGMOperatorsCheckGnOK", "CAAGMOperatorsExtractFace", "CAAGMOperatorsInDegree", "CAAGMOperatorsProperties", "CAAGMOperatorsBoundaryCreation", "CAAGMOperatorsWireAssembly", "CAAGMOperatorsIntersectShellShell"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcOperatorsSummary.htm"
 converted: "2026-05-11T17:33:49.012195"
-```
-
 ---
 tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsDraftCreation", "CAAGMOperatorsCompatible", "CAAGMOperatorsBodyExtremum", "CAAGMOperatorsShellOrientation", "CAAGMOperatorsCornerCreation", "CAAGMOperatorsSilhouette", "CAAGMOperatorsFaceReplaceSurface", "CAAGMOperatorsPattern", "CAAGMOperatorsCheckForPart", "CAAGMOperatorsNurbsSurfMultiPatch", "CAAGMOperatorsProgressBar", "CAAGMOperatorsAllFillets", "CAAGMOperatorsCheckGnOK", "CAAGMOperatorsExtractFace", "CAAGMOperatorsInDegree", "CAAGMOperatorsProperties", "CAAGMOperatorsBoundaryCreation", "CAAGMOperatorsWireAssembly", "CAAGMOperatorsIntersectShellShell"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcOperatorsSummary.htmmd"
@@ -51,7 +48,6 @@ CAAGMOperatorsDumpJournal.m | Dump a journal on the standard output. |  [Dumping
 CAAGMOperatorsExtractFace.m | Extract a face from a solid. |  [Extract a Face from a Solid](CAACgmUcExtractFace.md)
 CAAGMOperatorsExtractIsoPar.m | Extract isoparametric curves. |  [Isoparametric Curves](CAACgmUcTopExtractIsoParam.md)
 CAAGMOperatorsFaceReplaceSurface.m | Modify the geometry of a face. |  [Modifying the Geometry of a Face](CAACgmUcTopReplaceFace.md)
-CAAGMOperatorsInDegree.m | Modify the degree of a Nurbs. |  [Modifying the Degree of a Nurbs](CAACgmUcNurbsDegree.md)
 CAAGMOperatorsInDegree.m | Modify the degree of a Nurbs. |  [Modifying the Degree of a Nurbs](CAACgmUcNurbsDegree.md)
 CAAGMOperatorsIntersectShellShell.m | Intersect two shells. |  [Intersecting Shells](CAACgmUcTopShellShell.md)
 CAAGMOperatorsJournal.m | Create a stiffener by calling a user operator using the journal. Stiffener defined in CAAGMOperatorsOperatorCreation.m. |  [Using the Topological Journal](CAACgmUcTopJournal.md)

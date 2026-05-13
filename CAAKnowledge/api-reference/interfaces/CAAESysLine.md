@@ -1,51 +1,73 @@
 ---
 title: "CAAESysLine"
-type: "interface"
+type: "LocalClass"
 module: "CAASystem"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAESysLine → CATBaseUnknown"
 method_count: 4
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAASystem.edu/CAASysGeoModelImpl.m/LocalInterfaces/CAAESysLine.h"
 ---
+
 # CAAESysLine
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAESysLine → CATBaseUnknown  
-**模块**: CAASystem  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 4
+> Data extension ofd the CAASysLine component and implementing the CAAISysLine interface. Main Method: SetStartPoint/GetStartPoint SetEndPoint/GetEndPoint
+
+**基类**: CATBaseUnknown | **模块**: CAASystem | **方法数**: 4
 
 ## 依赖
 
 - `CATBaseUnknown.h`
 - `CATMathPoint.h`
 
+## 虚方法
+
+### SetStartPoint
+
+```cpp
+virtual HRESULT SetStartPoint(const CATMathPoint & iStartPoint) ;
+```
+
+Start Point
+
+| 参数 | 类型 |
+|------|------|
+| iStartPoint | `const CATMathPoint &` |
+
+
+### GetStartPoint
+
+```cpp
+virtual HRESULT GetStartPoint(CATMathPoint & oStartPoint) const ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oStartPoint | `CATMathPoint &` |
+
+
+### SetEndPoint
+
+```cpp
+virtual HRESULT SetEndPoint(const CATMathPoint & iEndPoint) ;
+```
+
+End Point
+
+| 参数 | 类型 |
+|------|------|
+| iEndPoint | `const CATMathPoint &` |
+
+
+### GetEndPoint
+
+```cpp
+virtual HRESULT GetEndPoint(CATMathPoint & oEndPoint) const ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oEndPoint | `CATMathPoint &` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAASystem.edu/CAASysGeoModelImpl.m/LocalInterfaces/CAAESysLine.h`

@@ -22,7 +22,7 @@ Option Explicit
 '   CATIA Level:  V5R6 
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ```
@@ -30,7 +30,7 @@ Sub CATMain(#)
     ' ----------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,"No Doc Path Defined"
@@ -39,13 +39,13 @@ Sub CATMain(#)
     ' ----------------------------------------------------------- 
 
     ' Get the collection of documents in session
-```vbscript
+```cpp
     Dim documents1 As Documents
     Set documents1 = CATIA.Documents
 
     ' Open the CATAnalysis Document
 ```
-```vbscript
+```cpp
     Dim oAnalysisDocument As Document
     Set oAnalysisDocument = documents1.Open(sDocPath & "/online/CAAScdAniUseCases/samples/AnalysisCrank.CATAnalysis")
     '_____________________________________________________________________________________
@@ -167,7 +167,7 @@ End Sub
 
 ```
 
-```vbscript
+```cpp
 Option Explicit
 &#39; COPYRIGTH DASSAULT SYSTEMES 2000
 
@@ -183,7 +183,7 @@ Option Explicit
 &#39;   CATIA Level:  V5R6 
 &#39; ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ```
@@ -191,7 +191,7 @@ Sub CATMain(#)
     &#39; ----------------------------------------------------------- 
     &#39; Optional: allows to find the sample wherever it&#39;s installed
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,&quot;No Doc Path Defined&quot;
@@ -200,13 +200,13 @@ Sub CATMain(#)
     &#39; ----------------------------------------------------------- 
 
     &#39; Get the collection of documents in session
-```vbscript
+```cpp
     Dim documents1 As Documents
     Set documents1 = CATIA.Documents
 
     &#39; Open the CATAnalysis Document
 ```
-```vbscript
+```cpp
     Dim oAnalysisDocument As Document
     Set oAnalysisDocument = documents1.Open(sDocPath &amp; &quot;/online/CAAScdAniUseCases/samples/AnalysisCrank.CATAnalysis&quot;)
     &#39;_____________________________________________________________________________________

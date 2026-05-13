@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a State Dialog Command"
 category: "use-case"
 module: "CAADegTechArticles"
-tags: ["CAACommandCmd", "CATIndicationAgent"]
-source_file: "Doc/online/CAADegTechArticles/CAADegCreatingCommand.htmmd"
+tags: "["CAACommandCmd", "CATIndicationAgent"]"
+source_file: "Doc/online/CAADegTechArticles/CAADegCreatingCommand.htm"
 converted: "2026-05-11T17:33:49.764355"
-```
-
 ---
 tags: ["CAACommandCmd", "CATIndicationAgent"]
 source_file: "Doc/online/CAADegTechArticles/CAADegCreatingCommand.htmmd"
@@ -40,7 +37,7 @@ Creating the State Dialog Command Class Header This shows how to create the clas
 ---
     * **Lifecycle** : the command lifecycle is managed using the command's constructor and destructor, and using the methods `Activate`, `Desactivate`, and `Cancel`. `Activate` is called when your command takes the focus, `Desactivate` is called when a shared command takes the focus, and thus leaves your command on the command stack in its current state, and `Cancel` is called when your command completes, or when an exclusive command takes the focus and requests your command to be deleted.
 
-```vbscript
+```cpp
 CmdDeclareResource(CAACommandCmd, CATStateCommand);
           CATStatusChangeRC Activate   (CATCommand * iCmd, CATNotification * iNotif);
           CATStatusChangeRC Desactivate(CATCommand * iCmd, CATNotification * iNotif);

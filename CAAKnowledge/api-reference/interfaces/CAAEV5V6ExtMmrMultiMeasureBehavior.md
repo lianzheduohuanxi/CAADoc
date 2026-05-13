@@ -1,52 +1,115 @@
 ---
 title: "CAAEV5V6ExtMmrMultiMeasureBehavior"
-type: "interface"
+type: "LocalClass"
 module: "CAAV5V6MechanicalModeler"
-category: api-reference
 base: "CATIFmFeatureBehaviorCustomization"
-inheritance_chain: "CAAEV5V6ExtMmrMultiMeasureBehavior → CATIFmFeatureBehaviorCustomization"
 method_count: 9
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAV5V6MechanicalModeler.edu/CAAV5V6ExtMmrMultiMeasure.m/LocalInterfaces/CAAEV5V6ExtMmrMultiMeasureBehavior.h"
 ---
+
 # CAAEV5V6ExtMmrMultiMeasureBehavior
 
-**基类**: CATIFmFeatureBehaviorCustomization  
-**继承链**: CAAEV5V6ExtMmrMultiMeasureBehavior → CATIFmFeatureBehaviorCustomization  
-**模块**: CAAV5V6MechanicalModeler  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 9
-
-> =============================================================================
+**基类**: CATIFmFeatureBehaviorCustomization | **模块**: CAAV5V6MechanicalModeler | **方法数**: 9
 
 ## 依赖
 
 - `CATIFmFeatureBehaviorCustomization.h`
 
+## 虚方法
+
+### CanBeRemoved
+
+```cpp
+virtual HRESULT CanBeRemoved(CATBoolean & oDeletable) const ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oDeletable | `CATBoolean &` |
+
+
+### BeforeRemove
+
+```cpp
+virtual HRESULT BeforeRemove() ;
+```
+
+
+### Build
+
+```cpp
+virtual HRESULT Build() ;
+```
+
+
+### CcpRegisterAdditionalObjectsForCopy
+
+```cpp
+virtual HRESULT CcpRegisterAdditionalObjectsForCopy(const CATListValCATBaseUnknown_var & iInitialSetOfObjects, CATListValCATBaseUnknown_var & oObjectToAddToBoundary) const ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iInitialSetOfObjects | `const CATListValCATBaseUnknown_var &` |
+| oObjectToAddToBoundary | `CATListValCATBaseUnknown_var &` |
+
+
+### CcpUpdate
+
+```cpp
+virtual HRESULT CcpUpdate(const CATFmCCPContext & iContext) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iContext | `const CATFmCCPContext &` |
+
+
+### CcpUpdate
+
+```cpp
+virtual HRESULT CcpUpdate(CATFmCCPContext & iContext) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iContext | `CATFmCCPContext &` |
+
+
+### CcpPaste
+
+```cpp
+virtual HRESULT CcpPaste(const CATFmCCPContext & iContext) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iContext | `const CATFmCCPContext &` |
+
+
+### CcpPaste
+
+```cpp
+virtual HRESULT CcpPaste(CATFmCCPContext & iContext) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iContext | `CATFmCCPContext &` |
+
+
+### CcpRegisterAdditionalObjectsForRemove
+
+```cpp
+virtual HRESULT CcpRegisterAdditionalObjectsForRemove(const CATListValCATBaseUnknown_var & iInitialSetOfObjects, CATListValCATBaseUnknown_var & oObjectToAddToBoundary) const ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iInitialSetOfObjects | `const CATListValCATBaseUnknown_var &` |
+| oObjectToAddToBoundary | `CATListValCATBaseUnknown_var &` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATIFmFeatureBehaviorCustomization**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAV5V6MechanicalModeler.edu/CAAV5V6ExtMmrMultiMeasure.m/LocalInterfaces/CAAEV5V6ExtMmrMultiMeasureBehavior.h`

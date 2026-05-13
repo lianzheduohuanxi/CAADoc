@@ -93,7 +93,7 @@ during an interactive session:
 ```vbscript
 'Optional: allows to find the sample wherever it's installed
 
-```vbscript
+```cpp
       Dim sDocPath As String
       sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
 
@@ -109,14 +109,14 @@ during an interactive session:
 
 ```vbscript
 'Open the document. 
-```vbscript
+```cpp
      Dim iPartDoc As Document
      Set iPartDoc = CATIA.Documents.Open(sDocPath &amp; _
        &quot;/online/CAAScdInfUseCases/samples/CAAInfReadDocument.CATPart&quot;)
 ```
 
     'Close the active document which is the document just opened.
-```vbscript
+```cpp
      CATIA.ActiveDocument.Close(#)
 
 ```
@@ -130,7 +130,7 @@ during an interactive session:
 
 ```vbscript
 'Open the same document again.
-```vbscript
+```cpp
      Set iPartDoc = CATIA.Documents.Open(sDocPath &amp; _
        &quot;/online/CAAScdInfUseCases/samples/CAAInfReadDocument.CATPart&quot;)
 ```
@@ -147,13 +147,13 @@ during an interactive session:
 
 ```vbscript
 'Open the same document a third time.
-```vbscript
+```cpp
       Set iPartDoc = CATIA.Documents.Open(sDocPath &amp; _
         &quot;/online/CAAScdInfUseCases/samples/CAAInfReadDocument.CATPart&quot;)
 ```
 
      'Close the document by specifying its name.
-```vbscript
+```cpp
       CATIA.Documents.Item(&quot;CAAInfReadDocument.CATPart&quot;).Close(#)
   ...
 ```

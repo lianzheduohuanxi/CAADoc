@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Managing Geometry with User Machining Features"
-category: use-case case"
+category: "use-case case"
 module: "CAASmiUseCases"
-tags: ["CAASmiUserOperationGeometryPanel", "CATISmgNcGeometryManager", "CAAManufacturing", "CATIMfgViewAccess_var", "CATISmgNcGeometryParameter", "CAASmgOperation", "CATISmgFactory", "CATIMfgGeometryActivity", "CAASmiUserOperationGeomUI", "CATIMfgViewAccess", "CAASmiUserOperationGeometrySelCom", "CAASmiUserMachFeatureCatalog", "CATIEdit", "CATIMfgActivity", "CAASmgMachiningFeature", "CAAESmiUserOperationGeometryEditor", "CATISpecObject_var", "CATISmgNcGeometryManager_var", "CAASmgGuide", "CAASurfaceMachiningItf"]
-source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationWithUserMF.htmmd"
+tags: "["CAASmiUserOperationGeometryPanel", "CATISmgNcGeometryManager", "CAAManufacturing", "CATIMfgViewAccess_var", "CATISmgNcGeometryParameter", "CAASmgOperation", "CATISmgFactory", "CATIMfgGeometryActivity", "CAASmiUserOperationGeomUI", "CATIMfgViewAccess", "CAASmiUserOperationGeometrySelCom", "CAASmiUserMachFeatureCatalog", "CATIEdit", "CATIMfgActivity", "CAASmgMachiningFeature", "CAAESmiUserOperationGeometryEditor", "CATISpecObject_var", "CATISmgNcGeometryManager_var", "CAASmgGuide", "CAASurfaceMachiningItf"]"
+source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationWithUserMF.htm"
 converted: "2026-05-11T17:31:51.281341"
-```
-
 ---
 # Machining
 
@@ -79,7 +76,6 @@ The geometry management is done by several functionalities:
 
 This use case is a part of _Surface Machining Operation Sample_ [1]. You should build all the modules of this sample at a time to be able to launch it [2].
 
-This use case is a part of _Surface Machining Operation Sample_ [1]. You should build all the modules of this sample at a time to be able to launch it [2].
 Don't forget to edit the interface dictionary located in:
 
 Windows | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CNext/code/dictionary/`
@@ -251,7 +247,7 @@ Then, we instanciate **CAASmgMachiningFeature** and we add the **CAASmgGuide** a
         oFeature = spInstance;
 
         // Adds a geometric parameter "CAASmgGuide"
-```vbscript
+```cpp
 if (SUCCEEDED(oRC))
 oFeature = spInstance;
         CATISmgNcGeometryManager_var spSmgManager = oFeature;
@@ -289,7 +285,7 @@ if(NbMfgView)
 ```
 
         {
-```vbscript
+```cpp
 if(NbMfgView)
 CATBaseUnknown * pBaseView = ListOfMfgView[NbMfgView - 1];
 if (pBaseView)
@@ -406,7 +402,7 @@ pSmgFactory = NULL;
 ```
 
       {
-```vbscript
+```cpp
 if (!!_spGuide && !!spNcFeature)
         CATISmgNcGeometryParameter * pSmgParameter = NULL;
         RC = _spGuide->QueryInterface(IID_CATISmgNcGeometryParameter, (void**) &pSmgParameter);

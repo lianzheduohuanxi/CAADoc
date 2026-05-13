@@ -1,63 +1,140 @@
 ---
 title: "CAAICafGeometryEltSettingAtt"
-type: "interface"
+type: "ProtectedInterface"
 module: "CAACATIAApplicationFrm"
-category: api-reference
 base: "IUnknown"
-inheritance_chain: "CAAICafGeometryEltSettingAtt → IUnknown"
 method_count: 10
-visibility: "protected"
-has_tie_binding: true
-verified: true
+source_file: "CAACATIAApplicationFrm.edu/ProtectedInterfaces/CAAICafGeometryEltSettingAtt.h"
 ---
-> **TIE实现**: unknown
 
 # CAAICafGeometryEltSettingAtt
 
-**基类**: IUnknown  
-**继承链**: CAAICafGeometryEltSettingAtt → IUnknown  
-**模块**: CAACATIAApplicationFrm  
-**分类**: framework  
-**可见性**: protected  
-**方法数**: 10
-
-> Global Unique IDentifier defined in .cpp
+**基类**: IUnknown | **模块**: CAACATIAApplicationFrm | **方法数**: 10
 
 ## 依赖
 
+- `IUnknown.h`
 - `CAACafCtrlToolsOptions.h`
 
-## TIE实现
+## 纯虚方法 (接口契约)
 
-**实现文件**:
-- `CAACafGeometryEltSettingCtrl.cpp`
-- `CAACafGeometryViewSettingCtrl.cpp`
-- `CAAECafGeometryEltSettingAtt.cpp`
-- `CAAECafGeometryViewSettingAtt.cpp`
-- `CAAECafSettingManagmentForGeometryElt.cpp`
+### Initialize
+
+```cpp
+virtual HRESULT Initialize() = 0 ;
+```
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetIdentifierVisibility
+
+```cpp
+virtual HRESULT GetIdentifierVisibility(CATString & oIdVisibility) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oIdVisibility | `CATString &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### SetIdentifierVisibility
+
+```cpp
+virtual HRESULT SetIdentifierVisibility(const CATString & iIdVisibility) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iIdVisibility | `const CATString &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetInfoIdentifierVisibility
+
+```cpp
+virtual HRESULT GetInfoIdentifierVisibility(CATSettingInfo * oInfo) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oInfo | `CATSettingInfo *` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetMaxPointCurve
+
+```cpp
+virtual HRESULT GetMaxPointCurve(int & oMaxPoint) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oMaxPoint | `int &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### SetMaxPointCurve
+
+```cpp
+virtual HRESULT SetMaxPointCurve(const int iMaxPoint) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iMaxPoint | `const int` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetInfoMaxPointCurve
+
+```cpp
+virtual HRESULT GetInfoMaxPointCurve(CATSettingInfo ** oInfoArray, int * iNbInfo) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oInfoArray | `CATSettingInfo **` |
+| iNbInfo | `int *` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetImplPointVisibility
+
+```cpp
+virtual HRESULT GetImplPointVisibility(CATString & oImplPointVisibility) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oImplPointVisibility | `CATString &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### SetImplPointVisibility
+
+```cpp
+virtual HRESULT SetImplPointVisibility(const CATString & iImplPointVisibility) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iImplPointVisibility | `const CATString &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetInfoImplPointVisibility
+
+```cpp
+virtual HRESULT GetInfoImplPointVisibility(CATSettingInfo * oInfo) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oInfo | `CATSettingInfo *` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
 
 ---
 
-## Interface Overview
-
-This interface inherits from **IUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAACATIAApplicationFrm.edu/ProtectedInterfaces/CAAICafGeometryEltSettingAtt.h`

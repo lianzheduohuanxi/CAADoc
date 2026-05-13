@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "SketcherInterfaces Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR9"
-version: "V5R9"
-tags: ["CATISketchEditor", "CATI2DWFFactory", "CATISketch"]
-source_file: "Doc/online/CAACenAPIChangesR9/SketcherInterfaces.htmmd"
+tags: "["CATISketchEditor", "CATI2DWFFactory", "CATISketch"]"
+source_file: "Doc/online/CAACenAPIChangesR9/SketcherInterfaces.htm"
 converted: "2026-05-11T17:33:52.959983"
-```
-
 ---
 tags: ["CATISketchEditor", "CATI2DWFFactory", "CATISketch"]
 source_file: "Doc/online/CAACenAPIChangesR9/SketcherInterfaces.htmmd"

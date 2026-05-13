@@ -75,13 +75,13 @@ to its global specifications.
 ```
 
 ```vbscript
-```vbscript
+```cpp
 Sub CATMain(#)
 
 '----------------------------------------------------------- 
 ```
 'Optional: allows to find the sample wherever it&#39;s installed
-```vbscript
+```cpp
 sDocPath=CATIA.SystemService.Environ("CATDocView")
 If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 Err.Raise 9999,,"No Doc Path Defined"
@@ -92,7 +92,7 @@ End If
 
 ```vbscript
 'Open the Analysis document 
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online/CAAScdAniUseCases/samples/Beam.CATAnalysis&quot;)
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```

@@ -181,12 +181,12 @@ using two different methods. Specifically, it has illustrated:
 
 *Copyright  2000, Dassault Systmes. All rights reserved.*
 
-```vbscript
+```cpp
 CAASchAppSample2::InitEnvironment
 CreateCATProductEnv::CreateCATProductEnv
 ```
 
-```vbscript
+```cpp
 CATISchSession* piSchSession = NULL;
     if ( SUCCEEDED( pSession-&gt;QueryInterface (IID_CATISchSession,(void**)&amp;piSchSession)))
     {
@@ -220,7 +220,7 @@ CATISchSession* piSchSession = NULL;
       }
 ```
 
-```vbscript
+```cpp
 if (SUCCEEDED(_piSchAppObjFact-&gt;AppCreateRoute (SCHEDUClass_String,
            &amp;_piUKAppRoute2)))
       {
@@ -241,7 +241,7 @@ if (SUCCEEDED(_piSchAppObjFact-&gt;AppCreateRoute (SCHEDUClass_String,
     }
 ```
 
-```vbscript
+```cpp
 CATISchRoute   *_piSchRoute1;
     if ( _piUKAppRoute1 )
     {

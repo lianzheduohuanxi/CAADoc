@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Single Patch NURBS Surface"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperatorsOverview", "CAAGMOperatorsInterfaces", "CAATopNurbsSurfSinglePatch", "CAADoc", "CAAGMOperatorsNurbsSurfSinglePatch", "CATICGMObject", "CAAGMModelGemBrowser", "CATICGMTopSkin", "CATIA"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopNurbsSurfSinglePatch.htmmd"
+tags: "["CAAGMOperatorsOverview", "CAAGMOperatorsInterfaces", "CAATopNurbsSurfSinglePatch", "CAADoc", "CAAGMOperatorsNurbsSurfSinglePatch", "CATICGMObject", "CAAGMModelGemBrowser", "CATICGMTopSkin", "CATIA"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopNurbsSurfSinglePatch.htm"
 converted: "2026-05-11T17:33:49.236921"
-```
-
 ---
 tags: ["CAAGMOperatorsOverview", "CAAGMOperatorsInterfaces", "CAATopNurbsSurfSinglePatch", "CAADoc", "CAAGMOperatorsNurbsSurfSinglePatch", "CATICGMObject", "CAAGMModelGemBrowser", "CATICGMTopSkin", "CATIA"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcTopNurbsSurfSinglePatch.htmmd"
@@ -183,13 +180,13 @@ This is the skin you obtain (the green bullets are the control points):  ![Resul
     if(1==toStore)
      {
     #ifdef _WINDOWS_SOURCE
-```vbscript
+```cpp
 if(1==toStore)
        ofstream filetowrite(pfileName, ios::binary ) ;
 ```
 
     #else
-```vbscript
+```cpp
 if(1==toStore)
 ofstream filetowrite(pfileName, ios::binary ) ;
        ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;

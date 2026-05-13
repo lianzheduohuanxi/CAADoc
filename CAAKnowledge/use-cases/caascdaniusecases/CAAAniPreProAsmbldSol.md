@@ -100,7 +100,7 @@ object using the selection interface.
 ```vbscript
 ' ----------------------------------------------------------- 
 ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
 sDocPath=CATIA.SystemService.Environ("CATDocView")
 sSep=CATIA.SystemService.Environ("ADL_ODT_SLASH")
 
@@ -110,7 +110,7 @@ End If
 ```
 ' ----------------------------------------------------------- 
 ' Open the Analysis document 
-```vbscript
+```cpp
 Set analysisDocument1 = CATIA.Documents.Open(sDocPath & sSep & "online" & sSep & "CAAScdAniUseCases" &
 						 sSep & "samples" & sSep & "Assembled_Loads_Slutions.CATAnalysis")
 ```
@@ -206,7 +206,7 @@ selection1.Search "Name=*DISP*,all"
 ```
 
 'Retrieve the analysis manager object from the analysis document
-```vbscript
+```cpp
 Set documents1 = CATIA.Documents
 Set analysisDocument2 = documents1.Item("Analysis1.CATAnalysis")
 Set analysisManager2 = analysisDocument2.Analysis

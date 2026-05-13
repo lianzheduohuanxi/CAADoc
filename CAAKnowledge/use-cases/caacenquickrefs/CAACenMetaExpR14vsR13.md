@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Changes to ENOVIA LCA Metadata in V5R14 Compared with V5R13"
 category: "use-case"
 module: "CAACenQuickRefs"
-tags: []
-source_file: "Doc/online/CAACenQuickRefs/CAACenMetaExpR14vsR13.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAACenQuickRefs/CAACenMetaExpR14vsR13.htm"
 converted: "2026-05-11T17:33:46.903919"
-```
-
 ---
 tags: []
 source_file: "Doc/online/CAACenQuickRefs/CAACenMetaExpR14vsR13.htmmd"
@@ -19,7 +16,6 @@ CAA V5 Encyclopedia |  Changes to ENOVIA LCA Metadata in V5R14 Compared with V5R
 CAA V5 Encyclopedia |  Changes to ENOVIA LCA Metadata in V5R14 Compared with V5R13
 Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Object Inheritance | Attribute | Type | Inherited | Alias | Short role | Role
 
-Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Object Inheritance | Attribute | Type | Inherited | Alias | Short role | Role
 3 | 3 | 1 | New attribute | VPMWFL | ACTION | WFProcess | Class | AFLAction | V_waitTime | Simple of Real |   | V_waitTime | The expected time needed to prepare the performance of the process | This attribute is not currently taken into account by the Workflow.
 3 | 3 | 1 | Multi-valuated attribute newly declared as injective | VPMWFL | ACTION | WFProcess | Class | AFLAction | C_activities | (Injective) |   | C_activities | References to all activities defined for the Workflow process |
 3 | 3 | 1 | Multi-valuated attribute newly declared as injective | VPMWFL | ACTION | WFProcess | Class | AFLAction | C_transitions | (Injective) |   | C_transitions | References to all transitions defined for the Workflow process |
@@ -260,7 +256,7 @@ Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Obj
 2 | 2 | 0 | New object | CONFIG |   | VARIABILITY_SPACE | Class |   |   |   |   | VARIABILITY_SPACE |   |
 3 | 2 | 0 | New object | CONFIG |   | VARIABILITY_SPACE | Class |   | NAME | Simple of String |   | NAME |   |
 3 | 2 | 0 | New object | CONFIG |   | VARIABILITY_SPACE | Class |   | STATUS | Simple of String |   | STATUS |   |
-```vbscript
+```cpp
 3 | 2 | 0 | New object | CONFIG |   | VARIABILITY_SPACE | Class |   | CATEGORY_LINK | Set of Oid |   | CATEGORY_LINK |   |
 3 | 2 | 0 | New object | CONFIG |   | VARIABILITY_SPACE | Class |   | MODIFICATION | Set of Oid |   | MODIFICATION |   |
 3 | 2 | 0 | New object | CONFIG |   | VARIABILITY_SPACE | Class |   | CONFIG_HANDLER | Set of Oid |   | CONFIG_HANDLER |   |

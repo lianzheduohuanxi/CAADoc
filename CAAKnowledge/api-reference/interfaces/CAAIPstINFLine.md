@@ -1,27 +1,15 @@
 ---
 title: "CAAIPstINFLine"
-type: "interface"
+type: "ProtectedInterface"
 module: "CAAProductStructure"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAIPstINFLine → CATBaseUnknown"
 method_count: 2
-visibility: "protected"
-has_tie_binding: true
-verified: true
+source_file: "CAAProductStructure.edu/ProtectedInterfaces/CAAIPstINFLine.h"
 ---
-> **TIE实现**: unknown
 
 # CAAIPstINFLine
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAIPstINFLine → CATBaseUnknown  
-**模块**: CAAProductStructure  
-**分类**: framework  
-**可见性**: protected  
-**方法数**: 2
-
-> ObjectSpecsModeler Framework
+**基类**: CATBaseUnknown | **模块**: CAAProductStructure | **方法数**: 2
 
 ## 依赖
 
@@ -29,36 +17,38 @@ verified: true
 - `CATBaseUnknown.h`
 - `CATISpecObject.h`
 
-## TIE实现
+## 纯虚方法 (接口契约)
 
-**实现文件**:
-- `CAAIPstINFLine.cpp`
-- `CAAIPstINFPoint.cpp`
-- `CAAIPstINFRoot.cpp`
-- `CAAIPstINFWire.cpp`
+### GetPoint
+
+```cpp
+virtual HRESULT GetPoint(int iNum, CATISpecObject **opiPoint) = 0 ;
+```
+
+Retrieves one of the point features pointed to by the line's attribute definitions.
+
+| 参数 | 类型 |
+|------|------|
+| iNum | `int` |
+| **opiPoint | `CATISpecObject` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### SetPoint
+
+```cpp
+virtual HRESULT SetPoint(int iNum, CATISpecObject *ipiPoint) = 0 ;
+```
+
+Valuates one of the line's attribute definitions with a point feature.
+
+| 参数 | 类型 |
+|------|------|
+| iNum | `int` |
+| *ipiPoint | `CATISpecObject` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
 
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAProductStructure.edu/ProtectedInterfaces/CAAIPstINFLine.h`

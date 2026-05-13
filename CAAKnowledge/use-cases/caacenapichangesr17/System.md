@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "System Framework Modifications in V5R17"
-category: use-case
+category: "use-case"
 module: "CAACenAPIChangesR17"
-version: "V5R17"
-tags: ["CATIUExitCryptedILockBytes"]
-source_file: "Doc/online/CAACenAPIChangesR17/System.htmmd"
+tags: "["CATIUExitCryptedILockBytes"]"
+source_file: "Doc/online/CAACenAPIChangesR17/System.htm"
 converted: "2026-05-11T17:33:51.378408"
-```
-
 ---
 # CAA C++ API Modifications
 

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Auditing CAA Code on ProtectedInterfaces Usage"
 category: "use-case"
 module: "CAACenAPIChanges"
-tags: ["CAABlobUIIC", "CAABlob", "CATINamingPart", "CAABlobBlobize", "CAAProtectedChecker", "CAACheckPro", "CAABlobUI", "CAABlobBlobizer"]
-source_file: "Doc/online/CAACenAPIChanges/CAACenHowToAuditProtectedUsage.htmmd"
+tags: "["CAABlobUIIC", "CAABlob", "CATINamingPart", "CAABlobBlobize", "CAAProtectedChecker", "CAACheckPro", "CAABlobUI", "CAABlobBlobizer"]"
+source_file: "Doc/online/CAACenAPIChanges/CAACenHowToAuditProtectedUsage.htm"
 converted: "2026-05-11T17:33:50.063318"
-```
-
 ---
 tags: ["CAABlobUIIC", "CAABlob", "CATINamingPart", "CAABlobBlobize", "CAAProtectedChecker", "CAACheckPro", "CAABlobUI", "CAABlobBlobizer"]
 source_file: "Doc/online/CAACenAPIChanges/CAACenHowToAuditProtectedUsage.htmmd"

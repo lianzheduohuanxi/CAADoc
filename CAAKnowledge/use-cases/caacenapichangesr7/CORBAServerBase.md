@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "CORBAServerBase Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR7"
-version: "V5R7"
-tags: ["CATIUExitServerAdmin"]
-source_file: "Doc/online/CAACenAPIChangesR7/CORBAServerBase.htmmd"
+tags: "["CATIUExitServerAdmin"]"
+source_file: "Doc/online/CAACenAPIChangesR7/CORBAServerBase.htm"
 converted: "2026-05-11T17:33:51.981594"
-```
-
 ---
 tags: ["CATIUExitServerAdmin"]
 source_file: "Doc/online/CAACenAPIChangesR7/CORBAServerBase.htmmd"

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAAPriPatternDescription.CATScript"
 category: "use-case"
 module: "CAAScdPriUseCases"
-tags: ["CATIA", "CAAPriChangePattern", "CAAPriPatternDescription"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangePatternSource.htmmd"
+tags: "["CATIA", "CAAPriChangePattern", "CAAPriPatternDescription"]"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangePatternSource.htm"
 converted: "2026-05-11T17:31:51.213996"
-```
-
 ---
 tags: ["CATIA", "CAAPriChangePattern", "CAAPriPatternDescription"]
 source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangePatternSource.htmmd"
@@ -16,7 +13,7 @@ converted: "2026-05-11T17:31:51.213996"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGTH DASSAULT SYSTEMES 2004
     ' ***********************************************************************
     '   Purpose:      Changes pattern description
@@ -33,7 +30,7 @@ converted: "2026-05-11T17:31:51.213996"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -64,7 +61,7 @@ converted: "2026-05-11T17:31:51.213996"
     ' ------------
     ' Get the part document
     ' ------------
-```vbscript
+```cpp
     Set oPartDocument = CATIA.ActiveDocument
     ' ------------
 ```

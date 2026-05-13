@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Repartition Automation Objects"
-category: tech-article
+category: "tech-article"
 module: "CAAScdPriTechArticles"
-tags: []
-source_file: "Doc/online/CAAScdPriTechArticles/CAAPriTocRepartition.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAAScdPriTechArticles/CAAPriTocRepartition.htm"
 converted: "2026-05-11T17:31:51.239439"
-```
-
 ---
 # Repartition Automation Objects
 

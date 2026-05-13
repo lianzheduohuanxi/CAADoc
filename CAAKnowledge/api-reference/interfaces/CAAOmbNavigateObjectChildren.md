@@ -1,52 +1,42 @@
 ---
 title: "CAAOmbNavigateObjectChildren"
-type: "interface"
+type: "LocalClass"
 module: "CAAObjectModelerBase"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAOmbNavigateObjectChildren → CATBaseUnknown"
 method_count: 2
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAObjectModelerBase.edu/CAAOmbGeoNavigate.m/LocalInterfaces/CAAOmbNavigateObjectChildren.h"
 ---
+
 # CAAOmbNavigateObjectChildren
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAOmbNavigateObjectChildren → CATBaseUnknown  
-**模块**: CAAObjectModelerBase  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 2
+> This Use Case illustrates how to implement the CATINavigateObject interface. for elements without children Execute the Use Case: To execute this Use Case, you must be in a CATIA V5 session.  Create a new document of type CAAGeometry.  Create geometric elements in the document.
 
-> System Framework
+**基类**: CATBaseUnknown | **模块**: CAAObjectModelerBase | **方法数**: 2
 
 ## 依赖
 
 - `CATBaseUnknown.h`
 
+## 虚方法
+
+### GetIdentificators
+
+```cpp
+virtual CATListValCATUnicodeString * GetIdentificators() ;
+```
+
+GetIdentificators ----------------- Returns node identifier which here is the name of the component
+
+
+### GetChildren
+
+```cpp
+virtual CATListValCATBaseUnknown_var * GetChildren() ;
+```
+
+GetChildren ------------ Returns an empty list
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAObjectModelerBase.edu/CAAOmbGeoNavigate.m/LocalInterfaces/CAAOmbNavigateObjectChildren.h`

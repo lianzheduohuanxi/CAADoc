@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Multi Patch NURBS Surface"
-category: use-case case"
+category: "use-case case"
 module: "CAATopUseCases"
-tags: ["CATICGMObject", "CAATopBopdyChecker", "CAATopBodyChecker", "CAATopologicalOperators", "CATICGMContainer"]
-source_file: "Doc/online/CAATopUseCases/CAATopBodyChecker.htmmd"
+tags: "["CATICGMObject", "CAATopBopdyChecker", "CAATopBodyChecker", "CAATopologicalOperators", "CATICGMContainer"]"
+source_file: "Doc/online/CAATopUseCases/CAATopBodyChecker.htm"
 converted: "2026-05-11T17:31:50.690774"
-```
-
 ---
 # Geometric Modeler
 
@@ -61,7 +58,6 @@ The CAATopBodyChecker use case:
 
 To launch CAATopBodyChecker , you will need to set up the build time environment, then compile CAATopBodyChecker .m along with its prerequisites, set up the run time environment, and then execute the use case [1].
 
-To launch CAATopBodyChecker , you will need to set up the build time environment, then compile CAATopBodyChecker .m along with its prerequisites, set up the run time environment, and then execute the use case [1].
 With Windows CAATopBodyChecker `e/bodyChecker1.NCGM`
 
 With UNIX CAATopBodyChecker `/u/bodyChecker1.NCGM`
@@ -98,7 +94,6 @@ There are thee main steps in CAATopBodyChecker.cpp:
 
 The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject (and the curves and surfaces in particular). In this use case, the factory is defined by reading a NCGM file that was previously stored,  the global function `::CATLoadCGMContainer` must be used to retrieve the factory. The body is retrieved by using the CATICGMContainer::FindObjectFromTag method. There is only one body in the container which is loaded. 2353356 is the body tag.
 
-The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject (and the curves and surfaces in particular). In this use case, the factory is defined by reading a NCGM file that was previously stored,  the global function `::CATLoadCGMContainer` must be used to retrieve the factory. The body is retrieved by using the CATICGMContainer::FindObjectFromTag method. There is only one body in the container which is loaded. 2353356 is the body tag.
     CATGeoFactory* piGeomFactory = CATLoadCGMContainer(filetoread);
 
     ...
@@ -147,7 +142,6 @@ pBodyChecker->SetCheckMode(eChkMode);
 
 All the errors found in the body to be checked are displayed if you have specified the Full Mode. If the light mode is specified, several errors of the same type can be diagnosed.
 
-All the errors found in the body to be checked are displayed if you have specified the Full Mode. If the light mode is specified, several errors of the same type can be diagnosed.
     pBodyChecker->BeginningDiagnosis(#);
     while( pBodyChecker->NextDiagnosis(#) )
 

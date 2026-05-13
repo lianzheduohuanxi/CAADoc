@@ -1,25 +1,17 @@
 ---
 title: "CAAMcaUdfLoftEditCreateCmd"
-type: "interface"
+type: "LocalClass"
 module: "CAAMechanicalCommands"
-category: api-reference
 base: "CATPrtPanelStateCmd"
-inheritance_chain: "CAAMcaUdfLoftEditCreateCmd → CATPrtPanelStateCmd"
-method_count: 8
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 0
+source_file: "CAAMechanicalCommands.edu/CAAMcaUdfEdit.m/LocalInterfaces/CAAMcaUdfLoftEditCreateCmd.h"
 ---
+
 # CAAMcaUdfLoftEditCreateCmd
 
-**基类**: CATPrtPanelStateCmd  
-**继承链**: CAAMcaUdfLoftEditCreateCmd → CATPrtPanelStateCmd  
-**模块**: CAAMechanicalCommands  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 8
+> This command enables to edit and create an user feature which comes from the CAAUserFeatureSample user feature reference with the CAAUdfLoft type. This type of user feature has two inputs: two points. The end user selects a point feature and the name of the feature is displayed in a dialog box. To help the end user, the current point to select is indicated by the highlight of the linked editor. It can also pre-visualize the result in the 3D viewer. This use case illustrates: how to use the CATPrtPanelStateCmd class how to instantiate a user feature in an interactive command How to launch ? Edit mode: In the InstallRootDirectory/CAAMechanicalCommands.edu/InputData you find the CAAUdfModelWithTypeInst.CATPart document which contains one instance of the CAAUserFeatureSample user feature reference with the CAAUdfLoft type in Cnext, open this file and double click on the CAAUserFeatureSampleToEdit feature: the current command is launched Create mode: Select the Generative Shape Design workbench in the Start menu In the toolbar, User Feature Creation, click on the first icon: the current command is launched. (see CAAMcaUdfAddin.m/LocalInterfaces/CAAMcaUdfAdn.h) where InstallRootDirectory is the directory where the CAA CD-ROM is installed.
 
-> MechanicalModelerUI framework
+**基类**: CATPrtPanelStateCmd | **模块**: CAAMechanicalCommands | **方法数**: 0
 
 ## 依赖
 
@@ -27,26 +19,4 @@ verified: true
 
 ---
 
-## Interface Overview
-
-This interface inherits from **CATPrtPanelStateCmd**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAMechanicalCommands.edu/CAAMcaUdfEdit.m/LocalInterfaces/CAAMcaUdfLoftEditCreateCmd.h`

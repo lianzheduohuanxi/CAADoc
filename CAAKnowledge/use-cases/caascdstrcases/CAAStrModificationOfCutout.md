@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Modifying Cutouts"
 category: "use-case"
 module: "CAAScdStrUseCases"
-tags: ["CATIA", "CAAStrEditCutout", "CAAScdStrUseCases"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfCutout.htmmd"
+tags: "["CATIA", "CAAStrEditCutout", "CAAScdStrUseCases"]"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfCutout.htm"
 converted: "2026-05-11T17:31:50.895570"
-```
-
 ---
 ## Structure Design
 
@@ -27,7 +24,6 @@ converted: "2026-05-11T17:31:50.895570"
 
   CAAStrEditCutout includes three steps:
 
-CAAStrEditCutout includes three steps:
   1. Prolog
   2. Retrieving Existing Cutout
   3. Modifying the Cutout
@@ -45,7 +41,7 @@ CAAStrEditCutout includes three steps:
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     Dim strFactory As StrObjectFactory
 
     Set doc = CATIA.ActiveDocument
@@ -149,7 +145,7 @@ Replace the existing contour of the cutout with a new one and also change the di
     Set CurrentContour = CutoutToEdit.Contour
     'Get the Current Direction Element
 ```
-```vbscript
+```cpp
     Dim CurrentDirElement As Reference
     Set CurrentDirElement = CutoutToEdit.DirectionElement
     'Set the New Direction Element

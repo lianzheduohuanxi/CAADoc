@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Schematic Document"
 category: "use-case"
 module: "CAAScdSchUseCases"
-tags: ["CATIA", "CAASchCreateSchDocument2", "CAAScdSchUseCases"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchCreateSchDocument2.htmmd"
+tags: "["CATIA", "CAASchCreateSchDocument2", "CAAScdSchUseCases"]"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchCreateSchDocument2.htm"
 converted: "2026-05-11T17:31:51.345185"
-```
-
 ---
 ## Schematics Platform Modeler
 
@@ -40,7 +37,7 @@ The macro first creates a new document.. |     ...
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     '--------------------------------------------------------------------------
     ' Create a CATProduct document
     '--------------------------------------------------------------------------
@@ -55,7 +52,7 @@ The macro first creates a new document.. |     ...
     Dim objSchDoc As Document
 ```vbscript
 ```
-```vbscript
+```cpp
     Set objSchDoc = CATIA.Documents.Add ("CATProduct")
 ```
 ```
@@ -70,7 +67,7 @@ The macro first creates a new document.. |     ...
     ...
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
          '---------------------------------------------------------------------
          ' Regular CATProduct is a 3D document and is associated with a 3D
          ' editor and a 3D viewer. On the other hand a schematic document
@@ -104,7 +101,7 @@ The macro first creates a new document.. |     ...
 ```
 
 ```vbscript
-```vbscript
+```cpp
          Set objSchDoc = CATIA.Documents.Open (strDocName)
 ```
 ```

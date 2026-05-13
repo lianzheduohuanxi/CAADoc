@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Changing the Pattern Parameters"
 category: "use-case"
 module: "CAAScdPriUseCases"
-tags: ["CATIA", "CAAPriChangePattern", "CAAPriPatternDescription"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangePattern.htmmd"
+tags: "["CATIA", "CAAPriChangePattern", "CAAPriPatternDescription"]"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangePattern.htm"
 converted: "2026-05-11T17:31:51.211500"
-```
-
 ---
 ## Part Design
 
@@ -33,7 +30,6 @@ It modifies the _ CircPattern_ object from its methods and properties, and updat
 
  CAAPriPatternDescription includes the following steps:
 
-CAAPriPatternDescription includes the following steps:
   1. Prolog
   2. Looking for the Circular Pattern Object in the Selection
   3. Applying the Circular Pattern Description
@@ -58,7 +54,7 @@ Load the CAAPriPatternDescription.CATPart that contains two circular patterns. !
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Set oPartDocument = CATIA.ActiveDocument
 ```
 ```

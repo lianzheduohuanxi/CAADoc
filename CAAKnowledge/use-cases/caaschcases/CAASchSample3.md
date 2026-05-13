@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Features in an Applicative Container"
-category: use-case case"
+category: "use-case case"
 module: "CAASchUseCases"
-tags: ["CAASchEduIn", "CAASchAppSample2", "CATISchAppObjectFactory", "CAASchAppSample3Main", "CAASchAppSample3", "CAASchSample1", "CATISchSession", "CAASCHEDU_SamplePID", "CAASchApp", "CATISchRoute", "CAASchEduOut3", "CATISchBaseFactory", "CAASchPlatformModeler", "CAASchAppUtilities", "CATInit", "CAAESchAppObjectFactory", "CAASchAppBase", "CAASchAppBaseEnv", "CAASchAppDeleteBaseUnknown"]
-source_file: "Doc/online/CAASchUseCases/CAASchSample3.htmmd"
+tags: "["CAASchEduIn", "CAASchAppSample2", "CATISchAppObjectFactory", "CAASchAppSample3Main", "CAASchAppSample3", "CAASchSample1", "CATISchSession", "CAASCHEDU_SamplePID", "CAASchApp", "CATISchRoute", "CAASchEduOut3", "CATISchBaseFactory", "CAASchPlatformModeler", "CAASchAppUtilities", "CATInit", "CAAESchAppObjectFactory", "CAASchAppBase", "CAASchAppBaseEnv", "CAASchAppDeleteBaseUnknown"]"
+source_file: "Doc/online/CAASchUseCases/CAASchSample3.htm"
 converted: "2026-05-11T17:31:51.529141"
-```
-
 ---
 # Equipment & Systems
 
@@ -65,7 +62,6 @@ To launch CAASchAppSample3, you will need to set up the build time environment, 
 
 CAASchAppSample3 code is located in the CAASchAppSample3.m use case module of the CAASchPlatformModeler.edu framework:
 
-CAASchAppSample3 code is located in the CAASchAppSample3.m use case module of the CAASchPlatformModeler.edu framework:
 Windows | `InstallRootDirectory/CAASchPlatformModeler.edu/CAASchAppSample3.m`
 
 CAASchAppSample3 code is located in the CAASchAppSample3.m use case module of the CAASchPlatformModeler.edu framework:
@@ -98,7 +94,6 @@ In this use case, we open an input drawing containing one main sheet and one det
 
 The CAASchAppSample2 code is derived from the CAASchAppBaseEnv base class. The base class contains functionality common to the other CAASchApp samples. Initializing the environment involves the following methods:
 
-The CAASchAppSample2 code is derived from the CAASchAppBaseEnv base class. The base class contains functionality common to the other CAASchApp samples. Initializing the environment involves the following methods:
     CAASchAppSample2::InitEnvironment
     CreateCATProductEnv::CreateCATProductEnv
 
@@ -121,9 +116,8 @@ These methods perform the following functions:
 
 According to the rules for the Schematics Modeler, if you want to create a route, you must first use your application object factory to create the route (feature) object. The sample uses the _CATISchAppObjectFactory_ interface method `AppCreateRoute` to create the route object instance. The application route reference is already residing in the input model, and `AppCreateRoute` retrieves it and creates the application route instance from it.
 
-According to the rules for the Schematics Modeler, if you want to create a route, you must first use your application object factory to create the route (feature) object. The sample uses the _CATISchAppObjectFactory_ interface method `AppCreateRoute` to create the route object instance. The application route reference is already residing in the input model, and `AppCreateRoute` retrieves it and creates the application route instance from it.
         CATISchSession* piSchSession = NULL;
-```vbscript
+```cpp
         if ( SUCCEEDED( pSession->QueryInterface (IID_CATISchSession,(void**)&piSchSession)))
 
 ```
@@ -168,7 +162,7 @@ if (SUCCEEDED(_piSchAppObjFact->AppCreateRoute (SCHEDUClass_String,
 ```
 
           }
-```vbscript
+```cpp
 if (SUCCEEDED(_piSchAppObjFact->AppCreateRoute (SCHEDUClass_String,
 cout << "CAASchAppSample3::DoSample: First application route found" << endl;
           else
@@ -190,13 +184,13 @@ cout << "Route: "
           if (SUCCEEDED(_piSchAppObjFact->AppCreateRoute (SCHEDUClass_String,
                &_piUKAppRoute2)))
           {
-```vbscript
+```cpp
 if (SUCCEEDED(_piSchAppObjFact->AppCreateRoute (SCHEDUClass_String,
             cout << "CAASchAppSample3::DoSample: Second application route found" << endl;
 ```
 
           }
-```vbscript
+```cpp
 if (SUCCEEDED(_piSchAppObjFact->AppCreateRoute (SCHEDUClass_String,
 cout << "CAASchAppSample3::DoSample: Second application route found" << endl;
           else
@@ -235,7 +229,6 @@ The method `AppCreateRoute` is implemented in the file **CAAESchAppObjectFactory
 
 After the route feature object is created, the Schematics base factory interface _CATISchBaseFactory_ method `CreateSchRouteByPoints` is used to create the Route.
 
-After the route feature object is created, the Schematics base factory interface _CATISchBaseFactory_ method `CreateSchRouteByPoints` is used to create the Route.
         CATISchRoute   *_piSchRoute1;
 ```vbscript
         if ( _piUKAppRoute1 )
@@ -259,7 +252,7 @@ int iSize = 4;
 RC = _piBaseFact->CreateSchRouteByPoints (_piUKAppRoute1,
 LDbPts, iSize, &_piSchRoute1);
 if (SUCCEEDED(RC) && _piSchRoute1)
-```vbscript
+```cpp
             RC = _piSchRoute1->QueryInterface (IID_CATISpecObject,
 ```
 
@@ -369,7 +362,7 @@ return 0;
 return 0;
 cout << "CreateRouteTest: GRRRoutes created" << endl;
         CATSchListServices SchList;
-```vbscript
+```cpp
         if (SUCCEEDED(SchList.CreateCATIUnknownList (&_piLUK)))
 
 ```
@@ -450,7 +443,7 @@ RC = _piBaseFact->CreateSchRouteByPrim (_piUKAppRoute2, _piLUK, &_piSchRoute2);
         {
 RC = _piBaseFact->CreateSchRouteByPrim (_piUKAppRoute2, _piLUK, &_piSchRoute2);
 ```vbscript
-```vbscript
+```cpp
 if (SUCCEEDED(RC) && _piSchRoute2)
           RC = _piSchRoute2->QueryInterface (IID_CATISpecObject,
 ```

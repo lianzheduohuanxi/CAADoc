@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Accessing Spatial Integration Data"
 category: "use case"
 module: "CAACloUseCases"
-tags: ["CAACommonLayoutItf", "CAACloPspSpatialPhysical", "CATIArrNode_var", "CAACloPspSpatialPhysicalMain", "CAACloPlacePart", "CATIPspPhysical", "CATIArrSegmentsString", "CAAPspUtilities", "CATIPspSpatial", "CATIUnknownList", "CAAPspBaseEnvProtected", "CAAPlantShipInterfaces", "CAACloPspEduIn", "CATIA"]
-source_file: "Doc/online/CAACloUseCases/CAACloPspSpatialPhysical.htmmd"
+tags: "["CAACommonLayoutItf", "CAACloPspSpatialPhysical", "CATIArrNode_var", "CAACloPspSpatialPhysicalMain", "CAACloPlacePart", "CATIPspPhysical", "CATIArrSegmentsString", "CAAPspUtilities", "CATIPspSpatial", "CATIUnknownList", "CAAPspBaseEnvProtected", "CAAPlantShipInterfaces", "CAACloPspEduIn", "CATIA"]"
+source_file: "Doc/online/CAACloUseCases/CAACloPspSpatialPhysical.htm"
 converted: "2026-05-11T17:33:49.507426"
-```
-
 ---
 tags: ["CAACommonLayoutItf", "CAACloPspSpatialPhysical", "CATIArrNode_var", "CAACloPspSpatialPhysicalMain", "CAACloPlacePart", "CATIPspPhysical", "CATIArrSegmentsString", "CAAPspUtilities", "CATIPspSpatial", "CATIUnknownList", "CAAPspBaseEnvProtected", "CAAPlantShipInterfaces", "CAACloPspEduIn", "CATIA"]
 source_file: "Doc/online/CAACloUseCases/CAACloPspSpatialPhysical.htmmd"
@@ -142,7 +139,7 @@ else
 
 cout << "FileToBeLoaded = " << FileToBeLoaded << endl;
 rc = myObject.DoSample(FileToBeLoaded);
-```vbscript
+```cpp
       CATCatch (CATError, pError)
 
 ```
@@ -199,7 +196,7 @@ CATTry
         cout << "Product environment created." << endl;
 
         //  Initialize Piping Design application
-```vbscript
+```cpp
 CreateCATProductEnv(iuFileToBeLoaded);
 cout << "Product environment created." << endl;
         ApplicationInit("CATPiping");
@@ -208,14 +205,14 @@ cout << "Product environment created." << endl;
 ```
 
         // Retrieve a list of physical objects and connectors associated at the extremity of the spatial object.
-```vbscript
+```cpp
 ApplicationInit("CATPiping");
 cout << "Piping application initialized." << endl;
         HRESULT rcListCntrPhy = ListConnectedPhysicalsToSpatial(#);
         cout << "rcListCntrPhy = " << rcListCntrPhy << endl;
 ```
 
-```vbscript
+```cpp
         // Set return code.
 HRESULT rcListCntrPhy = ListConnectedPhysicalsToSpatial(#);
 ```
@@ -225,7 +222,7 @@ cout << "rcListCntrPhy = " << rcListCntrPhy << endl;
 
       }  // end CATTry
 
-```vbscript
+```cpp
 if (SUCCEEDED(rcListCntrPhy))
 rc = CATReturnSuccess;
       CATCatch (CATError, pError)
@@ -237,7 +234,7 @@ CATCatch (CATError, pError)
         cout << "CAACloPspSpatialPhysical::DoSample *** Error Caught ***" << endl;
         cout << pError;
 
-```vbscript
+```cpp
         rc = CATReturnError(pError);
 
 ```
@@ -301,7 +298,7 @@ CATTry
           if ( SUCCEEDED(piPhysical->GetSpatial(piUnknown)) && NULL != piUnknown )
           {
             //  Find CATIPspSpatial interface
-```vbscript
+```cpp
 if ( SUCCEEDED(piPhysical->GetSpatial(piUnknown)) && NULL != piUnknown )
             piUnknown->QueryInterface(IID_CATIPspSpatial,(void**)&piSpatial);
             piUnknown->Release(#);
@@ -319,14 +316,14 @@ if ( SUCCEEDED(piPhysical->GetSpatial(piUnknown)) && NULL != piUnknown )
             //----------------------------------------------------------------------------------------------------
 ```vbscript
 if ( NULL != piSpatial )
-```vbscript
+```cpp
             if (SUCCEEDED (piSpatial->QueryInterface(IID_CATIArrSegmentsString, (void**)&pRun)))
 ```
 
 ```
 
             {
-```vbscript
+```cpp
 if (SUCCEEDED (piSpatial->QueryInterface(IID_CATIArrSegmentsString, (void**)&pRun)))
               pRun->GetEndPoints(ospEndPoint1,ospEndPoint2);
               if(!!ospEndPoint1)

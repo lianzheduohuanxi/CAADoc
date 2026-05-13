@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "DrawingPageSetup Object"
-category: tech-article
+category: "tech-article"
 module: "CAAScdDriTechArticles"
-tags: ["CATIA"]
-source_file: "Doc/online/CAAScdDriTechArticles/CAADriObjDrawingPageSetup.htmmd"
+tags: "["CATIA"]"
+source_file: "Doc/online/CAAScdDriTechArticles/CAADriObjDrawingPageSetup.htm"
 converted: "2026-05-11T17:31:51.118717"
-```
-
 ---
 # DrawingPageSetup Object
 
@@ -30,7 +27,7 @@ Use the **FitToPrinterFormat** method to to zoom the sheet in or out to fit the 
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     CATIA.Documents(2).ActiveSheet.DrawingPageSetup.FitToPrinterFormat
 
 ```
@@ -42,7 +39,7 @@ Use the **ChooseBestOrientation** method to activate if it is deactivated, or to
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     CATIA.Documents(2).ActiveSheet.DrawingPageSetup.ChooseBestOrientation
 
 ```

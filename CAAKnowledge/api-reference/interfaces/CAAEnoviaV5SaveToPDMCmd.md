@@ -1,51 +1,85 @@
 ---
 title: "CAAEnoviaV5SaveToPDMCmd"
-type: "interface"
+type: "LocalClass"
 module: "CAAProductStructureE5i"
-category: api-reference
 base: "CATStateCommand"
-inheritance_chain: "CAAEnoviaV5SaveToPDMCmd → CATStateCommand"
-method_count: 4
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 5
+source_file: "CAAProductStructureE5i.edu/CAAEnoviaV5SaveToPDM.m/LocalInterfaces/CAAEnoviaV5SaveToPDMCmd.h"
 ---
+
 # CAAEnoviaV5SaveToPDMCmd
 
-**基类**: CATStateCommand  
-**继承链**: CAAEnoviaV5SaveToPDMCmd → CATStateCommand  
-**模块**: CAAProductStructureE5i  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 4
+**基类**: CATStateCommand | **模块**: CAAProductStructureE5i | **方法数**: 5
 
 ## 依赖
 
 - `CATStateCommand.h`
 - `CATBoolean.h`
 
+## 虚方法
+
+### BuildGraph
+
+```cpp
+virtual void BuildGraph() ;
+```
+
+Define the Cmd State Sharts
+
+
+### Activate
+
+```cpp
+virtual CATStatusChangeRC Activate(CATCommand *iFromClient, CATNotification *iEvtDat) ;
+```
+
+Action Triggered when the Command Gains Focus
+
+| 参数 | 类型 |
+|------|------|
+| *iFromClient | `CATCommand` |
+| *iEvtDat | `CATNotification` |
+
+
+### Desactivate
+
+```cpp
+virtual CATStatusChangeRC Desactivate(CATCommand *iFromClient, CATNotification *iEvtDat) ;
+```
+
+Actions Triggered when the Command Loses Focus
+
+| 参数 | 类型 |
+|------|------|
+| *iFromClient | `CATCommand` |
+| *iEvtDat | `CATNotification` |
+
+
+### Cancel
+
+```cpp
+virtual CATStatusChangeRC Cancel(CATCommand *iFromClient, CATNotification *iEvtDat) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iFromClient | `CATCommand` |
+| *iEvtDat | `CATNotification` |
+
+
+## 公共方法
+
+### OnOKSelected
+
+```cpp
+CATBoolean OnOKSelected(void *data) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *data | `void` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATStateCommand**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAProductStructureE5i.edu/CAAEnoviaV5SaveToPDM.m/LocalInterfaces/CAAEnoviaV5SaveToPDMCmd.h`

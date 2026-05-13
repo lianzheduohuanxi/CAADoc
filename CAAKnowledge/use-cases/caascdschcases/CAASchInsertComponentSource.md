@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAASchInsertComponent.CATScript"
 category: "use-case"
 module: "CAAScdSchUseCases"
-tags: ["CAASCH_Sample", "CATIASchGRRRoute", "CATIASchRouteGraphic", "CAAScdSchUseCases", "CAASCH_RouteForPlacement", "CATIA", "CAASacInsertComponent", "CATIASchCompatible", "CATIASchComponent", "CATIASchCompGraphic", "CATIASchRoute", "CATIASchAppConnectable", "CAASchInsertComponent"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchInsertComponentSource.htmmd"
+tags: "["CAASCH_Sample", "CATIASchGRRRoute", "CATIASchRouteGraphic", "CAAScdSchUseCases", "CAASCH_RouteForPlacement", "CATIA", "CAASacInsertComponent", "CATIASchCompatible", "CATIASchComponent", "CATIASchCompGraphic", "CATIASchRoute", "CATIASchAppConnectable", "CAASchInsertComponent"]"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchInsertComponentSource.htm"
 converted: "2026-05-11T17:31:51.378605"
-```
-
 ---
 tags: ["CAASCH_Sample", "CATIASchGRRRoute", "CATIASchRouteGraphic", "CAAScdSchUseCases", "CAASCH_RouteForPlacement", "CATIA", "CAASacInsertComponent", "CATIASchCompatible", "CATIASchComponent", "CATIASchCompGraphic", "CATIASchRoute", "CATIASchAppConnectable", "CAASchInsertComponent"]
 source_file: "Doc/online/CAAScdSchUseCases/CAASchInsertComponentSource.htmmd"
@@ -16,7 +13,7 @@ converted: "2026-05-11T17:31:51.378605"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGHT DASSAULT SYSTEMES 2004
     ' *****************************************************************************
     '   Purpose:      Insert a schematic component into a route.
@@ -31,7 +28,7 @@ converted: "2026-05-11T17:31:51.378605"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -44,7 +41,7 @@ converted: "2026-05-11T17:31:51.378605"
         ' -------------------------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String
-```vbscript
+```cpp
         sDocPath=CATIA.SystemService.Environ("CATDocView")
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -70,7 +67,7 @@ converted: "2026-05-11T17:31:51.378605"
 ```vbscript
         ' -------------------------------------------------------------------------
         ' Open the catalog document
-```vbscript
+```cpp
         Dim sCtlgFilePath
         sCtlgFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
@@ -83,12 +80,12 @@ converted: "2026-05-11T17:31:51.378605"
                 "online/CAAScdSchUseCases/samples/CAASCH_Sample.catalog")
 
 ```vbscript
-```vbscript
+```cpp
 sCtlgFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
         Dim objSchCtlgDoc As Document
         Set objSchCtlgDoc = CATIA.Documents.Open(sCtlgFilePath)
 ```
@@ -102,7 +99,7 @@ sCtlgFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```vbscript
 ```vbscript
         ' Open main schematic design document (for new component instances created here)
-```vbscript
+```cpp
         Dim sFilePath
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
@@ -115,12 +112,12 @@ sCtlgFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
                 "online/CAAScdSchUseCases/samples/CAASCH_RouteForPlacement.CATProduct")
 
 ```vbscript
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
         Dim objSchDoc As Document
         Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
@@ -234,7 +231,7 @@ strMessage = strMessage & _
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
                Dim objCompatInfo As AnyObject
                Dim objFinalInsertInfo As AnyObject
                Dim bYesCompat As Boolean
@@ -327,7 +324,7 @@ Set objCompRefPlaceInfo = objSchCompCVRef.QueryConnectAbility _
                     objCompatInfo, bYesCompat
 
 ```vbscript
-```vbscript
+```cpp
                   Dim db2Pt(2) As CATSafeArrayVariant
 ```vbscript
 ```
@@ -503,7 +500,7 @@ Not ( IsEmpty (objLDbPlace ) )  ) Then
                       "Placement point for PlaceOnObject = (" & db2Pt(0) & "," & db2Pt(1) &")" & vbCr
 
 ```vbscript
-```vbscript
+```cpp
                      Dim db6Matrix(6) As CATSafeArrayVariant
 ```vbscript
 ```
@@ -608,7 +605,7 @@ End If  '----If ( Not ( IsEmpty (objSchRoot ) )...
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' -----------------------------------------------------------------------------
     ' | Find a route instance in the model.
     ' | Input: objSchCompGraph:  the schematic component
@@ -633,7 +630,7 @@ End If  '----If ( Not ( IsEmpty (objSchRoot ) )...
           Set objSchLSymbols = objSchRootArg.GetRoutes
           If ( Not ( IsEmpty (objSchLSymbols ) ) ) Then
 ```
-```vbscript
+```cpp
              Set FindARouteInModel = objSchLSymbols.Item (1,"CATIASchCompatible")
           End If
 ```
@@ -646,7 +643,7 @@ End If  '----If ( Not ( IsEmpty (objSchRoot ) )...
     End Function
 ```vbscript
 ```
-```vbscript
+```cpp
     ' -----------------------------------------------------------------------------
     ' | Find a route instance in the model.
     ' | Input: objSchRouteArg:  the route
@@ -681,7 +678,7 @@ Private Function FindPlacementPoint (objSchRootArg As SchematicRoot, _
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
        Dim objSchLDb As SchListOfDoubles
        Dim objSchGRRRoute As SchGRRRoute
        Dim objSchTempListFact As SchTempListFactory
@@ -738,7 +735,7 @@ Private Function FindPlacementPoint (objSchRootArg As SchematicRoot, _
 ```vbscript
           If ( Not ( IsEmpty (objSchLGRR ) ) ) Then
 
-```vbscript
+```cpp
              Set objSchGRRRoute = objSchLGRR.Item (1,"CATIASchGRRRoute")
 
 ```

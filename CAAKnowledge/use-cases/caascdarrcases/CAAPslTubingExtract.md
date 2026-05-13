@@ -1,7 +1,7 @@
 ---
 title: "CATIArrBendableString, CATIAArrSystemLineProduct Interfaces Use Case
  "
-```vbscript
+```cpp
 title: "CATIArrBendableString, CATIAArrSystemLineProduct Interfaces Use Case
 category: "use-case"
 module: "CAAScdArrUseCases"
@@ -49,7 +49,7 @@ The ArrSystemLineProduct object is a collection object that manages ArrBendableS
 
     ...
 ```vbscript
-```vbscript
+```cpp
        Set objCATIAV5Document0 = CATIA.ActiveDocument
 ```
 ```
@@ -58,21 +58,21 @@ The ArrSystemLineProduct object is a collection object that manages ArrBendableS
 ```vbscript
 ```vbscript
        '//---------- Get Arrworkbench from current document
-```vbscript
+```cpp
        Set objCATIAV5ArrWorkbench0 = objCATIAV5Document0.GetWorkbench("ArrWorkbench")
        '//---------- Get current selection
 ```
-```vbscript
+```cpp
        Set objCATIAV5Selection = objCATIAV5Document0.Selection
        Dim objSysLineProduct As ArrSystemLineProduct
        Dim objBendableString As ArrBendableString
        ' Find from the selection list, objects that conform to the CATIAArrSystemLineProduct interface.
 ```
-```vbscript
+```cpp
        Set objSysLineProduct = objCATIAV5Selection.FindObject("CATIAArrSystemLineProduct")
        ' Get the count of subproducts, actual subproduct (methods of CATIArrSystemLineProduct interface)
 ```
-```vbscript
+```cpp
        Dim intNumOfSubProducts As integer
        intNumOfSubProducts = objSysLineProduct.GetSubProductsCount("CATIAArrBendableString")
 ```

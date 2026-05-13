@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAA V5R16 News Highlights"
 category: "use-case"
 module: "CAACenQuickRefs"
-tags: ["CATIParameterEditor", "CATIIniSearchSymbolCriterion", "CATIXMLSAXFactory", "CATIBehOperationManagement", "CATIEwrFilter", "CATIxPDMSendToService", "CATIXMLDOMDocumentBuilder", "CATIVizVisualizationSettingAtt", "CATIVariableManagement", "CATICafSearchSettingAtt", "CATIA"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenNewsR16.htmmd"
+tags: "["CATIParameterEditor", "CATIIniSearchSymbolCriterion", "CATIXMLSAXFactory", "CATIBehOperationManagement", "CATIEwrFilter", "CATIxPDMSendToService", "CATIXMLDOMDocumentBuilder", "CATIVizVisualizationSettingAtt", "CATIVariableManagement", "CATICafSearchSettingAtt", "CATIA"]"
+source_file: "Doc/online/CAACenQuickRefs/CAACenNewsR16.htm"
 converted: "2026-05-11T17:33:47.006273"
-```
-
 ---
 tags: ["CATIParameterEditor", "CATIIniSearchSymbolCriterion", "CATIXMLSAXFactory", "CATIBehOperationManagement", "CATIEwrFilter", "CATIxPDMSendToService", "CATIXMLDOMDocumentBuilder", "CATIVizVisualizationSettingAtt", "CATIVariableManagement", "CATICafSearchSettingAtt", "CATIA"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenNewsR16.htmmd"
@@ -66,7 +63,6 @@ This is done in the workbench resource file.
 [Top] Product Synthesis & Knowledgeware In Business Knowledge Templates (BKT), two new interfaces to manage and access characteristics of main BKT objects:
 
   1. CATIVariableManagement is available on the BKT types, the typed objects and the behaviors. It contains a set of methods to access the variables of these objects
-1. CATIVariableManagement is available on the BKT types, the typed objects and the behaviors. It contains a set of methods to access the variables of these objects
   2. CATIBehOperationManagement manages the different states of a behavior (Done, Started, Suspended, and Canceled).
 
 These two interfaces will allow clients to create they own commands and use them in a BKT process. [Top] Analysis DS command reusability in customers' workbenches: you can now programmatically insert identified DS commands into your own workbenches. This is restricted to commands and workbenches of the Analysis solution. See [ Command Access](../CAAAniQuickRefs/CAAAniCommandAccess.md) for additional information and the list of commands you can reuse. [Top] Equipement & Systems To help DMU review of Electrical Harness by configuration, it is currently possible to interactively filter a 150% harness (also named the maximum configuration) by implementing some User Interface Program (UIP) than enables the end user to get, for a given harness, the list of criteria (can be a configuration) and to retrieve from a particular criteria the list of active wires. The new filtering interface  CATIEwrFilter enables you now to do this from a program. [Top] RADE When creating Web applications, you can use input and output parameters to interact with Modular 3d com. Creating an Application to be Integrated to Modular 3Dcom](../CAADkiUseCases/CAADkiIdentityCard.md) [Top]

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "What's New?"
 category: "use-case"
 module: "CAACenQuickRefs"
-tags: ["CAAGMOperatorsInterfaces", "CATInteractiveInterfaces", "CATINavigateObject", "CATINavigateProvider", "CATINavigContainer", "CAAOsmNovel", "CATIGraphNode", "CAAAniCatalog", "CATInterfaceEvents", "CATIRedrawEvent", "CATICstFactory", "CATIntersectionOrientation", "CATIPrintable", "CATIBloc", "CATINavigateFilter", "CAAOsmCatalogSU", "CATIMfgStartupFactories", "CATIPrinterManager", "CATINavigElement", "CATIA"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenWhatsNew.htmmd"
+tags: "["CAAGMOperatorsInterfaces", "CATInteractiveInterfaces", "CATINavigateObject", "CATINavigateProvider", "CATINavigContainer", "CAAOsmNovel", "CATIGraphNode", "CAAAniCatalog", "CATInterfaceEvents", "CATIRedrawEvent", "CATICstFactory", "CATIntersectionOrientation", "CATIPrintable", "CATIBloc", "CATINavigateFilter", "CAAOsmCatalogSU", "CATIMfgStartupFactories", "CATIPrinterManager", "CATINavigElement", "CATIA"]"
+source_file: "Doc/online/CAACenQuickRefs/CAACenWhatsNew.htm"
 converted: "2026-05-11T17:33:47.787486"
-```
-
 ---
 tags: ["CAAGMOperatorsInterfaces", "CATInteractiveInterfaces", "CATINavigateObject", "CATINavigateProvider", "CATINavigContainer", "CAAOsmNovel", "CATIGraphNode", "CAAAniCatalog", "CATInterfaceEvents", "CATIRedrawEvent", "CATICstFactory", "CATIntersectionOrientation", "CATIPrintable", "CATIBloc", "CATINavigateFilter", "CAAOsmCatalogSU", "CATIMfgStartupFactories", "CATIPrinterManager", "CATINavigElement", "CATIA"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenWhatsNew.htmmd"
@@ -496,7 +493,6 @@ Deprecated APIs can be found in:
 Deprecated APIs can be found in:
 New Geometric Modeler layer and Rearchitecture of Geometric Modeler frameworks  A new geometric modeler interfaces layer, coming from the upcoming CAA V6 architecture, is delivered in V5R20. The goal is to minimize the code size at installation and manage to load the code which is strictly necessary for the achievement of some identified scenarios (open a model, perform measures on it ...). This new layer allows an application to load dynamically the dlls which are strictly needed for the execution of a given scenario. There is no need to migrate to these new interfaces. CAA developers intending to switch to V6, may consider this new delivery as a way to gradually migrate to V6 architecture while still in a V5 environment. For those, the necessary information is provided in the [New Geometric Modeler Interfaces Layer](CAACenGobInterfacesMigration.md) article. A consequence of this delivery is that some interfaces have also been moved from AdvancedTopologicalOpe, BasicTopologicalOpe, FreeFormOperators, GeometricObjects, GeometricOperators, NewTopologicalObjects and TopologicalOperators frameworks into existing frameworks and the newly created GMModelInterfaces, GMOperatorsInterfaces, NewTopologicalObjects, TopologicalOperators and TopologicalOperatorsLight frameworks. Modules using the moved Authorized APIs should have the listed module added to their `LINK_WITH` statement of their Imakefile.mk file and add the listed framework as a prerequisite in the IdentityCard of their frameworks.  The CAA Multi-Workspace Application Builder - mkmk (MAB) automatically takes this modification into account and only displays a WARNING, but adding the right framework and module to the IdentityCards and Imakefile.mk is highly recommended. Authorized API | Framework | Module
 
-New Geometric Modeler layer and Rearchitecture of Geometric Modeler frameworks  A new geometric modeler interfaces layer, coming from the upcoming CAA V6 architecture, is delivered in V5R20. The goal is to minimize the code size at installation and manage to load the code which is strictly necessary for the achievement of some identified scenarios (open a model, perform measures on it ...). This new layer allows an application to load dynamically the dlls which are strictly needed for the execution of a given scenario. There is no need to migrate to these new interfaces. CAA developers intending to switch to V6, may consider this new delivery as a way to gradually migrate to V6 architecture while still in a V5 environment. For those, the necessary information is provided in the [New Geometric Modeler Interfaces Layer](CAACenGobInterfacesMigration.md) article. A consequence of this delivery is that some interfaces have also been moved from AdvancedTopologicalOpe, BasicTopologicalOpe, FreeFormOperators, GeometricObjects, GeometricOperators, NewTopologicalObjects and TopologicalOperators frameworks into existing frameworks and the newly created GMModelInterfaces, GMOperatorsInterfaces, NewTopologicalObjects, TopologicalOperators and TopologicalOperatorsLight frameworks. Modules using the moved Authorized APIs should have the listed module added to their `LINK_WITH` statement of their Imakefile.mk file and add the listed framework as a prerequisite in the IdentityCard of their frameworks.  The CAA Multi-Workspace Application Builder - mkmk (MAB) automatically takes this modification into account and only displays a WARNING, but adding the right framework and module to the IdentityCards and Imakefile.mk is highly recommended. Authorized API | Framework | Module
 AdvancedTopologicalOpe/PublicInterfaces/CATCreateSketchGeodesic.h | TopologicalOperatorsLight | AdvTopoSketchLight
 AdvancedTopologicalOpe/PublicInterfaces/CATCreateTopExtrapolWireOpe.h | TopologicalOperators | AdvTopoSketch
 AdvancedTopologicalOpe/PublicInterfaces/CATCreateTopGeodesicDistanceTool.h | TopologicalOperatorsLight | AdvTopoSketchLight
@@ -643,7 +639,6 @@ Deprecated APIs can be found in:
 Deprecated APIs can be found in:
 Split of the ObjectModelerBase framework Some interfaces have been moved from  ObjectModelerBase into the new  ObjectModelerSystem and  ObjectModelerNavigator  frameworks. Modules using the moved Authorized APIs should have the listed module added to their `LINK_WITH `statement of their Imakefile.mk file and add the listed framework as a prerequisite in the IdentityCard of their frameworks.  The CAA Multi-Workspace Application Builder - mkmk (MAB) automatically takes this modification into account and only displays a WARNING, but adding the right framework and module to the IdentityCards and Imakefile.mk is highly recommended. Authorized API | Framework | Module
 
-Split of the ObjectModelerBase framework Some interfaces have been moved from  ObjectModelerBase into the new  ObjectModelerSystem and  ObjectModelerNavigator  frameworks. Modules using the moved Authorized APIs should have the listed module added to their `LINK_WITH `statement of their Imakefile.mk file and add the listed framework as a prerequisite in the IdentityCard of their frameworks.  The CAA Multi-Workspace Application Builder - mkmk (MAB) automatically takes this modification into account and only displays a WARNING, but adding the right framework and module to the IdentityCards and Imakefile.mk is highly recommended. Authorized API | Framework | Module
 booleanDef.h | ObjectModelerSystem | CATOMY
 CATIGraphLink.h | ObjectModelerNavigator | CATObjectModelerNavigator
 CATIGraphNode.h | ObjectModelerNavigator | CATObjectModelerNavigator
@@ -1089,7 +1084,7 @@ As a reminder, all metadata changes, whether metadata is exposed or not, are des
 GeometricObjects | CATGeoFactory::CreateNurbsCurve | CATGeoFactory::CATCreateNurbsCurve
 GeometricObjects | CATGeoFactory::CreatePNurbs | CATGeoFactory::CATCreatePNurbs
 GeometricObjects | CATGeoFactory::CreateNurbsSurface | CATGeoFactory::CATCreateNurbsSurface
-```vbscript
+```cpp
 GeometricObjects | CATNurbsCurve::Set | CATNurbsCurve::SetData
 GeometricObjects | CATNurbsSurface::Set | CATNurbsSurface::SetData
 GeometricObjects | CATPNurbs::Set | CATPNurbs::SetData
@@ -1464,7 +1459,6 @@ Deprecated APIs can be found in:
 Deprecated APIs can be found in:
 Move of the LiteralFeatures Framework The Authorized APIs that were up to now supplied with the LiteralFeatures framework are moved to the KnowledgeInterfaces framework. Before rebuilding your applications that use these Authorized APIs, make sure that the KnowledgeInterfaces framework is declared in the IdentityCard.h files of your frameworks. Split of the MechanicalModeler framework Some interfaces have been moved from  MechanicalModeler into the new  ConstraintModeler and  ConstraintModelerInterfaces  frameworks. Modules using the moved Authorized APIs should have the listed module added to their `LINK_WITH `statement of their Imakefile.mk file and add the listed framework as a prerequisite in the IdentityCard of their frameworks.  The CAA Multi-Workspace Application Builder - mkmk (MAB) automatically takes this modification into account and only displays a WARNING, but adding the right framework and module to the IdentityCards and Imakefile.mk is highly recommended. **Authorized API** |  **Framework** |  **Module**
 
-Move of the LiteralFeatures Framework The Authorized APIs that were up to now supplied with the LiteralFeatures framework are moved to the KnowledgeInterfaces framework. Before rebuilding your applications that use these Authorized APIs, make sure that the KnowledgeInterfaces framework is declared in the IdentityCard.h files of your frameworks. Split of the MechanicalModeler framework Some interfaces have been moved from  MechanicalModeler into the new  ConstraintModeler and  ConstraintModelerInterfaces  frameworks. Modules using the moved Authorized APIs should have the listed module added to their `LINK_WITH `statement of their Imakefile.mk file and add the listed framework as a prerequisite in the IdentityCard of their frameworks.  The CAA Multi-Workspace Application Builder - mkmk (MAB) automatically takes this modification into account and only displays a WARNING, but adding the right framework and module to the IdentityCards and Imakefile.mk is highly recommended. **Authorized API** |  **Framework** |  **Module**
 CATDimMath.h.h | ConstraintModeler | CATConstraintModeler
 CATDimTempCst.h | ConstraintModeler | CATConstraintModeler
 CATDimVisualizationAdapter.h | ConstraintModeler | CATConstraintModeler
@@ -1635,7 +1629,7 @@ New articles in existing V5R10 modelers or RADE tools:
   * No new articles in V5R10 SP4
   * V5R10 SP3
     * In [User Interface - Frame](../CAACenWeb/CAACenV5UIHome.md)
-```vbscript
+```cpp
       * [ Contextual Help for an Add-on](../CAAAfrUseCases/CAAAfrSampleContextualHelpCATIA.md)
   * No new articles in V5R10 SP2
 ```
@@ -1951,7 +1945,7 @@ Version: **1** [Nov 2000] | Document created
 
 Version: **1** [Nov 2000] | Document created
 _Copyright © 1999-20016, Dassault Systèmes. All rights reserved._
-```vbscript
+```cpp
 Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.md) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.md) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.md)
 
 ```

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating EdgeFillets on a Rectangular Pad"
 category: "use-case"
 module: "CAAScdPriUseCases"
-tags: ["CAAScdPriUseCases", "CATIA", "CAAPriUseCases", "CAAPriCreateEdgeFillet"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriCreateEdgeFillet.htmmd"
+tags: "["CAAScdPriUseCases", "CATIA", "CAAPriUseCases", "CAAPriCreateEdgeFillet"]"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriCreateEdgeFillet.htm"
 converted: "2026-05-11T17:31:51.218485"
-```
-
 ---
 ## Part Interfaces
 
@@ -41,7 +38,7 @@ Dim oPartDocument As PartDocument
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
 Set oPartDocument = CATIA.Documents.Open("E/tmp/CAAScdPriUseCases.doc/src/samples/Pad.CATPart Dim oPart As Part
 Set oPart = CATIA.ActiveDocument.Part ' Retrieve the part body of the document containing the pad to be used
 Dim oBody As Body

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAASchCreateSchDocument.CATScript"
 category: "use-case"
 module: "CAAScdSchUseCases"
-tags: ["CATIA", "CAASCH_Detail01", "CAASchCreateSchDocument", "CAAScdSchUseCases"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchCreateSchDocumentSource.htmmd"
+tags: "["CATIA", "CAASCH_Detail01", "CAASchCreateSchDocument", "CAAScdSchUseCases"]"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchCreateSchDocumentSource.htm"
 converted: "2026-05-11T17:31:51.349674"
-```
-
 ---
 tags: ["CATIA", "CAASCH_Detail01", "CAASchCreateSchDocument", "CAAScdSchUseCases"]
 source_file: "Doc/online/CAAScdSchUseCases/CAASchCreateSchDocumentSource.htmmd"
@@ -16,7 +13,7 @@ converted: "2026-05-11T17:31:51.349674"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGHT DASSAULT SYSTEMES 2004
     ' *****************************************************************************
     '   Purpose:      Create a schematic document.
@@ -30,7 +27,7 @@ converted: "2026-05-11T17:31:51.349674"
 
 ```
 
-```vbscript
+```cpp
     Sub CATMain(#)
 ```vbscript
 ```
@@ -48,7 +45,7 @@ converted: "2026-05-11T17:31:51.349674"
 ' -------------------------------------------------------------------------
 ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String
-```vbscript
+```cpp
         sDocPath=CATIA.SystemService.Environ("CATDocView")
 
 ```
@@ -59,7 +56,7 @@ converted: "2026-05-11T17:31:51.349674"
 ```
 
 ```vbscript
-```vbscript
+```cpp
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 ```
@@ -88,7 +85,7 @@ End If
 ```vbscript
 ```vbscript
         dim sSavePath As String
-```vbscript
+```cpp
         sSavePath=CATIA.SystemService.Environ("CATSavePath")
 
 ```
@@ -98,7 +95,7 @@ End If
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
         CATIA.SystemService.Print "CATSavePath = " & sSavePath
 
         If (Not CATIA.FileSystem.FolderExists(sSavePath)) Then
@@ -121,7 +118,7 @@ End If
 ```vbscript
 ```vbscript
         ' Open main schematic P&ID; design document
-```vbscript
+```cpp
         Dim sFilePath
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
@@ -134,12 +131,12 @@ End If
                 "online/CAAScdSchUseCases/samples/CAASCH_Detail01.CATProduct")
 
 ```vbscript
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
         Dim objSchDoc As Document
         Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
@@ -314,7 +311,7 @@ Dim strDocName As String
                 strMessage = strMessage & "default name = " & strDocName & vbCr
 
 ```vbscript
-```vbscript
+```cpp
                 strDocName = CATIA.FileSystem.ConcatenatePaths(sSavePath, _
 
 ```
@@ -323,7 +320,7 @@ Dim strDocName As String
     			              "SampleOutput_SchDoc01.CATProduct")
 
 strMessage = strMessage & "default name = " & strDocName & vbCr
-```vbscript
+```cpp
 strDocName = CATIA.FileSystem.ConcatenatePaths(sSavePath, _
                 objSchDocNew.SaveAs strDocName
 ```

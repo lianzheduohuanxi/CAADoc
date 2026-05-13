@@ -1,49 +1,22 @@
 ---
 title: "CAASysRevolSurface"
-type: "interface"
+type: "LocalClass"
 module: "CAASystem"
-category: api-reference
 base: "CAASysSurface"
-inheritance_chain: "CAASysRevolSurface → CAASysSurface → CATBaseUnknown"
 method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAASystem.edu/CAASysDerivationOM.m/LocalInterfaces/CAASysRevolSurface.h"
 ---
+
 # CAASysRevolSurface
 
-**基类**: CAASysSurface  
-**继承链**: CAASysRevolSurface → CAASysSurface → CATBaseUnknown  
-**模块**: CAASystem  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> Implementation class of the CAASysRevolSurface component. This class must C++ derives from the implementation class of the component CAASysSurface (ie the CAASysSurface class ). This class declares too, with the macros CATDeclareClass (in the header file) and CATImplementClass (in the cpp file), that's the component named, CAASysRevolSurface, Object Modeler (OM) derives from the CAASysSurface component. |                     | | CAASysSurface       |-o CAAISysSurfaceProperties |                     | | impl                |-o CAAISysSurfaceArea +-----------------+- |                 | | C++ Derivation  | OM Derivation | of the          | of the component | implementation  | |                 | |                 | |                 | ^-----------------^--- | impl                  | |                       |-o CAAISysRevolAxis |                       | |  CAASysRevolSurface   |-o CAAISysSurfaceArea |                       |
 
-> COPYRIGHT DASSAULT SYSTEMES 2000
+**基类**: CAASysSurface | **模块**: CAASystem | **方法数**: 0
 
-## 说明
-
-该接口没有在当前头文件中声明方法。继承自基类的潜在方法请查阅基类文档。
-
-- 完整继承链: CAASysRevolSurface → CAASysSurface → CATBaseUnknown
 ## 依赖
 
 - `CAASysSurface.h`
 
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAASystem.edu/CAASysDerivationOM.m/LocalInterfaces/CAASysRevolSurface.h`

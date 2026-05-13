@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Tessellation Changed Classes or Interfaces"
 category: "use-case"
 module: "CAACenQuickRefs"
-tags: ["CATICGMCellTessellator", "CATICGMBodyTessellator", "CATICGMSurfaceTessellator", "CATICGMCurveTessellator"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenBUTessellation.htmmd"
+tags: "["CATICGMCellTessellator", "CATICGMBodyTessellator", "CATICGMSurfaceTessellator", "CATICGMCurveTessellator"]"
+source_file: "Doc/online/CAACenQuickRefs/CAACenBUTessellation.htm"
 converted: "2026-05-11T17:33:46.422742"
-```
-
 ---
 tags: ["CATICGMCellTessellator", "CATICGMBodyTessellator", "CATICGMSurfaceTessellator", "CATICGMCurveTessellator"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenBUTessellation.htmmd"

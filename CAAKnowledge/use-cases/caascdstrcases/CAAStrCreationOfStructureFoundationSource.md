@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAAStrCreationOfStructureObjects.CATScript"
 category: "use-case"
 module: "CAAScdStrUseCases"
-tags: ["CAAStrCreationOfStructureObjects", "CATIA"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfStructureFoundationSource.htmmd"
+tags: "["CAAStrCreationOfStructureObjects", "CATIA"]"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfStructureFoundationSource.htm"
 converted: "2026-05-11T17:31:50.879106"
-```
-
 ---
 tags: ["CAAStrCreationOfStructureObjects", "CATIA"]
 source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfStructureFoundationSource.htmmd"
@@ -16,7 +13,7 @@ converted: "2026-05-11T17:31:50.879106"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGTH DASSAULT SYSTEMES 2000
     ' ***********************************************************************
     '   Purpose:      Create structure foundation
@@ -33,7 +30,7 @@ converted: "2026-05-11T17:31:50.879106"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -51,7 +48,7 @@ converted: "2026-05-11T17:31:50.879106"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
         Dim strFactory As StrObjectFactory
 
         Set doc = CATIA.ActiveDocument

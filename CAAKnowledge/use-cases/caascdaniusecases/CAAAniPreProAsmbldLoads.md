@@ -105,7 +105,7 @@ object using the selection interface.
 ```vbscript
 ' ----------------------------------------------------------- 
 ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
 sDocPath=CATIA.SystemService.Environ("CATDocView")
 
 If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -114,7 +114,7 @@ End If
 ```
 ' ----------------------------------------------------------- 
 ' Open the Analysis document 
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online/CAAScdAniUseCases/samples/Assembled_Loads_Solutions.CATAnalysis&quot;)
 Set analysisDocument1 = CATIA.Documents.Open(sFilePath)
 ```
@@ -213,7 +213,7 @@ selection1.Search "Name=*Load*,all"
 ```
 
 'Retrieve the analysis manager object from the analysis document
-```vbscript
+```cpp
 Set documents1 = CATIA.Documents
 Set analysisDocument2 = documents1.Item("Analysis1.CATAnalysis")
 Set analysisManager2 = analysisDocument2.Analysis
@@ -223,7 +223,7 @@ Set analysisManager2 = analysisDocument2.Analysis
 'Go through the selections and find out the the analysis set
 'create a reference from the analysis set and add it to the basic component
 For i =1 To selection1.Count
-```vbscript
+```cpp
 Set analysisSet = selection1.FindObject("CATIAAnalysisSet")
 Set entity =   analysisSet.AnalysisEntities.Item(1)
           IF ( entity.Type = "SAMLoadAssembly") Then 'DO NOTHING

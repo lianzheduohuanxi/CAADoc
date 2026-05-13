@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Point on a Wire"
-category: use-case case"
+category: "use-case case"
 module: "CAACgmModel"
-tags: ["CAADoc", "CAAGMModelGemBrowser", "CAAGMModelInterfaces", "CAAGMModelComputePointOnWire", "CATICGMTopWire", "CATIA", "CATICGMComputePointOnWire"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcBtoPointOnWire.htmmd"
+tags: "["CAADoc", "CAAGMModelGemBrowser", "CAAGMModelInterfaces", "CAAGMModelComputePointOnWire", "CATICGMTopWire", "CATIA", "CATICGMComputePointOnWire"]"
+source_file: "Doc/online/CAACgmModel/CAACgmUcBtoPointOnWire.htm"
 converted: "2026-05-11T17:33:48.162955"
-```
-
 ---
 # Computing a Mathematical Point on a Wire
 

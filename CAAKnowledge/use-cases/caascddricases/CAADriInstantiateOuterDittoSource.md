@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAADriInstantiateOuterDitto.CATScript"
 category: "use-case"
 module: "CAAScdDriUseCases"
-tags: ["CAADriInstantiateOuterDitto", "CAADriInstantiateDittoTarget", "CAADriInstantiateDittoSource", "CATIA", "CAAScdDriUseCases"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriInstantiateOuterDittoSource.htmmd"
+tags: "["CAADriInstantiateOuterDitto", "CAADriInstantiateDittoTarget", "CAADriInstantiateDittoSource", "CATIA", "CAAScdDriUseCases"]"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriInstantiateOuterDittoSource.htm"
 converted: "2026-05-11T17:31:51.092771"
-```
-
 ---
 tags: ["CAADriInstantiateOuterDitto", "CAADriInstantiateDittoTarget", "CAADriInstantiateDittoSource", "CATIA", "CAAScdDriUseCases"]
 source_file: "Doc/online/CAAScdDriUseCases/CAADriInstantiateOuterDittoSource.htmmd"
@@ -16,7 +13,7 @@ converted: "2026-05-11T17:31:51.092771"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGHT DASSAULT SYSTEMES 2003
     ' ***********************************************************************
     '   Purpose:      This macro allows you to instantiate a ditto in
@@ -32,12 +29,12 @@ converted: "2026-05-11T17:31:51.092771"
 
 ```
 
-```vbscript
+```cpp
     Sub CATMain(#)
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
         ' Set the CATIA popup file alerts to False
         ' It prevents to stop the macro at each alert during its execution
 ```
@@ -47,7 +44,7 @@ converted: "2026-05-11T17:31:51.092771"
 ```
 
 ```vbscript
-```vbscript
+```cpp
         CATIA.DisplayFileAlerts = False
 ```
 ```
@@ -57,14 +54,14 @@ converted: "2026-05-11T17:31:51.092771"
 ```vbscript
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String
-```vbscript
+```cpp
         sDocPath=CATIA.SystemService.Environ("CATDocView")
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
           Err.Raise 9999,,"No Doc Path Defined"
         End If
 ```
         ' Open the drawing document containing the existing ditto
-```vbscript
+```cpp
         Dim oDrawingSource As DrawingDocument
         Set oDrawingSource = CATIA.Documents.Open(sDocPath & _
 ```
@@ -141,7 +138,7 @@ Set oSelectionSource = oDrawingSource.Selection
 ```vbscript
 ```vbscript
         ' Open the drawing document where the ditto will be instantiated
-```vbscript
+```cpp
         Dim oDrawingTarget As DrawingDocument
         Set oDrawingTarget = CATIA.Documents.Open(sDocPath & _
 ```
@@ -158,7 +155,7 @@ Dim oDrawingTarget As DrawingDocument
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
 Set oDrawingTarget = CATIA.Documents.Open(sDocPath & _
         CATIA.ActiveWindow.ActiveViewer.Reframe
 ```

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Tessellation"
 category: "use cases"
 module: "CAACgmBase"
-tags: ["CATIA", "CAAGMModelInterfaces"]
-source_file: "Doc/online/CAACgmBase/CAACgmTessellationHome.htmmd"
+tags: "["CATIA", "CAAGMModelInterfaces"]"
+source_file: "Doc/online/CAACgmBase/CAACgmTessellationHome.htm"
 converted: "2026-05-11T17:33:47.843259"
-```
-
 ---
 tags: ["CATIA", "CAAGMModelInterfaces"]
 source_file: "Doc/online/CAACgmBase/CAACgmTessellationHome.htmmd"

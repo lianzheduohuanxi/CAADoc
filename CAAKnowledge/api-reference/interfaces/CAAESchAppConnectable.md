@@ -1,51 +1,105 @@
 ---
 title: "CAAESchAppConnectable"
-type: "interface"
+type: "LocalClass"
 module: "CAASchPlatformModeler"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAESchAppConnectable → CATBaseUnknown"
 method_count: 7
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAASchPlatformModeler.edu/CAASchAppBase.m/LocalInterfaces/CAAESchAppConnectable.h"
 ---
+
 # CAAESchAppConnectable
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAESchAppConnectable → CATBaseUnknown  
-**模块**: CAASchPlatformModeler  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 7
+**基类**: CATBaseUnknown | **模块**: CAASchPlatformModeler | **方法数**: 7
 
 ## 依赖
 
 - `CATBaseUnknown.h`
 - `CATBooleanDef.h`
 
+## 虚方法
+
+### AppListConnectors
+
+```cpp
+virtual HRESULT AppListConnectors(CATICStringList *iLCntrClassFilter, CATIUnknownList **oLCntrs) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iLCntrClassFilter | `CATICStringList` |
+| **oLCntrs | `CATIUnknownList` |
+
+
+### AppListConnectables
+
+```cpp
+virtual HRESULT AppListConnectables(CATICStringList *iLCntbleClassFilter, CATIUnknownList **oLCntbles, CATIUnknownList **oLCntrsOnThisObj, CATIUnknownList **oLCntrsOnConnected) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iLCntbleClassFilter | `CATICStringList` |
+| **oLCntbles | `CATIUnknownList` |
+| **oLCntrsOnThisObj | `CATIUnknownList` |
+| **oLCntrsOnConnected | `CATIUnknownList` |
+
+
+### AppAddConnector
+
+```cpp
+virtual HRESULT AppAddConnector(const char *iClassType, CATISchAppConnector **oNewAppCntr) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iClassType | `const char` |
+| **oNewAppCntr | `CATISchAppConnector` |
+
+
+### AppRemoveConnector
+
+```cpp
+virtual HRESULT AppRemoveConnector(CATISchAppConnector *iCntrToRemove) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iCntrToRemove | `CATISchAppConnector` |
+
+
+### AppListValidCntrTypes
+
+```cpp
+virtual HRESULT AppListValidCntrTypes(CATICStringList **oLValidCntrTypes) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| **oLValidCntrTypes | `CATICStringList` |
+
+
+### AppGetReferenceName
+
+```cpp
+virtual HRESULT AppGetReferenceName(char **oReferenceName) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| **oReferenceName | `char` |
+
+
+### AppSetReferenceName
+
+```cpp
+virtual HRESULT AppSetReferenceName(const char *iReferenceName) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iReferenceName | `const char` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAASchPlatformModeler.edu/CAASchAppBase.m/LocalInterfaces/CAAESchAppConnectable.h`

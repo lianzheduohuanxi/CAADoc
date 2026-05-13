@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "SimulationBase Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR11"
-version: "V5R11"
-tags: []
-source_file: "Doc/online/CAACenAPIChangesR11/SimulationBase.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAACenAPIChangesR11/SimulationBase.htm"
 converted: "2026-05-11T17:33:50.457110"
-```
-
 ---
 | CAA C++ API Modifications|  SimulationBase  |
 ---|---|---

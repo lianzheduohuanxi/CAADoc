@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "An Introduction to Geometric Modeler Use Cases"
-category: use-case case"
+category: "use-case case"
 module: "CAACgmModel"
-tags: ["CAAGMOperatorsOverview", "CATICGMContainer", "CAAGMOperatorsChamfer", "CATICGMObject", "CAAGMModelGemBrowser"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGMUseCases.htmmd"
+tags: "["CAAGMOperatorsOverview", "CATICGMContainer", "CAAGMOperatorsChamfer", "CATICGMObject", "CAAGMModelGemBrowser"]"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGMUseCases.htm"
 converted: "2026-05-11T17:33:48.329658"
-```
-
 ---
 # About Geometric Modeler Use Cases
 
@@ -28,7 +25,6 @@ The purpose of geometric modeler use cases is to explain how to use CGM public A
 
 There are different steps in a use case:
 
-There are different steps in a use case:
     1. Data creation from the geometry factory or data loading from an input NCGM file
     2. Data creation or operator creation, option setting, run, access to the generated result
     3. Model saving/data writing.
@@ -120,7 +116,7 @@ if(1==toStore)
        ofstream filetowrite(pfileName, ios::binary ) ;
 
     #else
-```vbscript
+```cpp
 if(1==toStore)
 ofstream filetowrite(pfileName, ios::binary ) ;
        ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Designing Your Interactive Application"
-category: tech-article
+category: "tech-article"
 module: "CAADlgTechArticles"
-tags: ["CAADlgWindowApplication", "CAADlgInterWindow", "CAADlgInterWindowId", "CAADlgInterApplication", "CATInteractiveApplication", "CAADialog"]
-source_file: "Doc/online/CAADlgTechArticles/CAADlgInteractiveApplication.htmmd"
+tags: "["CAADlgWindowApplication", "CAADlgInterWindow", "CAADlgInterWindowId", "CAADlgInterApplication", "CATInteractiveApplication", "CAADialog"]"
+source_file: "Doc/online/CAADlgTechArticles/CAADlgInteractiveApplication.htm"
 converted: "2026-05-11T17:17:56.042541"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 

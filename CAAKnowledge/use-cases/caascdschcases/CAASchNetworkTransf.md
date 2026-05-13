@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Transforming a Schematic Network Object"
 category: "use-case"
 module: "CAAScdSchUseCases"
-tags: ["CAADoc", "CAAScdSchUseCases", "CATIA", "CAASchAppBase", "CAASCHEDUApp", "CAASchPlatformModeler", "CATIASchMovable", "CAASCH_Network01", "CAASchNetworkTransf", "CAASchAppUtilities"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchNetworkTransf.htmmd"
+tags: "["CAADoc", "CAAScdSchUseCases", "CATIA", "CAASchAppBase", "CAASCHEDUApp", "CAASchPlatformModeler", "CATIASchMovable", "CAASCH_Network01", "CAASchNetworkTransf", "CAASchAppUtilities"]"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchNetworkTransf.htm"
 converted: "2026-05-11T17:31:51.417508"
-```
-
 ---
 ## Schematics Platform Modeler
 
@@ -41,7 +38,6 @@ This macro shows you how to transform a schematic network object.Given a list of
 [CAASchNetworkTransf.CATScript ](CAASchNetworkTransfSource.md) is located in the CAAScdSchUseCases module. [Execute macro](macros/CAASchNetworkTransf.CATScript) (Windows only).
  CAASchNetworkTransf includes the following steps:
 
-CAASchNetworkTransf includes the following steps:
   1. Prolog
   2. Translating a Schematic component that is connected to other objects
   3. Scaling a Schematic component that is connected to other objects
@@ -65,7 +61,7 @@ The macro first loads CAASCH_Network01.CATProduct. |     ...
     Dim sFilePath
 ```vbscript
 ```
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
 ```
@@ -80,7 +76,7 @@ Dim sFilePath
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
@@ -189,7 +185,7 @@ A network object member in the output list: objLNetwork implements the SchMovabl
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
           Set objSchNet = objLNetWork.Item (1,"CATIASchMovable")
 
 ```

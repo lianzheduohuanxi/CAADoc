@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Modifying the Degree of a Nurbs"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperatorsInDegree", "CATICGMCrvDegreeModification", "CATICGMNurbsCurveTools"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcNurbsDegree.htmmd"
+tags: "["CAAGMOperatorsInDegree", "CATICGMCrvDegreeModification", "CATICGMNurbsCurveTools"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcNurbsDegree.htm"
 converted: "2026-05-11T17:33:48.998271"
-```
-
 ---
 tags: ["CAAGMOperatorsInDegree", "CATICGMCrvDegreeModification", "CATICGMNurbsCurveTools"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcNurbsDegree.htmmd"

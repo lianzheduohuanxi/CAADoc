@@ -220,13 +220,13 @@ occurrence. Specifically, it has illustrated:
 
 *Copyright  2000, Dassault Systmes. All rights reserved.*
 
-```vbscript
+```cpp
 CAASchAppSample2::InitEnvironment
 CAASchAppSample2::GetAppReference
 CreateCATProductEnv::CreateCATProductEnv
 ```
 
-```vbscript
+```cpp
 //-------------------------------------------------------------------------
     //  Using the reference object, find CATISchCompGraphic interface.
     //-------------------------------------------------------------------------    
@@ -274,7 +274,7 @@ CreateCATProductEnv::CreateCATProductEnv
     }
 ```
 
-```vbscript
+```cpp
 for (int iView = 3; iView &lt;= SizeOfLView; iView++) 
         {
           if (LView[iView] != spSpecView)
@@ -293,7 +293,7 @@ for (int iView = 3; iView &lt;= SizeOfLView; iView++)
 	}
 ```
 
-```vbscript
+```cpp
 if ( SUCCEEDED(_spAppRef-&gt;QueryInterface (IID_CATISchComponent,(void **) &amp;piComponent)) )
     {
       double aDb6Axis[6] = {1.0,0.0, 0.0,1.0, 50.0,200.0};
@@ -310,7 +310,7 @@ if ( SUCCEEDED(_spAppRef-&gt;QueryInterface (IID_CATISchComponent,(void **) &amp
         }
 ```
 
-```vbscript
+```cpp
 double Db2Loc[2] = {220.0,200.0};
         char *pGRRName = NULL;
         if ( SUCCEEDED (piGRRComp2-&gt;QueryInterface(IID_CATISchGRR,(void**)&amp;piSchGRR) ) )

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Placing Parts"
 category: "use case"
 module: "CAACloUseCases"
-tags: ["CATIArrNode_var", "CATIPspConnection", "CATIProduct", "CATIAHybridShapeFactory", "CAAPspUtilities", "CATIPspConnectable", "CATIArrSegment", "CAACloPlacePart", "CATIArrSegmentsString", "CATIPspPhysicalProduct", "CAACloEduRuns", "CATIAPart", "CATIArrSegment_var", "CATIPspPlacePartOnRun", "CATIUnknownList", "CATIPspLogicalLine", "CATIPspConnector", "CATIPspPartConnector", "CAACommonLayoutItf", "CATIUnknownListImpl"]
-source_file: "Doc/online/CAACloUseCases/CAACloPlacePart.htmmd"
+tags: "["CATIArrNode_var", "CATIPspConnection", "CATIProduct", "CATIAHybridShapeFactory", "CAAPspUtilities", "CATIPspConnectable", "CATIArrSegment", "CAACloPlacePart", "CATIArrSegmentsString", "CATIPspPhysicalProduct", "CAACloEduRuns", "CATIAPart", "CATIArrSegment_var", "CATIPspPlacePartOnRun", "CATIUnknownList", "CATIPspLogicalLine", "CATIPspConnector", "CATIPspPartConnector", "CAACommonLayoutItf", "CATIUnknownListImpl"]"
+source_file: "Doc/online/CAACloUseCases/CAACloPlacePart.htm"
 converted: "2026-05-11T17:33:49.487432"
-```
-
 ---
 tags: ["CATIArrNode_var", "CATIPspConnection", "CATIProduct", "CATIAHybridShapeFactory", "CAAPspUtilities", "CATIPspConnectable", "CATIArrSegment", "CAACloPlacePart", "CATIArrSegmentsString", "CATIPspPhysicalProduct", "CAACloEduRuns", "CATIAPart", "CATIArrSegment_var", "CATIPspPlacePartOnRun", "CATIUnknownList", "CATIPspLogicalLine", "CATIPspConnector", "CATIPspPartConnector", "CAACommonLayoutItf", "CATIUnknownListImpl"]
 source_file: "Doc/online/CAACloUseCases/CAACloPlacePart.htmmd"
@@ -126,7 +123,7 @@ if (argc > 1)
         if (FileToBeLoaded.IsNull(#))
         {
 
-```vbscript
+```cpp
 if (FileToBeLoaded.IsNull(#))
            cout << "**** must input the file name of " << endl;
            cout << "a CATProduct with Piping application objects " << endl;
@@ -157,7 +154,7 @@ else
 CATCatch (CATError, pError)
         cout << "error in main " << endl;
 
-```vbscript
+```cpp
         rcError = CATReturnError(pError);
 
 ```
@@ -236,7 +233,7 @@ CATTry
         cout << "Product environment created." << endl;
 
         //  Initialize Tubing Design application
-```vbscript
+```cpp
 CreateCATProductEnv(iuFileToBeLoaded);
 cout << "Product environment created." << endl;
         ApplicationInit("CATTubing");
@@ -245,7 +242,7 @@ cout << "Product environment created." << endl;
 ```
 
         // Place a part in space.
-```vbscript
+```cpp
 ApplicationInit("CATTubing");
 cout << "Tubing application initialized." << endl;
         HRESULT rcSpace = PlacePartInSpace(#);
@@ -283,7 +280,7 @@ cout << "rcNode = " << rcNode << endl;
         HRESULT rcPartCtrNCnt = PlacePartOnPartConnectorAndReconnectRun(#);
         cout  << "rcPartCtrNCnt = " << rcPartCtrNCnt  << endl;
 
-```vbscript
+```cpp
         // Set return code.
 HRESULT rcPartCtrNCnt = PlacePartOnPartConnectorAndReconnectRun(#);
 ```
@@ -302,7 +299,7 @@ cout  << "rcPartCtrNCnt = " << rcPartCtrNCnt  << endl;
 
       } // end CATTry
 
-```vbscript
+```cpp
 SUCCEEDED(rcPartCtrNCnt))
 rc = CATReturnSuccess;
     	CATCatch (CATError, pError)
@@ -314,7 +311,7 @@ CATCatch (CATError, pError)
         cout << "CAACloPlacePart::DoSample *** Error Caught ***" << endl;
         cout << pError;
 
-```vbscript
+```cpp
         rc = CATReturnError(pError);
 
 ```
@@ -382,7 +379,7 @@ HRESULT rc = CATReturnFailure;
 unsigned int ListSize = 0;
 CATTry
         if (ipiPartUnk &&
-```vbscript
+```cpp
             SUCCEEDED(((IUnknown*)ipiPartUnk)->QueryInterface(IID_CATIPspPhysicalProduct,(void**)&piPhysProd)))
 
 ```
@@ -435,7 +432,7 @@ CATCatch (CATError, pError)
         cout << "CAACloPlacePart::GetPartConnector *** Error Caught ***" << endl;
         cout << pError;
 
-```vbscript
+```cpp
         rc = CATReturnError(pError);
 
 ```
@@ -521,7 +518,7 @@ if (SUCCEEDED(rc) && piCtrUnk)
 
             ((IUnknown*)ipiRelAxisUnk)->QueryInterface(IID_CATIMovable,(void**)&piRelAxis);
 
-```vbscript
+```cpp
 if (ipiRelAxisUnk)
           cout << "piRelAxis = " << piRelAxis << endl;
 
@@ -567,7 +564,7 @@ if (piPartCntr) {piPartCntr->Release(#); piPartCntr = NULL;}
 
 ```vbscript
 if (piCtrUnk) {piCtrUnk->Release(#); piCtrUnk = NULL;}
-```vbscript
+```cpp
     	CATCatch (CATError, pError)
 ```
 
@@ -579,7 +576,7 @@ CATCatch (CATError, pError)
 
         cout << pError;
 
-```vbscript
+```cpp
         rc = CATReturnError(pError);
 
 ```
@@ -671,7 +668,7 @@ CATTry
 piCtrUnk);
 if (SUCCEEDED(rc) && piCtrUnk)
 ```vbscript
-```vbscript
+```cpp
           if (SUCCEEDED(piCtrUnk->QueryInterface(IID_CATIPspConnector,(void**)&piPspConnector)))
 
 ```
@@ -680,7 +677,7 @@ if (SUCCEEDED(rc) && piCtrUnk)
 
           {
 
-```vbscript
+```cpp
 if (SUCCEEDED(piCtrUnk->QueryInterface(IID_CATIPspConnector,(void**)&piPspConnector)))
 ```vbscript
 ```vbscript
@@ -726,7 +723,7 @@ for ( unsigned int iiCnx = 0; iiCnx < numCnx; iiCnx++ )
 
                 {
 
-```vbscript
+```cpp
 if ( SUCCEEDED(piListConnections->Item(iiCnx,&piUnk)) && (NULL != piUnk) )
                   piUnk->QueryInterface(IID_CATIPspConnection,(void**)&piPspConnection);
                   cout << "piPspConnection = " << piPspConnection << endl;
@@ -773,7 +770,7 @@ for ( unsigned int iiCtr = 0; iiCtr < numCtr; iiCtr++ )
 
                       {
 
-```vbscript
+```cpp
 if ( SUCCEEDED(piListCtr->Item(iiCtr,&piUnk)) && (NULL != piUnk) )
                         piUnk->QueryInterface(IID_CATIPspConnector,(void**)&piPspConnectedCtr);
                         cout << "piPspConnectedCtr = " << piPspConnectedCtr << endl;
@@ -843,7 +840,7 @@ break;
 
 ```vbscript
 if (piCtrUnk) {piCtrUnk->Release(#); piCtrUnk = NULL;}
-```vbscript
+```cpp
     	CATCatch (CATError, pError)
 ```
 
@@ -855,7 +852,7 @@ CATCatch (CATError, pError)
 
         cout << pError;
 
-```vbscript
+```cpp
         rc = CATReturnError(pError);
 
 ```
@@ -1015,7 +1012,7 @@ CATCatch (CATError, pError)
         cout << "CAACloPlacePart::TestPartConnectorData *** Error Caught ***" << endl;
         cout << pError;
 
-```vbscript
+```cpp
         rc = CATReturnError(pError);
 
 ```
@@ -1197,7 +1194,7 @@ CATCatch (CATError, pError)
         cout << "CAACloPlacePart::TestConnectedPart *** Error Caught ***" << endl;
         cout << pError;
 
-```vbscript
+```cpp
         rc = CATReturnError(pError);
 
 ```
@@ -1276,7 +1273,7 @@ HRESULT rc = CATReturnFailure;
         // Get application object.
 CATMathDirection ctrUp;
 CATTry
-```vbscript
+```cpp
         piAppObject = new CATObject("CATTubing");
 
 ```
@@ -1284,7 +1281,7 @@ CATTry
         cout << "piAppObject = " << piAppObject << endl;
 
         if (piAppObject &&
-```vbscript
+```cpp
             SUCCEEDED(piAppObject->QueryInterface(IID_CATIPspPlacePartOnRun,(void**)&piPlacePart)))
 
 ```
@@ -1293,13 +1290,13 @@ CATTry
 
 ```vbscript
 if (piAppObject &&
-```vbscript
+```cpp
 SUCCEEDED(piAppObject->QueryInterface(IID_CATIPspPlacePartOnRun,(void**)&piPlacePart)))
 ```
 
           cout << "piPlacePart = " << piPlacePart << endl;
 
-```vbscript
+```cpp
           piParentProduct = (CATIProduct*)GetChildObject(IID_CATIProduct, "TubingWP.1");
 
 ```
@@ -1338,7 +1335,7 @@ cout << "piLogicalLine = " << piLogicalLine << endl;
           {
 
             // Place part in space.
-```vbscript
+```cpp
 if (SUCCEEDED(rc) &&
 piReferencePart)
             uFunctionType = "CATTubControlValveFunction";
@@ -1443,7 +1440,7 @@ CATCatch (CATError, pError)
 
         cout << pError;
 
-```vbscript
+```cpp
         rc = CATReturnError(pError);
 
 ```
@@ -1544,7 +1541,7 @@ HRESULT rc = CATReturnFailure;
         // Get application object.
 CATMathDirection ctrUp;
 CATTry
-```vbscript
+```cpp
         piAppObject = new CATObject("CATTubing");
 
 ```
@@ -1552,7 +1549,7 @@ CATTry
         cout << "piAppObject = " << piAppObject << endl;
 
         if (piAppObject &&
-```vbscript
+```cpp
             SUCCEEDED(piAppObject->QueryInterface(IID_CATIPspPlacePartOnRun,(void**)&piPlacePart)))
 
 ```
@@ -1561,13 +1558,13 @@ CATTry
 
 ```vbscript
 if (piAppObject &&
-```vbscript
+```cpp
 SUCCEEDED(piAppObject->QueryInterface(IID_CATIPspPlacePartOnRun,(void**)&piPlacePart)))
 ```
 
           cout << "piPlacePart = " << piPlacePart << endl;
 
-```vbscript
+```cpp
           piParentProduct = (CATIProduct*)GetChildObject(IID_CATIProduct, "TubingWP.1");
 
 ```
@@ -1609,7 +1606,7 @@ cout << "piLogicalLine = " << piLogicalLine << endl;
 if (SUCCEEDED(rc) &&
 piReferencePart)
             if (piParentProduct &&
-```vbscript
+```cpp
                 SUCCEEDED(piParentProduct->QueryInterface(IID_CATIAProducts,(void**)&piParentProducts)))
 ```
 
@@ -1619,7 +1616,7 @@ piReferencePart)
 
 ```vbscript
 if (piParentProduct &&
-```vbscript
+```cpp
 SUCCEEDED(piParentProduct->QueryInterface(IID_CATIAProducts,(void**)&piParentProducts)))
 ```
 
@@ -1655,7 +1652,7 @@ if (piPartForPointsProduct)
 
                 cout << "piPartForPointsShape = " << piPartForPointsShape << endl;
                 if (piPartForPointsShape &&
-```vbscript
+```cpp
                     SUCCEEDED(piPartForPointsShape->QueryInterface(IID_CATIAPartDocument,(void**)&piPartForPointsDoc)))
 
 ```
@@ -1664,7 +1661,7 @@ if (piPartForPointsProduct)
 
 cout << "piPartForPointsShape = " << piPartForPointsShape << endl;
 if (piPartForPointsShape &&
-```vbscript
+```cpp
 SUCCEEDED(piPartForPointsShape->QueryInterface(IID_CATIAPartDocument,(void**)&piPartForPointsDoc)))
 ```
 
@@ -1696,7 +1693,7 @@ if (piPartForPoints)
 cout << "piHybridShapeFactory = " << piHybridShapeFactory << endl;
 if (piHybridShapeFactory)
 ```vbscript
-```vbscript
+```cpp
                       piListImpl = new CATIUnknownListImpl(#);
                       if (piListImpl)
 
@@ -1751,7 +1748,6 @@ for (unsigned int iiPoint = 0; iiPoint < 4; iiPoint++)
 
             // Place part in space.
             uFunctionType = "CATTubTubeFunction";
-uFunctionType = "CATTubTubeFunction";
             uPlacedPartID = "TestTubeWithBends";
 
             firstPointUpDirection.SetCoord(0, 0, 1); // Up direction parallel to z-axis.
@@ -1760,8 +1756,6 @@ uFunctionType = "CATTubTubeFunction";
             listBendRadii.Append(25.4); // Bend radius in mm (1in).
             listBendRadii.Append(25.4);
 
-            listBendRadii.Append(25.4);
-            listBendRadii.Append(25.4);
             rc = piPlacePart->RouteStringPartInSpace (uStandard,
                                                       uFunctionType,
                                                       piReferencePart,
@@ -1859,7 +1853,7 @@ CATCatch (CATError, pError)
 
         cout << pError;
 
-```vbscript
+```cpp
         rc = CATReturnError(pError);
 
 ```
@@ -1954,7 +1948,7 @@ HRESULT rc = CATReturnFailure;
         // Get application object.
 CATIArrSegment_var spSegment;
 CATTry
-```vbscript
+```cpp
         piAppObject = new CATObject("CATTubing");
 
 ```
@@ -1962,7 +1956,7 @@ CATTry
         cout << "piAppObject = " << piAppObject << endl;
 
         if (piAppObject &&
-```vbscript
+```cpp
             SUCCEEDED(piAppObject->QueryInterface(IID_CATIPspPlacePartOnRun,(void**)&piPlacePart)))
 
 ```
@@ -1971,13 +1965,13 @@ CATTry
 
 ```vbscript
 if (piAppObject &&
-```vbscript
+```cpp
 SUCCEEDED(piAppObject->QueryInterface(IID_CATIPspPlacePartOnRun,(void**)&piPlacePart)))
 ```
 
           cout << "piPlacePart = " << piPlacePart << endl;
 
-```vbscript
+```cpp
           piParentProduct = (CATIProduct*)GetChildObject(IID_CATIProduct, "TubingWP.1");
 
 ```
@@ -1987,12 +1981,12 @@ SUCCEEDED(piAppObject->QueryInterface(IID_CATIPspPlacePartOnRun,(void**)&piPlace
 ```
 
           //piLogicalLine = GetALogicalLine(piParentProduct);
-```vbscript
+```cpp
 piParentProduct = (CATIProduct*)GetChildObject(IID_CATIProduct, "TubingWP.1");
 cout << "piParentProduct = " << piParentProduct << endl;
           cout << "piLogicalLine = " << piLogicalLine << endl;
 
-```vbscript
+```cpp
           piRun = (CATIArrSegmentsString*)GetChildObject(IID_CATIArrSegmentsString, "Run-0043", piParentProduct);
 
 ```
@@ -2017,7 +2011,6 @@ if (piRun)
               // ==============================================================================
               // Get reference part
               uPartType = "CATTubUnion";
-uPartType = "CATTubUnion";
               uPartNumber = "UNION-BULKHEAD-FFSM-16";
 
               rc = piPlacePart->GetReferencePartFromCatalog (uStandard,
@@ -2063,7 +2056,7 @@ cout << "piSegment = " << piSegment << endl;
                 {
 
                   // Place part on run segment.
-```vbscript
+```cpp
 if (piSegment)
                   uFunctionType = "CATTubTubeFunction";
                   uPlacedPartID = ""; // Null string uses name generated by PP engine
@@ -2292,7 +2285,6 @@ rc = CATReturnFailure;
               // ==============================================================================
               // Get reference part
               uPartType = "CATTubBendableTube";
-uPartType = "CATTubBendableTube";
               uPartNumber = "TUBE-BENDABLE-TIV-16S";
 
               rc = piPlacePart->GetReferencePartFromCatalog (uStandard,
@@ -2338,7 +2330,7 @@ cout << "piSegment = " << piSegment << endl;
                 {
 
                   // Place part on run segment.
-```vbscript
+```cpp
 if (piSegment)
                   uFunctionType = "CATTubTubeFunction";
                   uPlacedPartID = ""; // Null string uses name generated by PP engine
@@ -2453,7 +2445,7 @@ CATCatch (CATError, pError)
         cout << "CAACloPlacePart::PlacePartOnRunSegment *** Error Caught ***" << endl;
         cout << pError;
 
-```vbscript
+```cpp
         rc = CATReturnError(pError);
 
 ```
@@ -2544,7 +2536,7 @@ HRESULT rc = CATReturnFailure;
         // Get application object.
 CATIArrNode_var spNode;
 CATTry
-```vbscript
+```cpp
         piAppObject = new CATObject("CATTubing");
 
 ```
@@ -2552,7 +2544,7 @@ CATTry
         cout << "piAppObject = " << piAppObject << endl;
 
         if (piAppObject &&
-```vbscript
+```cpp
             SUCCEEDED(piAppObject->QueryInterface(IID_CATIPspPlacePartOnRun,(void**)&piPlacePart)))
 
 ```
@@ -2561,13 +2553,13 @@ CATTry
 
 ```vbscript
 if (piAppObject &&
-```vbscript
+```cpp
 SUCCEEDED(piAppObject->QueryInterface(IID_CATIPspPlacePartOnRun,(void**)&piPlacePart)))
 ```
 
           cout << "piPlacePart = " << piPlacePart << endl;
 
-```vbscript
+```cpp
           piParentProduct = (CATIProduct*)GetChildObject(IID_CATIProduct, "TubingWP.1");
 
 ```
@@ -2577,12 +2569,12 @@ SUCCEEDED(piAppObject->QueryInterface(IID_CATIPspPlacePartOnRun,(void**)&piPlace
 ```
 
           //piLogicalLine = GetALogicalLine(piParentProduct);
-```vbscript
+```cpp
 piParentProduct = (CATIProduct*)GetChildObject(IID_CATIProduct, "TubingWP.1");
 cout << "piParentProduct = " << piParentProduct << endl;
           cout << "piLogicalLine = " << piLogicalLine << endl;
 
-```vbscript
+```cpp
           piRun = (CATIArrSegmentsString*)GetChildObject(IID_CATIArrSegmentsString, "Run-0044", piParentProduct);
 
 ```
@@ -2607,7 +2599,6 @@ if (piRun)
               // ==============================================================================
               // Get reference part
               uPartType = "CATTubControlValve";
-uPartType = "CATTubControlValve";
               uPartNumber = "V_BALL-TF-16S";
 
               rc = piPlacePart->GetReferencePartFromCatalog (uStandard,
@@ -2652,7 +2643,7 @@ cout << "piNode = " << piNode << endl;
 
                 {
 
-```vbscript
+```cpp
 if (piNode)
                   uFunctionType = "CATTubControlValveFunction";
                   uPlacedPartID = ""; // Null string uses name generated by PP engine
@@ -2750,7 +2741,6 @@ rc = CATReturnFailure;
               // ==============================================================================
               // Get reference part
               uPartType = "CATTubNonReducingElbow";
-uPartType = "CATTubNonReducingElbow";
               uPartNumber = "ELBOW-90-BULKHEAD-FFSM-16";
 
               rc = piPlacePart->GetReferencePartFromCatalog (uStandard,
@@ -2795,7 +2785,7 @@ cout << "piNode = " << piNode << endl;
 
                 {
 
-```vbscript
+```cpp
 if (piNode)
                   uFunctionType = "CATTubTubeFunction";
                   uPlacedPartID = ""; // Null string uses name generated by PP engine
@@ -2893,7 +2883,6 @@ rc = CATReturnFailure;
               // ==============================================================================
               // Get reference part
               uPartType = "CATTubBendableTube";
-uPartType = "CATTubBendableTube";
               uPartNumber = "TUBE-BENDABLE-TIV-16S";
 
               rc = piPlacePart->GetReferencePartFromCatalog (uStandard,
@@ -2938,7 +2927,7 @@ cout << "piNode = " << piNode << endl;
 
                 {
 
-```vbscript
+```cpp
 if (piNode)
                   uFunctionType = "CATTubTubeFunction";
                   uPlacedPartID = ""; // Null string uses name generated by PP engine
@@ -3091,7 +3080,7 @@ CATCatch (CATError, pError)
         cout << "CAACloPlacePart::PlacePartOnRunNode *** Error Caught ***" << endl;
         cout << pError;
 
-```vbscript
+```cpp
         rc = CATReturnError(pError);
 
 ```
@@ -3185,7 +3174,7 @@ HRESULT rc = CATReturnFailure;
         // Get application object.
 CATIArrSegment_var spSegment;
 CATTry
-```vbscript
+```cpp
         piAppObject = new CATObject("CATTubing");
 
 ```
@@ -3193,7 +3182,7 @@ CATTry
         cout << "piAppObject = " << piAppObject << endl;
 
         if (piAppObject &&
-```vbscript
+```cpp
             SUCCEEDED(piAppObject->QueryInterface(IID_CATIPspPlacePartOnRun,(void**)&piPlacePart)))
 
 ```
@@ -3202,13 +3191,13 @@ CATTry
 
 ```vbscript
 if (piAppObject &&
-```vbscript
+```cpp
 SUCCEEDED(piAppObject->QueryInterface(IID_CATIPspPlacePartOnRun,(void**)&piPlacePart)))
 ```
 
           cout << "piPlacePart = " << piPlacePart << endl;
 
-```vbscript
+```cpp
           piParentProduct = (CATIProduct*)GetChildObject(IID_CATIProduct, "TubingWP.1");
 
 ```
@@ -3222,7 +3211,7 @@ SUCCEEDED(piAppObject->QueryInterface(IID_CATIPspPlacePartOnRun,(void**)&piPlace
 
           cout << "piLogicalLine = " << piLogicalLine << endl;
 
-```vbscript
+```cpp
           piRun = (CATIArrSegmentsString*)GetChildObject(IID_CATIArrSegmentsString, "Run-0044", piParentProduct);
 
 ```
@@ -3269,7 +3258,6 @@ if (listOfSegments.Size(#) >= 5)
               // ==============================================================================
               // Get reference part
               uPartType = "CATTubControlValve";
-uPartType = "CATTubControlValve";
               uPartNumber = "V_BALL-TF-16S";
 
               rc = piPlacePart->GetReferencePartFromCatalog (uStandard,
@@ -3288,7 +3276,7 @@ uPartType = "CATTubControlValve";
               {
 
                 // Place part in space.
-```vbscript
+```cpp
 if (SUCCEEDED(rc) &&
 piReferencePart)
                 uFunctionType = "CATTubControlValveFunction";
@@ -3391,7 +3379,6 @@ rc = CATReturnFailure;
               // ==============================================================================
               // Get reference part
               uPartType = "TubingUnion";
-uPartType = "TubingUnion";
               uPartNumber = "UNION-BULKHEAD-TMFL-16-16S";
 
               rc = piPlacePart->GetReferencePartFromCatalog (uStandard,
@@ -3536,7 +3523,6 @@ rc = CATReturnFailure;
               // ==============================================================================
               // Get reference part
               uPartType = "CATTubControlValve";
-uPartType = "CATTubControlValve";
               uPartNumber = "V_BALL-TF-16S";
 
               rc = piPlacePart->GetReferencePartFromCatalog (uStandard,
@@ -3555,7 +3541,7 @@ uPartType = "CATTubControlValve";
               {
 
                 // Place part on segment.
-```vbscript
+```cpp
 if (SUCCEEDED(rc) &&
 piReferencePart)
                 uFunctionType = "CATTubControlValveFunction";
@@ -3655,7 +3641,6 @@ rc = CATReturnFailure;
               // ==============================================================================
               // Get reference part
               uPartType = "TubingUnion";
-uPartType = "TubingUnion";
               uPartNumber = "UNION-BULKHEAD-TMFL-16-16S";
 
               rc = piPlacePart->GetReferencePartFromCatalog (uStandard,
@@ -3803,7 +3788,6 @@ rc = CATReturnFailure;
               // ==============================================================================
               // Get reference part
               uPartType = "TubingBNutSleeve";
-uPartType = "TubingBNutSleeve";
               uPartNumber = "SLEEVE-CSFR-16S";
 
               rc = piPlacePart->GetReferencePartFromCatalog (uStandard,
@@ -3951,7 +3935,6 @@ rc = CATReturnFailure;
               // ==============================================================================
               // Get reference part
               uPartType = "TubingNut";
-uPartType = "TubingNut";
               uPartNumber = "B-NUT-CSFR-16S";
 
               rc = piPlacePart->GetReferencePartFromCatalog (uStandard,
@@ -4114,7 +4097,7 @@ CATCatch (CATError, pError)
         cout << "CAACloPlacePart::PlacePartInSpace *** Error Caught ***" << endl;
         cout << pError;
 
-```vbscript
+```cpp
         rc = CATReturnError(pError);
 
 ```
@@ -4185,7 +4168,7 @@ HRESULT CAACloPlacePart::PlacePartOnPartConnectorAndReconnectRun(#)
         // Get application object.
 CATMathDirection ctrUp;
 CATTry
-```vbscript
+```cpp
         piAppObject = new CATObject("CATTubing");
 
 ```
@@ -4193,7 +4176,7 @@ CATTry
         cout << "piAppObject = " << piAppObject << endl;
 
         if (piAppObject &&
-```vbscript
+```cpp
                   SUCCEEDED(piAppObject->QueryInterface(IID_CATIPspPlacePartOnRun,(void**)&piPlacePart)))
 
 ```
@@ -4201,7 +4184,7 @@ CATTry
         {
 cout << "piAppObject = " << piAppObject << endl;
 if (piAppObject &&
-```vbscript
+```cpp
 SUCCEEDED(piAppObject->QueryInterface(IID_CATIPspPlacePartOnRun,(void**)&piPlacePart)))
 ```
 
@@ -4213,7 +4196,7 @@ SUCCEEDED(piAppObject->QueryInterface(IID_CATIPspPlacePartOnRun,(void**)&piPlace
           piLogicalLine = GetALogicalLine(piParentProduct);
           cout << "piLogicalLine = " << piLogicalLine << endl;
 
-```vbscript
+```cpp
           piValve = (CATIProduct*)GetChildObject(IID_CATIProduct, "T-001", piParentProduct);
 
 ```
@@ -4356,7 +4339,7 @@ if (SUCCEEDED(rc))
 CATCatch (CATError, pError)
          cout << "CAACloPlacePart::PlacePartOnPartConnectorAndReconnectRun *** Error Caught ***" << endl;
          cout << pError;
-```vbscript
+```cpp
          rc = CATReturnError(pError);
 
 ```

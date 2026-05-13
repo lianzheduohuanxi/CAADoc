@@ -1,56 +1,35 @@
 ---
 title: "CAAOmbNavigModifyRoot"
-type: "interface"
+type: "LocalClass"
 module: "CAAObjectModelerBase"
-category: api-reference
 base: "CATNodeExtension"
-inheritance_chain: "CAAOmbNavigModifyRoot → CATNodeExtension"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 1
+source_file: "CAAObjectModelerBase.edu/CAAOmbGeoNavigate.m/LocalInterfaces/CAAOmbNavigModifyRoot.h"
 ---
+
 # CAAOmbNavigModifyRoot
 
-**基类**: CATNodeExtension  
-**继承链**: CAAOmbNavigModifyRoot → CATNodeExtension  
-**模块**: CAAObjectModelerBase  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> This is an implementation of the CATINavigModify interface. Execute the Use Case: To execute this Use Case, you must be in a CATIA V5 session.  Create a new document of type "CAAGeometry".  Create geometric elements in the document. Select the root node "CAASysGeomRootObj":  a tree is displayed containing the names of all of the elements existing in the document. CATINavigModify::UpdateElem allows the modification of tree nodes by changing node colors using CATIGraphNode::SetColor and by adding icons to nodes using CATIGraphNode::SetPixelImage. ******************************************************************************
 
-> CATIGraphNode::SetPixelImage.
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATNodeExtension | **模块**: CAAObjectModelerBase | **方法数**: 1
 
 ## 依赖
 
 - `CATNodeExtension.h`
 
+## 公共方法
+
+### UpdateElem
+
+```cpp
+void UpdateElem(CATNavigInstance * iInstance) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iInstance | `CATNavigInstance *` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATNodeExtension**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAObjectModelerBase.edu/CAAOmbGeoNavigate.m/LocalInterfaces/CAAOmbNavigModifyRoot.h`

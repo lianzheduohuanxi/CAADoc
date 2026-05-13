@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "DrawingDocument Object"
-category: tech-article
+category: "tech-article"
 module: "CAAScdDriTechArticles"
-tags: ["CATIA"]
-source_file: "Doc/online/CAAScdDriTechArticles/CAADriObjDrawingDocument.htmmd"
+tags: "["CATIA"]"
+source_file: "Doc/online/CAAScdDriTechArticles/CAADriObjDrawingDocument.htm"
 converted: "2026-05-11T17:31:51.117216"
-```
-
 ---
 # DrawingDocument Object
 
@@ -36,7 +33,7 @@ Use **Documents**(_index_), where index is the document name or index number in 
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     CATIA.Documents(2).Activate
 
 ```
@@ -45,7 +42,7 @@ Use **Documents**(_index_), where index is the document name or index number in 
 ```
 
 ```vbscript
-```vbscript
+```cpp
 CATIA.Documents(2).Activate
 ```
 ```
@@ -60,7 +57,7 @@ Use the **ActiveDocument** property to retrieve the active document:
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
     Set Doc = CATIA.ActiveDocuments
 
 ```

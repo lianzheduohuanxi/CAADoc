@@ -1,56 +1,58 @@
 ---
 title: "CAAAniAeroMesher"
-type: "interface"
+type: "LocalClass"
 module: "CAAAnalysisInterfaces"
-category: api-reference
 base: "CATMSHExtIMesher"
-inheritance_chain: "CAAAniAeroMesher → CATMSHExtIMesher"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 3
+source_file: "CAAAnalysisInterfaces.edu/CAAAniAeroDTransition.m/LocalInterfaces/CAAAniAeroMesher.h"
 ---
+
 # CAAAniAeroMesher
 
-**基类**: CATMSHExtIMesher  
-**继承链**: CAAAniAeroMesher → CATMSHExtIMesher  
-**模块**: CAAAnalysisInterfaces  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
-
-> -----------------------------------------------------------------------
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATMSHExtIMesher | **模块**: CAAAnalysisInterfaces | **方法数**: 3
 
 ## 依赖
 
 - `CATMSHExtIMesher.h`
 
+## 公共方法
+
+### IsATypeOf
+
+```cpp
+int IsATypeOf(CATIMSHMeshPart * iMeshPart, const CATUnicodeString &iType) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iMeshPart | `CATIMSHMeshPart *` |
+| &iType | `const CATUnicodeString` |
+
+
+### CheckSupport
+
+```cpp
+HRESULT CheckSupport(CATIMSHMeshPart * iMeshPart, int &oNbParents, CATIMSHMeshPart ** &oParentMeshParts) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iMeshPart | `CATIMSHMeshPart *` |
+| &oNbParents | `int` |
+| &oParentMeshParts | `CATIMSHMeshPart **` |
+
+
+### Mesh
+
+```cpp
+HRESULT Mesh(CATIMSHMeshPart * iMeshPart) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iMeshPart | `CATIMSHMeshPart *` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATMSHExtIMesher**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAAnalysisInterfaces.edu/CAAAniAeroDTransition.m/LocalInterfaces/CAAAniAeroMesher.h`

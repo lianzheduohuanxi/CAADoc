@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Hatching Pattern On 2D Geometry"
-category: use-case case"
+category: "use-case case"
 module: "CAADriUseCases"
-tags: ["CATIDrwAnnotationFactory_var", "CATISheet_var", "CATISketch_var", "CATIDftDocumentServices", "CATI2DCurve", "CATIDftHatchingPattern", "CATIContainer_var", "CATIA", "CAADrwCreatePattern", "CATIDftAnnotationFactory", "CATIAlias_var", "CATIDrawing", "CATIView_var", "CAADRWCreatePattern", "CATISpecObject_var", "CATISpecObject", "CATIDrwBreakElem_var", "CAADraftingInterfaces", "CATIDrwAreaFill_var", "CATI2DCurve_var"]
-source_file: "Doc/online/CAADriUseCases/CAADriCreatePattern.htmmd"
+tags: "["CATIDrwAnnotationFactory_var", "CATISheet_var", "CATISketch_var", "CATIDftDocumentServices", "CATI2DCurve", "CATIDftHatchingPattern", "CATIContainer_var", "CATIA", "CAADrwCreatePattern", "CATIDftAnnotationFactory", "CATIAlias_var", "CATIDrawing", "CATIView_var", "CAADRWCreatePattern", "CATISpecObject_var", "CATISpecObject", "CATIDrwBreakElem_var", "CAADraftingInterfaces", "CATIDrwAreaFill_var", "CATI2DCurve_var"]"
+source_file: "Doc/online/CAADriUseCases/CAADriCreatePattern.htm"
 converted: "2026-05-11T17:31:50.962468"
-```
-
 ---
 # Mechanical Design
 
@@ -85,7 +82,6 @@ When you launch the use case, pass the full pathname of the file into which you 
 
 The CAADrwCreatePattern use case is made of one source file named CAADrwCreatePattern.cpp located in the CAADrwCreatePattern.m module of the CAADraftingInterfaces.edu framework:
 
-The CAADrwCreatePattern use case is made of one source file named CAADrwCreatePattern.cpp located in the CAADrwCreatePattern.m module of the CAADraftingInterfaces.edu framework:
 Windows | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCreatePattern.m/`
 
 The CAADrwCreatePattern use case is made of one source file named CAADrwCreatePattern.cpp located in the CAADrwCreatePattern.m module of the CAADraftingInterfaces.edu framework:
@@ -140,7 +136,7 @@ char** iArgv)   // Path to the new *.CATDrawing document
        CATIContainer_var spDrwcont;
        CATISpecObject_var spSpecObj;
        CATIDrwFactory_var spDrwFact;
-```vbscript
+```cpp
        if (FAILED(CATDocumentServices::OpenDocument(pfileName, pDoc)))
 
 ```
@@ -166,7 +162,7 @@ This section represents the usual sequence for creating a CATIA document.
     ...
       if (SUCCEEDED(pDoc->QueryInterface(IID_CATIDftDocumentServices, (void **)&piDftDocServices)))
        {
-```vbscript
+```cpp
 if (SUCCEEDED(pDoc->QueryInterface(IID_CATIDftDocumentServices, (void **)&piDftDocServices)))
           piDftDocServices->GetDrawing(IID_CATIDrawing, (void **)&piDrawing);
           piDftDocServices->Release(#);
@@ -229,7 +225,7 @@ The root feature of a drawing document is the Drawing that is the feature that i
 CATUnicodeString namealias;
 hr = spSketch->GetComponents(CATI2DCurve::ClassName(#),spListElem);
 ```vbscript
-```vbscript
+```cpp
 for (int i=1; i<=spListElem.Size(#); i++)
           namealias = CATIAlias_var(spListElem[i])->GetAlias(#);
           if (namealias.SearchSubString("area") != -1)
@@ -260,8 +256,7 @@ The 2D geometry in the Start Up CATDrawing Document is identified by external na
     ...
      CATIDftHatchingPattern *iHatching = NULL;
 
-CATIDftHatchingPattern *iHatching = NULL;
-```vbscript
+```cpp
     	if (SUCCEEDED( spDrwFact->CreateHatchingPattern(IID_CATIDftHatchingPattern, (void **) &iHatching) ))
 
 ```
@@ -270,7 +265,7 @@ CATIDftHatchingPattern *iHatching = NULL;
 CATIDftHatchingPattern *iHatching = NULL;
 if (SUCCEEDED( spDrwFact->CreateHatchingPattern(IID_CATIDftHatchingPattern, (void **) &iHatching) ))
 ```vbscript
-```vbscript
+```cpp
           hr = iHatching->SetOffset(15.0);
           hr = iHatching->SetAngle ((double)  ( CATRadianToDegree * CATPIBY4));
           hr = iHatching->SetPitch (8.0);
@@ -334,7 +329,7 @@ if (iHatching) iHatching->Release(#);
           return 5;
 
        }
-```vbscript
+```cpp
 if (iHatching) iHatching->Release(#);
 return 5;
        CATLISTV(CATISpecObject_var) ListBreakElem;
@@ -398,11 +393,10 @@ pEndParam = pInter;
        // Gets the annotation factory
        CATIDrwAnnotationFactory_var spAnnFactory = spMainView;
 
-CATIDrwAnnotationFactory_var spAnnFactory = spMainView;
        CATIDrwAreaFill_var AreaFill;
 
        CATISpecObject *piSpecObj = NULL;
-```vbscript
+```cpp
        if (SUCCEEDED(iHatching->QueryInterface(IID_CATISpecObject, (void **)&piSpecObj)))
 
 ```
@@ -418,7 +412,7 @@ if (SUCCEEDED(iHatching->QueryInterface(IID_CATISpecObject, (void **)&piSpecObj)
           piSpecObj->Release(#);
 
        }
-```vbscript
+```cpp
 if (SUCCEEDED(iHatching->QueryInterface(IID_CATISpecObject, (void **)&piSpecObj)))
 ```vbscript
 AreaFill = spAnnFactory -> CreateDrwAreaFill(ListBreakElem, piSpecObj, "");

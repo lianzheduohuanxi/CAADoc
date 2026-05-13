@@ -20,7 +20,7 @@ Option Explicit
 ' Locale     :   English
 '******************************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
    
    ' On Error Resume Next
@@ -28,7 +28,7 @@ Sub CATMain(#)
    '----------------------------------------------
 ```
    'Create a new product document
-```vbscript
+```cpp
    Dim objProdDoc        As ProductDocument
    Dim objRootProd       As Product
    Set objProdDoc      = CATIA.Documents.Add("Product")
@@ -187,7 +187,7 @@ End Sub
 
 ```
 
-```vbscript
+```cpp
 Option Explicit
 '// COPYRIGHT DASSAULT SYSTEMES  2000
 '******************************************************************************
@@ -201,7 +201,7 @@ Option Explicit
 ' Locale     :   English
 '******************************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
    
    ' On Error Resume Next
@@ -209,7 +209,7 @@ Sub CATMain(#)
    '----------------------------------------------
 ```
    'Create a new product document
-```vbscript
+```cpp
    Dim objProdDoc        As ProductDocument
    Dim objRootProd       As Product
    Set objProdDoc      = CATIA.Documents.Add("Product")

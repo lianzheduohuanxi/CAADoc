@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAAInfCreateDocument.CATScript"
 category: "use-case"
 module: "CAAScdInfUseCases"
-tags: ["CATIA", "CAAInfCreateDocument"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfCreateDocumentSource.htmmd"
+tags: "["CATIA", "CAAInfCreateDocument"]"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfCreateDocumentSource.htm"
 converted: "2026-05-11T17:31:52.356061"
-```
-
 ---
 tags: ["CATIA", "CAAInfCreateDocument"]
 source_file: "Doc/online/CAAScdInfUseCases/CAAInfCreateDocumentSource.htmmd"
@@ -16,7 +13,7 @@ converted: "2026-05-11T17:31:52.356061"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGHT DASSAULT SYSTEMES 2001
     ' *****************************************************************************
     '   Purpose:       Create a New Document.
@@ -34,7 +31,7 @@ converted: "2026-05-11T17:31:52.356061"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -60,7 +57,7 @@ converted: "2026-05-11T17:31:52.356061"
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
         Set oNewPartDoc = CATIA.Documents.Add("Part")
 
 ```

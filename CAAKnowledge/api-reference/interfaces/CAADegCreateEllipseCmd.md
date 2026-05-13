@@ -1,25 +1,15 @@
 ---
 title: "CAADegCreateEllipseCmd"
-type: "interface"
+type: "LocalClass"
 module: "CAADialogEngine"
-category: api-reference
 base: "CATStateCommand"
-inheritance_chain: "CAADegCreateEllipseCmd → CATStateCommand"
-method_count: 1
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 3
+source_file: "CAADialogEngine.edu/CAADegGeoCommands.m/LocalInterfaces/CAADegCreateEllipseCmd.h"
 ---
+
 # CAADegCreateEllipseCmd
 
-**基类**: CATStateCommand  
-**继承链**: CAADegCreateEllipseCmd → CATStateCommand  
-**模块**: CAADialogEngine  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 1
-
-> DialogEngine Framework
+**基类**: CATStateCommand | **模块**: CAADialogEngine | **方法数**: 3
 
 ## 依赖
 
@@ -27,28 +17,41 @@ verified: true
 - `CATMathPoint.h`
 - `CATMathPlane.h`
 
+## 虚方法
+
+### BuildGraph
+
+```cpp
+virtual void BuildGraph() ;
+```
+
+BuildGraph ----------- Implements the statechart. It is called once, even if the command is in repeat mode
+
+
+## 公共方法
+
+### CreateCamera
+
+```cpp
+CATBoolean CreateCamera(void * iUsefulData) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iUsefulData | `void *` |
+
+
+### CreateEllipse
+
+```cpp
+CATBoolean CreateEllipse(void * iUsefulData) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iUsefulData | `void *` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATStateCommand**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAADialogEngine.edu/CAADegGeoCommands.m/LocalInterfaces/CAADegCreateEllipseCmd.h`

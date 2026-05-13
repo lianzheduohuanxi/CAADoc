@@ -1,51 +1,53 @@
 ---
 title: "CAAEOmbExportTypeData"
-type: "interface"
+type: "LocalClass"
 module: "CAAObjectModelerBase"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAEOmbExportTypeData → CATBaseUnknown"
 method_count: 2
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAObjectModelerBase.edu/CAAOmbExportType.m/LocalInterfaces/CAAEOmbExportTypeData.h"
 ---
+
 # CAAEOmbExportTypeData
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAEOmbExportTypeData → CATBaseUnknown  
-**模块**: CAAObjectModelerBase  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 2
+> Implement interface ObjectModelerBase.CATIExportTypeManager for object CATProduct to OmbExportType
+
+**基类**: CATBaseUnknown | **模块**: CAAObjectModelerBase | **方法数**: 2
 
 ## 依赖
 
 - `CATBaseUnknown.h`
 - `CATUnicodeString.h`
 
+## 虚方法
+
+### ExportData
+
+```cpp
+virtual HRESULT ExportData(CATDocument * ipDoc, CATUnicodeString iPath) ;
+```
+
+CATIExportTypeManager Methods
+
+| 参数 | 类型 |
+|------|------|
+| ipDoc | `CATDocument *` |
+| iPath | `CATUnicodeString` |
+
+
+### ExportData
+
+```cpp
+virtual HRESULT ExportData(CATUnicodeString iToExportPath, CATUnicodeString iExportedPath) ;
+```
+
+CATIExportTypeManager Methods
+
+| 参数 | 类型 |
+|------|------|
+| iToExportPath | `CATUnicodeString` |
+| iExportedPath | `CATUnicodeString` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAObjectModelerBase.edu/CAAOmbExportType.m/LocalInterfaces/CAAEOmbExportTypeData.h`

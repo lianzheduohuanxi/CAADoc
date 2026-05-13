@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "DraftingInterfaces Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR7"
-version: "V5R7"
-tags: ["CATISpecObject", "CATIGenerSpec", "CATIDrwSubString", "CATIDrwText", "CATIDrwAnnotationFactory", "CATIDrwLeader"]
-source_file: "Doc/online/CAACenAPIChangesR7/DraftingInterfaces.htmmd"
+tags: "["CATISpecObject", "CATIGenerSpec", "CATIDrwSubString", "CATIDrwText", "CATIDrwAnnotationFactory", "CATIDrwLeader"]"
+source_file: "Doc/online/CAACenAPIChangesR7/DraftingInterfaces.htm"
 converted: "2026-05-11T17:33:52.011735"
-```
-
 ---
 tags: ["CATISpecObject", "CATIGenerSpec", "CATIDrwSubString", "CATIDrwText", "CATIDrwAnnotationFactory", "CATIDrwLeader"]
 source_file: "Doc/online/CAACenAPIChangesR7/DraftingInterfaces.htmmd"

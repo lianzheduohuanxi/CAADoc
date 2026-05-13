@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Application Frame Overview"
-category: tech-article
+category: "tech-article"
 module: "CAAAfrTechArticles"
-tags: ["CATIUIActivate", "CATIExtGeo2DVisu", "CATI2DGeoVisu", "CATIWorkshopConfiguration", "CATIExtGeo3DVisu", "CATIShapeDesignAddin", "CATIWorkshop", "CATI3DGeoVisu", "CATIWorkbenchTransition", "CATIEditor"]
-source_file: "Doc/online/CAAAfrTechArticles/CAAAfrOverview.htmmd"
+tags: "["CATIUIActivate", "CATIExtGeo2DVisu", "CATI2DGeoVisu", "CATIWorkshopConfiguration", "CATIExtGeo3DVisu", "CATIShapeDesignAddin", "CATIWorkshop", "CATI3DGeoVisu", "CATIWorkbenchTransition", "CATIEditor"]"
+source_file: "Doc/online/CAAAfrTechArticles/CAAAfrOverview.htm"
 converted: "2026-05-11T17:17:55.934142"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -149,7 +146,6 @@ The structure of the workshop associated with the (document) UI-active object is
 
 The Start menu offers to the end user a set of workbenches. Some of them are provided by Dassault Systmes as part of its products and solutions, others are provided by third-parties, others can be home-made. From the end user viewpoint, all these workbenches are on the same level, even if some are used more than others. They can be selected by a simple click, even by error, and what happens depends on which document and workbench were active at the moment the end user clicks on another workbench. To perform the appropriate transition between these two workbenches, the application should know what to do. You will provide this knowledge using the _CATIWorkbenchTransition_ interface you will implement either on the workbench, or on the workshop.
 
-The Start menu offers to the end user a set of workbenches. Some of them are provided by Dassault Systmes as part of its products and solutions, others are provided by third-parties, others can be home-made. From the end user viewpoint, all these workbenches are on the same level, even if some are used more than others. They can be selected by a simple click, even by error, and what happens depends on which document and workbench were active at the moment the end user clicks on another workbench. To perform the appropriate transition between these two workbenches, the application should know what to do. You will provide this knowledge using the _CATIWorkbenchTransition_ interface you will implement either on the workbench, or on the workshop.
 Transitions between workbenches can be classified in two main types, depending on whether the active document can be connected to a document of the type required by the selected workbench, or on the opposite has nothing to do with such as document. In the latter case, no document can be retrieved, and a new one should be created as if the end user had selected File->New. Otherwise, if, for example, a Part document is the active document and if the end user selects the Product Structure workbench, the end user intent may be to work at the product level rather than at the part level, meaning that the part was edited in-context. In this way, the product pointing to the part must be retrieved upwards in the Part specification tree and made the active one, while the Product Structure workbench is made available. The application should then be able to retrieve from the active document and using the selected workbench the document to make active, if it exists, whether this document contains or is contained by the active document. These two main cases are detailed below and can be classified into the following types of transitions.
 
   1. The active document type and the document type with which the selected workbench is associated cannot be connected. This case can be divided into the following transition sub-cases:
@@ -162,7 +158,7 @@ For example, assume that the end user selects the Free Style workbench when a Pa
 
 ```
 
-```vbscript
+```cpp
 For example, assume that the active document is a Part document and the active workbench is Part Design. The end user selects the Material Library workbench, which is for CATMaterial documents. Since a CATPart document cannot contain, or be contained by, a CATMaterial document, a new empty CATMaterial document is created in another window, and the selected workbench is activated.
   2. The active document type and the document type with which the selected workbench is associated can be connected. This case can be divided into the following transition sub-cases:
      1. Transition to a workbench corresponding to a document type that can be pointed to by the active document.
@@ -186,7 +182,6 @@ For example, assume that the active document is a Part document and the active w
 
 You should consider these cases when you create a new workbench, and figure out the different cases that can happen depending on the type of the document this workbench is associated with. As you can see, and even transitions happen between workbenches, the associated document types always appear as a key point, and, as a consequence, the workshop dedicated to the document type that can often be used to implement once the same transitions involving all its workbenches. This can simplify a bit your job if you are not the workshop developer, since in this case you may have nothing to do.
 
-You should consider these cases when you create a new workbench, and figure out the different cases that can happen depending on the type of the document this workbench is associated with. As you can see, and even transitions happen between workbenches, the associated document types always appear as a key point, and, as a consequence, the workshop dedicated to the document type that can often be used to implement once the same transitions involving all its workbenches. This can simplify a bit your job if you are not the workshop developer, since in this case you may have nothing to do.
 Transitions from and to your workbench should be designed knowing that the application calls the workbenches and workshops involved in the transition in the following order:
 
   1. The active workbench
@@ -266,7 +261,7 @@ The editor is described by the _CATFrmEditor_ class [1]. This class manages the 
 [Top]
 #### The objects providing the interactive behavior
 
-```vbscript
+```cpp
   * The **CSO** , for Current Set of Objects: contains the current object(s). The selected objects are placed in the CSO, and the CSO can be used by any command to retrieve the selected objects. The Cut & Paste, Copy & Paste, and Drag & Drop use the CSO as input. The CSO is known by the current command. Objects contained in the CSO have usually their graphical representation highlighted.
   * The **SDO** , for Set of Dialog Objects: contains objects to be placed in toolbars such as input fields.
   * The **ISO** , for Interactive Set of Objects: used to contain interactive objects, that is objects that are not part of the document, but which are displayed to enable their document object handling, such as manipulator handles. A command can itself be put in the ISO, or an object it aggregates. Such objects should implement the _CATI2DGeoVisu_ or _CATI3DGeoVisu_ interface. The classes _CATIExtGeo2DVisu_ and _CATIExtGeo3DVisu_ provide basic implementations of these interfaces respectively

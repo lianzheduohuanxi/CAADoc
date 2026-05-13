@@ -1,62 +1,71 @@
 ---
 title: "CAAIV5V6ExtMmrCCDataExtension"
-type: "interface"
+type: "PublicInterface"
 module: "CAAV5V6MechanicalModeler"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAIV5V6ExtMmrCCDataExtension → CATBaseUnknown"
 method_count: 4
-visibility: "public"
-has_tie_binding: true
-verified: true
+source_file: "CAAV5V6MechanicalModeler.edu/PublicInterfaces/CAAIV5V6ExtMmrCCDataExtension.h"
 ---
-> **TIE实现**: unknown
 
 # CAAIV5V6ExtMmrCCDataExtension
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAIV5V6ExtMmrCCDataExtension → CATBaseUnknown  
-**模块**: CAAV5V6MechanicalModeler  
-**分类**: framework  
-**可见性**: public  
-**方法数**: 4
+**基类**: CATBaseUnknown | **模块**: CAAV5V6MechanicalModeler | **方法数**: 4
 
 ## 依赖
 
 - `CAAV5V6ExtMmrCCDataExtension.h`
 - `CATBaseUnknown.h`
 
-## TIE实现
+## 纯虚方法 (接口契约)
 
-**实现文件**:
-- `CAAEV5V6ExtMmrCCDataExtension.cpp`
-- `CAAEV5V6ExtMmrCCDataExtensionBehavior.cpp`
-- `CAAEV5V6ExtMmrCCDataExtensionModelEvent.cpp`
-- `CAAEV5V6ExtMmrCCDataExtensionParmPublisher.cpp`
-- `CAAEV5V6ExtMmrCCDataExtensionVisu.cpp`
+### SetGeomFeature
+
+```cpp
+virtual HRESULT SetGeomFeature(CATBaseUnknown * ipGeomFeature) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| ipGeomFeature | `CATBaseUnknown *` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetGeomFeature
+
+```cpp
+virtual HRESULT GetGeomFeature(CATBaseUnknown*& opGeomFeature) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| opGeomFeature | `CATBaseUnknown*&` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### AggregateParam
+
+```cpp
+virtual HRESULT AggregateParam(CATICkeParm_var ispParmToAggregate) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| ispParmToAggregate | `CATICkeParm_var` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetValuatedParam
+
+```cpp
+virtual HRESULT GetValuatedParam(CATICkeParm_var& iospValuatedParm) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iospValuatedParm | `CATICkeParm_var&` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
 
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAV5V6MechanicalModeler.edu/PublicInterfaces/CAAIV5V6ExtMmrCCDataExtension.h`

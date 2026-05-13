@@ -16,7 +16,7 @@ converted: "2026-05-11T11:27:02.585366"
 '// 03/21/2013  Creation                                                    BE9
 '//============================================================================
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 Dim ObjPart As Part
@@ -39,7 +39,7 @@ Set SuperMember1 = SuperMembers.Item(1)
 
 'Retrieving The Split Members
 ```
-```vbscript
+```cpp
 Dim SplitMembers As References
 Set SplitMembers = SuperMember1.SplitProfiles
 
@@ -50,7 +50,7 @@ Set SelctionObj = CATIA.ActiveDocument.Selection
 'DECK Member
 ```
 SelctionObj.Add SplitMember1
-```vbscript
+```cpp
 Dim DeckMember1 As SfmMember
 Set DeckMember1 = SelctionObj.FindObject("CATIASfmMember")
 
@@ -117,7 +117,7 @@ End Sub
 '// 03/21/2013  Creation                                                    BE9
 '//============================================================================
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 Dim ObjPart As Part
@@ -140,7 +140,7 @@ Set SuperMember1 = SuperMembers.Item(1)
 
 'Retrieving The Split Members
 ```
-```vbscript
+```cpp
 Dim SplitMembers As References
 Set SplitMembers = SuperMember1.SplitProfiles
 
@@ -151,7 +151,7 @@ Set SelctionObj = CATIA.ActiveDocument.Selection
 'DECK Member
 ```
 SelctionObj.Add SplitMember1
-```vbscript
+```cpp
 Dim DeckMember1 As SfmMember
 Set DeckMember1 = SelctionObj.FindObject("CATIASfmMember")
 

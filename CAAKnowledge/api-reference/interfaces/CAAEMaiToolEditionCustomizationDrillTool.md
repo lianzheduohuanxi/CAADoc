@@ -1,25 +1,15 @@
 ---
 title: "CAAEMaiToolEditionCustomizationDrillTool"
-type: "interface"
+type: "LocalClass"
 module: "CAAManufacturingItf"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAEMaiToolEditionCustomizationDrillTool → CATBaseUnknown"
 method_count: 5
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAManufacturingItf.edu/CAAMaiToolEditionCustomization.m/LocalInterfaces/CAAEMaiToolEditionCustomizationDrillTool.h"
 ---
+
 # CAAEMaiToolEditionCustomizationDrillTool
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAEMaiToolEditionCustomizationDrillTool → CATBaseUnknown  
-**模块**: CAAManufacturingItf  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 5
-
-> Dialog Framework
+**基类**: CATBaseUnknown | **模块**: CAAManufacturingItf | **方法数**: 5
 
 ## 依赖
 
@@ -28,28 +18,83 @@ verified: true
 - `CATListOfCATUnicodeString.h`
 - `CATISpecObject.h`
 
+## 虚方法
+
+### GetPanelEditor
+
+```cpp
+virtual CATDlgFrame* GetPanelEditor(CATDialog *iParent, CATDlgStyle iStyle=CATDlgFraNoFrame, const CATBoolean iEditMode=TRUE) ;
+```
+
+This method allows to get the Tool editor view that will be displayed when editing the tool through ResourceList access (simple view)
+
+| 参数 | 类型 |
+|------|------|
+| *iParent | `CATDialog` |
+| iStyle=CATDlgFraNoFrame | `CATDlgStyle` |
+| iEditMode=TRUE | `const CATBoolean` |
+
+
+### GetMorePanelEditor
+
+```cpp
+virtual CATDlgFrame* GetMorePanelEditor(CATDialog *iParent, CATDlgStyle iStyle=CATDlgFraNoFrame, const CATBoolean iEditMode=TRUE) ;
+```
+
+This method allows to get the Tool editor view that will be displayed when editing the tool through ResourceList access with selection of the button "more" (advanced view)
+
+| 参数 | 类型 |
+|------|------|
+| *iParent | `CATDialog` |
+| iStyle=CATDlgFraNoFrame | `CATDlgStyle` |
+| iEditMode=TRUE | `const CATBoolean` |
+
+
+### GetActivityEditor
+
+```cpp
+virtual CATDlgFrame* GetActivityEditor(CATDialog *iParent, CATDlgStyle iStyle=CATDlgFraNoFrame, const CATBoolean iEditMode=FALSE, const CATISpecObject_var &ihSpecAct=NULL_var) ;
+```
+
+This method allows to get the Tool editor view that will be displayed when editing the tool with access through the Activity editor (tool tab page)
+
+| 参数 | 类型 |
+|------|------|
+| *iParent | `CATDialog` |
+| iStyle=CATDlgFraNoFrame | `CATDlgStyle` |
+| iEditMode=FALSE | `const CATBoolean` |
+| &ihSpecAct=NULL_var | `const CATISpecObject_var` |
+
+
+### GetGraphicEditor
+
+```cpp
+virtual CATDlgFrame* GetGraphicEditor(CATDialog *iParent, CATDlgStyle iStyle=CATDlgFraNoFrame, const CATBoolean iEditMode=FALSE) ;
+```
+
+This method allows to get the Tool graphic view That can be an icon (at least displayed during Tool selection)
+
+| 参数 | 类型 |
+|------|------|
+| *iParent | `CATDialog` |
+| iStyle=CATDlgFraNoFrame | `CATDlgStyle` |
+| iEditMode=FALSE | `const CATBoolean` |
+
+
+### GenerateJPEGImageFromGraphicEditor
+
+```cpp
+virtual void GenerateJPEGImageFromGraphicEditor(CATDialog *iParent, const CATUnicodeString &iImagePathName="") ;
+```
+
+Not used (for future use)
+
+| 参数 | 类型 |
+|------|------|
+| *iParent | `CATDialog` |
+| &iImagePathName="" | `const CATUnicodeString` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAManufacturingItf.edu/CAAMaiToolEditionCustomization.m/LocalInterfaces/CAAEMaiToolEditionCustomizationDrillTool.h`

@@ -1,62 +1,36 @@
 ---
 title: "CAAIMmrCCDataExtensionFactory"
-type: "interface"
+type: "PublicInterface"
 module: "CAAMechanicalModeler"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAIMmrCCDataExtensionFactory → CATBaseUnknown"
 method_count: 1
-visibility: "public"
-has_tie_binding: true
-verified: true
+source_file: "CAAMechanicalModeler.edu/PublicInterfaces/CAAIMmrCCDataExtensionFactory.h"
 ---
-> **TIE实现**: unknown
 
 # CAAIMmrCCDataExtensionFactory
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAIMmrCCDataExtensionFactory → CATBaseUnknown  
-**模块**: CAAMechanicalModeler  
-**分类**: framework  
-**可见性**: public  
-**方法数**: 1
+**基类**: CATBaseUnknown | **模块**: CAAMechanicalModeler | **方法数**: 1
 
 ## 依赖
 
 - `CAAMmrCCDataExtension.h`
 - `CATBaseUnknown.h`
 
-## TIE实现
+## 纯虚方法 (接口契约)
 
-**实现文件**:
-- `CAAEMmrCCDataExtension.cpp`
-- `CAAEMmrCCDataExtensionBuild.cpp`
-- `CAAEMmrCCDataExtensionFactory.cpp`
-- `CAAEMmrCCDataExtensionModelEvent.cpp`
-- `CAAEMmrCCDataExtensionParmPublisher.cpp`
+### CreateMmrCCDataExtension
 
----
+```cpp
+virtual HRESULT CreateMmrCCDataExtension(const CATBaseUnknown *iBaseFeature, CAAIMmrCCDataExtension **ioMmrCCDataExtension) = 0 ;
+```
 
-## Interface Overview
+| 参数 | 类型 |
+|------|------|
+| *iBaseFeature | `const CATBaseUnknown` |
+| **ioMmrCCDataExtension | `CAAIMmrCCDataExtension` |
 
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
 
 ---
 
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAMechanicalModeler.edu/PublicInterfaces/CAAIMmrCCDataExtensionFactory.h`

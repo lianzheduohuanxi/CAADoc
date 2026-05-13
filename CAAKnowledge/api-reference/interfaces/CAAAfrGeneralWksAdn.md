@@ -1,56 +1,31 @@
 ---
 title: "CAAAfrGeneralWksAdn"
-type: "interface"
+type: "LocalClass"
 module: "CAAApplicationFrame"
-category: api-reference
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+base: "CATBaseUnknown"
+method_count: 1
+source_file: "CAAApplicationFrame.edu/CAAAfrGeneralWksAddin.m/LocalInterfaces/CAAAfrGeneralWksAdn.h"
 ---
+
 # CAAAfrGeneralWksAdn
 
-**模块**: CAAApplicationFrame  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> Class which represents an addin of the General Workshop. It implements the CATIAfrGeneralWksAddin interface which is specified by the General workshop as the interface to implement in its addins.
 
-> addins.
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATBaseUnknown | **模块**: CAAApplicationFrame | **方法数**: 1
 
 ## 依赖
 
----
+- `CATBaseUnknown.h`
 
-## Interface Overview
+## 公共方法
 
-**Inherited Methods**: Please refer to the base interface documentation above.
+### CreateCommands
 
----
+```cpp
+void CreateCommands() ;
+```
 
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
 
 ---
 
-## Related Use Cases
-
-- [3D PLM Enterprise Architecture](../../use-cases/caaafrcases/CAAAfrCheckHeader.md)
-- [3D PLM Enterprise Architecture](../../use-cases/caaafrcases/CAAAfrSampleGeneralWksAddin.md)
-- [3D PLM Enterprise Architecture](../../use-cases/caaafrcases/CAAAfrSampleMRUHdr.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAApplicationFrame.edu/CAAAfrGeneralWksAddin.m/LocalInterfaces/CAAAfrGeneralWksAdn.h`

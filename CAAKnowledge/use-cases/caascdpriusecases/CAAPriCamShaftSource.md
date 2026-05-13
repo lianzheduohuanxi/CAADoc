@@ -128,7 +128,7 @@ Option Explicit
 ' Main program
 '
 ' **************************************************************************
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ```
@@ -149,7 +149,7 @@ Sub CATMain(#)
     dPi                = 3.14159265358979323846
     iCurrentLevel      = 0
 
-```vbscript
+```cpp
     Dim oPartDocument As Document
     Set oPartDocument = CATIA.Documents.Add ( "Part" )
     Set oPart         = oPartDocument.Part
@@ -158,7 +158,7 @@ Sub CATMain(#)
     
     ' -- Shading view Mode
 ```
-```vbscript
+```cpp
     CATIA.ActiveWindow.ActiveViewer.RenderingMode = 1
 
 ```
@@ -166,7 +166,7 @@ Sub CATMain(#)
     msgbox "Create Five Bearings"
     Call CreatePatternBearing(#)
     oPart.Update
-```vbscript
+```cpp
     CATIA.ActiveWindow.ActiveViewer.Reframe
 
     msgbox "Create First Cam Set"
@@ -175,7 +175,7 @@ Sub CATMain(#)
     Call CreateCamSet (0) 
     oPart.Update 
 ```
-```vbscript
+```cpp
     CATIA.ActiveWindow.ActiveViewer.Reframe
 
     msgbox "Create Second Cam Set"
@@ -184,7 +184,7 @@ Sub CATMain(#)
     Call CreateCamSet (90)
     oPart.Update
 ```
-```vbscript
+```cpp
     CATIA.ActiveWindow.ActiveViewer.Reframe
 
     msgbox "Create Third Cam Set"
@@ -193,7 +193,7 @@ Sub CATMain(#)
     Call CreateCamSet (180)
     oPart.Update
 ```
-```vbscript
+```cpp
     CATIA.ActiveWindow.ActiveViewer.Reframe
 
     msgbox "Create Fourth Cam Set"
@@ -202,7 +202,7 @@ Sub CATMain(#)
     Call CreateCamSet (270)
     oPart.Update
 ```
-```vbscript
+```cpp
     CATIA.ActiveWindow.ActiveViewer.Reframe
 
 ```
@@ -284,10 +284,7 @@ Sub CreatePatternBearing(#)
                                                             iCylinderSpacing,     _
                                                             0.0,                  _
                                                             1,                    _  
-                                                            1,                    _
                                                             oRefPlaneXY,          _
-                                                            oRefPlaneXY,          _
-                                                            True,                 _
                                                             True,                 _
                                                             0.0)
 
@@ -587,7 +584,7 @@ End Sub
 
 ```
 
-```vbscript
+```cpp
 Option Explicit
 ' COPYRIGHT DASSAULT SYSTEMES 2001
 '*******************************************************************************
@@ -709,7 +706,7 @@ Option Explicit
 ' Main program
 '
 ' **************************************************************************
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ```
@@ -730,7 +727,7 @@ Sub CATMain(#)
     dPi                = 3.14159265358979323846
     iCurrentLevel      = 0
 
-```vbscript
+```cpp
     Dim oPartDocument As Document
     Set oPartDocument = CATIA.Documents.Add ( &quot;Part&quot; )
     Set oPart         = oPartDocument.Part
@@ -739,7 +736,7 @@ Sub CATMain(#)
     
     ' -- Shading view Mode
 ```
-```vbscript
+```cpp
     CATIA.ActiveWindow.ActiveViewer.RenderingMode = 1
 
 ```
@@ -747,7 +744,7 @@ Sub CATMain(#)
     msgbox &quot;Create Five Bearings&quot;
     Call CreatePatternBearing(#)
     oPart.Update
-```vbscript
+```cpp
     CATIA.ActiveWindow.ActiveViewer.Reframe
 
     msgbox &quot;Create First Cam Set&quot;
@@ -756,7 +753,7 @@ Sub CATMain(#)
     Call CreateCamSet (0) 
     oPart.Update 
 ```
-```vbscript
+```cpp
     CATIA.ActiveWindow.ActiveViewer.Reframe
 
     msgbox &quot;Create Second Cam Set&quot;
@@ -765,7 +762,7 @@ Sub CATMain(#)
     Call CreateCamSet (90)
     oPart.Update
 ```
-```vbscript
+```cpp
     CATIA.ActiveWindow.ActiveViewer.Reframe
 
     msgbox &quot;Create Third Cam Set&quot;
@@ -774,7 +771,7 @@ Sub CATMain(#)
     Call CreateCamSet (180)
     oPart.Update
 ```
-```vbscript
+```cpp
     CATIA.ActiveWindow.ActiveViewer.Reframe
 
     msgbox &quot;Create Fourth Cam Set&quot;
@@ -783,7 +780,7 @@ Sub CATMain(#)
     Call CreateCamSet (270)
     oPart.Update
 ```
-```vbscript
+```cpp
     CATIA.ActiveWindow.ActiveViewer.Reframe
 
 ```
@@ -865,10 +862,7 @@ Sub CreatePatternBearing(#)
                                                             iCylinderSpacing,     _
                                                             0.0,                  _
                                                             1,                    _  
-                                                            1,                    _
                                                             oRefPlaneXY,          _
-                                                            oRefPlaneXY,          _
-                                                            True,                 _
                                                             True,                 _
                                                             0.0)
 

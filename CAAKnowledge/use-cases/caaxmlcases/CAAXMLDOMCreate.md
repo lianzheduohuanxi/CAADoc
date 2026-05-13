@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating XML documents with DOM"
-category: use-case case"
+category: "use-case case"
 module: "CAAXmlUseCases"
-tags: ["CATIDOMElement", "CAAXMLParser", "CAAXMLDOMCreate", "CATIDOMComment", "CATIXMLDOMDocumentBuilder", "CATIDOMImplementation", "CATIXMLDOMDocumentBuilder_var", "CATIDOMDocument_var", "CATIDOMDocument", "CATIDOMImplementation_var", "CATIDOMDocumentType_var", "CATIDOMText_var", "CATIDOMComment_var", "CATIDOMText", "CATIDOMElement_var"]
-source_file: "Doc/online/CAAXmlUseCases/CAAXMLDOMCreate.htmmd"
+tags: "["CATIDOMElement", "CAAXMLParser", "CAAXMLDOMCreate", "CATIDOMComment", "CATIXMLDOMDocumentBuilder", "CATIDOMImplementation", "CATIXMLDOMDocumentBuilder_var", "CATIDOMDocument_var", "CATIDOMDocument", "CATIDOMImplementation_var", "CATIDOMDocumentType_var", "CATIDOMText_var", "CATIDOMComment_var", "CATIDOMText", "CATIDOMElement_var"]"
+source_file: "Doc/online/CAAXmlUseCases/CAAXMLDOMCreate.htm"
 converted: "2026-05-11T17:33:45.610569"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -221,7 +218,6 @@ The `CreateDocument` method creates a new DOM document. It accepts the following
 
     ...
     CATIDOMElement_var car;
-CATIDOMElement_var car;
 ```vbscript
     hr = document->**CreateElement**("car", car);
 

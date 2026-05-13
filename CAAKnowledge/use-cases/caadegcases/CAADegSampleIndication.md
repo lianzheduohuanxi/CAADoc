@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Managing Indication"
 category: "use case"
 module: "CAADegUseCases"
-tags: ["CAACreateCircleCmd", "CAADegCreateCircleCmd", "CAADialogEngine", "CAAGeometry", "CATIndicationAgent", "CAADegGeoCommands"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleIndication.htmmd"
+tags: "["CAACreateCircleCmd", "CAADegCreateCircleCmd", "CAADialogEngine", "CAAGeometry", "CATIndicationAgent", "CAADegGeoCommands"]"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleIndication.htm"
 converted: "2026-05-11T17:33:49.684430"
-```
-
 ---
 tags: ["CAACreateCircleCmd", "CAADegCreateCircleCmd", "CAADialogEngine", "CAAGeometry", "CATIndicationAgent", "CAADegGeoCommands"]
 source_file: "Doc/online/CAADegUseCases/CAADegSampleIndication.htmmd"
@@ -54,7 +51,6 @@ Indicating a point means clicking on the screen at the desired location with the
 [Top] Where to Find the Circle Command Code The Circle command is made of a single class named _CAADegCreateCircleCmd_ located in the CAADegGeoCommands.m module of the CAADialogEngine.edu framework: Windows | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 ---|---
 Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
-Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed. [Top] Step-by-Step To create the circle center, there are seven steps: # | Step | Where
 
 Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
@@ -97,7 +93,7 @@ A pointer to the indication agent, its projection plane, and the temporary point
       ...
 A pointer to the indication agent, its projection plane, and the temporary point to keep the circle center are declared as private data members. [Top] Instantiating the Indication Agent The indication agent is instantiated in the command `BuildGraph` method.
 void CAACreateCircleCmd::BuildGraph(#)
-```vbscript
+```cpp
       _daIndicCircleCenter = **new** **CATIndicationAgent**("GetCircleCenter");
 
 ```
@@ -161,7 +157,7 @@ CATDialogTransition *pSecondTransition = **AddTransition**
         stGetCircleCenter,
         stGetRadius,
         AndCondition(
-```vbscript
+```cpp
           IsOutputSetCondition(_daIndicCircleCenter),
           Condition((ConditionMethod) & CAACreateCircleCmd::CheckCircleCenter)),
         Action((ActionMethod) & CAACreateCircleCmd::CreateCircleCenter)
@@ -172,7 +168,7 @@ CATDialogTransition *pSecondTransition = **AddTransition**
     ...
 
 ---
-```vbscript
+```cpp
 Action((ActionMethod) & CAACreateCircleCmd::CreateCircleCenter)
 The `AddTransition` method creates a transition and adds it to the transitions managed by the dialog command. Pointers to the transition's source and target states are the first and second arguments respectively. The transition trigger is defined in the guard condition as the first condition to be checked using the `IsOutputSetCondition` method applied to the indication agent. A second condition that is useless for this use case purpose uses the `CheckCircleCenter` method. Because we use `AndCondition` to create the guard condition, both condition methods must return True to fire the transition. In this case, the `CreateCircleCenter` action method is executed. [Top] Retrieving the Indicated Point and Converting it to a 3D Point When the end user has clicked to indicate a point, the transition between the GetCenter and GetRadius states is triggered, and if the guard condition returns True, the following action method executes.
 
