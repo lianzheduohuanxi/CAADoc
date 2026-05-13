@@ -4,13 +4,13 @@ title: "Using the Body Checker"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CATICGMContainer", "CAADoc", "CAAGMOperatorsBodyChecker", "CATICGMObject", "CAATopBodyChecker", "CATICGMBodyChecker"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopBodyChecker.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopBodyChecker.htmmd"
 converted: "2026-05-11T17:33:49.090808"
 ```
 
 ---
 tags: ["CAAGMOperatorsInterfaces", "CATICGMContainer", "CAADoc", "CAAGMOperatorsBodyChecker", "CATICGMObject", "CAATopBodyChecker", "CATICGMBodyChecker"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopBodyChecker.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopBodyChecker.htmmd"
 converted: "2026-05-11T17:33:49.090808"
 Using the Body Checker
 
@@ -34,7 +34,7 @@ What You Will Learn With This Use Case This use case is intended to help you det
     * Displays the diagnosis.
     * Closes the container.
 What You Will Learn With This Use Case This use case is intended to help you determine whether a surface is valid in terms of curvature radius. This is done by using the CATICGMBodyChecker.h interface. Today, the rule to check whether a shell self-intersects is not implemented yet (see the interface documentation in the encyclopedia). The CAAGMOperatorsBodyChecker Use Case CAAGMOperatorsBodyChecker is a use case of the CAAGMOperatorsInterfaces.edu framework that illustrates the GMOperatorsInterfaces framework capabilities. What Does CAAGMOperatorsBodyChecker Do? The CAAGMOperatorsBodyChecker use case:
-How to Launch CAAGMOperatorsBodyChecker To launch CAAGMOperatorsBodyChecker , you will need to set up the build time environment, then compile CAAGMOperatorsBodyChecker.m along with its prerequisites, set up the run time environment, and then execute the use case [1]. `CAAGMOperatorsBodyChecker e/bodyChecker1.NCGM` where `bodyChecker1.NCGM` is the input file delivered in the CAAGMOperatorsInterfaces.edu\FunctionTests\InputData file [1].  Where to Find the CAAGMOperatorsBodyChecker Code The CAAGMOperatorsBodyChecker use case is made of a main named CAATopBodyChecker.cpp located in the CAAGMOperatorsBodyChecker.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsBodyChecker.m\` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. Step-by-Step There are thee main steps in CAATopBodyChecker.cpp:
+How to Launch CAAGMOperatorsBodyChecker To launch CAAGMOperatorsBodyChecker , you will need to set up the build time environment, then compile CAAGMOperatorsBodyChecker.m along with its prerequisites, set up the run time environment, and then execute the use case [1]. `CAAGMOperatorsBodyChecker e/bodyChecker1.NCGM` where `bodyChecker1.NCGM` is the input file delivered in the CAAGMOperatorsInterfaces.edu/FunctionTests/InputData file [1].  Where to Find the CAAGMOperatorsBodyChecker Code The CAAGMOperatorsBodyChecker use case is made of a main named CAATopBodyChecker.cpp located in the CAAGMOperatorsBodyChecker.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder/CAADoc/CAAGMOperatorsInterfaces.edu/CAAGMOperatorsBodyChecker.m/` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. Step-by-Step There are thee main steps in CAATopBodyChecker.cpp:
     1. Loading the Container and Retrieving the Body to Be Checked
     2. Creating and Running the CATICGMBodyChecker Object
     3. Displaying the Diagnosis
@@ -74,32 +74,32 @@ CATCGMBodyCheckMode eChkMode = CATCGMBodyChkModeFull;
 pBodyChecker->SetCheckMode(eChkMode);
     CATBoolean bRet = FALSE;
 ```vbscript
-    bRet = pBodyChecker->Run();
+    bRet = pBodyChecker->Run(#);
 
 ```
 
     ....
 
 CATBoolean bRet = FALSE;
-bRet = pBodyChecker->Run();
+bRet = pBodyChecker->Run(#);
 Displaying the Diagnosis All the errors found in the body to be checked are displayed if you have specified the Full Mode. If the light mode is specified, several errors of the same type can be diagnosed.
 
-    pBodyChecker->BeginningDiagnosis();
-    while( pBodyChecker->NextDiagnosis() )
+    pBodyChecker->BeginningDiagnosis(#);
+    while( pBodyChecker->NextDiagnosis(#) )
 
     {
 Displaying the Diagnosis All the errors found in the body to be checked are displayed if you have specified the Full Mode. If the light mode is specified, several errors of the same type can be diagnosed.
-pBodyChecker->BeginningDiagnosis();
-while( pBodyChecker->NextDiagnosis() )
+pBodyChecker->BeginningDiagnosis(#);
+while( pBodyChecker->NextDiagnosis(#) )
     CATUnicodeString strDiagnosis;
     pBodyChecker->GetDiagnosis(strDiagnosis);
 
-    cout << strDiagnosis.ConvertToChar() << endl;
+    cout << strDiagnosis.ConvertToChar(#) << endl;
 
     }
 
 pBodyChecker->GetDiagnosis(strDiagnosis);
-cout << strDiagnosis.ConvertToChar() << endl;
+cout << strDiagnosis.ConvertToChar(#) << endl;
 This is the message which is displayed on the standard output at execution:
 
     CATTabulatedCylinder[2353360] : Surface has invalid curvature

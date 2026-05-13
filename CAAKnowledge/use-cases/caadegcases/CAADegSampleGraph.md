@@ -4,13 +4,13 @@ title: "Implementing the Statechart Diagram"
 category: "use case"
 module: "CAADegUseCases"
 tags: ["CAADegCreateRectangleCmd", "CAAISysPlane", "CAADialogEngine", "CAAGeometry", "CAACreateRectangleCmd", "CATIndicationAgent", "CAADegGeoCommands"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleGraph.htm"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleGraph.htmmd"
 converted: "2026-05-11T17:33:49.670669"
 ```
 
 ---
 tags: ["CAADegCreateRectangleCmd", "CAAISysPlane", "CAADialogEngine", "CAAGeometry", "CAACreateRectangleCmd", "CATIndicationAgent", "CAADegGeoCommands"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleGraph.htm"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleGraph.htmmd"
 converted: "2026-05-11T17:33:49.670669"
 3D PLM Enterprise Architecture |  User Interface - Commands |  Implementing the Statechart Diagram _Coding the BuildGraph method_
 
@@ -33,9 +33,9 @@ Abstract This article shows how to retrieve a point in the 3D space from an end 
 
 * * *
 
-What You Will Learn With This Use Case This use case is intended to show how to implement the statechart diagram of a state dialog command by coding the command `BuildGraph` [1] method. `BuildGraph` is the command core. It declares the objects that make up the dialog steps and sequences, and their relationships. [Top] The Rectangle Command Use Case The Rectangle command is a use case of the CAADialogEngine.edu framework that illustrates the DialogEngine framework capabilities. [Top] What Does the Rectangle Command Do CAACreateRectangleCmd is a state dialog command that creates a rectangle in the 3D space according to the following UML statechart diagram [2]. ![CAACreateRectangleStatechart.jpg \(22767 bytes\)](images/CAACreateRectangleStatechart.jpg) The dialog is as follows: ![CAACreateRectangle1.jpg \(17043 bytes\)](images/CAACreateRectangle1.jpg) | Select the CAADegCreateRectangleCmd command. The active state is GetPlane. Select an existing plane that will be used as the rectangle plane. The selection is possible thanks to a selection agent.
+What You Will Learn With This Use Case This use case is intended to show how to implement the statechart diagram of a state dialog command by coding the command `BuildGraph` [1] method. `BuildGraph` is the command core. It declares the objects that make up the dialog steps and sequences, and their relationships. [Top] The Rectangle Command Use Case The Rectangle command is a use case of the CAADialogEngine.edu framework that illustrates the DialogEngine framework capabilities. [Top] What Does the Rectangle Command Do CAACreateRectangleCmd is a state dialog command that creates a rectangle in the 3D space according to the following UML statechart diagram [2]. ![CAACreateRectangleStatechart.jpg /(22767 bytes/)](images/CAACreateRectangleStatechart.jpg) The dialog is as follows: ![CAACreateRectangle1.jpg /(17043 bytes/)](images/CAACreateRectangle1.jpg) | Select the CAADegCreateRectangleCmd command. The active state is GetPlane. Select an existing plane that will be used as the rectangle plane. The selection is possible thanks to a selection agent.
 ---|---
-What You Will Learn With This Use Case This use case is intended to show how to implement the statechart diagram of a state dialog command by coding the command `BuildGraph` [1] method. `BuildGraph` is the command core. It declares the objects that make up the dialog steps and sequences, and their relationships. [Top] The Rectangle Command Use Case The Rectangle command is a use case of the CAADialogEngine.edu framework that illustrates the DialogEngine framework capabilities. [Top] What Does the Rectangle Command Do CAACreateRectangleCmd is a state dialog command that creates a rectangle in the 3D space according to the following UML statechart diagram [2]. ![CAACreateRectangleStatechart.jpg \(22767 bytes\)](images/CAACreateRectangleStatechart.jpg) The dialog is as follows: ![CAACreateRectangle1.jpg \(17043 bytes\)](images/CAACreateRectangle1.jpg) | Select the CAADegCreateRectangleCmd command. The active state is GetPlane. Select an existing plane that will be used as the rectangle plane. The selection is possible thanks to a selection agent.
+What You Will Learn With This Use Case This use case is intended to show how to implement the statechart diagram of a state dialog command by coding the command `BuildGraph` [1] method. `BuildGraph` is the command core. It declares the objects that make up the dialog steps and sequences, and their relationships. [Top] The Rectangle Command Use Case The Rectangle command is a use case of the CAADialogEngine.edu framework that illustrates the DialogEngine framework capabilities. [Top] What Does the Rectangle Command Do CAACreateRectangleCmd is a state dialog command that creates a rectangle in the 3D space according to the following UML statechart diagram [2]. ![CAACreateRectangleStatechart.jpg /(22767 bytes/)](images/CAACreateRectangleStatechart.jpg) The dialog is as follows: ![CAACreateRectangle1.jpg /(17043 bytes/)](images/CAACreateRectangle1.jpg) | Select the CAADegCreateRectangleCmd command. The active state is GetPlane. Select an existing plane that will be used as the rectangle plane. The selection is possible thanks to a selection agent.
  The viewpoint changes to make the selected plane and the screen plane coincide. The active state becomes GetFirstPoint.
  Click to indicate a point for the diagonal first end point. The active state becomes GetSecondPoint. This image is captured just after the click. The indicated point is shown beside the plane. The mouse has not yet moved. The indication is enabled thanks to an indication agent.
  Move the mouse from this point. A temporary rectangle is drawn and increases or decreases to follow the mouse moves. The active state remains GetSecondPoint. The self transition loops onto this state. The indication is enabled thanks to the second indication agent.
@@ -51,7 +51,7 @@ The Rectangle command statechart diagram comprises three states in addition to t
     * Successively click the three points to create a plane
     * Select Insert->Rectangle
     * Click two points to create a rectangle.
-[Top] Where to Find the Rectangle Command Code The Rectangle command is made of a single class named _CAADegCreateRectangleCmd_ located in the CAADegGeoCommands.m module of the CAADialogEngine.edu framework: Windows | `InstallRootDirectory\CAADialogEngine.edu\CAADegGeoCommands.m\`
+[Top] Where to Find the Rectangle Command Code The Rectangle command is made of a single class named _CAADegCreateRectangleCmd_ located in the CAADegGeoCommands.m module of the CAADialogEngine.edu framework: Windows | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 ---|---
 Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
@@ -68,11 +68,11 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 1 | Create the dialog agents | `BuildGraph` method
 2 | Create the states | `BuildGraph` method
 3 | Create the transitions between the states | `BuildGraph` method
-    void CAADegCreateRectangleCmd::BuildGraph()
+    void CAADegCreateRectangleCmd::BuildGraph(#)
 
     {
 3 | Create the transitions between the states | `BuildGraph` method
-void CAADegCreateRectangleCmd::BuildGraph()
+void CAADegCreateRectangleCmd::BuildGraph(#)
     _//1- Creates the dialog agents_
 
     _//1-1 Dialog agent to select the rectangle plane_
@@ -95,10 +95,14 @@ This code portion has the following meaning:
     * Thanks to the `AddElementType` method, the selection agent is valued only when an object that implements the CAAISysPlane interface is selected. The selection agent remains impassive when any object that doesn't implement this interface is selected
     * Any dialog agent has a behavior assigned using the `SetBehavior` method. The global behavior is made of a concatenation of unit behaviors set using keywords separated with the "|" pipe character
       * `CATDlgEngWithPrevaluation` means that the selection agent is prevalued when an object is preselected, that is, as long as the mouse moves or is located above the object without left clicking. The object must of course match the type set by `AddElementType`, otherwise the dialog agent is not prevalued
+```vbscript
       * `CATDlgEngWithPSOHSO` means that any preselected object is prehighlighted, and thus put in the PSO (Prehighlighted Set of Objects), and that any selected object is highlighted, and thus put in the HSO (Highlighted Set of Objects)
       * `CATDlgEngWithUndo` means that no undo step is recorded for this dialog agent [x]
+```
+```vbscript
     * The dialog agent can be valued when the end user selects an object that implements CAAISysPlane. In addition, the `AssCSOClient` method enables the dialog agent to be valued if the CSO (Current Set of Objects) contains such an object when the command is selected, this object being put in the CSO before the command selection either by an end user selection or as a result of the preceding command. This is a powerful means to increase end user productivity.
 The second dialog agent is an indication agent used to get the rectangle diagonal first end point.
+```
 
     ...
 The second dialog agent is an indication agent used to get the rectangle diagonal first end point.

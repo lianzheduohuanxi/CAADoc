@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Editing Generated Geometry in a Generative View"
-category: "use case"
+category: use-case case"
 module: "CAADriUseCases"
 tags: ["CATIPrtContainer", "CATISheet_var", "CATIVisProperties", "CATIDftDocumentServices", "CAADRWGeomAccess", "CATIA", "CATILinkableObject_var", "CATIDftGenGeomAccess", "CATIDrawing", "CATIView_var", "CATIDftView", "CATIPrtPart_var", "CAADrwGeomAccess", "CATInit_var", "CATIUnknownList", "CATIView", "CAADraftingInterfaces", "CATIDftSheet", "CATIDftGenGeom", "CATISheet"]
-source_file: "Doc/online/CAADriUseCases/CAADriGenGeomAccess.htm"
+source_file: "Doc/online/CAADriUseCases/CAADriGenGeomAccess.htmmd"
 converted: "2026-05-11T17:31:50.999826"
 ```
 
@@ -68,11 +68,11 @@ Fig. 2 represents the Drawing document modified by the use case program:
 
 To launch CAADrwGeomAccess, you will need to set up the build time environment, then compile CAADrwGeomAccess along with its prerequisites, set up the run time environment, and then execute the use case [1].
 
-When you launch the use case, pass the full pathname of the Drawing file as argument. A Drawing file is deliverry in the following path: CAADraftingInterfaces.edu\CNext\resources\graphic\DrawingForGenGeomAccessUseCase.CATDrawing.
+When you launch the use case, pass the full pathname of the Drawing file as argument. A Drawing file is deliverry in the following path: CAADraftingInterfaces.edu/CNext/resources/graphic/DrawingForGenGeomAccessUseCase.CATDrawing.
 
   * With Windows
 
-When you launch the use case, pass the full pathname of the Drawing file as argument. A Drawing file is deliverry in the following path: CAADraftingInterfaces.edu\CNext\resources\graphic\DrawingForGenGeomAccessUseCase.CATDrawing.
+When you launch the use case, pass the full pathname of the Drawing file as argument. A Drawing file is deliverry in the following path: CAADraftingInterfaces.edu/CNext/resources/graphic/DrawingForGenGeomAccessUseCase.CATDrawing.
         e:> mkrun -c cmd
         CAADrwGeomAccess c/.../DrawingForGenGeomAccessUseCase.CATDrawing c/DrawingTestOutput.CATDrawing
 
@@ -90,10 +90,10 @@ When you launch the use case, pass the full pathname of the Drawing file as argu
 The CAADrwGeomAccess use case is made of a single source file named CAADrwGeomAccess.cpp located in the CAADrwGeomAccess.m module of the CAADraftingInterfaces.edu framework:
 
 The CAADrwGeomAccess use case is made of a single source file named CAADrwGeomAccess.cpp located in the CAADrwGeomAccess.m module of the CAADraftingInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwGeomAccess.m\`
+Windows | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwGeomAccess.m/`
 
 The CAADrwGeomAccess use case is made of a single source file named CAADrwGeomAccess.cpp located in the CAADrwGeomAccess.m module of the CAADraftingInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwGeomAccess.m\`
+Windows | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwGeomAccess.m/`
 Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwGeomAccess.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -171,12 +171,12 @@ CATIDrawing *piDrawing = NULL;
 CATIDrawing *piDrawing = NULL;
 if (SUCCEEDED(pDoc->QueryInterface(IID_CATIDftDocumentServices, (void **)&piDftDocServices)))
         piDftDocServices->**GetDrawing**(IID_**CATIDrawing** , (void **)&piDrawing);
-        piDftDocServices->**Release**();
+        piDftDocServices->**Release**(#);
 
       }
 
 piDftDocServices->**GetDrawing**(IID_**CATIDrawing** , (void **)&piDrawing);
-piDftDocServices->**Release**();
+piDftDocServices->**Release**(#);
       if (NULL == piDrawing)
         return 1;
 
@@ -191,8 +191,8 @@ The root feature of a drawing document is the Drawing, that is, the feature that
 
     ...
       // We are working in front view of the current sheet
-       CATISheet_var spSheet = piDrawing->GetCurrentSheet();
-       piDrawing->Release();
+       CATISheet_var spSheet = piDrawing->GetCurrentSheet(#);
+       piDrawing->Release(#);
        piDrawing=NULL;
 
        CATIDftSheet *piSheet = NULL;
@@ -208,7 +208,7 @@ CATIDftSheet *piSheet = NULL;
 CATIDftView *piCurrentView = NULL;
 if (SUCCEEDED(spSheet->QueryInterface(IID_CATIDftSheet,(void**) & piSheet) ) )
           piSheet->GetDefaultActiveView (&piCurrentView);
-          piSheet->Release();
+          piSheet->Release(#);
           piSheet=NULL;
 
        }
@@ -222,16 +222,16 @@ A drawing may contain several sheets, but only one is current at a time. The cur
 #### Getting the Part Document Pointed by Current View
 
     ...
-       CATIView_var spCurrentView = spSheet->GetCurrentView();
+       CATIView_var spCurrentView = spSheet->GetCurrentView(#);
        CATILinkableObject_var spLink;
        CATDocument* pDocPart = NULL;
        if (NULL_var != spCurrentView)
 ```vbscript
 ```vbscript
-          spLink = spCurrentView->GetDoc();
+          spLink = spCurrentView->GetDoc(#);
 
        if (NULL_var != spLink)
-           pDocPart = spLink->GetDocument();
+           pDocPart = spLink->GetDocument(#);
 
        if (pDocPart)
 
@@ -244,7 +244,7 @@ A drawing may contain several sheets, but only one is current at a time. The cur
 if (NULL_var != spLink)
 ```vbscript
 ```vbscript
-pDocPart = spLink->GetDocument();
+pDocPart = spLink->GetDocument(#);
 if (pDocPart)
 ```
 
@@ -274,8 +274,8 @@ if (!piPrtCont)
           }
           // Get the part feature of the container.
 return 6;
-          CATIPrtPart_var spPart = piPrtCont->GetPart();
-          piPrtCont->Release();
+          CATIPrtPart_var spPart = piPrtCont->GetPart(#);
+          piPrtCont->Release(#);
           piPrtCont=NULL;
 
        }
@@ -430,36 +430,36 @@ ioValues.SetColor( 255,0,0);
 else
 ioValues.SetColor( 0,255,0);
 piVisProp->SetPropertiesAtt( ioValues, iPropertyType, CATVPLine);
-                                 piVisProp->Release();
+                                 piVisProp->Release(#);
                                  piVisProp=NULL;
 
                                }
 piVisProp->SetPropertiesAtt( ioValues, iPropertyType, CATVPLine);
-piVisProp->Release();
+piVisProp->Release(#);
 piVisProp=NULL;
-                               Curve->Release(); Curve = NULL;
+                               Curve->Release(#); Curve = NULL;
 
                             }
 
                             // Memory clean
-Curve->Release(); Curve = NULL;
-                            piGenGeom->Release(); piGenGeom = NULL;
-                            item->Release(); item = NULL;
+Curve->Release(#); Curve = NULL;
+                            piGenGeom->Release(#); piGenGeom = NULL;
+                            item->Release(#); item = NULL;
 
                          }
                       }
                    }
                    // Memory clean
-                   piList->Release(); piList = NULL;
+                   piList->Release(#); piList = NULL;
                 }
                 // Memory clean
-                piGenGeomAccess->Release(), piGenGeomAccess = NULL;
+                piGenGeomAccess->Release(#), piGenGeomAccess = NULL;
              }
              // Memory clean
-             piGenView->Release() , piGenView=NULL;
+             piGenView->Release(#) , piGenView=NULL;
           }
           // Memory clean
-          piCurrentView->Release() , piCurrentView=NULL;
+          piCurrentView->Release(#) , piCurrentView=NULL;
        }
 
     ...

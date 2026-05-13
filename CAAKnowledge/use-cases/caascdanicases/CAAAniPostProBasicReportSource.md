@@ -4,7 +4,7 @@ title: "CAAAniPostProBasicReport.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniPostProBasicReport", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPostProBasicReportSource.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPostProBasicReportSource.htmmd"
 converted: "2026-05-11T17:31:51.743555"
 ```
 
@@ -28,24 +28,30 @@ converted: "2026-05-11T17:31:51.743555"
 
 ```
 
-    Sub CATMain()
 ```vbscript
+    Sub CATMain(#)
+```vbscript
+```
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
 
+```vbscript
       sDocPath=CATIA.SystemService.Environ("CATDocView")
       sOut = CATIA.SystemService.Environ("CATTemp")
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 
 ```
+```
 
 ```
 
 ```vbscript
+```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
 ```vbscript
         End If
     ' -----------------------------------------------------------
@@ -62,37 +68,46 @@ End If
 ```vbscript
 ' -----------------------------------------------------------
     ' Open the CATAnalysis Document
-    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis")
+```vbscript
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Cube_R13_Freq.CATAnalysis")
+```
 ```
 
 ```
 
 ```
 
+```vbscript
 ```vbscript
 ```vbscript
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
     Set fileSystem1 = CATIA.FileSystem
 ```
+```
 
+```vbscript
 ```vbscript
 ```vbscript
     Set folder1 = fileSystem1.GetFolder(sOut)
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 ```vbscript
     Set oAnalysisManager = oAnalysisDocument.Analysis
 
     Set oAnalysisModels = oAnalysisManager.AnalysisModels
 ```
+```
 
+```vbscript
 ```vbscript
 ```vbscript
     Set oAnalysisModel = oAnalysisModels.Item(1)
@@ -102,15 +117,20 @@ End If
     Set oAnalysisCase = oAnalysisCases.Item(1)
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Set oAnalysisCases = oAnalysisModel.AnalysisCases
 ```vbscript
+```
+```vbscript
 Set oAnalysisCase = oAnalysisCases.Item(1)
+```
 ```
 
     oAnalysisPostManager.AddExistingCaseForReport oAnalysisCase
@@ -148,6 +168,8 @@ Set oAnalysisCase = oAnalysisCases.Item(1)
 ```
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

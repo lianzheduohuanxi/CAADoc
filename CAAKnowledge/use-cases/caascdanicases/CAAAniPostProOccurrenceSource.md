@@ -4,7 +4,7 @@ title: "CAAAniPostProOccurrence.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniPostProOccurrence", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPostProOccurrenceSource.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPostProOccurrenceSource.htmmd"
 converted: "2026-05-11T17:31:51.761551"
 ```
 
@@ -28,7 +28,10 @@ converted: "2026-05-11T17:31:51.761551"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
+
+```
 
 ```
 
@@ -37,18 +40,22 @@ converted: "2026-05-11T17:31:51.761551"
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
+```vbscript
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
 ```vbscript
         End If
     ' -----------------------------------------------------------
@@ -65,17 +72,21 @@ End If
 ```vbscript
 ' -----------------------------------------------------------
     ' Open the CATAnalysis Document
-    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis")
+```vbscript
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Cube_R13_Freq.CATAnalysis")
+```
 ```
 
 ```
 
 ```
 
+```vbscript
 ```vbscript
 ```vbscript
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
+```
 ```
 
 ```
@@ -86,62 +97,81 @@ End If
 
 ```vbscript
 ```vbscript
+```vbscript
     Set oAnalysisManager = oAnalysisDocument.Analysis
 
 ```
+```
 
 ```
 
 ```vbscript
+```vbscript
 Set oAnalysisManager = oAnalysisDocument.Analysis
 ```vbscript
+```
     ' Retrieve the analysis model from the list of models
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisModels = oAnalysisManager.AnalysisModels
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oAnalysisModel = oAnalysisModels.Item(1)
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Set oAnalysisModel = oAnalysisModels.Item(1)
 ```vbscript
+```
     ' Retrieve the analysis cases and the first analysis case
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisCases = oAnalysisModel.AnalysisCases
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oAnalysisCase = oAnalysisCases.Item(1)
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Set oAnalysisCase = oAnalysisCases.Item(1)
 ```vbscript
+```
     ' Retrieve the analysis cases and the first analysis case
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisSets = oAnalysisCase.AnalysisSets
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oAnalysisSet = oAnalysisSets.Item("Frequency Case Solution.1", catAnalysisSetSearchAll)
@@ -149,6 +179,7 @@ Set oAnalysisCase = oAnalysisCases.Item(1)
     Set oAnalysisImages = oAnalysisSet.AnalysisImages
     Set oAnalysisImage = oAnalysisImages.Item("Von Mises Stress (nodal values).1")
     'Modify current occurrence of Image Von Mises Stress (nodal values)
+```
     '==================================================================
 ```
 
@@ -160,6 +191,8 @@ Set oAnalysisCase = oAnalysisCases.Item(1)
 ```
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

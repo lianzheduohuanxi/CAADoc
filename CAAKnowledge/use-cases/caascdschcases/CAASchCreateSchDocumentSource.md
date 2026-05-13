@@ -4,13 +4,13 @@ title: "CAASchCreateSchDocument.CATScript"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CATIA", "CAASCH_Detail01", "CAASchCreateSchDocument", "CAAScdSchUseCases"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchCreateSchDocumentSource.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchCreateSchDocumentSource.htmmd"
 converted: "2026-05-11T17:31:51.349674"
 ```
 
 ---
 tags: ["CATIA", "CAASCH_Detail01", "CAASchCreateSchDocument", "CAAScdSchUseCases"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchCreateSchDocumentSource.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchCreateSchDocumentSource.htmmd"
 converted: "2026-05-11T17:31:51.349674"
     Option Explicit
 
@@ -30,8 +30,10 @@ converted: "2026-05-11T17:31:51.349674"
 
 ```
 
-    Sub CATMain()
 ```vbscript
+    Sub CATMain(#)
+```vbscript
+```
 ```vbscript
         ' -------------------------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
@@ -46,21 +48,27 @@ converted: "2026-05-11T17:31:51.349674"
 ' -------------------------------------------------------------------------
 ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String
+```vbscript
         sDocPath=CATIA.SystemService.Environ("CATDocView")
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
+```
 
+```vbscript
 ```vbscript
           Err.Raise 9999,sDocPath,"No Doc Path Defined"
 ```vbscript
+```
 ```vbscript
         End If
 
@@ -71,30 +79,38 @@ converted: "2026-05-11T17:31:51.349674"
 ```
 
 ```vbscript
+```vbscript
 Err.Raise 9999,sDocPath,"No Doc Path Defined"
+```
 ```
 
 End If
 ```vbscript
 ```vbscript
         dim sSavePath As String
+```vbscript
         sSavePath=CATIA.SystemService.Environ("CATSavePath")
 
 ```
+```
 
 ```
 
+```vbscript
 ```vbscript
 ```vbscript
         CATIA.SystemService.Print "CATSavePath = " & sSavePath
 
         If (Not CATIA.FileSystem.FolderExists(sSavePath)) Then
 ```
+```
 
+```vbscript
 ```vbscript
 ```vbscript
           Err.Raise 9999,sSavePath,"No Path for saving document"
         End If
+```
 ```
 
 ```
@@ -105,18 +121,23 @@ End If
 ```vbscript
 ```vbscript
         ' Open main schematic P&ID; design document
+```vbscript
         Dim sFilePath
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
-
 ```
 
 ```
 
-                "online\CAAScdSchUseCases\samples\CAASCH_Detail01.CATProduct")
+```
+
+                "online/CAAScdSchUseCases/samples/CAASCH_Detail01.CATProduct")
 
 ```vbscript
+```vbscript
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+```vbscript
+```
 ```vbscript
 ```vbscript
         Dim objSchDoc As Document
@@ -125,14 +146,17 @@ sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
         Dim strMessage As String
 
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Dim strMessage As String
         strMessage = _
+```
 ```
 
           "--------------------------------------------------------------------" & vbCr
@@ -152,21 +176,31 @@ strMessage = strMessage & _
 ```
 
 ```vbscript
+```vbscript
         Dim objPrdRoot As Product
+```vbscript
+```
 ```vbscript
 ```vbscript
         Dim objSchRoot As SchematicRoot
         If ( Not ( objSchDoc Is Nothing ) ) Then
+```
+```vbscript
           Set objPrdRoot = objSchDoc.Product
           If ( Not ( objPrdRoot Is Nothing ) ) Then
+```
+```vbscript
             Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
           End If
+```
         End If
 
+```vbscript
         Dim objSchSession As SchSession
         Dim objSchDocNew As Document
         Dim bInteractive As boolean
 
+```
 ```
 
 ```
@@ -184,8 +218,10 @@ strMessage = strMessage & _
            ' Get the schematic session.
            '-----------------------------------------------------------------------
 
+```vbscript
            Set objSchSession = objSchRoot.GetSchematicSession
            If ( Not ( objSchSession Is Nothing ) ) Then
+```
 ```
 
 ```
@@ -222,17 +258,23 @@ bInteractive = false
 ```vbscript
              If ( Not ( objSchDocNew Is Nothing ) ) Then
 
+```vbscript
                 Set objPrdRoot = Nothing
 ```
+```
 
+```vbscript
 ```vbscript
 ```vbscript
                 Set objSchRoot = Nothing
 
                 Set objPrdRoot = objSchDocNew.Product
                 If ( Not ( objPrdRoot Is Nothing ) ) Then
+```
+```vbscript
                    Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
                 End If
+```
 
 ```
 
@@ -244,21 +286,27 @@ bInteractive = false
                 If ( Not ( objSchRoot Is Nothing ) ) Then
                    objSchRoot.SetDrawingStandard catISO
                    strMessage = strMessage & "drawing standard set to catISO" & vbCr
+```vbscript
                    Dim std As CatDrawingStandard
                    std = objSchRoot.GetDrawingStandard
+```
                    strMessage = strMessage & "drawing standard = " & std & vbCr
 ```vbscript
                 End If
 
+```vbscript
                 Dim strDocName As String
 
+```
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Dim strDocName As String
                 strDocName = objSchDocNew.FullName
+```
 
 ```
 
@@ -266,15 +314,19 @@ Dim strDocName As String
                 strMessage = strMessage & "default name = " & strDocName & vbCr
 
 ```vbscript
+```vbscript
                 strDocName = CATIA.FileSystem.ConcatenatePaths(sSavePath, _
 
+```
 ```
 
     			              "SampleOutput_SchDoc01.CATProduct")
 
 strMessage = strMessage & "default name = " & strDocName & vbCr
+```vbscript
 strDocName = CATIA.FileSystem.ConcatenatePaths(sSavePath, _
                 objSchDocNew.SaveAs strDocName
+```
 
                 strMessage = strMessage &  "document created" & vbCr
                 strMessage = strMessage &  "document saved as " & strDocName & vbCr
@@ -308,9 +360,13 @@ End If  '----If ( Not ( objSchRoot Is Nothing )...
 ```
 
           "--------------------------------------------------------------------" & vbCr
+```vbscript
         MsgBox strMessage
 
 ```vbscript
+```
+```vbscript
     End Sub
 
+```
 ```

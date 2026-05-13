@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating Fillets"
-category: "use case"
+category: use-case case"
 module: "CAATopUseCases"
 tags: ["CAAGemBrowser", "CATICGMObject", "CAAATopAllFillets", "CAATopConstantFillets", "CAATopAllFillet", "CAATopRollingEdges", "CAATopAllFillets", "CAATopologicalOperators", "CAATopFillet", "CAATopVariableFillets"]
-source_file: "Doc/online/CAATopUseCases/CAATopAllFillets.htm"
+source_file: "Doc/online/CAATopUseCases/CAATopAllFillets.htmmd"
 converted: "2026-05-11T17:31:50.684779"
 ```
 
@@ -83,10 +83,10 @@ This NCGM file can be displayed using the CAAGemBrowser use case.
 This NCGM file can be displayed using the CAAGemBrowser use case.
 The CAATopAllFillets use case is made of a main named CAATopAllFillets.cpp located in the CAATopAllFillets.m module of the CAATopologicalOperators.edu framework:
 
-Windows | `InstallRootDirectory\CAATopologicalOperators.edu\CAATopAllFillets.m\`
+Windows | `InstallRootDirectory/CAATopologicalOperators.edu/CAATopAllFillets.m/`
 
 The CAATopAllFillets use case is made of a main named CAATopAllFillets.cpp located in the CAATopAllFillets.m module of the CAATopologicalOperators.edu framework:
-Windows | `InstallRootDirectory\CAATopologicalOperators.edu\CAATopAllFillets.m\`
+Windows | `InstallRootDirectory/CAATopologicalOperators.edu/CAATopAllFillets.m/`
 Unix | `InstallRootDirectory/CAATopologicalOperators.edu/CAATopAllFillets.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -111,7 +111,7 @@ There are six steps in CAATopAllFillets.cpp:
 The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
 
 The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
-    CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**() ;
+    CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**(#) ;
 ```vbscript
     if (NULL==piGeomFactory) return (1);
 
@@ -295,7 +295,7 @@ ofstream filetowrite(pfileName, ios::binary ) ;
     #endif
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
-       filetowrite.close();
+       filetowrite.close(#);
      }
 
      _//

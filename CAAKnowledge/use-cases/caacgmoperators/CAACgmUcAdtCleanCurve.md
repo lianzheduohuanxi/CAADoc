@@ -4,13 +4,13 @@ title: "Achieving a Given Continuity along a Wire"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CATICGMTopCleanCrvOperator", "CAAGMModelGemBrowser", "CATICGMTopWire", "CAAGMOperatorsCleanCrv", "CAAAdtCleanCrv"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtCleanCurve.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtCleanCurve.htmmd"
 converted: "2026-05-11T17:33:48.844279"
 ```
 
 ---
 tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CATICGMTopCleanCrvOperator", "CAAGMModelGemBrowser", "CATICGMTopWire", "CAAGMOperatorsCleanCrv", "CAAAdtCleanCrv"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtCleanCurve.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtCleanCurve.htmmd"
 converted: "2026-05-11T17:33:48.844279"
 Achieving a Given Continuity along a Wire
 
@@ -47,7 +47,7 @@ Criteria to be met on priority is deformation
 Maximum deformation of 0.2 specified.
 
     * Runs the CATICGMTopCleanCrvOperator and retrieve the resulting body.
-**Note** : This article only focuses on the operations related to the CATICGMTopCleanCrvOperator operator. Refer to "Overview of the Topological Operators" [3] for more information on the operations which are not detailed in the article. How to Launch CAAGMOperatorsCleanCrv To launch CAAGMOperatorsCleanCrv, you will need to set up the build time environment, then compile CAAGMOperatorsCleanCrv .m, set up the run time environment, and then execute the use case [2]. If you simply type CAAGMOperatorsCleanCrv with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example:  CAAGMOperatorsCleanCrv `e/G2Wire.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMOperatorsCleanCrv Code The CAAGMOperatorsCleanCrv use case is made of a main named CAAAdtCleanCrv.cpp located in the CAAGMOperatorsCleanCrv .m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsCleanCrv.m\` where `InstallRootFolder` [2] is the folder where the API CD-ROM is installed. Step-by-Step The use case is divided into the following main steps:
+**Note** : This article only focuses on the operations related to the CATICGMTopCleanCrvOperator operator. Refer to "Overview of the Topological Operators" [3] for more information on the operations which are not detailed in the article. How to Launch CAAGMOperatorsCleanCrv To launch CAAGMOperatorsCleanCrv, you will need to set up the build time environment, then compile CAAGMOperatorsCleanCrv .m, set up the run time environment, and then execute the use case [2]. If you simply type CAAGMOperatorsCleanCrv with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example:  CAAGMOperatorsCleanCrv `e/G2Wire.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMOperatorsCleanCrv Code The CAAGMOperatorsCleanCrv use case is made of a main named CAAAdtCleanCrv.cpp located in the CAAGMOperatorsCleanCrv .m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder/CAADoc/CAAGMOperatorsInterfaces.edu/CAAGMOperatorsCleanCrv.m/` where `InstallRootFolder` [2] is the folder where the API CD-ROM is installed. Step-by-Step The use case is divided into the following main steps:
     * Creating the Curves Making up the Wire
     * Creating the Wire to Be Corrected
     * Creating a CATICGMTopCleanCrvOperator Operator Instance
@@ -88,8 +88,8 @@ nbcurve0,
 ListOfCurves0,
 curLimits0,
 wireOrientations0);
-    pWire0->Run();
-    CATBody * pWireBody0 = pWire0->GetResult();
+    pWire0->Run(#);
+    CATBody * pWireBody0 = pWire0->GetResult(#);
 
 Creating a CATICGMTopCleanCrvOperator Operator Instance The CATICGMTopCleanCrvOperator operator is created by the CATCGMCreateTopCleanCrvOperator global function. The wire body is passed as the third argument of the function.
 

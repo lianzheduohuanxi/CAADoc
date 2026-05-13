@@ -4,13 +4,13 @@ title: "CAADriInstantiateOuterDitto.CATScript"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CAADriInstantiateOuterDitto", "CAADriInstantiateDittoTarget", "CAADriInstantiateDittoSource", "CATIA", "CAAScdDriUseCases"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriInstantiateOuterDittoSource.htm"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriInstantiateOuterDittoSource.htmmd"
 converted: "2026-05-11T17:31:51.092771"
 ```
 
 ---
 tags: ["CAADriInstantiateOuterDitto", "CAADriInstantiateDittoTarget", "CAADriInstantiateDittoSource", "CATIA", "CAAScdDriUseCases"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriInstantiateOuterDittoSource.htm"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriInstantiateOuterDittoSource.htmmd"
 converted: "2026-05-11T17:31:51.092771"
     Option Explicit
 
@@ -32,18 +32,24 @@ converted: "2026-05-11T17:31:51.092771"
 
 ```
 
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
+```vbscript
+```
 ```vbscript
 ```vbscript
         ' Set the CATIA popup file alerts to False
         ' It prevents to stop the macro at each alert during its execution
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
         CATIA.DisplayFileAlerts = False
+```
 ```
 
 ```vbscript
@@ -51,48 +57,64 @@ converted: "2026-05-11T17:31:51.092771"
 ```vbscript
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String
+```vbscript
         sDocPath=CATIA.SystemService.Environ("CATDocView")
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
           Err.Raise 9999,,"No Doc Path Defined"
         End If
+```
         ' Open the drawing document containing the existing ditto
+```vbscript
         Dim oDrawingSource As DrawingDocument
         Set oDrawingSource = CATIA.Documents.Open(sDocPath & _
 ```
-
 ```
 
 ```
 
-                 "\online\CAAScdDriUseCases\samples\CAADriInstantiateDittoSource.CATDrawing")
+```
+
+                 "/online/CAAScdDriUseCases/samples/CAADriInstantiateDittoSource.CATDrawing")
 ```vbscript
 ```vbscript
 ```vbscript
         ' Retrieve the sheet containing the ditto to be copied
+```vbscript
         Dim oSheetSource As DrawingSheet
         Set oSheetSource = oDrawingSource.Sheets.Item("Sheet.3")
         ' Retrieve the view containing the ditto to be copied
+```
+```vbscript
         Dim oViewSource As DrawingView
         Set oViewSource = oSheetSource.Views.Item("View.1")
         ' Retrieve the ditto
+```
+```vbscript
         Dim oDitto As DrawingComponent
         Set oDitto = oViewSource.Components.Item(1)
         ' Create an object of selection for the source document
+```
+```vbscript
         Dim oSelectionSource As Selection
         Set oSelectionSource = oDrawingSource.Selection
         ' Clear the selection
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Dim oSelectionSource As Selection
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set oSelectionSource = oDrawingSource.Selection
 ' Clear the selection
+```
 ```
 
 ```
@@ -119,21 +141,27 @@ Set oSelectionSource = oDrawingSource.Selection
 ```vbscript
 ```vbscript
         ' Open the drawing document where the ditto will be instantiated
+```vbscript
         Dim oDrawingTarget As DrawingDocument
         Set oDrawingTarget = CATIA.Documents.Open(sDocPath & _
 ```
-
 ```
 
 ```
 
-                 "\online\CAAScdDriUseCases\samples\CAADriInstantiateDittoTarget.CATDrawing")
+```
+
+                 "/online/CAAScdDriUseCases/samples/CAADriInstantiateDittoTarget.CATDrawing")
+```vbscript
 ```vbscript
 Dim oDrawingTarget As DrawingDocument
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set oDrawingTarget = CATIA.Documents.Open(sDocPath & _
         CATIA.ActiveWindow.ActiveViewer.Reframe
+```
 ```
 
 ```
@@ -144,8 +172,10 @@ Set oDrawingTarget = CATIA.Documents.Open(sDocPath & _
 ```vbscript
 ```vbscript
         ' Retrieve the sheet where the ditto will be instantiated
+```vbscript
         Dim oSheetTarget As DrawingSheet
         Set oSheetTarget = oDrawingTarget.Sheets.Item("Sheet.1")
+```
 ```
 
 ```
@@ -156,8 +186,10 @@ Set oDrawingTarget = CATIA.Documents.Open(sDocPath & _
 ```vbscript
 ```vbscript
 ' Retrieve the sheet where the ditto will be instantiated
+```vbscript
 Dim oSheetTarget As DrawingSheet
 Set oSheetTarget = oDrawingTarget.Sheets.Item("Sheet.1")
+```
 ```
 
 ```
@@ -169,30 +201,40 @@ Set oSheetTarget = oDrawingTarget.Sheets.Item("Sheet.1")
 ```vbscript
 ```vbscript
         ' Retrieve the view where the ditto will be instantiated
+```vbscript
         Dim oViewTarget As DrawingView
         Set oViewTarget = oSheetTarget.Views.Item("View.3")
         ' Indicate the ditto location
+```
+```vbscript
         Dim ReturnStatus As String
         Dim iDittoCoordinates(1)
         Dim oDraw
         Set oDraw = oDrawingTarget
         ReturnStatus = oDraw.Indicate2D("Indicate the ditto location", iDittoCoordinates)
+```
         ' Create an object of selection for the target document
+```vbscript
         Dim oSelectionTarget As Selection
         Set oSelectionTarget = oDrawingTarget.Selection
         ' Clear the selection
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Dim oSelectionTarget As Selection
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set oSelectionTarget = oDrawingTarget.Selection
 ' Clear the selection
+```
 ```
 
 ```
@@ -219,11 +261,15 @@ Set oSelectionTarget = oDrawingTarget.Selection
 ```vbscript
 ```vbscript
         ' Retrieve the drawing components collection of the target drawing view
+```vbscript
         Dim o2DComponents As DrawingComponents
         Set o2DComponents = oViewTarget.Components
         ' Retrieve the ditto and define its location
+```
+```vbscript
         Dim o2DComponent As DrawingComponent
         Set o2DComponent = o2DComponents.Item("DrwDetail.1")
+```
 ```
 
 ```
@@ -234,9 +280,11 @@ Set oSelectionTarget = oDrawingTarget.Selection
 ```vbscript
 ```vbscript
 ' Retrieve the ditto and define its location
+```vbscript
 Dim o2DComponent As DrawingComponent
 Set o2DComponent = o2DComponents.Item("DrwDetail.1")
         o2DComponent.X = iDittoCoordinates(0)
+```
         o2DComponent.Y = iDittoCoordinates(1)
 ```
 
@@ -248,11 +296,15 @@ Set o2DComponent = o2DComponents.Item("DrwDetail.1")
 ```vbscript
 ```vbscript
         ' Retrieve the modifiable text of the ditto
+```vbscript
         Dim oText As DrawingText
         Set oText = o2DComponent.GetModifiableObject(1)
         ' Modify the modifiable text value
+```
+```vbscript
         Dim ReturnValue As String
         ReturnValue = InputBox("Enter a value", "", "New Value For Text")
+```
 ```
 
 ```
@@ -263,7 +315,9 @@ Set o2DComponent = o2DComponents.Item("DrwDetail.1")
 ```vbscript
 ```vbscript
 ' Modify the modifiable text value
+```vbscript
 Dim ReturnValue As String
+```
 ```
 
 ```
@@ -283,6 +337,7 @@ ReturnValue = InputBox("Enter a value", "", "New Value For Text")
 ```vbscript
 ```vbscript
         ' Clear the variables
+```vbscript
         Set oText = Nothing
         Set o2DComponent = Nothing
         Set o2DComponents = Nothing
@@ -296,12 +351,15 @@ ReturnValue = InputBox("Enter a value", "", "New Value For Text")
         Set oSheetSource = Nothing
         Set oDrawingSource = Nothing
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

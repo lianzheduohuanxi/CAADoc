@@ -4,13 +4,13 @@ title: "New C++ Authorized APIs in CAA V5R16 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATITPSIDServices", "CATITrack", "CATIStmFlangeSurf", "CATIXMLInputStream", "CATITPSConstructedGeomServices", "CATIMfgVirtualActivity", "CATIShot", "CATIStrMaterialESSObjectSettingAtt", "CATIAVPMVDAReplace", "CATInstantCollabDesignCAAItf", "CATIAerospaceSheetMetalFactory", "CATIStmWeb", "CATIIniSearchSymbolCriterion", "CATIMfgActivityDefaultValuesMngt", "CATIStmJoggle", "CATIEwrFilter", "CATISamEditionControl", "CATIColMergeContextRole", "CATIVariableManagement", "CATIDftStandardMediator"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R16GANewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R16GANewCPPAPI.htmmd"
 converted: "2026-05-11T17:33:47.268959"
 ```
 
 ---
 tags: ["CATITPSIDServices", "CATITrack", "CATIStmFlangeSurf", "CATIXMLInputStream", "CATITPSConstructedGeomServices", "CATIMfgVirtualActivity", "CATIShot", "CATIStrMaterialESSObjectSettingAtt", "CATIAVPMVDAReplace", "CATInstantCollabDesignCAAItf", "CATIAerospaceSheetMetalFactory", "CATIStmWeb", "CATIIniSearchSymbolCriterion", "CATIMfgActivityDefaultValuesMngt", "CATIStmJoggle", "CATIEwrFilter", "CATISamEditionControl", "CATIColMergeContextRole", "CATIVariableManagement", "CATIDftStandardMediator"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R16GANewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R16GANewCPPAPI.htmmd"
 converted: "2026-05-11T17:33:47.268959"
 CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R16 GA
 
@@ -19,9 +19,11 @@ CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R16 GA
 The following are the new CAA V5R16 GA C++ Authorized APIs, compared with CAA V5R15 at GA level.
 
   * ApplicationFrame framework
+```vbscript
     * Global Function CATAfrCreateCommandHeader
     * Global Function CATCreateDefaultCamera
   * CATAnalysisInterfaces framework
+```
     * Class CATSamAnalysisUpdateTools
     * Interface CATISamEditionControl
   * CATAnalysisResources framework
@@ -39,6 +41,7 @@ The following are the new CAA V5R16 GA C++ Authorized APIs, compared with CAA V5
     * Macro or #define SizeCollabUUID
     * Enumeration CATIColMergeContextFlag
     * Enumeration CATIColMergeContextRole
+```vbscript
     * Global Function CATColAfterMerge
     * Global Function CATColBeforeMerge
     * Global Function CATColCanBeSharedAs
@@ -52,6 +55,7 @@ The following are the new CAA V5R16 GA C++ Authorized APIs, compared with CAA V5
     * Global Function CATColShareAs
     * Global Function CATCreateCATICollabServices
     * Interface CATIColId
+```
     * Interface CATIColInvariantId
     * Interface CATICollabServices
     * Interface CATIColMergeable
@@ -99,8 +103,10 @@ The following are the new CAA V5R16 GA C++ Authorized APIs, compared with CAA V5
   * DraftingInterfaces framework
     * Interface CATIDftStandardMediator
   * ENOVInterfaces framework
+```vbscript
     * Global Function GetCatalogManager
     * Interface CATIEnovCatalogManager
+```
     * Interface ENOVIABOAssemblyRelation
     * Interface ENOVICfgEvents
     * Interface ENOVICfgUESolver
@@ -160,8 +166,10 @@ The following are the new CAA V5R16 GA C++ Authorized APIs, compared with CAA V5
     * Class CATMmrApplicativeAttributes
   * NewTopologicalObjects framework
     * Class CATPositionPtVolOperator
+```vbscript
     * Global Function CATCreatePositionPtVolOperator
   * ObjectModelerBase framework
+```
     * Interface CATIOmbUndoRedoEvents
     * Typedef Properties
     * Typedef PropertyNames
@@ -187,6 +195,7 @@ The following are the new CAA V5R16 GA C++ Authorized APIs, compared with CAA V5
     * Interface CATIStrPathESSRessourcesSettingAtt
     * Interface CATIStrTypeESSObjectSettingAtt
   * System framework
+```vbscript
     * Global Function CATFChmod
     * Global Function CATFClose
     * Global Function CATFCopy
@@ -207,6 +216,7 @@ The following are the new CAA V5R16 GA C++ Authorized APIs, compared with CAA V5
     * Global Function CATFTell64
     * Global Function CATFWrite
     * Typedef CATListOfCATString
+```
     * Typedef CATListOfCATUnicodeString
     * Typedef CATListOfDouble
     * Typedef CATListOfFloat
@@ -215,8 +225,10 @@ The following are the new CAA V5R16 GA C++ Authorized APIs, compared with CAA V5
     * Typedef CATSetOfCATString
     * Typedef CATSetOfCATUnicodeString
   * TopologicalOperators framework
+```vbscript
     * Global Function CATCreateNewTopAssemble
   * VPMDesktopObjects framework
+```
     * Interface CATIAVPMVDAReplace
   * VPMInterfaces framework
     * Class CATListOfENOVISubScribeGroupMod_var
@@ -224,9 +236,11 @@ The following are the new CAA V5R16 GA C++ Authorized APIs, compared with CAA V5
   * VisualizationBase framework
     * Enumeration CATCameraType
   * XMLParser framework
+```vbscript
     * Global Function DetectCATIXMLDOMDocumentBuilder
     * Global Function DetectCATIXMLSAXFactory
     * Interface CATIXMLInputStream
+```
 
 [Top]
 

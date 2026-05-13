@@ -4,13 +4,13 @@ title: "Dumping the Topological Journal"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMDumpJournal", "CAAGMOperatorsInterfaces", "CAAGMOperatorsCheckGnOK", "CAAGMTopDumpJournal", "CAAGMOperatorsClashIntersect", "CAAGMOperatorsBoundaryCreation", "CAAGMOperatorsCheckGnKO", "CAAGMOperatorsDumpJournal"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopDumpJournal.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopDumpJournal.htmmd"
 converted: "2026-05-11T17:33:49.148870"
 ```
 
 ---
 tags: ["CAAGMDumpJournal", "CAAGMOperatorsInterfaces", "CAAGMOperatorsCheckGnOK", "CAAGMTopDumpJournal", "CAAGMOperatorsClashIntersect", "CAAGMOperatorsBoundaryCreation", "CAAGMOperatorsCheckGnKO", "CAAGMOperatorsDumpJournal"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopDumpJournal.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopDumpJournal.htmmd"
 converted: "2026-05-11T17:33:49.148870"
 Dumping the Topological Journal
 
@@ -50,7 +50,7 @@ Where to Find Examples The topological journal is dumped in the use cases below:
 which are all in the CAAGMOperatorsInterfaces.edu framework. Step-by-Step
     1. Scan the journal:
 
-           CATCGMJournalItem* pJournalItem = Next->CastToReportItem();
+           CATCGMJournalItem* pJournalItem = Next->CastToReportItem(#);
 
     2. For each journal statement:
        1. get the input cells ("parent cells"):
@@ -60,12 +60,12 @@ which are all in the CAAGMOperatorsInterfaces.edu framework. Step-by-Step
 
        2. get the event type:
 
-              CATCGMJournal::Type CGMEventType = pJournalItem->GetType();
+              CATCGMJournal::Type CGMEventType = pJournalItem->GetType(#);
               switch (CGMEventType)
 
                  {
 2. get the event type:
-CATCGMJournal::Type CGMEventType = pJournalItem->GetType();
+CATCGMJournal::Type CGMEventType = pJournalItem->GetType(#);
 switch (CGMEventType)
 ```vbscript
                    case CATCGMJournal::Creation:
@@ -73,7 +73,7 @@ switch (CGMEventType)
 ```
 
                      {
-CATCGMJournal::Type CGMEventType = pJournalItem->GetType();
+CATCGMJournal::Type CGMEventType = pJournalItem->GetType(#);
 switch (CGMEventType)
 case CATCGMJournal::Creation:
                        cout >> "->Creation";
@@ -88,7 +88,7 @@ cout >> "->Creation";
 
        4. get the associated "info data":
 
-              const CATCGMJournalInfo * journalInfo = pJournalItem->GetAssociatedInfo();
+              const CATCGMJournalInfo * journalInfo = pJournalItem->GetAssociatedInfo(#);
 
 References [1] | [Topological Journal Principles](CAACgmTaTopJournal.md)
 

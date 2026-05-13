@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CAAScrBase", "CAALaunch7b", "CAALaunch6", "CAALaunch7a", "CAALaunch1", "CAAInstallation", "CAADoc"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfLauchMacro.htm"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfLauchMacro.htmmd"
 converted: "2026-05-11T11:27:02.701952"
 ---
 

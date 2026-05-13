@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating Explicit Objects"
-category: "use case"
+category: use-case case"
 module: "CAACgmModel"
 tags: ["CATICGMContainer", "CAADoc", "CATICGMObject", "CAAGMModelLifeCycleImplit", "CAAGMModelGemBrowser", "CAAGMModelLifeCycleImplicit", "CAAGMModelInterfaces", "CATIA", "CAAGMModelLifeCycleExplicit"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGobLifeCycleExplicit.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGobLifeCycleExplicit.htmmd"
 converted: "2026-05-11T17:33:48.395998"
 ```
 
@@ -54,7 +54,7 @@ With Windows `CAAGMModelLifeCycleExplicit`` e/Obj.NCGM`
 This NCGM file can be displayed using the CAAGMModelGemBrowser use case.
 The CAAGMModelLifeCycleExplicit use case is made of a main named CAAGMModelLifeCycleExplicit.cpp located in the CAAGMModelLifeCycleExplicit.m module of the CAAGMModelInterfaces.edu framework:
 
-`InstallRootFolder\CAADoc\CAAGMModelInterfaces.edu\CAAGMModelLifeCycleExplicit.m\`
+`InstallRootFolder/CAADoc/CAAGMModelInterfaces.edu/CAAGMModelLifeCycleExplicit.m/`
 
 where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed.
 ## Step-by-Step
@@ -75,7 +75,7 @@ The main program is divided into the following steps:
 5. Writing the Model and Closing the Container
 The geometry factory (`CATGeoFactory`) creates and manages all the CATICGMObject. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
 
-    CATGeoFactory* piGeomFactory = ::CATCreateCGMContainer() ;
+    CATGeoFactory* piGeomFactory = ::CATCreateCGMContainer(#) ;
 ```vbscript
     if (NULL == piGeomFactory) return (1);
 
@@ -83,11 +83,11 @@ The geometry factory (`CATGeoFactory`) creates and manages all the CATICGMObject
 
 ### Creating the Implicit Geometry Factory
 
-CATGeoFactory* piGeomFactory = ::CATCreateCGMContainer() ;
+CATGeoFactory* piGeomFactory = ::CATCreateCGMContainer(#) ;
 if (NULL == piGeomFactory) return (1);
-The implicit factory is retrieved from the standard factory by using the CATGeoFactory::GetImplicitGeoFactory() method.
+The implicit factory is retrieved from the standard factory by using the CATGeoFactory::GetImplicitGeoFactory(#) method.
 
-    CATGeoFactory * piImplicitFactory =piGeomFactory->GetImplicitGeoFactory( );
+    CATGeoFactory * piImplicitFactory =piGeomFactory->GetImplicitGeoFactory(#);
 ```vbscript
     if (NULL == piImplicitFactory) return (1);
 
@@ -95,7 +95,7 @@ The implicit factory is retrieved from the standard factory by using the CATGeoF
 
 ### Creating the Explicit Objects: the CATPlane, the Initial CATPline and the Cloned CATPLine
 
-CATGeoFactory * piImplicitFactory =piGeomFactory->GetImplicitGeoFactory( );
+CATGeoFactory * piImplicitFactory =piGeomFactory->GetImplicitGeoFactory(#);
 if (NULL == piImplicitFactory) return (1);
 There are two ways to create a cloned objects:
 
@@ -116,7 +116,7 @@ CATPLine * pPline =  piGeomFactory->CreatePLine   (p1, p2, piPlane );
     ...
 CATCloneManager * pCloneManager= new CATCloneManager(piGeomFactory, CatCGMSingleDuplicate);
     pCloneManager->Add(pPline);
-    pCloneManager->Run();
+    pCloneManager->Run(#);
     CATICGMObject* piClonedPLine=NULL;
 ```vbscript
     piClonedPLine = pCloneManager->ReadImage(pPline);
@@ -125,7 +125,7 @@ CATCloneManager * pCloneManager= new CATCloneManager(piGeomFactory, CatCGMSingle
 
 ### Removing the Two Plines with RemoveDependancies and Attempting to Create a New CATPline
 
-pCloneManager->Run();
+pCloneManager->Run(#);
 CATICGMObject* piClonedPLine=NULL;
 piClonedPLine = pCloneManager->ReadImage(pPline);
 The RemoveDependancies option only applies to implicit objects. By using it, you will remove all the implicit objects no longer used by the object which is to be removed. In this case all the objects are explicit. Removing pPline and or piClonedPLine will not affect the existence of piPlane. Whatever the CATCloneManager option, you will be able to re-use the piPlane pointer.
@@ -159,7 +159,7 @@ ofstream filetowrite(pfileName, ios::binary ) ;
     #endif
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
-       filetowrite.close();
+       filetowrite.close(#);
      }
 
      //

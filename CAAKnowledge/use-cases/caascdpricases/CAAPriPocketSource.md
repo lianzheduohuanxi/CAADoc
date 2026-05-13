@@ -4,13 +4,13 @@ title: "CAAPriPocket.CATScript"
 category: "use-case"
 module: "CAAScdPriUseCases"
 tags: ["CAAScdPriUseCases", "CATIA", "CAAPriPocket"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriPocketSource.htm"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriPocketSource.htmmd"
 converted: "2026-05-11T17:31:51.233955"
 ```
 
 ---
 tags: ["CAAScdPriUseCases", "CATIA", "CAAPriPocket"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriPocketSource.htm"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriPocketSource.htmmd"
 converted: "2026-05-11T17:31:51.233955"
     Option Explicit
 
@@ -34,7 +34,10 @@ converted: "2026-05-11T17:31:51.233955"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
+
+```
 
 ```
 
@@ -44,20 +47,26 @@ converted: "2026-05-11T17:31:51.233955"
         ' -----------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String
+```vbscript
         sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
+```
 
+```vbscript
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
         End If
 ```
 
@@ -68,15 +77,17 @@ converted: "2026-05-11T17:31:51.233955"
 ```vbscript
         ' -----------------------------------------------------------
         ' Open the Part document
+```vbscript
         Dim oDoc As Document
         set oDoc = CATIA.Documents.Open(sDocPath & _
 ```
-
 ```
 
 ```
 
-                     "\online\CAAScdPriUseCases\samples\CAAPriPocket.CATPart")
+```
+
+                     "/online/CAAScdPriUseCases/samples/CAAPriPocket.CATPart")
 
 ```vbscript
 ```vbscript
@@ -91,9 +102,13 @@ converted: "2026-05-11T17:31:51.233955"
 ```
 
 ```vbscript
+```vbscript
     Dim oPart As Part
 ```vbscript
+```
+```vbscript
     Set oPart = oDoc.Part
+```
 ```
 
 ```
@@ -104,14 +119,18 @@ converted: "2026-05-11T17:31:51.233955"
     ' ------------
     ' Get the part body in the part
     ' ------------
+```vbscript
     Dim oBody As Body
     Set oBody = oPart.Bodies.Item  ( "PartBody" )
     ' ------------
+```
     ' Get the sketch in the body
     ' ------------
+```vbscript
     Dim oSketch As Sketch
     Set oSketch = oBody.Sketches.Item  ( "Sketch.2" )
     ' ------------
+```
     ' Create the pocket with a default first limit
     ' ------------
 ```
@@ -130,10 +149,14 @@ converted: "2026-05-11T17:31:51.233955"
 
 ```
 
+```vbscript
     MsgBox "Click OK to create the pocket."
     Dim oPocket As Pocket
 ```vbscript
+```
+```vbscript
     Set oPocket= oPart.ShapeFactory.AddNewPocket    ( oSketch, 20.000000 )
+```
 ```
 
 ```
@@ -185,8 +208,10 @@ converted: "2026-05-11T17:31:51.233955"
 
 ```
 
+```vbscript
     MsgBox "Click OK to set the pocket first limit to 30mm."
     oPocket.FirstLimit.Dimension.Value = 30.000000
+```
 ```
 
 ```vbscript
@@ -216,6 +241,8 @@ converted: "2026-05-11T17:31:51.233955"
 ```
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

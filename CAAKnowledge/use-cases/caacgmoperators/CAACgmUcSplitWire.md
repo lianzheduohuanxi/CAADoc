@@ -4,13 +4,13 @@ title: "Splitting a Wire"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsSplitWire", "CATICGMHybSplit"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcSplitWire.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcSplitWire.htmmd"
 converted: "2026-05-11T17:33:49.056921"
 ```
 
 ---
 tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsSplitWire", "CATICGMHybSplit"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcSplitWire.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcSplitWire.htmmd"
 converted: "2026-05-11T17:33:49.056921"
 Splitting a Wire
 
@@ -53,22 +53,22 @@ and the code below:
 CATICGMHybSplit * pSplitWireByShellOpe = CATCGMCreateTopSplitWire (piGeomFactory, &topdata;,
 pWire1, pShellBody, POSITIVE_NEGATIVE_SIDE);
     pSplitWireByShellOpe->SetKeepHalfSpaceMode(TRUE);
-    pSplitWireByShellOpe->Run();
-    CATBody * pSplitWireByShellResult = pSplitWireByShellOpe->GetResult();
+    pSplitWireByShellOpe->Run(#);
+    CATBody * pSplitWireByShellResult = pSplitWireByShellOpe->GetResult(#);
 
     ...
 pSplitWireByShellOpe->SetKeepHalfSpaceMode(TRUE);
-pSplitWireByShellOpe->Run();
-CATBody * pSplitWireByShellResult = pSplitWireByShellOpe->GetResult();
-    pSplitWireByShellOpe->Release(); pSplitWireByShellOpe=NULL;
+pSplitWireByShellOpe->Run(#);
+CATBody * pSplitWireByShellResult = pSplitWireByShellOpe->GetResult(#);
+    pSplitWireByShellOpe->Release(#); pSplitWireByShellOpe=NULL;
 
 ---
-CATBody * pSplitWireByShellResult = pSplitWireByShellOpe->GetResult();
-pSplitWireByShellOpe->Release(); pSplitWireByShellOpe=NULL;
+CATBody * pSplitWireByShellResult = pSplitWireByShellOpe->GetResult(#);
+pSplitWireByShellOpe->Release(#); pSplitWireByShellOpe=NULL;
 you get this result: Fig.2 Split a wire by a plane: result  ![Split a wire by a plane: Result](images/CGM_splitWireByShell_1.png)
 
 ---
-pSplitWireByShellOpe->Release(); pSplitWireByShellOpe=NULL;
+pSplitWireByShellOpe->Release(#); pSplitWireByShellOpe=NULL;
 you get this result: Fig.2 Split a wire by a plane: result  ![Split a wire by a plane: Result](images/CGM_splitWireByShell_1.png)
 The same result is obtained if you specify POSITIVE_POSITIVE_SIDE for the CATHybSelectionMode. But, if you specify NEGATIVE_NEGATIVE_SIDE or NEGATIVE_POSITIVE_SIDE, the result is NULL. Case 2: Split a Wire by a Wire The CATHybSelectionMode identifies which partitions of the split wire are kept. When splitting a wire by a wire, the split partitions are alternately assigned NEGATIVE and POSITIVE values, the first partition being NEGATIVE when moving along the direction of the wire to be cut (going from the start vertex to the end vertex). The result is independent on the cutting wire orientation.
 
@@ -94,13 +94,13 @@ and the code below:
 and the code below:
 CATICGMHybSplit * pSplitWireByWireOpe = CATCGMCreateTopSplitWire (piGeomFactory, &topdata;, pWire1, pWire2,
 POSITIVE_NEGATIVE_SIDE);
-    pSplitWireByWireOpe->Run();
-    CATBody * pSplitWireByWireResult = pSplitWireByWireOpe->GetResult();
-    pSplitWireByWireOpe->Release(); pSplitWireByWireOpe=NULL;
+    pSplitWireByWireOpe->Run(#);
+    CATBody * pSplitWireByWireResult = pSplitWireByWireOpe->GetResult(#);
+    pSplitWireByWireOpe->Release(#); pSplitWireByWireOpe=NULL;
 
 ---
-CATBody * pSplitWireByWireResult = pSplitWireByWireOpe->GetResult();
-pSplitWireByWireOpe->Release(); pSplitWireByWireOpe=NULL;
+CATBody * pSplitWireByWireResult = pSplitWireByWireOpe->GetResult(#);
+pSplitWireByWireOpe->Release(#); pSplitWireByWireOpe=NULL;
 you get this result: Fig.4 Split a wire by a wire: result  ![Split a wire by a wire: Result](images/CGM_splitWireByWire_1.png)
 
 ---
@@ -125,7 +125,7 @@ Should not be used.
 With the input data below: Fig.5 Split a wire by a vertex: input data (splitting vertex in green) ![Split a wire by a vertex: Result](images/CGM_splitWireByVertex_0.png)
 and the code below:
 
-    CATBody * pVertexInVolumeBody  =  piGeomFactory->CreateBody();
+    CATBody * pVertexInVolumeBody  =  piGeomFactory->CreateBody(#);
     CATVertexInVolume *  pVertexInVolume = NULL;
 ```vbscript
     if  (!!pVertexInVolumeBody)
@@ -133,12 +133,12 @@ and the code below:
 ```
 
     {
-CATBody * pVertexInVolumeBody  =  piGeomFactory->CreateBody();
+CATBody * pVertexInVolumeBody  =  piGeomFactory->CreateBody(#);
 CATVertexInVolume *  pVertexInVolume = NULL;
 if  (!!pVertexInVolumeBody)
 ```vbscript
 ```vbscript
-    		pVertexInVolume =  pVertexInVolumeBody->CreateVertexInVolume();
+    		pVertexInVolume =  pVertexInVolumeBody->CreateVertexInVolume(#);
     		if  (!!pVertexInVolume)
 
 ```
@@ -150,7 +150,7 @@ if  (!!pVertexInVolumeBody)
 if  (!!pVertexInVolumeBody)
 ```vbscript
 ```vbscript
-pVertexInVolume =  pVertexInVolumeBody->CreateVertexInVolume();
+pVertexInVolume =  pVertexInVolumeBody->CreateVertexInVolume(#);
 if  (!!pVertexInVolume)
 ```
 
@@ -170,16 +170,16 @@ pVertexInVolumeBody->AddDomain(pVertexInVolume);
     ...
 CATICGMHybSplit * pSplitWireByVertexOpe = CATCGMCreateTopSplitWire (piGeomFactory, &topdata;, pWire1,
 pVertexInVolumeBody, POSITIVE_NEGATIVE_SIDE);
-    pSplitWireByVertexOpe->Run();
-    CATBody * pSplitWireByVertex = pSplitWireByVertexOpe->GetResult();
+    pSplitWireByVertexOpe->Run(#);
+    CATBody * pSplitWireByVertex = pSplitWireByVertexOpe->GetResult(#);
 
 ---
-pSplitWireByVertexOpe->Run();
-CATBody * pSplitWireByVertex = pSplitWireByVertexOpe->GetResult();
+pSplitWireByVertexOpe->Run(#);
+CATBody * pSplitWireByVertex = pSplitWireByVertexOpe->GetResult(#);
 you get this result: Fig.6 Split a wire by a vertex: result  ![Split a wire by a vertex: Result](images/CGM_splitWireByVertex_1.png)
 
 ---
-CATBody * pSplitWireByVertex = pSplitWireByVertexOpe->GetResult();
+CATBody * pSplitWireByVertex = pSplitWireByVertexOpe->GetResult(#);
 you get this result: Fig.6 Split a wire by a vertex: result  ![Split a wire by a vertex: Result](images/CGM_splitWireByVertex_1.png)
 References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)
 

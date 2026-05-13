@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Converting a Shape Design Feature into a Datum"
-category: "use case"
+category: use-case case"
 module: "CAAGsiUseCases"
 tags: ["CAAGsiNozzle", "CATIGSMProceduralView_var", "CATICkeParm_var", "CATIPrtContainer", "CATICkeParmFactory_var", "CAAGSMInterfaces", "CATIMf3DBehavior_var", "CATIGSMAssemble_var", "CATIGSMFactory", "CATIGSMProceduralView", "CATIPrtPart_var", "CAAGsiObjectUpdate", "CATIDescendants_var", "CATISpecObject_var", "CATIModelEvents_var", "CATInit", "CATIGSMFactory_var", "CATIDescendant", "CAAGsiDatum"]
-source_file: "Doc/online/CAAGsiUseCases/CAAGsiDatum.htm"
+source_file: "Doc/online/CAAGsiUseCases/CAAGsiDatum.htmmd"
 converted: "2026-05-11T17:31:50.628699"
 ```
 
@@ -64,7 +64,7 @@ Launch the use case as follows:
 
   * With Windows
 
-        e:>CAAGsiDatum inputDirectory\GAAGsiNozzle.CATPart outputDirectory\CAAGsiDatum.CATPart
+        e:>CAAGsiDatum inputDirectory/GAAGsiNozzle.CATPart outputDirectory/CAAGsiDatum.CATPart
 
 ---
   * With UNIX
@@ -86,18 +86,18 @@ where:
 The CAAGsiDatum use case is made of main program located in the CAAGsiDatum.m module of the CAAGSMInterfaces.edu framework:
 
 The CAAGsiDatum use case is made of main program located in the CAAGsiDatum.m module of the CAAGSMInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAAGSMInterfaces.edu\CAAGsiDatum.m\`
+Windows | `InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiDatum.m/`
 
 The CAAGsiDatum use case is made of main program located in the CAAGsiDatum.m module of the CAAGSMInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAAGSMInterfaces.edu\CAAGsiDatum.m\`
+Windows | `InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiDatum.m/`
 Unix | `InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiDatum.m/`
 
 The input CAAGsiNozzle.CATPart is proposed in Data.d directory of CAAGSMInterfaces.edu
 
-Windows | ` InstallRootDirectory\CAAGSMInterfaces.edu\Data.d\CAAGsiNozzle.CATPart `
+Windows | ` InstallRootDirectory/CAAGSMInterfaces.edu/Data.d/CAAGsiNozzle.CATPart `
 
 The input CAAGsiNozzle.CATPart is proposed in Data.d directory of CAAGSMInterfaces.edu
-Windows | ` InstallRootDirectory\CAAGSMInterfaces.edu\Data.d\CAAGsiNozzle.CATPart `
+Windows | ` InstallRootDirectory/CAAGSMInterfaces.edu/Data.d/CAAGsiNozzle.CATPart `
 Unix | ` InstallRootDirectory/CAAGSMInterfaces.edu/Data.d/CAAGsiNozzle.CATPart`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -123,7 +123,7 @@ We will now comment each of those sections by looking at the code of the main me
 CAAGsiDatum sample first creates a session and opens the input CATPart.
 
 CAAGsiDatum sample first creates a session and opens the input CATPart.
-Note: The important feature of the following sequence of code consists in the required call to the GetPart() method of the CATPrtContainer interfaces. \
+Note: The important feature of the following sequence of code consists in the required call to the GetPart(#) method of the CATPrtContainer interfaces. /
 
 This method allow to load in session the different containers of the part (feature container, geometric container,..)
 
@@ -186,10 +186,10 @@ pDoc->QueryInterface(IID_CATInit, (void**)&pDocAsInit) ;
 if ( NULL != pDocAsInit ) {
        piPartContainer =
           (CATIPrtContainer*)pDocAsInit->GetRootContainer("CATIPrtContainer");
-       pDocAsInit->Release(); pDocAsInit = NULL ;
+       pDocAsInit->Release(#); pDocAsInit = NULL ;
 
        if( NULL != piPartContainer ) {
-          CATISpecObject_var spPart = piPartContainer->GetPart() ;
+          CATISpecObject_var spPart = piPartContainer->GetPart(#) ;
           spPrtPart = spPart ;
 
        }
@@ -213,7 +213,7 @@ Finally, the wireframe and shape design factory is retrieved. .
 
          spGsmFact = _pFact;
 ```vbscript
-         if (_pFact) _pFact -> Release(); _pFact = NULL;
+         if (_pFact) _pFact -> Release(#); _pFact = NULL;
 
 ```
 
@@ -267,12 +267,12 @@ spParm = spCkeFact -> CreateLength("MergingDistance",MergingDistanceTol/1000.0);
 ```
 
     CATIGSMAssemble_var spAssemble = spGsmFact -> CreateAssemble(aObjectParametersAssemble,spParm,iCheckConnexity);
-    aObjectParametersAssemble.RemoveAll();
+    aObjectParametersAssemble.RemoveAll(#);
 
     // Insert in procedural view
     // ------------------
 CATIGSMAssemble_var spAssemble = spGsmFact -> CreateAssemble(aObjectParametersAssemble,spParm,iCheckConnexity);
-aObjectParametersAssemble.RemoveAll();
+aObjectParametersAssemble.RemoveAll(#);
     CATISpecObject_var spSpecTmp = spAssemble;
 ```vbscript
     if (NULL_var != spSpecTmp) {
@@ -286,7 +286,7 @@ if (NULL_var != spSpecTmp) {
        if (NULL_var != ispProcView ) {
 ```vbscript
 ```vbscript
-          rc = ispProcView ->InsertInProceduralView();
+          rc = ispProcView ->InsertInProceduralView(#);
 
 ```
 
@@ -318,7 +318,7 @@ Verify that the feature to convert is not already a Datum
     if(NULL_var != ispBehave ){
 
 ```vbscript
-      if ( FAILED( ispBehave -> IsADatum() ) ) {
+      if ( FAILED( ispBehave -> IsADatum(#) ) ) {
 
 ```
 
@@ -370,31 +370,31 @@ This operation has to be done in 2 step
     // -- Model event for delete / update visualization
     CATIModelEvents_var IME(ispSpec);
     if(NULL_var != IME) {
-        CATDelete info(ispSpec->GetImpl());
+        CATDelete info(ispSpec->GetImpl(#));
         IME->Dispatch(info);
 
     }
 
     // -- Delete Specification
-CATDelete info(ispSpec->GetImpl());
+CATDelete info(ispSpec->GetImpl(#));
 IME->Dispatch(info);
-    CATISpecObject_var ispFather = ispSpec->GetFather();
+    CATISpecObject_var ispFather = ispSpec->GetFather(#);
 
     // Specification is aggretated in the prodecural view
-CATISpecObject_var ispFather = ispSpec->GetFather();
+CATISpecObject_var ispFather = ispSpec->GetFather(#);
     if (NULL_var != ispFather) {
-       ispFather->Release();
+       ispFather->Release(#);
        CATIDescendants_var ispDes = ispFather;
        ispDes->RemoveChild (ispSpec);
 
     }
     // Specification is not in the prodecural view
-ispFather->Release();
+ispFather->Release(#);
 CATIDescendants_var ispDes = ispFather;
 ispDes->RemoveChild (ispSpec);
     else {
        LifeCycleObject_var LCO = ispSpec;
-       LCO -> remove();
+       LCO -> remove(#);
 
     }
     ....
@@ -407,13 +407,13 @@ The Datum is created , previous feature is deleted, now the Datum has to be inse
     // Insert in procedural view
 The Datum is created , previous feature is deleted, now the Datum has to be inserted in the procedural view as for any other shape designs feature (Wires, Surfaces and Volumes created in CATIGSMFactory).
     int i;
-    int size = AllDatums.Size();
+    int size = AllDatums.Size(#);
     for(i=1;i<=size;i++) {
        CATIGSMProceduralView_var curobj = AllDatums[i];
        if (NULL_var != curobj ) {
 ```vbscript
 ```vbscript
-       rc = curobj->InsertInProceduralView();
+       rc = curobj->InsertInProceduralView(#);
        if (FAILED(rc)) cout << " (CAAGsiDatum)  Failed to insert datum in procedural view" << endl ;
 
 ```

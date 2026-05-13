@@ -5,13 +5,13 @@ category: "use-case"
 module: "CAACenAPIChangesR10"
 version: "V5R10"
 tags: ["CATITTRSList", "CATIRGETopology", "CATITTRS", "CATIGeometricalElement", "CATIRGE"]
-source_file: "Doc/online/CAACenAPIChangesR10/MecModInterfaces.htm"
+source_file: "Doc/online/CAACenAPIChangesR10/MecModInterfaces.htmmd"
 converted: "2026-05-11T17:33:50.220734"
 ```
 
 ---
 tags: ["CATITTRSList", "CATIRGETopology", "CATITTRS", "CATIGeometricalElement", "CATIRGE"]
-source_file: "Doc/online/CAACenAPIChangesR10/MecModInterfaces.htm"
+source_file: "Doc/online/CAACenAPIChangesR10/MecModInterfaces.htmmd"
 converted: "2026-05-11T17:33:50.220734"
 CAA C++ API Modifications |  MecModInterfaces |
 

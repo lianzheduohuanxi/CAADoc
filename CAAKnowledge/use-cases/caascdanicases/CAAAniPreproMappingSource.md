@@ -4,13 +4,13 @@ title: "CAAAniPreproMapping.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniPreproMapping", "CATISamImportDefine", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproMappingSource.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproMappingSource.htmmd"
 converted: "2026-05-11T17:31:51.813397"
 ```
 
 ---
 tags: ["CATIA", "CAAAniPreproMapping", "CATISamImportDefine", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproMappingSource.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproMappingSource.htmmd"
 converted: "2026-05-11T17:31:51.813397"
     Language="VBSCRIPT"
 
@@ -37,24 +37,30 @@ converted: "2026-05-11T17:31:51.813397"
 
 ```
 
-    Sub CATMain()
 ```vbscript
+    Sub CATMain(#)
+```vbscript
+```
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
 
+```vbscript
       sDocPath=CATIA.SystemService.Environ("CATDocView")
       sSep=CATIA.SystemService.Environ("ADL_ODT_SLASH")
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 
 ```
+```
 
 ```
 
 ```vbscript
+```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
         End If
 ```
 
@@ -65,21 +71,29 @@ converted: "2026-05-11T17:31:51.813397"
 ```vbscript
     ' -----------------------------------------------------------
     ' Get the collection of documents in session
+```vbscript
         Set documents1 = CATIA.Documents
     ' Only one Analysis Document is required
+```
     ' Create the CATAnalysis Document
+```vbscript
         Set TheAnalysisDocument = documents1.Add("Analysis")
     ' if WB name already is "GPSCfg", not to use StartWorkbench
 ```
+```
 
 ```
 
+```vbscript
         WBName = CATIA.GetWorkbenchId
         if (WBName <> "GPSCfg") Then
+```
+```vbscript
 ```vbscript
 ```vbscript
     	CATIA.StartWorkbench("GPSCfg")
         End If
+```
     '_____________________________________________________________________________________
     ' Start to scan the existing structure of analysis document:  Retrieve the AnalysisManager
     ' and link the analysis to a Part Document
@@ -99,15 +113,19 @@ converted: "2026-05-11T17:31:51.813397"
 
 ```vbscript
 ```vbscript
+```vbscript
         Set analysisManager1 = TheAnalysisDocument.Analysis
 
+```
 ```
 
 ```
 
 ```vbscript
+```vbscript
         Dim arrayOfVariantOfShort1(0)
         analysisManager1.ImportDefineFile (sDocPath & sSep  & "online" & sSep & "CAAScdAniUseCases" & sSep & "samples" & sSep  & "SimpleChrank.CATPart"),
+```
 
 ```
 
@@ -128,9 +146,13 @@ converted: "2026-05-11T17:31:51.813397"
 ```
 
 ```vbscript
+```vbscript
       Set specsAndGeomWindow1 = CATIA.ActiveWindow
 ```vbscript
+```
+```vbscript
       Set viewer3D1 = specsAndGeomWindow1.ActiveViewer
+```
 ```
 
       viewer3D1.Reframe
@@ -141,8 +163,10 @@ converted: "2026-05-11T17:31:51.813397"
 ```vbscript
     ' _____________________________________________________________________________________
     ' Scan the analysis document:  Retrieve the Pointed documents to extract the reference for preprocessing
+```vbscript
         Set analysisLinkedDocuments1 = analysisManager1.LinkedDocuments
         CATIA.SystemService.Print analysisLinkedDocuments1.Name
+```
 ```
 
 ```
@@ -153,8 +177,10 @@ converted: "2026-05-11T17:31:51.813397"
        If (analysisLinkedDocuments1.Count <> 1 ) Then
 ```vbscript
 ```vbscript
+```vbscript
           Err.Raise 9999,,"NbDoc Li NE 1"
        End If
+```
 ```
 
 ```
@@ -166,6 +192,7 @@ converted: "2026-05-11T17:31:51.813397"
 ```vbscript
     ' _____________________________________________________________________________________
     ' Retrieve the CATPart Document and associated publications for preprocessing.
+```vbscript
        Set TheDoc = analysisLinkedDocuments1.Item(1)
        CATIA.SystemService.Print TheDoc.FullName
 
@@ -174,32 +201,41 @@ converted: "2026-05-11T17:31:51.813397"
        Set publication1 = publications1.Item("ClampFace")
        Set publication2 = publications1.Item("MappingFace")
     ' _____________________________________________________________________________________
+```
     ' Create a Static Case in the current analysis model.
+```vbscript
        Set analysisModels1 = analysisManager1.AnalysisModels
        Set analysisModel1 = analysisModels1.Item(1)
 
        Set analysisCases1 = analysisModel1.AnalysisCases
-       Set analysisCase1 = analysisCases1.Add()
+       Set analysisCase1 = analysisCases1.Add(#)
        Set analysisSets1 = analysisCase1.AnalysisSets
 
        Set analysisSet1 = analysisSets1.Add("RestraintSet", catAnalysisSetIn)
        Set analysisSet2 = analysisSets1.Add("LoadSet", catAnalysisSetIn)
        Set analysisSet3 = analysisCase1.AddSolution("StaticSet")
     ' _____________________________________________________________________________________
+```
     ' Create clamp boundary and apply to the publication called ClampFace
 
+```vbscript
        Set analysisEntities1 = analysisSet1.AnalysisEntities
        Set analysisEntity1 = analysisEntities1.Add("SAMClamp")
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Set analysisEntities1 = analysisSet1.AnalysisEntities
 ```vbscript
+```
+```vbscript
 Set analysisEntity1 = analysisEntities1.Add("SAMClamp")
+```
 ```
 
        analysisEntity1.AddSupportFromPublication product1, publication1
@@ -208,19 +244,25 @@ Set analysisEntity1 = analysisEntities1.Add("SAMClamp")
     ' _____________________________________________________________________________________
     ' Create Surfacic Force and apply to the publication called MappingFace
 
+```vbscript
        Set analysisEntities2 = analysisSet2.AnalysisEntities
        Set analysisEntity3 = analysisEntities2.Add("SAMSurfacicForce")
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Set analysisEntities2 = analysisSet2.AnalysisEntities
 ```vbscript
+```
+```vbscript
 Set analysisEntity3 = analysisEntities2.Add("SAMSurfacicForce")
+```
 ```
 
        analysisEntity3.AddSupportFromPublication product1, publication2
@@ -228,11 +270,15 @@ Set analysisEntity3 = analysisEntities2.Add("SAMSurfacicForce")
 ```
 
 ```vbscript
+```vbscript
        Set basicComponents1 = analysisEntity3.BasicComponents
 ```vbscript
+```
 ```vbscript
     ' No Local Axis is defined
+```vbscript
        Set basicComponent1 = basicComponents1.GetItem("SAMSurfacicForceAxis.1")
+```
 ```
 
 ```
@@ -241,7 +287,9 @@ Set analysisEntity3 = analysisEntities2.Add("SAMSurfacicForce")
 ```vbscript
 ```vbscript
     ' Valuate the vector.
+```vbscript
        Set basicComponent2 = basicComponents1.GetItem("SAMSurfacicForceVector.1")
+```
 ```
 
 ```
@@ -255,8 +303,10 @@ Set analysisEntity3 = analysisEntities2.Add("SAMSurfacicForce")
 ```vbscript
 ```vbscript
     ' Create a Design Table for the mapping file and valuate the basic component
+```vbscript
        Set basicComponent3 = basicComponents1.GetItem("SAMDTPtrSurfForce")
        Set designTable1 = analysisManager1.Relations.CreateDesignTable("", "", False, sDocPath & sSep  & "online" & sSep & "CAAScdAniUseCases" & sSep & "samples" & sSep  & "MappingForCrank.txt")
+```
 ```
 
 ```
@@ -267,8 +317,10 @@ Set analysisEntity3 = analysisEntities2.Add("SAMSurfacicForce")
 ```vbscript
 ```vbscript
 ' Create a Design Table for the mapping file and valuate the basic component
+```vbscript
 Set basicComponent3 = basicComponents1.GetItem("SAMDTPtrSurfForce")
 Set designTable1 = analysisManager1.Relations.CreateDesignTable("", "", False, sDocPath & sSep  & "online" & sSep & "CAAScdAniUseCases" & sSep & "samples" & sSep  & "MappingForCrank.txt")
+```
 ```
 
 ```
@@ -288,10 +340,12 @@ Set designTable1 = analysisManager1.Relations.CreateDesignTable("", "", False, s
     ' _____________________________________________________________________________________
     ' Define a global sensor measuring the maximum value of VonMises criterion.
 
+```vbscript
       Set dimension1 = analysisManager1.Parameters.CreateDimension("Maximum value of VonMises criterion", "PRESSURE", 0.000000)
-      Set formula1 = analysisManager1.Relations.CreateFormula("Maximum value of VonMises criterion","",dimension1,"misesmax(`Finite Element Model.1\Static Case Solution.1` ) ")
+      Set formula1 = analysisManager1.Relations.CreateFormula("Maximum value of VonMises criterion","",dimension1,"misesmax(`Finite Element Model.1/Static Case Solution.1` ) ")
       CATIA.SystemService.Print " Mises Max Computed " & dimension1.ValueAsString
     ' _____________________________________________________________________________________
+```
 ```
 
 ```
@@ -303,8 +357,10 @@ Set designTable1 = analysisManager1.Relations.CreateDesignTable("", "", False, s
 ```vbscript
 ```vbscript
     '------------------------------- END   END   END   ----------------------------
+```vbscript
       CATIA.DisplayFileAlerts = False
     '  TheAnalysisDocument.Close
+```
 ```
 
 ```
@@ -312,6 +368,8 @@ Set designTable1 = analysisManager1.Relations.CreateDesignTable("", "", False, s
 ```
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

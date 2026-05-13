@@ -4,7 +4,7 @@ title: "Creating an ArrangementArea Object with a Rectangular Contour"
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CAAArrCreateContourArea", "CAAArrCreateItemReservation", "CATIA", "CAAScdArrUseCases"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateContourArea.htm"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateContourArea.htmmd"
 converted: "2026-05-11T17:31:51.544106"
 ```
 
@@ -50,12 +50,16 @@ This macro shows you how to create an _ArrangementArea_ object with a rectangula
 ```
 
 ```vbscript
+```vbscript
        Dim objProdDoc        As ProductDocument
+```vbscript
+```
 ```vbscript
 ```vbscript
        Dim objRootProd       As Product
        Set objProdDoc      = CATIA.Documents.Add("Product")
        Set objRootProd     = objProdDoc.Product
+```
 ```
 
 ```
@@ -81,12 +85,16 @@ Once the new product document has been created, fetch the _ArrangementProduct_ a
 ```
 
 ```vbscript
+```vbscript
        Dim objMove           As Move
+```vbscript
+```
 ```vbscript
 ```vbscript
        Dim objPosition       As Position
        Set objMove      = objRootProd.Move
        Set objPosition  = objRootProd.Position
+```
 ```
 
 ```
@@ -98,8 +106,10 @@ Once the new product document has been created, fetch the _ArrangementProduct_ a
 ```vbscript
        '----------------------------------------------
        ' Get ArrangementProduct
+```vbscript
        Dim objArrProd        As ArrangementProduct
        Set objArrProd   = objRootProd.GetTechnologicalObject("ArrangementProduct")
+```
 ```
 
 ```
@@ -125,28 +135,38 @@ The _ArrangementAreas_ object is a collection object that manages _ArrangementAr
 ```
 
 ```vbscript
+```vbscript
        Dim objArea     As ArrangementArea
+```vbscript
+```
 ```vbscript
 ```vbscript
        Dim dblAreaPos(11)  As Double
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Dim objArea     As ArrangementArea
 ```vbscript
+```
+```vbscript
 Dim dblAreaPos(11)  As Double
+```
 ```
 
        objPosition.GetComponents dblAreaPos
 ```
 
 ```vbscript
+```vbscript
        Set objArea     = objArrProd.ArrangementAreas.AddArea(objMove, dblAreaPos, 50.0)
+```
 ```
 
     ...
@@ -168,7 +188,10 @@ The newly created _ArrangementArea_ object is displayed without a contour at thi
 ```
 
 ```vbscript
+```vbscript
        Dim objRectangle      As ArrangementRectangle
+```vbscript
+```
 ```vbscript
 ```vbscript
        Dim objArrProd1       As ArrangementProduct
@@ -183,15 +206,20 @@ The newly created _ArrangementArea_ object is displayed without a contour at thi
        Set objPosition1  = objAreaProd1.Position
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Set objMove1      = objAreaProd1.Move
 ```vbscript
+```
+```vbscript
 Set objPosition1  = objAreaProd1.Position
+```
 ```
 
        objPosition1.GetComponents dblRectPos
@@ -204,7 +232,9 @@ Set objPosition1  = objAreaProd1.Position
 ```
 
 ```vbscript
+```vbscript
        Set objRectangle = objArrProd1.ArrangementRectangles.AddRectangle (objMove1,dblRectPos, 50.0, 50.0)
+```
 ```
 
     ...
@@ -235,13 +265,15 @@ The _ArrangementArea_ object is now displayed with its boundary as shown in the 
 
     ...
 ```vbscript
+```vbscript
      End Sub
 
+```
 ```
 
 ---
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

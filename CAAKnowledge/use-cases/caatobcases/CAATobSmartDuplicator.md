@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Using the Smart Duplicator"
-category: "use case"
+category: use-case case"
 module: "CAATobUseCases"
 tags: ["CATICGMContainer", "CAATopologicalOjects", "CATICGMObject", "CAATobSmartDuplicator", "CAATopSmartDuplicator", "CAATopologicalObjects"]
-source_file: "Doc/online/CAATobUseCases/CAATobSmartDuplicator.htm"
+source_file: "Doc/online/CAATobUseCases/CAATobSmartDuplicator.htmmd"
 converted: "2026-05-11T17:33:45.823962"
 ```
 
@@ -75,10 +75,10 @@ where partwithhole.NCGM is an input file delivered in the CAATopologicalObjects.
 where partwithhole.NCGM is an input file delivered in the CAATopologicalObjects.edu/FunctionTests/InputData file.
 The CAATobSmartDuplicator use case is made of a main named CAATopSmartDuplicator.cpp located in the CAATobSmartDuplicator.m module of the CAATopologicalObjects.edu framework:
 
-Windows | `InstallRootDirectory\CAATopologicalObjects.edu\`CAATobSmartDuplicator`.m\`
+Windows | `InstallRootDirectory/CAATopologicalObjects.edu/`CAATobSmartDuplicator`.m/`
 
 The CAATobSmartDuplicator use case is made of a main named CAATopSmartDuplicator.cpp located in the CAATobSmartDuplicator.m module of the CAATopologicalObjects.edu framework:
-Windows | `InstallRootDirectory\CAATopologicalObjects.edu\`CAATobSmartDuplicator`.m\`
+Windows | `InstallRootDirectory/CAATopologicalObjects.edu/`CAATobSmartDuplicator`.m/`
 Unix | `InstallRootDirectory/CAATopologicalOjects.edu/`CAATobSmartDuplicator`.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -122,41 +122,41 @@ To retrieve the holed face, all the faces of the body are scanned and for each c
 
 To retrieve the holed face, all the faces of the body are scanned and for each cell, the number of internal domains is computed. For the cells which have internal domains, the domains are scanned. The internal loop is detected by using CATDomain::GetLocation.
 ```vbscript
-    for (int k = 1; k < faceList.Size()+1; k++)
+    for (int k = 1; k < faceList.Size(#)+1; k++)
 
 ```
 
         {
 To retrieve the holed face, all the faces of the body are scanned and for each cell, the number of internal domains is computed. For the cells which have internal domains, the domains are scanned. The internal loop is detected by using CATDomain::GetLocation.
-for (int k = 1; k < faceList.Size()+1; k++)
+for (int k = 1; k < faceList.Size(#)+1; k++)
     	CATCell * pLocalCell = faceList[k];
 ```vbscript
-            if (pLocalCell && pLocalCell->GetNbInternalDomains() > 0)
+            if (pLocalCell && pLocalCell->GetNbInternalDomains(#) > 0)
 
 ```
 
             {
 ```vbscript
-for (int k = 1; k < faceList.Size()+1; k++)
+for (int k = 1; k < faceList.Size(#)+1; k++)
 CATCell * pLocalCell = faceList[k];
-if (pLocalCell && pLocalCell->GetNbInternalDomains() > 0)
-                int NbDomains=pLocalCell->GetNbDomains();
+if (pLocalCell && pLocalCell->GetNbInternalDomains(#) > 0)
+                int NbDomains=pLocalCell->GetNbDomains(#);
                 for(int j=1;j<=NbDomains;j++)
 ```
 
                 {
 ```vbscript
-if (pLocalCell && pLocalCell->GetNbInternalDomains() > 0)
-int NbDomains=pLocalCell->GetNbDomains();
+if (pLocalCell && pLocalCell->GetNbInternalDomains(#) > 0)
+int NbDomains=pLocalCell->GetNbDomains(#);
 for(int j=1;j<=NbDomains;j++)
                     CATDomain *pDomain=pLocalCell->GetDomain(j);
-                    CATLocation Location=pDomain->GetLocation();
+                    CATLocation Location=pDomain->GetLocation(#);
                     if(Location==CATLocationInner)
 ```
 
                     {
 CATDomain *pDomain=pLocalCell->GetDomain(j);
-CATLocation Location=pDomain->GetLocation();
+CATLocation Location=pDomain->GetLocation(#);
 if(Location==CATLocationInner)
                         pInnerLoop=pDomain;                    // the inner loop
                         holedFace = (CATFace *) faceList[k] ;  // the holed face
@@ -184,17 +184,17 @@ The CATTopology::Touch method is used to specify which topology is going to be m
 First, you must create an empty body from CATGeoFactory. The CATSmartBodyDuplicator operator is created from this new body. It must be run.
 
 First, you must create an empty body from CATGeoFactory. The CATSmartBodyDuplicator operator is created from this new body. It must be run.
-     CATBody * copBody = piGeomFactory->CreateBody();
+     CATBody * copBody = piGeomFactory->CreateBody(#);
         CATSmartBodyDuplicator * smartDuplicator =
             copBody->CreateSmartDuplicator(piBody, topdata);
         if (smartDuplicator == NULL) return (1);
-        smartDuplicator->Run();
+        smartDuplicator->Run(#);
         CATFace * duplicatedFace = (CATFace *)smartDuplicator->GetDuplicatedCell(holedFace);
 
 ---
 ```vbscript
 if (smartDuplicator == NULL) return (1);
-smartDuplicator->Run();
+smartDuplicator->Run(#);
 CATFace * duplicatedFace = (CATFace *)smartDuplicator->GetDuplicatedCell(holedFace);
 The cell which has been initially touched is retrieved by using the CATSmartBodyDuplicator::GetDuplicatedCell method.
 
@@ -206,19 +206,19 @@ The cell which has been initially touched is retrieved by using the CATSmartBody
 The face inner loop is retrieved by scanning its domains. A domain which is an internal domain is removed.
 
 The face inner loop is retrieved by scanning its domains. A domain which is an internal domain is removed.
-     int NbD=duplicatedFace->GetNbDomains();
+     int NbD=duplicatedFace->GetNbDomains(#);
         for(int j=1;j<=NbD;j++)
 
         {
-int NbD=duplicatedFace->GetNbDomains();
+int NbD=duplicatedFace->GetNbDomains(#);
 for(int j=1;j<=NbD;j++)
             CATDomain *pDom=duplicatedFace->GetDomain(j);
-            CATLocation Loc=pDom->GetLocation();
+            CATLocation Loc=pDom->GetLocation(#);
             if(Loc==CATLocationInner)
 
             {
 CATDomain *pDom=duplicatedFace->GetDomain(j);
-CATLocation Loc=pDom->GetLocation();
+CATLocation Loc=pDom->GetLocation(#);
 if(Loc==CATLocationInner)
                duplicatedFace->RemoveDomain(pDom);
 
@@ -255,7 +255,7 @@ ofstream filetowrite(pfileName, ios::binary ) ;
     #endif
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
-       filetowrite.close();
+       filetowrite.close(#);
      }
 
      _//

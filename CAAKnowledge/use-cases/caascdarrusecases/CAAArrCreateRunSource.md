@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CAAScrBase", "CATIA", "CAAArrCreateRun"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateRunSource.htm"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateRunSource.htmmd"
 converted: "2026-05-11T11:27:02.685231"
 ---
 
@@ -20,32 +20,43 @@ Option Explicit
 ' Locale     :   English
 '******************************************************************************
 
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
    
    ' On Error Resume Next
 
    '----------------------------------------------
+```
    'Create a new product document
+```vbscript
    Dim objProdDoc        As ProductDocument
    Dim objRootProd       As Product
    Set objProdDoc      = CATIA.Documents.Add("Product")
    Set objRootProd     = objProdDoc.Product
 
    '----------------------------------------------
+```
    'Retrieving Root Product's Relative Axis and Position Information
+```vbscript
    Dim objMove           As Move
    Set objMove      = objRootProd.Move
 
    '----------------------------------------------
+```
    ' Get ArrangementProduct
+```vbscript
    Dim objArrProd        As ArrangementProduct
    Set objArrProd   = objRootProd.GetTechnologicalObject("ArrangementProduct")
 
    '----------------------------------------------
+```
    ' Create ArrangementRun under the Root Product
+```vbscript
    Dim dblRunPoints(75)      As Double
    Dim dblMathDirection(3)   As Double
    Dim objArrRun             As ArrangementRun
+
+```
 
    dblRunPoints(0)   =  300.0
    dblRunPoints(1)   =  100.0
@@ -151,7 +162,10 @@ Sub CATMain()
    dblMathDirection(1) = 0.0
    dblMathDirection(2) = 0.0
 
+```vbscript
    Set objArrRun             = objArrProd.ArrangementRuns.AddRun(objMove,dblRunPoints, dblMathDirection)
+
+```
 
    '----------------------------------------------
    ' Change Properties of ArrangementRun
@@ -161,14 +175,17 @@ Sub CATMain()
 
    '----------------------------------------------
    ' Define Bend Radius of Nodes
+```vbscript
    Dim intK As Integer   
    For intK = 1 To objArrRun.ArrangementNodes.Count
+```
      objArrRun.ArrangementNodes.Item(intK).BendRadius = 10.0
    Next
 
+```vbscript
 End Sub 
 
-
+```
 
 ```vbscript
 Option Explicit
@@ -184,33 +201,43 @@ Option Explicit
 ' Locale     :   English
 '******************************************************************************
 
-
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
    
    ' On Error Resume Next
 
    '----------------------------------------------
+```
    'Create a new product document
+```vbscript
    Dim objProdDoc        As ProductDocument
    Dim objRootProd       As Product
    Set objProdDoc      = CATIA.Documents.Add("Product")
    Set objRootProd     = objProdDoc.Product
 
    '----------------------------------------------
+```
    'Retrieving Root Product's Relative Axis and Position Information
+```vbscript
    Dim objMove           As Move
    Set objMove      = objRootProd.Move
 
    '----------------------------------------------
+```
    ' Get ArrangementProduct
+```vbscript
    Dim objArrProd        As ArrangementProduct
    Set objArrProd   = objRootProd.GetTechnologicalObject("ArrangementProduct")
 
    '----------------------------------------------
+```
    ' Create ArrangementRun under the Root Product
+```vbscript
    Dim dblRunPoints(75)      As Double
    Dim dblMathDirection(3)   As Double
    Dim objArrRun             As ArrangementRun
+
+```
 
    dblRunPoints(0)   =  300.0
    dblRunPoints(1)   =  100.0
@@ -316,7 +343,10 @@ Sub CATMain()
    dblMathDirection(1) = 0.0
    dblMathDirection(2) = 0.0
 
+```vbscript
    Set objArrRun             = objArrProd.ArrangementRuns.AddRun(objMove,dblRunPoints, dblMathDirection)
+
+```
 
    '----------------------------------------------
    ' Change Properties of ArrangementRun
@@ -326,10 +356,14 @@ Sub CATMain()
 
    '----------------------------------------------
    ' Define Bend Radius of Nodes
+```vbscript
    Dim intK As Integer   
    For intK = 1 To objArrRun.ArrangementNodes.Count
+```
      objArrRun.ArrangementNodes.Item(intK).BendRadius = 10.0
    Next
 
+```vbscript
 End Sub
+```
 ```

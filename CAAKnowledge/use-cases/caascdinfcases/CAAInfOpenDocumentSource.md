@@ -4,13 +4,13 @@ title: "CAAInfOpenDocument.CATScript"
 category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CAAScdInfUseCases", "CAAInfOpenDocument", "CATIA", "CAAInfReadDocument"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfOpenDocumentSource.htm"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfOpenDocumentSource.htmmd"
 converted: "2026-05-11T17:31:52.383997"
 ```
 
 ---
 tags: ["CAAScdInfUseCases", "CAAInfOpenDocument", "CATIA", "CAAInfReadDocument"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfOpenDocumentSource.htm"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfOpenDocumentSource.htmmd"
 converted: "2026-05-11T17:31:52.383997"
 Option Explicit
 
@@ -34,8 +34,10 @@ Option Explicit
 
 ```
 
-     Sub CATMain()
 ```vbscript
+     Sub CATMain(#)
+```vbscript
+```
 ```vbscript
          ' -----------------------------------------------------------------------------------------------
          ' Optional: allows to find the sample wherever it may be installed
@@ -45,13 +47,17 @@ Option Explicit
 ```
 
 ```vbscript
+```vbscript
          Dim sDocPath As String
+```vbscript
+```
 ```vbscript
 ```vbscript
          sDocPath=CATIA.SystemService.Environ("CATDocView")
          If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
            Err.Raise 9999,,"No Doc Path Defined"
          End If
+```
 ```
 
 ```
@@ -65,17 +71,22 @@ Option Explicit
          'Open the document and add it as the last item of the collection of documents.
          'Create and display a new window for the document.
          'Activate the document and its window.
+```vbscript
          Dim sFilePath
          sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
-
 ```
 
 ```
 
-            "online\CAAScdInfUseCases\samples\CAAInfReadDocument.CATPart")
+```
+
+            "online/CAAScdInfUseCases/samples/CAAInfReadDocument.CATPart")
+```vbscript
 ```vbscript
 Dim sFilePath
+```vbscript
+```
 ```vbscript
 ```vbscript
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
@@ -83,12 +94,15 @@ sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
          Set iPartDoc = CATIA.Documents.Open(sFilePath)
 
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
      End Sub
 
+```
 ```

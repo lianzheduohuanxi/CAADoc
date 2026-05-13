@@ -4,13 +4,13 @@ title: "New C++ Authorized APIs in CAA V5R21 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIPspDefinePhysicalPart", "CATICGMRemoveFace", "CATIFmtMeshDomain", "CATIMfgCCPCustom", "CATIMfgMultiAxisCurveMachiningAuxDrive", "CATIMfg5AxisSpiralMilling", "CATICGMRemoveFacesInShell", "CATIPDMUEOnCancel", "CATIFmtCustomVisualization", "CATIMfgCustomizeCSOFilter", "CATIFmtMesher", "CATIFmtSelectedElement", "CATICGMObjectsLoad", "CATIFmtMeshPartOutput", "CATIFmtTrapSelector", "CATICGMRemoveEdge", "CATIUExitPVRCommands", "CATICGMThickSurfacePlus", "CATIPDMCharacteristicScm", "CATIFmtMesh"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R21GANewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R21GANewCPPAPI.htmmd"
 converted: "2026-05-11T17:33:47.505618"
 ```
 
 ---
 tags: ["CATIPspDefinePhysicalPart", "CATICGMRemoveFace", "CATIFmtMeshDomain", "CATIMfgCCPCustom", "CATIMfgMultiAxisCurveMachiningAuxDrive", "CATIMfg5AxisSpiralMilling", "CATICGMRemoveFacesInShell", "CATIPDMUEOnCancel", "CATIFmtCustomVisualization", "CATIMfgCustomizeCSOFilter", "CATIFmtMesher", "CATIFmtSelectedElement", "CATICGMObjectsLoad", "CATIFmtMeshPartOutput", "CATIFmtTrapSelector", "CATICGMRemoveEdge", "CATIUExitPVRCommands", "CATICGMThickSurfacePlus", "CATIPDMCharacteristicScm", "CATIFmtMesh"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R21GANewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R21GANewCPPAPI.htmmd"
 converted: "2026-05-11T17:33:47.505618"
 CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R21 GA
 
@@ -25,13 +25,17 @@ The following are the new CAA V5R21 GA C++ Authorized APIs, compared with CAA V5
   * ApplicationFrame framework
     * Macro or #define CATFrmMkStringFromDefine1
     * Macro or #define CATFrmMkStringFromDefine
+```vbscript
     * Global Function CATAfrNewTransaction
   * BSFBuildtimeData framework
+```
     * Macro or #define WIN32_LEAN_AND_MEAN
   * BasicTopologicalOpe framework
+```vbscript
     * Global Function CATCreateLengthFromBodyOnWire
     * Global Function CATCreateLengthFromBodyOnWire
   * CATCommonLayoutInterfaces framework
+```
     * Interface CATICloPartRules
   * CATFmtModelInterfaces framework
     * Class CATFmtConnectivityServices
@@ -103,6 +107,7 @@ The following are the new CAA V5R21 GA C++ Authorized APIs, compared with CAA V5
     * Macro or #define CATFrmMkStringFromDefine1
     * Macro or #define CATFrmMkStringFromDefine
   * CATIAV4Interfaces framework
+```vbscript
     * Global Function CATV4iGetCanonLength
     * Global Function CATV4iGetConnectorLink
     * Global Function CATV4iGetDittoLink
@@ -110,6 +115,7 @@ The following are the new CAA V5R21 GA C++ Authorized APIs, compared with CAA V5
     * Global Function CATV4iGetParentOCPLink
     * Global Function CATV4iGetPipingLink
   * CATPDMBaseInterfaces framework
+```
     * Interface CATIPDMUEOnCancel
   * CATPDMReconcile framework
     * Class CATEpeDocument
@@ -188,13 +194,17 @@ The following are the new CAA V5R21 GA C++ Authorized APIs, compared with CAA V5
   * FreeFormOperators framework
     * Class CATFrFSmoothingOper
     * Macro or #define NULL
+```vbscript
     * Global Function CATFrFCreateSmoothingOper
   * GMModelInterfaces framework
+```
     * Macro or #define NULL
     * Enumeration CATTopRelimitByVolumeSelectionType
+```vbscript
     * Global Function CATCGMCreatePickOperator
     * Global Function CATCGMCreateRelimitByVolume
     * Interface CATCGMPickOperatorPickedObject
+```
     * Interface CATCGMPickOperatorResultIterator
     * Interface CATCGMPickOperator
     * Interface CATCGMTessID
@@ -210,6 +220,7 @@ The following are the new CAA V5R21 GA C++ Authorized APIs, compared with CAA V5
     * Enumeration CATTopBlendBehaviour_Mode
     * Enumeration CATTopCleanCrvC1ToC2Management
     * Enumeration TYPEDEF_ENUM
+```vbscript
     * Global Function CATCGMCreateDistancePointBody
     * Global Function CATCGMCreateRemoveEdge
     * Global Function CATCGMCreateRemoveFace
@@ -229,6 +240,7 @@ The following are the new CAA V5R21 GA C++ Authorized APIs, compared with CAA V5
     * Global Function CATCGMTopCreateSolidTorus
     * Global Function CreateConvertCrvToNurbsCrv
     * Interface CATICGMDistancePointBody
+```
     * Interface CATICGMFrFSmoothingOper
     * Interface CATICGMRemoveEdge
     * Interface CATICGMRemoveFace
@@ -273,16 +285,20 @@ The following are the new CAA V5R21 GA C++ Authorized APIs, compared with CAA V5
   * NewTopologicalObjects framework
     * Class CATTopPositionPtFaceOperator
     * Class CATTopRelimitByVolume
+```vbscript
     * Global Function CATCreateTopClashOperator
     * Global Function CATCreateTopPositionPtFaceOperator
     * Interface CATTopClashOperator
+```
   * ObjectModelerSystem framework
     * Macro or #define SEQUENCE
   * ObjectSpecsModeler framework
     * Class CATLISTP(IID)
   * PartInterfaces framework
+```vbscript
     * Global Function CATCreateCATIPrtThreadStandardServices
   * SDMRuntime framework
+```
     * Typedef SdaiAppInstanceH
     * Typedef SdaiAttrH
     * Typedef SdaiEntityH
@@ -297,8 +313,10 @@ The following are the new CAA V5R21 GA C++ Authorized APIs, compared with CAA V5
     * Macro or #define CATDMUMeasure
     * Macro or #define CATDMUSectionData
     * Macro or #define CATDMUSection
+```vbscript
     * Global Function CATDMUCopyData
     * Interface CATIDMUUpdateDuringSimulation
+```
     * Typedef CATDMUDataType
   * SpecialAPI framework
     * Macro or #define FAILED
@@ -322,6 +340,7 @@ The following are the new CAA V5R21 GA C++ Authorized APIs, compared with CAA V5
     * Macro or #define FALSE
     * Macro or #define TRUE
     * Macro or #define throw
+```vbscript
     * Global Function BuildSafeArrayVariant
     * Global Function BuildSafeArrayVariant
     * Global Function CATSysInstantiateSettingRepository
@@ -329,6 +348,7 @@ The following are the new CAA V5R21 GA C++ Authorized APIs, compared with CAA V5
     * Global Function DSYStgRep
     * Global Function ~DSYStgRep
     * Interface CATIASettingRepository
+```
     * Typedef CATCallbackEvent
     * Typedef CATCallback
     * Typedef CATClassId
@@ -337,6 +357,7 @@ The following are the new CAA V5R21 GA C++ Authorized APIs, compared with CAA V5
   * TopologicalOperators framework
     * Class CATRemoveEdge
     * Macro or #define NULL
+```vbscript
     * Global Function CATCreateRemoveEdge
     * Global Function CATCreateRemoveEdge
     * Global Function CATCreateRemoveFace
@@ -347,13 +368,16 @@ The following are the new CAA V5R21 GA C++ Authorized APIs, compared with CAA V5
     * Global Function CATTopCreateSolidPyramid
     * Global Function CATTopCreateSolidTorus
     * Interface CATRemoveFace
+```
   * TopologicalOperatorsLight framework
     * Macro or #define NULL
+```vbscript
     * Global Function CATCreateRemoveFacesInShell
     * Global Function CATCreateTopDisconnect
     * Global Function CATCreateTopProject
     * Global Function CATTopCreateSolidSphere
     * Interface CATRemoveFacesInShell
+```
   * VPMInterfaces framework
     * Macro or #define suffixeActionSE
     * Interface CATIAVPMIIProductSpecification
@@ -375,4 +399,7 @@ History Version: **1** [Mar 2011] | Document created
 * * *
 
 _Copyright © 1999-2011, Dassault Systèmes. All rights reserved._
+```vbscript
 Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.md) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.md) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.md)
+
+```

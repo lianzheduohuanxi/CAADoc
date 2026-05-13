@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating an Open Body"
-category: "technical article"
+category: tech-article article"
 module: "CAAGsiTechArticles"
 tags: ["CATIPrtPart", "CAAGsiNozzle", "CATIPrtManagement_var", "CATIPrtContainer", "CATIMechanicalRootFactory", "CAAGSMInterfaces", "CAAGsiUserTools", "CATIContainer_var", "CATIA", "CATIGSMFactory", "CATIGSMTool", "CATIPrtPart_var", "CATIDescendants_var", "CATInit_var", "CATIBasicTool_var", "CATISpecObject_var", "CATIDescendants", "CAAGsiToolkit", "CATIBasicTool", "CATIPrtManagement"]
-source_file: "Doc/online/CAAGsiTechArticles/CAAGsiCreateGSMTool.htm"
+source_file: "Doc/online/CAAGsiTechArticles/CAAGsiCreateGSMTool.htmmd"
 converted: "2026-05-11T17:31:50.660543"
 ```
 
@@ -76,10 +76,10 @@ CAAGsiUserTools is used in CAAGsiNozzle sample
 CAAGsiUserTools is used in CAAGsiNozzle sample
 The CAAGsiUserTools Object is made of a single class named CAAGsiUserTools located in the CAAGsiToolkit.m module of the CAAGSMInterfaces.edu framework:
 
-Windows | `InstallRootDirectory\CAAGSMInterfaces.edu\CAAGsiToolkit.m\`
+Windows | `InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiToolkit.m/`
 
 The CAAGsiUserTools Object is made of a single class named CAAGsiUserTools located in the CAAGsiToolkit.m module of the CAAGSMInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAAGSMInterfaces.edu\CAAGsiToolkit.m\`
+Windows | `InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiToolkit.m/`
 Unix | `InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiToolkit.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -152,7 +152,7 @@ int                    iSetAsCurrent,
 int                    iTopLevel)
       CATIContainer_var    spCont     = **_pFact** ;
       CATIPrtContainer_var spPartCont = spCont;
-      CATIPrtPart_var      spPart     = **spPartCont - > GetPart()**;
+      CATIPrtPart_var      spPart     = **spPartCont - > GetPart(#)**;
 
     ...
 
@@ -178,13 +178,13 @@ CATIGSMTool_var spTool = NULL_var;
       {
 CATIGSMTool_var spTool = NULL_var;
 if ( NULL_var != spPart )
-        CATIBasicTool_var spCurrentTool = spPart->**GetCurrentTool**();
+        CATIBasicTool_var spCurrentTool = spPart->**GetCurrentTool**(#);
 
         ...
 
 ---
 
-CATIBasicTool_var spCurrentTool = spPart->**GetCurrentTool**();
+CATIBasicTool_var spCurrentTool = spPart->**GetCurrentTool**(#);
 The _CATIPrtPart_ interface enables us to retrieve the current tool (One always exists.) Then, we try to get a _CATIGSMTool_ smart pointer from the `spCurrentTool` _CATIBasicTool_ smart pointer.
 
 At this stage, we have to check that the tool retrieved is not the open body dedicated to store external references (Multi-model links) If it is the case, we set `spTool` to `NULL_var` which means that we need to create another GSMTool feature for our need.
@@ -196,7 +196,7 @@ At this stage, we have to check that the tool retrieved is not the open body ded
 
         ...
         int Position = 0;
-        CATISpecObject_var spCurrentFeat = spPart->**GetCurrentFeature**();
+        CATISpecObject_var spCurrentFeat = spPart->**GetCurrentFeature**(#);
         CATISpecObject_var **spParentForGSMTool** = spPart;
 
 ```vbscript
@@ -205,11 +205,11 @@ At this stage, we have to check that the tool retrieved is not the open body ded
 ```
 
         {
-CATISpecObject_var spCurrentFeat = spPart->**GetCurrentFeature**();
+CATISpecObject_var spCurrentFeat = spPart->**GetCurrentFeature**(#);
 CATISpecObject_var **spParentForGSMTool** = spPart;
 if (spCurrentFeat != spCurrentTool && 0 == iTopLevel)
           spParentForGSMTool  = spCurrentTool;
-          CATISpecObject_var spExternalRef = spPart->**GetBodyForExternalReferences**();
+          CATISpecObject_var spExternalRef = spPart->**GetBodyForExternalReferences**(#);
 ```vbscript
           if (NULL_var != spExternalRef && spCurrentTool == spExternalRef)
 
@@ -217,12 +217,12 @@ if (spCurrentFeat != spCurrentTool && 0 == iTopLevel)
 
           {
 spParentForGSMTool  = spCurrentTool;
-CATISpecObject_var spExternalRef = spPart->**GetBodyForExternalReferences**();
+CATISpecObject_var spExternalRef = spPart->**GetBodyForExternalReferences**(#);
 if (NULL_var != spExternalRef && spCurrentTool == spExternalRef)
             spParentForGSMTool = spPart;
 
           }
-CATISpecObject_var spExternalRef = spPart->**GetBodyForExternalReferences**();
+CATISpecObject_var spExternalRef = spPart->**GetBodyForExternalReferences**(#);
 if (NULL_var != spExternalRef && spCurrentTool == spExternalRef)
 spParentForGSMTool = spPart;
           else

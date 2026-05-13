@@ -2,7 +2,7 @@
 title: "CAAIPstINFWire"
 type: "interface"
 module: "CAAProductStructure"
-category: "framework"
+category: api-reference
 base: "CATBaseUnknown"
 inheritance_chain: "CAAIPstINFWire → CATBaseUnknown"
 method_count: 2
@@ -37,3 +37,28 @@ verified: true
 - `CAAIPstINFRoot.cpp`
 - `CAAIPstINFWire.cpp`
 
+---
+
+## Interface Overview
+
+This interface inherits from **CATBaseUnknown**. 
+
+**Inherited Methods**: Please refer to the base interface documentation above.
+
+---
+
+## Interface Overview
+
+This interface inherits from **from**. 
+
+**Inherited Methods**: Please refer to the base interface documentation above.
+
+## Interface Notes
+
+This interface is part of the **CAA** module.
+
+**Status**: This interface document is a template. Please refer to the official API documentation for more information.
+
+**Related Resources**:
+- [Quick References](../..//quick-refs/)
+- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)

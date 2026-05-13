@@ -2,9 +2,8 @@
 title: "CAASysCollectionEmptyNotif"
 type: "interface"
 module: "CAASystem"
-category: "framework"
+category: api-reference
 base: "CAASysCollectionNotification"
-inheritance_chain: "CAASysCollectionEmptyNotif → CAASysCollectionNotification → CATNotification"
 method_count: 0
 visibility: "public"
 has_tie_binding: false
@@ -13,7 +12,6 @@ verified: true
 # CAASysCollectionEmptyNotif
 
 **基类**: CAASysCollectionNotification  
-**继承链**: CAASysCollectionEmptyNotif → CAASysCollectionNotification → CATNotification  
 **模块**: CAASystem  
 **分类**: framework  
 **可见性**: public  
@@ -23,9 +21,37 @@ verified: true
 
 该接口没有在当前头文件中声明方法。继承自基类的潜在方法请查阅基类文档。
 
-- 完整继承链: CAASysCollectionEmptyNotif → CAASysCollectionNotification → CATNotification
 ## 依赖
 
 - `CAASysCollectionNotification.h`
 - `CAASysGeoModelInf.h`
 
+---
+
+## Interface Overview
+
+**Inherited Methods**: Please refer to the base interface documentation above.
+
+---
+
+## Interface Overview
+
+This interface inherits from **from**. 
+
+**Inherited Methods**: Please refer to the base interface documentation above.
+
+---
+
+## Related Use Cases
+
+- [3D PLM Enterprise Architecture](../../use-cases/caaafrcases/CAAAfrSampleCustomCommandHeader.md)
+
+## Interface Notes
+
+This interface is part of the **CAA** module.
+
+**Status**: This interface document is a template. Please refer to the official API documentation for more information.
+
+**Related Resources**:
+- [Quick References](../..//quick-refs/)
+- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)

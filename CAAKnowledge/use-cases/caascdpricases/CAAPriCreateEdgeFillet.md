@@ -4,7 +4,7 @@ title: "Creating EdgeFillets on a Rectangular Pad"
 category: "use-case"
 module: "CAAScdPriUseCases"
 tags: ["CAAScdPriUseCases", "CATIA", "CAAPriUseCases", "CAAPriCreateEdgeFillet"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriCreateEdgeFillet.htm"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriCreateEdgeFillet.htmmd"
 converted: "2026-05-11T17:31:51.218485"
 ```
 
@@ -36,16 +36,20 @@ Figure 1: The final result. [CAAPriCreateEdgeFillet.CATScript](CAAPriCreateEdgeF
     ...
 
 ```vbscript
+```vbscript
 Dim oPartDocument As PartDocument
 ```vbscript
+```
 ```vbscript
-Set oPartDocument = CATIA.Documents.Open("E/tmp\CAAScdPriUseCases.doc\src\samples\Pad.CATPart Dim oPart As Part
+```vbscript
+Set oPartDocument = CATIA.Documents.Open("E/tmp/CAAScdPriUseCases.doc/src/samples/Pad.CATPart Dim oPart As Part
 Set oPart = CATIA.ActiveDocument.Part ' Retrieve the part body of the document containing the pad to be used
 Dim oBody As Body
 Set oBody = oPart.Bodies.Item ( "MechanicalTool.1" ) ' Retrieve the pad of the body
 Dim oPad As Pad
 Set oPad = oBody.Shapes.Item ( "Pad.1" )
 
+```
 ```
 
 ```
@@ -66,11 +70,15 @@ oPad is retrieved by its name "Pad.1" in the PartBody tree.
 ```
 
 ```vbscript
+```vbscript
 Dim oEdge1 As Reference
 ```vbscript
+```
 ```vbscript
-Set oEdge1 = oPart.CreateReferenceFromBRepName ( "REdge:(Edge:(Face:(Brp:(Pad.1;0:(Brp:(Sketch.1;1))); None:());Face:(Brp:(Pad.1;0:(Brp:(Sketch.1;2)));None:());None:(Limits1:();Limits2:())); WithTemporaryBody;WithoutBuildError;WithSelectingFeatureSupport)", oPad )
+```vbscript
+Set oEdge1 = oPart.CreateReferenceFromBRepName ( "REdge:(Edge:(Face:(Brp:(Pad.1;0:(Brp:(Sketch.1;1))); None:(#));Face:(Brp:(Pad.1;0:(Brp:(Sketch.1;2)));None:(#));None:(Limits1:(#);Limits2:(#))); WithTemporaryBody;WithoutBuildError;WithSelectingFeatureSupport)", oPad )
 
+```
 ```
 
 ```
@@ -92,17 +100,25 @@ defined by their symbolic addresses.
 ```
 
 ```vbscript
+```vbscript
 Dim oEdgeFillet1 As ConstRadEdgeFillet
 ```vbscript
+```
+```vbscript
 Set oEdgeFillet1 = oPart.ShapeFactory.AddNewEdgeFilletWithConstantRadius ( oEdge1, 1, 5.000000 ) ' Add the others edges to be filleted
+```
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Dim oEdgeFillet1 As ConstRadEdgeFillet
 ```vbscript
+```
+```vbscript
 Set oEdgeFillet1 = oPart.ShapeFactory.AddNewEdgeFilletWithConstantRadius ( oEdge1, 1, 5.000000 ) ' Add the others edges to be filleted
+```
 ```
 
 ```
@@ -141,13 +157,17 @@ Figure 2: Rectangular pad with its vertical filleted edges.
 ```
 
 ```vbscript
+```vbscript
 Dim oTopFace As Reference
 ```vbscript
+```
 ```vbscript
-Set oTopFace = oPart.CreateReferenceFromBRepName ( "RSur:(Face:(Brp:(Pad.1;2);None:());WithTemporaryBody;WithoutBuildError;WithSelectingFeatureSupport)", oEdgeFillet1 ) ' Retrieve the bottom face of the pad to be filleted
+```vbscript
+Set oTopFace = oPart.CreateReferenceFromBRepName ( "RSur:(Face:(Brp:(Pad.1;2);None:(#));WithTemporaryBody;WithoutBuildError;WithSelectingFeatureSupport)", oEdgeFillet1 ) ' Retrieve the bottom face of the pad to be filleted
 Dim oBottomFace As Reference
-Set oBottomFace = oPart.CreateReferenceFromBRepName ( "RSur:(Face:(Brp:(Pad.1;1);None:());WithTemporaryBody;WithoutBuildError;WithSelectingFeatureSupport)", oEdgeFillet1 )
+Set oBottomFace = oPart.CreateReferenceFromBRepName ( "RSur:(Face:(Brp:(Pad.1;1);None:(#));WithTemporaryBody;WithoutBuildError;WithSelectingFeatureSupport)", oEdgeFillet1 )
 
+```
 ```
 
 ```
@@ -163,17 +183,25 @@ Retrieve the Rsur features representing the top and bottom faces of the pad to u
 
 ... ' Define the fillet to be created with the first face
 ```vbscript
+```vbscript
 Dim oEdgeFillet2 As ConstRadEdgeFillet
 ```vbscript
+```
+```vbscript
 Set oEdgeFillet2 = oPart.ShapeFactory.AddNewEdgeFilletWithConstantRadius ( oTopFace, 1, 15.000000 ) ' Define the fillet radius to 5 mm
+```
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Dim oEdgeFillet2 As ConstRadEdgeFillet
 ```vbscript
+```
+```vbscript
 Set oEdgeFillet2 = oPart.ShapeFactory.AddNewEdgeFilletWithConstantRadius ( oTopFace, 1, 15.000000 ) ' Define the fillet radius to 5 mm
+```
 ```
 
 ```

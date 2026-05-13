@@ -4,13 +4,13 @@ title: "Using a Tessellation Operator"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGMOperatorsInterfaces", "CATICGMCellTessellator", "CAATesBody", "CAAGMOperatorsTesBody", "CATICGMBodyTessellator", "CATICGMObject", "CAAGMModelGemBrowser", "CATICGMTopSkin", "CATIA"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcTesBody.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcTesBody.htmmd"
 converted: "2026-05-11T17:33:48.537640"
 ```
 
 ---
 tags: ["CAAGMOperatorsInterfaces", "CATICGMCellTessellator", "CAATesBody", "CAAGMOperatorsTesBody", "CATICGMBodyTessellator", "CATICGMObject", "CAAGMModelGemBrowser", "CATICGMTopSkin", "CATIA"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcTesBody.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcTesBody.htmmd"
 converted: "2026-05-11T17:33:48.537640"
 Using a Tessellation Operator
 
@@ -76,7 +76,7 @@ These iterators are all built on the same scheme. To use them:
     * Increment the iterator.
     * Retrieve one object.
 These iterators are all built on the same scheme. To use them:
-The CAAGMOperatorsTesBody Use Case CAAGMOperatorsTesBody is a use case of the CAAGMOperatorsInterfaces.edu framework that illustrates the tessellation capabilities. What Does CAAGMOperatorsTesBody Do This use case creates a body representing a quarter of hemisphere. Then it defines a tessellation operator, runs it, and uses the results to create lines representing the generated bars. Finally, it clears the environment. How to Launch CAAGMOperatorsTesBody To launch CAAGMOperatorsTesBody, you will need to set up the build time environment, then compile CAAGMOperatorsTesBody.m along with its prerequisites, set up the run time environment, and then execute the use case [5]. If you simply type CAAGMOperatorsTesBody with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsTesBody e/Tessellation.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case [6]. Where to Find the CAAGMOperatorsTesBody Code The CAAGMOperatorsTesBody use case is made of a main named CAATesBody.cpp located in the CAAGMOperatorsTesBody.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootDirectory\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsTesBody.m\` where `InstallRootFolder` [5] is the folder where the API CD-ROM is installed. Step-by-Step There are five logical sections in CAAGMOperatorsTesBody:
+The CAAGMOperatorsTesBody Use Case CAAGMOperatorsTesBody is a use case of the CAAGMOperatorsInterfaces.edu framework that illustrates the tessellation capabilities. What Does CAAGMOperatorsTesBody Do This use case creates a body representing a quarter of hemisphere. Then it defines a tessellation operator, runs it, and uses the results to create lines representing the generated bars. Finally, it clears the environment. How to Launch CAAGMOperatorsTesBody To launch CAAGMOperatorsTesBody, you will need to set up the build time environment, then compile CAAGMOperatorsTesBody.m along with its prerequisites, set up the run time environment, and then execute the use case [5]. If you simply type CAAGMOperatorsTesBody with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsTesBody e/Tessellation.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case [6]. Where to Find the CAAGMOperatorsTesBody Code The CAAGMOperatorsTesBody use case is made of a main named CAATesBody.cpp located in the CAAGMOperatorsTesBody.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootDirectory/CAAGMOperatorsInterfaces.edu/CAAGMOperatorsTesBody.m/` where `InstallRootFolder` [5] is the folder where the API CD-ROM is installed. Step-by-Step There are five logical sections in CAAGMOperatorsTesBody:
     1. Creating the Geometry Factory
     2. Creating the Topological Body representing a topological sphere
     3. Tessellating the Body
@@ -84,7 +84,7 @@ The CAAGMOperatorsTesBody Use Case CAAGMOperatorsTesBody is a use case of the CA
     5. Writing the Model And Closings the Container
 Creating the Geometry Factory The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
 
-    CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**() ;
+    CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**(#) ;
 ```vbscript
     if (NULL==piGeomFactory) return (1);
 
@@ -119,9 +119,9 @@ if (NULL==piSphere)
      //
      // ... and the body
      //
-     CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration(); // defines an open configuration
+     CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration(#); // defines an open configuration
      // creates the data of the operator : configuration + journal
-CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration(); // defines an open configuration
+CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration(#); // defines an open configuration
      CATTopData topdata(pConfig,NULL);
      CATSurLimits limits;
      piSphere->GetLimits(limits);                                         // retrieves the sphere limits
@@ -153,15 +153,15 @@ if (NULL==pSkinOper)
 return (1);
 ```
 
-     pSkinOper->**Run**();
-     CATBody * piBody=pSkinOper->**GetResult**();
+     pSkinOper->**Run**(#);
+     CATBody * piBody=pSkinOper->**GetResult**(#);
      if (NULL==piBody)
 ```
 
      {
        ::CATCloseCGMContainer(piGeomFactory);
-pSkinOper->**Run**();
-CATBody * piBody=pSkinOper->**GetResult**();
+pSkinOper->**Run**(#);
+CATBody * piBody=pSkinOper->**GetResult**(#);
 if (NULL==piBody)
 ```vbscript
        return (1);
@@ -175,15 +175,15 @@ if (NULL==piBody)
 return (1);
 ```
 
-    pSkinOper->**Release**();
+    pSkinOper->**Release**(#);
     pSkinOper = NULL;
 ```
 
     // Releases the configuration
 return (1);
-pSkinOper->**Release**();
+pSkinOper->**Release**(#);
 pSkinOper = NULL;
-    pConfig->**Release**();
+    pConfig->**Release**(#);
 
 The geometry is created by the `CreateSphere` method of `CATGeoFactory`. The body is created by the topological operator `CATICGMTopSkin`. To use the operator:
 
@@ -208,12 +208,12 @@ Tessellating the Body In this use case `piBody` is the pointer to the body to te
 double sag   = 0.2;
 CATICGMBodyTessellator * pTessellator =:: **CATCGMCreateBodyTessellator**(piBody,sag);
 if (NULL!=pTessellator)
-     pTessellator -> **Run**();
+     pTessellator -> **Run**(#);
 
      //
      // Get the results
      //
-pTessellator -> **Run**();
+pTessellator -> **Run**(#);
      CATBoolean isPlanar=FALSE;
      CATCGMTessPointIter *    pVertices  = NULL;
      CATCGMTessStripeIter *   pStrips    = NULL;
@@ -227,13 +227,13 @@ CATCGMessPolyIter *     pPolygons  = NULL;
 CATCGMTessTrianIter *    pTriangles = NULL;
      CATLISTP(CATCell) faces;
      piBody->GetAllCells( faces,2); // faces are cells of dimension 2
-     int numberOfFaces = faces.Size();
+     int numberOfFaces = faces.Size(#);
 
      // Scan  the result for one face
 ```vbscript
 CATLISTP(CATCell) faces;
 piBody->GetAllCells( faces,2); // faces are cells of dimension 2
-int numberOfFaces = faces.Size();
+int numberOfFaces = faces.Size(#);
      for (int i=1 ; i<=numberOfFaces ; i++)
 ```
 
@@ -258,7 +258,7 @@ for (int i=1 ; i<=numberOfFaces ; i++)
      }
      //
      // delete the operator
-     **pTessellator- >Release();
+     **pTessellator- >Release(#);
      pTessellator = NULL**;
     }
 
@@ -283,13 +283,13 @@ CATLine * piLn      = NULL;
     {
 ```vbscript
 if(NULL != pVertices)
-       long nbp=pVertices->**GetNbPoint**();
+       long nbp=pVertices->**GetNbPoint**(#);
 ```
 
        **aCoord** = new float[nbp][3];
 ```vbscript
 if(NULL != pVertices)
-long nbp=pVertices->**GetNbPoint**();
+long nbp=pVertices->**GetNbPoint**(#);
        pVertices->**GetPointXyzAll**(aCoord); // all the coordinates in one shot
 ```
 
@@ -303,17 +303,17 @@ long nbp=pVertices->**GetNbPoint**();
 ```vbscript
 if(NULL != pStrips)
       long nbs=0;
-      while (0==(pStrips->**IsExhausted**()))       // last strip?
+      while (0==(pStrips->**IsExhausted**(#)))       // last strip?
 ```
 
       {
 long nbs=0;
-while (0==(pStrips->**IsExhausted**()))       // last strip?
+while (0==(pStrips->**IsExhausted**(#)))       // last strip?
 ```vbscript
-        nbs=CATMax(nbs,pStrips->**GetStriNbPts**()); // the result of the current strip
+        nbs=CATMax(nbs,pStrips->**GetStriNbPts**(#)); // the result of the current strip
 ```
 
-        pStrips->**GoToNext**();                     // next strip
+        pStrips->**GoToNext**(#);                     // next strip
 
       }
 
@@ -324,26 +324,26 @@ while (0==(pStrips->**IsExhausted**()))       // last strip?
       //
       // from the beginning again to retrieve the results
       //
-      pStrips->Reset();                          //initialize the strip iterator
-pStrips->Reset();                          //initialize the strip iterator
+      pStrips->Reset(#);                          //initialize the strip iterator
+pStrips->Reset(#);                          //initialize the strip iterator
 ```vbscript
-      while (0==(pStrips->IsExhausted()))        // last one?
+      while (0==(pStrips->IsExhausted(#)))        // last one?
 
 ```
 
       {
-pStrips->Reset();                          //initialize the strip iterator
-while (0==(pStrips->IsExhausted()))        // last one?
+pStrips->Reset(#);                          //initialize the strip iterator
+while (0==(pStrips->IsExhausted(#)))        // last one?
 ```vbscript
-        nbs=pStrips->GetStriNbPts();
+        nbs=pStrips->GetStriNbPts(#);
 ```
 
         pStrips->**GetStriNuPts**(aNuPts);
 
         // create some interior lines of the strip from the results
-while (0==(pStrips->IsExhausted()))        // last one?
+while (0==(pStrips->IsExhausted(#)))        // last one?
 ```vbscript
-nbs=pStrips->GetStriNbPts();
+nbs=pStrips->GetStriNbPts(#);
 ```
 
 pStrips->**GetStriNuPts**(aNuPts);
@@ -353,7 +353,7 @@ pStrips->**GetStriNuPts**(aNuPts);
 ```
 
         {
-nbs=pStrips->GetStriNbPts();
+nbs=pStrips->GetStriNbPts(#);
 pStrips->**GetStriNuPts**(aNuPts);
 for (int j=0;j<nbs-1;j++)
 ```vbscript
@@ -373,7 +373,7 @@ for (int j=0;j<nbs-1;j++)
 CATMathPoint(aCoord[aNuPts[j+1]][0],
 aCoord[aNuPts[j+1]][1],
 aCoord[aNuPts[j+1]][2]) );
-      pStrips->GoToNext();                      // next one
+      pStrips->GoToNext(#);                      // next one
 ```
 
     }
@@ -404,7 +404,7 @@ ofstream filetowrite(pfileName, ios::binary ) ;
     #endif
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
-       filetowrite.close();
+       filetowrite.close(#);
      }
 
      //

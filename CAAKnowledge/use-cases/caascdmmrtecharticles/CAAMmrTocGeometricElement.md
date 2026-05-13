@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Geometric Element Automation Objects"
-category: "use-case"
+category: tech-article
 module: "CAAScdMmrTechArticles"
 tags: []
-source_file: "Doc/online/CAAScdMmrTechArticles/CAAMmrTocGeometricElement.htm"
+source_file: "Doc/online/CAAScdMmrTechArticles/CAAMmrTocGeometricElement.htmmd"
 converted: "2026-05-11T17:31:51.147648"
 ```
 

@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating a Composite Law"
-category: "use case"
+category: use-case case"
 module: "CAACgmModel"
 tags: ["CAAGMModelInterfaces", "CAAGMModelMakeLaws"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcCompositeLaw.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcCompositeLaw.htmmd"
 converted: "2026-05-11T17:33:48.173955"
 ```
 

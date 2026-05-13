@@ -4,7 +4,7 @@ title: "Retrieving Weld Information on Plate Objects"
 category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CATIA", "CAAStrWeldInfoOnPlate", "CAAScdStrUseCases"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrWeldInfoOnPlate.htm"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrWeldInfoOnPlate.htmmd"
 converted: "2026-05-11T17:31:50.915079"
 ```
 
@@ -40,19 +40,27 @@ CAAStrWeldInfoOnPlate includes the following steps:
 
 8. Retrieving Weld Features on the OperatedSplitPlate with No Operating Element (Weld Use Case 2)
 9. Retrieving Weld Attributes of Weld Use Case 2 Features
+```vbscript
 Opens the CAAStrWeldInfoOnPlate.CATPart in CATIA.
 
 ```vbscript
-    Sub CATMain()
+```
+```vbscript
+    Sub CATMain(#)
 
+```
 ```
 
 ```vbscript
+```vbscript
     Dim ObjPart As Part
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set ObjPart = CATIA.ActiveDocument.Part
 
+```
 ```
 
 ```
@@ -62,7 +70,9 @@ Opens the CAAStrWeldInfoOnPlate.CATPart in CATIA.
 #### Retrieving Factory Object from Part Document
 
 ```vbscript
+```vbscript
 Set ObjPart = CATIA.ActiveDocument.Part
+```
 ```
 
 This step describes how to get Structure Feature Factory. The Factory object is retrieved by adding object to nibble to the selection list.
@@ -76,11 +86,15 @@ This step describes how to get Structure Feature Factory. The Factory object is 
 ```
 
 ```vbscript
+```vbscript
     Dim FactoryObj As SfmFactory
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set FactoryObj = ObjPart.GetCustomerFactory("SfmFactory")
 
+```
 ```
 
 ```
@@ -90,7 +104,9 @@ This step describes how to get Structure Feature Factory. The Factory object is 
 #### Getting the Manager from Factory
 
 ```vbscript
+```vbscript
 Set FactoryObj = ObjPart.GetCustomerFactory("SfmFactory")
+```
 ```
 
 The Manager Object is obtained by GetManager.
@@ -104,11 +120,15 @@ The Manager Object is obtained by GetManager.
 ```
 
 ```vbscript
+```vbscript
     Dim ManagerObj As SfmManager
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set ManagerObj = FactoryObj.GetManager
 
+```
 ```
 
 ```
@@ -118,7 +138,9 @@ The Manager Object is obtained by GetManager.
 #### Retrieving the Super Plates
 
 ```vbscript
+```vbscript
 Set ManagerObj = FactoryObj.GetManager
+```
 ```
 
 This step describes how to get the collection of Super Plates and how to get one specific element in it.
@@ -132,9 +154,13 @@ This step describes how to get the collection of Super Plates and how to get one
 ```
 
 ```vbscript
+```vbscript
     Dim SuperPlates As References
 ```vbscript
+```
+```vbscript
     Set SuperPlates = ManagerObj.GetSuperPlates
+```
 ```
 
 ```
@@ -143,11 +169,15 @@ This step describes how to get the collection of Super Plates and how to get one
 ```vbscript
 ```vbscript
     'Retrieving Operating Super Plate
+```vbscript
     Dim SuperPlate1 As SfmSuperPlate
     Set SuperPlate1 = SuperPlates.Item(1)
     'Retrieving Operated Super Plate
+```
+```vbscript
     Dim SuperPlate2 As SfmSuperPlate
     Set SuperPlate2 = SuperPlates.Item(2)
+```
 ```
 
 ```
@@ -168,9 +198,13 @@ This step describes how to get the collection of Split Plates and how to get one
 ```
 
 ```vbscript
+```vbscript
     Dim OperatingSplitPlateRefs As References
 ```vbscript
+```
+```vbscript
     Set OperatingSplitPlateRefs = SuperPlate1.SplitPlates
+```
 ```
 
 ```
@@ -179,6 +213,7 @@ This step describes how to get the collection of Split Plates and how to get one
 ```vbscript
 ```vbscript
     'Retrieving the SplitPlates of SuperPlate2
+```vbscript
     Dim OperatedSplitPlateRefs As SfmSplitPlates
     Set OperatedSplitPlateRefs = SuperPlate2.SplitPlatesObjects
 
@@ -187,6 +222,7 @@ This step describes how to get the collection of Split Plates and how to get one
 
     Dim OperatedSplitPlate As SfmSplitPlate
     Set OperatedSplitPlate = OperatedSplitPlateRefs.Item(1)
+```
 ```
 
 ```
@@ -208,7 +244,10 @@ This step describes how to get the collection of Weld features with operating el
 ```
 
 ```vbscript
+```vbscript
     Dim ListWeldsUC1 As SfmWelds
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set ListWeldsUC1 = OperatedSplitPlate.GetWelds(OperatingSplitPlate)
@@ -216,6 +255,7 @@ This step describes how to get the collection of Weld features with operating el
     Dim WeldUC1Feature As SfmWeld
     Set WeldUC1Feature = ListWeldsUC1.Item(1)
 
+```
 ```
 
 ```
@@ -247,7 +287,10 @@ This step describes how to get the collection of Weld features with operating el
 ```
 
 ```vbscript
+```vbscript
     Dim ListWeldsUC2 As SfmWelds
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set ListWeldsUC2 = OperatedSplitPlate.GetWelds(Nothing)
@@ -255,6 +298,7 @@ This step describes how to get the collection of Weld features with operating el
     Dim WeldUC2Feature As SfmWeld
     Set WeldUC2Feature = ListWeldsUC2.Item(1)
 
+```
 ```
 
 ```
@@ -272,11 +316,13 @@ This step describes how to get the weld information set on the Operated split pl
     ustrEdgePrepUC2 = WeldUC2Feature.EdgePreparation
 
 ```vbscript
+```vbscript
     End Sub
 
 ```
+```
 
-![End Task Icon](../CAAScrBase/images/aendtask.gif)
+![End Task Icon](./assets/images/aendtask.gif)
 
 [Top]
 

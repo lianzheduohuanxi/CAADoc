@@ -4,13 +4,13 @@ title: "The CGM Topological Model"
 category: "use-case"
 module: "CAATobTechArticles"
 tags: []
-source_file: "Doc/online/CAATobTechArticles/TopoModel.htm"
+source_file: "Doc/online/CAATobTechArticles/TopoModel.htmmd"
 converted: "2026-05-11T17:33:45.920949"
 ```
 
 ---
 tags: []
-source_file: "Doc/online/CAATobTechArticles/TopoModel.htm"
+source_file: "Doc/online/CAATobTechArticles/TopoModel.htmmd"
 converted: "2026-05-11T17:33:45.920949"
 Geometric Modeler |  Topology |  The CGM Topological Model _How the Topological Concepts are implemented_
 
@@ -57,8 +57,10 @@ The building up of a CATBody takes several steps
   * Attach the first level of domain(s) defining the CATBody.
   * Declare the completion of the CATBody and freeze it (this will be possible only if it satisfies to all the validity criteria, see Validity of the Topological Objects). It now can be used for topological operations, but cannot be modified anymore. It is necessary to make a copy of a frozen CATBody into a non-frozen one, in order to be able to perform modifications. Hence, topological operators do never modify input bodies, but retrieve the result into a new body.
 
+```vbscript
 [Top] CATDomain and CATCell CATDomain and CATCell interfaces implement the concept of topological domains and cells [2]. They offer navigation methods, and all Get and Set methods on their attributes. The following arrays present the mapping between the concepts and the CGM interfaces. Space Dimension | Cell (concepts) | CATCell | Associated CATGeometry | Bounded by
 ---|---|---|---|---
+```
 0 | Vertex | CATVertex | CATMacroPoint |
 1 | Edge | CATEdge | CATEdgeCurve | CATVertex
 2 | Face | CATFace | CATSurface | CATLoop, CATVertexInFace
@@ -114,7 +116,7 @@ the cell orientation is reversed with regards to the geometry orientation.
 the cell orientation is reversed with regards to the geometry orientation.
 the cell orientation is the geometry orientation.
     the cell orientation is not defined.
-Fig. 3: Orientation of the cell with regards to its geometry ![TopoModelOrientation2.gif \(3983 bytes\)](images/TopoModelOrientation1.gif) | The edge V1-V2 is oriented from V2 to V1. Its orientation with regards to the geometry is inverted (`CATOrientationNegative`) Face has the same orientation as the orientation of the underlying surface. (`CATOrientationPositive`)
+Fig. 3: Orientation of the cell with regards to its geometry ![TopoModelOrientation2.gif /(3983 bytes/)](images/TopoModelOrientation1.gif) | The edge V1-V2 is oriented from V2 to V1. Its orientation with regards to the geometry is inverted (`CATOrientationNegative`) Face has the same orientation as the orientation of the underlying surface. (`CATOrientationPositive`)
 
 [Top] Location of a CATDomain Bounding a CATCell
 
@@ -139,7 +141,7 @@ Fig. 3: Orientation of the cell with regards to its geometry ![TopoModelOrientat
     For creation into a body.
 ```
 
-Fig. 4: Location of a cell ![TopoModelOrientation1.gif \(6556 bytes\)](images/TopoModelOrientation2.gif) | Face is bounded by 3 loop domains: L1 is its external boundary: `CATLocationOuter` L2 is an internal loop: `CATLocationInner` L3 is an immersed loop: `CATLocationFull`
+Fig. 4: Location of a cell ![TopoModelOrientation1.gif /(6556 bytes/)](images/TopoModelOrientation2.gif) | Face is bounded by 3 loop domains: L1 is its external boundary: `CATLocationOuter` L2 is an internal loop: `CATLocationInner` L3 is an immersed loop: `CATLocationFull`
 ---|---
 
 [Top] Matter Side The relative orientation between the cell and its underlying geometry and the type of location of the boundaries are not sufficient to precisely defined the relationships between the cells. It remains to be declared on which side is the matter, when a bounding cell is run along. The CATSide attribute defines the matter side on a bounding cell of a cell. This attribute is independent of the geometric orientation (CATOrientation), but must be consistent with the location (CATLocation).   |   | CATFace | CATEdge | CATVertex
@@ -155,13 +157,16 @@ Fig. 4: Location of a cell ![TopoModelOrientation1.gif \(6556 bytes\)](images/To
 `CATSideFull` |   |   | Impossible
  Top: The order for defining the outer loop is E1, E2, E3 (or E2, E3, E1; or E3, E1, E2). All other order is wrong. The order for defining the inner loop is I1, I2, I3 (or I2, I3, I1; or I3, I1, I2). All other order is wrong. Bottom: The order for defining the outer loop is E3, E2, E1 (or E2, E1, E3; or E1, E3, E2). All other order is wrong. The order for defining the inner loop is I3, I2, I1 (or I2, I1, I3; or I1, I3, I2). All other order is wrong.
 ---|---
-Notice the CATSide attributes associated with the CATEdges. A boundary cell operator always returns the CATCells in the order they have been defined inside the CATLoop. When a cell bounds a domain twice, the boundary cell operator returns the cell twice: once with the`CATSideLeft` attribute, once with the `CATSideRight attribute`. This configuration , allowed by the CGM topological model, is however to avoid: some topological operators does not hold it in a first version. [Top] Orientation of a CATCell inside a CATDomain A CATDomain is globally oriented. Each CATCell also owns its own orientation. It is the reason why it is necessary to set the `CATOrientation` of a CATCell with regards to the CATDomain that contends it. If this CATDomain is itself a boundary, it is equivalent to give the `CATOrientation` of the CATCell with regards to the CATDomain, or to define the `CATSide` of the CATCell (see the example of the cube below). Fig. 6: Orientation of a cell inside a domain ![TopoModelOrientation3.gif \(5285 bytes\)](images/TopoModelOrientation3.gif) | The global orientation of the shells are represented by the black arrows. The orientation of each face is drawn in light blue. The faces S2, C2, C4 must have the attribute `CATOrientationNegative` to keep the consistency of the shell domain. The matter side is then `CATSideRight` for the faces C2 and C4, and `CATSideLeft` for the faces C1 and C3 (no matter side for S1, S2, S3, that do not bound a CATDomain).
+Notice the CATSide attributes associated with the CATEdges. A boundary cell operator always returns the CATCells in the order they have been defined inside the CATLoop. When a cell bounds a domain twice, the boundary cell operator returns the cell twice: once with the`CATSideLeft` attribute, once with the `CATSideRight attribute`. This configuration , allowed by the CGM topological model, is however to avoid: some topological operators does not hold it in a first version. [Top] Orientation of a CATCell inside a CATDomain A CATDomain is globally oriented. Each CATCell also owns its own orientation. It is the reason why it is necessary to set the `CATOrientation` of a CATCell with regards to the CATDomain that contends it. If this CATDomain is itself a boundary, it is equivalent to give the `CATOrientation` of the CATCell with regards to the CATDomain, or to define the `CATSide` of the CATCell (see the example of the cube below). Fig. 6: Orientation of a cell inside a domain ![TopoModelOrientation3.gif /(5285 bytes/)](images/TopoModelOrientation3.gif) | The global orientation of the shells are represented by the black arrows. The orientation of each face is drawn in light blue. The faces S2, C2, C4 must have the attribute `CATOrientationNegative` to keep the consistency of the shell domain. The matter side is then `CATSideRight` for the faces C2 and C4, and `CATSideLeft` for the faces C1 and C3 (no matter side for S1, S2, S3, that do not bound a CATDomain).
 ---|---
 [Top] Methodology Do the following steps for managing the different orientations:
 
   * Define the `CATOrientation` of the CATCell with regards to the geometry orientation (choose the orientation of the underlying geometry as much as possible)
   * Define the CATDomain that bounds the CATCell: set the type of boundary (`CATLocation`). For a CATFace, give the list of the CATEdges by letting the matter on the left when you stand along the face direction.
+```vbscript
   * Set the matter side `CATSide` for each CATCell, with regards to its own orientation or define the `CATOrientation` of the CATCell with regards to the CATDomain it belongs to
+
+```
 
 [Top] Validity of the Topological Objects The validity of the objects is checked at the CATBody completion. The CATBody cannot be frozen if one of the following rules is not fulfilled:
 

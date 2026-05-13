@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating Sketching Elements in a Part Document"
-category: "use case"
+category: use-case case"
 module: "CAASkiUseCases"
 tags: ["CATIPrtContainer", "CATI2DConstraintFactory_var", "CATI2DTopologicalOperators_var", "CATISketch_var", "CATI2DPoint_var", "CATISketchFactory_var", "CATI2DLine_var", "CATI2DWFGeometry_var", "CATIContainerOfDocument_var", "CATIPrtPart_var", "CATIContainer", "CATInit_var", "CATISpecObject_var", "CAASketcherInterfaces", "CAASkiBasicGeometries", "CATI2DWFFactory_var", "CATI2DConstraintFactory", "CATISketch", "CATI2DCurve_var", "CATI2DAxis_var"]
-source_file: "Doc/online/CAASkiUseCases/CAASkiBasicGeometries.htm"
+source_file: "Doc/online/CAASkiUseCases/CAASkiBasicGeometries.htmmd"
 converted: "2026-05-11T17:31:50.823243"
 ```
 
@@ -87,10 +87,10 @@ When you launch the use case, pass the full pathname of the file into which you 
 The CAASkiBasicGeometries use case is made of a main program located in the CAASkiBasicGeometries.m module of the CAASketcherInterfaces.edu framework:
 
 The CAASkiBasicGeometries use case is made of a main program located in the CAASkiBasicGeometries.m module of the CAASketcherInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAASketcherInterfaces.edu\CAASkiBasicGeometries.m\`
+Windows | `InstallRootDirectory/CAASketcherInterfaces.edu/CAASkiBasicGeometries.m/`
 
 The CAASkiBasicGeometries use case is made of a main program located in the CAASkiBasicGeometries.m module of the CAASketcherInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAASketcherInterfaces.edu\CAASkiBasicGeometries.m\`
+Windows | `InstallRootDirectory/CAASketcherInterfaces.edu/CAASkiBasicGeometries.m/`
 Unix | `InstallRootDirectory/CAASketcherInterfaces.edu/CAASkiBasicGeometries.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -141,8 +141,8 @@ char** iArgv)   // Path to the new *.CATPart document
       CATIPrtContainer *piPrtContainer = NULL;
       HRESULT hr = piContainer->QueryInterface( IID_CATIPrtContainer, (void **)&piPrtContainer );
       if ( FAILED(hr) ) return 5;
-      CATIPrtPart_var spPart(piPrtContainer->GetPart());
-      piPrtContainer->Release();
+      CATIPrtPart_var spPart(piPrtContainer->GetPart(#));
+      piPrtContainer->Release(#);
 
     ...
 
@@ -154,18 +154,18 @@ This section represents the usual sequence for creating a Part document (CATPart
 #### Creating and Opening the Sketch Edition
 
     ...
-      CATLISTV(CATISpecObject_var) spRefPlanes = spPart->GetReferencePlanes();
+      CATLISTV(CATISpecObject_var) spRefPlanes = spPart->GetReferencePlanes(#);
 
       //------------------------------------------------------------------------------------------
       // SKETCH CREATION and EDIT:Instantiates the sketch with the plane XY (refPlanes[1])
       //------------------------------------------------------------------------------------------
 ```vbscript
-CATLISTV(CATISpecObject_var) spRefPlanes = spPart->GetReferencePlanes();
+CATLISTV(CATISpecObject_var) spRefPlanes = spPart->GetReferencePlanes(#);
       CATISketchFactory_var spSketchFactory(piContainer);
       if ( NULL_var == spSketchFactory ) return 6;
       CATISketch_var spSketch(spSketchFactory->CreateSketch(spRefPlanes[1]));
       if ( NULL_var == spSketch ) return 7;
-    	spSketch->OpenEdition();
+    	spSketch->OpenEdition(#);
 ```
 
     ...
@@ -290,9 +290,9 @@ We solve the dimensional system. The last point modified has the top priority. G
     ...
       CATI2DAxis_var spSupport;
       spSketch->GetAbsolute2DAxis(spSupport);
-      spConstraint2DFactory->CreateConstraint( spPt_bottom_left, NULL, spSupport->GetHDirection(), NULL, NULL, NULL, NULL,
+      spConstraint2DFactory->CreateConstraint( spPt_bottom_left, NULL, spSupport->GetHDirection(#), NULL, NULL, NULL, NULL,
                                                Cst2DType_Distance, 0, 0 );
-      spConstraint2DFactory->CreateConstraint( spPt_bottom_left, NULL, spSupport->GetVDirection(), NULL, NULL, NULL, NULL,
+      spConstraint2DFactory->CreateConstraint( spPt_bottom_left, NULL, spSupport->GetVDirection(#), NULL, NULL, NULL, NULL,
                                                Cst2DType_Distance, 0, 0 );
 
     ...
@@ -327,7 +327,7 @@ We create an operation on the geometry factory. This operation corresponds to a 
 #### Closing the Sketch Edition
 
     ...
-      spSketch->CloseEdition();
+      spSketch->CloseEdition(#);
     ...
 
 ---
@@ -344,7 +344,7 @@ We close the sketch edition.
       // Memory cleaning
 CATDocumentServices::SaveAs(*pDocument,pFileName);
 pSession->Delete_Session(pSessionIdent);
-      piContainer->Release();
+      piContainer->Release(#);
 
       return 0;
 

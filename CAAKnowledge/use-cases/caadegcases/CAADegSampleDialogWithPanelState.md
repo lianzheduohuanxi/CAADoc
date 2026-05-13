@@ -4,13 +4,13 @@ title: "Associating a Dialog Box with a State"
 category: "use case"
 module: "CAADegUseCases"
 tags: ["CAADegGeoCommands", "CAADegPointEditor", "CATIndicationAgent", "CAADialogEngine", "CAAGeometry", "CAADegCreatePointCmd", "CAADegFileCmd"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleDialogWithPanelState.htm"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleDialogWithPanelState.htmmd"
 converted: "2026-05-11T17:33:49.657183"
 ```
 
 ---
 tags: ["CAADegGeoCommands", "CAADegPointEditor", "CATIndicationAgent", "CAADialogEngine", "CAAGeometry", "CAADegCreatePointCmd", "CAADegFileCmd"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleDialogWithPanelState.htm"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleDialogWithPanelState.htmmd"
 converted: "2026-05-11T17:33:49.657183"
 3D PLM Enterprise Architecture |  User Interface - Commands |  Associating a Dialog Box with a State _Using a dialog box to input data and to trigger several transition from a state_
 
@@ -33,9 +33,9 @@ Abstract This article shows how to use a Dialog box associated with a state in a
 
 * * *
 
-What You Will Learn With This Use Case This use case is intended to show how to use a dialog box associated with a state in a dialog command. This dialog box is used to input precise values rather than indicating a point on the screen. In addition, you will learn how to use the Cancel state. [Top] The Point Command Use Case The Point command is a use case of the CAADialogEngine.edu framework that illustrates the DialogEngine framework capabilities. [Top] What Does the Point Command Do The Point command is a state dialog command that creates a point in the 3D space according to the following UML statechart diagram [1]. ![CAACreatePointStatechart.jpg \(15193 bytes\)](images/CAACreatePointStatechart.jpg) The dialog is as follows: ![CAACreatePoint1.jpg \(19413 bytes\)](images/CAACreatePoint1.jpg) | Select the Point command. The active state becomes GetPoint, and the dialog box is displayed. You can either indicate a point or use the dialog box.
+What You Will Learn With This Use Case This use case is intended to show how to use a dialog box associated with a state in a dialog command. This dialog box is used to input precise values rather than indicating a point on the screen. In addition, you will learn how to use the Cancel state. [Top] The Point Command Use Case The Point command is a use case of the CAADialogEngine.edu framework that illustrates the DialogEngine framework capabilities. [Top] What Does the Point Command Do The Point command is a state dialog command that creates a point in the 3D space according to the following UML statechart diagram [1]. ![CAACreatePointStatechart.jpg /(15193 bytes/)](images/CAACreatePointStatechart.jpg) The dialog is as follows: ![CAACreatePoint1.jpg /(19413 bytes/)](images/CAACreatePoint1.jpg) | Select the Point command. The active state becomes GetPoint, and the dialog box is displayed. You can either indicate a point or use the dialog box.
 ---|---
-What You Will Learn With This Use Case This use case is intended to show how to use a dialog box associated with a state in a dialog command. This dialog box is used to input precise values rather than indicating a point on the screen. In addition, you will learn how to use the Cancel state. [Top] The Point Command Use Case The Point command is a use case of the CAADialogEngine.edu framework that illustrates the DialogEngine framework capabilities. [Top] What Does the Point Command Do The Point command is a state dialog command that creates a point in the 3D space according to the following UML statechart diagram [1]. ![CAACreatePointStatechart.jpg \(15193 bytes\)](images/CAACreatePointStatechart.jpg) The dialog is as follows: ![CAACreatePoint1.jpg \(19413 bytes\)](images/CAACreatePoint1.jpg) | Select the Point command. The active state becomes GetPoint, and the dialog box is displayed. You can either indicate a point or use the dialog box.
+What You Will Learn With This Use Case This use case is intended to show how to use a dialog box associated with a state in a dialog command. This dialog box is used to input precise values rather than indicating a point on the screen. In addition, you will learn how to use the Cancel state. [Top] The Point Command Use Case The Point command is a use case of the CAADialogEngine.edu framework that illustrates the DialogEngine framework capabilities. [Top] What Does the Point Command Do The Point command is a state dialog command that creates a point in the 3D space according to the following UML statechart diagram [1]. ![CAACreatePointStatechart.jpg /(15193 bytes/)](images/CAACreatePointStatechart.jpg) The dialog is as follows: ![CAACreatePoint1.jpg /(19413 bytes/)](images/CAACreatePoint1.jpg) | Select the Point command. The active state becomes GetPoint, and the dialog box is displayed. You can either indicate a point or use the dialog box.
  Click to indicate a point. The transition loops to GetPoint and creates the point. You can click another point or use the dialog box.
  Enter values in the dialog box spinners. Clicking Apply create the point whose coordinates were entered and you can again either click to indicate a point or use the dialog box. This is what's shown beside. Clicking OK creates the point and ends the command. Clicking Cancel doesn't create the point and ends the command.
 Indicating a point [2] means clicking on the screen at the desired location with the left mouse key. This is a very handy way, but sometimes it is not accurate enough, and a dialog box in which numerical values can be entered is often needed. The Point command enables both indication and dialog box input. Only the latter is described here. [Top] How to Launch the Point Command See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)" use case for a detailed description of how this use case should be launched [3]. Then, in the window where you run the mkrun command, do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following:
@@ -44,7 +44,7 @@ Indicating a point [2] means clicking on the screen at the desired location with
     * In the New box, select **CAAGeometry** and click **OK**
     * Select **Insert** ->**Point**
     * Click in the window background to create points, or enter the point coordinates in the dialog box and click OK or Apply.
-[Top] Where to Find the Point Command Code The Point command is made of a single class named _CAADegCreatePointCmd_ located in the CAADegGeoCommands.m module of the CAADialogEngine.edu framework: Windows | `InstallRootDirectory\CAADialogEngine.edu\CAADegGeoCommands.m\`
+[Top] Where to Find the Point Command Code The Point command is made of a single class named _CAADegCreatePointCmd_ located in the CAADegGeoCommands.m module of the CAADialogEngine.edu framework: Windows | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 ---|---
 Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
@@ -72,14 +72,14 @@ class CAADegCreatePointCmd : public CATStateCommand
 
 ```
 
-        CAADegCreatePointCmd();
-        virtual ~CAADegCreatePointCmd();
+        CAADegCreatePointCmd(#);
+        virtual ~CAADegCreatePointCmd(#);
 
         ...
 public :
-CAADegCreatePointCmd();
-virtual ~CAADegCreatePointCmd();
-        virtual void BuildGraph() ; _// Implements the statechart_
+CAADegCreatePointCmd(#);
+virtual ~CAADegCreatePointCmd(#);
+        virtual void BuildGraph(#) ; _// Implements the statechart_
 
         CATBoolean  CheckPoint(void * iData); _// Checks if the point can be created_
 
@@ -102,7 +102,7 @@ This header file includes:
     * Private data members include the indication agent, the dialog box, and a method called by the action method that actually creates a 3D point in the document.
 [Top] Implementing the Statechart Diagram This is done in the command `BuildGraph` method.
 
-    void CAADegCreatePointCmd::BuildGraph()
+    void CAADegCreatePointCmd::BuildGraph(#)
     {
       //1- Creates the indication agent
       _daIndication = new **CATIndicationAgent**("Indication");
@@ -117,7 +117,7 @@ The indication agent is instantiated. The default projection plane is used; it i
 The indication agent is instantiated. The default projection plane is used; it is a plane parallel to the screen plane  Then, the dialog box is instantiated and built. It is an instance of the _CAADegPointEditor_ class that derives from the _CATDlgDialog_ class and that simply includes a spinner for each coordinate, and three push buttons OK, Apply, and Cancel.
       CATApplicationFrame * pFrame = NULL ;
       CATDialog * pParent = NULL ;
-      pFrame = CATApplicationFrame::**GetFrame**() ;
+      pFrame = CATApplicationFrame::**GetFrame**(#) ;
 ```vbscript
 ```vbscript
       if ( NULL != pFrame )
@@ -129,34 +129,34 @@ The indication agent is instantiated. The default projection plane is used; it i
       {
 CATApplicationFrame * pFrame = NULL ;
 CATDialog * pParent = NULL ;
-pFrame = CATApplicationFrame::**GetFrame**() ;
+pFrame = CATApplicationFrame::**GetFrame**(#) ;
 ```vbscript
 ```vbscript
 if ( NULL != pFrame )
-           pParent = pFrame->**GetMainWindow**() ;
+           pParent = pFrame->**GetMainWindow**(#) ;
 
 ```
 
 ```
 
       }
-pFrame = CATApplicationFrame::**GetFrame**() ;
+pFrame = CATApplicationFrame::**GetFrame**(#) ;
 ```vbscript
 ```vbscript
 if ( NULL != pFrame )
-pParent = pFrame->**GetMainWindow**() ;
+pParent = pFrame->**GetMainWindow**(#) ;
       _PointEditor = new **CAADegPointEditor**(pParent);
 ```
 
 ```
 
-      _PointEditor->**Build**();
+      _PointEditor->**Build**(#);
 
       ...
 
 ---
 _PointEditor = new **CAADegPointEditor**(pParent);
-_PointEditor->**Build**();
+_PointEditor->**Build**(#);
 The parent of this dialog box is an invisible dialog object which contains all the windows of the same document. This object is returned by the `GetMainWindow` method on the application frame. Refer to the article entitled "Understanding the Application Frame Layout" [5] for complete details about this object. Dialog boxes should always be instantiated without controls (or other dialog objects). Instantiating these controls in a `Build` method called after the constructor has returned make sure that the control resources will be correctly allocated. The GetPoint state is an instance of the _CATPanelState_ class, dedicated to states associated with a dialog box.
 
     ...
@@ -196,18 +196,18 @@ The Apply and Ok transitions are retrieved from the state and assigned a conditi
       //5- Completes the Apply transition
       // Sets a condition to the Apply transition
 The Apply and Ok transitions are retrieved from the state and assigned a condition and an action.
-      (stState->**GetApplyTransition**())->**SetCondition**(**Condition**((ConditionMethod)&CAADegCreatePointCmd::CheckPoint));
+      (stState->**GetApplyTransition**(#))->**SetCondition**(**Condition**((ConditionMethod)&CAADegCreatePointCmd::CheckPoint));
 
       // Sets an action to the Apply transition
-      (stState->**GetApplyTransition**())->**SetAction**(**Action**((ActionMethod)&CAADegCreatePointCmd::CreatePointByBox));
+      (stState->**GetApplyTransition**(#))->**SetAction**(**Action**((ActionMethod)&CAADegCreatePointCmd::CreatePointByBox));
 
       //6- Completes the Ok transition
       // Sets a condition to the Ok transition
-(stState->**GetApplyTransition**())->**SetAction**(**Action**((ActionMethod)&CAADegCreatePointCmd::CreatePointByBox));
-      (stState->**GetOkTransition**())->**SetCondition**(**Condition**((ConditionMethod)&CAADegCreatePointCmd::CheckPoint));
+(stState->**GetApplyTransition**(#))->**SetAction**(**Action**((ActionMethod)&CAADegCreatePointCmd::CreatePointByBox));
+      (stState->**GetOkTransition**(#))->**SetCondition**(**Condition**((ConditionMethod)&CAADegCreatePointCmd::CheckPoint));
 
       // Sets an action to the Ok transition
-      (stState->**GetOkTransition**())->**SetAction**(**Action**((ActionMethod)&CAADegCreatePointCmd::CreatePointByBox));
+      (stState->**GetOkTransition**(#))->**SetAction**(**Action**((ActionMethod)&CAADegCreatePointCmd::CreatePointByBox));
        ...
     }
 
@@ -217,18 +217,18 @@ The Apply and Ok transitions are retrieved from the state and assigned a conditi
     ...
       // As the state was created explicitly by "new" instead of the
       // GetInitialState method, it must be released.
-      stState->**Release**();
+      stState->**Release**(#);
     }
 
 ---
 [Top] Releasing the Indication Agent and the Dialog Box A pointer to the indication agent was created in the command `BuildGraph` method as a data member to be accessed and used in different methods. It should be released when it becomes useless. This can be done in the command destructor, as shown here. This could also be done in the `Cancel` method called just before the destructor. In the same way, the dialog box should be destructed as soon as possible. This is possible using the `RequestDelayedDestruction` method.
 
-    CAADegCreatePointCmd::~CAADegCreatePointCmd()
+    CAADegCreatePointCmd::~CAADegCreatePointCmd(#)
     {
-CAADegCreatePointCmd::~CAADegCreatePointCmd()
-      if (NULL != _daIndication) _daIndication->**RequestDelayedDestruction**();
+CAADegCreatePointCmd::~CAADegCreatePointCmd(#)
+      if (NULL != _daIndication) _daIndication->**RequestDelayedDestruction**(#);
       daIndication = NULL ;
-      if (NULL !=_PointEditor)  _PointEditor->**RequestDelayedDestruction**();
+      if (NULL !=_PointEditor)  _PointEditor->**RequestDelayedDestruction**(#);
       _PointEditor = NULL ;
 
       ...

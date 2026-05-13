@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Using Cameras"
-category: "use case"
+category: use-case case"
 module: "CAAAfrUseCases"
 tags: ["CATI3DCamera", "CAAAfrChangeViewNormalCmd", "CAAAfrGeometryWshop", "CAAAfrGeoCommands", "CAAGeometry", "CAAAfrGeoCommand", "CAAApplicationFrame"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleCamera.htm"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleCamera.htmmd"
 converted: "2026-05-11T17:17:55.631615"
 ```
 
@@ -83,10 +83,10 @@ Do not type the module name on the command line, but type CNEXT instead. When th
 The CAAAfrGeoCommand use case is made of a single class named _CAAAfrChangeViewNormalCmd_ located in the CAAAfrGeoCommands.m module of the CAAApplicationFrame.edu framework:
 
 The CAAAfrGeoCommand use case is made of a single class named _CAAAfrChangeViewNormalCmd_ located in the CAAAfrGeoCommands.m module of the CAAApplicationFrame.edu framework:
-Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeoCommands.m\`
+Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeoCommands.m/`
 
 The CAAAfrGeoCommand use case is made of a single class named _CAAAfrChangeViewNormalCmd_ located in the CAAAfrGeoCommands.m module of the CAAApplicationFrame.edu framework:
-Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeoCommands.m\`
+Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeoCommands.m/`
 Unix | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeoCommands.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -101,8 +101,10 @@ To create the command that changes the current window viewpoint, there are three
 ---|---|---
 To create the command that changes the current window viewpoint, there are three steps:
 1 | Create the command and storing the argument | constructor
+```vbscript
 2 | Set the camera axes | `Activate` method
 3 | Create the camera and assign it to the current window | `Activate` method
+```
 
 [Top]
 #### Creating the Command and Storing the Argument
@@ -163,7 +165,7 @@ switch (_ArgumentCmd)
 
 ---
 
-The argument takes the value of 1 for a plane normal to the x axis, 2 for a plane normal to the y axis, and 3 for a plane normal to the z axis. The camera axes are made up of a sight direction axis that joins the eye and the target, and a zenith axis perpendicular to the sight direction. ![CAAAfr3DCamera.gif \(3610 bytes\)](images/CAAAfr3DCamera.gif)
+The argument takes the value of 1 for a plane normal to the x axis, 2 for a plane normal to the y axis, and 3 for a plane normal to the z axis. The camera axes are made up of a sight direction axis that joins the eye and the target, and a zenith axis perpendicular to the sight direction. ![CAAAfr3DCamera.gif /(3610 bytes/)](images/CAAAfr3DCamera.gif)
 
   * The camera that sees the yz plane has a sight direction opposed to the x axis (-1,0,0) and a zenith direction parallel to the z axis.
   * The camera that sees the zx plane has a sight direction opposed to the y axis (0,-1,0) and a zenith direction opposed to the z axis (0,0,-1)
@@ -175,17 +177,17 @@ These direction as set as _CATMathDirection_ instances is the switch.
 #### Creating the Camera and Assigning it to the Current Window
 
       ...
-      CATFrmLayout *pCurrentLayout = **CATFrmLayout::GetCurrentLayout**();
-CATFrmLayout *pCurrentLayout = **CATFrmLayout::GetCurrentLayout**();
+      CATFrmLayout *pCurrentLayout = **CATFrmLayout::GetCurrentLayout**(#);
+CATFrmLayout *pCurrentLayout = **CATFrmLayout::GetCurrentLayout**(#);
 ```vbscript
       if ( pCurrentLayout )
 
 ```
 
       {
-CATFrmLayout *pCurrentLayout = **CATFrmLayout::GetCurrentLayout**();
+CATFrmLayout *pCurrentLayout = **CATFrmLayout::GetCurrentLayout**(#);
 if ( pCurrentLayout )
-        CATFrmWindow *pCurrentWindow = pCurrentLayout->**GetCurrentWindow**();
+        CATFrmWindow *pCurrentWindow = pCurrentLayout->**GetCurrentWindow**(#);
 ```vbscript
         if ( pCurrentWindow )
 
@@ -194,7 +196,7 @@ if ( pCurrentLayout )
         {
 ```vbscript
 if ( pCurrentLayout )
-CATFrmWindow *pCurrentWindow = pCurrentLayout->**GetCurrentWindow**();
+CATFrmWindow *pCurrentWindow = pCurrentLayout->**GetCurrentWindow**(#);
 if ( pCurrentWindow )
           CATFrm3DCamera * pCameraImpl = new **CATFrm3DCamera**("cam3d",
                                                             origin,
@@ -218,20 +220,20 @@ zenith);
 HRESULT rc = pCameraImpl->QueryInterface(IID_CATI3DCamera, (void**)&pCamera);
 if (SUCCEEDED(rc))
             pCurrentWindow->**SetCurrentCamera**(pCamera);
-    	pCamera->Release();
+    	pCamera->Release(#);
 
           }
 ```vbscript
 if (SUCCEEDED(rc))
 pCurrentWindow->**SetCurrentCamera**(pCamera);
-pCamera->Release();
-          pCameraImpl->Release();
+pCamera->Release(#);
+          pCameraImpl->Release(#);
 ```
 
         }
       }
-pCamera->Release();
-pCameraImpl->Release();
+pCamera->Release(#);
+pCameraImpl->Release(#);
       return CATStatusChangeRCCompleted;
 
     }

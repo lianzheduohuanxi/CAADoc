@@ -4,7 +4,7 @@ title: "Querying for a List of Connected Objects"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAASCH_CompRoute01", "CAADoc", "CAAScdSchUseCases", "CAASchAppBase", "CATIA", "CAASCHEDUApp", "CAASchQueryConnectivity", "CAASchPlatformModeler", "CATIASchAppConnectable", "CAASchAppUtilities"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchQueryConnectivity.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchQueryConnectivity.htmmd"
 converted: "2026-05-11T17:31:51.464895"
 ```
 
@@ -29,9 +29,9 @@ converted: "2026-05-11T17:31:51.464895"
   * Setup:
 
 >   1. Build CAASchAppBase.m and CAASchAppUtilities.m, located in CAASchPlatformModeler.edu (RADE is required).
->   2. Copy generated DLLs, CAASchAppBase.dll and CAASchAppUtilities.m, respectively, to the run-time environment folder "intel_a\code\bin."
->   3. Copy CAASCHEDUApp.CATfct, located CAASchPlatformModeler.edu\CNext\resources\graphic, to the run-time environment folder "intel_a\resources\graphic."
->   4. Copy CAASchPlatformModeler.edu\CNext\code\dictionary\CAASchPlatformModeler.edu.dico to the run-time environment folder "intel_a\code\dictionary."
+>   2. Copy generated DLLs, CAASchAppBase.dll and CAASchAppUtilities.m, respectively, to the run-time environment folder "intel_a/code/bin."
+>   3. Copy CAASCHEDUApp.CATfct, located CAASchPlatformModeler.edu/CNext/resources/graphic, to the run-time environment folder "intel_a/resources/graphic."
+>   4. Copy CAASchPlatformModeler.edu/CNext/code/dictionary/CAASchPlatformModeler.edu.dico to the run-time environment folder "intel_a/code/dictionary."
 >
 
 [ CAASchQueryConnectivity.CATScript ](CAASchQueryConnectivitySource.md)is located in the CAAScdSchUseCases module. [Execute macro](macros/CAASchQueryConnectivity.CATScript) (Windows only).
@@ -56,22 +56,30 @@ The macro first loads the document: CAASCH_CompRoute01.CATProduct.  |     ...
 ```
 
 ```vbscript
+```vbscript
     Dim sFilePath
+```vbscript
+```
 ```vbscript
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
+```
 
 ```
 
-            "online\CAAScdSchUseCases\samples\CAASCH_CompRoute01.CATProduct")
+            "online/CAAScdSchUseCases/samples/CAASCH_CompRoute01.CATProduct")
 
 ```vbscript
+```vbscript
 Dim sFilePath
+```vbscript
+```
 ```vbscript
 ```vbscript
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
+```
 ```
 
 ```
@@ -95,15 +103,23 @@ Next, the macro acquires the schematic root object from the document. The schema
 ```
 
 ```vbscript
+```vbscript
     Dim objPrdRoot As Product
+```vbscript
+```
 ```vbscript
 ```vbscript
     Dim objSchRoot As SchematicRoot
     If ( Not ( objSchDoc Is Nothing ) ) Then
+```
+```vbscript
       Set objPrdRoot = objSchDoc.Product
       If ( Not ( objPrdRoot Is Nothing ) ) Then
+```
+```vbscript
         Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
       End If
+```
     End If
 ```
 
@@ -135,11 +151,15 @@ Next, the macro acquires the schematic root object from the document. The schema
 ```
 
 ```vbscript
+```vbscript
        Set objSchLComps = objSchRoot.GetComponents
+```vbscript
+```
 ```vbscript
 ```vbscript
        Set objSchLRoutes = objSchRoot.GetRoutes
     End If
+```
 ```
 
 ```
@@ -191,8 +211,10 @@ Not ( objSchRoot Is Nothing ) ) Then
 
 ```vbscript
 ```vbscript
+```vbscript
             Set objAppCntbl = objSchRoot.GetInterface ("CATIASchAppConnectable",objPrd)
 
+```
 ```
 
 ```
@@ -212,12 +234,14 @@ Not ( objSchRoot Is Nothing ) ) Then
                '  output lists of objects will contain the following members.
                '
                '         objLCntblOther    objLCntrThis    objLCntrOther
-               '         \--------------    \--------------  \----------------
+               '         /--------------    /--------------  /----------------
                '           B               connector on A   connector on B
                '           C               connector on A   connector on C
                '---------------------------------------------------------------
 
+```vbscript
                Set objLFilter = Nothing
+```
 ```
 
 ```
@@ -279,13 +303,17 @@ If (intNb > 0) Then
 
     ...
 ```vbscript
+```vbscript
                Set objAppCntbl = objSchRoot.GetInterface ("CATIASchAppConnectable",objPrd)
 ```vbscript
+```
 ```vbscript
                  If ( Not ( objAppCntbl Is Nothing ) ) Then
 
+```vbscript
                     Set objLFilter = Nothing
 
+```
 ```
 
 ```
@@ -293,8 +321,10 @@ If (intNb > 0) Then
 ```
 
 ```vbscript
+```vbscript
 Set objLFilter = Nothing
                     objAppCntbl.AppListConnectables objLFilter, objLCntblOther, _
+```
                       objLCntrThis, objLCntrOther
 ```
 

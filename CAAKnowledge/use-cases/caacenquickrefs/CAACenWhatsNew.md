@@ -4,13 +4,13 @@ title: "What's New?"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CAAGMOperatorsInterfaces", "CATInteractiveInterfaces", "CATINavigateObject", "CATINavigateProvider", "CATINavigContainer", "CAAOsmNovel", "CATIGraphNode", "CAAAniCatalog", "CATInterfaceEvents", "CATIRedrawEvent", "CATICstFactory", "CATIntersectionOrientation", "CATIPrintable", "CATIBloc", "CATINavigateFilter", "CAAOsmCatalogSU", "CATIMfgStartupFactories", "CATIPrinterManager", "CATINavigElement", "CATIA"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenWhatsNew.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenWhatsNew.htmmd"
 converted: "2026-05-11T17:33:47.787486"
 ```
 
 ---
 tags: ["CAAGMOperatorsInterfaces", "CATInteractiveInterfaces", "CATINavigateObject", "CATINavigateProvider", "CATINavigContainer", "CAAOsmNovel", "CATIGraphNode", "CAAAniCatalog", "CATInterfaceEvents", "CATIRedrawEvent", "CATICstFactory", "CATIntersectionOrientation", "CATIPrintable", "CATIBloc", "CATINavigateFilter", "CAAOsmCatalogSU", "CATIMfgStartupFactories", "CATIPrinterManager", "CATINavigElement", "CATIA"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenWhatsNew.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenWhatsNew.htmmd"
 converted: "2026-05-11T17:33:47.787486"
 CAA V5 Encyclopedia |  |  What's New? _News in CAA V5-6R2017 C++ and Java_
 
@@ -711,7 +711,7 @@ sequence_octet.h | ObjectModelerSystem | CATOMY
 
 [Top] Reminder of CAA V5R18 News The following is new with CAA V5R18. The IRIX operating system is not supported any longer, starting with V5R18. New V5R18 Architecture Rules In V5R18, like in V5R17, the following common sense rule now produces build errors: when a C++ header file is in ProtectedInterfaces, it cannot include header files located in a folder with a lower level of visibility, like PrivateInterface for example. Such architecture inconsistencies are reported as build errors the following way:
 
-> `# mkmk-ERROR: xxx\ProtectedInterfaces\Xxx.h : PROTECTED file cannot use yyy\PrivateInterfaces Yyy.h as include since it is PRIVATE.`
+> `# mkmk-ERROR: xxx/ProtectedInterfaces/Xxx.h : PROTECTED file cannot use yyy/PrivateInterfaces Yyy.h as include since it is PRIVATE.`
 
 They don't prevent to actually build the application but it is strongly recommended to correct them. New V5R18 Modelers The following modelers are available from CAA V5R18 onwards:
 
@@ -760,8 +760,10 @@ Deprecated APIs can be found in:
         * [ Launching CAA V5 Batch](../CAABatUseCases/CAABatBatchLauncherSample.md)
     * In [Mechanical Modeler](../CAACenWeb/CAACenV5MecModHome.md)
       * [ MechanicalElement StartUp and Feature](../CAAMmrTechArticles/CAAMmrMechanicalElement.md)
+```vbscript
       * [ MechanicalSet StartUp and Feature](../CAAMmrTechArticles/CAAMmrMechanicalSet.md)
       * [ Working with Extension Features](../CAAMmrTechArticles/CAAMmrExtension.md)
+```
       * [ Working with Providers](../CAAMmrTechArticles/CAAMmrProvidersInMechPart.md)
       * [ Configuration and Versioning a Mechanical Feature](../CAAMmrTechArticles/CAAMmrVersioningMechFeat.md)
       * [ Applicative Mechanical Imports](../CAAMmrTechArticles/CAAMmrApplicativeImport.md)
@@ -797,7 +799,7 @@ Deprecated APIs can be found in:
 
 [Top] Reminder of CAA V5R17 News The following is new with CAA V5R17. New V5R17 Architecture Rules In V5R17, the following common sense rule now produces build errors: when a C++ header file is in ProtectedInterfaces, it cannot include header files located in a folder with a lower level of visibility, like PrivateInterface for example. Such architecture inconsistencies are reported as build errors the following way:
 
-> `# mkmk-ERROR: xxx\ProtectedInterfaces\Xxx.h : PROTECTED file cannot use yyy\PrivateInterfaces Yyy.h as include since it is PRIVATE.`
+> `# mkmk-ERROR: xxx/ProtectedInterfaces/Xxx.h : PROTECTED file cannot use yyy/PrivateInterfaces Yyy.h as include since it is PRIVATE.`
 
 They don't prevent to actually build the application but it is strongly recommended to correct them. [Top] New V5R17 Modelers The following modelers are available from CAA V5R17 onwards in [ENOVIA V5 VPM](../CAACenWeb/CAACenV5VPM.md):
 
@@ -871,8 +873,10 @@ The new [Machining Algorithms](../CAASmaBase/CAASmaHome.md) modeler appears in t
           * [CATProduct Black Box Creation](../CAAPsnUseCases/CAAPsnUseCase4.md)
         * [File xPDM (PX1)](../CAACenWeb/CAACenV5CaxPDMHubFilePX1.md)
           * [Reading Product Structure Properties](../CAAXpiUseCases/CAAxPDMReadItemInfo.md)
+```vbscript
           * [Sending a Consistent Set of Files](../CAAXpiUseCases/CAAxPDMSendTo.md)
           * [Creating an Interactive Command to Save a Complete Session in a Directory](../CAAXpiUseCases/CAAxPDMToolbar.md)
+```
     * In [Mechanical Modeler](../CAACenWeb/CAACenV5MecModHome.md)
       * [Integrating Combined Curve to Knowledge](../CAAMmrUseCases/CAAMmrCombinedCurveCkeFeat.md)
     * In [Equipment & Systems](../CAACenWeb/CAACenEquipment.md)
@@ -937,8 +941,10 @@ Deprecated APIs can be found in:
     * In 3D PLM PPR Hub Open Gateway
       * In the Cax/Document and PDM Object Hub - File xPDM (PX1)
         * [Reading Product Structure Properties](../CAAXpiUseCases/CAAxPDMReadItemInfo.md)
+```vbscript
         * [Sending a Consistent Set of Files](../CAAXpiUseCases/CAAxPDMSendTo.md)
         * [Creating an Interactive Command to Save a Complete Session in a Directory ](../CAAXpiUseCases/CAAxPDMToolbar.md)
+```
   * No new articles in V5R16 SP2 and SP1
   * V5R16 GA (Refer also to CAA V5R15 Encyclopedia News for articles delivered after the V5R15 GA up to SP1, but before the V5R16 GA.)
     * In Enterprise Artchitecture
@@ -1083,10 +1089,12 @@ As a reminder, all metadata changes, whether metadata is exposed or not, are des
 GeometricObjects | CATGeoFactory::CreateNurbsCurve | CATGeoFactory::CATCreateNurbsCurve
 GeometricObjects | CATGeoFactory::CreatePNurbs | CATGeoFactory::CATCreatePNurbs
 GeometricObjects | CATGeoFactory::CreateNurbsSurface | CATGeoFactory::CATCreateNurbsSurface
+```vbscript
 GeometricObjects | CATNurbsCurve::Set | CATNurbsCurve::SetData
 GeometricObjects | CATNurbsSurface::Set | CATNurbsSurface::SetData
 GeometricObjects | CATPNurbs::Set | CATPNurbs::SetData
 GeometricObjects | CATSplineCurve::SetOnePoint | CATSplineCurve::ReplaceOnePoint
+```
 GeometricObjects | CATSplineCurve::SetOneTangent | CATSplineCurve::ReplaceOneTangent
 GeometricObjects | CATPSpline::SetOnePoint | CATPSpline::ReplaceOnePoint
 GeometricObjects | CATPSpline::SetOneTangent | CATPSpline::ReplaceOneTangent
@@ -1606,7 +1614,7 @@ Move of TTRS Modeler CAA Authorized APIs Before V5R10 the TTRS modeler Authorize
 
   2. _Imakefile_ : modules using the moved Authorized APIs of the TTRS modeler should have the CATTTRSItf and CATTTRSUUID modules added to their `LINK_WITH` statement of their Imakefile.mk
 
-         LINK_WITH = CATTTRSItf \
+         LINK_WITH = CATTTRSItf /
                      CATTTRSUUID
 
 to avoid runtime stability problems during V5R10, insert those modules **before** the reference to the CATMecModInterfaces module (that may even have become useless).
@@ -1627,8 +1635,10 @@ New articles in existing V5R10 modelers or RADE tools:
   * No new articles in V5R10 SP4
   * V5R10 SP3
     * In [User Interface - Frame](../CAACenWeb/CAACenV5UIHome.md)
+```vbscript
       * [ Contextual Help for an Add-on](../CAAAfrUseCases/CAAAfrSampleContextualHelpCATIA.md)
   * No new articles in V5R10 SP2
+```
   * V5R10 SP1
     * RADE
       * [Data Model Customizer](../CAACenWeb/CAACenV5RADEDMCHome.md)
@@ -1696,8 +1706,10 @@ New articles in existing V5R10 modelers or RADE tools:
 
 New V5R9 Modelers The following modelers are available from CAA V5R9 onwards:
 
+```vbscript
   * [ Product Function Definition](../CAAFsiBase/CAAFsiHome.md) in the [Product Synthesis & Knowledgeware](../CAACenWeb/CAACenDMU.md) solution
   * [ Surfacing Machining](../CAASmiBase/CAASmiHome.md) in the [NC Manufacturing](../CAACenWeb/CAACenManufacturing.md) solution
+```
   * [ Electrical Wire Routing](../CAAEwrBase/CAAEwrHome.md) in the [Equipment & Systems](../CAACenWeb/CAACenEquipment.md) solution
 
 [Top] New V5R9 RADE Tools
@@ -1882,7 +1894,7 @@ New articles:
     * ENOVIA Events: [ Domains Objects Events](../CAADocTechArticles/CAADocEventsIndex.md)
     * Product Structure: [ Using the Provider Mechanism](../CAAPstUseCases/CAAPstProviders.md)
     * Automation:
-      * Analysis: [ The Physical Types for Structural Analysis](../CAAScdAniTechArticles/CAAAniPreprocessingFeatures.md)
+      * Analysis: [ The Physical Types for Structural Analysis](../use-cases/caascdaniusecases/CAAAniPreprocessingFeatures.md)
       * Feature (Literals): [ Optimizing Formulas](../CAAScdKniUseCases/CAAKniOptimizationSource.md)
   * V5R7 SP3
     * Administration: [ CAA Partner Product Installation](../CAADocTechArticles/CAADocPartnerCDInstallation.md)
@@ -1939,4 +1951,7 @@ Version: **1** [Nov 2000] | Document created
 
 Version: **1** [Nov 2000] | Document created
 _Copyright © 1999-20016, Dassault Systèmes. All rights reserved._
+```vbscript
 Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.md) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.md) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.md)
+
+```

@@ -1,11 +1,11 @@
 ---
 ```vbscript
 title: "GSMInterfaces Framework Modifications in V5-6R2012"
-category: "use-case"
+category: use-case
 module: "CAACenAPIChangesR22"
 version: "V5R22"
 tags: []
-source_file: "Doc/online/CAACenAPIChangesR22/GSMInterfaces.htm"
+source_file: "Doc/online/CAACenAPIChangesR22/GSMInterfaces.htmmd"
 converted: "2026-05-11T17:33:51.738583"
 ```
 

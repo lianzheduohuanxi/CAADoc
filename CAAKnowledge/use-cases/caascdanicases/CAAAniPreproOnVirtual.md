@@ -4,7 +4,7 @@ title: "Creating Virtual Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniPreproOnVirtual", "CATISamImportDefine", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproOnVirtual.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproOnVirtual.htmmd"
 converted: "2026-05-11T17:31:51.835848"
 ```
 
@@ -49,7 +49,9 @@ This macro shows you how to create an Analysis document for a generative structu
 ```
 
 ```vbscript
+```vbscript
        Set TheAnalysisDocument = documents1.Add("Analysis")
+```
 ```
 
 ```vbscript
@@ -57,12 +59,16 @@ This macro shows you how to create an Analysis document for a generative structu
     ' if WB name already is "GPSCfg", not to use StartWorkbench
 ```
 
+```vbscript
        WBName = CATIA.GetWorkbenchId
        if (WBName <> "GPSCfg") Then
+```
+```vbscript
 ```vbscript
 ```vbscript
           CATIA.StartWorkbench("GPSCfg")
        End If
+```
 ```
 
 ```
@@ -91,15 +97,19 @@ In order to import the document you have to give the path of this document, the 
 
 ```vbscript
 ```vbscript
+```vbscript
        Set analysisManager1 = TheAnalysisDocument.Analysis
 
+```
 ```
 
 ```
 
 ```vbscript
+```vbscript
        Dim arrayOfVariantOfShort1(0)
-       analysisManager1.ImportDefineFile (sDocPath & "\online\CAAScdAniUseCases\samples\AnalysisMechfeat.CATPart"),
+       analysisManager1.ImportDefineFile (sDocPath & "/online/CAAScdAniUseCases/samples/AnalysisMechfeat.CATPart"),
+```
 
 ```
 
@@ -120,9 +130,13 @@ In order to import the document you have to give the path of this document, the 
 ```
 
 ```vbscript
+```vbscript
        Set specsAndGeomWindow1 = CATIA.ActiveWindow
 ```vbscript
+```
+```vbscript
        Set viewer3D1 = specsAndGeomWindow1.ActiveViewer
+```
 ```
 
        viewer3D1.Reframe
@@ -133,17 +147,23 @@ In order to import the document you have to give the path of this document, the 
 ```vbscript
     ' _____________________________________________________________________________________
     ' Scan the analysis document: Retrieve the Pointed documents to extract the reference for preprocessing
+```vbscript
        Set analysisLinkedDocuments1 = analysisManager1.LinkedDocuments
        CATIA.SystemService.Print analysisLinkedDocuments1.Name
        If (analysisLinkedDocuments1.Count <> 1 ) Then
+```
+```vbscript
           Err.Raise 9999,,"NbDoc Li NE 1"
        End If
+```
     ' _____________________________________________________________________________________
     ' Retrieve the CATPart Document and associated publications for preprocessing.
+```vbscript
        Set TheDoc = analysisLinkedDocuments1.Item(1)
        CATIA.SystemService.Print TheDoc.FullName
        Set product1 = TheDoc.Product
        Set publications1 = product1.Publications
+```
 ```
 
 ```
@@ -160,7 +180,7 @@ The Part document is fetched in the documentation installation path, this path h
 #### Creating an Analysis Case for Frequency Analysis
 
 The Part document is fetched in the documentation installation path, this path has already been stored in the `sDocPath` variable. In the collection of documents analysisLinkedDocuments1, two documents can be retrieved: the Analysis document and the Part document. The extraction of pre-defined geometrical arena is done by using the Publication interface. Each publication is identified by a logical name. This is equivalent as the selection of a Publication element inside the interactive applications.
-According to the general [Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **document** , we find the **Analysis manager Object** , the **Analysis models** and the **Analysis cases Objects**. From both last object (Analysis Model and Analysis case), you can get access to **Analysis Sets** and **Analysis entities** that defines the preprocessing actions.
+According to the general [Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **document** , we find the **Analysis manager Object** , the **Analysis models** and the **Analysis cases Objects**. From both last object (Analysis Model and Analysis case), you can get access to **Analysis Sets** and **Analysis entities** that defines the preprocessing actions.
 
 Inserting a new __ Frequency Case __ allows you to create objects sets for the new environmental specifications, and to implicitly require a normal modes solution procedure**** for the computation of the system vibration frequencies and normal modes for a given non-structural mass distribution under given restraints
 
@@ -177,19 +197,23 @@ Inserting a new __ Frequency Case __ allows you to create objects sets for the n
 ```
 
 ```vbscript
+```vbscript
        Set analysisModels1 = analysisManager1.AnalysisModels
+```vbscript
+```
 ```vbscript
 ```vbscript
        Set analysisModel1 = analysisModels1.Item(1)
 
        Set analysisCases1 = analysisModel1.AnalysisCases
-       Set analysisCase1 = analysisCases1.Add()
+       Set analysisCase1 = analysisCases1.Add(#)
        Set analysisSets1 = analysisCase1.AnalysisSets
 
        Set analysisSet1 = analysisSets1.Add("RestraintSet", catAnalysisSetIn)
        Set analysisSet2 = analysisSets1.Add("MassSet", catAnalysisSetIn)
        Set analysisSet3 = analysisCase1.AddSolution("FrequencySet")
        Set analysisSet6 = analysisSets1.Add("SensorSet",catAnalysisSetOut)
+```
 ```
 
 ```
@@ -208,15 +232,19 @@ Inserting a new __ Frequency Case __ allows you to create objects sets for the n
     ...
 ```vbscript
 ```vbscript
+```vbscript
     Set analysisSet4 = analysisSets2.ItemByType("PropertySet")
 
     Set analysisEntities1 = analysisSet4.AnalysisEntities
 ```
+```
 
+```vbscript
 ```vbscript
 ```vbscript
     Set analysisEntity1 = analysisEntities1.Add("SAMVirPartRigid")
     Set publication1 = publications1.Item("SmallHole")
+```
 ```
 
 ```
@@ -246,11 +274,15 @@ Inserting a new __ Frequency Case __ allows you to create objects sets for the n
 ```
 
 ```vbscript
+```vbscript
        Set analysisEntities2 = analysisSet1.AnalysisEntities
+```vbscript
+```
 ```vbscript
 ```vbscript
        Set analysisEntity5 = analysisEntities2.Add("SAMClamp")
        Set reference1 = analysisManager1.CreateReferenceFromObject(analysisEntity4)
+```
 ```
 
 ```
@@ -283,20 +315,28 @@ Distributed Masses are used to model purely inertial (non-structural) system cha
 ```
 
 ```vbscript
+```vbscript
        Set analysisEntities3 = analysisSet2.AnalysisEntities
+```vbscript
+```
 ```vbscript
 ```vbscript
        Set analysisEntity9 = analysisEntities3.Add("SAMDistributedMass")
        Set publication5 = publications1.Item("TopFace")
+```
 ```
 
 ```
 
        analysisEntity9.AddSupportFromPublication product1, publication5
 
+```vbscript
        Set basicComponents1 = analysisEntity9.BasicComponents
 ```vbscript
+```
+```vbscript
        Set basicComponent1 = basicComponents1.GetItem("SAMMassMag")
+```
 ```
 
        basicComponent1.SetValue "", 0, 0, 0, 25.000000
@@ -304,7 +344,9 @@ Distributed Masses are used to model purely inertial (non-structural) system cha
 ```
 
 ```vbscript
+```vbscript
 Set basicComponent1 = basicComponents1.GetItem("SAMMassMag")
+```
 ```
 
 basicComponent1.SetValue "", 0, 0, 0, 25.000000
@@ -319,8 +361,10 @@ basicComponent1.SetValue "", 0, 0, 0, 25.000000
 
 ```vbscript
 ```vbscript
+```vbscript
       CATIA.SystemService.Print " Mass Applied of the Part: " & basicComponent1.GetValue ("",0,0,0)
 
+```
 ```
 
 ```
@@ -351,13 +395,15 @@ This method will launch the mesher, generate the finite element model for prepro
 
     ...
 ```vbscript
+```vbscript
      End Sub
 
+```
 ```
 
 ---
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 
@@ -373,7 +419,7 @@ This use case has shown how to produce in VB a complete analysis document with a
 
 [1] | [Replaying a macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)
 ---|---
-[2] | [Physical types for structural analysis](../CAAScdAniTechArticles/CAAAniPreprocessingFeatures.md)
+[2] | [Physical types for structural analysis](../use-cases/caascdaniusecases/CAAAniPreprocessingFeatures.md)
 [Top]
 
 * * *

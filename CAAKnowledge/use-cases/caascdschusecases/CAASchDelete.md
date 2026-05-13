@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAAScrBase", "CATIA", "CAASchDeleteSource", "CAAScrJavaScript", "CAASCH_Delete01", "CAAScdSchUseCases", "CATIASchRoute", "CAASchDelete_01", "CAASchPlatformModeler", "CAAScdInfUseCases", "CAAInfLauchMacro", "CAASchDelete_02", "CAASCHEDUApp", "CATIASchAppConnectable", "CAASchDelete", "CAASchAppBase", "CAADoc", "CAASchAppUtilities"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchDelete.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchDelete.htmmd"
 converted: "2026-05-11T11:27:02.631400"
 ---
 

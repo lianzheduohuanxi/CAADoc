@@ -3,13 +3,13 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CAAScrBase", "CAAScdStrCoping02", "CATIA", "CAAScrJavaScript", "CAAScdInfUseCases", "CAAInfLauchMacro", "CAAStrModificationOfCopingSource", "CAAScdStrUseCases", "CAAStrEditCoping"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfCoping.htm"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfCoping.htmmd"
 converted: "2026-05-11T11:27:02.594168"
 ---
 
 ---
 
-![End Task Icon](../CAAScrBase/images/aendtask.gif)
+![End Task Icon](./assets/images/aendtask.gif)
 
 [Top]
 
@@ -29,10 +29,9 @@ This use case has shown how to edit coping between structure objects.
 
 *Copyright  1999-2010, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
 
   Dim StrWorkbench As StrWorkbench
   Dim strFactory As StrObjectFactory
@@ -49,20 +48,27 @@ Sub CATMain()
   Dim strMembers As strMembers
   Set strMembers = rootProduct.GetTechnologicalObject("StructureMembers")
 ```
+```
 
+```vbscript
 ```vbscript
 Dim selection1 As Selection
   Set selection1 = doc.Selection
 
   selection1.Search "Name='Coping.1',all"
+```
 
+```vbscript
   Dim NibblingToEdit As StrNibblingFeature
   Set NibblingToEdit = selection1.Item(1).Value
 
   Dim SubTypeOfNibbling As String
   SubTypeOfNibbling = NibblingToEdit.SubType
+```
 
   NibblingToEdit.SubType = "CurrCurr"
 
+```vbscript
 End Sub
+```
 ```

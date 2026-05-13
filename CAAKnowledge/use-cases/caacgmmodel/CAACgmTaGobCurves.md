@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "The Curves of CATIA Geometric Modeler"
-category: "use-case"
+category: use-case
 module: "CAACgmModel"
 tags: ["CATIA"]
-source_file: "Doc/online/CAACgmModel/CAACgmTaGobCurves.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmTaGobCurves.htmmd"
 converted: "2026-05-11T17:33:47.920606"
 ```
 
@@ -51,10 +51,10 @@ The CGM curves implement the CATCurve interface, which behavior is now described
 ### Validity Criteria
 
 The CGM curves implement the CATCurve interface, which behavior is now described. The CATCurve interface inherits all the behavior of the CATGeometry interface. Therefore, the factory of the CGM objects (CATGeoFactory) handles the creation, stream, unstream and remove of the CGM curves. The geometric transformation and/or duplication of CGM curves is managed by specific processes through CATTransfoManager and CATCloneManager instances [3]. For more details about the CGM objects general properties, see [1].
-    1. CGM curves **must be C2 continuous**. Hence, the curves are many infinitely differentiable with respect to the W parameter on each arc, and only twice continuously differentiable between two arcs. CGM directly generates objects satisfying this criterion. If you want to introduce foreign curves, you have to insure that they satisfy it. If they do not satisfy it, you can cut them where they are not C2 continuous, and use topological objects to assemble the parts.  Fig. 2: Valid (C) and Invalid (A, B) Curves ![Valid \(C\) and Invalid \(A, B\) Curves](images/CAACgmGobCurves2.gif) | In addition, the curves must not be self intersecting, except if they are closed curves.
+    1. CGM curves **must be C2 continuous**. Hence, the curves are many infinitely differentiable with respect to the W parameter on each arc, and only twice continuously differentiable between two arcs. CGM directly generates objects satisfying this criterion. If you want to introduce foreign curves, you have to insure that they satisfy it. If they do not satisfy it, you can cut them where they are not C2 continuous, and use topological objects to assemble the parts.  Fig. 2: Valid (C) and Invalid (A, B) Curves ![Valid /(C/) and Invalid /(A, B/) Curves](images/CAACgmGobCurves2.gif) | In addition, the curves must not be self intersecting, except if they are closed curves.
 
 The CGM curves implement the CATCurve interface, which behavior is now described. The CATCurve interface inherits all the behavior of the CATGeometry interface. Therefore, the factory of the CGM objects (CATGeoFactory) handles the creation, stream, unstream and remove of the CGM curves. The geometric transformation and/or duplication of CGM curves is managed by specific processes through CATTransfoManager and CATCloneManager instances [3]. For more details about the CGM objects general properties, see [1].
-1. CGM curves **must be C2 continuous**. Hence, the curves are many infinitely differentiable with respect to the W parameter on each arc, and only twice continuously differentiable between two arcs. CGM directly generates objects satisfying this criterion. If you want to introduce foreign curves, you have to insure that they satisfy it. If they do not satisfy it, you can cut them where they are not C2 continuous, and use topological objects to assemble the parts.  Fig. 2: Valid (C) and Invalid (A, B) Curves ![Valid \(C\) and Invalid \(A, B\) Curves](images/CAACgmGobCurves2.gif) | In addition, the curves must not be self intersecting, except if they are closed curves.
+1. CGM curves **must be C2 continuous**. Hence, the curves are many infinitely differentiable with respect to the W parameter on each arc, and only twice continuously differentiable between two arcs. CGM directly generates objects satisfying this criterion. If you want to introduce foreign curves, you have to insure that they satisfy it. If they do not satisfy it, you can cut them where they are not C2 continuous, and use topological objects to assemble the parts.  Fig. 2: Valid (C) and Invalid (A, B) Curves ![Valid /(C/) and Invalid /(A, B/) Curves](images/CAACgmGobCurves2.gif) | In addition, the curves must not be self intersecting, except if they are closed curves.
     2. Finally, the curvilinear length must be greater than the resolution of the factory. The resolution defines the minimum length of a valid object, see [1].
     3. The derivatives at a point within the curve must not be null. This condition implies that you have no cusps.
     4. The derivatives at the curve extremities must neither be null (strongly recommended).
@@ -103,16 +103,16 @@ It is useful to retrieve the equations representing the curve, especially when y
 
 All curve modification changes the equations. Thus, it is necessary to precisely define the use of the geometry equations. There are 3 main methods for using equations.
 
-    * `CATCurve::Lock()`: Locks the geometric object before asking for its equation. This operation:
+    * `CATCurve::Lock(#)`: Locks the geometric object before asking for its equation. This operation:
       * Declares a reference on the object, so that it cannot be deleted anymore.
       * Increments the number of customers that wants to prevent the object from future modifications, except the relimitation.
       * Does not compute anything.
-    * `CATCurve::GetEquation()`: Asks for the equation. This operation:
+    * `CATCurve::GetEquation(#)`: Asks for the equation. This operation:
       * Throws an exception if the object is not locked.
       * Allocate the memory (if needed).
       * Computes the equations (if needed).
       * Returns a constant pointer to the required equation.
-    * `CATCurve::Unlock()`: Unlocks the geometric object when you do not need to use its equation no more. This operation:
+    * `CATCurve::Unlock(#)`: Unlocks the geometric object when you do not need to use its equation no more. This operation:
       * Releases the reference.
       * Decrements the number of customers which want to prevent the object from future modifications, except the relimitation.
       * Keeps the allocated memory and computed equations as long as the object is not modified.

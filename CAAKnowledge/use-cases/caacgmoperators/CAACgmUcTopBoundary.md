@@ -4,13 +4,13 @@ title: "Boundaries"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsBoundaryCreation", "CAAGMOperatorsInterfaces", "CATICGMHybBoundary"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopBoundary.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopBoundary.htmmd"
 converted: "2026-05-11T17:33:49.099805"
 ```
 
 ---
 tags: ["CAAGMOperatorsBoundaryCreation", "CAAGMOperatorsInterfaces", "CATICGMHybBoundary"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopBoundary.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopBoundary.htmmd"
 converted: "2026-05-11T17:33:49.099805"
 Boundaries
 
@@ -46,18 +46,18 @@ piInputBody,
 piDomain, // the domain
 piEdge, // the initial cell
 TANGENT_CONTINUITY);
-    pBoundOpe->Run();
-    CATBody * piBoundaryBody = pBoundOpe->GetResult();
+    pBoundOpe->Run(#);
+    CATBody * piBoundaryBody = pBoundOpe->GetResult(#);
 
     ...
 TANGENT_CONTINUITY);
-pBoundOpe->Run();
-CATBody * piBoundaryBody = pBoundOpe->GetResult();
-    pBoundOpe->Release();
+pBoundOpe->Run(#);
+CATBody * piBoundaryBody = pBoundOpe->GetResult(#);
+    pBoundOpe->Release(#);
     pBoundOpe = NULL;
 
 ---
-pBoundOpe->Release();
+pBoundOpe->Release(#);
 pBoundOpe = NULL;
 you get this result: Fig.2 Result of Boundary Operation  ![Boundary Result: Tangent Continuity ](images/CGM_boundary_tgcont.png)
 

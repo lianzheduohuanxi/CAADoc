@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating a Document's Window - Part 2"
-category: "use case"
+category: use-case case"
 module: "CAAAfrUseCases"
 tags: ["CATI2DGeoVisu", "CAAGeometry", "CATISO", "CATI3DGeoVisu", "CAASample", "CAAAfrCustomWindow", "CAAApplicationFrame", "CAAAfrGeoWindows"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleCustomWindow2.htm"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleCustomWindow2.htmmd"
 converted: "2026-05-11T17:17:55.703896"
 ```
 
@@ -52,7 +52,7 @@ CAAAfrCustomWindow is a use case of the CAAApplicationFrame.edu framework that i
 
 The CAAAfrCustomWindow use case creates a document window for CAASample documents.
 
-![CAAAfrCustomWindow.jpg \(42069 bytes\)](images/CAAAfrCustomWindow.jpg)
+![CAAAfrCustomWindow.jpg /(42069 bytes/)](images/CAAAfrCustomWindow.jpg)
 
 [Top]
 #### How to Launch CAAAfrCustomWindow
@@ -73,10 +73,10 @@ Do not type the module name on the command line, but type CNEXT instead. When th
 The CAAAfrCustomWindow use case is made up of a single class named CAAAfrCustomWindow located in the CAAAfrGeoWindows.m module of the CAAApplicationFrame.edu framework:
 
 The CAAAfrCustomWindow use case is made up of a single class named CAAAfrCustomWindow located in the CAAAfrGeoWindows.m module of the CAAApplicationFrame.edu framework:
-Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeoWindows.m\`
+Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeoWindows.m/`
 
 The CAAAfrCustomWindow use case is made up of a single class named CAAAfrCustomWindow located in the CAAAfrGeoWindows.m module of the CAAApplicationFrame.edu framework:
-Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeoWindows.m\`
+Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeoWindows.m/`
 Unix | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeoWindows.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed. It includes the CAAAfrCustomWindow.h  header file in the PrivateInterfaces directory of the CAAApplicationFrame.edu framework and the CAAAfrCustomWindow.cpp source file in the src directory.
@@ -107,12 +107,12 @@ This document window includes two 3D viewers of different sizes located in the u
 class CAAAfrCustomWindow: public CATFrmWindow
       public:
         CAAAfrCustomWindow(const CATString & iName, CATFrmEditor * iEditor=NULL);
-        virtual ~CAAAfrCustomWindow();
+        virtual ~CAAAfrCustomWindow(#);
 
-        virtual CATFrmWindow * **DuplicateWindow**();
-        virtual void **DeleteWindow**();
+        virtual CATFrmWindow * **DuplicateWindow**(#);
+        virtual void **DeleteWindow**(#);
 
-        void **Build**();
+        void **Build**(#);
 
         void **GetViewers**(CATNavigation3DViewer ** oV1,
                            CATNavigation3DViewer ** oV2,
@@ -175,15 +175,15 @@ The constructor creates the viewers, arranges them in the window and sets one of
 The constructor creates the viewers, arranges them in the window and sets one of them the current viewer.
   1. Instantiating the different viewers to display
 
-         void CAAAfrCustomWindow::Build()
+         void CAAAfrCustomWindow::Build(#)
 
          {
 1. Instantiating the different viewers to display
-void CAAAfrCustomWindow::Build()
+void CAAAfrCustomWindow::Build(#)
            int width, height;
            CATString  ViewerName;
 
-           CATDlgFrame * FrameWindow = **GetViewerFrame**() ;
+           CATDlgFrame * FrameWindow = **GetViewerFrame**(#) ;
            CATString FrameName = "FrameName";
            CATDlgFrame * Frame = new CATDlgFrame(FrameWindow, FrameName,
                                                  CATDlgGridLayout|CATDlgFraNoFrame);
@@ -239,13 +239,13 @@ The `Attach4Sides` method attaches the `Frame` object to the four sides of the `
 
 Then the `SetGridConstraints` method applied to `_Viewer1` is located on grid cells beginning with the cell at the intersection of the row 0 and column 0, and expands from left to right on 1 row, and from top to bottom on 1 column. `CATGRID_4SIDES` means that the viewer occupies the whole cell space. Row 0 and 1, as well as columns 0 and 1, as first argument of the `SetGridxxResizable` methods, are declared to be resizable since the second argument is 1 (on the opposite, 0 means non resizable.)
 
-![CAAAfrCustomWindow.gif \(2992 bytes\)](images/CAAAfrCustomWindow.gif)
+![CAAAfrCustomWindow.gif /(2992 bytes/)](images/CAAAfrCustomWindow.gif)
 
   3. Setting the current viewer
 
          ...
 3. Setting the current viewer
-           _pViewer1->Reframe();
+           _pViewer1->Reframe(#);
            SetViewer(_pViewer1);
 
          ...
@@ -276,8 +276,8 @@ Still in the `Build` method, let's now the unique visualization manager be aware
          ...
 1. Retrieving the visualization manager and the document root object
 Still in the `Build` method, let's now the unique visualization manager be aware of the document to display, under which viewpoints. The `GetEditor` method of the _CATFrmWindow_ enables you to retrieve the editor of the constructor class.
-           CATFrmEditor * pEditor = **GetEditor**();
-           CATVisManager * pVisuManager = CATVisManager::**GetVisManager**();
+           CATFrmEditor * pEditor = **GetEditor**(#);
+           CATVisManager * pVisuManager = CATVisManager::**GetVisManager**(#);
 
            // Here is the code to retrieve the root model, pRootObject
          ...
@@ -307,7 +307,7 @@ if ( (NULL != pEditor  ) && (NULL != pRootObject ) && (NULL != pVisuManager) )
 
 ```
 
-               CATCommand * CommandSelector = (CATCommand*) pEditor->**GetCommandSelector**();
+               CATCommand * CommandSelector = (CATCommand*) pEditor->**GetCommandSelector**(#);
 
                list<IID> ListIVisu3d, ListIVisu2d;
                IID visu3d = IID_CATI3DGeoVisu;
@@ -319,13 +319,13 @@ if ( (NULL != pEditor  ) && (NULL != pRootObject ) && (NULL != pVisuManager) )
                CATViewpoint * pViewPoint2 = NULL;
                CATViewpoint * pViewPoint3 = NULL;
 
-               pViewPoint1 = (CATViewpoint*) &(_pViewer1->GetMain3DViewpoint());
+               pViewPoint1 = (CATViewpoint*) &(_pViewer1->GetMain3DViewpoint(#));
                pVisuManager->**AttachTo**(_pRootObjectPath,pViewPoint1,ListIVisu3d,CommandSelector);
 
-               pViewPoint2 = (CATViewpoint*) &(_pViewer2->GetMain3DViewpoint());
+               pViewPoint2 = (CATViewpoint*) &(_pViewer2->GetMain3DViewpoint(#));
                pVisuManager->AttachTo(_pRootObjectPath,pViewPoint2,ListIVisu3d,CommandSelector);
 
-               pViewPoint3 = (CATViewpoint*) &(_pViewer3->GetMain2DViewpoint());
+               pViewPoint3 = (CATViewpoint*) &(_pViewer3->GetMain2DViewpoint(#));
                pVisuManager->AttachTo(_pRootObjectPath,pViewPoint3,ListIVisu2d,CommandSelector);
 
          ...
@@ -344,8 +344,11 @@ If the editor, the visualization manager, and the root object are successfully r
 ```vbscript
 If the editor, the visualization manager, and the root object are successfully retrieved, this root object is then turned to a _CATPathElement_ , the command selector, that is, the command that stands at the top of the command tree [4], is retrieved, and the lists of 2D and 3D interfaces implemented by the objects of the documents are set up. Then for each viewer, its main viewpoint is retrieved and attached to the visualization manager along with the document's root object, the list of interfaces to use, and the command selector.
 3. Managing the links between these objects and all the other objects enabling interactivity
-               CATPSO * pPSO = pEditor->**GetPSO**() ;  // Preselected Set Objects
-               CATHSO * pHSO = pEditor->**GetHSO**() ;  // Highlighted Set Objects
+```vbscript
+               CATPSO * pPSO = pEditor->**GetPSO**(#) ;  // Preselected Set Objects
+               CATHSO * pHSO = pEditor->**GetHSO**(#) ;  // Highlighted Set Objects
+
+```
 
                pVisuManager->**AttachPSOTo**(pPSO, pViewPoint1);
                pVisuManager->AttachPSOTo(pPSO, pViewPoint2);
@@ -354,7 +357,7 @@ If the editor, the visualization manager, and the root object are successfully r
                pVisuManager->AttachHSOTo(pHSO, pViewPoint2);
                pVisuManager->AttachHSOTo(pHSO, pViewPoint3);
 
-               CATISO * pISO = pEditor->**GetISO**();
+               CATISO * pISO = pEditor->**GetISO**(#);
                pISO->**AddViewer**(_pViewer1);
                pISO->AddViewer(_pViewer2);
                pISO->AddViewer(_pViewer3);
@@ -367,10 +370,13 @@ If the editor, the visualization manager, and the root object are successfully r
 
 ---
 
+```vbscript
 This piece of code retrieves the Preselected Set of Objects (PSO) and the Highlighted Set of Objects (HSO) from the editor, and requests the visualization controller to attach the appropriate viewpoints to the PSO and to the HSO. Now, when the end user moves the mouse above a representation in a viewer, the path element corresponding to this representation is put in the PSO, is highlighted and put in the HSO.
 
 This piece of code retrieves the Preselected Set of Objects (PSO) and the Highlighted Set of Objects (HSO) from the editor, and requests the visualization controller to attach the appropriate viewpoints to the PSO and to the HSO. Now, when the end user moves the mouse above a representation in a viewer, the path element corresponding to this representation is put in the PSO, is highlighted and put in the HSO.
 The Interactive Set of Objects (ISO) is also retrieved. These objects are those which don't belong to the document, but that are so handy to manipulate representations in viewers, such as handles to move or deform them. The ISO now knows the three viewers.
+
+```
 
 The document window `Build` method is now complete.
 
@@ -381,16 +387,16 @@ This is done thanks to the Duplicate method.
 
     ...
 This is done thanks to the Duplicate method.
-    CATFrmWindow * CAAAfrCustomWindow :: DuplicateWindow()
+    CATFrmWindow * CAAAfrCustomWindow :: DuplicateWindow(#)
 
     {
-CATFrmWindow * CAAAfrCustomWindow :: DuplicateWindow()
-      CATString NameOfThis = GetBaseName().CastToCharPtr();
+CATFrmWindow * CAAAfrCustomWindow :: DuplicateWindow(#)
+      CATString NameOfThis = GetBaseName(#).CastToCharPtr(#);
       CAAAfrCustomWindow * pWindowToReturn = NULL;
-      pWindowToReturn = new **CAAAfrCustomWindow**(NameOfThis,GetEditor());
-      pWindowToReturn->**Build**();
+      pWindowToReturn = new **CAAAfrCustomWindow**(NameOfThis,GetEditor(#));
+      pWindowToReturn->**Build**(#);
 
-      pWindowToReturn->**SetBaseName**(GetBaseName());
+      pWindowToReturn->**SetBaseName**(GetBaseName(#));
 
       float r,v,b ;
 ```vbscript
@@ -442,19 +448,19 @@ This method uses the `GetViewers` method below:
 #### Deleting the Window
 
     ...
-    void CAAAfrCustomWindow::DeleteWindow()
+    void CAAAfrCustomWindow::DeleteWindow(#)
     {
-void CAAAfrCustomWindow::DeleteWindow()
-      if ( (NULL != GetEditor()) && (NULL != pViewer1) &&
+void CAAAfrCustomWindow::DeleteWindow(#)
+      if ( (NULL != GetEditor(#)) && (NULL != pViewer1) &&
            (NULL != pViewer2)    && (NULL != pViewer3) )
 
       {
         // Detaches Viewers from the ISO
 ```vbscript
-if ( (NULL != GetEditor()) && (NULL != pViewer1) &&
+if ( (NULL != GetEditor(#)) && (NULL != pViewer1) &&
 (NULL != pViewer2)    && (NULL != pViewer3) )
         CATISO *pISO = NULL;
-        pISO = **GetEditor**()->GetISO();
+        pISO = **GetEditor**(#)->GetISO(#);
 ```vbscript
 ```vbscript
         if (NULL != pISO) pISO->**RemoveViewer**(_pViewer1);
@@ -481,11 +487,11 @@ if (NULL != pISO) pISO->RemoveViewer(_pViewer3);
         CATViewpoint * pViewpoint1 = NULL;
         CATViewpoint * pViewpoint2 = NULL;
         CATViewpoint * pViewpoint3 = NULL;
-        pViewpoint1 = (CATViewPoint *) &(_pViewer1->GetMain3DViewpoint());
+        pViewpoint1 = (CATViewPoint *) &(_pViewer1->GetMain3DViewpoint(#));
 ```vbscript
 ```vbscript
-        pViewpoint2 = (CATViewPoint *) &(_pViewer2->GetMain3DViewpoint());
-        pViewpoint3 = (CATViewPoint *) &(_pViewer3->GetMain2DViewpoint());
+        pViewpoint2 = (CATViewPoint *) &(_pViewer2->GetMain3DViewpoint(#));
+        pViewpoint3 = (CATViewPoint *) &(_pViewer3->GetMain2DViewpoint(#));
 
 ```
 
@@ -494,16 +500,16 @@ if (NULL != pISO) pISO->RemoveViewer(_pViewer3);
 ```
 
         // Retrieves the unique visu manager
-pViewpoint1 = (CATViewPoint *) &(_pViewer1->GetMain3DViewpoint());
+pViewpoint1 = (CATViewPoint *) &(_pViewer1->GetMain3DViewpoint(#));
 ```vbscript
 ```vbscript
-pViewpoint2 = (CATViewPoint *) &(_pViewer2->GetMain3DViewpoint());
-pViewpoint3 = (CATViewPoint *) &(_pViewer3->GetMain2DViewpoint());
+pViewpoint2 = (CATViewPoint *) &(_pViewer2->GetMain3DViewpoint(#));
+pViewpoint3 = (CATViewPoint *) &(_pViewer3->GetMain2DViewpoint(#));
 ```
 
 ```
 
-        CATVisManager *pVisuManager = **CATVisManager::GetVisManager**();
+        CATVisManager *pVisuManager = **CATVisManager::GetVisManager**(#);
         if ( (NULL != pViewpoint1) &&
              (NULL != pViewpoint2) &&
              (NULL != pViewpoint3) && (NULL != pVisuManager) )
@@ -533,12 +539,12 @@ pVisuManager->DetachHSOFrom(pViewpoint3);
 
         }
       }
-      **CATFrmWindow::DeleteWindow**();
+      **CATFrmWindow::DeleteWindow**(#);
     }
 
-    CAAAfrCustomWindow::~CAAAfrCustomWindow()
+    CAAAfrCustomWindow::~CAAAfrCustomWindow(#)
     {
-CAAAfrCustomWindow::~CAAAfrCustomWindow()
+CAAAfrCustomWindow::~CAAAfrCustomWindow(#)
       if (NULL != _pRootObjectPath) delete _pRootObjectPath;
       _pRootObjectPath = NULL;
 
@@ -558,9 +564,14 @@ This use case explains the structure of a document's window class:
 
   * A `Build` method
     * To create and arrange the viewers in the window,
+```vbscript
     * To attach the root's document and the Interactive Set Objects to the command tree.
   * A `DuplicateWindow` method to create a new instance from an existing one.
+```
+```vbscript
   * A `DeleteWindow` method to detach the root's document and the Interactive Set Objects from the command tree.
+
+```
 
 [Top]
 

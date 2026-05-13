@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "How to Use Geometric Operators"
-category: "technical article"
+category: use-case article"
 module: "CAACgmModel"
 tags: ["CATICGMProjectionCrvSur", "CATICGMProjectionPtSur", "CATICGMConfusionPtOnSurPtOnSur", "CATICGMDistanceMinPtSur", "CATICGMIntersectionSurSur", "CATICGMDistanceMinPtCrv", "CATICGMProjectionPtCrv", "CATICGMIntersectionCrvCrv", "CATICGMContainer", "CATICGMInclusionPtCrv", "CATICGMMassProperties1D", "CATICGMDistanceMinCrvCrv", "CATICGMLocalAnalysis1D", "CATIA", "CATICGMConfusionPtOnCrvPtOnCrv", "CATICGMInclusionPtSur", "CATICGMIntersectionCrvSur", "CATICGMReflectCurve", "CATICGMLocalAnalysis2D", "CATICGMEdgeCurveComputation"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelOpeOverw.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelOpeOverw.htmmd"
 converted: "2026-05-11T17:33:48.309647"
 ```
 
@@ -97,7 +97,7 @@ To operate in this mode, you must:
 piGeomFactory,   // geometric factory
 piLine,          // geometric line
 piCylinder,      // geometric cylinder
-    CATLONG32 nbPoints = pIntOp->GetNumberOfPoints();
+    CATLONG32 nbPoints = pIntOp->GetNumberOfPoints(#);
 
     ...
 
@@ -131,30 +131,30 @@ piCylinder,       // geometric cylinder
     pIntOp->**SetLimits**(crvLimits);
 
     // run
-    pIntOp->**Run**();
+    pIntOp->**Run**(#);
 
     // set another line and new limits
 
-pIntOp->**Run**();
+pIntOp->**Run**(#);
     pIntOp->**SetCurve**(piNewLine);    // piNewLine was previously created
     pIntOp->SetLimits(newCrvLimits); // newCrvLimits was previously defined
 
     // run again
 pIntOp->**SetCurve**(piNewLine);    // piNewLine was previously created
 pIntOp->SetLimits(newCrvLimits); // newCrvLimits was previously defined
-    pIntOp->**Run**();
+    pIntOp->**Run**(#);
 
     // get the results
-pIntOp->**Run**();
-    nbPoints = pIntOp->GetNumberOfPoints();
+pIntOp->**Run**(#);
+    nbPoints = pIntOp->GetNumberOfPoints(#);
     cout << " Number of intersection points: "<< nbPoints << endl;
-    long nbCurves= pIntOp->GetNumberOfCurves();
+    long nbCurves= pIntOp->GetNumberOfCurves(#);
     cout << "Number of intersection curves: "<< nbCurves << endl;
 
 ## How to Delete a Geometric Operator
 
 cout << " Number of intersection points: "<< nbPoints << endl;
-long nbCurves= pIntOp->GetNumberOfCurves();
+long nbCurves= pIntOp->GetNumberOfCurves(#);
 cout << "Number of intersection curves: "<< nbCurves << endl;
 Geometric operators should be deleted by using the **Release** method.
 
@@ -166,7 +166,7 @@ Geometric operators should be deleted by using the **Release** method.
                                     **ADVANCED**);        // MODE
     ...
     **// delete the operator**
-    **pIntOp- >Release();
+    **pIntOp- >Release(#);
     pIntOp=NULL;**
 ## In Short
 

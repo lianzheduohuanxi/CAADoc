@@ -4,13 +4,13 @@ title: "CAAAsmModifyOptions.catvbs"
 category: "use-case"
 module: "CAAScdAsmUseCases"
 tags: ["CATIA", "CAAAsmModifyOptions"]
-source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmModifyOptionsSource.htm"
+source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmModifyOptionsSource.htmmd"
 converted: "2026-05-11T17:31:50.861645"
 ```
 
 ---
 tags: ["CATIA", "CAAAsmModifyOptions"]
-source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmModifyOptionsSource.htm"
+source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmModifyOptionsSource.htmmd"
 converted: "2026-05-11T17:31:50.861645"
 ```vbscript
     ' COPYRIGTH DASSAULT SYSTEMES 2004
@@ -36,7 +36,10 @@ converted: "2026-05-11T17:31:50.861645"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
+
+```
 
 ```
 
@@ -53,7 +56,9 @@ converted: "2026-05-11T17:31:50.861645"
 ```
 
 ```vbscript
+```vbscript
     Set settingControllers1 = CATIA.SettingControllers
+```
 ```
 
 ```vbscript
@@ -63,10 +68,14 @@ converted: "2026-05-11T17:31:50.861645"
     ' Assembly / General options
     ' ------------------------------
 
+```vbscript
     Set asmGeneralSetting = settingControllers1.Item("CATAsmGeneralSettingCtrl")
     ' ------------------------------
+```
+```vbscript
     ' Get/Set the options values
     ' ------------------------------
+```
 ```
 
 ```
@@ -164,15 +173,19 @@ converted: "2026-05-11T17:31:50.861645"
 ```
 
 ```vbscript
+```vbscript
     Set asmConstraintSetting = settingControllers1.Item("CATAsmConstraintSettingCtrl")
+```
 ```
 
 ```vbscript
 ```vbscript
 ```vbscript
     ' ------------------------------
+```vbscript
     ' Get/Set the options values
     ' ------------------------------
+```
 ```
 
 ```
@@ -193,8 +206,10 @@ converted: "2026-05-11T17:31:50.861645"
 ```
 
 ```vbscript
+```vbscript
     Dim newArray(5)
 ```vbscript
+```
     newArray(0) = "CATAsmPerpendType"
     newArray(1) = "CATAsmSurfContactType"
     newArray(2) = "CATAsmAngleType"
@@ -205,9 +220,11 @@ converted: "2026-05-11T17:31:50.861645"
 
     asmConstraintSetting.SetQuickConstraintOrderedList newArray
     quick = asmConstraintSetting.QuickConstraintMode
+```vbscript
     Dim array
 ```vbscript
-    array = asmConstraintSetting.GetQuickConstraintOrderedList()
+```
+    array = asmConstraintSetting.GetQuickConstraintOrderedList(#)
 ```
 
     msgbox "Quick Constraint creation mode = " & quick
@@ -276,6 +293,8 @@ converted: "2026-05-11T17:31:50.861645"
 ```
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

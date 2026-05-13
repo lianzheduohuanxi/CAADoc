@@ -4,7 +4,7 @@ title: "CAAAniMeshOctTriangle.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniMeshOctTriangle", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshOctTriangleSource.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshOctTriangleSource.htmmd"
 converted: "2026-05-11T17:31:51.679720"
 ```
 
@@ -26,20 +26,26 @@ converted: "2026-05-11T17:31:51.679720"
     ' ***********************************************************************
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
+```vbscript
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
+```
 
+```vbscript
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
 ```vbscript
         End If
     ' -----------------------------------------------------------
@@ -51,7 +57,10 @@ converted: "2026-05-11T17:31:51.679720"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
+
+```
 
 ```
 
@@ -59,24 +68,36 @@ converted: "2026-05-11T17:31:51.679720"
 ```vbscript
 ```vbscript
     'Open the analysis document
-    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Surface.CATAnalysis")
+```vbscript
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Surface.CATAnalysis")
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
     ' Retrieve the Analysis Manager and Analysis Model
+```
+```vbscript
     Set oAnalysisManager = oAnalysisDocument.Analysis
     ' Retrieve the part document and product from Analysis manager
+```
+```vbscript
     Set oAnalysisLinkedDocuments = oAnalysisManager.LinkedDocuments
     Set partDocument1 = oAnalysisLinkedDocuments.Item(1)
     Set Product = partDocument1.Product
     ' Retrieve the analysis model from the list of models
+```
+```vbscript
     Set oAnalysisModels = oAnalysisManager.AnalysisModels
     Set oAnalysisModel = oAnalysisModels.Item(1)
     ' Retrieve mesh manager and mesh part
+```
+```vbscript
     Set meshManagar = oAnalysisModel.MeshManager
     Set meshPart = meshManagar.AnalysisMeshParts
     ' Retrieve publications from product and retrieve the published face.
+```
+```vbscript
     Set Publications = Product.Publications
     Set pubSurf = Publications.Item("Round Hole.1")
     Set pubEdge = Publications.Item("Edge")
+```
 ```
 
 ```
@@ -88,14 +109,18 @@ converted: "2026-05-11T17:31:51.679720"
 ```
 
 ```vbscript
+```vbscript
     Set octreePart = meshPart.Add ("MSHPartOctree2D")
 ```vbscript
+```
     ' Add the support from the published surface
 ```
 
     octreePart.AddSupportFromPublication Product, pubSurf
 ```vbscript
+```vbscript
     ' Set the global Specifications
+```
 ```
 
     octreePart.SetGlobalSpecification "SizeValue", "10.0 mm"
@@ -120,8 +145,10 @@ converted: "2026-05-11T17:31:51.679720"
 ```vbscript
 ```vbscript
     ' Add the domain specifications as local specifications and assign it attributes
+```vbscript
     Set meshspecs1 = octreePart.AnalysisMeshLocalSpecifications
     Set spec1 = meshspecs1.Add("MSHLocalMeshSize")
+```
 ```
 
 ```
@@ -132,8 +159,10 @@ converted: "2026-05-11T17:31:51.679720"
 ```vbscript
 ```vbscript
 ' Add the domain specifications as local specifications and assign it attributes
+```vbscript
 Set meshspecs1 = octreePart.AnalysisMeshLocalSpecifications
 Set spec1 = meshspecs1.Add("MSHLocalMeshSize")
+```
 ```
 
 ```
@@ -149,6 +178,8 @@ Set spec1 = meshspecs1.Add("MSHLocalMeshSize")
 ```
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

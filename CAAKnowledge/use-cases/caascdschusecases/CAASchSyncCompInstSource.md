@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAAScrBase", "CAASCH_SyncCompInst", "CATIA", "CAAScdSchUseCases", "CAASchSyncCompInst", "CATIASchComponent", "CATIASchUpdateInstances"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchSyncCompInstSource.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchSyncCompInstSource.htmmd"
 converted: "2026-05-11T11:27:02.652678"
 ---
 
@@ -17,27 +17,37 @@ Option Explicit
 '   CATIA Level:  V5R18 
 ' *****************************************************************************
 
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
+
+```
 
     ' ------------------------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
+```vbscript
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,sDocPath,"No Doc Path Defined"
     End If
+```
 
     ' ------------------------------------------------------------------------- 
     ' Open the schematic document 
+```vbscript
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
-            "online\CAAScdSchUseCases\samples\CAASCH_SyncCompInst.CATProduct")
+            "online/CAAScdSchUseCases/samples/CAASCH_SyncCompInst.CATProduct")
+```
 
+```vbscript
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
     Dim strMessageAs String
+
+```
 
     strMessage = _
       "--------------------------------------------------------------------" & vbCr
@@ -45,32 +55,48 @@ Sub CATMain()
       "Output traces from CAASchSyncCompInst.CATScript" & vbCrLf
 
     ' Find the top node of the schematic object tree - schematic root.
+```vbscript
     Dim objPrdRoot As Product
     Dim objSchRoot As SchematicRoot
     If ( Not ( objSchDoc Is Nothing ) ) Then
+```
+```vbscript
       Set objPrdRoot = objSchDoc.Product 
       If ( Not ( objPrdRoot Is Nothing ) ) Then
+```
+```vbscript
         Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
       End If
+```
     End If
 
     ' Get SchUpdateInstances interface on the schematic root. 
+```vbscript
     Dim objUpdateInstancesAs SchUpdateInstances
 
     If ( Not ( objSchRoot Is Nothing ) ) Then
+```
+```vbscript
        Set objUpdateInstances = objSchRoot.GetInterface ("CATIASchUpdateInstances",objSchRoot) 
     End If 
+```
    
     ' Find a list of reference component in the model
+```vbscript
     Dim objLCompRefsAs SchListOfObjects
     Dim objCompRefAs SchComponent
     If ( Not ( objSchRoot Is Nothing ) ) Then
+```
+```vbscript
        Set objLCompRefs = objSchRoot.GetRefComponents
 
        ' Get the first reference component 
+```
        If ( Not ( objLCompRefs Is Nothing ) )Then
+```vbscript
           Set objCompRef = objLCompRefs.Item (1,"CATIASchComponent")
        End If
+```
     End If 
    
     ' Synchronize component instances of the first reference component 
@@ -86,10 +112,12 @@ Sub CATMain()
 
     strMessage = strMessage & _
       "--------------------------------------------------------------------" & vbCr
+```vbscript
     MsgBox strMessage
 
 End Sub
 
+```
 
 ```vbscript
 Option Explicit
@@ -102,27 +130,37 @@ Option Explicit
 '   CATIA Level:  V5R18 
 ' *****************************************************************************
 
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
+
+```
 
     ' ------------------------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
+```vbscript
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,sDocPath,"No Doc Path Defined"
     End If
+```
 
     ' ------------------------------------------------------------------------- 
     ' Open the schematic document 
+```vbscript
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
-            "online\CAAScdSchUseCases\samples\CAASCH_SyncCompInst.CATProduct")
+            "online/CAAScdSchUseCases/samples/CAASCH_SyncCompInst.CATProduct")
+```
 
+```vbscript
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
     Dim strMessageAs String
+
+```
 
     strMessage = _
       "--------------------------------------------------------------------" &amp; vbCr
@@ -130,32 +168,48 @@ Sub CATMain()
       "Output traces from CAASchSyncCompInst.CATScript" & vbCrLf
 
     ' Find the top node of the schematic object tree - schematic root.
+```vbscript
     Dim objPrdRoot As Product
     Dim objSchRoot As SchematicRoot
     If ( Not ( objSchDoc Is Nothing ) ) Then
+```
+```vbscript
       Set objPrdRoot = objSchDoc.Product 
       If ( Not ( objPrdRoot Is Nothing ) ) Then
+```
+```vbscript
         Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
       End If
+```
     End If
 
     ' Get SchUpdateInstances interface on the schematic root. 
+```vbscript
     Dim objUpdateInstancesAs SchUpdateInstances
 
     If ( Not ( objSchRoot Is Nothing ) ) Then
+```
+```vbscript
        Set objUpdateInstances = objSchRoot.GetInterface ("CATIASchUpdateInstances",objSchRoot) 
     End If 
+```
    
     ' Find a list of reference component in the model
+```vbscript
     Dim objLCompRefsAs SchListOfObjects
     Dim objCompRefAs SchComponent
     If ( Not ( objSchRoot Is Nothing ) ) Then
+```
+```vbscript
        Set objLCompRefs = objSchRoot.GetRefComponents
 
        ' Get the first reference component 
+```
        If ( Not ( objLCompRefs Is Nothing ) )Then
+```vbscript
           Set objCompRef = objLCompRefs.Item (1,"CATIASchComponent")
        End If
+```
     End If 
    
     ' Synchronize component instances of the first reference component 
@@ -171,7 +225,9 @@ Sub CATMain()
 
     strMessage = strMessage & _
       "--------------------------------------------------------------------" & vbCr
+```vbscript
     MsgBox strMessage
 
 End Sub
+```
 ```

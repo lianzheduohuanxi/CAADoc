@@ -4,13 +4,13 @@ title: "Changes to ENOVIA LCA Metadata in V5R15 Compared with V5R14"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: []
-source_file: "Doc/online/CAACenQuickRefs/CAACenMetaExpR15vsR14.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenMetaExpR15vsR14.htmmd"
 converted: "2026-05-11T17:33:46.992768"
 ```
 
 ---
 tags: []
-source_file: "Doc/online/CAACenQuickRefs/CAACenMetaExpR15vsR14.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenMetaExpR15vsR14.htmmd"
 converted: "2026-05-11T17:33:46.992768"
 CAA V5 Encyclopedia |  Changes to ENOVIA LCA Metadata in V5R15 Compared with V5R14
 
@@ -81,8 +81,10 @@ Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Obj
 3 | 2 | 1 | New object | APLAFL | ACTION | Internal_Associated_Object | Class | AFLBaseObject | V_object_description | Simple of String | Inherited | V_object_description | The real object short description |
 3 | 2 | 1 | New object | APLAFL | ACTION | Internal_Associated_Object | Class | AFLBaseObject | C_created | Simple of Timestamp | Inherited | C_created | The real object creation date |
 3 | 2 | 1 | New object | APLAFL | ACTION | Internal_Associated_Object | Class | AFLBaseObject | C_modified | Simple of Timestamp | Inherited | C_modified | The real object modification date |
+```vbscript
 3 | 2 | 1 | New object | APLAFL | ACTION | Internal_Associated_Object | Class | AFLBaseObject | C506_objects | Set of Oid | Inherited | C506_objects | References to other affected objects |
 3 | 2 | 0 | New object | APLAFL | ACTION | Internal_Associated_Object | Class | AFLBaseObject | C_changeType | Simple of String | Inherited | C_changeType | References to other affected objects |
+```
 3 | 2 | 0 | New object | APLAFL | ACTION | Internal_Associated_Object | Class | AFLBaseObject | C_changeAction | Simple of String | Inherited | C_changeAction | References to other affected objects |
 3 | 2 | 0 | New object | APLAFL | ACTION | Internal_Associated_Object | Class | AFLBaseObject | C_manuallyAdded | Simple of Boolean | Inherited | C_manuallyAdded | References to other affected objects |
 3 | 2 | 0 | New object | APLAFL | ACTION | Internal_Associated_Object | Class | AFLBaseObject | C_actuallyChanged | Simple of Boolean | Inherited | C_actuallyChanged | References to other affected objects |
@@ -103,8 +105,10 @@ Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Obj
 3 | 2 | 1 | New object | APLAFL | ACTION | Validated_Associated_Object | Class | AFLBaseObject | V_object_description | Simple of String | Inherited | V_object_description | The real object short description |
 3 | 2 | 1 | New object | APLAFL | ACTION | Validated_Associated_Object | Class | AFLBaseObject | C_created | Simple of Timestamp | Inherited | C_created | The real object creation date |
 3 | 2 | 1 | New object | APLAFL | ACTION | Validated_Associated_Object | Class | AFLBaseObject | C_modified | Simple of Timestamp | Inherited | C_modified | The real object modification date |
+```vbscript
 3 | 2 | 1 | New object | APLAFL | ACTION | Validated_Associated_Object | Class | AFLBaseObject | C506_objects | Set of Oid | Inherited | C506_objects | References to other affected objects |
 3 | 2 | 0 | New object | APLAFL | ACTION | Validated_Associated_Object | Class | AFLBaseObject | C_changeType | Simple of String | Inherited | C_changeType | References to other affected objects |
+```
 3 | 2 | 0 | New object | APLAFL | ACTION | Validated_Associated_Object | Class | AFLBaseObject | C_changeAction | Simple of String | Inherited | C_changeAction | References to other affected objects |
 3 | 2 | 0 | New object | APLAFL | ACTION | Validated_Associated_Object | Class | AFLBaseObject | C_manuallyAdded | Simple of Boolean | Inherited | C_manuallyAdded | References to other affected objects |
 3 | 2 | 0 | New object | APLAFL | ACTION | Validated_Associated_Object | Class | AFLBaseObject | C_actuallyChanged | Simple of Boolean | Inherited | C_actuallyChanged | References to other affected objects |
@@ -125,8 +129,10 @@ Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Obj
 3 | 2 | 1 | New object | APLAFL | ACTION | Specification_Associated_Object | Class | AFLBaseObject | V_object_description | Simple of String | Inherited | V_object_description | The real object short description |
 3 | 2 | 1 | New object | APLAFL | ACTION | Specification_Associated_Object | Class | AFLBaseObject | C_created | Simple of Timestamp | Inherited | C_created | The real object creation date |
 3 | 2 | 1 | New object | APLAFL | ACTION | Specification_Associated_Object | Class | AFLBaseObject | C_modified | Simple of Timestamp | Inherited | C_modified | The real object modification date |
+```vbscript
 3 | 2 | 1 | New object | APLAFL | ACTION | Specification_Associated_Object | Class | AFLBaseObject | C506_objects | Set of Oid | Inherited | C506_objects | References to other affected objects |
 3 | 2 | 0 | New object | APLAFL | ACTION | Specification_Associated_Object | Class | AFLBaseObject | C_changeType | Simple of String | Inherited | C_changeType | References to other affected objects |
+```
 3 | 2 | 0 | New object | APLAFL | ACTION | Specification_Associated_Object | Class | AFLBaseObject | C_changeAction | Simple of String | Inherited | C_changeAction | References to other affected objects |
 3 | 2 | 0 | New object | APLAFL | ACTION | Specification_Associated_Object | Class | AFLBaseObject | C_manuallyAdded | Simple of Boolean | Inherited | C_manuallyAdded | References to other affected objects |
 3 | 2 | 0 | New object | APLAFL | ACTION | Specification_Associated_Object | Class | AFLBaseObject | C_actuallyChanged | Simple of Boolean | Inherited | C_actuallyChanged | References to other affected objects |
@@ -147,8 +153,10 @@ Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Obj
 3 | 2 | 1 | New object | APLAFL | ACTION | Context_Associated_Object | Class | AFLBaseObject | V_object_description | Simple of String | Inherited | V_object_description | The real object short description |
 3 | 2 | 1 | New object | APLAFL | ACTION | Context_Associated_Object | Class | AFLBaseObject | C_created | Simple of Timestamp | Inherited | C_created | The real object creation date |
 3 | 2 | 1 | New object | APLAFL | ACTION | Context_Associated_Object | Class | AFLBaseObject | C_modified | Simple of Timestamp | Inherited | C_modified | The real object modification date |
+```vbscript
 3 | 2 | 1 | New object | APLAFL | ACTION | Context_Associated_Object | Class | AFLBaseObject | C506_objects | Set of Oid | Inherited | C506_objects | References to other affected objects |
 3 | 2 | 0 | New object | APLAFL | ACTION | Context_Associated_Object | Class | AFLBaseObject | C_changeType | Simple of String | Inherited | C_changeType | References to other affected objects |
+```
 3 | 2 | 0 | New object | APLAFL | ACTION | Context_Associated_Object | Class | AFLBaseObject | C_changeAction | Simple of String | Inherited | C_changeAction | References to other affected objects |
 3 | 2 | 0 | New object | APLAFL | ACTION | Context_Associated_Object | Class | AFLBaseObject | C_manuallyAdded | Simple of Boolean | Inherited | C_manuallyAdded | References to other affected objects |
 3 | 2 | 0 | New object | APLAFL | ACTION | Context_Associated_Object | Class | AFLBaseObject | C_actuallyChanged | Simple of Boolean | Inherited | C_actuallyChanged | References to other affected objects |
@@ -169,8 +177,10 @@ Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Obj
 3 | 2 | 1 | New object | APLAFL | ACTION | AFLAffected_Clash | Class | AFLBaseObject | V_object_description | Simple of String | Inherited | V_object_description | The real object short description |
 3 | 2 | 1 | New object | APLAFL | ACTION | AFLAffected_Clash | Class | AFLBaseObject | C_created | Simple of Timestamp | Inherited | C_created | The real object creation date |
 3 | 2 | 1 | New object | APLAFL | ACTION | AFLAffected_Clash | Class | AFLBaseObject | C_modified | Simple of Timestamp | Inherited | C_modified | The real object modification date |
+```vbscript
 3 | 2 | 1 | New object | APLAFL | ACTION | AFLAffected_Clash | Class | AFLBaseObject | C506_objects | Set of Oid | Inherited | C506_objects | References to other affected objects |
 3 | 2 | 0 | New object | APLAFL | ACTION | AFLAffected_Clash | Class | AFLBaseObject | C_changeType | Simple of String | Inherited | C_changeType | References to other affected objects |
+```
 3 | 2 | 0 | New object | APLAFL | ACTION | AFLAffected_Clash | Class | AFLBaseObject | C_changeAction | Simple of String | Inherited | C_changeAction | References to other affected objects |
 3 | 2 | 0 | New object | APLAFL | ACTION | AFLAffected_Clash | Class | AFLBaseObject | C_manuallyAdded | Simple of Boolean | Inherited | C_manuallyAdded | References to other affected objects |
 3 | 2 | 0 | New object | APLAFL | ACTION | AFLAffected_Clash | Class | AFLBaseObject | C_actuallyChanged | Simple of Boolean | Inherited | C_actuallyChanged | References to other affected objects |
@@ -193,8 +203,10 @@ Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Obj
 3 | 2 | 1 | New object | APLAFL | ACTION | AFLAffected_PenetrationObject | Class | AFLBaseObject | V_object_description | Simple of String | Inherited | V_object_description | The real object short description |
 3 | 2 | 1 | New object | APLAFL | ACTION | AFLAffected_PenetrationObject | Class | AFLBaseObject | C_created | Simple of Timestamp | Inherited | C_created | The real object creation date |
 3 | 2 | 1 | New object | APLAFL | ACTION | AFLAffected_PenetrationObject | Class | AFLBaseObject | C_modified | Simple of Timestamp | Inherited | C_modified | The real object modification date |
+```vbscript
 3 | 2 | 1 | New object | APLAFL | ACTION | AFLAffected_PenetrationObject | Class | AFLBaseObject | C506_objects | Set of Oid | Inherited | C506_objects | References to other affected objects |
 3 | 2 | 0 | New object | APLAFL | ACTION | AFLAffected_PenetrationObject | Class | AFLBaseObject | C_changeType | Simple of String | Inherited | C_changeType | References to other affected objects |
+```
 3 | 2 | 0 | New object | APLAFL | ACTION | AFLAffected_PenetrationObject | Class | AFLBaseObject | C_changeAction | Simple of String | Inherited | C_changeAction | References to other affected objects |
 3 | 2 | 0 | New object | APLAFL | ACTION | AFLAffected_PenetrationObject | Class | AFLBaseObject | C_manuallyAdded | Simple of Boolean | Inherited | C_manuallyAdded | References to other affected objects |
 3 | 2 | 0 | New object | APLAFL | ACTION | AFLAffected_PenetrationObject | Class | AFLBaseObject | C_actuallyChanged | Simple of Boolean | Inherited | C_actuallyChanged | References to other affected objects |
@@ -217,8 +229,10 @@ Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Obj
 3 | 2 | 1 | New object | APLAFL | ACTION | AFLAffected_Penetrating | Class | AFLAffected_PenetrationObject | V_object_description | Simple of String | Inherited | V_object_description | The real object short description |
 3 | 2 | 1 | New object | APLAFL | ACTION | AFLAffected_Penetrating | Class | AFLAffected_PenetrationObject | C_created | Simple of Timestamp | Inherited | C_created | The real object creation date |
 3 | 2 | 1 | New object | APLAFL | ACTION | AFLAffected_Penetrating | Class | AFLAffected_PenetrationObject | C_modified | Simple of Timestamp | Inherited | C_modified | The real object modification date |
+```vbscript
 3 | 2 | 1 | New object | APLAFL | ACTION | AFLAffected_Penetrating | Class | AFLAffected_PenetrationObject | C506_objects | Set of Oid | Inherited | C506_objects | References to other affected objects |
 3 | 2 | 0 | New object | APLAFL | ACTION | AFLAffected_Penetrating | Class | AFLAffected_PenetrationObject | C_changeType | Simple of String | Inherited | C_changeType | References to other affected objects |
+```
 3 | 2 | 0 | New object | APLAFL | ACTION | AFLAffected_Penetrating | Class | AFLAffected_PenetrationObject | C_changeAction | Simple of String | Inherited | C_changeAction | References to other affected objects |
 3 | 2 | 0 | New object | APLAFL | ACTION | AFLAffected_Penetrating | Class | AFLAffected_PenetrationObject | C_manuallyAdded | Simple of Boolean | Inherited | C_manuallyAdded | References to other affected objects |
 3 | 2 | 0 | New object | APLAFL | ACTION | AFLAffected_Penetrating | Class | AFLAffected_PenetrationObject | C_actuallyChanged | Simple of Boolean | Inherited | C_actuallyChanged | References to other affected objects |
@@ -241,8 +255,10 @@ Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Obj
 3 | 2 | 1 | New object | APLAFL | ACTION | AFLAffected_Penetrated | Class | AFLAffected_PenetrationObject | V_object_description | Simple of String | Inherited | V_object_description | The real object short description |
 3 | 2 | 1 | New object | APLAFL | ACTION | AFLAffected_Penetrated | Class | AFLAffected_PenetrationObject | C_created | Simple of Timestamp | Inherited | C_created | The real object creation date |
 3 | 2 | 1 | New object | APLAFL | ACTION | AFLAffected_Penetrated | Class | AFLAffected_PenetrationObject | C_modified | Simple of Timestamp | Inherited | C_modified | The real object modification date |
+```vbscript
 3 | 2 | 1 | New object | APLAFL | ACTION | AFLAffected_Penetrated | Class | AFLAffected_PenetrationObject | C506_objects | Set of Oid | Inherited | C506_objects | References to other affected objects |
 3 | 2 | 0 | New object | APLAFL | ACTION | AFLAffected_Penetrated | Class | AFLAffected_PenetrationObject | C_changeType | Simple of String | Inherited | C_changeType | References to other affected objects |
+```
 3 | 2 | 0 | New object | APLAFL | ACTION | AFLAffected_Penetrated | Class | AFLAffected_PenetrationObject | C_changeAction | Simple of String | Inherited | C_changeAction | References to other affected objects |
 3 | 2 | 0 | New object | APLAFL | ACTION | AFLAffected_Penetrated | Class | AFLAffected_PenetrationObject | C_manuallyAdded | Simple of Boolean | Inherited | C_manuallyAdded | References to other affected objects |
 3 | 2 | 0 | New object | APLAFL | ACTION | AFLAffected_Penetrated | Class | AFLAffected_PenetrationObject | C_actuallyChanged | Simple of Boolean | Inherited | C_actuallyChanged | References to other affected objects |
@@ -265,8 +281,10 @@ Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Obj
 3 | 2 | 1 | New object | APLAFL | ACTION | AFLAffected_CutoutSketch | Class | AFLAffected_PenetrationObject | V_object_description | Simple of String | Inherited | V_object_description | The real object short description |
 3 | 2 | 1 | New object | APLAFL | ACTION | AFLAffected_CutoutSketch | Class | AFLAffected_PenetrationObject | C_created | Simple of Timestamp | Inherited | C_created | The real object creation date |
 3 | 2 | 1 | New object | APLAFL | ACTION | AFLAffected_CutoutSketch | Class | AFLAffected_PenetrationObject | C_modified | Simple of Timestamp | Inherited | C_modified | The real object modification date |
+```vbscript
 3 | 2 | 1 | New object | APLAFL | ACTION | AFLAffected_CutoutSketch | Class | AFLAffected_PenetrationObject | C506_objects | Set of Oid | Inherited | C506_objects | References to other affected objects |
 3 | 2 | 0 | New object | APLAFL | ACTION | AFLAffected_CutoutSketch | Class | AFLAffected_PenetrationObject | C_changeType | Simple of String | Inherited | C_changeType | References to other affected objects |
+```
 3 | 2 | 0 | New object | APLAFL | ACTION | AFLAffected_CutoutSketch | Class | AFLAffected_PenetrationObject | C_changeAction | Simple of String | Inherited | C_changeAction | References to other affected objects |
 3 | 2 | 0 | New object | APLAFL | ACTION | AFLAffected_CutoutSketch | Class | AFLAffected_PenetrationObject | C_manuallyAdded | Simple of Boolean | Inherited | C_manuallyAdded | References to other affected objects |
 3 | 2 | 0 | New object | APLAFL | ACTION | AFLAffected_CutoutSketch | Class | AFLAffected_PenetrationObject | C_actuallyChanged | Simple of Boolean | Inherited | C_actuallyChanged | References to other affected objects |
@@ -274,8 +292,10 @@ Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Obj
 3 | 2 | 0 | New object | APLAFL | ACTION | AFLAffected_CutoutSketch | Class | AFLAffected_PenetrationObject | C506_inv_objects | Inverse of AFLAffected_Object.C506_objects (Set) | Inherited | C506_inv_objects |  |
 2 | 2 | 1 | New object | ACTION |  | AFLCategory | Class |  |  |  |  | AFLCategory |  |
 3 | 2 | 1 | New object | ACTION |  | AFLCategory | Class |  | V_type | Simple of String |  | V_type | An affected object type |
+```vbscript
 3 | 2 | 1 | New object | ACTION |  | AFLCategory | Class |  | C_associations | Set of Oid |  | C_associations | References to category associations |
 3 | 2 | 0 | New object | ACTION |  | AFLCategory | Class |  | C_related_action | Inverse of AFLAction.C_categories (Simple) |  | C_related_action | References to category associations |
+```
 2 | 2 | 1 | New object | ACTION |  | AFLCategoryAssociation | Class |  |  |  |  | AFLCategoryAssociation |  |
 3 | 2 | 1 | New object | ACTION |  | AFLCategoryAssociation | Class |  | C_folder_id | Simple of URL |  | C_folder_id | The reference to a folder |
 3 | 2 | 1 | New object | ACTION |  | AFLCategoryAssociation | Class |  | V_description | Simple of String |  | V_description | A description of the category association |

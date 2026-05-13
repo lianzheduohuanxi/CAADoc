@@ -3,14 +3,16 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdKniUseCases"
 tags: ["CAAScrBase", "CATIA", "CAAKniClash", "CAAKniParamPerComponents", "CAAScdKniUseCases"]
-source_file: "Doc/online/CAAScdKniUseCases/CAAKniParamPerComponentsSource.htm"
+source_file: "Doc/online/CAAScdKniUseCases/CAAKniParamPerComponentsSource.htmmd"
 converted: "2026-05-11T11:27:02.708429"
 ---
 
 Option Explicit
 ' COPYRIGHT DASSAULT SYSTEMES 2001
+```vbscript
 Dim Language as String
 Language="VBScript"
+```
 
 ' ***********************************************************************
 '   Purpose:      This macro filters the parameters created in a CATProduct 
@@ -32,11 +34,16 @@ Language="VBScript"
 '   revision V5R13
 ' ***********************************************************************
 
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
 
  ' Set the CATIA popup file alerts to False
  ' It prevents to stop the macro at each alert during its execution
+```
+```vbscript
  CATIA.DisplayFileAlerts = False
+
+```
 
  ' Retrieve your active document - CATIA is your application 
  ' You get the active document by using the ActiveDocument property
@@ -45,16 +52,21 @@ Sub CATMain()
     ' ----------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
+```vbscript
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,"No Doc Path Defined"
     End If
+```
     ' ----------------------------------------------------------- 
 
     ' Open the Part document 
+```vbscript
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
-		"online\CAAScdKniUseCases\samples\CAAKniClash.CATProduct")
+		"online/CAAScdKniUseCases/samples/CAAKniClash.CATProduct")
+```
+```vbscript
     Dim oDoc As Document
     set oDoc = CATIA.Documents.Open(sFilePath)
 
@@ -64,12 +76,15 @@ Sub CATMain()
  Dim i As Integer
  Dim j As Integer
  ' Check whether the document is a CATPart
+```
  ' InStr is a standard VB function
  If (InStr(oActiveDoc.Name,".CATProduct")) <> 0  Then 
 
+```vbscript
     Dim oParams As Parameters
     Set oParams = oActiveDoc.Product.Parameters
     msgbox oParams.Count
+```
     
     ' Search for the parameters having Product1 as their 
     ' "grand-parent"
@@ -82,13 +97,17 @@ Sub CATMain()
     Next 
 
     ' Searches for the parameters right below the p2.1 component
+```vbscript
     Dim oProductList As Products
     Set oProductList = oActiveDoc.Product.Products
     For j = 1 to oProductList.Count
+```
        if  oProductList.Item(j).Name = "p2.1" then
+```vbscript
        Dim oProd As Product
        Set oProd = oProductList.item(j)
        'Msgbox oProductList.Item(j).Name
+```
        For i = 1 to oProd.Parameters.Count
           Msgbox oProd.Parameters.item(i).name
           Msgbox oProd.Parameters.item(i).Parent.Parent.name 
@@ -97,17 +116,23 @@ Sub CATMain()
     Next       
 
  Else 
+```vbscript
     MsgBox "The active document must be a CATProduct"
 End If
+```
 
+```vbscript
 End Sub
 
+```
 
 ```vbscript
 Option Explicit
 ' COPYRIGHT DASSAULT SYSTEMES 2001
+```vbscript
 Dim Language as String
 Language="VBScript"
+```
 
 ' ***********************************************************************
 '   Purpose:      This macro filters the parameters created in a CATProduct 
@@ -129,11 +154,16 @@ Language="VBScript"
 '   revision V5R13
 ' ***********************************************************************
 
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
 
  ' Set the CATIA popup file alerts to False
  ' It prevents to stop the macro at each alert during its execution
+```
+```vbscript
  CATIA.DisplayFileAlerts = False
+
+```
 
  ' Retrieve your active document - CATIA is your application 
  ' You get the active document by using the ActiveDocument property
@@ -142,16 +172,21 @@ Sub CATMain()
     ' ----------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
+```vbscript
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,"No Doc Path Defined"
     End If
+```
     ' ----------------------------------------------------------- 
 
     ' Open the Part document 
+```vbscript
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
-		"online\CAAScdKniUseCases\samples\CAAKniClash.CATProduct")
+		"online/CAAScdKniUseCases/samples/CAAKniClash.CATProduct")
+```
+```vbscript
     Dim oDoc As Document
     set oDoc = CATIA.Documents.Open(sFilePath)
 
@@ -161,12 +196,15 @@ Sub CATMain()
  Dim i As Integer
  Dim j As Integer
  ' Check whether the document is a CATPart
+```
  ' InStr is a standard VB function
  If (InStr(oActiveDoc.Name,".CATProduct")) &lt;&gt; 0  Then 
 
+```vbscript
     Dim oParams As Parameters
     Set oParams = oActiveDoc.Product.Parameters
     msgbox oParams.Count
+```
     
     ' Search for the parameters having Product1 as their 
     ' "grand-parent"
@@ -179,13 +217,17 @@ Sub CATMain()
     Next 
 
     ' Searches for the parameters right below the p2.1 component
+```vbscript
     Dim oProductList As Products
     Set oProductList = oActiveDoc.Product.Products
     For j = 1 to oProductList.Count
+```
        if  oProductList.Item(j).Name = "p2.1" then
+```vbscript
        Dim oProd As Product
        Set oProd = oProductList.item(j)
        'Msgbox oProductList.Item(j).Name
+```
        For i = 1 to oProd.Parameters.Count
           Msgbox oProd.Parameters.item(i).name
           Msgbox oProd.Parameters.item(i).Parent.Parent.name 
@@ -194,8 +236,12 @@ Sub CATMain()
     Next       
 
  Else 
+```vbscript
     MsgBox "The active document must be a CATProduct"
 End If
+```
 
+```vbscript
 End Sub
+```
 ```

@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Topological Journal Methodology"
-category: "use-case"
+category: tech-article
 module: "CAATopTechArticles"
 tags: ["CAACheckForPart", "CAATopCheckGnOK", "CATIBRepAccess", "CAATopJournal", "CAATopCheckForPart", "CATIA", "CAATopCheckGnKO", "CAATopDumpJournal", "CATIMfProcReport", "CAACheck", "CAATopologicalOperators"]
-source_file: "Doc/online/CAATopTechArticles/JournalMethodology.htm"
+source_file: "Doc/online/CAATopTechArticles/JournalMethodology.htmmd"
 converted: "2026-05-11T17:31:50.785311"
 ```
 

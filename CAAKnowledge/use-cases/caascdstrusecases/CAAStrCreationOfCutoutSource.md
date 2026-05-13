@@ -3,11 +3,12 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CAAScrBase", "CATIAStrFeatureFactory", "CATIA", "CAAStrCreateCutout"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfCutoutSource.htm"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfCutoutSource.htmmd"
 converted: "2026-05-11T11:27:02.589968"
 ---
 
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
 
 Dim doc As Document
 
@@ -27,13 +28,17 @@ Dim doc As Document
   Set sketch1 = rootProduct.CreateReferenceFromName("Product1/Grid/!Sketch.1")
 
   '*************************First Cutout**************************************************
+```
+```vbscript
   Dim PlateToCut1 As StrPlate
   Set PlateToCut1 = strPlates.Item("Plate_052")
 
   Dim Selection1 As Selection
   Set Selection1 = CATIA.ActiveDocument.Selection
   Selection1.Add PlateToCut1
+```
   
+```vbscript
   Dim Factory1 As StrFeatureFactory
   Set Factory1 = Selection1.FindObject("CATIAStrFeatureFactory")
 
@@ -44,13 +49,17 @@ Dim doc As Document
   Set Cutout1 = Factory1.AddCutoutWithAfterFormingMode(sketch1, dir1)
  
   '*************************Second  Cutout**************************************************
+```
+```vbscript
   Dim PlateToCut2 As StrPlate
   Set PlateToCut2 = strPlates.Item("Plate_053")
 
   Dim Selection2 As Selection
   Set Selection2 = CATIA.ActiveDocument.Selection
   Selection2.Add PlateToCut2
+```
 
+```vbscript
   Dim Factory2 As StrFeatureFactory
   Set Factory2 = Selection2.FindObject("CATIAStrFeatureFactory")
 
@@ -62,10 +71,10 @@ Dim doc As Document
 
 End Sub
 
-
-
 ```vbscript
-Sub CATMain()
+```
+```vbscript
+Sub CATMain(#)
 
 Dim doc As Document
 
@@ -85,13 +94,17 @@ Dim doc As Document
   Set sketch1 = rootProduct.CreateReferenceFromName(&quot;Product1/Grid/!Sketch.1&quot;)
 
   '*************************First Cutout**************************************************
+```
+```vbscript
   Dim PlateToCut1 As StrPlate
   Set PlateToCut1 = strPlates.Item(&quot;Plate_052&quot;)
 
   Dim Selection1 As Selection
   Set Selection1 = CATIA.ActiveDocument.Selection
   Selection1.Add PlateToCut1
+```
   
+```vbscript
   Dim Factory1 As StrFeatureFactory
   Set Factory1 = Selection1.FindObject(&quot;CATIAStrFeatureFactory&quot;)
 
@@ -102,13 +115,17 @@ Dim doc As Document
   Set Cutout1 = Factory1.AddCutoutWithAfterFormingMode(sketch1, dir1)
  
   '*************************Second  Cutout**************************************************
+```
+```vbscript
   Dim PlateToCut2 As StrPlate
   Set PlateToCut2 = strPlates.Item(&quot;Plate_053&quot;)
 
   Dim Selection2 As Selection
   Set Selection2 = CATIA.ActiveDocument.Selection
   Selection2.Add PlateToCut2
+```
 
+```vbscript
   Dim Factory2 As StrFeatureFactory
   Set Factory2 = Selection2.FindObject(&quot;CATIAStrFeatureFactory&quot;)
 
@@ -119,4 +136,5 @@ Dim doc As Document
   Set Cutout2 = Factory2.AddCutoutWithBeforeFormingMode(sketch1, Sur1)
 
 End Sub
+```
 ```

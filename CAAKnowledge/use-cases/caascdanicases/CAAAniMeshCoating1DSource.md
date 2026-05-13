@@ -4,7 +4,7 @@ title: "CAAAniMeshCoating1D.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniMeshCoating1D", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshCoating1DSource.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshCoating1DSource.htmmd"
 converted: "2026-05-11T17:31:51.623499"
 ```
 
@@ -33,7 +33,10 @@ converted: "2026-05-11T17:31:51.623499"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
+
+```
 
 ```
 
@@ -42,18 +45,22 @@ converted: "2026-05-11T17:31:51.623499"
 ```vbscript
     '-----------------------------------------------------------
     'Optional: allows to find the sample wherever it's installed
+```vbscript
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
 ```vbscript
         End If
     '-----------------------------------------------------------
@@ -70,24 +77,30 @@ End If
 ```vbscript
 '-----------------------------------------------------------
     'Open the CATAnalysis Document
-    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Surface.CATAnalysis")
+```vbscript
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Surface.CATAnalysis")
+```
 ```
 
 ```
 
 ```
 
+```vbscript
 ```vbscript
 ```vbscript
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ```
+```
 
 ```
 
 ```vbscript
+```vbscript
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```vbscript
+```
     'Retrieve the analysis Manager
 ```
 
@@ -95,26 +108,34 @@ Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ```vbscript
 ```vbscript
+```vbscript
     Set oAnalysisManagar = oAnalysisDocument.Analysis
 
 ```
+```
 
 ```
 
 ```vbscript
+```vbscript
 Set oAnalysisManagar = oAnalysisDocument.Analysis
 ```vbscript
+```
     'Retrieve the part document and product
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisLinkedDocuments = oAnalysisManagar.LinkedDocuments
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set partDocument = oAnalysisLinkedDocuments.Item(1)
     Set product = partDocument.Product
+```
 ```
 
 ```
@@ -125,8 +146,10 @@ Set oAnalysisManagar = oAnalysisDocument.Analysis
 ```vbscript
 ```vbscript
     'Retrieve the published edge
+```vbscript
     Set publications1 = product.Publications
     Set pubFace = publications1.Item("Edge")
+```
 ```
 
 ```
@@ -138,9 +161,13 @@ Set oAnalysisManagar = oAnalysisDocument.Analysis
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisModels = oAnalysisManagar.AnalysisModels
 ```vbscript
+```
+```vbscript
     Set oAnalysisModel = oAnalysisModels.Item(1)
+```
 ```
 
 ```
@@ -149,11 +176,15 @@ Set oAnalysisManagar = oAnalysisDocument.Analysis
 ```vbscript
 ```vbscript
     'Retrieve mesh manager and the surface mesh part by name
+```vbscript
     Set oAnalysisMeshManager = oAnalysisModel.MeshManager
     Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
     Set oAnalysisMeshPart = oAnalysisMeshParts.Item("Surface Mesh.1")
     'Create reference from the mesh part
+```
+```vbscript
     Set reference1 = oAnalysisManagar.CreateReferenceFromObject(oAnalysisMeshPart)
+```
 ```
 
 ```
@@ -165,14 +196,18 @@ Set oAnalysisManagar = oAnalysisDocument.Analysis
 ```
 
 ```vbscript
+```vbscript
     Set coat1D = oAnalysisMeshParts.Add ("MSHPart1DCoating")
 ```vbscript
+```
     'Add the reference previously created
 ```
 
     coat2D.AddSupportFromReference NOTHING, reference1
 ```vbscript
+```vbscript
     'Set the global specifications
+```
 ```
 
     coat2D.SetGlobalSpecification "ExtractionType", 1
@@ -189,9 +224,13 @@ coat2D.SetGlobalSpecification "ExtractionType", 1
 ```
 
 ```vbscript
+```vbscript
     Set meshSpecs = coat2D.AnalysisMeshLocalSpecifications
 ```vbscript
+```
+```vbscript
     Set spec = meshSpecs.Add("MSHCoatingLocalSpecification")
+```
 ```
 
     spec.SetAttribute "LocalExtractionType", 2
@@ -199,7 +238,9 @@ coat2D.SetGlobalSpecification "ExtractionType", 1
 ```
 
 ```vbscript
+```vbscript
 Set spec = meshSpecs.Add("MSHCoatingLocalSpecification")
+```
 ```
 
 spec.SetAttribute "LocalExtractionType", 2
@@ -212,6 +253,8 @@ spec.SetAttribute "LocalExtractionType", 2
     coat1D.Update
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

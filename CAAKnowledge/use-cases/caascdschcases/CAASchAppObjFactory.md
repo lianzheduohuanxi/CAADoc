@@ -4,7 +4,7 @@ title: "Building a Schematic Reference Component"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAADoc", "CAASchPlatformModeler", "CAASchAppObjFactory", "CATIASchCompConnector", "CAASCHEDUCompressFunc", "CAAScdSchUseCases", "CAASCHEDU_SamplePID", "CAASCHEDUFuncString", "CATIA", "CAASchAppBase", "CAASCHEDUApp", "CAASCHEDUConnector", "CATIASchGRR", "CATIASchCompatible", "CAASCH_Detail01", "CATIASchComponent2", "CAASchAppUtilities"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchAppObjFactory.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchAppObjFactory.htmmd"
 converted: "2026-05-11T17:31:51.312764"
 ```
 
@@ -29,9 +29,9 @@ converted: "2026-05-11T17:31:51.312764"
   * Setup:
 
 >   1. Build CAASchAppBase.m and CAASchAppUtilities.m, located in CAASchPlatformModeler.edu (RADE is required).
->   2. Copy generated DLLs, CAASchAppBase.dll and CAASchAppUtilities.m, respectively, to the run-time environment folder "intel_a\code\bin."
->   3. Copy CAASCHEDUApp.CATfct, located CAASchPlatformModeler.edu\CNext\resources\graphic, to the run-time environment folder "intel_a\resources\graphic."
->   4. Copy CAASchPlatformModeler.edu\CNext\code\dictionary\CAASchPlatformModeler.edu.dico to the run-time environment folder "intel_a\code\dictionary."
+>   2. Copy generated DLLs, CAASchAppBase.dll and CAASchAppUtilities.m, respectively, to the run-time environment folder "intel_a/code/bin."
+>   3. Copy CAASCHEDUApp.CATfct, located CAASchPlatformModeler.edu/CNext/resources/graphic, to the run-time environment folder "intel_a/resources/graphic."
+>   4. Copy CAASchPlatformModeler.edu/CNext/code/dictionary/CAASchPlatformModeler.edu.dico to the run-time environment folder "intel_a/code/dictionary."
 >
 
 [CAASchAppObjFactory.CATScript](CAASchAppObjFactorySource.md) is located in the CAAScdSchUseCases module. [Execute macro](macros/CAASchAppObjFactory.CATScript) (Windows only).
@@ -59,22 +59,30 @@ The macro first loads CAASCH_Detail01.CATProduct that contains 3 schematic compo
 ```
 
 ```vbscript
+```vbscript
     Dim sFilePath
+```vbscript
+```
 ```vbscript
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
+```
 
 ```
 
-            "online\CAAScdSchUseCases\samples\CAASCH_Detail01.CATProduct")
+            "online/CAAScdSchUseCases/samples/CAASCH_Detail01.CATProduct")
 
 ```vbscript
+```vbscript
 Dim sFilePath
+```vbscript
+```
 ```vbscript
 ```vbscript
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
+```
 ```
 
 ```
@@ -98,15 +106,23 @@ Next, the macro acquires the schematic root object from the document. The schema
 ```
 
 ```vbscript
+```vbscript
     Dim objPrdRoot As Product
+```vbscript
+```
 ```vbscript
 ```vbscript
     Dim objSchRoot As SchematicRoot
     If ( Not ( objSchDoc Is Nothing ) ) Then
+```
+```vbscript
       Set objPrdRoot = objSchDoc.Product
       If ( Not ( objPrdRoot Is Nothing ) ) Then
+```
+```vbscript
         Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
       End If
+```
     End If
 ```
 
@@ -127,12 +143,16 @@ From this schematic root object the following factory objects can be obtained.
 
     ...
 ```vbscript
+```vbscript
     Dim objAppObjFact As SchAppObjectFactory
+```vbscript
+```
 ```vbscript
 ```vbscript
     Dim objSchBaseFact As SchBaseFactory
     Dim objSchTempListFact As SchTempListFactory
 
+```
 ```
 
 ```
@@ -149,9 +169,11 @@ From this schematic root object the following factory objects can be obtained.
        '-----------------------------------------------------------------------
        ' Get all the necessary factories.
        '-----------------------------------------------------------------------
+```vbscript
        Set objAppObjFact = objSchRoot.GetApplObjFactFromVirtualType ("CAASCHEDU_SamplePID")
        Set objSchBaseFact = objSchRoot.GetSchBaseFactory
        Set objSchTempListFact = objSchRoot.GetTemporaryListFactory
+```
 ```
 
 ```
@@ -213,7 +235,9 @@ A graphical representation (a symbol) is needed to define a schematic reference 
 ```
 
 ```vbscript
+```vbscript
            Set objSchSymbol = GetComponentSymbol (objSchRoot)
+```
 ```
 
     ...
@@ -230,14 +254,18 @@ Note that, a temporary list of object is created to contain the graphic represen
 ```
 
 ```vbscript
+```vbscript
               Set objSchListGRR = objSchTempListFact.CreateListOfObjects
 ```vbscript
+```
               If ( Not ( objSchListGRR Is Nothing ) ) Then
 ```
 
                  objSchListGRR.Append objSchSymbol
+```vbscript
                  Set objSchCompRef = objSchBaseFact.CreateSchComponent ( _
                    objAppCompRef, objSchListGRR)
+```
 ```
 
     ...
@@ -267,13 +295,17 @@ The following data needs to be defined when creating a connector.
 ```
 
 ```vbscript
+```vbscript
            Dim objSchCntr As SchCompConnector
+```vbscript
+```
 ```vbscript
 ```vbscript
            Dim objSchAppCntr As SchAppConnector
            Dim objSchCntrLoc As SchCntrLocation
 
            Set objSchCntr = objSchRoot.GetInterface ("CATIASchCompConnector", _
+```
 ```
 
 ```
@@ -286,14 +318,18 @@ The following data needs to be defined when creating a connector.
 ```vbscript
            If ( Not ( objSchCntr Is Nothing ) ) Then
 
+```vbscript
               Dim iCntr As Integer
 ```
+```
 
+```vbscript
 ```vbscript
 ```vbscript
               Dim db2CntrPos (2) As CATSafeArrayVariant
               Dim db2CntrVec (2) As CATSafeArrayVariant
 
+```
 ```
 
 ```
@@ -303,7 +339,9 @@ The following data needs to be defined when creating a connector.
 ```vbscript
               For iCntr = 1 To 2
 ```vbscript
+```vbscript
                 Set objSchCntrLoc = Nothing
+```
 ```
 
 ```
@@ -394,8 +432,10 @@ We also need to specify the positioning matrix for the graphical representation 
 ```
 
 ```vbscript
+```vbscript
            Dim db6Matrix(6) As CATSafeArrayVariant
 ```vbscript
+```
            db6Matrix(0)=1.0
            db6Matrix(1)=0.0
            db6Matrix(2)=0.0
@@ -403,7 +443,9 @@ We also need to specify the positioning matrix for the graphical representation 
            db6Matrix(4)=100.0
            db6Matrix(5)=100.0
 
+```vbscript
            Set objSchComp2Ref = objSchRoot.GetInterface ( _
+```
 ```
 
 ```
@@ -438,7 +480,9 @@ IsTargetOKForRoute is called for the checking. It returns a flag bCompatible and
 
     ...
 ```vbscript
+```vbscript
             Set objSchCompCompat = objSchRoot.GetInterface ( _
+```
 ```
 
              "CATIASchCompatible",objSchCompInst)
@@ -475,7 +519,10 @@ Not ( objSchGRRCompInst Is Nothing ) ) Then
 ```
 
 ```vbscript
+```vbscript
                Dim objSchGRRInst As SchGRR
+```vbscript
+```
 ```vbscript
 ```vbscript
                Dim objAppCntrCompBest As SchAppConnector
@@ -483,16 +530,21 @@ Not ( objSchGRRCompInst Is Nothing ) ) Then
                Dim db2SelectPt(2) As CATSafeArrayVariant
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Dim objLDbOut As SchListOfDoubles
 ```vbscript
+```
+```vbscript
 Dim db2SelectPt(2) As CATSafeArrayVariant
                db2SelectPt(0) = 130.0
+```
                db2SelectPt(1) = 110.0
 
 ```
@@ -500,7 +552,9 @@ Dim db2SelectPt(2) As CATSafeArrayVariant
 ```
 
 ```vbscript
+```vbscript
                Set objSchGRRInst = objSchRoot.GetInterface ( _
+```
 ```
 
                  "CATIASchGRR",objSchGRRCompInst)
@@ -613,8 +667,10 @@ The newly created route instance is connected to the component instance via thei
 ```
 
 ```vbscript
+```vbscript
                          Set objAppConnection = objAppCntrCompBest.AppConnect _
                            (objAppCntrRouteBest)
+```
 ```
 
     ...

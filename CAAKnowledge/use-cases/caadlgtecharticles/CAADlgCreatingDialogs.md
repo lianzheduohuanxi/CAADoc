@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating Dialog Objects"
-category: "use-case"
+category: tech-article
 module: "CAADlgTechArticles"
 tags: ["CATInteractiveApplication"]
-source_file: "Doc/online/CAADlgTechArticles/CAADlgCreatingDialogs.htm"
+source_file: "Doc/online/CAADlgTechArticles/CAADlgCreatingDialogs.htmmd"
 converted: "2026-05-11T17:17:56.030157"
 ```
 
@@ -101,12 +101,12 @@ By default, all the dialog objects contained in this main container are also sho
 
 The `GetVisibility` method allows you to know whether a given object is visible:
 
-    if (pObject->GetVisibility() == CATDlgShow)
+    if (pObject->GetVisibility(#) == CATDlgShow)
 ```
 
       ... //Do what is required if the object is visible
 The `GetVisibility` method allows you to know whether a given object is visible:
-if (pObject->GetVisibility() == CATDlgShow)
+if (pObject->GetVisibility(#) == CATDlgShow)
     else
 
       ... //Do what is required if the object is not visible

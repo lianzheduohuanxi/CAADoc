@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "DrawingDocument Object"
-category: "use-case"
+category: tech-article
 module: "CAAScdDriTechArticles"
 tags: ["CATIA"]
-source_file: "Doc/online/CAAScdDriTechArticles/CAADriObjDrawingDocument.htm"
+source_file: "Doc/online/CAAScdDriTechArticles/CAADriObjDrawingDocument.htmmd"
 converted: "2026-05-11T17:31:51.117216"
 ```
 
@@ -36,14 +36,18 @@ Use **Documents**(_index_), where index is the document name or index number in 
 
 ```vbscript
 ```vbscript
+```vbscript
     CATIA.Documents(2).Activate
 
+```
 ```
 
 ```
 
 ```vbscript
+```vbscript
 CATIA.Documents(2).Activate
+```
 ```
 
 The index number denotes the order in which the documents were opened or created. `Documents(1)` is the second document created, and `Documents(Documents.Count)` is the last one created. Activating a document doesn't change its index number. All documents are included in the index count, even if they're hidden.
@@ -51,11 +55,15 @@ The index number denotes the order in which the documents were opened or created
 Use the **ActiveDocument** property to retrieve the active document:
 
 ```vbscript
+```vbscript
     Dim Doc As Document
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set Doc = CATIA.ActiveDocuments
 
+```
 ```
 
 ```

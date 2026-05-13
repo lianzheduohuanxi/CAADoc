@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Constructing Graphic Representations in Batch Mode"
-category: "use case"
+category: use-case case"
 module: "CAAVisUseCases"
 tags: ["CATI3DGeoVisu", "CATIPrtContainer", "CAAGviVisuBatchuse", "CAAGviVisuBatch", "CAAVisuBatch", "CAAGeometryVisualization"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleVisuBatch.htm"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleVisuBatch.htmmd"
 converted: "2026-05-11T17:31:52.235473"
 ```
 
@@ -57,7 +57,7 @@ To launch CAAGviVisuBatch , you will need to set up the build time environment, 
 where `InputPart` is the complete path of a Part document. You can use the following Part document:
 
   * Unix : `InstallRootDirectory/CAAGeometryVisualization.edu/InputData/CAAVisuBatch.CATPart`
-  * Windows : `InstallRootDirectory\CAAGeometryVisualization.edu\InputData\CAAVisuBatch.CATPart`
+  * Windows : `InstallRootDirectory/CAAGeometryVisualization.edu/InputData/CAAVisuBatch.CATPart`
 
 [Top]
 #### Where to Find the CAAGviVisuBatch Code
@@ -65,10 +65,10 @@ where `InputPart` is the complete path of a Part document. You can use the follo
 The CAAGviVisuBatch use case is made of a single file, _CAAGviVisuBatch.cpp_ , located in the CAAGviVisuBatch.m module of the CAAGeometryVisualization.edu framework:
 
 The CAAGviVisuBatch use case is made of a single file, _CAAGviVisuBatch.cpp_ , located in the CAAGviVisuBatch.m module of the CAAGeometryVisualization.edu framework:
-Windows | `InstallRootDirectory\CAAGeometryVisualization.edu\CAAGviVisuBatch.m\`
+Windows | `InstallRootDirectory/CAAGeometryVisualization.edu/CAAGviVisuBatch.m/`
 
 The CAAGviVisuBatch use case is made of a single file, _CAAGviVisuBatch.cpp_ , located in the CAAGviVisuBatch.m module of the CAAGeometryVisualization.edu framework:
-Windows | `InstallRootDirectory\CAAGeometryVisualization.edu\CAAGviVisuBatch.m\`
+Windows | `InstallRootDirectory/CAAGeometryVisualization.edu/CAAGviVisuBatch.m/`
 Unix | `InstallRootDirectory/CAAGeometryVisualization.edu/CAAGviVisuBatch.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -107,7 +107,7 @@ In this use case, the _CATPathElement_ is built with the root feature of the Par
 #### Retrieves the unique CATVisManager Instance
 
     ...
-     **CATVisManager** * pVisManager = CATVisManager::**GetVisManager**();
+     **CATVisManager** * pVisManager = CATVisManager::**GetVisManager**(#);
     ...
 
 ---
@@ -121,7 +121,7 @@ There is only one instance of the _CATVisManager_ class in a session. The `GetVi
         IID * pIIDInf = new IID(IID_CATI3DGeoVisu) ;
         ListIVisu3d.**fastadd**(pIIDInf);
 
-        CAT3DViewpoint * pVP = new **CAT3DViewpoint**();
+        CAT3DViewpoint * pVP = new **CAT3DViewpoint**(#);
 
 ```vbscript
         rc = pVisManager->**AttachTo** ( pRootObjectPath, pVP, ListIVisu3d);
@@ -153,7 +153,7 @@ rc = spSpecObjectOnMechanicalPart->QueryInterface(IID_CATI3DGeoVisu,
         ...
 rc = spSpecObjectOnMechanicalPart->QueryInterface(IID_CATI3DGeoVisu,
 (void **) & pIVisuOnRoot);
-           CATRep * pRep = pIVisuOnRoot->**GiveRep**();
+           CATRep * pRep = pIVisuOnRoot->**GiveRep**(#);
 ```vbscript
            if ( NULL != pRep )
 
@@ -161,11 +161,11 @@ rc = spSpecObjectOnMechanicalPart->QueryInterface(IID_CATI3DGeoVisu,
 
            {
 (void **) & pIVisuOnRoot);
-CATRep * pRep = pIVisuOnRoot->**GiveRep**();
+CATRep * pRep = pIVisuOnRoot->**GiveRep**(#);
 if ( NULL != pRep )
               CAT3DRep * p3DRep = (CAT3DRep *) pRep;
 
-              CAT3DBoundingSphere pBe = p3DRep->GetBoundingElement();
+              CAT3DBoundingSphere pBe = p3DRep->GetBoundingElement(#);
 
               ...
 
@@ -183,7 +183,7 @@ After the `AttachTo` method, it is possible to retrieve the graphic representati
 rc = pVisManager->**DetachFrom**(pVP,0) ;
 ```
 
-     pVP->Release();
+     pVP->Release(#);
      pVP = NULL ;
 
     ...

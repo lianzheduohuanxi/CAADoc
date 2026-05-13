@@ -1,17 +1,17 @@
 ---
 ```vbscript
 title: "Constraints Object"
-category: "use-case"
+category: tech-article
 module: "CAAScdMmrTechArticles"
 tags: ["CATIAConstraints"]
-source_file: "Doc/online/CAAScdMmrTechArticles/CAAMmrObjConstraints.htm"
+source_file: "Doc/online/CAAScdMmrTechArticles/CAAMmrObjConstraints.htmmd"
 converted: "2026-05-11T17:31:51.139670"
 ```
 
 ---
 # Constraints Object
 
-source_file: "Doc/online/CAAScdMmrTechArticles/CAAMmrObjConstraints.htm"
+source_file: "Doc/online/CAAScdMmrTechArticles/CAAMmrObjConstraints.htmmd"
 converted: "2026-05-11T17:31:51.139670"
 See Also | UseCases | Properties | Methods
 
@@ -25,11 +25,15 @@ The **Constraints** collection provides methods to create constraints. A **Const
 To retrieve the **Constraints** collection, use the `Connections` method of the root product object. Assuming `product1` is the root product, write:
 
 ```vbscript
+```vbscript
     Dim constraints1 As Constraints
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set constraints1 = product1.Connections("CATIAConstraints")
 
+```
 ```
 
 ```

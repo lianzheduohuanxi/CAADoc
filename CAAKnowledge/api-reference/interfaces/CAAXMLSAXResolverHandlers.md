@@ -2,7 +2,7 @@
 title: "CAAXMLSAXResolverHandlers"
 type: "interface"
 module: "CAAXMLParser"
-category: "framework"
+category: api-reference
 base: "CATSAXHandlerBase"
 inheritance_chain: "CAAXMLSAXResolverHandlers → CATSAXHandlerBase"
 method_count: 3
@@ -26,3 +26,28 @@ verified: true
 - `CATUnicodeString.h`
 - `CATSAXHandlerBase.h`
 
+---
+
+## Interface Overview
+
+This interface inherits from **CATSAXHandlerBase**. 
+
+**Inherited Methods**: Please refer to the base interface documentation above.
+
+---
+
+## Related Use Cases
+
+This interface is used in the following use cases:
+
+- [CAAXMLSAXResolver](../../use-cases/caaxmlcases/CAAXMLSAXResolver.md)
+
+## Interface Notes
+
+This interface is part of the **CAA** module.
+
+**Status**: This interface document is a template. Please refer to the official API documentation for more information.
+
+**Related Resources**:
+- [Quick References](../..//quick-refs/)
+- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)

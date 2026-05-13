@@ -5,7 +5,7 @@ category: "use-case"
 module: "CAACenAPIChangesR14"
 version: "V5R14"
 tags: ["CAAManufacturingItf", "CATIMfgResourceQuery", "CATIMfgResourceQueryUserDataBase"]
-source_file: "Doc/online/CAACenAPIChangesR14/ManufacturingInterfaces.htm"
+source_file: "Doc/online/CAACenAPIChangesR14/ManufacturingInterfaces.htmmd"
 converted: "2026-05-11T17:33:50.928331"
 ```
 

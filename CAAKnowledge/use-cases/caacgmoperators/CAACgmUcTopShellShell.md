@@ -4,7 +4,7 @@ title: "Corner"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CATICGMHybIntersect", "CAAGMOperatorsIntersectShellShell"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopShellShell.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopShellShell.htmmd"
 converted: "2026-05-11T17:33:49.305940"
 ```
 
@@ -69,9 +69,9 @@ pIntersectOpe = CATCGMCreateTopIntersect(piGeomFactory, &topdata, pBody1, pBody2
 if(pIntersectOpe )
 ```
 
-          pIntersectOpe -> Run();
-          CurrentBody = pIntersectOpe -> GetResult ();
-          pIntersectOpe-&gtRelease;(); pIntersectOpe=NULL;
+          pIntersectOpe -> Run(#);
+          CurrentBody = pIntersectOpe -> GetResult (#);
+          pIntersectOpe-&gtRelease;(#); pIntersectOpe=NULL;
 
        }
 

@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdPstUseCases"
 tags: ["CAAScrBase", "CAAPstPad1_1", "CAAPstPad1_2", "CATIA", "CAAScdPstUseCases", "CAAPstAddNewProduct"]
-source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddNewProductSource.htm"
+source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddNewProductSource.htmmd"
 converted: "2026-05-11T11:27:02.575384"
 ---
 
@@ -21,38 +21,52 @@ Option Explicit
 '   CATIA Level:  V5R6 
 ' *****************************************************************************
 
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
 
     ' -----------------------------------------------------------------------------------------------
+```
     ' Optional: allows to find the sample wherever it's installed
+```vbscript
     Dim sDocPath As String
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,"No Doc Path Defined"
     End If
+```
     ' ------------------------------------------------------------------------------------------------ 
    
     'Create a new product document by adding a document with the Product type
     'to the document collection of the CATIA application. 
+```vbscript
     Dim oProductDoc As Document
     Set oProductDoc = CATIA.Documents.Add("Product")
 
     'Retrieve the root product.
+```
+```vbscript
     Dim oRootProduct As Product
     Set oRootProduct = oProductDoc.Product
+
+```
 
     'Declare the root product's part number and name.
     oRootProduct.PartNumber = "Root"
     oRootProduct.Name = "The_Root_Product"
 
     'Retrieve the product's collection under the root product.
+```vbscript
     Dim oRootChildren As Products
     Set oRootChildren = oRootProduct.Products
 
     'Add a new product to the collection. This adds both a product reference
+```
     'and a product component.
+```vbscript
     Dim oChildProduct1 As Product
     Set oChildProduct1 = oRootChildren.AddNewProduct("Child_1_Type")
+
+```
 
     'Declare the part number and name for this product.
     oChildProduct1.PartNumber = "Child_001"
@@ -61,12 +75,17 @@ Sub CATMain()
     'Add a representation to this product using an existing part and reframe
     'the viewer to display the part completely.
     oChildProduct1.AddMasterShapeRepresentation sDocPath & "CAAPstPad1_1.CATPart"
+```vbscript
     CATIA.ActiveWindow.ActiveViewer.Reframe
 
     'Add another product to the root product's collection.  This adds both
+```
     'a product reference and a product component.
+```vbscript
     Dim oChildProduct2 As Product
     Set oChildProduct2 = oRootChildren.AddNewProduct("Child_2_Type")
+
+```
 
     'Declare the part number and name for this product.
     oChildProduct2.PartNumber = "Child_002"
@@ -75,12 +94,13 @@ Sub CATMain()
     'Add a representation to this product using an existing part and reframe
     'the viewer to display the part completely.
     oChildProduct2.AddMasterShapeRepresentation sDocPath & _
-       "\online\CAAScdPstUseCases\samples\CAAPstPad1_2.CATPart"
-    CATIA.ActiveWindow.ActiveViewer.Reframe()
+       "/online/CAAScdPstUseCases/samples/CAAPstPad1_2.CATPart"
+```vbscript
+    CATIA.ActiveWindow.ActiveViewer.Reframe(#)
      
 End Sub
 
-
+```
 
 ```vbscript
 Option Explicit
@@ -97,39 +117,52 @@ Option Explicit
 '   CATIA Level:  V5R6 
 ' *****************************************************************************
 
-
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
 
     ' -----------------------------------------------------------------------------------------------
+```
     ' Optional: allows to find the sample wherever it's installed
+```vbscript
     Dim sDocPath As String
     sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,&quot;No Doc Path Defined&quot;
     End If
+```
     ' ------------------------------------------------------------------------------------------------ 
    
     'Create a new product document by adding a document with the Product type
     'to the document collection of the CATIA application. 
+```vbscript
     Dim oProductDoc As Document
     Set oProductDoc = CATIA.Documents.Add(&quot;Product&quot;)
 
     'Retrieve the root product.
+```
+```vbscript
     Dim oRootProduct As Product
     Set oRootProduct = oProductDoc.Product
+
+```
 
     'Declare the root product's part number and name.
     oRootProduct.PartNumber = &quot;Root&quot;
     oRootProduct.Name = &quot;The_Root_Product&quot;
 
     'Retrieve the product's collection under the root product.
+```vbscript
     Dim oRootChildren As Products
     Set oRootChildren = oRootProduct.Products
 
     'Add a new product to the collection. This adds both a product reference
+```
     'and a product component.
+```vbscript
     Dim oChildProduct1 As Product
     Set oChildProduct1 = oRootChildren.AddNewProduct(&quot;Child_1_Type&quot;)
+
+```
 
     'Declare the part number and name for this product.
     oChildProduct1.PartNumber = &quot;Child_001&quot;
@@ -138,12 +171,17 @@ Sub CATMain()
     'Add a representation to this product using an existing part and reframe
     'the viewer to display the part completely.
     oChildProduct1.AddMasterShapeRepresentation sDocPath &amp; &quot;CAAPstPad1_1.CATPart&quot;
+```vbscript
     CATIA.ActiveWindow.ActiveViewer.Reframe
 
     'Add another product to the root product's collection.  This adds both
+```
     'a product reference and a product component.
+```vbscript
     Dim oChildProduct2 As Product
     Set oChildProduct2 = oRootChildren.AddNewProduct(&quot;Child_2_Type&quot;)
+
+```
 
     'Declare the part number and name for this product.
     oChildProduct2.PartNumber = &quot;Child_002&quot;
@@ -152,8 +190,10 @@ Sub CATMain()
     'Add a representation to this product using an existing part and reframe
     'the viewer to display the part completely.
     oChildProduct2.AddMasterShapeRepresentation sDocPath &amp; _
-       &quot;\online\CAAScdPstUseCases\samples\CAAPstPad1_2.CATPart&quot;
-    CATIA.ActiveWindow.ActiveViewer.Reframe()
+       &quot;/online/CAAScdPstUseCases/samples/CAAPstPad1_2.CATPart&quot;
+```vbscript
+    CATIA.ActiveWindow.ActiveViewer.Reframe(#)
      
 End Sub
+```
 ```

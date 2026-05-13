@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Using the "Tools Palette" Toolbar for a Workbench"
-category: "use case"
+category: use-case case"
 module: "CAAAfrUseCases"
 tags: ["CAAAfrGeoCreationWkb_Palette", "CAAAfrGeoCreationWkb", "CATIAfrPaletteOptions", "CAAEAfrPaletteOptions", "CAAAfrPaletteOptions", "CAAGeometry", "CAAAfrEltCountHeader", "CAAAfrEltCountHdr", "CATIAfrCmdPaletteOptions", "CAAApplicationFrame"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSamplePaletteWkb.htm"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSamplePaletteWkb.htmmd"
 converted: "2026-05-11T17:17:55.792002"
 ```
 
@@ -94,10 +94,10 @@ Then, in the window where you run the mkrun command, do not type the module name
 The CAAAfrPaletteOptions use case is made of a single class,_CAAEAfrPaletteOptions_ , located in the CAAAfrPaletteOptions.m module of the CAAApplicationFrame.edu framework:
 
 The CAAAfrPaletteOptions use case is made of a single class,_CAAEAfrPaletteOptions_ , located in the CAAAfrPaletteOptions.m module of the CAAApplicationFrame.edu framework:
-Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrPaletteOptions.m\`
+Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrPaletteOptions.m/`
 
 The CAAAfrPaletteOptions use case is made of a single class,_CAAEAfrPaletteOptions_ , located in the CAAAfrPaletteOptions.m module of the CAAApplicationFrame.edu framework:
-Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrPaletteOptions.m\`
+Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrPaletteOptions.m/`
 Unix | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrPaletteOptions.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -128,10 +128,10 @@ class CAAEAfrPaletteOptions: public CATBaseUnknown
 
       public:
 
-        CAAEAfrPaletteOptions();
-        virtual ~CAAEAfrPaletteOptions();
+        CAAEAfrPaletteOptions(#);
+        virtual ~CAAEAfrPaletteOptions(#);
 
-        CATLISTP(CATCommandHeader) **GetPaletteOptions**();
+        CATLISTP(CATCommandHeader) **GetPaletteOptions**(#);
 
       private:
         CAAEAfrPaletteOptions(const CAAEAfrPaletteOptions &iObjectToCopy);
@@ -170,9 +170,9 @@ CATImplementClass(CAAEAfrPaletteOptions,
 ```vbscript
 CATImplementClass(CAAEAfrPaletteOptions,
 CATBaseUnknown,
-    CAAEAfrPaletteOptions::CAAEAfrPaletteOptions():CATBaseUnknown(){}
+    CAAEAfrPaletteOptions::CAAEAfrPaletteOptions(#):CATBaseUnknown(#){}
 
-    CAAEAfrPaletteOptions::~CAAEAfrPaletteOptions(){}
+    CAAEAfrPaletteOptions::~CAAEAfrPaletteOptions(#){}
 ```
 
     ...
@@ -192,11 +192,11 @@ Now, lets us see the `GetPaletteOptions` implementation.
 
     ...
 Now, lets us see the `GetPaletteOptions` implementation.
-    CATLISTP(CATCommandHeader) CAAEAfrPaletteOptions::GetPaletteOptions()
+    CATLISTP(CATCommandHeader) CAAEAfrPaletteOptions::GetPaletteOptions(#)
 
     {
 ```vbscript
-CATLISTP(CATCommandHeader) CAAEAfrPaletteOptions::GetPaletteOptions()
+CATLISTP(CATCommandHeader) CAAEAfrPaletteOptions::GetPaletteOptions(#)
 ```vbscript
         CATLISTP(CATCommandHeader) TheListToReturn ;
 

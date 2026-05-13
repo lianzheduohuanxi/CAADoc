@@ -4,13 +4,13 @@ title: "Accessing Spatial Integration Data"
 category: "use case"
 module: "CAACloUseCases"
 tags: ["CAACommonLayoutItf", "CAACloPspSpatialPhysical", "CATIArrNode_var", "CAACloPspSpatialPhysicalMain", "CAACloPlacePart", "CATIPspPhysical", "CATIArrSegmentsString", "CAAPspUtilities", "CATIPspSpatial", "CATIUnknownList", "CAAPspBaseEnvProtected", "CAAPlantShipInterfaces", "CAACloPspEduIn", "CATIA"]
-source_file: "Doc/online/CAACloUseCases/CAACloPspSpatialPhysical.htm"
+source_file: "Doc/online/CAACloUseCases/CAACloPspSpatialPhysical.htmmd"
 converted: "2026-05-11T17:33:49.507426"
 ```
 
 ---
 tags: ["CAACommonLayoutItf", "CAACloPspSpatialPhysical", "CATIArrNode_var", "CAACloPspSpatialPhysicalMain", "CAACloPlacePart", "CATIPspPhysical", "CATIArrSegmentsString", "CAAPspUtilities", "CATIPspSpatial", "CATIUnknownList", "CAAPspBaseEnvProtected", "CAAPlantShipInterfaces", "CAACloPspEduIn", "CATIA"]
-source_file: "Doc/online/CAACloUseCases/CAACloPspSpatialPhysical.htm"
+source_file: "Doc/online/CAACloUseCases/CAACloPspSpatialPhysical.htmmd"
 converted: "2026-05-11T17:33:49.507426"
 Equipment & Systems |  Distributive Systems |  Accessing Spatial Integration Data _How to access integration data._
 
@@ -37,7 +37,7 @@ Abstract This article discusses the CAACloPspSpatialPhysical use case.
 
 Overview CAACloPspSpatialPhysical is a use case of the CAACommonLayoutItf.edu framework. It illustrates a CATPlantShipInterfaces interface that is implemented by CATCommonLayout. [Top] What You Will Learn This use case is intended to show you how to obtain integration data from spatial object. [Top] What CAACloPspSpatialPhysical Does CAACloPspSpatialPhysical retrieves the physical objects and corresponding connectors associated at the extremity of the spatial object.   [Top] How to Launch CAACloPspSpatialPhysical To launch CAACloPspSpatialPhysical, you will need to set up the build time environment, then compile CAACloPspSpatialPhysical along with its prerequisites, set up the run time environment, and then execute the sample. This is fully described in the referenced article [1]. When launching the use case, you must pass the following arguments:
     * **CAACloPspEduIn.CATProduct** - the entire pathname, name and extension (.CATProduct) of the input product. Normally, it should be stored in the CNext/resources/graphic/CAACloPspEduIn directory of the CAACommonLayoutItf.edu framework.
-[Top] Where to Find CAACloPspSpatialPhysical Files CAACloPspSpatialPhysical code is located in the CAACloPspSpatialPhysical.m use case module of the CAACommonLayoutItf.edu framework: Windows | `InstallRootDirectory\CAACommonLayoutItf.edu\CAACloPspSpatialPhysical.m`
+[Top] Where to Find CAACloPspSpatialPhysical Files CAACloPspSpatialPhysical code is located in the CAACloPspSpatialPhysical.m use case module of the CAACommonLayoutItf.edu framework: Windows | `InstallRootDirectory/CAACommonLayoutItf.edu/CAACloPspSpatialPhysical.m`
 ---|---
 Overview CAACloPspSpatialPhysical is a use case of the CAACommonLayoutItf.edu framework. It illustrates a CATPlantShipInterfaces interface that is implemented by CATCommonLayout. [Top] What You Will Learn This use case is intended to show you how to obtain integration data from spatial object. [Top] What CAACloPspSpatialPhysical Does CAACloPspSpatialPhysical retrieves the physical objects and corresponding connectors associated at the extremity of the spatial object.   [Top] How to Launch CAACloPspSpatialPhysical To launch CAACloPspSpatialPhysical, you will need to set up the build time environment, then compile CAACloPspSpatialPhysical along with its prerequisites, set up the run time environment, and then execute the sample. This is fully described in the referenced article [1]. When launching the use case, you must pass the following arguments:
 Unix | `InstallRootDirectory/CAACommonLayoutItf.edu/CAACloPspSpatialPhysical.m`
@@ -112,12 +112,12 @@ if (argc > 1)
 ```vbscript
 if (argc > 1)
 FileToBeLoaded = argv[1];
-        if (FileToBeLoaded.GetLengthInChar())
+        if (FileToBeLoaded.GetLengthInChar(#))
 ```
 
         {
 FileToBeLoaded = argv[1];
-if (FileToBeLoaded.GetLengthInChar())
+if (FileToBeLoaded.GetLengthInChar(#))
           cout << "**** must input the file name of " << endl;
           cout << "a CATProduct with Piping application objects " << endl;
 
@@ -152,7 +152,7 @@ CATCatch (CATError, pError)
         cout << "error in main " << endl;
         cout  << "error message : "  <<
 
-          ( error ->GetNLSMessage()).ConvertToChar()<<endl;
+          ( error ->GetNLSMessage(#)).ConvertToChar(#)<<endl;
 
 cout << "error in main " << endl;
 cout  << "error message : "  <<
@@ -211,12 +211,14 @@ cout << "Product environment created." << endl;
 ```vbscript
 ApplicationInit("CATPiping");
 cout << "Piping application initialized." << endl;
-        HRESULT rcListCntrPhy = ListConnectedPhysicalsToSpatial();
+        HRESULT rcListCntrPhy = ListConnectedPhysicalsToSpatial(#);
         cout << "rcListCntrPhy = " << rcListCntrPhy << endl;
 ```
 
+```vbscript
         // Set return code.
-HRESULT rcListCntrPhy = ListConnectedPhysicalsToSpatial();
+HRESULT rcListCntrPhy = ListConnectedPhysicalsToSpatial(#);
+```
 cout << "rcListCntrPhy = " << rcListCntrPhy << endl;
         if (SUCCEEDED(rcListCntrPhy))
         rc = CATReturnSuccess;
@@ -255,9 +257,9 @@ rc = CATReturnError(pError);
     //===============================================================================================================
     // Retrieve all physical objects and corresponding connectors associated at the extremity of the spatial object.
     //===============================================================================================================
-     HRESULT CAACloPspSpatialPhysical::ListConnectedPhysicalsToSpatial()
+     HRESULT CAACloPspSpatialPhysical::ListConnectedPhysicalsToSpatial(#)
     {
-HRESULT CAACloPspSpatialPhysical::ListConnectedPhysicalsToSpatial()
+HRESULT CAACloPspSpatialPhysical::ListConnectedPhysicalsToSpatial(#)
       cout <<"======================================================================"<< endl;
       cout <<"===   CAACloPspSpatialPhysical::ListConnectedPhysicalsToSpatial    ==="<< endl;
       cout <<"======================================================================"<< endl;
@@ -283,7 +285,7 @@ HRESULT CAACloPspSpatialPhysical::ListConnectedPhysicalsToSpatial()
         //  CATIPspPhysical methods
         //-------------------------------------------------------------------------
 CATTry
-        piPhysical  = GetAPhysicalObject();
+        piPhysical  = GetAPhysicalObject(#);
 ```vbscript
 ```vbscript
         if ( NULL != piPhysical )
@@ -302,7 +304,7 @@ CATTry
 ```vbscript
 if ( SUCCEEDED(piPhysical->GetSpatial(piUnknown)) && NULL != piUnknown )
             piUnknown->QueryInterface(IID_CATIPspSpatial,(void**)&piSpatial);
-            piUnknown->Release();
+            piUnknown->Release(#);
             piUnknown = NULL;
 ```
 
@@ -340,17 +342,17 @@ if ( SUCCEEDED(piSpatial->ListConnectedPhysicals( spArrNode, piListOfPhysicals, 
                 unsigned int ListSize = 0;
                 piListOfPhysicals->Count(&ListSize);
                 cout << "Number of physical objects associated to the first extremity of the spatial object: " << (int)ListSize << endl;
-                piListOfPhysicals->Release();  piListOfPhysicals = NULL;
+                piListOfPhysicals->Release(#);  piListOfPhysicals = NULL;
 
                 piListOfConnectors->Count(&ListSize);
                 cout << "Number of connectors connected to the first extremity of the spatial object: " << (int)ListSize << endl;
-                piListOfConnectors->Release();  piListOfConnectors = NULL;
+                piListOfConnectors->Release(#);  piListOfConnectors = NULL;
                 rc = S_OK;
 
               }
             }
 cout << "Number of connectors connected to the first extremity of the spatial object: " << (int)ListSize << endl;
-piListOfConnectors->Release();  piListOfConnectors = NULL;
+piListOfConnectors->Release(#);  piListOfConnectors = NULL;
 rc = S_OK;
 ```vbscript
             if ( NULL != pRun )
@@ -360,28 +362,28 @@ rc = S_OK;
             {
 rc = S_OK;
 if ( NULL != pRun )
-              pRun->Release();
+              pRun->Release(#);
               pRun = NULL;
 
             }
 ```vbscript
 if ( NULL != pRun )
-pRun->Release();
+pRun->Release(#);
 pRun = NULL;
-            piSpatial->Release();
+            piSpatial->Release(#);
             piSpatial = NULL;
 ```
 
           } // end piSpatial
 pRun = NULL;
-piSpatial->Release();
+piSpatial->Release(#);
 piSpatial = NULL;
-          piPhysical->Release();
+          piPhysical->Release(#);
           piPhysical = NULL;
 
         } // end piPhysical
       } // end CATTry
-piPhysical->Release();
+piPhysical->Release(#);
 piPhysical = NULL;
       CATCatch (CATError, error)
 
@@ -390,9 +392,9 @@ piPhysical = NULL;
 CATCatch (CATError, error)
 ```vbscript
 ```vbscript
-        if ( NULL != piPhysical ) { piPhysical->Release(); piPhysical = NULL; }
-        if ( NULL != piSpatial ) { piSpatial->Release(); piSpatial = NULL; }
-        if ( NULL != piUnknown ) {  piUnknown->Release(); piUnknown = NULL; }
+        if ( NULL != piPhysical ) { piPhysical->Release(#); piPhysical = NULL; }
+        if ( NULL != piSpatial ) { piSpatial->Release(#); piSpatial = NULL; }
+        if ( NULL != piUnknown ) {  piUnknown->Release(#); piUnknown = NULL; }
 ```
 
 ```
@@ -402,9 +404,9 @@ CATCatch (CATError, error)
 
       }
 ```vbscript
-if ( NULL != piSpatial ) { piSpatial->Release(); piSpatial = NULL; }
+if ( NULL != piSpatial ) { piSpatial->Release(#); piSpatial = NULL; }
 ```vbscript
-if ( NULL != piUnknown ) {  piUnknown->Release(); piUnknown = NULL; }
+if ( NULL != piUnknown ) {  piUnknown->Release(#); piUnknown = NULL; }
 ```
 
 cout << "CAACloPspSpatialPhysical::ListConnectedPhysicalsToSpatial *** CATRethrow" << endl;
@@ -429,7 +431,7 @@ References [1] | [ Building and Launching a CAA V5 Use Case](../CAADocUseCases/C
 
 * * *
 
-Footnotes 1. This documents uses Unix-style forward slash (/) to separate directory names. Windows users should use backslash (\) instead of forward slash (/).
+Footnotes 1. This documents uses Unix-style forward slash (/) to separate directory names. Windows users should use backslash (/) instead of forward slash (/).
 ---
 
 * * *

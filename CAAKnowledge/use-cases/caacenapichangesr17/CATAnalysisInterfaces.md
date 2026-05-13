@@ -1,11 +1,11 @@
 ---
 ```vbscript
 title: "CATAnalysisInterfaces Framework Modifications in V5R17"
-category: "use-case"
+category: use-case
 module: "CAACenAPIChangesR17"
 version: "V5R17"
 tags: ["CATISamGeneralSettingAtt", "CATISamAnalysisGeneralSettingAtt"]
-source_file: "Doc/online/CAACenAPIChangesR17/CATAnalysisInterfaces.htm"
+source_file: "Doc/online/CAACenAPIChangesR17/CATAnalysisInterfaces.htmmd"
 converted: "2026-05-11T17:33:51.265533"
 ```
 

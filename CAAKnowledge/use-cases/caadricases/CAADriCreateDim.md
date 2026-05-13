@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating a Distance Dimension on Interactive Geometry"
-category: "use case"
+category: use-case case"
 module: "CAADriUseCases"
 tags: ["CATIDftStandardManager", "CATIDrwAnnotationFactory_var", "CATISheet_var", "CATIDrwAnnotationFactory", "CATIDftDocumentServices", "CATIDrwDimDimension", "CATIContainer_var", "CATIA", "CATIDrawing", "CATIStringList", "CATIView_var", "CAADrwCreateDimCmd", "CATIUnknownList", "CATISpecObject_var", "CAADrwCreateDim", "CATIUnknownListImpl", "CATI2DWFFactory_var", "CAADraftingInterfaces", "CAADRWCreateDim"]
-source_file: "Doc/online/CAADriUseCases/CAADriCreateDim.htm"
+source_file: "Doc/online/CAADriUseCases/CAADriCreateDim.htmmd"
 converted: "2026-05-11T17:31:50.950000"
 ```
 
@@ -27,11 +27,15 @@ Use Case
 This article discusses the CAADrwCreateDim.cpp use case. This use case explains how to edit a dimension dress-up.
 
   * **What You Will Learn With This Use Case**
+```vbscript
   * **The CAADrwCreateDim Use Case**
     * What Does CAADrwCreateDim Do
     * How to Launch CAADrwCreateDimCmd
+```
+```vbscript
     * Where to Find the CAADrwCreateDim Code
   * **Step-by-Step**
+```
   * **In Short**
   * **References**
 
@@ -43,42 +47,59 @@ This article discusses the CAADrwCreateDim.cpp use case. This use case explains 
 In this use case you will learn how to create an associative dimension on two 2D lines.
 
 [Top]
+```vbscript
 ### The CAADrwCreateDim Use Case
 
 CAADrwCreateDim is a use case of the CAADraftingInterfaces.edu framework that illustrates DraftingInterfaces framework capabilities.
 
 [Top]
+```
+```vbscript
 #### What Does CAADrwCreateDim Do
 
 CAADrwCreateDim is a use case of the CAADraftingInterfaces.edu framework that illustrates DraftingInterfaces framework capabilities.
 This sample creates a dimension on two 2D lines in batch mode:
+```
 
+```vbscript
 Fig. 2: The Model created by CAADrwCreateDim batch ![](images/CAADrwCreateDim1.jpg)
+
+```
 
 ---
 
 [Top]
 #### How to Launch CAADrwCreateDim
 
+```vbscript
 To launch CAADrwCreateDim, you will need to set up the build time environment, then compile CAADrwCreateDim along with its prerequisites, set up the run time environment, and then execute the use case [1].
 
 When you launch the use case, pass the full pathname of the file into which you you want to store the created document as argument: for example Result.CATDrawing.
+```
 
+```vbscript
   * With Windows  `e:> CAADrwCreateDim Result.CATDrawing`
 ---
+```
+```vbscript
   * With UNIX  `$ CAADrwCreateDim /u/users/Result.CATDrawing`
 ---
+```
 
 [Top]
+```vbscript
 #### Where to Find the CAADrwCreateDim Code
 
 The CAADrwCreateDim use case is made of one source file named CAADrwCreateDim.cpp located in the CAADrwCreateDim.m module of the CAADraftingInterfaces.edu framework:
 
 The CAADrwCreateDim use case is made of one source file named CAADrwCreateDim.cpp located in the CAADrwCreateDim.m module of the CAADraftingInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwCreateDim.m\`
+Windows | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCreateDim.m/`
+```
 
+```vbscript
 The CAADrwCreateDim use case is made of one source file named CAADrwCreateDim.cpp located in the CAADrwCreateDim.m module of the CAADraftingInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwCreateDim.m\`
+Windows | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCreateDim.m/`
+```
 Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCreateDim.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -168,18 +189,18 @@ CATIContainer_var spDrwcont = NULL_var;
 CATISpecObject_var spSpecObj = NULL_var;
 if (SUCCEEDED(pDoc->QueryInterface(IID_CATIDftDocumentServices, (void **)&piDftDocServices)))
           piDftDocServices->GetDrawing(IID_CATIDrawing, (void **)&piDrawing);
-          piDftDocServices->Release();
+          piDftDocServices->Release(#);
           spSpecObj=piDrawing;
 ```vbscript
-          spDrwcont = spSpecObj->GetFeatContainer();
+          spDrwcont = spSpecObj->GetFeatContainer(#);
 
 ```
 
        }
 piDftDocServices->GetDrawing(IID_CATIDrawing, (void **)&piDrawing);
-piDftDocServices->Release();
+piDftDocServices->Release(#);
 spSpecObj=piDrawing;
-spDrwcont = spSpecObj->GetFeatContainer();
+spDrwcont = spSpecObj->GetFeatContainer(#);
        else return 3;
 
     ...
@@ -262,14 +283,14 @@ if ( stdname == ANSI_UncS )
                 }
 piStdmgr->ImportStandard (wstd);
 break;
-                piListstd->Release();
+                piListstd->Release(#);
                 piListstd=NULL;
 
              }
 
-piListstd->Release();
+piListstd->Release(#);
 piListstd=NULL;
-             piStdmgr->Release ();
+             piStdmgr->Release (#);
              piStdmgr=NULL;
 
           }
@@ -285,9 +306,9 @@ The reffiles directory is  accessible in runtime view.
 
     ...
      // We are working in main view of the current sheet
-       CATISheet_var spSheet = piDrawing->GetCurrentSheet();
-       piDrawing->Release();
-       CATIView_var spMainView = spSheet->GetMainView();
+       CATISheet_var spSheet = piDrawing->GetCurrentSheet(#);
+       piDrawing->Release(#);
+       CATIView_var spMainView = spSheet->GetMainView(#);
 
        // GEOMETRY CREATION
        // =================
@@ -336,9 +357,9 @@ CATIDrwAnnotationFactory_var spAnnFactory = spMainView;
        CATDrwDimType dimType = DrwDimDistance;
        CATDimDefinition dimDef;
        CATIUnknownList * piSelectionsList =NULL;
-       CATIUnknownListImpl * piListsel = new CATIUnknownListImpl();
+       CATIUnknownListImpl * piListsel = new CATIUnknownListImpl(#);
        piListsel->QueryInterface(IID_CATIUnknownList, (void **) &piSelectionsList);
-       piListsel->Release();
+       piListsel->Release(#);
        piListsel=NULL;
        IUnknown * piLine1 = NULL;
        IUnknown * piLine2 = NULL;
@@ -357,10 +378,10 @@ CATIDrwAnnotationFactory_var spAnnFactory = spMainView;
 ```vbscript
        hr = spAnnFactory->CreateDimension(piSelectionsList,pts,dimType,&dimDef,&piDimHoriz);
 
-       if (piLine1) piLine1->Release();
-       if (piLine2) piLine2->Release();
-       if (piDimHoriz) piDimHoriz->Release();
-       if (piSelectionsList) piSelectionsList->Release();
+       if (piLine1) piLine1->Release(#);
+       if (piLine2) piLine2->Release(#);
+       if (piDimHoriz) piDimHoriz->Release(#);
+       if (piSelectionsList) piSelectionsList->Release(#);
 
 ```
 

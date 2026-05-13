@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating Customized Command Headers"
-category: "use case"
+category: use-case case"
 module: "CAAAfrUseCases"
 tags: ["CAAFindP2", "CAAAfrDumpCommandHeader", "CAASysCollectionEmptyNotif", "CAAAfrGeometryWksHeader", "CAAAfrGeometryWks", "CATImplementHeaderResources", "CAAAfrGeometryWshop", "CAAGeometry", "CAAAfrGeoCommands", "CAASysCollectionFilledNotif", "CAAAfrDumpCmd", "CAAAfrDumpHdr", "CAAISysCollection", "CAAApplicationFrame"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleCustomCommandHeader.htm"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleCustomCommandHeader.htmmd"
 converted: "2026-05-11T17:17:55.679598"
 ```
 
@@ -80,10 +80,10 @@ Note that if the document is empty, the **Element Count** command is greyed and 
 Note that if the document is empty, the **Element Count** command is greyed and cannot be triggerred.
 The CAAAfrDumpCommandHeader use case is made of a single class named _CAAAfrDumpCommandHeader_ located in the CAAAfrGeometryWshop.m module of the CAAApplicationFrame.edu framework:
 
-Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeometryWshop.m\`
+Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeometryWshop.m/`
 
 The CAAAfrDumpCommandHeader use case is made of a single class named _CAAAfrDumpCommandHeader_ located in the CAAAfrGeometryWshop.m module of the CAAApplicationFrame.edu framework:
-Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeometryWshop.m\`
+Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeometryWshop.m/`
 Unix | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeometryWshop.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -99,8 +99,10 @@ To create the command header for the Element Count command of the CAAAfrGeometry
 To create the command header for the Element Count command of the CAAAfrGeometryWshop workshop, there are six steps:
 1 | Create the command header class header file | LocalInterfaces
 2 | Declare the command header class resources | CAAAfrDumpCommandHeader.cpp
+```vbscript
 3 | Set the callbacks to appropriate events and initialize the command availability | Constructor
 4 | Create the copy constructor, the Clone method, and the destructor | CAAAfrDumpCommandHeader.cpp
+```
 5 | Create the callback methods that manage the command availability | CAAAfrDumpCommandHeader.cpp
 6 | Instantiate the command header class | CAAAfrGeometryWshop.m `CreateCommands` method
 7 | Assign resources to the command header instance | Resource files
@@ -120,14 +122,14 @@ class CAAAfrDumpCommandHeader : public **CATCommandHeader**
       public:
 
         CAAAfrDumpCommandHeader(const CATString & iHeaderName);
-        virtual ~CAAAfrDumpCommandHeader();
-        CATCommandHeader * **Clone**();
+        virtual ~CAAAfrDumpCommandHeader(#);
+        CATCommandHeader * **Clone**(#);
 
       private:
 
         **CAAAfrDumpCommandHeader**(CATCommandHeader *iHeaderToCopy);
-virtual ~CAAAfrDumpCommandHeader();
-CATCommandHeader * **Clone**();
+virtual ~CAAAfrDumpCommandHeader(#);
+CATCommandHeader * **Clone**(#);
 private:
         CAAAfrDumpCommandHeader(const CAAAfrDumpCommandHeader &iObjectToCopy);
         void **AnalyzeFilledCB**(CATCallbackEvent     iPublishedEvent,
@@ -244,13 +246,13 @@ _pCollection,
 
 ```
 
-          **BecomeAvailable();**
+          **BecomeAvailable(#);**
 int nbobject = 0;
 _pCollection->GetNumberOfObjects(&nbobject);
 if ( nbobject > 1 )
         else
 
-          **BecomeUnavailable();**
+          **BecomeUnavailable(#);**
       }
 ```vbscript
 if ( nbobject > 1 )
@@ -258,19 +260,19 @@ else
       else
 ```
 
-        **BecomeUnavailable();**
+        **BecomeUnavailable(#);**
     }
 
 else
-    CAAAfrDumpCommandHeader::~CAAAfrDumpCommandHeader()
+    CAAAfrDumpCommandHeader::~CAAAfrDumpCommandHeader(#)
 
     {
       if ( NULL != _pCollection)
       {
          **RemoveSubscriberCallbacks**(_pCollection);
-CAAAfrDumpCommandHeader::~CAAAfrDumpCommandHeader()
+CAAAfrDumpCommandHeader::~CAAAfrDumpCommandHeader(#)
 if ( NULL != _pCollection)
-         _pCollection->Release();
+         _pCollection->Release(#);
          _pCollection = NULL ;
 
       }
@@ -306,24 +308,24 @@ This is done in the _CAAAfrDumpCommandHeader_ as follows:
 
 CAAAfrDumpCommandHeader::CAAAfrDumpCommandHeader(CATCommandHeader * iHeaderToCopy)
 _pCollection(NULL)
-    CATCommandHeader * CAAAfrDumpCommandHeader::Clone()
+    CATCommandHeader * CAAAfrDumpCommandHeader::Clone(#)
 
     {
 ```vbscript
 _pCollection(NULL)
-CATCommandHeader * CAAAfrDumpCommandHeader::Clone()
+CATCommandHeader * CAAAfrDumpCommandHeader::Clone(#)
       return new CAAAfrDumpCommandHeader(this);
 ```
 
     }
 
-CATCommandHeader * CAAAfrDumpCommandHeader::Clone()
+CATCommandHeader * CAAAfrDumpCommandHeader::Clone(#)
 return new CAAAfrDumpCommandHeader(this);
-    CAAAfrDumpCommandHeader::~CAAAfrDumpCommandHeader()
+    CAAAfrDumpCommandHeader::~CAAAfrDumpCommandHeader(#)
 
     {
 return new CAAAfrDumpCommandHeader(this);
-CAAAfrDumpCommandHeader::~CAAAfrDumpCommandHeader()
+CAAAfrDumpCommandHeader::~CAAAfrDumpCommandHeader(#)
 ```vbscript
       if ( NULL != _pCollection)
 
@@ -331,9 +333,9 @@ CAAAfrDumpCommandHeader::~CAAAfrDumpCommandHeader()
 
       {
          **RemoveSubscriberCallbacks**(_pCollection);
-CAAAfrDumpCommandHeader::~CAAAfrDumpCommandHeader()
+CAAAfrDumpCommandHeader::~CAAAfrDumpCommandHeader(#)
 if ( NULL != _pCollection)
-         _pCollection->Release();
+         _pCollection->Release(#);
          _pCollection = NULL;
 
       }
@@ -359,7 +361,7 @@ This is done in the _CAAAfrDumpCommandHeader_ as follows:
                                                   CATCallback         iCallbackId)
 
     {
-      **BecomeAvailable**();
+      **BecomeAvailable**(#);
     }
 
 CATCallback         iCallbackId)
@@ -370,7 +372,7 @@ CATCallback         iCallbackId)
                                                   CATCallback         iCallbackId)
 
     {
-      **BecomeUnavailable**();
+      **BecomeUnavailable**(#);
     }
 
 ---
@@ -382,7 +384,7 @@ These two methods have the classical signatures of callback methods. Depending o
 
 To instantiate this command header, the `CreateCommands` method of the _CAAAfrGeometryWks_ workshop class should call its constructor with the command header identifier as parameter.
 
-    void CAAAfrGeometryWks::**CreateCommands**()
+    void CAAAfrGeometryWks::**CreateCommands**(#)
     {
       ...
       new **CAAAfrDumpCommandHeader**("CAAAfrDumpHdr");
@@ -422,7 +424,7 @@ These resources are:
 Title | Text displayed in the Tools menu for the command
 ShortHelp | Text displayed in a balloon as the command short help message when the mouse moves over the command when this command is in a toolbar. This is not applicable to commands located in the menu bar
 Help | Text displayed in the status bar as the command help message when the mouse moves over the command. This is not applicable to commands located only in the menu bar, but is applicable for commands located in both the menu bar and a toolbar
-LongHelp | Text displayed in a balloon when the end user clicks ![I_WhatsThisP2.gif \(235 bytes\)](images/I_WhatsThisP2.gif), which turns the mouse cursor as a question mark, and then clicks on the icon representing the command. This is not applicable to commands located in the menu bar
+LongHelp | Text displayed in a balloon when the end user clicks ![I_WhatsThisP2.gif /(235 bytes/)](images/I_WhatsThisP2.gif), which turns the mouse cursor as a question mark, and then clicks on the icon representing the command. This is not applicable to commands located in the menu bar
 Category | An attribute associated with the command and used to sort the commands in the Commands tab page of the Customize window
 
 The CAAAfrGeometryWksHeader.CATRsc file includes the following for the Point command:

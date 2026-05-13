@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Reading and writing XML documents with DOM"
-category: "use case"
+category: use-case case"
 module: "CAAXmlUseCases"
 tags: ["CAAXMLParser", "CATIXMLDOMDocumentBuilder", "CATIXMLDOMDocumentBuilder_var", "CATIDOMDocument_var", "CAAXMLDOMTranscode_utf16", "CAAXMLDOMTranscode"]
-source_file: "Doc/online/CAAXmlUseCases/CAAXMLDOMTranscode.htm"
+source_file: "Doc/online/CAAXmlUseCases/CAAXMLDOMTranscode.htmmd"
 converted: "2026-05-11T17:33:45.623063"
 ```
 
@@ -71,10 +71,10 @@ where:
 A sample XML file is provided with the use case. To use it, launch the following command from the command line:
 
 A sample XML file is provided with the use case. To use it, launch the following command from the command line:
-Windows | `CAAXMLDOMTranscode -utf16 InstallRoot\OS\resources\xml\CAAXMLDOMTranscode\CAAXMLDOMTranscode.xml C/TEMP\CAAXMLDOMTranscode_utf16.xml`
+Windows | `CAAXMLDOMTranscode -utf16 InstallRoot/OS/resources/xml/CAAXMLDOMTranscode/CAAXMLDOMTranscode.xml C/TEMP/CAAXMLDOMTranscode_utf16.xml`
 
 A sample XML file is provided with the use case. To use it, launch the following command from the command line:
-Windows | `CAAXMLDOMTranscode -utf16 InstallRoot\OS\resources\xml\CAAXMLDOMTranscode\CAAXMLDOMTranscode.xml C/TEMP\CAAXMLDOMTranscode_utf16.xml`
+Windows | `CAAXMLDOMTranscode -utf16 InstallRoot/OS/resources/xml/CAAXMLDOMTranscode/CAAXMLDOMTranscode.xml C/TEMP/CAAXMLDOMTranscode_utf16.xml`
 Unix | `CAAXMLDOMTranscode -utf16 InstallRoot/OS/resources/xml/CAAXMLDOMTranscode/CAAXMLDOMTranscode.xml /tmp/CAAXMLDOMTranscode_utf16.xml`
 
 where:
@@ -93,10 +93,10 @@ where:
 The CAAXMLDOMTranscode use case is made of one file located in the CAAXMLDOMTranscode.m module of the CAAXMLParser.edu framework:
 
 The CAAXMLDOMTranscode use case is made of one file located in the CAAXMLDOMTranscode.m module of the CAAXMLParser.edu framework:
-Windows | `InstallRootDirectory\CAAXMLParser.edu\CAAXMLDOMTranscode.m\`
+Windows | `InstallRootDirectory/CAAXMLParser.edu/CAAXMLDOMTranscode.m/`
 
 The CAAXMLDOMTranscode use case is made of one file located in the CAAXMLDOMTranscode.m module of the CAAXMLParser.edu framework:
-Windows | `InstallRootDirectory\CAAXMLParser.edu\CAAXMLDOMTranscode.m\`
+Windows | `InstallRootDirectory/CAAXMLParser.edu/CAAXMLDOMTranscode.m/`
 Unix | `InstallRootDirectory/CAAXMLParser.edu/CAAXMLDOMTranscode.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.

@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Editing Dimension Dress-Up"
-category: "use case"
+category: use-case case"
 module: "CAADriUseCases"
 tags: ["CAADrwDimDressupCmduse", "CAAUseCaseCommands", "CATIDrwDimDimension", "CATIDrwDimFormat", "CAADrwAddin", "CATIDrwDimValueComponent_var", "CATIDrwDimText_var", "CATIDrwDimExtensionLine", "CATIDrwDimExtensionLine_var", "CATIA", "CATIDrwDimExtensionLineLinear", "CATIDrwDimDimensionLine_var", "CATIDrwDimDimensionLine", "CATIDrwDimText", "CATIDrwDimValue_var", "CATIDrwDimValue", "CAADrwDimDressupCmd", "CATIDrwDimExtensionLineLinear_var", "CATISpecObject_var", "CAADrwDimDressup"]
-source_file: "Doc/online/CAADriUseCases/CAADriDimDressup.htm"
+source_file: "Doc/online/CAADriUseCases/CAADriDimDressup.htmmd"
 converted: "2026-05-11T17:31:50.992103"
 ```
 
@@ -81,10 +81,10 @@ To launch CAADrwDimDressupCmd, you will need to set up the build time environmen
 3. Launch the DimDressup use case command, and select the annotation.
 The CAADrwDimDressupCmduse case is made of two source files named CAADrwDimDressupCmd.h and CAADrwDimDressupCmd.cpp located in the CAADrwDimDressup.m module of the CAADraftingInterfaces.edu framework:
 
-Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwDimDressup.m\`
+Windows | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwDimDressup.m/`
 
 The CAADrwDimDressupCmduse case is made of two source files named CAADrwDimDressupCmd.h and CAADrwDimDressupCmd.cpp located in the CAADrwDimDressup.m module of the CAADraftingInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwDimDressup.m\`
+Windows | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwDimDressup.m/`
 Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwDimDressup.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -110,10 +110,10 @@ There are 11 steps in CAADrwDimDressupCmd:
 [Top]
 #### Building the State Chart and Creating the Appropriate Selection Agent
 
-    void CAADrwDimDressupCmd::BuildGraph()
+    void CAADrwDimDressupCmd::BuildGraph(#)
     {
        // Creation of the acquisition agent
-void CAADrwDimDressupCmd::BuildGraph()
+void CAADrwDimDressupCmd::BuildGraph(#)
        _pObjectAgent = new CATPathElementAgent("_ObjectAgent A");
        _pObjectAgent ->SetBehavior( CATDlgEngWithPrevaluation |
                                     CATDlgEngMultiAcquisition |
@@ -154,7 +154,7 @@ In this section we create a _CATPathElementAgent_ and set the corresponding elem
     {
        // We get the Selected set of objects
 boolean CAADrwDimDressupCmd::DressUp(void *)
-       CATSO* pObjSO = _pObjectAgent->GetListOfValues();
+       CATSO* pObjSO = _pObjectAgent->GetListOfValues(#);
        CATPathElement *pElemPath = NULL;
 
 ```vbscript
@@ -167,13 +167,16 @@ boolean CAADrwDimDressupCmd::DressUp(void *)
           // There is a selection, we will scan it from the beginning
 ```vbscript
 if (pObjSO)
-          pObjSO->InitElementList();
-          while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement()))
+          pObjSO->InitElementList(#);
+          while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement(#)))
 ```
 
           {
              // Make sure the element is dimension
+```vbscript
              **CATIDrwDimDimension** *piDim = (CATIDrwDimDimension *)pElemPath->FindElement(IID_CATIDrwDimDimension);
+
+```
 
              if (NULL != piDim)
              {
@@ -205,7 +208,7 @@ The dimension implements the _CATIDrwTextProperties_ interface. Using this inter
 
     ...
                 // Dual value
-                piDim->**ShowDualValue**();
+                piDim->**ShowDualValue**(#);
     ...
 
 ---
@@ -229,12 +232,12 @@ The tolerance is set using the _CATIDrwDimDimension_ interface.
 
     ...
                 // We get the dim value
-                **CATIDrwDimValue** _var spDimValue = piDim->GetValue();
+                **CATIDrwDimValue** _var spDimValue = piDim->GetValue(#);
                 spDimValue->**SetDualValueDisplay**(CATDrwDimDualSideBySide);
 
                 // The main value
-                **CATIDrwDimValueComponent** _var spMainValue = spDimValue->**GetFaceComponent**();
-                **CATIDrwDimText** _var spMainText = spMainValue->**GetText**();
+                **CATIDrwDimValueComponent** _var spMainValue = spDimValue->**GetFaceComponent**(#);
+                **CATIDrwDimText** _var spMainText = spMainValue->**GetText**(#);
 spDimValue->**SetDualValueDisplay**(CATDrwDimDualSideBySide);
                 spMainText->**SetPSText**("L=", "");
                 spMainText->**SetBAULText**("", "", "Up", "Down");
@@ -260,8 +263,8 @@ Using `SetBAULText` we set:
 
     ...
                 // The dual value
-                CATIDrwDimValueComponent_var spDualValue = spDimValue->**GetDualComponent**();
-                **CATIDrwDimFormat** _var spDualFormat = spDualValue->**GetFormat**();
+                CATIDrwDimValueComponent_var spDualValue = spDimValue->**GetDualComponent**(#);
+                **CATIDrwDimFormat** _var spDualFormat = spDualValue->**GetFormat**(#);
                 spDualFormat->**SetUnit**(CATDrwDimUnitINCH);
     ...
 
@@ -277,13 +280,13 @@ We get the dual value from the dimension value and modify the format putting the
                 **CATGraphicAttributeSet** attrSet;
 
                 // DimensionLine
-                **CATIDrwDimDimensionLine** _var spDimLine = piDim->**GetDimensionLine**();
+                **CATIDrwDimDimensionLine** _var spDimLine = piDim->**GetDimensionLine**(#);
                 attrSet.SetColorRGBA(255,0,0,255);
-                spDimLine->**SetGraphicParameters**(attrSet.GetColorRGBA(), 0.2);
+                spDimLine->**SetGraphicParameters**(attrSet.GetColorRGBA(#), 0.2);
                 spDimLine->**SetSymbol**(CATDrwDimSymbCircledCross,CATDrwDimSymbCircledCross);
                 attrSet.**SetColorRGBA**(0,255,0,255);
-                spDimLine->**SetSymbolsGraphicParameters**(attrSet.GetColorRGBA(), 0.1,
-                                                       attrSet.GetColorRGBA(), 0.1);
+                spDimLine->**SetSymbolsGraphicParameters**(attrSet.GetColorRGBA(#), 0.1,
+                                                       attrSet.GetColorRGBA(#), 0.1);
 
     ...
 
@@ -300,9 +303,9 @@ We get the dimension line interface from the dimension. Using the _CATIDrwDimDim
 
     ...
                 // ExtentionLine
-                **CATIDrwDimExtensionLine** _var spExtLine = piDim->**GetExtensionLine**();
+                **CATIDrwDimExtensionLine** _var spExtLine = piDim->**GetExtensionLine**(#);
                 attrSet.SetColorRGBA(0,255,255,255);
-                spExtLine->**SetGraphicParameters**(attrSet.GetColorRGBA(), 0.2);
+                spExtLine->**SetGraphicParameters**(attrSet.GetColorRGBA(#), 0.2);
                 spExtLine->**SetGap**(4);
                 spExtLine->**SetOverRun**(4);
 
@@ -336,18 +339,18 @@ This is a distance dimension. So the extension line implements _CATIDrwDimExtens
     ...
                 // Let's update the dimension after spec modifications
                 **CATISpecObject** _var spDimSpec = piDim;
-                spDimSpec->**Update**();
+                spDimSpec->**Update**(#);
 
-                piDim->Release();
+                piDim->Release(#);
              }
           }
 
-piDim->Release();
-          _pObjectAgent -> InitializeAcquisition();
+piDim->Release(#);
+          _pObjectAgent -> InitializeAcquisition(#);
           return TRUE;
 
        }
-_pObjectAgent -> InitializeAcquisition();
+_pObjectAgent -> InitializeAcquisition(#);
 return TRUE;
        return FALSE;
 

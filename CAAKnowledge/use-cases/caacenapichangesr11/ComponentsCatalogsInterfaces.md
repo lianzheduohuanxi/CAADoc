@@ -5,13 +5,13 @@ category: "use-case"
 module: "CAACenAPIChangesR11"
 version: "V5R11"
 tags: ["CATICatalogPersistentQuery"]
-source_file: "Doc/online/CAACenAPIChangesR11/ComponentsCatalogsInterfaces.htm"
+source_file: "Doc/online/CAACenAPIChangesR11/ComponentsCatalogsInterfaces.htmmd"
 converted: "2026-05-11T17:33:50.347204"
 ```
 
 ---
 tags: ["CATICatalogPersistentQuery"]
-source_file: "Doc/online/CAACenAPIChangesR11/ComponentsCatalogsInterfaces.htm"
+source_file: "Doc/online/CAACenAPIChangesR11/ComponentsCatalogsInterfaces.htmmd"
 converted: "2026-05-11T17:33:50.347204"
 CAA C++ API Modifications|  ComponentsCatalogsInterfaces  |
 

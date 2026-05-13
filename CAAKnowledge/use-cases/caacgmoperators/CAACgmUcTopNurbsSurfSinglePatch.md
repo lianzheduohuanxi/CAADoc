@@ -4,13 +4,13 @@ title: "Creating a Single Patch NURBS Surface"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsOverview", "CAAGMOperatorsInterfaces", "CAATopNurbsSurfSinglePatch", "CAADoc", "CAAGMOperatorsNurbsSurfSinglePatch", "CATICGMObject", "CAAGMModelGemBrowser", "CATICGMTopSkin", "CATIA"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopNurbsSurfSinglePatch.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopNurbsSurfSinglePatch.htmmd"
 converted: "2026-05-11T17:33:49.236921"
 ```
 
 ---
 tags: ["CAAGMOperatorsOverview", "CAAGMOperatorsInterfaces", "CAATopNurbsSurfSinglePatch", "CAADoc", "CAAGMOperatorsNurbsSurfSinglePatch", "CATICGMObject", "CAAGMModelGemBrowser", "CATICGMTopSkin", "CATIA"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopNurbsSurfSinglePatch.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopNurbsSurfSinglePatch.htmmd"
 converted: "2026-05-11T17:33:49.236921"
 Creating a Single Patch NURBS Surface
 
@@ -36,7 +36,7 @@ What You Will Learn With This Use Case This use case is intended to help you cre
     * Creates a rational NURBS surface and modifies one of the pole weight.
     * Creates a skin relying on the NURBS.
     * Writes the model and closes the container.
-How to Launch CAAGMOperatorsNurbsSurfSinglePatch To launch CAAGMOperatorsNurbsSurfSinglePatch , you will need to set up the build time environment, then compile CAAGMOperatorsNurbsSurfSinglePatch.m along with its prerequisites, set up the run time environment, and then execute the use case [1]. If you simply type CAAGMOperatorsNurbsSurfSinglePatch with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsNurbsSurfSinglePatch e/NurbsSurfSinglePatch.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMOperatorsNurbsSurfSinglePatch Code The CAAGMOperatorsNurbsSurfSinglePatch use case is made of a main named CAATopNurbsSurfSinglePatch.cpp located in the CAAGMOperatorsNurbsSurfSinglePatch .m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsNurbsSurfSinglePatch.m\` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. Step-by-Step There are six steps in CAATopNurbsSurfSinglePatch.cpp:
+How to Launch CAAGMOperatorsNurbsSurfSinglePatch To launch CAAGMOperatorsNurbsSurfSinglePatch , you will need to set up the build time environment, then compile CAAGMOperatorsNurbsSurfSinglePatch.m along with its prerequisites, set up the run time environment, and then execute the use case [1]. If you simply type CAAGMOperatorsNurbsSurfSinglePatch with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsNurbsSurfSinglePatch e/NurbsSurfSinglePatch.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMOperatorsNurbsSurfSinglePatch Code The CAAGMOperatorsNurbsSurfSinglePatch use case is made of a main named CAATopNurbsSurfSinglePatch.cpp located in the CAAGMOperatorsNurbsSurfSinglePatch .m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder/CAADoc/CAAGMOperatorsInterfaces.edu/CAAGMOperatorsNurbsSurfSinglePatch.m/` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. Step-by-Step There are six steps in CAATopNurbsSurfSinglePatch.cpp:
     1. Creating the Geometry Factory
     2. Creating the Grid of Poles
     3. Creating the Knot Vector
@@ -45,7 +45,7 @@ How to Launch CAAGMOperatorsNurbsSurfSinglePatch To launch CAAGMOperatorsNurbsSu
     6. Writing the Model and Closing the Container
 Creating the Geometry Factory The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
 
-    CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**() ;
+    CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**(#) ;
 ```vbscript
     if (NULL==piGeomFactory) return (1);
 
@@ -161,11 +161,11 @@ Creating the Skin For how to create a skin, see the CAAGMOperatorsOverview use c
     CATSurLimits surMaxLimits ;
     piSurf1->GetMaxLimits(surMaxLimits) ;
 
-    CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration();
+    CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration(#);
     CATTopData topdata(pConfig);
 
     // Create the CATTopSkin operator to be applied to the max limits
-CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration();
+CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration(#);
 CATTopData topdata(pConfig);
     CATICGMTopSkin * pSkinOpe =::CATCGMCreateTopSkin(piGeomFactory,
 
@@ -198,7 +198,7 @@ ofstream filetowrite(pfileName, ios::binary ) ;
     #endif
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
-       filetowrite.close();
+       filetowrite.close(#);
      }
 
      _//

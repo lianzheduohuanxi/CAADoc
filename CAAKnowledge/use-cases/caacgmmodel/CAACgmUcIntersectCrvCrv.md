@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Intersecting Curves"
-category: "use case"
+category: use-case case"
 module: "CAACgmModel"
 tags: ["CATICGMIntersectionCrvCrv", "CAAGMModelGeometryCreation", "CAAGMModelInterfaces", "CAAGMModelIntersectionOpe"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcIntersectCrvCrv.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcIntersectCrvCrv.htmmd"
 converted: "2026-05-11T17:33:48.444003"
 ```
 
@@ -49,18 +49,18 @@ the code below:
     //       c - Scan the resulting points
 piNurbsCurve,
 piNurbsCurve1);
-    CATLONG32 nbOfPoints1 = pPtCrvCrv->GetNumberOfPoints();
+    CATLONG32 nbOfPoints1 = pPtCrvCrv->GetNumberOfPoints(#);
     cout   << "NumberOfPoints "   << nbOfPoints1   << endl;
     CATCartesianPoint * pCartP = NULL;
     if(nbOfPoints1)
 
     	{
-CATLONG32 nbOfPoints1 = pPtCrvCrv->GetNumberOfPoints();
+CATLONG32 nbOfPoints1 = pPtCrvCrv->GetNumberOfPoints(#);
 cout   << "NumberOfPoints "   << nbOfPoints1   << endl;
 CATCartesianPoint * pCartP = NULL;
 if(nbOfPoints1)
 ```vbscript
-    		while(pPtCrvCrv->NextPoint())
+    		while(pPtCrvCrv->NextPoint(#))
 
 ```
 
@@ -68,10 +68,10 @@ if(nbOfPoints1)
     			// Retrieves the resulting points
     			// 3 points are expected
 ```vbscript
-while(pPtCrvCrv->NextPoint())
+while(pPtCrvCrv->NextPoint(#))
 ```vbscript
 ```vbscript
-    			pCartP = pPtCrvCrv->GetCartesianPoint();
+    			pCartP = pPtCrvCrv->GetCartesianPoint(#);
     			if (pCartP)
 ```
 
@@ -80,14 +80,14 @@ while(pPtCrvCrv->NextPoint())
 ```
 
     			{
-pCartP = pPtCrvCrv->GetCartesianPoint();
+pCartP = pPtCrvCrv->GetCartesianPoint(#);
 ```vbscript
 if (pCartP)
 ```
 
-    				cout   << "X="   << pCartP->GetX()   << endl;
-    				cout   << "Y="   << pCartP->GetY()   << endl;
-    				cout   << "Z="   << pCartP->GetZ()   << endl;
+    				cout   << "X="   << pCartP->GetX(#)   << endl;
+    				cout   << "Y="   << pCartP->GetY(#)   << endl;
+    				cout   << "Z="   << pCartP->GetZ(#)   << endl;
 
     			}
     		}

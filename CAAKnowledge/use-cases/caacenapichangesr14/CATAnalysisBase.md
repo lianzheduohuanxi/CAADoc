@@ -5,27 +5,27 @@ category: "use-case"
 module: "CAACenAPIChangesR14"
 version: "V5R14"
 tags: ["CATIMSHMeshManager"]
-source_file: "Doc/online/CAACenAPIChangesR14/CATAnalysisBase.htm"
+source_file: "Doc/online/CAACenAPIChangesR14/CATAnalysisBase.htmmd"
 converted: "2026-05-11T17:33:50.841308"
 ```
 
 ---
 tags: ["CATIMSHMeshManager"]
-source_file: "Doc/online/CAACenAPIChangesR14/CATAnalysisBase.htm"
+source_file: "Doc/online/CAACenAPIChangesR14/CATAnalysisBase.htmmd"
 converted: "2026-05-11T17:33:50.841308"
 CAA C++ API Modifications|  CATAnalysisBase Framework Modifications in V5R14 |
 
 * * *
 
 **Entity|  SP| Modification| To Do** | CATAnalysisBase/Public/CATAnalysisExplicitTopology.h/CATAnalysisExplicitTopology/CleanAllMemory
-**Prototype:**`virtual HRESULT CleanAllMemory()= 0;`| GA| [MHBDM](CAACenAPIChangeDetail.htm#Abstract)| Removed because useless and data corruption-prone: life cycle of those objects is to be managed by the system and not by the application. Use CATAnalysisExplicitModel::GetExplicitTopology.
+**Prototype:**`virtual HRESULT CleanAllMemory(#)= 0;`| GA| [MHBDM](CAACenAPIChangeDetail.htm#Abstract)| Removed because useless and data corruption-prone: life cycle of those objects is to be managed by the system and not by the application. Use CATAnalysisExplicitModel::GetExplicitTopology.
 ---|---|---|---
 CATAnalysisBase/Public/CATAnalysisExplicitTopology.h/CATAnalysisExplicitTopology/CATAnalysisExplicitTopology
 **Prototype:**`CATAnalysisExplicitTopology(const CATAnalysisExplicitParent &iFEMModel;,const CATIMSHMeshManager*iMeshManager = NULL);`| GA| [MHBDM](CAACenAPIChangeDetail.htm#Abstract)| Removed because useless and data corruption-prone: life cycle of those objects is to be managed by the system and not by the application. Use CATAnalysisExplicitModel::GetExplicitTopology.
 CATAnalysisBase/Public/CATAnalysisExplicitTopology.h/CATAnalysisExplicitTopology/CATAnalysisExplicitTopology
 CATAnalysisBase/Public/CATAnalysisExplicitTopology.h/CATAnalysisExplicitTopology/~CATAnalysisExplicitTopology
 
-**Prototype:**`virtual ~CATAnalysisExplicitTopology();`| GA| [MHBDM](CAACenAPIChangeDetail.htm#Abstract)| Removed because of memory corruption risks, don't use this destructor. Use CATAnalysisExplicitModel::GetExplicitTopology.
+**Prototype:**`virtual ~CATAnalysisExplicitTopology(#);`| GA| [MHBDM](CAACenAPIChangeDetail.htm#Abstract)| Removed because of memory corruption risks, don't use this destructor. Use CATAnalysisExplicitModel::GetExplicitTopology.
 CATAnalysisBase/Public/CATAnalysisExplicitTopology.h/CATAnalysisExplicitTopology/CATAnalysisExplicitTopology
 CATAnalysisBase/Public/CATAnalysisExplicitTopology.h/CATAnalysisExplicitTopology/~CATAnalysisExplicitTopology
 CATAnalysisBase/Public/CATAnalysisExplicitAxis.h/CATAnalysisExplicitAxis/Convert

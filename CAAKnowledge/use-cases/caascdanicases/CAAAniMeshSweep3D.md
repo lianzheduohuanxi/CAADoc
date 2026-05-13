@@ -4,7 +4,7 @@ title: "Creating Sweep 3D Mesh Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniMeshSweep3D", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSweep3D.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSweep3D.htmmd"
 converted: "2026-05-11T17:31:51.713621"
 ```
 
@@ -38,20 +38,26 @@ This use case shows you how to create sweep 3D mesh parts.  The macro opens an A
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
+```vbscript
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
+```
 
+```vbscript
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
         End If
 ```
 
@@ -62,8 +68,10 @@ This use case shows you how to create sweep 3D mesh parts.  The macro opens an A
 ```vbscript
     ' -----------------------------------------------------------
     ' Open the Analysis document
-    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\WeldConnections.CATAnalysis")
+```vbscript
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/WeldConnections.CATAnalysis")
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+```
 ```
 
 ```
@@ -84,9 +92,13 @@ Open the Analysis document. The Analysis document is retrieved in the documentat
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisManagar = oAnalysisDocument.Analysis
 ```vbscript
+```
+```vbscript
     Set oAnalysisSet = oAnalysisManagar.AnalysisSets
+```
 ```
 
 ```
@@ -95,18 +107,26 @@ Open the Analysis document. The Analysis document is retrieved in the documentat
 ```vbscript
 ```vbscript
     ' Retrieve the part document and product
+```vbscript
     Set oAnalysisLinkedDocuments = oAnalysisManagar.LinkedDocuments
     Set partDocument = oAnalysisLinkedDocuments.Item(1)
     Set product = partDocument.Product
     'Retrieve the publications
+```
+```vbscript
     Set publications = product.Publications
     Set pubBody = publications.Item("PartBody")
     ' Retrieve the analysis model
+```
+```vbscript
     Set oAnalysisModels = oAnalysisManagar.AnalysisModels
     Set oAnalysisModel = oAnalysisModels.Item(1)
     'Retrieve the mesh manager and list of mesh parts
+```
+```vbscript
     Set oAnalysisMeshManager = oAnalysisModel.MeshManager
     Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
+```
 ```
 
 ```
@@ -117,7 +137,7 @@ Open the Analysis document. The Analysis document is retrieved in the documentat
 
 ---
 
-According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**.
+According to the general [ Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**.
 
 The extraction of pre-defined geometrical arena is done by using the Reference interface. This is equivalent to the selection of a B-Rep element inside the interactive applications.
 #### Creating Mesh Part and Assigning Values to its Attributes
@@ -129,8 +149,10 @@ The extraction of pre-defined geometrical arena is done by using the Reference i
 ```
 
 ```vbscript
+```vbscript
     Set sweep3D = oAnalysisMeshParts.Add ("MSHPartSweep3D")
 ```vbscript
+```
     'Add support from the published body
 ```
 
@@ -141,7 +163,9 @@ The extraction of pre-defined geometrical arena is done by using the Reference i
     sweep3D.SetSpecificationFromPublication "Top", product, pubTopFace, 0
     sweep3D.SetSpecificationFromPublication "Bottom", product, pubBotFace, 0
 ```vbscript
+```vbscript
     'Set the global specification
+```
 ```
 
     sweep3D.SetGlobalSpecification "ElementOrder", "Linear"
@@ -161,8 +185,10 @@ The extraction of pre-defined geometrical arena is done by using the Reference i
     ...
 
 ```vbscript
+```vbscript
 End Sub
 
+```
 ```
 
     ...
@@ -171,7 +197,7 @@ End Sub
 
 To run the macro interactively CATDocView environment variable must be defined.
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Scanning an Edge Curve"
-category: "use case"
+category: use-case case"
 module: "CAATobUseCases"
 tags: ["CAAEdgeCurve", "CAATopEdgeCurve", "CATICGMContainer", "CATICGMObject", "CATIntCurve", "CAATopologicalObjects"]
-source_file: "Doc/online/CAATobUseCases/CAATopEdgeCurve.htm"
+source_file: "Doc/online/CAATobUseCases/CAATopEdgeCurve.htmmd"
 converted: "2026-05-11T17:33:45.859498"
 ```
 
@@ -97,10 +97,10 @@ where  ` edgeCurve1`.NCGM is an input file delivered in the CAATopologicalObject
 where  ` edgeCurve1`.NCGM is an input file delivered in the CAATopologicalObjects.edu/FunctionTests/InputData file.
 The CAATopEdgeCurve use case is made of a main named CAAEdgeCurve.cpp located in the CAATopEdgeCurve.m module of the CAATopologicalObjects.edu framework:
 
-Windows | `InstallRootDirectory\CAATopologicalObjects.edu\CAATopEdgeCurve.m\`
+Windows | `InstallRootDirectory/CAATopologicalObjects.edu/CAATopEdgeCurve.m/`
 
 The CAATopEdgeCurve use case is made of a main named CAAEdgeCurve.cpp located in the CAATopEdgeCurve.m module of the CAATopologicalObjects.edu framework:
-Windows | `InstallRootDirectory\CAATopologicalObjects.edu\CAATopEdgeCurve.m\`
+Windows | `InstallRootDirectory/CAATopologicalObjects.edu/CAATopEdgeCurve.m/`
 Unix | `InstallRootDirectory/CAATopologicalObjects.edu/CAATopEdgeCurve.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -139,7 +139,7 @@ Here is the input model. The edge to be analyzed is highlighted.
     	//
             // (b) - retrieve the "ref curve"
     	//
-    	CATCurve * RefCurve = pEdgeCurve->GetRefCurve();
+    	CATCurve * RefCurve = pEdgeCurve->GetRefCurve(#);
     	...
             //
             // (c) - scans the edge curve
@@ -195,7 +195,7 @@ ofstream filetowrite(pfileName, ios::binary ) ;
     #endif
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
-       filetowrite.close();
+       filetowrite.close(#);
      }
 
      _//

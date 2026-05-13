@@ -4,13 +4,13 @@ title: "Using the Smoothing Options when Creating a Sweep"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CAAAdtSweepSmoothingCode", "CATICGMObject", "CAAGemBrowser", "CATICGMFrFTopologicalSweep", "CAAGMOperatorsSweepSmoothing", "CATIA"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtSweepSmoothing.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtSweepSmoothing.htmmd"
 converted: "2026-05-11T17:33:48.857282"
 ```
 
 ---
 tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CAAAdtSweepSmoothingCode", "CATICGMObject", "CAAGemBrowser", "CATICGMFrFTopologicalSweep", "CAAGMOperatorsSweepSmoothing", "CATIA"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtSweepSmoothing.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtSweepSmoothing.htmmd"
 converted: "2026-05-11T17:33:48.857282"
 Using the Smoothing Options when Creating a Sweep
 
@@ -41,7 +41,7 @@ There are two parameters to be adjusted in order to perform a sweep that does no
     * Creates a CATICGMFrFTopologicalSweep  operator instance.
     * Specifies the sweep parameters (angle and length laws, smoothing options).
     * Runs the CATICGMFrFTopologicalSweep  and retrieve the resulting body.
-How to Launch CAAGMOperatorsSweepSmoothing To launch CAAGMOperatorsSweepSmoothing, you will need to set up the build time environment, then compile CAAGMOperatorsSweepSmoothing.m, set up the run time environment, and then execute the use case [2].  To launch this use case you must type the command below, this commands saves the result in the outfile.NCGM file: `CAAGMOperatorsSweepSmoothing .../tolerantSweepInit.ncgm `outfile.NCGM This NCGM file can be displayed using the CAAGemBrowser use case. Where to Find the CAAGMOperatorsSweepSmoothing Code The CAAGMOperatorsSweepSmoothing code use case is made of a main named CAAAdtSweepSmoothingCode.cpp located in the CAAGMOperatorsSweepSmoothing.m code module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsSweepSmoothing.m\` where `InstallRootFolder` [2] is the folder where the API CD-ROM is installed. Step-by-Step The use case is divided into the following main steps:
+How to Launch CAAGMOperatorsSweepSmoothing To launch CAAGMOperatorsSweepSmoothing, you will need to set up the build time environment, then compile CAAGMOperatorsSweepSmoothing.m, set up the run time environment, and then execute the use case [2].  To launch this use case you must type the command below, this commands saves the result in the outfile.NCGM file: `CAAGMOperatorsSweepSmoothing .../tolerantSweepInit.ncgm `outfile.NCGM This NCGM file can be displayed using the CAAGemBrowser use case. Where to Find the CAAGMOperatorsSweepSmoothing Code The CAAGMOperatorsSweepSmoothing code use case is made of a main named CAAAdtSweepSmoothingCode.cpp located in the CAAGMOperatorsSweepSmoothing.m code module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder/CAADoc/CAAGMOperatorsInterfaces.edu/CAAGMOperatorsSweepSmoothing.m/` where `InstallRootFolder` [2] is the folder where the API CD-ROM is installed. Step-by-Step The use case is divided into the following main steps:
     * Retrieving the Input Data
     * Creating a CATICGMFrFTopologicalSweep Operator Instance
     * Setting the Smooth Options

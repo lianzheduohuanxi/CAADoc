@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Computing a Tool Path with User Machining Features"
-category: "use case"
+category: use-case case"
 module: "CAASmiUseCases"
 tags: ["CATIMfgCompoundTraject", "CAASmiUserOperationToolPathReplay", "CAAToolAngle", "CATISmgNcGeometryManager", "CATIMfgToolPathFactory", "CATIMfgComputeToolPathCustom", "CAAGuide", "CATISmgNcGeometryParameter", "CAASmgOperation", "CAAApproachDistance", "CAAISmiUserMachFeature", "CAASmiUserOperationpToolPathReplay", "CATIMfgToolPathComponents", "CATIMfgTPSaveData", "CAASmgMachiningFeature", "CATIMfgActivityParameters", "CAAESmiUserOperationTPComputation", "CAASmgGuide", "CAAESmiUserMachFeature", "CAASmiUserMachFeature"]
-source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationWithUserMFToolPath.htm"
+source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationWithUserMFToolPath.htmmd"
 converted: "2026-05-11T17:31:51.288324"
 ```
 
@@ -72,10 +72,10 @@ This use case is a part of _Surface Machining Operation Sample_ [1]. You should 
 This use case is a part of _Surface Machining Operation Sample_ [1]. You should build all the modules of this sample at a time to be able to launch it [2].
 Don't forget to edit the interface dictionary located in:
 
-Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CNext\code\dictionary\`
+Windows | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CNext/code/dictionary/`
 
 Don't forget to edit the interface dictionary located in:
-Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CNext\code\dictionary\`
+Windows | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CNext/code/dictionary/`
 Unix | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CNext/code/dictionary/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed, and uncomment the appropriate lines by removing the '#' character.
@@ -86,10 +86,10 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed,
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed, and uncomment the appropriate lines by removing the '#' character.
 This use case is made of source files located in the CAASmiUserOperationToolPathReplay.m module of the CAASurfaceMachiningItf.edu framework:
 
-Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CAASmiUserOperationpToolPathReplay.m`
+Windows | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CAASmiUserOperationpToolPathReplay.m`
 
 This use case is made of source files located in the CAASmiUserOperationToolPathReplay.m module of the CAASurfaceMachiningItf.edu framework:
-Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CAASmiUserOperationpToolPathReplay.m`
+Windows | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CAASmiUserOperationpToolPathReplay.m`
 Unix | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CAASmiUserOperationpToolPathReplay.m`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -158,7 +158,7 @@ if (SUCCEEDED(RC))
 pActivityParameters->GetValue ("CAAToolAngle", ToolAngle);
         pActivityParameters->GetValue ("CAAApproachDistance", ApproachDistance);
 
-        pActivityParameters->Release();
+        pActivityParameters->Release(#);
         pActivityParameters = NULL;
 
       }
@@ -173,10 +173,10 @@ To get geometry, we first retrieve the machining feature of our operation. Then,
 
       ...
       // Retrieves Machining Feature from Activity
-      CATBaseUnknown_var spBaseFeature = pActivity->GetFeature();
+      CATBaseUnknown_var spBaseFeature = pActivity->GetFeature(#);
 
       // Retrieves Geometry from Machining Feature
-CATBaseUnknown_var spBaseFeature = pActivity->GetFeature();
+CATBaseUnknown_var spBaseFeature = pActivity->GetFeature(#);
       CATLISTP(CATGeometry) ListOfGeometry;
       CAAISmiUserMachFeature * pUserMachFeature = NULL;
       RC = spBaseFeature->QueryInterface(IID_CAAISmiUserMachFeature, (void**) &pUserMachFeature);
@@ -198,7 +198,7 @@ if (SUCCEEDED(RC))
 ```
 
         pUserMachFeature->GetGuides(ListOfGeometry);
-        pUserMachFeature->Release();
+        pUserMachFeature->Release(#);
         pUserMachFeature = NULL;
 ```
 
@@ -245,13 +245,13 @@ if (SUCCEEDED(RC))
 ```
 
           pSmgParameter->**GetGeometricElements**(oGeometries);
-          pSmgParameter->Release();
+          pSmgParameter->Release(#);
           pSmgParameter = NULL;
 
         }
       }
 pSmgParameter->**GetGeometricElements**(oGeometries);
-pSmgParameter->Release();
+pSmgParameter->Release(#);
 pSmgParameter = NULL;
       return RC;
 

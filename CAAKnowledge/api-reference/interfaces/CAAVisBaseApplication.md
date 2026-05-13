@@ -2,7 +2,7 @@
 title: "CAAVisBaseApplication"
 type: "interface"
 module: "CAAVisualization"
-category: "framework"
+category: api-reference
 base: "CATInteractiveApplication"
 inheritance_chain: "CAAVisBaseApplication → CATInteractiveApplication"
 method_count: 2
@@ -25,3 +25,31 @@ verified: true
 
 - `CATInteractiveApplication.h`
 
+---
+
+## Interface Overview
+
+This interface inherits from **CATInteractiveApplication**. 
+
+**Inherited Methods**: Please refer to the base interface documentation above.
+
+---
+
+## Related Use Cases
+
+This interface is used in the following use cases:
+
+- [CAAVisSampleCAT3DFaceGP](../../use-cases/caaviscases/CAAVisSampleCAT3DFaceGP.md)
+- [CAAVisSampleCATSurfacicRep](../../use-cases/caaviscases/CAAVisSampleCATSurfacicRep.md)
+- [CAAVisSampleDisplayCgr](../../use-cases/caaviscases/CAAVisSampleDisplayCgr.md)
+- [CAAVisSampleLOD](../../use-cases/caaviscases/CAAVisSampleLOD.md)
+
+## Interface Notes
+
+This interface is part of the **CAA** module.
+
+**Status**: This interface document is a template. Please refer to the official API documentation for more information.
+
+**Related Resources**:
+- [Quick References](../..//quick-refs/)
+- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)

@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Parsing XML documents with SAX"
-category: "use case"
+category: use-case case"
 module: "CAAXmlUseCases"
 tags: ["CATISAXParser_var", "CAAXMLParser", "CATIXMLSAXFactory", "CAAXMLSAXCountErrHandler", "CAAXMLSAXCountMain", "CATISAXParser", "CAAXMLSAXCountDocHandler", "CATISAXDocumentHandler_var", "CATISAXEntityResolver", "CATISAXErrorHandler_var", "CATISAXErrorHandler", "CAAXMLSAXCount", "CATIXMLSAXFactory_var", "CATISAXDTDHandler", "CATISAXDocumentHandler"]
-source_file: "Doc/online/CAAXmlUseCases/CAAXMLSAXCount.htm"
+source_file: "Doc/online/CAAXmlUseCases/CAAXMLSAXCount.htmmd"
 converted: "2026-05-11T17:33:45.649159"
 ```
 
@@ -76,10 +76,10 @@ where `<filepath>` is the path of the XML file, which will be parsed.
 
 A sample XML file is provided with the use case. To use it, launch the following command from the command line:
 
-Windows | `CAAXMLSAXCount InstallRoot\OS\resources\xml\CAAXMLSAXCount\CAAXMLSAXCount.xml`
+Windows | `CAAXMLSAXCount InstallRoot/OS/resources/xml/CAAXMLSAXCount/CAAXMLSAXCount.xml`
 
 A sample XML file is provided with the use case. To use it, launch the following command from the command line:
-Windows | `CAAXMLSAXCount InstallRoot\OS\resources\xml\CAAXMLSAXCount\CAAXMLSAXCount.xml`
+Windows | `CAAXMLSAXCount InstallRoot/OS/resources/xml/CAAXMLSAXCount/CAAXMLSAXCount.xml`
 Unix | `CAAXMLSAXCount InstallRoot/OS/resources/xml/CAAXMLSAXCount/CAAXMLSAXCount.xml`
 
 where:
@@ -98,10 +98,10 @@ where:
 The CAAXMLSAXCount use case is made of several classes located in the CAAXMLSAXCount.m module of the CAAXMLParser.edu framework:
 
 The CAAXMLSAXCount use case is made of several classes located in the CAAXMLSAXCount.m module of the CAAXMLParser.edu framework:
-Windows | `InstallRootDirectory\CAAXMLParser.edu\CAAXMLSAXCount.m\`
+Windows | `InstallRootDirectory/CAAXMLParser.edu/CAAXMLSAXCount.m/`
 
 The CAAXMLSAXCount use case is made of several classes located in the CAAXMLSAXCount.m module of the CAAXMLParser.edu framework:
-Windows | `InstallRootDirectory\CAAXMLParser.edu\CAAXMLSAXCount.m\`
+Windows | `InstallRootDirectory/CAAXMLParser.edu/CAAXMLSAXCount.m/`
 Unix | `InstallRootDirectory/CAAXMLParser.edu/CAAXMLSAXCount.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -125,7 +125,7 @@ To create a SAX parser, implement and register event handlers with this parser, 
 #### Implement a V5 Document Handler Component
 
 7 | Manage Errors
-The SAX API uses an event-oriented API to process XML documents. The XML SAX parser reads XML documents sequentially and invokes callback functions to indicate the XML construct it comes across. Each invocation is called a SAX event. The SAX API defines V5 interfaces, which specify the signature of the SAX callback functions and group them per theme. The _CATISAXDocumentHandler_ interface defines functions, which describe the most common XML constructs found in an XML document: start of an document, end of an document, start of an element, end of an element, characters, processing instruction, white space. Other SAX interfaces (_CATISAXDTDHandler_ , _CATISAXErrorHandler_ , _CATISAXEntityResolver_) define additional events. To make the work easier for the developer, the SAX API provides a _CATSAXHandlerBase_ component, which already provides an empty implementation of all the SAX interfaces. ![saxhandlerbase.png \(3148 bytes\)](images/saxhandlerbase.png).
+The SAX API uses an event-oriented API to process XML documents. The XML SAX parser reads XML documents sequentially and invokes callback functions to indicate the XML construct it comes across. Each invocation is called a SAX event. The SAX API defines V5 interfaces, which specify the signature of the SAX callback functions and group them per theme. The _CATISAXDocumentHandler_ interface defines functions, which describe the most common XML constructs found in an XML document: start of an document, end of an document, start of an element, end of an element, characters, processing instruction, white space. Other SAX interfaces (_CATISAXDTDHandler_ , _CATISAXErrorHandler_ , _CATISAXEntityResolver_) define additional events. To make the work easier for the developer, the SAX API provides a _CATSAXHandlerBase_ component, which already provides an empty implementation of all the SAX interfaces. ![saxhandlerbase.png /(3148 bytes/)](images/saxhandlerbase.png).
 
 Therefore, to write a SAX document handler, all you need to do is to create a new V5 component which inherits from _CATISAXDocumentHandler_ and override the methods to answer to the events, which are relevant to your application. The following code declares and defines a _CAAXMLSAXCountDocHandler_ V5 component, which inherits from _CATSAXHandlerBase_ and partially re-implements _CATISAXDocumentHandler_.
 
@@ -142,7 +142,7 @@ Therefore, to write a SAX document handler, all you need to do is to create a ne
 public:
             virtual **HRESULT Characters(
                 const CATUnicodeString & iCharacters)**;
-            virtual **HRESULT EndDocument()** ;
+            virtual **HRESULT EndDocument(#)** ;
 
             ...
     };
@@ -171,7 +171,7 @@ The next step is to provide an implementation for each of the SAX events you wan
         // This event is sent by the CATISAXParser when a XML text is parsed
 HRESULT CAAXMLSAXCountDocHandler::**Characters**(
 const CATUnicodeString & iCharacters) {
-        _characterCount += iCharacters.GetLengthInChar();
+        _characterCount += iCharacters.GetLengthInChar(#);
         return S_OK;
 
     }
@@ -265,18 +265,18 @@ To create a SAX1 parser, one simply invokes the `CreateParser` on the _CATIXMLSA
 [Top]
 #### Instantiate the Document Handler and Error Handler Components and Register Them With the Parser
 
-The SAX1 parser created in the previous section is not yet usable as it does not yet know any other objects to which it can send the events it generates. The SAX1 parser can accept up to four event handlers (one for each event interface), as shown in the diagram below. ![saxsaxparser.png \(3115 bytes\)](images/saxparser.png)
+The SAX1 parser created in the previous section is not yet usable as it does not yet know any other objects to which it can send the events it generates. The SAX1 parser can accept up to four event handlers (one for each event interface), as shown in the diagram below. ![saxsaxparser.png /(3115 bytes/)](images/saxparser.png)
 
     ...
-The SAX1 parser created in the previous section is not yet usable as it does not yet know any other objects to which it can send the events it generates. The SAX1 parser can accept up to four event handlers (one for each event interface), as shown in the diagram below. ![saxsaxparser.png \(3115 bytes\)](images/saxparser.png)
-    CAAXMLSAXCountDocHandler *docHandlerImpl = new CAAXMLSAXCountDocHandler();
+The SAX1 parser created in the previous section is not yet usable as it does not yet know any other objects to which it can send the events it generates. The SAX1 parser can accept up to four event handlers (one for each event interface), as shown in the diagram below. ![saxsaxparser.png /(3115 bytes/)](images/saxparser.png)
+    CAAXMLSAXCountDocHandler *docHandlerImpl = new CAAXMLSAXCountDocHandler(#);
     CATISAXDocumentHandler_var docHandler = docHandlerImpl;
-    docHandlerImpl->Release();
+    docHandlerImpl->Release(#);
     docHandlerImpl = NULL;
 
-    CAAXMLSAXCountErrHandler *errHandlerImpl = new CAAXMLSAXCountErrHandler();
+    CAAXMLSAXCountErrHandler *errHandlerImpl = new CAAXMLSAXCountErrHandler(#);
     CATISAXErrorHandler_var errHandler = errHandlerImpl;
-    errHandlerImpl->Release();
+    errHandlerImpl->Release(#);
     errHandlerImpl = NULL;
 
     ...

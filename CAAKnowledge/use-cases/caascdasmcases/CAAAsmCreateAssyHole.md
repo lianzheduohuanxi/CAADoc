@@ -4,7 +4,7 @@ title: "Creating and Modifying an Assembly Hole"
 category: "use-case"
 module: "CAAScdAsmUseCases"
 tags: ["CAAScdAsmUseCases", "CATIA", "CAAAsmCreateAssyHole"]
-source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmCreateAssyHole.htm"
+source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmCreateAssyHole.htmmd"
 converted: "2026-05-11T17:31:50.843187"
 ```
 
@@ -49,7 +49,10 @@ The macro first loads AssemblyHole.CATProduct that contains three parts: a skele
 ```
 
 ```vbscript
+```vbscript
     Dim oRootProduct As Product
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oRootProduct = CATIA.ActiveDocument.Product
@@ -62,6 +65,7 @@ The macro first loads AssemblyHole.CATProduct that contains three parts: a skele
 
     Dim oPlaque2 As Product
     Set oPlaque2 = oRootProduct.Products.Item  ( "Plaque2.1" )
+```
 ```
 
 ```
@@ -88,7 +92,10 @@ Once the product document has been loaded, the `oSkeletton`, `oPlaque1` and `oPl
 ```
 
 ```vbscript
+```vbscript
     Dim oSkelDocument As PartDocument
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oSkelDocument = CATIA.Documents.Item("Skeletton.CATPart")
@@ -98,6 +105,7 @@ Once the product document has been loaded, the `oSkeletton`, `oPlaque1` and `oPl
 
     Dim oPosSketch As Sketch
     Set oPosSketch = oBody.Sketches.Item("Positioning sketch for assembly hole")
+```
 ```
 
 ```
@@ -125,9 +133,13 @@ The `oPosSketch` object will be used to determine the positioning point of the h
 ```
 
 ```vbscript
+```vbscript
     Dim oAssemblyFeatures As AssemblyFeatures
 ```vbscript
+```
+```vbscript
     Set oAssemblyFeatures = oRootProduct.GetTechnologicalObject("AssemblyFeatures")
+```
 ```
 
 ```
@@ -143,9 +155,11 @@ The `oPosSketch` object will be used to determine the positioning point of the h
     '   depth : 10 mm
     ' -------------------------------------------------------------
 
+```vbscript
     Dim oAssemblyHole As AssemblyHole
     Set oAssemblyHole = oAssemblyFeatures.AddAssemblyHole(oPosSketch, oSkeletton, 10.000000, oSkeletton)
     ' ------------------------------------------------------------
+```
     ' Affects parts to the assembly hole : Plaque1.1 and Plaque2.1
     ' ------------------------------------------------------------
 ```
@@ -189,11 +203,15 @@ The two _product_ Plaque1.1 and Plaque2.1 are affected using the `AddAffectedCom
 ```
 
 ```vbscript
+```vbscript
     Dim oDiameter As Length
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oDiameter = oAssemblyHole.Diameter
     oDiameter.Value = 10.000000
+```
 
 ```
 
@@ -202,7 +220,9 @@ The two _product_ Plaque1.1 and Plaque2.1 are affected using the `AddAffectedCom
 ```
 
 ```vbscript
+```vbscript
 Set oDiameter = oAssemblyHole.Diameter
+```
 ```
 
 oDiameter.Value = 10.000000
@@ -216,23 +236,33 @@ oDiameter.Value = 10.000000
 ```
 
 ```vbscript
+```vbscript
     Dim oHeadDiameter As Length
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oHeadDiameter = oAssemblyHole.HeadDiameter
     oHeadDiameter.Value = 15.000000
+```
 
+```vbscript
     Dim oHeadDepth As Length
     Set oHeadDepth = oAssemblyHole.HeadDepth
     oHeadDepth.Value = 5.000000
+```
 
+```vbscript
     Dim oBottomLimit As Limit
     Set oBottomLimit = oAssemblyHole.BottomLimit
     oBottomLimit.LimitMode = catOffsetLimit
+```
 
+```vbscript
     Dim oDepth As Length
     Set oDepth = oBottomLimit.Dimension
     oDepth.Value = 30.000000
+```
 
 ```
 
@@ -241,7 +271,9 @@ oDiameter.Value = 10.000000
 ```
 
 ```vbscript
+```vbscript
 Set oDepth = oBottomLimit.Dimension
+```
 ```
 
 oDepth.Value = 30.000000
@@ -254,11 +286,15 @@ oDepth.Value = 30.000000
 ```
 
 ```vbscript
+```vbscript
     Dim oBottomAngle As Angle
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oBottomAngle = oAssemblyHole.BottomAngle
     oBottomAngle.Value = 120.000000
+```
 ```
 
 ```
@@ -309,7 +345,7 @@ The root _Product_ is then updated; it propagates the Update to the affected par
 
 ![](images/AssyHoleAfter.jpg)
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

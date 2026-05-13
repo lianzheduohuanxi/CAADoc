@@ -4,7 +4,7 @@ title: "Creating 1D Mesh"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAScdAniUseCases", "CAAAniMesh1D", "CAAAniUserMaterial"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniApplyUserMaterial.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniApplyUserMaterial.htmmd"
 converted: "2026-05-11T17:31:51.596555"
 ```
 
@@ -35,7 +35,10 @@ This use case shows how to create a user material and how to apply analysis mate
     ...
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
+
+```
 
 ```
 
@@ -44,17 +47,21 @@ This use case shows how to create a user material and how to apply analysis mate
 ```vbscript
     '-----------------------------------------------------------
     'Optional: allows to find the sample wherever it's installed
+```vbscript
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
     Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
 ```vbscript
     End If
     '-----------------------------------------------------------
@@ -71,17 +78,21 @@ End If
 ```vbscript
 '-----------------------------------------------------------
     'Open the Analysis document
-    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Beam.CATAnalysis")
+```vbscript
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Beam.CATAnalysis")
+```
 ```
 
 ```
 
 ```
 
+```vbscript
 ```vbscript
 ```vbscript
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
+```
 ```
 
 ```
@@ -101,74 +112,98 @@ Open the Analysis document. The Analysis document is fetched in the documentatio
 
 ```vbscript
 ```vbscript
+```vbscript
     Set oAnalysisManager = oAnalysisDocument.Analysis
 
 ```
+```
 
 ```
 
 ```vbscript
+```vbscript
 Set oAnalysisManager = oAnalysisDocument.Analysis
 ```vbscript
+```
     'Retrieve the analysis model from the list of models
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisModels = oAnalysisManager.AnalysisModels
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oAnalysisModel = oAnalysisManager.Item(1)
 
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Set oAnalysisModels = oAnalysisManager.AnalysisModels
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set oAnalysisModel = oAnalysisManager.Item(1)
     'Retrieve the material set from list of analysis sets
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisSets = oAnalysisModel.AnalysisSets
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oAnalysisSet = oAnalysisSets.ItemByType("MaterialSet")
 
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Set oAnalysisSets = oAnalysisModel.AnalysisSets
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set oAnalysisSet = oAnalysisSets.ItemByType("MaterialSet")
     'Add an new user material
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisEntities = oAnalysisSet.AnalysisEntities
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oAnalysisEntity1 = oAnalysisEntities.Add("SAMUserMaterial")
 
+```
 ```
 
 ```
@@ -179,50 +214,64 @@ Set oAnalysisSet = oAnalysisSets.ItemByType("MaterialSet")
 
 ---
 
-According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and **Analysis Set.** We retrieve material set from the list of analysis sets. A new user material is added to this list.
+According to the general [ Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and **Analysis Set.** We retrieve material set from the list of analysis sets. A new user material is added to this list.
 #### Loading a Material Catalog and Applying Analysis Properties
 
     ...
-According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and **Analysis Set.** We retrieve material set from the list of analysis sets. A new user material is added to this list.
+According to the general [ Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and **Analysis Set.** We retrieve material set from the list of analysis sets. A new user material is added to this list.
 ```vbscript
 ```vbscript
     'Load the catalog of materials
-    MaterialFile = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\CatalogForAutomation.CATMaterial")
+```vbscript
+    MaterialFile = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/CatalogForAutomation.CATMaterial")
 
+```
 ```
 
 ```
 
+```vbscript
 ```vbscript
     Set oMaterial_document = CATIA.Documents.Open(MaterialFile)
 ```
+```
 
 ```vbscript
 ```vbscript
 ```vbscript
     'Load the catalog of materials
+```vbscript
     Set cFamilies_list = oMaterial_document.Families
     'Retrieve the first family of the library
+```
+```vbscript
     Dim ifamily_no As Integer
+```
 ```
 
 ```
 
     ifamily_no = 1
+```vbscript
     Set oFirst_family = cFamilies_list.Item(iFamily_no)
 ```vbscript
+```
 ```vbscript
     'Retrieve the list of materials from the family
+```vbscript
     Set cMaterials_list = oFirst_family.Materials
 
     Dim imaterial_no As Integer
+```
 ```
 
 ```
 
     imaterial_no = 1
 
+```vbscript
     Set oMaterial1 = cMaterials_list.Item(imaterial_no)
+```
 ```
 
     ...
@@ -241,21 +290,29 @@ Here we load the material catalog specifying its full path. Inside the material 
     imaterial_no = 1
 
 ```vbscript
+```vbscript
     Set oMaterial1 = cMaterials_list.Item(imaterial_no)
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set anlysisMaterial = oMaterial1.CreateAnalysisData("SAMAnisotropicMaterial")
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Set oMaterial1 = cMaterials_list.Item(imaterial_no)
 ```vbscript
+```
+```vbscript
 Set anlysisMaterial = oMaterial1.CreateAnalysisData("SAMAnisotropicMaterial")
+```
 ```
 
     anlysisMaterial.PutValue "SAMShearModulus_11", "1e+10"
@@ -279,8 +336,10 @@ Set anlysisMaterial = oMaterial1.CreateAnalysisData("SAMAnisotropicMaterial")
 ```
 
 ```vbscript
+```vbscript
     Set oManager = oAnalysisManager.GetItem("CATMatManagerVBExt")
     oManager.ApplyMaterialOnUserMaterial oAnalysisEntity1, oMaterial1, linkMode
+```
 
 ```
 
@@ -292,12 +351,14 @@ We retrieve a material from the list and we can create an analysis material of a
 #### Epilog
 
     ...
+```vbscript
      End Sub
+```
     ...
 
 ---
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

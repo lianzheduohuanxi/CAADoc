@@ -4,13 +4,13 @@ title: "KnowledgeOptimizer Glossary"
 category: "use-case"
 module: "CAAOptTechArticles"
 tags: []
-source_file: "Doc/online/CAAOptTechArticles/CAAOptGlossary.htm"
+source_file: "Doc/online/CAAOptTechArticles/CAAOptGlossary.htmmd"
 converted: "2026-05-11T17:33:46.040567"
 ```
 
 ---
 tags: []
-source_file: "Doc/online/CAAOptTechArticles/CAAOptGlossary.htm"
+source_file: "Doc/online/CAAOptTechArticles/CAAOptGlossary.htmmd"
 converted: "2026-05-11T17:33:46.040567"
 3D PLM PPR Hub Open Gateway |  Knowledge Modeler |  Optimization Glossary _To understand what we are talking about_
 

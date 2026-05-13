@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "DrawingView Object"
-category: "use-case"
+category: tech-article
 module: "CAAScdDriTechArticles"
 tags: ["CATIA"]
-source_file: "Doc/online/CAAScdDriTechArticles/CAADriObjDrawingView.htm"
+source_file: "Doc/online/CAAScdDriTechArticles/CAADriObjDrawingView.htmmd"
 converted: "2026-05-11T17:31:51.127693"
 ```
 
@@ -83,11 +83,15 @@ The other views are all defined by giving the **DrawingViewGenerativeBehavior** 
 Use x and y properties to set or retrieve the x and y coordinates of the view coordinate system. The following example sets these coordinates to 260mm and 120mm respectively.
 
 ```vbscript
+```vbscript
     Dim myView As Object
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set myView = CATIA.Documents(2).ActiveSheet.ActiveView
     myView.x = 260
+```
     myView.y = 120
 
 ```

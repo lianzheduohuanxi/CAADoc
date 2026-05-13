@@ -5,13 +5,13 @@ category: "use-case"
 module: "CAACenAPIChangesR9"
 version: "V5R9"
 tags: []
-source_file: "Doc/online/CAACenAPIChangesR9/VPMXBom.htm"
+source_file: "Doc/online/CAACenAPIChangesR9/VPMXBom.htmmd"
 converted: "2026-05-11T17:33:53.034095"
 ```
 
 ---
 tags: []
-source_file: "Doc/online/CAACenAPIChangesR9/VPMXBom.htm"
+source_file: "Doc/online/CAACenAPIChangesR9/VPMXBom.htmmd"
 converted: "2026-05-11T17:33:53.034095"
 CAA C++ API Modifications|  VPMXBom  |
 

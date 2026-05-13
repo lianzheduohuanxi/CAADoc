@@ -4,13 +4,13 @@ title: "CAAPriCreateEdgeFillet.CATScript"
 category: "use-case"
 module: "CAAScdPriUseCases"
 tags: ["CAAScdPriUseCases", "CATIA", "CAAPriCreateEdgeFillet"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriCreateEdgeFilletSource.htm"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriCreateEdgeFilletSource.htmmd"
 converted: "2026-05-11T17:31:51.219986"
 ```
 
 ---
 tags: ["CAAScdPriUseCases", "CATIA", "CAAPriCreateEdgeFillet"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriCreateEdgeFilletSource.htm"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriCreateEdgeFilletSource.htmmd"
 converted: "2026-05-11T17:31:51.219986"
     Option Explicit
 ```vbscript
@@ -22,8 +22,10 @@ converted: "2026-05-11T17:31:51.219986"
 ```
 
 ```vbscript
+```vbscript
     Dim Language As String
     Language="VBSCRIPT"
+```
 ```
 
 ```vbscript
@@ -45,18 +47,22 @@ converted: "2026-05-11T17:31:51.219986"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
 
         Dim oPartDocument As PartDocument
+```
 ```
 
 ```vbscript
 ```vbscript
-        Set oPartDocument = CATIA.Documents.Open(sDocPath & "\online\CAAScdPriUseCases\samples\Pad.CATPart")
+```vbscript
+        Set oPartDocument = CATIA.Documents.Open(sDocPath & "/online/CAAScdPriUseCases/samples/Pad.CATPart")
 
         Dim oPart As Part
         Set oPart =  CATIA.ActiveDocument.Part
 
+```
 ```
 
 ```
@@ -65,39 +71,51 @@ converted: "2026-05-11T17:31:51.219986"
 ```vbscript
 ```vbscript
         ' Retrieve the part body of the document containing the pad to be used
+```vbscript
         Dim oBody As Body
         Set oBody = oPart.Bodies.Item  ( "MechanicalTool.1" )
         ' Retrieve the pad of the body
+```
+```vbscript
         Dim oPad As Pad
         Set oPad = oBody.Shapes.Item  ( "Pad.1" )
         ' Retrieve the vertical edges of the pad to be filleted
+```
+```vbscript
         Dim oEdge1 As Reference
-        Set oEdge1 = oPart.CreateReferenceFromBRepName  ( "REdge:(Edge:(Face:(Brp:(Pad.1;0:(Brp:(Sketch.1;1)));None:());Face:(Brp:(Pad.1;0:(Brp:(Sketch.1;2)));None:());None:(Limits1:();Limits2:()));WithTemporaryBody;WithoutBuildError;WithSelectingFeatureSupport)", oPad )
+        Set oEdge1 = oPart.CreateReferenceFromBRepName  ( "REdge:(Edge:(Face:(Brp:(Pad.1;0:(Brp:(Sketch.1;1)));None:(#));Face:(Brp:(Pad.1;0:(Brp:(Sketch.1;2)));None:(#));None:(Limits1:(#);Limits2:(#)));WithTemporaryBody;WithoutBuildError;WithSelectingFeatureSupport)", oPad )
 
         Dim oEdge2 As Reference
-        Set oEdge2 = oPart.CreateReferenceFromBRepName  ( "REdge:(Edge:(Face:(Brp:(Pad.1;0:(Brp:(Sketch.1;2)));None:());Face:(Brp:(Pad.1;0:(Brp:(Sketch.1;3)));None:());None:(Limits1:();Limits2:()));WithTemporaryBody;WithoutBuildError;WithSelectingFeatureSupport)", oPad )
+        Set oEdge2 = oPart.CreateReferenceFromBRepName  ( "REdge:(Edge:(Face:(Brp:(Pad.1;0:(Brp:(Sketch.1;2)));None:(#));Face:(Brp:(Pad.1;0:(Brp:(Sketch.1;3)));None:(#));None:(Limits1:(#);Limits2:(#)));WithTemporaryBody;WithoutBuildError;WithSelectingFeatureSupport)", oPad )
 
         Dim oEdge3 As Reference
-        Set oEdge3 = oPart.CreateReferenceFromBRepName  ( "REdge:(Edge:(Face:(Brp:(Pad.1;0:(Brp:(Sketch.1;3)));None:());Face:(Brp:(Pad.1;0:(Brp:(Sketch.1;4)));None:());None:(Limits1:();Limits2:()));WithTemporaryBody;WithoutBuildError;WithSelectingFeatureSupport)", oPad )
+        Set oEdge3 = oPart.CreateReferenceFromBRepName  ( "REdge:(Edge:(Face:(Brp:(Pad.1;0:(Brp:(Sketch.1;3)));None:(#));Face:(Brp:(Pad.1;0:(Brp:(Sketch.1;4)));None:(#));None:(Limits1:(#);Limits2:(#)));WithTemporaryBody;WithoutBuildError;WithSelectingFeatureSupport)", oPad )
 
         Dim oEdge4 As Reference
-        Set oEdge4 = oPart.CreateReferenceFromBRepName  ( "REdge:(Edge:(Face:(Brp:(Pad.1;0:(Brp:(Sketch.1;4)));None:());Face:(Brp:(Pad.1;0:(Brp:(Sketch.1;1)));None:());None:(Limits1:();Limits2:()));WithTemporaryBody;WithoutBuildError;WithSelectingFeatureSupport)", oPad )
+        Set oEdge4 = oPart.CreateReferenceFromBRepName  ( "REdge:(Edge:(Face:(Brp:(Pad.1;0:(Brp:(Sketch.1;4)));None:(#));Face:(Brp:(Pad.1;0:(Brp:(Sketch.1;1)));None:(#));None:(Limits1:(#);Limits2:(#)));WithTemporaryBody;WithoutBuildError;WithSelectingFeatureSupport)", oPad )
         ' Define the fillet to be created with the first edge
+```
+```vbscript
         Dim oEdgeFillet1 As ConstRadEdgeFillet
         Set oEdgeFillet1 = oPart.ShapeFactory.AddNewEdgeFilletWithConstantRadius  ( oEdge1, 1, 5.000000 )
         ' Add the others edges to be filleted
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Dim oEdgeFillet1 As ConstRadEdgeFillet
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set oEdgeFillet1 = oPart.ShapeFactory.AddNewEdgeFilletWithConstantRadius  ( oEdge1, 1, 5.000000 )
 ' Add the others edges to be filleted
+```
 ```
 
 ```
@@ -126,27 +144,37 @@ Set oEdgeFillet1 = oPart.ShapeFactory.AddNewEdgeFilletWithConstantRadius  ( oEdg
 ```vbscript
 ```vbscript
         ' Retrieve the top face of the pad to be filleted
+```vbscript
         Dim oTopFace As Reference
-        Set oTopFace = oPart.CreateReferenceFromBRepName  ( "RSur:(Face:(Brp:(Pad.1;2);None:());WithTemporaryBody;WithoutBuildError;WithSelectingFeatureSupport)", oEdgeFillet1 )
+        Set oTopFace = oPart.CreateReferenceFromBRepName  ( "RSur:(Face:(Brp:(Pad.1;2);None:(#));WithTemporaryBody;WithoutBuildError;WithSelectingFeatureSupport)", oEdgeFillet1 )
         ' Retrieve the bottom face of the pad to be filleted
+```
+```vbscript
         Dim oBottomFace As Reference
-        Set oBottomFace = oPart.CreateReferenceFromBRepName  ( "RSur:(Face:(Brp:(Pad.1;1);None:());WithTemporaryBody;WithoutBuildError;WithSelectingFeatureSupport)", oEdgeFillet1 )
+        Set oBottomFace = oPart.CreateReferenceFromBRepName  ( "RSur:(Face:(Brp:(Pad.1;1);None:(#));WithTemporaryBody;WithoutBuildError;WithSelectingFeatureSupport)", oEdgeFillet1 )
         ' Define the fillet to be created with the first face
+```
+```vbscript
         Dim oEdgeFillet2 As ConstRadEdgeFillet
         Set oEdgeFillet2 = oPart.ShapeFactory.AddNewEdgeFilletWithConstantRadius  ( oTopFace, 1, 15.000000 )
         ' Define the fillet radius to 5 mm
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Dim oEdgeFillet2 As ConstRadEdgeFillet
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set oEdgeFillet2 = oPart.ShapeFactory.AddNewEdgeFilletWithConstantRadius  ( oTopFace, 1, 15.000000 )
 ' Define the fillet radius to 5 mm
+```
 ```
 
 ```
@@ -166,6 +194,8 @@ Set oEdgeFillet2 = oPart.ShapeFactory.AddNewEdgeFilletWithConstantRadius  ( oTop
 ```
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

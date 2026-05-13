@@ -1,9 +1,11 @@
 ---
+category: quick-ref
 title: "CAA开发常用模式"
 type: "quick-reference"
 verified: true
 verified_source: "CAAApplicationFrame.edu 源码"
 ---
+category: quick-ref
 
 # CAA开发常用模式
 
@@ -84,8 +86,8 @@ class CAAAfrMRUManager : public CATBaseUnknown
    CATDeclareClass;
 
 public:
-   CAAAfrMRUManager();
-   virtual ~CAAAfrMRUManager();
+   CAAAfrMRUManager(#);
+   virtual ~CAAAfrMRUManager(#);
 
    static HRESULT GetMRUManager(CAAAfrMRUManager ** oManager);
 
@@ -113,11 +115,11 @@ private:
 // CATImplementClass 参数: (类名, 扩展类型, 基类, 挚友类)
 CATImplementClass(CAAAfrMRUManager, Implementation, CATBaseUnknown, CATNull);
 
-CAAAfrMRUManager::CAAAfrMRUManager() : CATBaseUnknown()
+CAAAfrMRUManager::CAAAfrMRUManager(#) : CATBaseUnknown(#)
 {
 }
 
-CAAAfrMRUManager::~CAAAfrMRUManager()
+CAAAfrMRUManager::~CAAAfrMRUManager(#)
 {
 }
 ```
@@ -144,8 +146,8 @@ class CAAAfrChangeViewNormalCmd : public CATCommand
    CATDeclareClass;
 
 public:
-   CAAAfrChangeViewNormalCmd();
-   virtual ~CAAAfrChangeViewNormalCmd();
+   CAAAfrChangeViewNormalCmd(#);
+   virtual ~CAAAfrChangeViewNormalCmd(#);
 
    // 命令生命周期方法
    virtual CATStatusChangeRC Activate(CATCommand *iFromClient, CATNotification *iEvtData);
@@ -181,17 +183,17 @@ TIE 文件是 CAA 用来将接口绑定到实现类的机制。
 
 ```cpp
 // 在CATCommand派生类中:
-CATFrmEditor * pEditor = GetEditor();
-// GetEditor() 是 CATCommand 的成员方法
+CATFrmEditor * pEditor = GetEditor(#);
+// GetEditor(#) 是 CATCommand 的成员方法
 ```
 
 ### 获取当前文档
 
 ```cpp
-CATFrmEditor * pEditor = GetEditor();
+CATFrmEditor * pEditor = GetEditor(#);
 if (NULL != pEditor)
 {
-  CATDocument * pDoc = pEditor->GetDocument();
+  CATDocument * pDoc = pEditor->GetDocument(#);
 }
 ```
 
@@ -200,7 +202,6 @@ if (NULL != pEditor)
 以下头文件从源码中验证存在:
 
 | 头文件 | 用途 | 验证来源 |
-|--------|------|----------|
 | `CATBaseUnknown.h` | COM基类 | 所有模块 |
 | `CATCommand.h` | 命令基类 | CAAApplicationFrame |
 | `CATFrmEditor.h` | 编辑器 | CAAApplicationFrame |
@@ -220,11 +221,11 @@ if (NULL != pEditor)
 BUILT_OBJECT_TYPE = SHARED LIBRARY
 
 # 链接的库
-LINK_WITH = \
-  CATApplicationFrame \
-  CATVisualization \
-  CATViz \
-  SystemTS \
+LINK_WITH = /
+  CATApplicationFrame /
+  CATVisualization /
+  CATViz /
+  SystemTS /
 
 # 源文件
 LOCAL_SRCPATH = src
@@ -234,3 +235,4 @@ LOCAL_HDRPATH = LocalInterfaces PublicInterfaces
 ```
 
 ---
+category: quick-ref

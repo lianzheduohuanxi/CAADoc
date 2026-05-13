@@ -4,13 +4,13 @@ title: "Changes to ENOVIA LCA Metadata in V5R14 Compared with V5R13"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: []
-source_file: "Doc/online/CAACenQuickRefs/CAACenMetaExpR14vsR13.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenMetaExpR14vsR13.htmmd"
 converted: "2026-05-11T17:33:46.903919"
 ```
 
 ---
 tags: []
-source_file: "Doc/online/CAACenQuickRefs/CAACenMetaExpR14vsR13.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenMetaExpR14vsR13.htmmd"
 converted: "2026-05-11T17:33:46.903919"
 CAA V5 Encyclopedia |  Changes to ENOVIA LCA Metadata in V5R14 Compared with V5R13
 
@@ -260,10 +260,12 @@ Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Obj
 2 | 2 | 0 | New object | CONFIG |   | VARIABILITY_SPACE | Class |   |   |   |   | VARIABILITY_SPACE |   |
 3 | 2 | 0 | New object | CONFIG |   | VARIABILITY_SPACE | Class |   | NAME | Simple of String |   | NAME |   |
 3 | 2 | 0 | New object | CONFIG |   | VARIABILITY_SPACE | Class |   | STATUS | Simple of String |   | STATUS |   |
+```vbscript
 3 | 2 | 0 | New object | CONFIG |   | VARIABILITY_SPACE | Class |   | CATEGORY_LINK | Set of Oid |   | CATEGORY_LINK |   |
 3 | 2 | 0 | New object | CONFIG |   | VARIABILITY_SPACE | Class |   | MODIFICATION | Set of Oid |   | MODIFICATION |   |
 3 | 2 | 0 | New object | CONFIG |   | VARIABILITY_SPACE | Class |   | CONFIG_HANDLER | Set of Oid |   | CONFIG_HANDLER |   |
 3 | 2 | 0 | New object | CONFIG |   | VARIABILITY_SPACE | Class |   | CONFIGURABLE | Simple of Oid |   | CONFIGURABLE |   |
+```
 3 | 3 | 1 | Attribute length change | TEMPLAT |   | VPMTPFolderMaster | Class |   | V_ID | from 40 to 80 (Simple) |   | V_ID | The folder master identifier | This identifier must be unique
 3 | 3 | 0 | Attribute length change | TEMPLAT |   | VPMTPFolderFamily | Class |   | V_ID | from 40 to 80 (Simple) |   | V_ID |   |
 3 | 3 | 1 | Attribute length change | TEMPLAT |   | VPMTPDocumentMaster | Class |   | V_ID | from 40 to 80 (Simple) |   | V_ID | The document master identifier | This identifier must be unique
@@ -297,8 +299,10 @@ Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Obj
 3 | 2 | 0 | New object | PEOPLE |   | RscLevel | Class | RscBase | V_organization | Simple of String | Inherited | V_organization | The related parent object | The type of the parent object depends on the type of the object
 3 | 2 | 0 | New object | PEOPLE |   | RscLevel | Class | RscBase | V_expiration | Simple of Timestamp | Inherited | V_expiration | The related parent object | The type of the parent object depends on the type of the object
 3 | 2 | 0 | New object | PEOPLE |   | RscLevel | Class | RscBase | V_xattr | Injective of Oid | Inherited | V_xattr | The related parent object | The type of the parent object depends on the type of the object
+```vbscript
 3 | 2 | 0 | New object | PEOPLE |   | RscLevel | Class | RscBase | V_masks | Set of Oid | Inherited | V_masks | The related parent object | The type of the parent object depends on the type of the object
 3 | 2 | 1 | New object | PEOPLE |   | RscLevel | Class | RscBase | V_desc | Simple of String | Inherited | V_desc | The object description | In the case of RscPerson, this is the last name
+```
 3 | 2 | 1 | New object | PEOPLE |   | RscLevel | Class | RscBase | V_sec_level | Simple of Oid | Inherited | V_sec_level | The related security level | The security level defines the maximum security level of the object
 3 | 2 | 0 | New object | PEOPLE |   | RscLevel | Class | RscBase | V_links | Inverse of RscRelation.V_components (Set) | Inherited | V_links |   |
 3 | 2 | 0 | New object | PEOPLE |   | RscLevel | Class | RscBase | V_children | Inverse of RscBase.V_parent (Set) | Inherited | V_children |   |
@@ -315,8 +319,10 @@ Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Obj
 3 | 3 | 0 | New attribute | PRODUCT | TEMPLAT | VPMProductSpecification | Class |   | V_status | Simple of String |   | V_status | The product specification description |
 3 | 3 | 0 | New attribute | PRODUCT | TEMPLAT | VPMProductSpecification | Class |   | V514_ConfigHandler | Simple of Oid |   | V514_ConfigHandler | The product specification description |
 3 | 3 | 1 | Attribute structure change | PRODUCT | TEMPLAT | VPMProductComponent | Class |   | V_PCO | from List (Oid) to Injective (Oid) |   | V_PCO | The list of children ProductComponent objects |
+```vbscript
 3 | 3 | 0 | Attribute structure change | PRODUCT | TEMPLAT | VPMProductFunction | Class |   | V_PFU | from List (Oid) to Injective (Oid) |   | V_PFU |   |
 3 | 3 | 0 | Attribute structure change | PRODUCT | TEMPLAT | VPMItemInstance | Class |   | V_substitute | from List (Oid) to Injective (Oid) |   | V_substitute | The ProductSpecification of the item instance | If the current item instance is a ProductInstance, V_PS gives the relative ProductSpecification
+```
 3 | 3 | 0 | Attribute structure change | PRODUCT | TEMPLAT | VPMItemInstance | Class |   | V_Attached_TRI | from List (Oid) to Injective (Oid) |   | V_Attached_TRI | The item instance relative AssemblyRelation | The item instance relative AssemblyRelation is valued if the level is greater than 1.
 3 | 3 | 0 | Attribute structure change | PRODUCT | TEMPLAT | VPMItemInstance | Class |   | V_TRI | from List (Oid) to Injective (Oid) |   | V_TRI | The item instance relative AssemblyRelation | The item instance relative AssemblyRelation is valued if the level is greater than 1.
 3 | 3 | 0 | New attribute | PRODUCT | TEMPLAT | VPMItemInstance | Class |   | V_OverwritePosition | Simple of Boolean |   | V_OverwritePosition | The item instance quantity |

@@ -3,7 +3,7 @@ title: "Creating Tetrahedron Filler Mesh Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CAAScrBase", "CATIA", "CAAScdAniUseCases", "CAAScrJavaScript", "CAAAniTocAnalysisDocument", "CAAScdInfUseCases", "CAAScdAniTechArticles", "CAAAniMeshTetraFillerSource", "CAAInfLauchMacro", "CAAAniMeshTetraFiller"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshTetraFiller.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshTetraFiller.htmmd"
 converted: "2026-05-11T11:27:02.529704"
 ---
 
@@ -24,7 +24,7 @@ Open the Analysis document. The Analysis document is retrieved in the
 
 According to the general
 		[
-		Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.htm) structure, this macro uses some standard procedures 
+		Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures 
 		to navigate or retrieve the required objects. First, from the **Document**, 
 		we find the **Analysis Manager Object**, the **Analysis Models** and 
 		the **Mesh Manager Objects**. 
@@ -49,7 +49,7 @@ To run the macro interactively CATDocView
                 the user has to go to the Advanced Meshing Tools workbench to see the mesh.
 	
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 
@@ -78,8 +78,6 @@ parts as supports.
 
  
 
-
-
 ```vbscript
 ...
 ```
@@ -87,15 +85,20 @@ parts as supports.
 ```vbscript
 ' ----------------------------------------------------------- 
 ' Optional: allows to find the sample wherever it's installed
+```vbscript
   sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,"No Doc Path Defined"
     End If
+```
 ' ----------------------------------------------------------- 
 ' Open the Analysis document 
-sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis&quot;)
+```vbscript
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online/CAAScdAniUseCases/samples/Cube_R13_Freq.CATAnalysis&quot;)
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+
+```
 
 ...
 ```
@@ -106,25 +109,35 @@ Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ```vbscript
 ' Retrieve the Analysis Manager
+```vbscript
 Set oAnalysisManager = oAnalysisDocument.Analysis
 
 ' Retrieve the part document and product
+```
+```vbscript
 Set oAnalysisLinkedDocument = oAnalysisManager.LinkedDocuments
 Set PartDocument = oAnalysisLinkedDocuments.Item(1)
 Set product = partDocument.Product
 			
 ' Retrieve the analysis model from the list of models
+```
+```vbscript
 Set oAnalysisModels = oAnalysisManager.AnalysisModels
 Set oAnalysisModel = oAnalysisModels.Item(1)
 
 ' Retrieve mesh manager and mesh part from the list of mesh parts specifying its name
+```
+```vbscript
 Set oAnalysisMeshManager = oAnalysisModel.MeshManager
 Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
 Set oAnalysisMeshPart = oAnalysisMeshParts.Item("Surface Mesh.1")
 
 ' Create Reference from the mesh part.
+```
+```vbscript
 Set reference1 = oAnalysisManager.CreateReferenceFromObject(oAnalysisMeshPart)
 ...
+```
 ```
 
 ```vbscript
@@ -133,13 +146,17 @@ Set reference1 = oAnalysisManager.CreateReferenceFromObject(oAnalysisMeshPart)
 
 ```vbscript
 ' Add the new Tetrahedron Filler mesh part to the list of mesh parts
+```vbscript
 Set tetraFiller = oAnalysisMeshParts.Add("MHSPartGHS3D")
 
 ' Add reference previously created
+```
 tetraFiller.AddSupportFromReference NOTHING, reference1
 
+```vbscript
 ' Set the global Specifications
 tetraFiller.SetGlobalSpecification "Propagation", 1.5
+```
 tetraFiller.SetGlobalSpecification "ElementOrder", "Parabolic"
 
 'Update the mesh part

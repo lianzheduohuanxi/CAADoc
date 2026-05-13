@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CAAScrBase", "CATIA", "CAAInfRecord3", "CAAInfEdit1", "CAAScdInfUseCases", "CAAInfAddingMacroInToolbar", "CAAInfGettingStarted", "CAAInfRecord6", "CAAInfReplay2", "CAAScdInfTechArticles", "CAAInfInvoking", "CAAInfRecord7", "CAAInfGettingStartedSource", "CAAInfRecord5", "CAAInfEdit2", "CAAInfRecord4", "CAAInfRecord2", "CATIASketch3"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfGettingStarted.htm"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfGettingStarted.htmmd"
 converted: "2026-05-11T11:27:02.693495"
 ---
 
@@ -47,7 +47,7 @@ This example is divided into the following parts:
 You will then find information about the scripting languages and
 environments, and some keys for you if you are not familiar with writing macros
 in [Invoking
-CATIA from a Scripting Language](../CAAScdInfTechArticles/CAAInfInvoking.htm).
+CATIA from a Scripting Language](../CAAScdInfTechArticles/CAAInfInvoking.md).
 
 ## 1-Recording the Scenario
 
@@ -71,9 +71,12 @@ next step (Modifying the Generated Macro):
 
 Language="VBSCRIPT"
 
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
     
   
+
+```
 
   
 - Click on the** New **item of the **File **menu**, **or click on
@@ -83,6 +86,7 @@ Sub CATMain()
     **
     
 
+```vbscript
 Dim documents1 As Documents
 Set documents1 = CATIA.Documents
 
@@ -90,6 +94,8 @@ Dim partDocument1 As Document
 Set partDocument1 = documents1.Add("Part")
 
     
+    
+```
     
 
 A new document with the Part type is created. To do this, such a document
@@ -102,6 +108,7 @@ A new document with the Part type is created. To do this, such a document
     **
     
 
+```vbscript
 Dim part1 As Part
 Set part1 = partDocument1.Part
 
@@ -126,6 +133,7 @@ Set sketch1 = sketches1.Add(reference1)
 
 Dim arrayOfVariantOfDouble1(8)
 arrayOfVariantOfDouble1(0) = 0.000000
+```
 arrayOfVariantOfDouble1(1) = 0.000000
 arrayOfVariantOfDouble1(2) = 0.000000
 arrayOfVariantOfDouble1(3) = 1.000000
@@ -136,9 +144,12 @@ arrayOfVariantOfDouble1(7) = 1.000000
 arrayOfVariantOfDouble1(8) = 0.000000
 sketch1.SetAbsoluteAxisData arrayOfVariantOfDouble1
 
+```vbscript
 Dim factory2D1 As Factory2D
-Set factory2D1 = sketch1.OpenEdition()
+Set factory2D1 = sketch1.OpenEdition(#)
     
+    
+```
     
 
 A *Sketch* object named `Sketch1` is added to the *Sketches*
@@ -159,6 +170,7 @@ The `SetAbsoluteAxisData` method is used to define the
   **
     
 
+```vbscript
 Dim geometricElements1 As GeometricElements
 Set geometricElements1 = sketch1.GeometricElements
 
@@ -169,11 +181,14 @@ Dim line2D1 As AnyObject
 Set line2D1 = axis2D1.GetItem("HDirection")
 
 line2D1.ReportName = 1
+```
 
+```vbscript
 Dim line2D2 As AnyObject
 Set line2D2 = axis2D1.GetItem("VDirection")
 
 line2D2.ReportName = 2
+```
     
 
     
@@ -198,6 +213,7 @@ The axis is retrieved in the *GeometricElements* collection of the *Sketch*
   **
     
 
+```vbscript
 Dim circle2D1 As Circle2D
 Set circle2D1 = factory2D1.CreateClosedCircle(0.000000, 0.000000, 10.000000)
     
@@ -205,6 +221,7 @@ Dim point2D1 As AnyObject
 Set point2D1 = axis2D1.GetItem("Origin")
     
 circle2D1.CenterPoint = point2D1
+```
     
 circle2D1.ReportName = 3
     
@@ -233,6 +250,7 @@ The sketch editor is closed and the part udapted.
     mm and click OK. The pad is created.
     
 
+```vbscript
     Dim shapeFactory1 As Factory
     Set shapeFactory1 = part1.ShapeFactory
     
@@ -240,6 +258,7 @@ The sketch editor is closed and the part udapted.
     Set pad1 = shapeFactory1.AddNewPad(sketch1, 20.000000)
     
     part1.Update  
+```
     
 
 The `AddNewPad` method of the *ShapeFactory* object is
@@ -276,14 +295,15 @@ execution.
 
 #### References
 
-
-
 ```vbscript
 Language=&quot;VBSCRIPT&quot;
 
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
+```
 ```
 
+```vbscript
 ```vbscript
 Dim documents1 As Documents
 Set documents1 = CATIA.Documents
@@ -291,7 +311,9 @@ Set documents1 = CATIA.Documents
 Dim partDocument1 As Document
 Set partDocument1 = documents1.Add(&quot;Part&quot;)
 ```
+```
 
+```vbscript
 ```vbscript
 Dim part1 As Part
 Set part1 = partDocument1.Part
@@ -302,7 +324,9 @@ Set bodies1 = part1.Bodies
 Dim body1 As Body
 Set body1 = bodies1.Item(&quot;PartBody&quot;)
 ```
+```
 
+```vbscript
 ```vbscript
 Dim sketches1 As Sketches
 Set sketches1 = body1.Sketches
@@ -318,6 +342,7 @@ Set sketch1 = sketches1.Add(reference1)
 
 Dim arrayOfVariantOfDouble1(8)
 arrayOfVariantOfDouble1(0) = 0.000000
+```
 arrayOfVariantOfDouble1(1) = 0.000000
 arrayOfVariantOfDouble1(2) = 0.000000
 arrayOfVariantOfDouble1(3) = 1.000000
@@ -328,10 +353,13 @@ arrayOfVariantOfDouble1(7) = 1.000000
 arrayOfVariantOfDouble1(8) = 0.000000
 sketch1.SetAbsoluteAxisData arrayOfVariantOfDouble1
 
+```vbscript
 Dim factory2D1 As Factory2D
-Set factory2D1 = sketch1.OpenEdition()
+Set factory2D1 = sketch1.OpenEdition(#)
+```
 ```
 
+```vbscript
 ```vbscript
 Dim geometricElements1 As GeometricElements
 Set geometricElements1 = sketch1.GeometricElements
@@ -343,19 +371,26 @@ Dim line2D1 As AnyObject
 Set line2D1 = axis2D1.GetItem(&quot;HDirection&quot;)
 
 line2D1.ReportName = 1
+```
 
+```vbscript
 Dim line2D2 As AnyObject
 Set line2D2 = axis2D1.GetItem(&quot;VDirection&quot;)
+
+```
 
 line2D2.ReportName = 2
 ```
 
+```vbscript
 ```vbscript
 Dim circle2D1 As Circle2D
 Set circle2D1 = factory2D1.CreateClosedCircle(0.000000, 0.000000, 10.000000)
     
 Dim point2D1 As AnyObject
 Set point2D1 = axis2D1.GetItem(&quot;Origin&quot;)
+    
+```
     
 circle2D1.CenterPoint = point2D1
     
@@ -368,11 +403,14 @@ CATIASketch3.CloseEdition
 ```
 
 ```vbscript
+```vbscript
 Dim shapeFactory1 As Factory
     Set shapeFactory1 = part1.ShapeFactory
     
     Dim pad1 As Pad
     Set pad1 = shapeFactory1.AddNewPad(sketch1, 20.000000)
+    
+```
     
     part1.Update
 ```
@@ -391,26 +429,36 @@ Language=&quot;VBSCRIPT&quot;
 ```
 
 ```vbscript
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
 ...
+```
+```vbscript
 Dim refer1 As AnyObject
 Set refer1 = originElements1.PlaneXY
 
 x = 0
+```
 
+```vbscript
 Dim arrayOfVariantOfDouble1(8)
 arrayOfVariantOfDouble1(0) = 0.000000
+```
 ...
 arrayOfVariantOfDouble1(8) = 0.000000
 
 For I = 1 To 5
 
+```vbscript
   Dim sketch1 As Sketch
   Set sketch1 = sketches1.Add(refer1)
   ...
+```
+```vbscript
   Dim circle2D1 As Circle2D
   Set circle2D1 =                   _
      factory2D1.CreateClosedCircle( _
+```
                           x,        _
                           0.000000, _
                           10.000000)
@@ -421,5 +469,7 @@ For I = 1 To 5
 
   x = x + 25
 Next
+```vbscript
 End Sub
+```
 ```

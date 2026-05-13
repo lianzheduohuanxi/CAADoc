@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating a Single Patch NURBS Surface"
-category: "use case"
+category: use-case case"
 module: "CAATopUseCases"
 tags: ["CAAGemBrowser", "CATICGMObject", "CAATopCreateHelix", "CAATopOverview", "CAATopologicalOperators"]
-source_file: "Doc/online/CAATopUseCases/CAATopCreateHelix.htm"
+source_file: "Doc/online/CAATopUseCases/CAATopCreateHelix.htmmd"
 converted: "2026-05-11T17:31:50.697467"
 ```
 
@@ -79,10 +79,10 @@ This NCGM file can be displayed using the CAAGemBrowser use case.
 This NCGM file can be displayed using the CAAGemBrowser use case.
 The CAATopCreateHelix use case is made of a main named CAATopCreateHelix .cpp located in the CAATopCreateHelix .m module of the CAATopologicalOperators.edu framework:
 
-Windows | `InstallRootDirectory\CAATopologicalOperators.edu\`CAATopCreateHelix `.m\`
+Windows | `InstallRootDirectory/CAATopologicalOperators.edu/`CAATopCreateHelix `.m/`
 
 The CAATopCreateHelix use case is made of a main named CAATopCreateHelix .cpp located in the CAATopCreateHelix .m module of the CAATopologicalOperators.edu framework:
-Windows | `InstallRootDirectory\CAATopologicalOperators.edu\`CAATopCreateHelix `.m\`
+Windows | `InstallRootDirectory/CAATopologicalOperators.edu/`CAATopCreateHelix `.m/`
 Unix | `InstallRootDirectory/CAATopologicalOperators.edu/`CAATopCreateHelix `.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -94,13 +94,13 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
  The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
 
 The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
-    CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**() ;
+    CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**(#) ;
 ```vbscript
     if (NULL==piGeomFactory) return (1);
 
 ```
 
-    CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration();
+    CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration(#);
     CATTopData topdata(pConfig);
 
 ---
@@ -133,17 +133,23 @@ you get the helix below:
 [Top]
 #### Creating an Helix with a Variable Pitch and a Variable Radius
 
+```vbscript
 To create an helix with a variable pitch and a variable radius (with a linear or not linear variation), you must use the CATHelix::Set API which takes CATLaws as arguments. Prior to calling this method, you must:
 
 To create an helix with a variable pitch and a variable radius (with a linear or not linear variation), you must use the CATHelix::Set API which takes CATLaws as arguments. Prior to calling this method, you must:
   1. Initialize the data for the helix to be created. To do this, use the CATGeoFactory::CreateHelix method
+```
+```vbscript
   2. Compute the length of the initial helix by using the CATDynMassProperties1D operator. A suitable length is required for the CATLaw creation. If you pass an inconsistent length to the CATLaw and CATHelix::Set method, you will get a throw.
 
 ##### Creating the Radius Law
+```
 
 1. Initialize the data for the helix to be created. To do this, use the CATGeoFactory::CreateHelix method
+```vbscript
 2. Compute the length of the initial helix by using the CATDynMassProperties1D operator. A suitable length is required for the CATLaw creation. If you pass an inconsistent length to the CATLaw and CATHelix::Set method, you will get a throw.
 A linear radius law is used as it can be used both for a constant and a linear law.
+```
 
     // (c) - create the radius linear law: radius is 100
     CATLaw * radiusLaw = ((CATLaw*)(piGeomFactory -> CreateLinearLaw(0.0, 100.0, theLength1, 100)));
@@ -269,7 +275,7 @@ ofstream filetowrite(pfileName, ios::binary ) ;
     #endif
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
-       filetowrite.close();
+       filetowrite.close(#);
      }
 
      _//

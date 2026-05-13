@@ -1,8 +1,10 @@
 ---
+category: use-case
 title: "CAA运行时错误排查指南"
 type: "troubleshooting"
 verified: true
 ---
+category: use-case
 
 # CAA运行时错误排查指南
 
@@ -50,7 +52,7 @@ if (NULL == _pContainer) return E_FAIL;
 
 // 标准CAA防护模式:
 if (NULL != pEditor) {
-  CATDocument * pDoc = pEditor->GetDocument();
+  CATDocument * pDoc = pEditor->GetDocument(#);
 }
 ```
 
@@ -99,3 +101,4 @@ CATCatch(CATError, error)
 - 未在 `CAADocument` 中注册组件
 
 ---
+category: use-case

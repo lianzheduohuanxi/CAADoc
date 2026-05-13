@@ -4,13 +4,13 @@ title: "How to Associate Topology With Geometry"
 category: "tutorial"
 module: "CAATobTechArticles"
 tags: ["CATIntCurve"]
-source_file: "Doc/online/CAATobTechArticles/TopoCreate.htm"
+source_file: "Doc/online/CAATobTechArticles/TopoCreate.htmmd"
 converted: "2026-05-11T17:33:45.903936"
 ```
 
 ---
 tags: ["CATIntCurve"]
-source_file: "Doc/online/CAATobTechArticles/TopoCreate.htm"
+source_file: "Doc/online/CAATobTechArticles/TopoCreate.htmmd"
 converted: "2026-05-11T17:33:45.903936"
 Geometric Modeler |  Topology |  How to Associate Topology With Geometry _Rules Between Topological and Geometric Objects_
 
@@ -116,28 +116,28 @@ Note: A CATEdgeCurve cannot be directly created. Only its derived types (CATSimC
     Limit.GetHigh(Param);
     CATPointOnEdgeCurve *
                        Poec2 = factory->CreatePointOnEdgeCurve(Line,Param,SimCurve);
-    CATMacroPoint      Macro1= factory->CreateMacroPoint();
+    CATMacroPoint      Macro1= factory->CreateMacroPoint(#);
     Macro1->Append(Poec1);
-    CATMacroPoint      Macro2= factory->CreateMacroPoint();
+    CATMacroPoint      Macro2= factory->CreateMacroPoint(#);
     Macro2->Append(Poec2);
 
   4. **Vertex Creation; Association with the Geometry**
 
-    CATVertex * Vertex1=body->CreateVertex();
+    CATVertex * Vertex1=body->CreateVertex(#);
     Vertex1->SetGeometry(Macro1);
-    CATVertex * Vertex2=body->CreateVertex();
+    CATVertex * Vertex2=body->CreateVertex(#);
     Vertex2->SetGeometry(Macro2);
 
   5. **CATEdge Creation, Association with the Geometry, Boundary Definition.**
 
-    CATEdge *   Edge= body->CreateEdge();
+    CATEdge *   Edge= body->CreateEdge(#);
     Edge->SetCurve(SimCurve);
     Edge->AddBoundingCell(Vertex1,CATSideLeft,NULL,Poec1);
     Edge->AddBoundingCell(Vertex2,CATSideLeft,NULL,Poec2);
 
   6. **Wire Creation.**
 
-    CATWire Wire=body->CreateWire();
+    CATWire Wire=body->CreateWire(#);
 
   7. **Append the Edge into the Wire.**
 

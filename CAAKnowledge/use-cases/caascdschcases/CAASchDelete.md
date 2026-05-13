@@ -4,7 +4,7 @@ title: "Deleting Schematic Objects"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAADoc", "CAASCH_Delete01", "CAAScdSchUseCases", "CAASchDelete", "CATIA", "CAASchAppBase", "CAASCHEDUApp", "CATIASchRoute", "CAASchPlatformModeler", "CATIASchAppConnectable", "CAASchAppUtilities"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchDelete.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchDelete.htmmd"
 converted: "2026-05-11T17:31:51.359152"
 ```
 
@@ -29,9 +29,9 @@ converted: "2026-05-11T17:31:51.359152"
   * Setup:
 
 >   1. Build CAASchAppBase.m and CAASchAppUtilities.m, located in CAASchPlatformModeler.edu (RADE is required).
->   2. Copy generated DLLs, CAASchAppBase.dll and CAASchAppUtilities.m, respectively, to the run-time environment folder "intel_a\code\bin."
->   3. Copy CAASCHEDUApp.CATfct, located CAASchPlatformModeler.edu\CNext\resources\graphic, to the run-time environment folder "intel_a\resources\graphic."
->   4. Copy CAASchPlatformModeler.edu\CNext\code\dictionary\CAASchPlatformModeler.edu.dico to the run-time environment folder "intel_a\code\dictionary."
+>   2. Copy generated DLLs, CAASchAppBase.dll and CAASchAppUtilities.m, respectively, to the run-time environment folder "intel_a/code/bin."
+>   3. Copy CAASCHEDUApp.CATfct, located CAASchPlatformModeler.edu/CNext/resources/graphic, to the run-time environment folder "intel_a/resources/graphic."
+>   4. Copy CAASchPlatformModeler.edu/CNext/code/dictionary/CAASchPlatformModeler.edu.dico to the run-time environment folder "intel_a/code/dictionary."
 >
 
 [ CAASchDelete.CATScript i](CAASchDeleteSource.md)s located in the CAAScdSchUseCases module. [Execute macro](macros/CAASchDelete.CATScript) (Windows only).
@@ -56,22 +56,30 @@ The macro first loads CAASCH_Delete01.CATProduct. |     ...
 ```
 
 ```vbscript
+```vbscript
     Dim sFilePath
+```vbscript
+```
 ```vbscript
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
+```
 
 ```
 
-            "online\CAAScdSchUseCases\samples\CAASCH_Delete01.CATProduct")
+            "online/CAAScdSchUseCases/samples/CAASCH_Delete01.CATProduct")
 
 ```vbscript
+```vbscript
 Dim sFilePath
+```vbscript
+```
 ```vbscript
 ```vbscript
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
+```
 ```
 
 ```
@@ -95,15 +103,23 @@ Next, the macro acquires the schematic root object from the document. The schema
 ```
 
 ```vbscript
+```vbscript
     Dim objPrdRoot As Product
+```vbscript
+```
 ```vbscript
 ```vbscript
     Dim objSchRoot As SchematicRoot
     If ( Not ( objSchDoc Is Nothing ) ) Then
+```
+```vbscript
       Set objPrdRoot = objSchDoc.Product
       If ( Not ( objPrdRoot Is Nothing ) ) Then
+```
+```vbscript
         Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
       End If
+```
     End If
 ```
 
@@ -120,8 +136,10 @@ Using the GetSchBaseFactory method, a SchBaseFact interface handle is obtained. 
     ...
 ```vbscript
 ```vbscript
+```vbscript
     Dim objSchBaseFact As SchBaseFactory
 
+```
 ```
 
 ```
@@ -130,7 +148,9 @@ Using the GetSchBaseFactory method, a SchBaseFact interface handle is obtained. 
 ```vbscript
     If ( Not ( objSchRoot Is Nothing ) ) Then
 
+```vbscript
        Set objSchBaseFact = objSchRoot.GetSchBaseFactory
+```
 ```
 
 ```
@@ -153,8 +173,10 @@ The macro finds the component to be deleted in the private FindComponentInst fun
 
 ```vbscript
 ```vbscript
+```vbscript
           Set objSchComp = FindComponentInst (objSchRoot)
 
+```
 ```
 
 ```
@@ -196,7 +218,9 @@ The word "inserted" in the comment below is used to describe a situation where a
 ```
 
 ```vbscript
+```vbscript
        Set objLRoutes = objSchRoot.GetRoutes
+```
 ```
 
    ...
@@ -206,8 +230,10 @@ The word "inserted" in the comment below is used to describe a situation where a
 This macro uses a private FindOpenConnector function to find the 2 unconnected ends of the 2 routes that are connected to each ends of the component before it is deleted. With these 2 ends, the Concatenate method of the SchRoute interface is then called to connect the 2 route into one. Note that the input SchRoute interface handle (in this case, the objRoute2) will be deleted implicitly by the Concatenate method.
 
 ```vbscript
+```vbscript
        Set objLRoutes = objSchRoot.GetRoutes
 ```vbscript
+```
        If ( Not ( objLRoutes Is Nothing ) ) Then
 ```
 
@@ -216,7 +242,10 @@ This macro uses a private FindOpenConnector function to find the 2 unconnected e
           strMessage = strMessage & "after deleting an inserted component "
           strMessage = strMessage & " = " & intNbRouteAfter & vbCr
 
+```vbscript
           Dim  objRoute1 As SchRoute
+```vbscript
+```
 ```vbscript
 ```vbscript
           Dim  objRoute2 As SchRoute
@@ -228,27 +257,34 @@ This macro uses a private FindOpenConnector function to find the 2 unconnected e
           Dim  objAppRCntr2 As SchAppConnector
 
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Dim  objAppRCntr1 As SchAppConnector
+```vbscript
+```
 ```vbscript
 ```vbscript
 Dim  objAppRCntr2 As SchAppConnector
           If  ( intNbRouteAfter > 0 ) Then
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 ```vbscript
              Set objRoute1 = objLRoutes.Item (1, "CATIASchRoute")
 
+```
 ```
 
 ```
@@ -256,7 +292,9 @@ Dim  objAppRCntr2 As SchAppConnector
 ```vbscript
              If ( Not ( objRoute1 Is Nothing ) ) Then
 ```vbscript
+```vbscript
                 Set objRCntbl1 = objSchRoot.GetInterface ( _
+```
 ```
 
 ```
@@ -266,14 +304,20 @@ Dim  objAppRCntr2 As SchAppConnector
 If ( Not ( objRoute1 Is Nothing ) ) Then
 ```vbscript
 ```vbscript
+```vbscript
 Set objRCntbl1 = objSchRoot.GetInterface ( _
                 If ( Not ( objRCntbl1 Is Nothing ) ) Then
+```
+```vbscript
                    Set objAppRCntr1 = FindOpenConnector (objSchRoot,objRCntbl1)
                    Set objRoute2 = objLRoutes.Item (2, "CATIASchRoute")
                 End If
+```
              End If
              If ( Not ( objRoute2 Is Nothing ) ) Then
+```vbscript
                 Set objRCntbl2 = objSchRoot.GetInterface ( _
+```
 ```
 
 ```
@@ -290,10 +334,14 @@ End If
 If ( Not ( objRoute2 Is Nothing ) ) Then
 ```vbscript
 ```vbscript
+```vbscript
 Set objRCntbl2 = objSchRoot.GetInterface ( _
                 If ( Not ( objRCntbl2 Is Nothing ) ) Then
+```
+```vbscript
                    Set objAppRCntr2 = FindOpenConnector (objSchRoot,objRCntbl2)
                 End If
+```
              End If
 
 ```
@@ -308,8 +356,10 @@ Set objRCntbl2 = objSchRoot.GetInterface ( _
                    Not ( objAppRCntr1 Is Nothing ) And _
                    Not ( objAppRCntr2 Is Nothing ) ) Then
 ```vbscript
+```vbscript
                 Set objRoute2 = objLRoutes.Item (2, "CATIASchRoute")
                 If ( Not ( objRoute2 Is Nothing ) ) Then
+```
 ```
 
 ```
@@ -320,7 +370,9 @@ Set objRCntbl2 = objSchRoot.GetInterface ( _
                     ...
 Not ( objAppRCntr2 Is Nothing ) ) Then
 ```vbscript
+```vbscript
 Set objRoute2 = objLRoutes.Item (2, "CATIASchRoute")
+```
 ```
 
 If ( Not ( objRoute2 Is Nothing ) ) Then

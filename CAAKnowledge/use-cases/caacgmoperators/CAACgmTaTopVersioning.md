@@ -4,13 +4,13 @@ title: "Understanding the Versioning of the Topological Operators"
 category: "use-case"
 module: "CAACgmOperators"
 tags: []
-source_file: "Doc/online/CAACgmOperators/CAACgmTaTopVersioning.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmTaTopVersioning.htmmd"
 converted: "2026-05-11T17:33:48.710152"
 ```
 
 ---
 tags: []
-source_file: "Doc/online/CAACgmOperators/CAACgmTaTopVersioning.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmTaTopVersioning.htmmd"
 converted: "2026-05-11T17:33:48.710152"
 Understanding the Versioning of the Topological Operators
 
@@ -40,7 +40,7 @@ To create an open configuration (a configuration for the current software level)
 
     // Defines an open configuration for the operator
 To create an open configuration (a configuration for the current software level), use the default constructor. Notice that you must use the `new` operator.
-    CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration();
+    CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration(#);
 
 ```vbscript
 If you use feature applications, please refer to their documentation to see how to retrieve the configuration associated with a given feature. The configuration must be released after use in the following way:
@@ -48,15 +48,15 @@ If you use feature applications, please refer to their documentation to see how 
 ```
 
     // Releases the configuration after the deletion of the operators
-CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration();
+CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration(#);
 If you use feature applications, please refer to their documentation to see how to retrieve the configuration associated with a given feature. The configuration must be released after use in the following way:
-    pConfig->**Release**();
+    pConfig->**Release**(#);
 
 The CATTopData Class Once created, the configuration instance is given to the topological operator to inform it of the level of software it must use during its run. The software configuration is not given directly to the operator, but by the mean of the class _CATTopData_ that contains:
 
     * A pointer to the configuration, that must be not `NULL`.
     * A pointer to the journal [1] of the operator. This pointer can be `NULL` : in this case, the journal is not filled.
-pConfig->**Release**();
+pConfig->**Release**(#);
 The CATTopData Class Once created, the configuration instance is given to the topological operator to inform it of the level of software it must use during its run. The software configuration is not given directly to the operator, but by the mean of the class _CATTopData_ that contains:
 We give here an example for creating a `CATTopSkin` operator, that is fully commented in _Overview of the topological operators_ [2].
 

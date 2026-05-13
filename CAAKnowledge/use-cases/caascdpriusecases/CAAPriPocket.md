@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdPriUseCases"
 tags: ["CAAScrBase", "CATIA", "CAAScrJavaScript", "CAAScdInfUseCases", "CAAPriPocket", "CAAScdPriUseCases", "CAAInfLauchMacro", "CAAPriPocketSource", "CAAlink"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriPocket.htm"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriPocket.htmmd"
 converted: "2026-05-11T11:27:02.727402"
 ---
 
@@ -44,7 +44,7 @@ The `FirstLimit` property of the *Pocket* object is set
     
   
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 
@@ -64,28 +64,34 @@ This use case has shown how to create and modify a pocket using macros.
 
 *Copyright  2001, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 ...
 ' ------------
 ' Get the part
 ' ------------
+```vbscript
 Dim oPart As Part
 Set oPart = CATIA.ActiveDocument.Part
+
+```
 
 ' ------------
 ' Get the part body in the part
 ' ------------
+```vbscript
 Dim oBody As Body
 Set oBody = oPart.Bodies.Item  ( &quot;PartBody&quot; ) 
+
+```
 
 ' ------------
 ' Get the sketch in the body
 ' ------------
+```vbscript
 Dim oSketch As Sketch
 Set oSketch = oBody.Sketches.Item  ( &quot;Sketch.1&quot; ) 
    ...
+```
 ```
 
 ```vbscript
@@ -93,9 +99,12 @@ Set oSketch = oBody.Sketches.Item  ( &quot;Sketch.1&quot; )
 ' ------------
 ' Create the pocket with a default first limit
 ' ------------
+```vbscript
 MsgBox &quot;Click OK to create the pocket.&quot;
 Dim oPocket As Pocket
 Set oPocket= oPart.ShapeFactory.AddNewPocket    ( oSketch, 20.000000 ) 
+
+```
 
 ' ------------
 ' Update the part
@@ -109,8 +118,10 @@ oPart.Update
 ' ------------
 ' Define the pocket first limit
 ' ------------
+```vbscript
 MsgBox &quot;Click OK to set the pocket first limit to 30mm.&quot;
 oPocket.FirstLimit.Dimension.Value = 30.000000
+```
 
 ' ------------
 ' Update the part

@@ -4,13 +4,13 @@ title: "Creating a Point on a Wire"
 category: "use case"
 module: "CAABtoUseCases"
 tags: ["CAATopComputePointOnWire", "CATICGMObject", "CAABasicTopoOpe", "CAAGemBrowser"]
-source_file: "Doc/online/CAABtoUseCases/CAABtoPointOnWire.htm"
+source_file: "Doc/online/CAABtoUseCases/CAABtoPointOnWire.htmmd"
 converted: "2026-05-11T17:33:46.169729"
 ```
 
 ---
 tags: ["CAATopComputePointOnWire", "CATICGMObject", "CAABasicTopoOpe", "CAAGemBrowser"]
-source_file: "Doc/online/CAABtoUseCases/CAABtoPointOnWire.htm"
+source_file: "Doc/online/CAABtoUseCases/CAABtoPointOnWire.htmmd"
 converted: "2026-05-11T17:33:46.169729"
 Geometric Modeler |  Topology |  Creating a Point on a Wire _A topological operator to create a point on a wire_
 
@@ -45,7 +45,7 @@ What You Will Learn With This Use Case This use case is intended to help you use
 
 Note: Unlike in most topological operators, there is no GetResult method whereby you access a CATBody. There is no BASIC or ADVANCED mode to be defined either. [Top] The CAATopComputePointOnWire Use Case CAATopComputePointOnWire is a use case of the CAABasicTopoOpe.edu framework that illustrates the Basic Topological Operators framework capabilities. [Top] What Does CAATopComputePointOnWire Do Fig. 1: The Geometry of the CAATopComputePointOnWire Use Case ![](images/CAAComputePointOnWire.gif) | This use case creates a CATMathPoint at a ratio of 0.5 from the start extremity of the CATWire. To visualize this point a cartesian point is created at the CATMathPoint location.
 
-[Top] How to Launch CAATopComputePointOnWire To launch CAATopComputePointOnWire, you will need to set up the build time environment, then compile CAATopComputePointOnWire.m along with its prerequisites, set up the run time environment, and then execute the use case [3]. If you simply type CAATopComputePointOnWire with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: With Windows CAATopComputePointOnWire `e/PointOnWire.NCGM` With UNIX CAATopComputePointOnWire `/u/PointOnWire.NCGM` This NCGM file can be displayed using the CAAGemBrowser use case. [Top] Where to Find the CAATopComputePointOnWire Code The CAATopComputePointOnWire use case is made of a main named CAATopComputePointOnWire.cpp located in the CAATopComputePointOnWire.m module of the CAABasicTopoOpe.edu framework: Windows | `InstallRootDirectory\CAABasicTopoOpe.edu\CAATopComputePointOnWire.m\`
+[Top] How to Launch CAATopComputePointOnWire To launch CAATopComputePointOnWire, you will need to set up the build time environment, then compile CAATopComputePointOnWire.m along with its prerequisites, set up the run time environment, and then execute the use case [3]. If you simply type CAATopComputePointOnWire with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: With Windows CAATopComputePointOnWire `e/PointOnWire.NCGM` With UNIX CAATopComputePointOnWire `/u/PointOnWire.NCGM` This NCGM file can be displayed using the CAAGemBrowser use case. [Top] Where to Find the CAATopComputePointOnWire Code The CAATopComputePointOnWire use case is made of a main named CAATopComputePointOnWire.cpp located in the CAATopComputePointOnWire.m module of the CAABasicTopoOpe.edu framework: Windows | `InstallRootDirectory/CAABasicTopoOpe.edu/CAATopComputePointOnWire.m/`
 ---|---
 Note: Unlike in most topological operators, there is no GetResult method whereby you access a CATBody. There is no BASIC or ADVANCED mode to be defined either. [Top] The CAATopComputePointOnWire Use Case CAATopComputePointOnWire is a use case of the CAABasicTopoOpe.edu framework that illustrates the Basic Topological Operators framework capabilities. [Top] What Does CAATopComputePointOnWire Do Fig. 1: The Geometry of the CAATopComputePointOnWire Use Case ![](images/CAAComputePointOnWire.gif) | This use case creates a CATMathPoint at a ratio of 0.5 from the start extremity of the CATWire. To visualize this point a cartesian point is created at the CATMathPoint location.
 Unix | `InstallRootDirectory/CAABasicTopoOpe.edu/CAATopComputePointOnWire.m/`
@@ -59,7 +59,7 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 [Top] Creating the Geometry Factory The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject (and the curves and surfaces in particular) [1]. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
 
 4. Writing the Model and Closing the Factory
-    CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**() ;
+    CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**(#) ;
 ```vbscript
     if (NULL==piGeomFactory) return (1);
 
@@ -70,11 +70,11 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
     _// Define an open configuration for the operator_
 _// Define an open configuration for the operator_
-    CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration();
+    CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration(#);
 
     /_/ Define the data of the operator: configuration - no journal_
 _// Define an open configuration for the operator_
-CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration();
+CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration(#);
     CATTopData topdata(pConfig);
     _// Define the limits and orientations of the curves to be specified_
     CATCrvLimits CurLim[1];
@@ -109,12 +109,12 @@ CATComputePointOnWire* pPointOnWire = ::CATCreateComputePointOnWire(piGeomFactor
 CATComputePointOnWire* pPointOnWire = ::CATCreateComputePointOnWire(piGeomFactory,
 pWireBody,  0.5);
     CATMathPoint oPointOnWire;
-    oPointOnWire->Run();
+    oPointOnWire->Run(#);
     pPointOnWire->GetMathPoint(oPointOnWire);
 
 ---
 CATMathPoint oPointOnWire;
-oPointOnWire->Run();
+oPointOnWire->Run(#);
 pPointOnWire->GetMathPoint(oPointOnWire);
 To visualize the created CATMathPoint, a cartesian point is created. [Top] Writing the Model and Closing the Factory To save the model in a file, the `::CATSaveCGMContainer` global function is used. Notice that in the use case, the save is conditioned by an input parameter representing the file inside which the model must be saved. The use case ends with the closure of the geometry factory, done by the `::CATCloseCGMContainer` global function.
 
@@ -137,7 +137,7 @@ ofstream filetowrite(pfileName, ios::binary ) ;
     #endif
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
-       filetowrite.close();
+       filetowrite.close(#);
      }
 
      _//

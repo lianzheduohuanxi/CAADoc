@@ -4,13 +4,13 @@ title: "CAAInfFileAccess.CATScript"
 category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CATIA", "CAAInfFileAccess"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfFileAccessSource.htm"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfFileAccessSource.htmmd"
 converted: "2026-05-11T17:31:52.364041"
 ```
 
 ---
 tags: ["CATIA", "CAAInfFileAccess"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfFileAccessSource.htm"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfFileAccessSource.htmmd"
 converted: "2026-05-11T17:31:52.364041"
     Option Explicit
 
@@ -34,18 +34,24 @@ converted: "2026-05-11T17:31:52.364041"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
 
+```
 ```
 
 ```vbscript
+```vbscript
         Dim sLF As String
 ```vbscript
+```
 ```vbscript
         sLF = Chr(10)
 
+```vbscript
         Dim sMessage As String
         sMessage = InputBox ("Enter a message", "Message", "Hello World")
+```
 ```
 
 ```
@@ -57,30 +63,42 @@ converted: "2026-05-11T17:31:52.364041"
 ```vbscript
         ' ------------------------------------------
         ' Get the file system object
+```vbscript
         Dim oFileSys As FileSystem
         Set oFileSys = CATIA.FileSystem
         ' ------------------------------------------
+```
         ' Retrieve a folder for temporary files
+```vbscript
         Dim sTmpPath As String
         sTmpPath=CATIA.SystemService.Environ("CATTemp")
         If (Not oFileSys.FolderExists(sTmpPath)) Then
+```
+```vbscript
           Err.Raise 9999,,"No Tmp Path Defined"
         End If
+```
         ' ------------------------------------------
         ' Delete possibly existing input and output files
+```vbscript
         Dim sFilOu As String ' Output file full path
         sFilOu = CATIA.FileSystem.ConcatenatePaths(sTmpPath, "caatmpfilou.txt")
         If (oFileSys.FileExists(sFilou)) Then
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Dim sFilOu As String ' Output file full path
 ```vbscript
+```
+```vbscript
 sFilOu = CATIA.FileSystem.ConcatenatePaths(sTmpPath, "caatmpfilou.txt")
+```
 ```
 
 ```
@@ -91,13 +109,17 @@ If (oFileSys.FileExists(sFilou)) Then
 ```vbscript
         End If
 
+```vbscript
         Dim sFilIn As String ' Intput file full path
+```
 ```
 
 ```vbscript
 ```vbscript
+```vbscript
         sFilIn = CATIA.FileSystem.ConcatenatePaths(sTmpPath, "caatmpfilin.txt")
         If (oFileSys.FileExists(sFilIn)) Then
+```
 ```
 
 ```
@@ -111,22 +133,28 @@ If (oFileSys.FileExists(sFilou)) Then
 ```vbscript
         ' ---------------------------------------
         ' Create file FilIn
+```vbscript
         Dim oFilIn As File
         Set oFilIn = oFileSys.CreateFile(sFilIn, FALSE)
         Dim oStream As TextStream
         Set oStream = oFilIn.OpenAsTextStream("ForWriting")
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Set oFilIn = oFileSys.CreateFile(sFilIn, FALSE)
+```vbscript
+```
 ```vbscript
 ```vbscript
 Dim oStream As TextStream
 Set oStream = oFilIn.OpenAsTextStream("ForWriting")
+```
 ```
 
 ```
@@ -153,11 +181,13 @@ Set oStream = oFilIn.OpenAsTextStream("ForWriting")
 ```vbscript
         ' ---------------------------------------
         ' Get the result from the output file
+```vbscript
         Dim oFilOu As File
         Set oFilOu = oFileSys.GetFile(sFilOu)
         Set oStream = oFilOu.OpenAsTextStream("ForReading")
 
         Dim sBuffer As String
+```
 ```
 
 ```
@@ -184,6 +214,8 @@ Loop
         msgbox sMessage
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

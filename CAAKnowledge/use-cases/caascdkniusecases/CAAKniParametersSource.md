@@ -3,14 +3,16 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdKniUseCases"
 tags: ["CAAKniParameters", "CAAScrBase", "CATIA", "CAAScdKniUseCases"]
-source_file: "Doc/online/CAAScdKniUseCases/CAAKniParametersSource.htm"
+source_file: "Doc/online/CAAScdKniUseCases/CAAKniParametersSource.htmmd"
 converted: "2026-05-11T11:27:02.705012"
 ---
 
 Option Explicit
 ' COPYRIGHT DASSAULT SYSTEMES 2001
+```vbscript
 Dim Language as String
 Language="VBScript"
+```
 
 ' ***********************************************************************
 '   Purpose:      This macro:
@@ -44,32 +46,46 @@ Language="VBScript"
 '   revision V5R13
 ' ***********************************************************************
 
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
     ' ----------------------------------------------------------- 
+```
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
+```vbscript
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,"No Doc Path Defined"
     End If
+```
     ' ----------------------------------------------------------- 
 
     ' Open the Part document 
+```vbscript
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
-		"online\CAAScdKniUseCases\samples\KwrMacroHiddenParam.CATPart")
+		"online/CAAScdKniUseCases/samples/KwrMacroHiddenParam.CATPart")
+```
+```vbscript
     Dim oDoc As Document
     set oDoc = CATIA.Documents.Open(sFilePath)
 
  ' Set the CATIA popup file alerts to False
  ' It prevents to stop the macro at each alert during its execution
+```
+```vbscript
  CATIA.DisplayFileAlerts = False
+
+```
 
  ' Retrieve your active document - CATIA is your application 
  ' You get the active document by using the ActiveDocument property
  ' on your application object
+```vbscript
  Dim oActiveDoc As Document 
  Set oActiveDoc = CATIA.ActiveDocument 
+ 
+```
  
  ' Check whether the document is a CATPart
  ' InStr is a standard VB function
@@ -77,16 +93,20 @@ Sub CATMain()
 
     ' Retrieve the collection object which contains
     ' all the document parameters
+```vbscript
     Dim oParams As Parameters 
     Set oParams = oActiveDoc.Part.Parameters 
 
     ' Declare the variables to be used in the message box
+```
     ' which displays the hidden parameters
+```vbscript
     Dim strRel0 As String
     Dim strRel1 As String
     Dim strRel2 As String
     Dim HiddenNumber As Integer
     strRel0 = "Name   Value   Comments"
+```
     strRel1 = "Here is the list of hidden parameters" & vbCrLf & strRel0
  
     ' Scan the parameter list,
@@ -97,8 +117,10 @@ Sub CATMain()
     ' Note about the BoolParam type test:
     ' The statement oParams.Item(i).Value = "true" raises an error
     ' whenever the parameter is not a boolean
+```vbscript
     Dim i As Integer
     For i = 1 To oParams.Count
+```
        if (oParams.Item(i).Hidden = "True") Then
          if TypeName(oParams.Item(i)) = "BoolParam" Then
          strRel1 = strRel1 & vbCrLf & oParams.Item(i).Name &_
@@ -122,25 +144,34 @@ Sub CATMain()
     vbCrLf & "  2 ) SELECT THE SHOW COMMAND FROM THE CONTEXTUAL MENU" &_
     vbCrLf & vbCrLf & "THEN RE-RUN THE MACRO "
     If (HiddenNumber > 0) Then
+```vbscript
        MsgBox strRel1  
        MsgBox strRel2 
     Else 
+```
+```vbscript
        MsgBox "There are no hidden parameters in this document"
     End If
+```
 
 Else 
+```vbscript
    MsgBox "The active document must be a CATPart"
 End If
+```
 
+```vbscript
 End Sub
 
-
+```
 
 ```vbscript
 Option Explicit
 ' COPYRIGHT DASSAULT SYSTEMES 2001
+```vbscript
 Dim Language as String
 Language="VBScript"
+```
 
 ' ***********************************************************************
 '   Purpose:      This macro:
@@ -174,32 +205,46 @@ Language="VBScript"
 '   revision V5R13
 ' ***********************************************************************
 
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
     ' ----------------------------------------------------------- 
+```
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
+```vbscript
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,"No Doc Path Defined"
     End If
+```
     ' ----------------------------------------------------------- 
 
     ' Open the Part document 
+```vbscript
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
-		"online\CAAScdKniUseCases\samples\KwrMacroHiddenParam.CATPart")
+		"online/CAAScdKniUseCases/samples/KwrMacroHiddenParam.CATPart")
+```
+```vbscript
     Dim oDoc As Document
     set oDoc = CATIA.Documents.Open(sFilePath)
 
  ' Set the CATIA popup file alerts to False
  ' It prevents to stop the macro at each alert during its execution
+```
+```vbscript
  CATIA.DisplayFileAlerts = False
+
+```
 
  ' Retrieve your active document - CATIA is your application 
  ' You get the active document by using the ActiveDocument property
  ' on your application object
+```vbscript
  Dim oActiveDoc As Document 
  Set oActiveDoc = CATIA.ActiveDocument 
+ 
+```
  
  ' Check whether the document is a CATPart
  ' InStr is a standard VB function
@@ -207,16 +252,20 @@ Sub CATMain()
 
     ' Retrieve the collection object which contains
     ' all the document parameters
+```vbscript
     Dim oParams As Parameters 
     Set oParams = oActiveDoc.Part.Parameters 
 
     ' Declare the variables to be used in the message box
+```
     ' which displays the hidden parameters
+```vbscript
     Dim strRel0 As String
     Dim strRel1 As String
     Dim strRel2 As String
     Dim HiddenNumber As Integer
     strRel0 = "Name   Value   Comments"
+```
     strRel1 = "Here is the list of hidden parameters" & vbCrLf & strRel0
  
     ' Scan the parameter list,
@@ -227,8 +276,10 @@ Sub CATMain()
     ' Note about the BoolParam type test:
     ' The statement oParams.Item(i).Value = "true" raises an error
     ' whenever the parameter is not a boolean
+```vbscript
     Dim i As Integer
     For i = 1 To oParams.Count
+```
        if (oParams.Item(i).Hidden = "True") Then
          if TypeName(oParams.Item(i)) = "BoolParam" Then
          strRel1 = strRel1 & vbCrLf & oParams.Item(i).Name &_
@@ -252,15 +303,23 @@ Sub CATMain()
     vbCrLf & "  2 ) SELECT THE SHOW COMMAND FROM THE CONTEXTUAL MENU" &_
     vbCrLf & vbCrLf & "THEN RE-RUN THE MACRO "
     If (HiddenNumber &gt; 0) Then
+```vbscript
        MsgBox strRel1  
        MsgBox strRel2 
     Else 
+```
+```vbscript
        MsgBox "There are no hidden parameters in this document"
     End If
+```
 
 Else 
+```vbscript
    MsgBox "The active document must be a CATPart"
 End If
+```
 
+```vbscript
 End Sub
+```
 ```

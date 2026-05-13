@@ -1,17 +1,17 @@
 ---
 ```vbscript
 title: "Documents Object"
-category: "use-case"
+category: tech-article
 module: "CAAScdInfTechArticles"
 tags: ["CATIA"]
-source_file: "Doc/online/CAAScdInfTechArticles/CAAInfObjDocument.htm"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfObjDocument.htmmd"
 converted: "2026-05-11T17:31:52.427065"
 ```
 
 ---
 # Documents Object
 
-source_file: "Doc/online/CAAScdInfTechArticles/CAAInfObjDocument.htm"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfObjDocument.htmmd"
 converted: "2026-05-11T17:31:52.427065"
  See Also | Use Cases | Properties | Methods
 

@@ -1,11 +1,11 @@
 ---
 ```vbscript
 title: "ObjectSpecsModeler Framework Modifications in V5R19"
-category: "use-case"
+category: use-case
 module: "CAACenAPIChangesR19"
 version: "V5R19"
 tags: []
-source_file: "Doc/online/CAACenAPIChangesR19/ObjectSpecsModeler.htm"
+source_file: "Doc/online/CAACenAPIChangesR19/ObjectSpecsModeler.htmmd"
 converted: "2026-05-11T17:33:51.591709"
 ```
 

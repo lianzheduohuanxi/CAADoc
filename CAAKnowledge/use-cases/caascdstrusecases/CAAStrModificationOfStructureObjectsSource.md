@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CAAScrBase", "CATIA", "CAAStrModificationOfStructureObjects"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfStructureObjectsSource.htm"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfStructureObjectsSource.htmmd"
 converted: "2026-05-11T11:27:02.583775"
 ---
 
@@ -19,7 +19,8 @@ converted: "2026-05-11T11:27:02.583775"
 '//
 '//============================================================================
 
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
 
     Dim doc As Document
 
@@ -30,9 +31,13 @@ Sub CATMain()
     Dim rootProduct As Product
     Set rootProduct = doc.Product
 	dim strMembers as StrMembers
+```
 
+```vbscript
     Set strWorkbench = doc.GetWorkbench("StrWorkbench")
     Set strMembers = rootProduct.GetTechnologicalObject("StructureMembers")
+
+```
 
 	'============================================================
 	' looking for a member
@@ -58,7 +63,10 @@ Sub CATMain()
 	'============================================================
 
 	dim strPlates as StrPlates
+```vbscript
     Set strPlates = rootProduct.GetTechnologicalObject("StructurePlates")
+
+```
 
 	dim plate as StrPlates
 	set plate = strPlates.Item("PlateType_11")
@@ -81,9 +89,10 @@ Sub CATMain()
 
 	rootProduct.Update
 	
+```vbscript
 End Sub
 
-
+```
 
 ```vbscript
 '// COPYRIGHT DASSAULT SYSTEMES 2000
@@ -98,7 +107,8 @@ End Sub
 '//
 '//============================================================================
 
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
 
     Dim doc As Document
 
@@ -109,9 +119,13 @@ Sub CATMain()
     Dim rootProduct As Product
     Set rootProduct = doc.Product
 	dim strMembers as StrMembers
+```
 
+```vbscript
     Set strWorkbench = doc.GetWorkbench("StrWorkbench")
     Set strMembers = rootProduct.GetTechnologicalObject("StructureMembers")
+
+```
 
 	'============================================================
 	' looking for a member
@@ -137,7 +151,10 @@ Sub CATMain()
 	'============================================================
 
 	dim strPlates as StrPlates
+```vbscript
     Set strPlates = rootProduct.GetTechnologicalObject("StructurePlates")
+
+```
 
 	dim plate as StrPlates
 	set plate = strPlates.Item("PlateType_11")
@@ -160,5 +177,7 @@ Sub CATMain()
 
 	rootProduct.Update
 	
+```vbscript
 End Sub
+```
 ```

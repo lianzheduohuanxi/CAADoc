@@ -4,7 +4,7 @@ title: "Specifying Occurrences for Images"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniPostProOccurrence", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPostProOccurrence.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPostProOccurrence.htmmd"
 converted: "2026-05-11T17:31:51.760018"
 ```
 
@@ -38,20 +38,26 @@ This use case shows you how to change the occurrence of an image, created under 
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
+```vbscript
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
+```
 
+```vbscript
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
         End If
 ```
 
@@ -62,8 +68,10 @@ This use case shows you how to change the occurrence of an image, created under 
 ```vbscript
     ' -----------------------------------------------------------
     ' Open the Analysis document
-    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis")
+```vbscript
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Cube_R13_Freq.CATAnalysis")
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+```
 ```
 
 ```
@@ -84,15 +92,19 @@ Open the Analysis document. The Analysis document is retrieved in the documentat
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisManager = oAnalysisDocument.Analysis
+```
 ```
 
 ```vbscript
 ```vbscript
 ```vbscript
     ' Retrieve the analysis model from the list of models
+```vbscript
     Set oAnalysisModels = oAnalysisManager.AnalysisModels
     Set oAnalysisModel = oAnalysisModels.Item(1)
+```
 ```
 
 ```
@@ -104,55 +116,73 @@ Open the Analysis document. The Analysis document is retrieved in the documentat
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisCases = oAnalysisModel.AnalysisCases
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oAnalysisCase = oAnalysisCases.Item(1)
 
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Set oAnalysisCases = oAnalysisModel.AnalysisCases
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set oAnalysisCase = oAnalysisCases.Item(1)
     ' Retrieve the analysis cases and the first analysis case
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisSets = oAnalysisCase.AnalysisSets
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oAnalysisSet = oAnalysisSets.Item("Frequency Case Solution.1", catAnalysisSetSearchAll)
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Set oAnalysisSet = oAnalysisSets.Item("Frequency Case Solution.1", catAnalysisSetSearchAll)
 ```vbscript
+```
     ' Get the list of image and retrieve the Von Mises Stress image by its name
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisImages = oAnalysisSet.AnalysisImages
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oAnalysisImage = oAnalysisImages.Item("Von Mises Stress (nodal values).1")
 
+```
 ```
 
 ```
@@ -163,7 +193,7 @@ Set oAnalysisSet = oAnalysisSets.Item("Frequency Case Solution.1", catAnalysisSe
 
 ---
 
-According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models**.
+According to the general [ Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models**.
 
 The Analysis case is retrieved from list of cases by its index. The model contains only one analysis case hence we pass 1 to the method _Item._ Otherwise we pass the appropriate index of the Frequency case if there are more Analysis cases. The analysis image is retrieved from the list of images by its name. The name is same as that appears in the tree, in the interactive environment.
 #### Setting the Occurrence
@@ -191,8 +221,10 @@ The Analysis case is retrieved from list of cases by its index. The model contai
     ...
 
 ```vbscript
+```vbscript
 End Sub
 
+```
 ```
 
     ...
@@ -201,7 +233,7 @@ End Sub
 
 To run the macro interactively CATDocView environment variable must be defined.
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

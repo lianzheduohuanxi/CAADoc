@@ -4,7 +4,7 @@ title: "Creating Cutouts"
 category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CATIA", "CATIAStrFeatureFactory", "CAAStrCreateCutout", "CAAScdStrUseCases"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfCutout.htm"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfCutout.htmmd"
 converted: "2026-05-11T17:31:50.872122"
 ```
 
@@ -36,11 +36,14 @@ CAAStrCreateCutout includes four steps:
 
 ```vbscript
 ```vbscript
+```vbscript
     Dim doc As Document
 
     Dim StrWorkbench As StrWorkbench
 ```
+```
 
+```vbscript
 ```vbscript
 ```vbscript
     Dim strFactory As StrObjectFactory
@@ -56,6 +59,7 @@ CAAStrCreateCutout includes four steps:
     Set strPlates = rootProduct.GetTechnologicalObject("StructurePlates")
 
 ```
+```
 
 ```
 
@@ -64,7 +68,9 @@ CAAStrCreateCutout includes four steps:
 #### Retrieving the Factory from Object on which Cutout Is to Be Placed
 
 ```vbscript
+```vbscript
 Set strPlates = rootProduct.GetTechnologicalObject("StructurePlates")
+```
 ```
 
 This step describes how to get Structure Feature Factory. The Factory object is retrieved by adding object on which cutout is to be placed to the selection list.
@@ -78,7 +84,10 @@ This step describes how to get Structure Feature Factory. The Factory object is 
 ```
 
 ```vbscript
+```vbscript
     Dim PlateToCut1 As StrPlate
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set PlateToCut1 = strPlates.Item("Plate_052")
@@ -86,16 +95,21 @@ This step describes how to get Structure Feature Factory. The Factory object is 
     Dim Selection1 As Selection
     Set Selection1 = CATIA.ActiveDocument.Selection
 ```
+```
 
 ```
 
     Selection1.Add PlateToCut1
 
+```vbscript
     Dim Factory1 As StrFeatureFactory
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set Factory1 = Selection1.FindObject("CATIAStrFeatureFactory")
 
+```
 ```
 
 ```
@@ -121,9 +135,13 @@ For placing cutout using After Forming Mode you need to select a sketch and a di
 ```
 
 ```vbscript
+```vbscript
     Dim sketch As Reference
 ```vbscript
+```
+```vbscript
     Set sketch1 = rootProduct.CreateReferenceFromName("Product1/Grid/!Sketch.1")
+```
 ```
 
 ```
@@ -132,11 +150,15 @@ For placing cutout using After Forming Mode you need to select a sketch and a di
 ```vbscript
 ```vbscript
     'Define the Direction by selecting sketch containing line
+```vbscript
     Dim dir1 As Reference
     Set dir1 = rootProduct.CreateReferenceFromName("Product1/Grid/!Sketch.3")
     'Create the Cutout
+```
+```vbscript
     Dim Cutout1 As StrCutoutFeature
     Set Cutout1 = Factory1.AddCutoutWithAfterFormingMode(sketch1, dir1)
+```
 ```
 
 ```
@@ -162,9 +184,13 @@ For placing cutout using Before Forming Mode you need to select a sketch and a S
 ```
 
 ```vbscript
+```vbscript
     Dim sketch As Reference
 ```vbscript
+```
+```vbscript
     Set sketch1 = rootProduct.CreateReferenceFromName("Product1/Grid/!Sketch.1")
+```
 ```
 
 ```
@@ -173,11 +199,15 @@ For placing cutout using Before Forming Mode you need to select a sketch and a S
 ```vbscript
 ```vbscript
     'Define the Surface
+```vbscript
     Dim Sur1 As Reference
     Set Sur1 = rootProduct.CreateReferenceFromName("Product1/Grid/!Extrude.1")
     'Create the Cutout
+```
+```vbscript
     Dim Cutout2 As StrCutoutFeature
     Set Cutout2 = Factory2.AddCutoutWithBeforeFormingMode(sketch1, Sur1)
+```
 ```
 
 ```
@@ -186,7 +216,7 @@ For placing cutout using Before Forming Mode you need to select a sketch and a S
 
 ![Resulting Product](images/CAAScdStrCutout02.png)
 
-![End Task Icon](../CAAScrBase/images/aendtask.gif)
+![End Task Icon](./assets/images/aendtask.gif)
 
 [Top]
 

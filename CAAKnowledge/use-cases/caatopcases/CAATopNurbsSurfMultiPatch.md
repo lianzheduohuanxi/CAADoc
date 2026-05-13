@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating a Multi Patch NURBS Surface"
-category: "use case"
+category: use-case case"
 module: "CAATopUseCases"
 tags: ["CAAGemBrowser", "CATICGMObject", "CAATopNurbsSurfMultiPatch", "CATIA", "CAATopOverview", "CAATopologicalOperators"]
-source_file: "Doc/online/CAATopUseCases/CAATopNurbsSurfMultiPatch.htm"
+source_file: "Doc/online/CAATopUseCases/CAATopNurbsSurfMultiPatch.htmmd"
 converted: "2026-05-11T17:31:50.727379"
 ```
 
@@ -82,10 +82,10 @@ This NCGM file can be displayed using the CAAGemBrowser use case.
 This NCGM file can be displayed using the CAAGemBrowser use case.
 The CAATopNurbsSurfMultiPatch use case is made of a main named CAATopNurbsSurfMultiPatch .cpp located in the CAATopNurbsSurfMultiPatch .m module of the CAATopologicalOperators.edu framework:
 
-Windows | `InstallRootDirectory\CAATopologicalOperators.edu\`CAATopNurbsSurfMultiPatch `.m\`
+Windows | `InstallRootDirectory/CAATopologicalOperators.edu/`CAATopNurbsSurfMultiPatch `.m/`
 
 The CAATopNurbsSurfMultiPatch use case is made of a main named CAATopNurbsSurfMultiPatch .cpp located in the CAATopNurbsSurfMultiPatch .m module of the CAATopologicalOperators.edu framework:
-Windows | `InstallRootDirectory\CAATopologicalOperators.edu\`CAATopNurbsSurfMultiPatch `.m\`
+Windows | `InstallRootDirectory/CAATopologicalOperators.edu/`CAATopNurbsSurfMultiPatch `.m/`
 Unix | `InstallRootDirectory/CAATopologicalOperators.edu/`CAATopNurbsSurfMultiPatch `.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -109,7 +109,7 @@ There are six steps in CAATopNurbsSurfMultiPatch.cpp:
 The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
 
 The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
-    CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**() ;
+    CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**(#) ;
 ```vbscript
     if (NULL==piGeomFactory) return (1);
 
@@ -284,13 +284,13 @@ For how to create a skin, see the [CAATopOverview](CAATopOverview.md) use case[2
 CATSurLimits surMaxLimits ;
     piSurf1->GetInternalMaxLimits(1,0,surMaxLimits) ;
 
-    CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration();
+    CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration(#);
     CATTopData topdata(pConfig);
 
     CATTopSkin * pSkinOpe =::CATCreateTopSkin(piGeomFactory,
 
             &topdata,
-CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration();
+CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration(#);
 CATTopData topdata(pConfig);
 CATTopSkin * pSkinOpe =::CATCreateTopSkin(piGeomFactory,
             piSurf1,
@@ -346,7 +346,7 @@ ofstream filetowrite(pfileName, ios::binary ) ;
     #endif
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
-       filetowrite.close();
+       filetowrite.close(#);
      }
 
      _//

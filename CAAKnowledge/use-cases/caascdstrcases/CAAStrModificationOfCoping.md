@@ -4,7 +4,7 @@ title: "Modifying Copings"
 category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CATIA", "CAAStrEditCoping", "CAAScdStrUseCases"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfCoping.htm"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfCoping.htmmd"
 converted: "2026-05-11T17:31:50.892078"
 ```
 
@@ -33,12 +33,17 @@ CAAStrEditCoping includes two steps:
 #### Prolog
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
 
+```
 ```
 
 ```vbscript
+```vbscript
       Dim StrWorkbench As StrWorkbench
+```vbscript
+```
 ```vbscript
 ```vbscript
       Dim strFactory As StrObjectFactory
@@ -56,6 +61,7 @@ CAAStrEditCoping includes two steps:
       Set strMembers = rootProduct.GetTechnologicalObject("StructureMembers")
 
 ```
+```
 
 ```
 
@@ -66,21 +72,29 @@ CAAStrEditCoping includes two steps:
 The Existing coping can be searched by using the search method on selection.”Coping.1” is searched for in the entire product. The subtype of 1st coping feature is modifed to "CurrCurr".
 
 ```vbscript
+```vbscript
       Dim selection1 As Selection
+```vbscript
+```
 ```vbscript
 ```vbscript
       Set selection1 = doc.Selection
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Dim selection1 As Selection
 ```vbscript
+```
+```vbscript
 Set selection1 = doc.Selection
+```
 ```
 
       selection1.Search "Name='Coping.1',all"
@@ -88,12 +102,16 @@ Set selection1 = doc.Selection
 ```
 
 ```vbscript
+```vbscript
       Dim NibblingToEdit As StrNibblingFeature
+```vbscript
+```
 ```vbscript
 ```vbscript
       Set NibblingToEdit = selection1.Item(1).Value
 
       Dim SubTypeOfNibbling As String
+```
 ```
 
 ```
@@ -103,18 +121,22 @@ Set selection1 = doc.Selection
 ```
 
 ```vbscript
+```vbscript
 Dim SubTypeOfNibbling As String
+```
 ```
 
 SubTypeOfNibbling = NibblingToEdit.SubType
 ```vbscript
       NibblingToEdit.SubType = "CurrCurr"
 
+```vbscript
     End Sub
 
 ```
+```
 
-![End Task Icon](../CAAScrBase/images/aendtask.gif)
+![End Task Icon](./assets/images/aendtask.gif)
 
 [Top]
 

@@ -4,13 +4,13 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproSource.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproSource.htmmd"
 converted: "2026-05-11T17:31:51.851825"
 ```
 
 ---
 tags: ["CATIA", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproSource.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproSource.htmmd"
 converted: "2026-05-11T17:31:51.851825"
     Option Explicit
 
@@ -37,7 +37,10 @@ converted: "2026-05-11T17:31:51.851825"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
+
+```
 
 ```
 
@@ -47,20 +50,26 @@ converted: "2026-05-11T17:31:51.851825"
         ' -----------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String
+```vbscript
         sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
+```
 
+```vbscript
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
         End If
 ```
 
@@ -71,55 +80,85 @@ converted: "2026-05-11T17:31:51.851825"
 ```vbscript
         ' -----------------------------------------------------------
         ' Get the collection of documents in session
+```vbscript
         Dim documents1 As Documents
         Set documents1 = CATIA.Documents
         ' Open the CATAnalysis Document
+```
+```vbscript
         Dim oAnalysisDocument As Document
-        Set oAnalysisDocument = documents1.Open(sDocPath & "\online\CAAScdAniUseCases\samples\AnalysisCrank.CATAnalysis")
+        Set oAnalysisDocument = documents1.Open(sDocPath & "/online/CAAScdAniUseCases/samples/AnalysisCrank.CATAnalysis")
         '_____________________________________________________________________________________
+```
         ' Retrieve the CATPart document in order to compute the references for preprocessing
+```vbscript
         Dim PartDocument As PartDocument
         Set PartDocument = documents1.Item(3)
         ' Retrieve the Part from this document
+```
+```vbscript
         Dim part1 As Part
         Set part1 = PartDocument.Part
         ' Extract the product as input of preprocessing feature.
+```
+```vbscript
         Dim product1 As Product
         Set product1 = PartDocument.Product
         ' Retrieve the References
+```
+```vbscript
         Dim referenceBound As Reference
-        Set referenceBound = part1.CreateReferenceFromName("Selection_RSur:(Face:(Brp:(GSMRotate.2;(Brp:(GSMTranslate.2;(Brp:(Shaft.2;0:(Brp:(Sketch.5;7)))))));None:());GSMRotate.2)")
+        Set referenceBound = part1.CreateReferenceFromName("Selection_RSur:(Face:(Brp:(GSMRotate.2;(Brp:(GSMTranslate.2;(Brp:(Shaft.2;0:(Brp:(Sketch.5;7)))))));None:(#));GSMRotate.2)")
         Dim referenceLoad As Reference
-        Set referenceLoad = part1.CreateReferenceFromName("Selection_RSur:(Face:(Brp:(GSMRotate.2;(Brp:(GSMTranslate.2;(Brp:(Shaft.1;0:(Brp:(Sketch.4;4)))))));None:());GSMRotate.2)")
+        Set referenceLoad = part1.CreateReferenceFromName("Selection_RSur:(Face:(Brp:(GSMRotate.2;(Brp:(GSMTranslate.2;(Brp:(Shaft.1;0:(Brp:(Sketch.4;4)))))));None:(#));GSMRotate.2)")
         '_____________________________________________________________________________________
+```
         ' Start to scan the existing structure of analysis document:  Retrieve the AnalysisManager
+```vbscript
         Dim AnaManager As AnalysisManager
         Set AnaManager = oAnalysisDocument.Analysis
         ' Retrieve the AnalysisModels
+```
+```vbscript
         Dim AnaModels As AnalysisModels
         Set AnaModels = AnaManager.AnalysisModels
         ' To work with the first AnalysisModel of the collection
+```
+```vbscript
         Dim AnaModel As AnalysisModel
         Set AnaModel = AnaModels.Item(1)
         ' Retrieve the AnalysisCases
+```
+```vbscript
         Dim  Cases As  AnalysisCases
         Set  Cases=AnaModel.AnalysisCases
         ' To work with the first AnalysisCase of the collection
+```
+```vbscript
         Dim MyCase As AnalysisCase
         Set  MyCase=Cases.Item(1)
         ' Retrieve the AnalysisSets
+```
+```vbscript
         Dim ListSets As AnalysisSets
         Set ListSets = MyCase.AnalysisSets
         '_____________________________________________________________________________________
+```
+```vbscript
         ' To work with the AnalysisSet of the collection that is typed for Boundary condition
         Dim MySet As AnalysisSet
         Set MySet = ListSets.ItemByType("RestraintSet")
         ' Retrieve the AnalysisEntities collection defined on the set
+```
+```vbscript
         Dim anEntities As AnalysisEntities
         Set anEntities = MySet.AnalysisEntities
         ' Define an Analysis Entity on the set in order to Fix the referencebound of the Part
+```
+```vbscript
         Dim analysisEntity As AnalysisEntity
         Set analysisEntity = anEntities.Add("SAMClamp")
+```
 ```
 
 ```
@@ -130,8 +169,10 @@ converted: "2026-05-11T17:31:51.851825"
 ```vbscript
 ```vbscript
 ' Define an Analysis Entity on the set in order to Fix the referencebound of the Part
+```vbscript
 Dim analysisEntity As AnalysisEntity
 Set analysisEntity = anEntities.Add("SAMClamp")
+```
 ```
 
 ```
@@ -143,13 +184,19 @@ Set analysisEntity = anEntities.Add("SAMClamp")
 ```vbscript
 ```vbscript
         '_____________________________________________________________________________________
+```vbscript
         ' To work with the AnalysisSet of the collection that is typed for Load condition
         Set MySet = ListSets.ItemByType("LoadSet")
         ' Retrieve the AnalysisEntities collection defined on the set
+```
+```vbscript
         Set anEntities = MySet.AnalysisEntities
         ' Define an Analysis Entity on the set in order to assign a pressure the referenceLoad of the Part
+```
+```vbscript
         Set analysisEntity = anEntities.Add("SAMMoment")
        ' Valuate the momentum value and assign it to the reference
+```
 ```
 
 ```
@@ -160,8 +207,10 @@ Set analysisEntity = anEntities.Add("SAMClamp")
 ```vbscript
 ```vbscript
 ' Define an Analysis Entity on the set in order to assign a pressure the referenceLoad of the Part
+```vbscript
 Set analysisEntity = anEntities.Add("SAMMoment")
 ' Valuate the momentum value and assign it to the reference
+```
 ```
 
 ```
@@ -186,6 +235,8 @@ analysisEntity.SetValue "SAMMomentVector","", 3, 1, 1, 0.
         MyCase.Compute
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

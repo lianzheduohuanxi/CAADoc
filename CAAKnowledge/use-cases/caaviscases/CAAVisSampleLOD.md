@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating Levels of Details"
-category: "use case"
+category: use-case case"
 module: "CAAVisUseCases"
 tags: ["CAAVisBaseView", "CAAVisBaseDocument", "CAAVisBasics", "CAAVisBaseDefaultDocument", "CAAVisBaseApplication", "CATIA", "CAAVisBase", "CAAVisualization"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleLOD.htm"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleLOD.htmmd"
 converted: "2026-05-11T17:31:52.141771"
 ```
 
@@ -76,10 +76,10 @@ The torus is displayed in a 3D navigation viewer as soon as the application is l
 The torus is displayed in a 3D navigation viewer as soon as the application is launched. Zoom in and out to show the different levels of details and their associated colors.
 The CAAVisBasics use case is made of several classes located in the CAAVisBasics.m module of the CAAVisualization.edu framework:
 
-Windows | `InstallRootDirectory\CAAVisualization.edu\CAAVisBasics.m\`
+Windows | `InstallRootDirectory/CAAVisualization.edu/CAAVisBasics.m/`
 
 The CAAVisBasics use case is made of several classes located in the CAAVisBasics.m module of the CAAVisualization.edu framework:
-Windows | `InstallRootDirectory\CAAVisualization.edu\CAAVisBasics.m\`
+Windows | `InstallRootDirectory/CAAVisualization.edu/CAAVisBasics.m/`
 Unix | `InstallRootDirectory/CAAVisualization.edu/CAAVisBasics.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -113,23 +113,23 @@ The torus is displayed when the CAAVisBase application is launched. The torus le
 The _CAAVisBaseDefaultDocument_ constructor creates the representation bag to attach to the viewer, creates a _CAT3DLodRep_ instance for the torus, calls `CreateRep` as many time as there are sag values to the corresponding torus representations, adds the resulting 3D Lod representation to the representation bag, and calls `AddRepToViewer` for display.
 
 The _CAAVisBaseDefaultDocument_ constructor creates the representation bag to attach to the viewer, creates a _CAT3DLodRep_ instance for the torus, calls `CreateRep` as many time as there are sag values to the corresponding torus representations, adds the resulting 3D Lod representation to the representation bag, and calls `AddRepToViewer` for display.
-    void CAAVisBaseDefaultDocument::CreateModel()
+    void CAAVisBaseDefaultDocument::CreateModel(#)
 
     {
 The _CAAVisBaseDefaultDocument_ constructor creates the representation bag to attach to the viewer, creates a _CAT3DLodRep_ instance for the torus, calls `CreateRep` as many time as there are sag values to the corresponding torus representations, adds the resulting 3D Lod representation to the representation bag, and calls `AddRepToViewer` for display.
-void CAAVisBaseDefaultDocument::CreateModel()
+void CAAVisBaseDefaultDocument::CreateModel(#)
       _pRootContainer  = new CAT3DBagRep;
-      _pTorusLodRep = new CAT3DLodRep();
+      _pTorusLodRep = new CAT3DLodRep(#);
       float sag = 0.125f;
 
       ... // Loop on the torus tessellation
       //Adding of the CAT3DLodRep to the CAT3DBagRep
 _pRootContainer  = new CAT3DBagRep;
-_pTorusLodRep = new CAT3DLodRep();
+_pTorusLodRep = new CAT3DLodRep(#);
 float sag = 0.125f;
       _pRootContainer->AddChild(*_pTorusLodRep);
 
-      AddRepToViewer();
+      AddRepToViewer(#);
 
     }
 

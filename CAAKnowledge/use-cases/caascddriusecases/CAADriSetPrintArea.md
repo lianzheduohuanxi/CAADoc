@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CAAScrBase", "CATIADrawingView", "CATIA", "CAADriUseCases", "CAAScrJavaScript", "CAAScdDriTechArticles", "CAADriObjDrawingSheets", "CAAScdInfUseCases", "CAADriObjDrawingView", "CAADriObjDrawingSheet", "CAADriSetPrintAreaSource", "CAADriObjDrawingDocument", "CAAInfLauchMacro", "CAADriISetPrintArea", "CAADriSetPrintArea", "CAAlink"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriSetPrintArea.htm"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriSetPrintArea.htmmd"
 converted: "2026-05-11T11:27:02.759629"
 ---
 
@@ -149,7 +149,7 @@ To visualize the print area we have to run the specific command, but as
     
   
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 
@@ -170,21 +170,25 @@ of the `Selection` object
 
 *Copyright  2004, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 ...
 ' Retrieve the active document
+```vbscript
 Dim oDocument As Document
 Set oDocument = CATIA.ActiveDocument
 
 ' Test the document's type, if it is not a drawing document the macro stops
+```
 If TypeName(oDocument) = &quot;DrawingDocument&quot; Then
+```vbscript
     Dim oDrawingDocument As DrawingDocument
     Set oDrawingDocument = oDocument
 Else
+```
+```vbscript
     MsgBox &quot;This macro can be run with a drawing document only.&quot;
     Exit Sub
+```
 End If
 ...
 ```
@@ -192,17 +196,21 @@ End If
 ```vbscript
 ...
 ' Retrieve the active sheet of the document
+```vbscript
 Dim oSheet As DrawingSheet
 Set oSheet = oDrawingDocument.Sheets.ActiveSheet  
 ...
+```
 ```
 
 ```vbscript
 ...
 ' Retrieve the selection of the document
+```vbscript
 Dim oSelection 'As Selection
 Set oSelection = oDrawingDocument.Selection
 ' Clear the selection
+```
 oSelection.Clear
 ...
 ```
@@ -210,8 +218,10 @@ oSelection.Clear
 ```vbscript
 ...
 ' Define the object type allowed to be selected, here a drawing point
+```vbscript
 Dim InputObjectType(0)
 InputObjectType(0) = &quot;Point2D&quot;
+```
 ...
 ' Retrieve the first point location to set the print area from the mouse selection
 ReturnStatus = oSelection.IndicateOrSelectElement2D(&quot;Select the first point&quot;, _
@@ -224,10 +234,14 @@ InputObjectType, True, True, False, ObjectSelected, oFirstPointAbsolute)
 ' Test of the selection content from the ObjectSelected value
 If ObjectSelected = True Then
     ...
+```vbscript
     Set iFirstPoint = oSelection.Item(1).Value
     ...
+```
+```vbscript
     Set oView = oSelection.FindObject(&quot;CATIADrawingView&quot;)
     ...
+```
     iFirstPoint.GetCoordinates oFirstPointRelative
     ...
     CatAbsoluteCoordinates oView, oFirstPointAbsolute, oFirstPointRelative
@@ -238,8 +252,11 @@ End If
 ```vbscript
 ...
 ' Define the coordinates of the print area's point
+```vbscript
 Dim XPrintArea As Double
 Dim YPrintArea As Double
+
+```
 
 If oFirstPointAbsolute(0) &gt; oSecondPointAbsolute(0) Then
     XPrintArea = oSecondPointAbsolute(0)
@@ -253,16 +270,22 @@ Else
     YPrintArea = oFirstPointAbsolute(1)
 End If
 
+```vbscript
 Dim WidthPrintArea As Double
 Dim HeightPrintArea As Double
+
+```
 
 ' Define the width and height of the print area
 WidthPrintArea = Abs(oSecondPointAbsolute(0) - oFirstPointAbsolute(0))
 HeightPrintArea = Abs(oSecondPointAbsolute(1) - oFirstPointAbsolute(1))
 
 ' Define and activate the print area of the drawing document
+```vbscript
 Dim oPrintArea As PrintArea
 Set oPrintArea = oSheet.PrintArea
+
+```
 
 oPrintArea.SetArea XPrintArea, YPrintArea, WidthPrintArea, HeightPrintArea
 oPrintArea.ActivationState = True
@@ -272,7 +295,9 @@ oPrintArea.ActivationState = True
 ```vbscript
 ...
 oSelection.Add oSheet
+```vbscript
 CATIA.StartCommand &quot;CATDrwVisualizePrintAreaHdr&quot;
 oSelection.Clear
+```
  ...
 ```

@@ -4,7 +4,7 @@ title: "Knowledge Advisor Overview"
 category: "concept"
 module: "CAAScdKniTechArticles"
 tags: ["CATIA"]
-source_file: "Doc/online/CAAScdKniTechArticles/CAAKniAutomationPrinciples.htm"
+source_file: "Doc/online/CAAScdKniTechArticles/CAAKniAutomationPrinciples.htmmd"
 converted: "2026-05-11T17:31:52.000294"
 ```
 
@@ -37,7 +37,10 @@ The entry point is the Relations or Parameters collection. To retrieve the appro
 You can retrieve a Parameters object that way:
 
 ```vbscript
+```vbscript
     Dim oActiveDoc As Document
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oActiveDoc = CATIA.ActiveDocument
@@ -46,15 +49,20 @@ You can retrieve a Parameters object that way:
     Set oParams = oActiveDoc.Part.Parameters
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Dim oParams As Parameters
 ```vbscript
+```
+```vbscript
 Set oParams = oActiveDoc.Part.Parameters
+```
 ```
 
 ```
@@ -64,11 +72,15 @@ but prior to writing this, you must check that your document is a CATPart.
 To create the object, you just have to use the appropriate Create _xxx_ method.
 
 ```vbscript
+```vbscript
     Dim oSphereRadius As Parameter
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oSphereRadius = oParameters.CreateInteger("StringLength",0)
 
+```
 ```
 
 ```
@@ -80,21 +92,29 @@ To create the object, you just have to use the appropriate Create _xxx_ method.
 Parameters as well as Relations can be scanned in their collections. An item is retrieved from its collection using the **Item** method and the index of the item in the collection. Usually, the argument representing the index in the **Item** method is a Variant. This means that it can either represent the rank of the item in the collection or the name you assigned to this item using the **Name** property. The rank in a collection begins at 1. For example, assume that the Parameter named "StringLength" is the sixth parameter in the Parameters collection. To retrieve this parameter in the oParameters collection, write:
 
 ```vbscript
+```vbscript
     Dim oParam1 As Parameter
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oParam1 = oParams.Item(6)
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Dim oParam1 As Parameter
 ```vbscript
+```
+```vbscript
 Set oParam1 = oParams.Item(6)
+```
 ```
 
 ```
@@ -102,21 +122,29 @@ Set oParam1 = oParams.Item(6)
 or write:
 
 ```vbscript
+```vbscript
     Dim oParam1 As Parameter
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oParam1 = oParams.Name("StringLength")
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Dim oParam1 As Parameter
 ```vbscript
+```
+```vbscript
 Set oParam1 = oParams.Name("StringLength")
+```
 ```
 
 ```

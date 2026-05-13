@@ -4,7 +4,7 @@ title: "CAAAniMeshNodesToNodesConnection.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniMeshNodesToNodesConnection", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshNodesToNodesConnectionSource.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshNodesToNodesConnectionSource.htmmd"
 converted: "2026-05-11T17:31:51.667250"
 ```
 
@@ -32,7 +32,10 @@ converted: "2026-05-11T17:31:51.667250"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
+
+```
 
 ```
 
@@ -41,18 +44,22 @@ converted: "2026-05-11T17:31:51.667250"
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
+```vbscript
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
 ```vbscript
         End If
     ' -----------------------------------------------------------
@@ -69,33 +76,43 @@ End If
 ```vbscript
 ' -----------------------------------------------------------
     ' Open the Analysis document
-    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\WeldConnections.CATAnalysis")
+```vbscript
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/WeldConnections.CATAnalysis")
+```
 ```
 
 ```
 
 ```
 
+```vbscript
 ```vbscript
 ```vbscript
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ```
+```
 
 ```
 
 ```vbscript
+```vbscript
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```vbscript
+```
     ' Retrieve the analysis Manager
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisManagar = oAnalysisDocument.Analysis
 ```vbscript
+```
+```vbscript
     Set oAnalysisSet = oAnalysisManagar.AnalysisSets
+```
 ```
 
 ```
@@ -104,15 +121,21 @@ Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```vbscript
 ```vbscript
     ' Retrieve the part document and product
+```vbscript
     Set oAnalysisLinkedDocuments = oAnalysisManagar.LinkedDocuments
     Set partDocument = oAnalysisLinkedDocuments.Item(1)
     Set product = partDocument.Product
     ' Retreive the analysis model
+```
+```vbscript
     Set oAnalysisModels = oAnalysisManagar.AnalysisModels
     Set oAnalysisModel = oAnalysisModels.Item(1)
     'Retrieve the mesh manager and list of mesh parts
+```
+```vbscript
     Set oAnalysisMeshManager = oAnalysisModel.MeshManager
     Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
+```
 ```
 
 ```
@@ -124,13 +147,17 @@ Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```
 
 ```vbscript
+```vbscript
     Set connection = oAnalysisSet.ItemByType("ConnectionDesignManager")
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set connSet = connection.AnalysisSets
     Set conn = connSet.ItemByType("ConnectionDesignSet")
     Set entity = conn.AnalysisEntities
     Set surfConn  = entity.Item(4)
+```
 ```
 
 ```
@@ -141,10 +168,14 @@ Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```vbscript
 ```vbscript
     'Create reference from the surface analysis connection
+```vbscript
     Set reference1 = oAnalysisManagar.CreateReferenceFromObject(surfConn)
     'Add new nodes to nodes connection mesh part to the list of mesh parts
+```
+```vbscript
     Set nodeMesh = oAnalysisMeshParts.Add ("MSHPartConnPointPoint")
     'Assign previously created reference as support
+```
 ```
 
 ```
@@ -155,8 +186,10 @@ Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```vbscript
 ```vbscript
 'Add new nodes to nodes connection mesh part to the list of mesh parts
+```vbscript
 Set nodeMesh = oAnalysisMeshParts.Add ("MSHPartConnPointPoint")
 'Assign previously created reference as support
+```
 ```
 
 ```
@@ -178,6 +211,8 @@ Set nodeMesh = oAnalysisMeshParts.Add ("MSHPartConnPointPoint")
 ```
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

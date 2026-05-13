@@ -4,13 +4,13 @@ title: "Migrating Your Identity Cards to XML"
 category: "use-case"
 module: "CAABtlTechArticles"
 tags: []
-source_file: "Doc/online/CAABtlTechArticles/CAABtlMANIdCardXMLV5Mig.htm"
+source_file: "Doc/online/CAABtlTechArticles/CAABtlMANIdCardXMLV5Mig.htmmd"
 converted: "2026-05-11T17:33:46.071110"
 ```
 
 ---
 tags: []
-source_file: "Doc/online/CAABtlTechArticles/CAABtlMANIdCardXMLV5Mig.htm"
+source_file: "Doc/online/CAABtlTechArticles/CAABtlMANIdCardXMLV5Mig.htmmd"
 converted: "2026-05-11T17:33:46.071110"
 RADE |  Multi-Workspace Application Builder |  Migrating Your Identity Cards to XML _From .h to .xml_
 
@@ -42,7 +42,7 @@ Using mkICE
 5. Delete the IdentityCard.h file.
   1. In a command prompt located at the root folder of your workspace and initialized with the appropriate TCK using the tck_init and tck_profile commands, type mkIc2Xml followed by the names of your frameworks [3]. For example:
 
-         >ls *\IdentityCard\*.h
+         >ls */IdentityCard/*.h
          A.edu/IdentityCard/IdentityCard.h  A.tst/IdentityCard/IdentityCard.h  A/IdentityCard/IdentityCard.h
          >**mkIc2Xml A A.edu A.tst**
          == Starting generation: 3 framework(s) to do
@@ -52,7 +52,7 @@ A.edu/IdentityCard/IdentityCard.h  A.tst/IdentityCard/IdentityCard.h  A/Identity
          A.tst Done [3/3]
 
          == Generation done
-         >ls *\IdentityCard\*.xml
+         >ls */IdentityCard/*.xml
 A Done [1/3]
 A.edu Done [2/3]
 A.tst Done [3/3]

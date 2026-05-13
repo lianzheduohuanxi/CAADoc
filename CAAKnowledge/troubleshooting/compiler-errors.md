@@ -1,8 +1,10 @@
 ---
+category: use-case
 title: "CAA编译器错误排查指南"
 type: "troubleshooting"
 verified: true
 ---
+category: use-case
 
 # CAA编译器错误排查指南
 
@@ -73,3 +75,4 @@ class MyClass : public CATBaseUnknown { ... };
 ```
 
 ---
+category: use-case

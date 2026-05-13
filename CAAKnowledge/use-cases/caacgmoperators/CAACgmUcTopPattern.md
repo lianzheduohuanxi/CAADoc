@@ -4,13 +4,13 @@ title: "Creating a Pattern"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsPattern", "CAAGMOperatorsInterfaces", "CATICGMTopPattern", "CATICGMSolidCylinder"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopPattern.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopPattern.htmmd"
 converted: "2026-05-11T17:33:49.266941"
 ```
 
 ---
 tags: ["CAAGMOperatorsPattern", "CAAGMOperatorsInterfaces", "CATICGMTopPattern", "CATICGMSolidCylinder"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopPattern.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopPattern.htmmd"
 converted: "2026-05-11T17:33:49.266941"
 Creating a Pattern
 
@@ -78,17 +78,20 @@ CATCGMCreateTopPattern(iFactory, iTopData, iBody, pPatternPlane, iFaces, &transl
     // Run the pattern operator and get the result
     //
 pPatternOp->SetRectPattern(nbOccurrences , translationList[1], 1, NULL);
-    pPatternOp->Run();
+    pPatternOp->Run(#);
 ```vbscript
-    oResultBody = pPatternOp->GetResult();
+    oResultBody = pPatternOp->GetResult(#);
 
 ```
 
     ...
 
 ---
-oResultBody = pPatternOp->GetResult();
+oResultBody = pPatternOp->GetResult(#);
+```vbscript
 you get this result: Fig.2 Result of Pattern Operation from a Set of Faces  ![Pattern Result - Set of faces](images/CGM_pattern_2.png)
+
+```
 
 ```vbscript
 Case 2: Pattern Creation from a Body to be Replicated  The body to be patterned is a solid cylinder. With the same input body as above and the code below:
@@ -96,21 +99,23 @@ Case 2: Pattern Creation from a Body to be Replicated  The body to be patterned 
 ```
 
     // Create the body to be patterned
+```vbscript
 you get this result: Fig.2 Result of Pattern Operation from a Set of Faces  ![Pattern Result - Set of faces](images/CGM_pattern_2.png)
 Case 2: Pattern Creation from a Body to be Replicated  The body to be patterned is a solid cylinder. With the same input body as above and the code below:
+```
     CATICGMSolidCylinder* pCylinderOp =
     		CATCGMCreateSolidCylinder(iFactory, iTopData, firstPointOnAxis, secondPointOnAxis, cylRadius);
 
     ...
 CATICGMSolidCylinder* pCylinderOp =
 CATCGMCreateSolidCylinder(iFactory, iTopData, firstPointOnAxis, secondPointOnAxis, cylRadius);
-    pCylinderOp->Run();
-    CATBody *piCylindricalTool = pCylinderOp->GetResult();
+    pCylinderOp->Run(#);
+    CATBody *piCylindricalTool = pCylinderOp->GetResult(#);
 
     ...
     // Create a list of transformations for a 2D pattern
-pCylinderOp->Run();
-CATBody *piCylindricalTool = pCylinderOp->GetResult();
+pCylinderOp->Run(#);
+CATBody *piCylindricalTool = pCylinderOp->GetResult(#);
     CATLISTP(CATMathTransformation) translationList;
     int nbOccurrencesX = 10;
     int nbOccurrencesY = 3;
@@ -168,12 +173,12 @@ piCylindricalTool, &translationList;);
     CATMathTransformation translation1X(CATMathVector(distToNextX, 0, 0));
     CATMathTransformation translation1Y(CATMathVector(0, -distToNextY, 0));
     pPatternOp->SetRectPattern(nbOccurrencesX, &translation1X;, nbOccurrencesY, &translation1Y;);
-    pPatternOp->Run();
-    pPatternOp->GetResult();
+    pPatternOp->Run(#);
+    pPatternOp->GetResult(#);
 
 ---
-pPatternOp->Run();
-pPatternOp->GetResult();
+pPatternOp->Run(#);
+pPatternOp->GetResult(#);
 you get this result: Fig.3 Result of Pattern Operation from a Body to be Replicated ![Pattern Result - Tool](images/CGM_pattern_4.png)
 
 References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)

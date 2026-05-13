@@ -4,13 +4,13 @@ title: "How to use the Identity Card Interface"
 category: "use case"
 module: "CAADkiUseCases"
 tags: ["CAADkiNotesTab", "CAADkiIdentityCard", "CAAVPMDesktop"]
-source_file: "Doc/online/CAADkiUseCases/CAADkiIdentityCard.htm"
+source_file: "Doc/online/CAADkiUseCases/CAADkiIdentityCard.htmmd"
 converted: "2026-05-11T17:33:45.939442"
 ```
 
 ---
 tags: ["CAADkiNotesTab", "CAADkiIdentityCard", "CAAVPMDesktop"]
-source_file: "Doc/online/CAADkiUseCases/CAADkiIdentityCard.htm"
+source_file: "Doc/online/CAADkiUseCases/CAADkiIdentityCard.htmmd"
 converted: "2026-05-11T17:33:45.939442"
 ENOVIA Lifecycle Applications |  User Interface |  How to use the Identity Card Interface _Creating and displaying tabs in ENOVIA_
 
@@ -53,15 +53,19 @@ The _ActionListener_ interface/methods shown are as follows:
 
 [Top] How to Launch _CAADkiIdentityCard_ To launch _CAADkiIdentityCard_ , you will need to execute the following steps:
 
+```vbscript
   * Set up the build time environment [1]
   * Compile CAADkiNotesTab.java along with its prerequisites
+```
+```vbscript
   * Set up the run time environment
   * Modify the IdentityCardView.properties file declaring an additional view for _CAADkiNotesTab_ to point to the new java class
+```
   * Modify the VPMIdentityCard_en.properties file to declare a title for the new tab represented by the _CAADkiNotesTab_ class
   * Launch ENOVIA LCA, create a Change Management object (Action/CO/CR) and select the object to display the Identity Card view
   * Enter data on the "My Notes" tab and select the Save button.
 
-[Top] Where to Find the _CAADkiIdentityCard_ Code The CAADkiIdentityCard use case is made of a single file located in the CAADkiIdentityCard.mj module of the CAAVPMDesktop.edu framework: Windows | `InstallRootDirectory\CAAVPMDesktop.edu\CAADkiIdentityCard.mj\`
+[Top] Where to Find the _CAADkiIdentityCard_ Code The CAADkiIdentityCard use case is made of a single file located in the CAADkiIdentityCard.mj module of the CAAVPMDesktop.edu framework: Windows | `InstallRootDirectory/CAAVPMDesktop.edu/CAADkiIdentityCard.mj/`
 ---|---
 Unix | `InstallRootDirectory/CAAVPMDesktop.edu/CAADkiIdentityCard.mj/`
 Unix | `InstallRootDirectory/CAAVPMDesktop.edu/CAADkiIdentityCard.mj/`
@@ -94,7 +98,7 @@ These import statements are required for the following operations.
           {
 ```vbscript
 public class CAADkiNotesTab extends JPanel implements ENOVIIdentityCardInterface
-              public CAADkiNotesTab() {}
+              public CAADkiNotesTab(#) {}
               public void setServerParameters(String marker, String host) {}
               public boolean isEnabled(ENOVIObject obj) {}
               public void setObject(ENOVIObject obj) {}
@@ -127,9 +131,9 @@ public void setServerParameters(String marker, String host) {}
 ```
 
         {
-            return ("ENOVIA_ECO"==obj.getBaseType() ||
-                    "ENOVIA_ECR"==obj.getBaseType() ||
-                    "ENOVIA_AFLAction"==obj.getBaseType());
+            return ("ENOVIA_ECO"==obj.getBaseType(#) ||
+                    "ENOVIA_ECR"==obj.getBaseType(#) ||
+                    "ENOVIA_AFLAction"==obj.getBaseType(#));
         }
 
     //--- implement ENOVIIdentityCardInterface::isEnabled
@@ -188,10 +192,10 @@ These import statements are required for the following operations.
 private void showMyView(String notes)
             Border raisedbevel, loweredbevel;
 
-            raisedbevel     = BorderFactory.createRaisedBevelBorder();
+            raisedbevel     = BorderFactory.createRaisedBevelBorder(#);
 ```vbscript
 ```vbscript
-            loweredbevel    = BorderFactory.createLoweredBevelBorder();
+            loweredbevel    = BorderFactory.createLoweredBevelBorder(#);
 
             myTextArea = new JTextArea(5, 30);
 ```
@@ -211,9 +215,9 @@ private void showMyView(String notes)
                     BorderFactory.createCompoundBorder(
                                     loweredbevel,
                                     raisedbevel),
-                    scrollPane.getBorder()));
-            scrollPane.getHorizontalScrollBar().setEnabled(true);
-            scrollPane.getVerticalScrollBar().setEnabled(true);
+                    scrollPane.getBorder(#)));
+            scrollPane.getHorizontalScrollBar(#).setEnabled(true);
+            scrollPane.getVerticalScrollBar(#).setEnabled(true);
             add(scrollPane, BorderLayout.CENTER);
 
             JButton b1 = new JButton("Save");
@@ -239,18 +243,18 @@ public class CAADkiNotesTab extends JPanel implements ENOVIIdentityCardInterface
 ```vbscript
 public class CAADkiNotesTab extends JPanel implements ENOVIIdentityCardInterface, **ActionListener**
 public void actionPerformed(ActionEvent e)
-            if ("savenotes".equals(e.getActionCommand()))
+            if ("savenotes".equals(e.getActionCommand(#)))
 
 ```
 
             {
 ```vbscript
 public void actionPerformed(ActionEvent e)
-if ("savenotes".equals(e.getActionCommand()))
+if ("savenotes".equals(e.getActionCommand(#)))
 ```
 
 ```vbscript
-                setNotes(myObject.getInternalStringValue("V_name"), myTextArea.getText());
+                setNotes(myObject.getInternalStringValue("V_name"), myTextArea.getText(#));
 
 ```
 
@@ -281,24 +285,24 @@ import javax.swing.border.TitledBorder;
 These import statements are required for the following operations.
 
 ```vbscript
-        public CAADkiNotesTab()
+        public CAADkiNotesTab(#)
 
 ```
 
         {
 These import statements are required for the following operations.
-public CAADkiNotesTab()
-            TitledBorder myBorder = new TitledBorder(new EtchedBorder(), myFullFilename);
+public CAADkiNotesTab(#)
+            TitledBorder myBorder = new TitledBorder(new EtchedBorder(#), myFullFilename);
             setBorder(myBorder);
 
-            myFile = getFile();
+            myFile = getFile(#);
             try
 
             {
 ```vbscript
 setBorder(myBorder);
 ```vbscript
-myFile = getFile();
+myFile = getFile(#);
 ```
 
 try
@@ -306,13 +310,13 @@ try
 ```
 
             }
-myFile = getFile();
+myFile = getFile(#);
 try
 myNotes.load(new FileInputStream(myFile));
             catch(IOException e)
 
             {
-                //e.printStackTrace();
+                //e.printStackTrace(#);
                 //No need to take any action since a file will be created when the notes are saved.
             }
         }
@@ -352,20 +356,20 @@ myFileHeader);
 myNotes.store(new FileOutputStream(myFile),
 myFileHeader);
 catch(IOException e)
-                e.printStackTrace();
+                e.printStackTrace(#);
 
             }
         }
 
-e.printStackTrace();
-        public File getFile() {
-            if((myFilename==null) || (myFilename.length() == 0))
+e.printStackTrace(#);
+        public File getFile(#) {
+            if((myFilename==null) || (myFilename.length(#) == 0))
                 myFile = null;
             else
 
             {
-public File getFile() {
-if((myFilename==null) || (myFilename.length() == 0))
+public File getFile(#) {
+if((myFilename==null) || (myFilename.length(#) == 0))
 myFile = null;
 else
 ```vbscript

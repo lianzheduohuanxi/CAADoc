@@ -4,13 +4,13 @@ title: "How to Use the CGM Data Checker"
 category: "tutorial"
 module: "CAACgmOperators"
 tags: ["CATINTCurve", "CATIntCurveType", "CATICPath", "CATIntCurve", "CATIA"]
-source_file: "Doc/online/CAACgmOperators/CAACgmTaTopDataChecker.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmTaTopDataChecker.htmmd"
 converted: "2026-05-11T17:33:48.656134"
 ```
 
 ---
 tags: ["CATINTCurve", "CATIntCurveType", "CATICPath", "CATIntCurve", "CATIA"]
-source_file: "Doc/online/CAACgmOperators/CAACgmTaTopDataChecker.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmTaTopDataChecker.htmmd"
 converted: "2026-05-11T17:33:48.656134"
 How to Use the CGM Data Checker
 
@@ -50,20 +50,20 @@ How to Activate the Rules Here are the preliminary steps to follow prior to acti
 
     * Either create a CATIA environment, edit it and modify the value of the CATICPath variable.
 
-          <install_CATIA>\intel_a\code\productIC
+          <install_CATIA>/intel_a/code/productIC
 
 should be modified in:
 
-          <install_CATIA>\intel_a\code\productIC;<install ENOVIA Studio>\intel_a\code\productIC
+          <install_CATIA>/intel_a/code/productIC;<install ENOVIA Studio>/intel_a/code/productIC
 
 You can install ENOVIA Studio and CATIA at the same place.
     * Or copy the contents of:
 
-          <install ENOVIA Studio>\intel_a\code\productIC
+          <install ENOVIA Studio>/intel_a/code/productIC
 
 Into:
 
-          <install_CATIA>\intel_a\code\productIC
+          <install_CATIA>/intel_a/code/productIC
 
 **Step 2**
     * Activate the CDC license in the Tools/Option Licensing Menu.
@@ -88,14 +88,18 @@ to activate all the rules.
 ```
 
 to activate only a set of rules. XXX_1, YYYY_1 are the rule identifiers.
+```vbscript
     2. Restart CATIA.
 The Topological Checks Body should not contain any touched topology A cell is touched when it is intended to be used in some specific operations like the "smart duplication" (see the CATSmartBodyDuplicator in the Encyclopedia). Note there is other operators that require touched objects as their input data. After the operation has completed the touched cells should return to an untouched status. If they remain touched, further operations on the initial body may lead to unexpected results. A valid topology should not contain any touched cells. The CD traces are similar to the ones below: **CGM Rule: TRE_1**
+```
 Short msg: "Residual touched cells checking failed.";
 Extended msg: "Residual touched cells on ... checking failed.";
 
 ---
+```vbscript
 2. Restart CATIA.
 The Topological Checks Body should not contain any touched topology A cell is touched when it is intended to be used in some specific operations like the "smart duplication" (see the CATSmartBodyDuplicator in the Encyclopedia). Note there is other operators that require touched objects as their input data. After the operation has completed the touched cells should return to an untouched status. If they remain touched, further operations on the initial body may lead to unexpected results. A valid topology should not contain any touched cells. The CD traces are similar to the ones below: **CGM Rule: TRE_1**
+```
 Short msg: "Residual touched cells checking failed.";
 Extended msg: "Residual touched cells on ... checking failed.";
 A closed wire should be made up of at least two edges An edge cannot be closed on itself, in other words any closed wire should be made up of at least two edges.  **CGM Rule: CWE_1**

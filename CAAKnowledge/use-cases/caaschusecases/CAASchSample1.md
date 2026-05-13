@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAASchUseCases"
 tags: ["CATInit", "CAADocStyleSheets", "CAASchPlatformModeler", "CAASchCATFct", "CAASchAppBaseEnv", "CAASchApp", "CAASchEduOut1", "CAASCHEDU_SamplePID", "CAASCHEDUApp", "CATISchAppConnectable", "CAASchAppSample1Main", "CAADocUseCases", "CATISchCompConnector", "CATISpecObject_var", "CAASchAppUtilities", "CATIContainer_var", "CATISpecObject", "CATISchComponent", "CATISchCompFlow", "CATISchAppObjectFactory"]
-source_file: "Doc/online/CAASchUseCases/CAASchSample1.htm"
+source_file: "Doc/online/CAASchUseCases/CAASchSample1.htmmd"
 converted: "2026-05-11T11:27:02.669894"
 ---
 
@@ -258,8 +258,6 @@ application. Specifically, it has illustrated:
 
 *Copyright  2000, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 CAASchAppSample1::InitEnvironment
 CAASchAppSample1::GetDraftingObjects
@@ -273,7 +271,7 @@ if ( SUCCEEDED( pSession-&gt;QueryInterface (IID_CATISchSession,(void**)&amp;piS
   HRESULT rc = piSchSession-&gt;GetSchObjInterface(SCHEDUApplication_Name,
                                                 IID_CATISchAppObjectFactory,
                                                 (void**)&amp;_piSchAppObjFact);
-  piSchSession-&gt;Release(); piSchSession = NULL;
+  piSchSession-&gt;Release(#); piSchSession = NULL;
 }
 ```
 
@@ -292,9 +290,9 @@ CATISpecObject_var CAASchAppBaseServices::FindAppObjByClass (
    CATIExtendable_var spApplExtble = NULL_var;
 
    SEQUENCE (CATBaseUnknown_ptr) L0Obj = iCont-&gt;
-      ListMembers(CATISpecObject::ClassName());
+      ListMembers(CATISpecObject::ClassName(#));
       
-   int SizeOfL0Obj = L0Obj.length();
+   int SizeOfL0Obj = L0Obj.length(#);
    CATISpecObject *piSpec;
    for (int iObj=0; iObj&lt;SizeOfL0Obj; iObj++)
    {
@@ -303,16 +301,16 @@ CATISpecObject_var CAASchAppBaseServices::FindAppObjByClass (
      { 
         if (!spObjFound)
         {
-          ClassType = piSpec-&gt;GetType();
-          printf (&quot;Class Type -- %s\n&quot;, ClassType.ConvertToChar());
+          ClassType = piSpec-&gt;GetType(#);
+          printf (&quot;Class Type -- %s/n&quot;, ClassType.ConvertToChar(#));
           MatchPos = ClassType.SearchSubString(iUClass);
           if (MatchPos &gt;= 0)
           { 
-            printf (&quot;Match found \n&quot;);
+            printf (&quot;Match found /n&quot;);
             spObjFound = piSpec;
           }
         }
-        piSpec-&gt;Release();
+        piSpec-&gt;Release(#);
         piSpec = NULL;
      }
    }

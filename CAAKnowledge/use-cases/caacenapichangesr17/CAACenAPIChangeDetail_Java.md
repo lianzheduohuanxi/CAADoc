@@ -1,11 +1,11 @@
 ---
 ```vbscript
 title: "Detail Of API Changes"
-category: "api-changes"
+category: use-case
 module: "CAACenAPIChangesR17"
 version: "V5R17"
 tags: []
-source_file: "Doc/online/CAACenAPIChangesR17/CAACenAPIChangeDetail_Java.htm"
+source_file: "Doc/online/CAACenAPIChangesR17/CAACenAPIChangeDetail_Java.htmmd"
 converted: "2026-05-11T17:33:51.254562"
 ```
 
@@ -32,7 +32,7 @@ This article presents by frameworks the detail of CAA Java resources modified in
 * * *
 ## com.dassault_systemes.xxx
 
-| Method **yyy()** , ...
+| Method **yyy(#)** , ...
 ---
 
 * * *

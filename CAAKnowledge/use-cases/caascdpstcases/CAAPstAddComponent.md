@@ -4,7 +4,7 @@ title: "Adding Components"
 category: "use-case"
 module: "CAAScdPstUseCases"
 tags: ["CAAPstAddComponent", "CAAPstHull", "CATIA", "CAAScdPstUseCases", "CAAPstFunnel"]
-source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddComponent.htm"
+source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddComponent.htmmd"
 converted: "2026-05-11T17:31:52.313802"
 ```
 
@@ -53,9 +53,13 @@ This macro shows you how to create a product structure composed of four differen
 ```
 
 ```vbscript
+```vbscript
           Dim oProductDoc As Document
 ```vbscript
+```
+```vbscript
           Set oProductDoc = CATIA.Documents.**Add**("Product")
+```
 ```
 
 ```
@@ -64,21 +68,27 @@ This macro shows you how to create a product structure composed of four differen
 ```vbscript
 ```vbscript
           'Retrieve the Titanic as the root product.
+```vbscript
           Dim oTitanic As Product
           Set oTitanic = oProductDoc.Product
           'Declare the Titanic's part number and name.
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Dim oTitanic As Product
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set oTitanic = oProductDoc.Product
 'Declare the Titanic's part number and name.
+```
           oTitanic.PartNumber = "Titanic"
           oTitanic.Name = "Steam_Ship_Titanic"
 ```
@@ -91,8 +101,10 @@ Set oTitanic = oProductDoc.Product
 ```vbscript
 ```vbscript
           'Retrieve the product's collection of the Titanic.
+```vbscript
           Dim oTitanicProducts As Products
           Set oTitanicProducts = oTitanic.Products
+```
 ```
 
 ```
@@ -118,11 +130,15 @@ A new Product document is created using the `Add` method of the documents collec
 ```
 
 ```vbscript
+```vbscript
           Dim oHull As Product
+```vbscript
+```
 ```vbscript
 ```vbscript
           Set  oHull = oTitanicProducts.**AddNewProduct**("Hull_Type")
           oHull.PartNumber = "Titanic's_Hull"
+```
           oHull.Name = "Unsinkable_Hull"
 ```
 
@@ -150,7 +166,9 @@ A new product, the Hull,  is added to the collection using the `AddNewProduct` 
           oHull.**AddMasterShapeRepresentation** sDocPath & "CAAPstHull.CATPart"
 
 ```vbscript
+```vbscript
           CATIA.ActiveWindow.ActiveViewer.**Reframe**
+```
 ```
 
       ...
@@ -172,11 +190,15 @@ Using the `AddMasterShapeRepresentation` method of the _Product_ object, an exis
 ```
 
 ```vbscript
+```vbscript
         Dim oFunnel1 As Product
+```vbscript
+```
 ```vbscript
 ```vbscript
         Set oFunnel1 = oTitanicProducts.**AddNewProduct**("Funnel_Type")
         oFunnel1.PartNumber = "Titanic's_Funnel"
+```
         oFunnel1.Name = "Fore_Funnel"
 ```
 
@@ -217,8 +239,10 @@ Using the `AddMasterShapeRepresentation` method of the _Product_ object, an exis
 ```
 
 ```vbscript
+```vbscript
           Dim iMatrix(11)
 ```vbscript
+```
           iMatrix(0) = 1.0
           iMatrix(1) = 0.0
           iMatrix(2) = 0.0
@@ -253,9 +277,13 @@ Remember that arrays are initialized to 1 less than the maximum number of items 
 ```
 
 ```vbscript
+```vbscript
           Dim oFunnelRef As Product
 ```vbscript
+```
+```vbscript
           Set oFunnelRef = oFunnel1.ReferenceProduct
+```
 ```
 
 ```
@@ -278,11 +306,15 @@ In order to create new instances of a product, it is first necessary to retrieve
 ```
 
 ```vbscript
+```vbscript
           Dim oFunnel2 As Product
+```vbscript
+```
 ```vbscript
 ```vbscript
           Set oFunnel2 = oTitanicProducts.**AddComponent**(oFunnelRef)
           oFunnel2.Name = "Second_Funnel"
+```
           'Associate the new product with a different position from its reference
 ```
 
@@ -296,8 +328,10 @@ In order to create new instances of a product, it is first necessary to retrieve
 ```vbscript
 ```vbscript
           'Add a third component using the existing Funnel product's reference.
+```vbscript
           Dim oFunnel3 As Product
           Set oFunnel3 = oTitanicProducts.**AddComponent**(oFunnelRef)
+```
 ```
 
 ```
@@ -308,9 +342,11 @@ In order to create new instances of a product, it is first necessary to retrieve
 ```vbscript
 ```vbscript
 'Add a third component using the existing Funnel product's reference.
+```vbscript
 Dim oFunnel3 As Product
 Set oFunnel3 = oTitanicProducts.**AddComponent**(oFunnelRef)
           oFunnel3.Name = "Third_Funnel"
+```
           'Associate the new product with a different position from its reference
 ```
 
@@ -324,8 +360,10 @@ Set oFunnel3 = oTitanicProducts.**AddComponent**(oFunnelRef)
 ```vbscript
 ```vbscript
           'Add a fourth component using the existing Funnel product's reference.
+```vbscript
           Dim oFunnel4 As Product
           Set oFunnel4 = oTitanicProducts.**AddComponent**(oFunnelRef)
+```
 ```
 
 ```
@@ -336,9 +374,11 @@ Set oFunnel3 = oTitanicProducts.**AddComponent**(oFunnelRef)
 ```vbscript
 ```vbscript
 'Add a fourth component using the existing Funnel product's reference.
+```vbscript
 Dim oFunnel4 As Product
 Set oFunnel4 = oTitanicProducts.**AddComponent**(oFunnelRef)
           oFunnel4.Name = "Fourth_Funnel"
+```
           'Associate the new product with a different position from its reference
 ```
 
@@ -354,7 +394,7 @@ Set oFunnel4 = oTitanicProducts.**AddComponent**(oFunnelRef)
 
 A new instance of a product is created using the `AddComponent` method of the _Products_ object. A specific name is assigned to the new product instance.  The new product instance, the Funnel, is then positioned on the Hull in relation to the initial reference product's position. This is done using by acquiring a movable object using the `Move` property of __ the _Product_ object and then using the `Apply` method of the _Move_ object. The same procedure is repeated for the last two Funnels.
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

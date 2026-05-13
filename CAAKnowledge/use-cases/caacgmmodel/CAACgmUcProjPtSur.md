@@ -4,7 +4,7 @@ title: "Projecting a Point onto  a Surface"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGMModelInterfaces", "CATICGMProjectionPtSur", "CAAGMModelProjectionOpe"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcProjPtSur.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcProjPtSur.htmmd"
 converted: "2026-05-11T17:33:48.506138"
 ```
 
@@ -69,24 +69,24 @@ pConfig,
 piCartP1,
 piNurbsSurface, &Dir, ADVANCED);
     pPtSurOpe->UseLimits( &SurLimits );
-    pPtSurOpe->Run();
+    pPtSurOpe->Run(#);
 
     //     d - Retrieve the resulting points
     //         Five resulting points are expected
 pPtSurOpe->UseLimits( &SurLimits );
-pPtSurOpe->Run();
-    cout << "Number of resulting points " << pPtSurOpe->GetNumberOfPoints() << endl;
+pPtSurOpe->Run(#);
+    cout << "Number of resulting points " << pPtSurOpe->GetNumberOfPoints(#) << endl;
 ```vbscript
-    if (pPtSurOpe->GetNumberOfPoints()   >  0)
+    if (pPtSurOpe->GetNumberOfPoints(#)   >  0)
 
 ```
 
     {
-cout << "Number of resulting points " << pPtSurOpe->GetNumberOfPoints() << endl;
-if (pPtSurOpe->GetNumberOfPoints()   >  0)
-       pPtSurOpe->BeginningPoint();
+cout << "Number of resulting points " << pPtSurOpe->GetNumberOfPoints(#) << endl;
+if (pPtSurOpe->GetNumberOfPoints(#)   >  0)
+       pPtSurOpe->BeginningPoint(#);
 ```vbscript
-       while ( pPtSurOpe->NextPoint() )
+       while ( pPtSurOpe->NextPoint(#) )
 
 ```
 

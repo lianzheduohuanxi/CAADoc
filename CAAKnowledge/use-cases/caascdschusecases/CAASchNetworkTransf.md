@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAAScrBase", "CATIASchMovable", "CATIA", "CAAScrJavaScript", "CAASCH_Network01", "CAASchNetworkTransfSource", "CAAScdSchUseCases", "CAASchNetworkTransf_02", "CAASchPlatformModeler", "CAASchNetworkTransf_01", "CAAScdInfUseCases", "CAAInfLauchMacro", "CAASCHEDUApp", "CAASchAppBase", "CAADoc", "CAASchAppUtilities", "CAASchNetworkTransf"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchNetworkTransf.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchNetworkTransf.htmmd"
 converted: "2026-05-11T11:27:02.651660"
 ---
 

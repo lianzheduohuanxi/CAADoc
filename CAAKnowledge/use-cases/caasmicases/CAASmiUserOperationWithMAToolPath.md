@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Computing a Tool Path with Machining Areas"
-category: "use case"
+category: use-case case"
 module: "CAASmiUseCases"
 tags: ["CATISmgMachiningAreaGuidingCurves", "CAASmiConnectUserOperationWithMA", "CATIMfgToolPathComponents", "CATIMfgComputeToolPathCustom", "CATISmgMachiningAreaParts", "CATIMfgTPSaveData", "CAASmiUserOperationWithMA", "CAAESmiUserOperationWithMATPComputation", "CAASmiUserOperationWithMAToolPath", "CATISmgMachiningAreaxxx", "CATIMfgCompoundTraject", "CATISmgMachiningAreaChecks", "CAASurfaceMachiningItf", "CAAOffset", "CATIMfgToolPathFactory", "CAASmgOperationWithMA"]
-source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationWithMAToolPath.htm"
+source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationWithMAToolPath.htmmd"
 converted: "2026-05-11T17:31:51.272858"
 ```
 
@@ -73,10 +73,10 @@ This use case is a part of _Surface Machining Operation Sample_ [1]. You should 
 This use case is a part of _Surface Machining Operation Sample_ [1]. You should build all the modules of this sample at a time to be able to launch it [2].
 Don't forget to edit the interface dictionary located in:
 
-Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CNext\code\dictionary\`
+Windows | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CNext/code/dictionary/`
 
 Don't forget to edit the interface dictionary located in:
-Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CNext\code\dictionary\`
+Windows | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CNext/code/dictionary/`
 Unix | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CNext/code/dictionary/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed, and uncomment the appropriate lines by removing the '#' character.
@@ -87,10 +87,10 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed,
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed, and uncomment the appropriate lines by removing the '#' character.
 This use case is made of source files located in the CAASmiConnectUserOperationWithMA.m module of the CAASurfaceMachiningItf.edu framework:
 
-Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CAASmiConnectUserOperationWithMA.m`
+Windows | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CAASmiConnectUserOperationWithMA.m`
 
 This use case is made of source files located in the CAASmiConnectUserOperationWithMA.m module of the CAASurfaceMachiningItf.edu framework:
-Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CAASmiConnectUserOperationWithMA.m`
+Windows | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CAASmiConnectUserOperationWithMA.m`
 Unix | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CAASmiConnectUserOperationWithMA.m`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -128,7 +128,7 @@ To retrieve geometry of a machining area, we use the _CATISmgMachiningAreaxxx_ i
       ...
       // Gets Machining Area
 To retrieve geometry of a machining area, we use the _CATISmgMachiningAreaxxx_ interfaces:
-      CATBaseUnknown_var spBaseFeature = pActivity->GetFeature();
+      CATBaseUnknown_var spBaseFeature = pActivity->GetFeature(#);
 ```vbscript
       if (!!spBaseFeature)
 
@@ -137,7 +137,7 @@ To retrieve geometry of a machining area, we use the _CATISmgMachiningAreaxxx_ i
       {
         // Gets geometry from PART of the machining area
         **CATISmgMachiningAreaParts** * pParts = NULL;
-CATBaseUnknown_var spBaseFeature = pActivity->GetFeature();
+CATBaseUnknown_var spBaseFeature = pActivity->GetFeature(#);
 if (!!spBaseFeature)
 ```vbscript
 ```vbscript
@@ -170,7 +170,7 @@ RC = pParts->**GetGeometricElements**(ListOfGeometries);
 
 ```
 
-          pParts->Release();
+          pParts->Release(#);
           pParts = NULL;
 ```
 
@@ -210,7 +210,7 @@ RC = pChecks->**GetGeometricElements**(ListOfGeometries);
 
 ```
 
-          pChecks->Release();
+          pChecks->Release(#);
           pChecks = NULL;
 ```
 
@@ -249,14 +249,14 @@ RC = pGuidingCurves->**GetResultingCATCurves**(ListOfCurves);
           CATLISTP(CATGeometry) ListOfGeometries;
 ```
 
-          int NbCurves = ListOfCurves.Size();
+          int NbCurves = ListOfCurves.Size(#);
           for (int ic=1;ic<=NbCurves;ic++)
 ```
 
           {
 ```vbscript
 CATLISTP(CATGeometry) ListOfGeometries;
-int NbCurves = ListOfCurves.Size();
+int NbCurves = ListOfCurves.Size(#);
 for (int ic=1;ic<=NbCurves;ic++)
             ListOfGeometries.Append(ListOfCurves[ic]);
 ```
@@ -267,7 +267,7 @@ for (int ic=1;ic<=NbCurves;ic++)
 ListOfGeometries.Append(ListOfCurves[ic]);
           GetBoundingBox(ListOfGeometries,GuidingCurvesBBox);
 
-          pGuidingCurves->Release();
+          pGuidingCurves->Release(#);
           pGuidingCurves = NULL;
 
         }

@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "The Send/Receive Mechanism"
-category: "use case"
+category: use-case case"
 module: "CAADlgUseCases"
 tags: ["CAADlgErrorNotification", "CAADlgViewScreen", "CAADlgElement", "CAADlgNotifError", "CAADlgAddNotification", "CAADlgNotifRemove", "CAADlgModel", "CATIA", "CAADlgNotifAdd", "CAADlgRemoveNotification", "CAADlgSendReceive", "CAADialog", "CAADlgContainer"]
-source_file: "Doc/online/CAADlgUseCases/CAADlgSampleSendReceive.htm"
+source_file: "Doc/online/CAADlgUseCases/CAADlgSampleSendReceive.htmmd"
 converted: "2026-05-11T17:17:55.987209"
 ```
 
@@ -76,10 +76,10 @@ To launch CAADlgSendReceive, you will need to set up the build time environment,
 To launch CAADlgSendReceive, you will need to set up the build time environment, then compile CAADlgSendReceive along with its prerequisites, set up the run time environment, and then execute the use case [2].
 The CAADlgSendReceive use case is made of a several classes located in the CAADlgSendReceive.m module of the CAADialog.edu framework:
 
-Windows | `InstallRootDirectory\CAADialog.edu\CAADlgSendReceive.m\`
+Windows | `InstallRootDirectory/CAADialog.edu/CAADlgSendReceive.m/`
 
 The CAADlgSendReceive use case is made of a several classes located in the CAADlgSendReceive.m module of the CAADialog.edu framework:
-Windows | `InstallRootDirectory\CAADialog.edu\CAADlgSendReceive.m\`
+Windows | `InstallRootDirectory/CAADialog.edu/CAADlgSendReceive.m/`
 Unix | `InstallRootDirectory/CAADialog.edu/CAADlgSendReceive.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -109,8 +109,8 @@ The _CAADlgAddNotification_ class is taken as example.
       **CATDeclareClass** ;
 class CAADlgAddNotification: public **CATNotification**
       public:
-        CAADlgAddNotification();
-        virtual CAADlgAddNotification();
+        CAADlgAddNotification(#);
+        virtual CAADlgAddNotification(#);
       private:
         CAADlgAddNotification(const CAADlgAddNotification&iObjectToCopy);
         CAADlgAddNotification & operator = (const CAADlgAddNotification &iObjectToCopy);
@@ -126,20 +126,20 @@ A notification is a CAA V5 component. Its class C++-derives from the notificatio
 A notification is a CAA V5 component. Its class C++-derives from the notification base class _CATNotification_. The `CATDeclareClass` macro makes _CAADlgAddNotification_ __ part of a component. The copy constructor and the assignment operator are set as private and are not implemented to prevent the compiler to create one as public, and thus prevent from illegal copies of the notification instances.
     CATImplementClass(CAADlgAddNotification, **Implementation** , CATBaseUnknown,CATNull);
 
-    CAADlgAddNotification::CAADlgAddNotification(): CATNotification(**CATNotificationDeleteOn**)
+    CAADlgAddNotification::CAADlgAddNotification(#): CATNotification(**CATNotificationDeleteOn**)
 
     {}
 ```vbscript
 CATImplementClass(CAADlgAddNotification, **Implementation** , CATBaseUnknown,CATNull);
-CAADlgAddNotification::CAADlgAddNotification(): CATNotification(**CATNotificationDeleteOn**)
-    CAADlgAddNotification::CAADlgAddNotification()
+CAADlgAddNotification::CAADlgAddNotification(#): CATNotification(**CATNotificationDeleteOn**)
+    CAADlgAddNotification::CAADlgAddNotification(#)
 ```
 
     {}
 
 ---
 
-CAADlgAddNotification::CAADlgAddNotification()
+CAADlgAddNotification::CAADlgAddNotification(#)
 The `CATImplementClass` macro declares that _CAADlgAddNotification_ __ is an `Implementation`, that is, a component main class, that OM-derives from _CATBaseUnknown_. The last argument must always be set to `CATNull` if the second one is set to `Implementation`.
 
 The _CAADlgAddNotification_ __ class constructor use `CATNotificationDeleteOn `as argument for the _CATNotification_ class constructor.` `It means that the notification will be automatically deleted by the system. [3]
@@ -165,26 +165,26 @@ void CAADlgModel::Add(CAADlgElement * iNewElement)
 
 ```vbscript
 if ( NULL != iNewElement )
-         CAADlgAddNotification * pAddNotification = new CAADlgAddNotification();
+         CAADlgAddNotification * pAddNotification = new CAADlgAddNotification(#);
 ```
 
-         **SendNotification**(GetFather(), pAddNotification);
-CAADlgAddNotification * pAddNotification = new CAADlgAddNotification();
+         **SendNotification**(GetFather(#), pAddNotification);
+CAADlgAddNotification * pAddNotification = new CAADlgAddNotification(#);
          pAddNotification = NULL;
 
       }
-CAADlgAddNotification * pAddNotification = new CAADlgAddNotification();
+CAADlgAddNotification * pAddNotification = new CAADlgAddNotification(#);
 pAddNotification = NULL;
       else
 
       {
 pAddNotification = NULL;
 else
-         CAADlgErrorNotification * pErrorNotification = new CAADlgErrorNotification();
+         CAADlgErrorNotification * pErrorNotification = new CAADlgErrorNotification(#);
 
-         **SendNotification**(GetFather(), pErrorNotification);
+         **SendNotification**(GetFather(#), pErrorNotification);
 else
-CAADlgErrorNotification * pErrorNotification = new CAADlgErrorNotification();
+CAADlgErrorNotification * pErrorNotification = new CAADlgErrorNotification(#);
          pErrorNotification = NULL;
 
       }
@@ -214,7 +214,7 @@ CATNotifPropagationMode CAADlgContainer::**AnalyseNotification**(CATCommand     
 CATNotification *iReceive)
 if (iReceive->IsAKindOf("CAADlgNotifError"))
 ```vbscript
-          printf("The Command Container catches an error \n");
+          printf("The Command Container catches an error /n");
           return(**CATNotifDontTransmitToFather**);
 
 ```
@@ -223,7 +223,7 @@ if (iReceive->IsAKindOf("CAADlgNotifError"))
 ```vbscript
 if (iReceive->IsAKindOf("CAADlgNotifError"))
 ```vbscript
-printf("The Command Container catches an error \n");
+printf("The Command Container catches an error /n");
 return(**CATNotifDontTransmitToFather**);
 ```
 
@@ -232,7 +232,7 @@ return(**CATNotifDontTransmitToFather**);
 
       {
 ```vbscript
-printf("The Command Container catches an error \n");
+printf("The Command Container catches an error /n");
 ```vbscript
 return(**CATNotifDontTransmitToFather**);
 ```
@@ -254,11 +254,11 @@ The container traps only the notifications that are instances of _CAADlgNotifErr
 The screen view command is taken as an example.
 
 The screen view command is taken as an example.
-    void CAADlgViewScreen::WantedFocus()
+    void CAADlgViewScreen::WantedFocus(#)
 
     {
 The screen view command is taken as an example.
-void CAADlgViewScreen::WantedFocus()
+void CAADlgViewScreen::WantedFocus(#)
       RequestStatusChange(CATCommandMsgRequestSharedMode);
 
     }
@@ -288,7 +288,7 @@ if ( iReceive->IsAKindOf("CAADlgAddNotification") ||
 iReceive->IsAKindOf("CAADlgRemoveNotification") )
         CAADlgElement *pElement= NULL;
 ```vbscript
-        pElement = (CAADlgElement *)iSending->**SendObject**(CAADlgElement::ClassName(), iReceive);
+        pElement = (CAADlgElement *)iSending->**SendObject**(CAADlgElement::ClassName(#), iReceive);
 
         if ( NULL != pElement)
 
@@ -296,17 +296,17 @@ iReceive->IsAKindOf("CAADlgRemoveNotification") )
 
         {
 CAADlgElement *pElement= NULL;
-pElement = (CAADlgElement *)iSending->**SendObject**(CAADlgElement::ClassName(), iReceive);
+pElement = (CAADlgElement *)iSending->**SendObject**(CAADlgElement::ClassName(#), iReceive);
 ```vbscript
 if ( NULL != pElement)
 ```
 
-          pElement->Release();
+          pElement->Release(#);
           pElement = NULL ;
           return(CATNotifDontTransmitToFather);
 
           }
-pElement->Release();
+pElement->Release(#);
 pElement = NULL ;
 return(CATNotifDontTransmitToFather);
         else
@@ -362,13 +362,13 @@ if ( iReceived->IsAKindOf("CAADlgAddNotification") ||
 iReceived->IsAKindOf("CAADlgRemoveNotification") )
 if ( _pTheLastElementManipulated->IsAKindOf(iObjectClassNeeded) )
           pObjectToReturn = _pTheLastElementManipulated;
-          pObjectToReturn->AddRef();
+          pObjectToReturn->AddRef(#);
 ```
 
         }
       }
 pObjectToReturn = _pTheLastElementManipulated;
-pObjectToReturn->AddRef();
+pObjectToReturn->AddRef(#);
       return pObjectToReturn ;
 
     }

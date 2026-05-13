@@ -4,7 +4,7 @@ title: "CAADriSetPrintArea.CATScript"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CATIADrawingView", "CATIA", "CAADriSetPrintArea"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriSetPrintAreaSource.htm"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriSetPrintAreaSource.htmmd"
 converted: "2026-05-11T17:31:51.102250"
 ```
 
@@ -27,8 +27,10 @@ converted: "2026-05-11T17:31:51.102250"
 
 ```
 
-    Sub CATMain()
 ```vbscript
+    Sub CATMain(#)
+```vbscript
+```
 ```vbscript
     ' Retrieve the active document
 
@@ -37,9 +39,13 @@ converted: "2026-05-11T17:31:51.102250"
 ```
 
 ```vbscript
+```vbscript
     Dim oDocument As Document
 ```vbscript
+```
+```vbscript
     Set oDocument = CATIA.ActiveDocument
+```
 ```
 
 ```
@@ -49,8 +55,10 @@ converted: "2026-05-11T17:31:51.102250"
 ```vbscript
     ' Test the document's type, if it is not a drawing document the macro stops
     If TypeName(oDocument) = "DrawingDocument" Then
+```vbscript
         Dim oDrawingDocument As DrawingDocument
         Set oDrawingDocument = oDocument
+```
 ```
 
 ```
@@ -61,15 +69,19 @@ converted: "2026-05-11T17:31:51.102250"
 If TypeName(oDocument) = "DrawingDocument" Then
 ```vbscript
 ```vbscript
+```vbscript
 Dim oDrawingDocument As DrawingDocument
 Set oDrawingDocument = oDocument
+```
 ```
 
 ```
 
     Else
+```vbscript
         MsgBox "This macro can be run with a drawing document only."
         Exit Sub
+```
     End If
 ```
 
@@ -77,24 +89,32 @@ Set oDrawingDocument = oDocument
 ```vbscript
 ```vbscript
     ' Retrieve the active sheet of the document
+```vbscript
     Dim oSheet As DrawingSheet
     Set oSheet = oDrawingDocument.Sheets.ActiveSheet
     ' Retrieve the selection of the document
+```
+```vbscript
     Dim oSelection 'As Selection
     Set oSelection = oDrawingDocument.Selection
     ' Clear the selection
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Dim oSelection 'As Selection
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set oSelection = oDrawingDocument.Selection
 ' Clear the selection
+```
 ```
 
 ```
@@ -103,10 +123,13 @@ Set oSelection = oDrawingDocument.Selection
 ```vbscript
 ```vbscript
     ' Define the object type allowed to be selected, here a drawing point
+```vbscript
     Dim InputObjectType(0)
+```
 ```
 
     InputObjectType(0) = "Point2D"
+```vbscript
 ```vbscript
     Dim ReturnStatus As String
     Dim oView As DrawingView
@@ -115,6 +138,7 @@ Set oSelection = oDrawingDocument.Selection
     Dim iFirstPoint 'As Point 2D
     Dim oFirstPointRelative(1)
     Dim oFirstPointAbsolute(1)
+```
 ```
 
 ```
@@ -130,10 +154,14 @@ Set oSelection = oDrawingDocument.Selection
     If ObjectSelected  Then
         ' A drawing point has been selected
         ' Retrieve the drawing point object
+```vbscript
         Set iFirstPoint = oSelection.Item(1).Value
         ' Retrieve the drawing point's view form the FindObject method of the selection
+```
+```vbscript
         Set oView = oSelection.FindObject("CATIADrawingView")
         ' Retrieve the drawing point's coordinates,
+```
         ' these coordinates are defined from the view's reference axis
 ```
 
@@ -142,8 +170,10 @@ Set oSelection = oDrawingDocument.Selection
 ```
 
 ```vbscript
+```vbscript
 Set oView = oSelection.FindObject("CATIADrawingView")
 ```vbscript
+```
 ```vbscript
 ' Retrieve the drawing point's coordinates,
 ' these coordinates are defined from the view's reference axis
@@ -160,12 +190,16 @@ Set oView = oSelection.FindObject("CATIADrawingView")
     End If
     oSelection.Clear
 
+```vbscript
     Dim iSecondPoint 'As Point2D
+```vbscript
+```
 ```vbscript
 ```vbscript
     Dim oSecondPointRelative(1)
     Dim oSecondPointAbsolute(1)
     ' Retrieve the second point location to set the print area from the mouse selection
+```
     ReturnStatus = oSelection.IndicateOrSelectElement2D("Select the second point", InputObjectType, True, True, False, ObjectSelected, oSecondPointAbsolute)
 
 ```
@@ -189,15 +223,19 @@ ReturnStatus = oSelection.IndicateOrSelectElement2D("Select the second point", I
 ```
 
 ```vbscript
+```vbscript
         Set iSecondPoint = oSelection.Item(1).Value
+```
 ```
 
 ```vbscript
 ```vbscript
 ```vbscript
         ' Retrieve the drawing point's view form the FindObject method of the selection
+```vbscript
         Set oView = oSelection.FindObject("CATIADrawingView")
         ' Retrieve the drawing point's coordinates,
+```
         ' these coordinates are defined from the view's reference axis
 ```
 
@@ -206,8 +244,10 @@ ReturnStatus = oSelection.IndicateOrSelectElement2D("Select the second point", I
 ```
 
 ```vbscript
+```vbscript
 Set oView = oSelection.FindObject("CATIADrawingView")
 ```vbscript
+```
 ```vbscript
 ' Retrieve the drawing point's coordinates,
 ' these coordinates are defined from the view's reference axis
@@ -229,8 +269,10 @@ Set oView = oSelection.FindObject("CATIADrawingView")
 ```vbscript
 ```vbscript
     ' Define the coordinates of the print area's point
+```vbscript
     Dim XPrintArea As Double
     Dim YPrintArea As Double
+```
 ```
 
 ```
@@ -272,9 +314,11 @@ End If
 ```vbscript
     End If
 
+```vbscript
     Dim WidthPrintArea As Double
     Dim HeightPrintArea As Double
 
+```
 ```
 
 ```
@@ -288,8 +332,10 @@ End If
     WidthPrintArea = Abs(oSecondPointAbsolute(0) - oFirstPointAbsolute(0))
     HeightPrintArea = Abs(oSecondPointAbsolute(1) - oFirstPointAbsolute(1))
     ' Define and activate the print area of the drawing document
+```vbscript
     Dim oPrintArea As PrintArea
     Set oPrintArea = oSheet.PrintArea
+```
 ```
 
 ```
@@ -305,16 +351,20 @@ End If
     oSelection.Add oSheet
 
 ```vbscript
+```vbscript
     CATIA.StartCommand "CATDrwVisualizePrintAreaHdr"
     oSelection.Clear
+```
 
 ```
 
 ```vbscript
+```vbscript
     End Sub
 
 End Sub
-    Private Sub CatAbsoluteCoordinates(CatDrawingView As Object, AbsoluteCoordinates(), RelativeCoordinates())
+    Private Sub CatAbsoluteCoordinates(CatDrawingView As Object, AbsoluteCoordinates(#), RelativeCoordinates(#))
+```
 ```
 
 ```vbscript
@@ -329,6 +379,8 @@ End Sub
 ```
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

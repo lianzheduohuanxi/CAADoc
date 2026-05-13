@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating Center Lines in a CATDrawing Document"
-category: "use case"
+category: use-case case"
 module: "CAADriUseCases"
 tags: ["CATIDrwDimDimension", "CATIUnknownListImpl", "CAADrwAddin", "CATIDrwStackedDimSystem", "CAAUseCaseCommands", "CATIDrwDimSystem", "CAADraftingInterfaces", "CATIA", "CAADrwCreateDimSystCmd", "CATISpecObject_var", "CAADrwCreateDimSyst", "CATIDrwAnnotationFactory", "CATIUnknownList"]
-source_file: "Doc/online/CAADriUseCases/CAADriCreateDimSyst.htm"
+source_file: "Doc/online/CAADriUseCases/CAADriCreateDimSyst.htmmd"
 converted: "2026-05-11T17:31:50.955484"
 ```
 
@@ -92,10 +92,10 @@ Top]
 Top]
 The CAADrwCreateDimSyst use case is made of two source files named CAADrwCreateDimSystCmd.h and CAADrwCreateDimSystCmd.cpp located in the CAADrwCreateDimSyst.m module of the CAADraftingInterfaces.edu framework:
 
-Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwCreateDimSyst.m\`
+Windows | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCreateDimSyst.m/`
 
 The CAADrwCreateDimSyst use case is made of two source files named CAADrwCreateDimSystCmd.h and CAADrwCreateDimSystCmd.cpp located in the CAADrwCreateDimSyst.m module of the CAADraftingInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwCreateDimSyst.m\`
+Windows | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCreateDimSyst.m/`
 Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCreateDimSyst.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -112,10 +112,10 @@ There are two steps in CAADrwCreateDimSyst:
 [Top]
 ### Building the State Chart and Creating the Appropriate Selection Agent
 
-    void CAADrwCreateDimSystCmd::BuildGraph()
+    void CAADrwCreateDimSystCmd::BuildGraph(#)
     {
       // Creation of the acquisition agent
-void CAADrwCreateDimSystCmd::BuildGraph()
+void CAADrwCreateDimSystCmd::BuildGraph(#)
       _pObjectAgent = new CATPathElementAgent("_pObjectAgent A");
       _pObjectAgent ->SetBehavior( CATDlgEngWithPrevaluation |
       CATDlgEngMultiAcquisition |
@@ -155,12 +155,12 @@ In this section we create a CATPathElementAgent and set the corresponding elemen
     boolean CAADrwCreateDimSystCmd::CreateDimSyst(void *iData)
     {
 boolean CAADrwCreateDimSystCmd::CreateDimSyst(void *iData)
-      CATSO* pObjSO = _pObjectAgent->GetListOfValues();
+      CATSO* pObjSO = _pObjectAgent->GetListOfValues(#);
       CATPathElement *pElemPath = NULL;
 
       // Dimension System creation:
       // ==========================
-CATSO* pObjSO = _pObjectAgent->GetListOfValues();
+CATSO* pObjSO = _pObjectAgent->GetListOfValues(#);
 CATPathElement *pElemPath = NULL;
 ```vbscript
       if (NULL != pObjSO)
@@ -171,26 +171,28 @@ CATPathElement *pElemPath = NULL;
         // We will scan the CSO from the begining
 ```vbscript
 if (NULL != pObjSO)
-        pObjSO->InitElementList();
+        pObjSO->InitElementList(#);
         CATIDrwAnnotationFactory *piDrwFact = NULL;
         IDMPoint2D *piFirstElem = NULL;
         IDMPoint2D *piSecondElem = NULL;
         IDMPoint2D *piNextElem = NULL;
         CATIDrwDimSystem *piDimSyst = NULL;
+```vbscript
         CATIDrwDimDimension *piDim = NULL;
         CATDimSystemDefinition sysDef;
+```
         sysDef.SystemType = StackedDimSystem;
         sysDef.SetOffsetMode(ConstantOffsetSystem);
         sysDef.SetValueAlignmentMode(OnRefLineSide);
         sysDef.SetValueOffset(100.0);
-        while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement()) )
+        while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement(#)) )
 ```
 
         {
 sysDef.SetOffsetMode(ConstantOffsetSystem);
 sysDef.SetValueAlignmentMode(OnRefLineSide);
 sysDef.SetValueOffset(100.0);
-while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement()) )
+while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement(#)) )
 ```vbscript
 ```vbscript
           if (NULL == piFirstElem)
@@ -201,7 +203,7 @@ while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement()) )
 
           {
 sysDef.SetValueOffset(100.0);
-while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement()) )
+while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement(#)) )
 ```vbscript
 ```vbscript
 if (NULL == piFirstElem)
@@ -263,9 +265,9 @@ if (piSecondElem && piFirstElem)
 ```
 
               CATIUnknownList * piSelectionsList =NULL;
-              CATIUnknownListImpl * piListsel = new CATIUnknownListImpl();
+              CATIUnknownListImpl * piListsel = new CATIUnknownListImpl(#);
               piListsel->QueryInterface(IID_CATIUnknownList, (void **) &piSelectionsList);
-              piListsel->Release(); piListsel=NULL;
+              piListsel->Release(#); piListsel=NULL;
 
               IUnknown * piLine1 = NULL;
               IUnknown * piLine2 = NULL;
@@ -318,11 +320,11 @@ if (piDrwFact)
 if (piDrwFact)
 piDrwFact->CreateDimension(piSelectionsList,pts,dimType,&dimDef,&piDim);
 piDrwFact->CreateDimSystem(piDim,&sysDef,&piDimSyst);
-              if (piLine1) piLine1->Release(),piLine1 = NULL;
+              if (piLine1) piLine1->Release(#),piLine1 = NULL;
 ```vbscript
 ```vbscript
-              if (piLine2) piLine2->Release(),piLine2 = NULL;
-              if (piSelectionsList) piSelectionsList->Release(),piSelectionsList=NULL;
+              if (piLine2) piLine2->Release(#),piLine2 = NULL;
+              if (piSelectionsList) piSelectionsList->Release(#),piSelectionsList=NULL;
 ```
 
 ```
@@ -332,11 +334,11 @@ piDrwFact->CreateDimSystem(piDim,&sysDef,&piDimSyst);
             }
           }
 ```vbscript
-if (piLine1) piLine1->Release(),piLine1 = NULL;
+if (piLine1) piLine1->Release(#),piLine1 = NULL;
 ```vbscript
 ```vbscript
-if (piLine2) piLine2->Release(),piLine2 = NULL;
-if (piSelectionsList) piSelectionsList->Release(),piSelectionsList=NULL;
+if (piLine2) piLine2->Release(#),piLine2 = NULL;
+if (piSelectionsList) piSelectionsList->Release(#),piSelectionsList=NULL;
 ```
 
 ```
@@ -346,7 +348,7 @@ if (piSelectionsList) piSelectionsList->Release(),piSelectionsList=NULL;
 
           {
 ```vbscript
-if (piSelectionsList) piSelectionsList->Release(),piSelectionsList=NULL;
+if (piSelectionsList) piSelectionsList->Release(#),piSelectionsList=NULL;
 else if (NULL == piNextElem)
             piNextElem = (IDMPoint2D *)pElemPath->FindElement(IID_IDMPoint2D);
 ```
@@ -380,14 +382,14 @@ CATMathPoint2D ptSel(pt1[0],pt1[1]);
 CATIDrwDimDimension *myDimToAdd = NULL;
 piDimSyst->AddDimension((CATBaseUnknown *)piNextElem,myDimToAdd,&ptSel);
 ```vbscript
-            if (piNextElem) piNextElem->Release(),piNextElem=NULL;
+            if (piNextElem) piNextElem->Release(#),piNextElem=NULL;
 
 ```
 
           }
 CATIDrwDimDimension *myDimToAdd = NULL;
 piDimSyst->AddDimension((CATBaseUnknown *)piNextElem,myDimToAdd,&ptSel);
-if (piNextElem) piNextElem->Release(),piNextElem=NULL;
+if (piNextElem) piNextElem->Release(#),piNextElem=NULL;
           else
             cout << "invalid input" << endl;
 
@@ -421,15 +423,15 @@ if (piMasterDim)
         piMasterDim->MoveDimensionLine (ptPos);
         CATISpecObject_var spDimSpec = piMasterDim;
         if (!!spDimSpec)
-          spDimSpec->Update();
-        piMasterDim->Release();piMasterDim=NULL;
+          spDimSpec->Update(#);
+        piMasterDim->Release(#);piMasterDim=NULL;
 
       }
       // Dimension system properties modification
 ```vbscript
 if (!!spDimSpec)
-spDimSpec->Update();
-piMasterDim->Release();piMasterDim=NULL;
+spDimSpec->Update(#);
+piMasterDim->Release(#);piMasterDim=NULL;
       CATIDrwStackedDimSystem *piDrwStkSyst=NULL;
       if (SUCCEEDED(piDimSyst->QueryInterface(IID_CATIDrwStackedDimSystem,(void **)&piDrwStkSyst)))
 ```
@@ -440,13 +442,13 @@ if (SUCCEEDED(piDimSyst->QueryInterface(IID_CATIDrwStackedDimSystem,(void **)&pi
         double valueoffset = 12.0;
         piDrwStkSyst->SetValueAlignmentMode(AlignedOnCenter);
         piDrwStkSyst->SetOffset(valueoffset);
-        piDrwStkSyst->Release();piDrwStkSyst=NULL;
+        piDrwStkSyst->Release(#);piDrwStkSyst=NULL;
 
       }
 double valueoffset = 12.0;
 piDrwStkSyst->SetValueAlignmentMode(AlignedOnCenter);
 piDrwStkSyst->SetOffset(valueoffset);
-piDrwStkSyst->Release();piDrwStkSyst=NULL;
+piDrwStkSyst->Release(#);piDrwStkSyst=NULL;
       piDimSyst->LineUp(2);
 
     }

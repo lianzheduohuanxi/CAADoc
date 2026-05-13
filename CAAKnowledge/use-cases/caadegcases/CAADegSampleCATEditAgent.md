@@ -4,13 +4,13 @@ title: "Editing Object During a Command"
 category: "use case"
 module: "CAADegUseCases"
 tags: ["CAAPriPrtCfgAddin", "CAAPriEditSketchCmd", "CAAPriEditSketch", "CAAPriPrtCfgAdn", "CATISpecObject", "CATIBuildPath", "CATIWorkbenchAddin", "CATISketch", "CAAPriEditSketchNotification", "CATIPrtCfgAddin", "CAAPartInterfaces", "CAAPriCommands", "CAAPriEditSketchDlg", "CATIPad"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleCATEditAgent.htm"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleCATEditAgent.htmmd"
 converted: "2026-05-11T17:33:49.575815"
 ```
 
 ---
 tags: ["CAAPriPrtCfgAddin", "CAAPriEditSketchCmd", "CAAPriEditSketch", "CAAPriPrtCfgAdn", "CATISpecObject", "CATIBuildPath", "CATIWorkbenchAddin", "CATISketch", "CAAPriEditSketchNotification", "CATIPrtCfgAddin", "CAAPartInterfaces", "CAAPriCommands", "CAAPriEditSketchDlg", "CATIPad"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleCATEditAgent.htm"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleCATEditAgent.htmmd"
 converted: "2026-05-11T17:33:49.575815"
 3D PLM Enterprise Architecture |  User Interfaces - Commands |  Editing Object During a Command How to stack a workbench using CATEditAgent class
 
@@ -54,7 +54,7 @@ The Sketcher workbench is active until the end user clicks the exit ( ![](images
     * ![](images/CAADegEditAgentSktIcon3.jpg), Animate Constraint
 The "Part Modification" command is a state command which uses the _CATEditAgent_. Its UML statechart diagram [1] is the following: _Fig.4: The UML state chart for the Part Modification Command_ ![](images/CAADegCATEditAgentUML.jpg)
 ---
-[Top] How to Launch CAAPriEditSketch To launch CAAPriEditSketch , you will need to set up the build time environment, then compile CAAPriEditSketch along with its prerequisites, set up the run time environment, and then execute the use case [2]. But just before launching the execution, edit the CAAPartInterfaces.edu.dico interface dictionary file located in the dictionary directory of the CAAPartInterfaces.edu framework: Windows | `InstallRootDirectory\``CAAPartInterfaces.edu\CNext\code\dictionary\`
+[Top] How to Launch CAAPriEditSketch To launch CAAPriEditSketch , you will need to set up the build time environment, then compile CAAPriEditSketch along with its prerequisites, set up the run time environment, and then execute the use case [2]. But just before launching the execution, edit the CAAPartInterfaces.edu.dico interface dictionary file located in the dictionary directory of the CAAPartInterfaces.edu framework: Windows | `InstallRootDirectory/``CAAPartInterfaces.edu/CNext/code/dictionary/`
 ---|---
 The "Part Modification" command is a state command which uses the _CATEditAgent_. Its UML statechart diagram [1] is the following: _Fig.4: The UML state chart for the Part Modification Command_ ![](images/CAADegCATEditAgentUML.jpg)
 UNIX | `InstallRootDirectory/``CAAPartInterfaces.edu/CNext/code/dictionary/`
@@ -80,9 +80,9 @@ Then, in the window where you run the mkrun command, do not type the module name
       * _CAAPriEditSketchCmd_ : The state command to modify a Pad. This command uses the _CATEditAgent_ class to edit the profile of the selected Pad.
       * _CAAPriEditSketchDlg_ : The dialog box associated with the _CAAPriEditSketchCmd_ command.
       * _CAAPriEditSketchNotification_ : The notification class to inform the _CAAPriEditSketchCmd_ command that the sketch icon has been pushed.
-Windows | `InstallRootDirectory\CAAPartInterfaces.edu\CAAPriCommands.m\`
+Windows | `InstallRootDirectory/CAAPartInterfaces.edu/CAAPriCommands.m/`
 ---|---
-Windows | `InstallRootDirectory\CAAPartInterfaces.edu\CAAPriCommands.m\`
+Windows | `InstallRootDirectory/CAAPartInterfaces.edu/CAAPriCommands.m/`
 Unix | `InstallRootDirectory/CAAPartInterfaces.edu/CAAPriCommands.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed
 
@@ -90,15 +90,15 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed
       * _CAAPriPrtCfgAdn_ : The implementation class of the _CATIPrtCfgAddin_ interface. Refer to the use case [3] for details.
 Unix | `InstallRootDirectory/CAAPartInterfaces.edu/CAAPriCommands.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed
-Windows | `InstallRootDirectory\CAAPartInterfaces.edu\CAAPriPrtCfgAddin.m\`
+Windows | `InstallRootDirectory/CAAPartInterfaces.edu/CAAPriPrtCfgAddin.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed
-Windows | `InstallRootDirectory\CAAPartInterfaces.edu\CAAPriPrtCfgAddin.m\`
+Windows | `InstallRootDirectory/CAAPartInterfaces.edu/CAAPriPrtCfgAddin.m/`
 Unix | `InstallRootDirectory/CAAPartInterfaces.edu/CAAPriPrtCfgAddin.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM
 
 [Top] Step-by-Step There are five logical steps in CAAPriEditSketch:
-Windows | `InstallRootDirectory\CAAPartInterfaces.edu\CAAPriPrtCfgAddin.m\`
+Windows | `InstallRootDirectory/CAAPartInterfaces.edu/CAAPriPrtCfgAddin.m/`
 Unix | `InstallRootDirectory/CAAPartInterfaces.edu/CAAPriPrtCfgAddin.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM
     1. Creating the Edit Agent
@@ -142,21 +142,28 @@ The name of the workbench should be set with the `SetWorkbench` method. But the 
 
     ...
 The name of the workbench should be set with the `SetWorkbench` method. But the Sketcher is a specific case because it has only one workbench, so the UI activation [5] of the Sketch launches the Sketcher workbench. It is not necessary to specify this information.
-           CATStackableCommandSet * pCommandSet = new **CATStackableCommandSet**();
+```vbscript
+           CATStackableCommandSet * pCommandSet = new **CATStackableCommandSet**(#);
             pCommandSet->**AddCommand**("2DConstraint");
+```
             pCommandSet->AddCommand("2DAutoCst");
             pCommandSet->AddCommand("2DAnimateCst");
 
             _pEditAgent->**SetCommandSet**(pCommandSet);
-            pCommandSet->Release();
+            pCommandSet->Release(#);
+```vbscript
             pCommandSet = NULL ;
+
+```
 
     ...
 
 ---
-pCommandSet->Release();
+pCommandSet->Release(#);
+```vbscript
 pCommandSet = NULL ;
 The _CATStackableCommandSet_ class is a set of _CATCommandHeader_ class instance identifiers. The default constructor creates a non-empty list of commands: Hide/Show, Exit, ...... You should add the available commands of the workbench.  The `2DConstraint`, `2DAutoCst` and `2DAnimateCst` (Fig.3) are commands of the Sketcher workbench. To be exact, they are identifiers of _CATCommandHeader_ class instances. Refer to "How to (Re-)Use Command Header Identifiers" section of the "The Command Headers" technical article [6] to retrieve the name of identifiers.   `pCommandSet` must be released, since the `SetCommandSet` method addref's the class pointer.
+```
 
     * The name of the method which returns the object to edit
 
@@ -250,7 +257,7 @@ CATBoolean CAAPriEditSketchCmd::TriggerEditSketch(void *iDummy)
     ...
 CATBoolean CAAPriEditSketchCmd::TriggerEditSketch(void *iDummy)
 _pDialogBox->SetVisibility(**CATDlgHide**) ;
-          _pTriggerAgent->**InitializeAcquisition**();
+          _pTriggerAgent->**InitializeAcquisition**(#);
 
     ...
 
@@ -280,7 +287,7 @@ CATBoolean CAAPriEditSketchCmd::EditSketch(void *iDummy)
      ...
 CATBoolean CAAPriEditSketchCmd::EditSketch(void *iDummy)
 _pDialogBox->SetVisibility(**CATDlgShow**) ;
-           _pEditAgent->**InitializeAcquisition**();
+           _pEditAgent->**InitializeAcquisition**(#);
 
     ...
 
@@ -294,11 +301,11 @@ CATPathElement * CAAPriEditSketchCmd::**ProvideProfileToEdit**(CATClassId iDummy
        CATPathElement * pPathToReturn = NULL ;
 
 ```vbscript
-       if ( (NULL == GetEditor()) || (NULL == _pFeatureAgent) ) return NULL ;
+       if ( (NULL == GetEditor(#)) || (NULL == _pFeatureAgent) ) return NULL ;
 
 ```
 
-       CATBaseUnknown * pSelectedElt= _pFeatureAgent->**GetElementValue**();
+       CATBaseUnknown * pSelectedElt= _pFeatureAgent->**GetElementValue**(#);
 
        CATISpecObject * pISpecObjectOnProfile = NULL ;
        HRESULT rc = **FindProfile**(pSelectedElt,&pISpecObjectOnProfile) ;
@@ -328,25 +335,25 @@ rc = pISpecObjectOnProfile->QueryInterface( IID_CATIBuildPath, (void**) &piBuild
 if ( SUCCEEDED(rc) )
 ```
 
-             CATPathElement Context = GetEditor()->GetUIActiveObject();
+             CATPathElement Context = GetEditor(#)->GetUIActiveObject(#);
 ```vbscript
              rc = piBuildPath->**ExtractPathElement**(&Context,&pPathToReturn);
 
 ```
 
-             piBuildPath->Release();
+             piBuildPath->Release(#);
              piBuildPath = NULL ;
 
           }
 
-piBuildPath->Release();
+piBuildPath->Release(#);
 piBuildPath = NULL ;
-          pISpecObjectOnProfile->Release();
+          pISpecObjectOnProfile->Release(#);
           pISpecObjectOnProfile = NULL ;
 
        }
 
-pISpecObjectOnProfile->Release();
+pISpecObjectOnProfile->Release(#);
 pISpecObjectOnProfile = NULL ;
        return pPathToReturn ;
 

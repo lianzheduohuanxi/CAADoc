@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAAScrBase", "CAASchInsertComponentSource", "CATIA", "CAAScrJavaScript", "CAASchInsertComponent_01", "CAAScdSchUseCases", "CAASchPlatformModeler", "CAAScdInfUseCases", "CAAInfLauchMacro", "CAASCH_Sample", "CAASCH_RouteForPlacement", "CAASchInsertComponent_02", "CAASCHEDUApp", "CAASchInsertComponent", "CATIASchComponent", "CAASchAppBase", "CAADoc", "CAASchAppUtilities"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchInsertComponent.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchInsertComponent.htmmd"
 converted: "2026-05-11T11:27:02.647035"
 ---
 
@@ -138,35 +138,49 @@ This use case shows two ways to insert a Schematic object into a Schematic
 ...
     ' ------------------------------------------------------------------------- 
     ' Open the catalog document 
+```vbscript
     Dim sCtlgFilePath
     sCtlgFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
-            "online\CAAScdSchUseCases\samples\CAASCH_Sample.catalog")
+            "online/CAAScdSchUseCases/samples/CAASCH_Sample.catalog")
+```
 
+```vbscript
     Dim objSchCtlgDoc As Document
     Set objSchCtlgDoc = CATIA.Documents.Open(sCtlgFilePath)
+```
 ```
 
 ```vbscript
 ' Open main schematic design document (for new component instances created here)
+```vbscript
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
-            "online\CAAScdSchUseCases\samples\CAASCH_RouteForPlacement.CATProduct")
+            "online/CAAScdSchUseCases/samples/CAASCH_RouteForPlacement.CATProduct")
+```
 
+```vbscript
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
     ...
+```
 ```
 
 ```vbscript
 ...
     ' Find the top node of the schematic object tree - schematic root.
+```vbscript
     Dim objPrdRoot As Product
     Dim objSchRoot As SchematicRoot
     If ( Not ( IsEmpty ( objSchDoc ) ) Then
+```
+```vbscript
       Set objPrdRoot = objSchDoc.Product 
       If ( Not ( IsEmpty ( objPrdRoot ) ) Then
+```
+```vbscript
         Set objSchRoot = objPrdRoot.GetTechnologicalObject(&quot;SchematicRoot&quot;)
       End If
+```
     End If
 ```
 
@@ -176,7 +190,9 @@ This use case shows two ways to insert a Schematic object into a Schematic
 
 ```vbscript
 ...
+```vbscript
     Dim objSchGRRCVCtlg As SchGRR
+```
 ```
 
 ```vbscript
@@ -187,6 +203,8 @@ This use case shows two ways to insert a Schematic object into a Schematic
        '-----------------------------------------------------------------------
        ' Get the symbol of a component from the component catalog.
        '-----------------------------------------------------------------------
+```vbscript
        Set objSchGRRCVCtlg = objSchRoot.GetCompSymbolFromCatalog (&quot;Control Valve&quot;,objSchCtlgDoc)
     ...
+```
 ```

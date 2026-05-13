@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CAAScrBase", "CAAScdDriUseCases", "CATIA", "CAADriUseCases", "CAAScrJavaScript", "CAADriInstantiateDittoSource", "CAAScdDriTechArticles", "CAADriInstantiateInnerDittoSource", "CAADriObjDrawingSheets", "CAAScdInfUseCases", "CAADriObjDrawingView", "CAADriObjDrawingSheet", "CAADriObjDrawingDocument", "CAADriInstantiateInnerDitto", "CAAInfLauchMacro"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriInstantiateInnerDitto.htm"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriInstantiateInnerDitto.htmmd"
 converted: "2026-05-11T11:27:02.744954"
 ---
 
@@ -101,7 +101,7 @@ The text object is retrieved from the `o2DComponent` object
     
   
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 
@@ -122,86 +122,110 @@ in a view using the *Add *method of the *Components* object.
 
 *Copyright  2003, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 ...
+```vbscript
     ' Set the CATIA popup file alerts to False
     ' It prevents to stop the macro at each alert during its execution
+```
+```vbscript
     CATIA.DisplayFileAlerts = False
   ...
+```
 ```
 
 ```vbscript
 ...
     ' Open the drawing document
+```vbscript
     Dim oDrawing As DrawingDocument
     Set oDrawing = CATIA.Documents.Open(sDocPath &amp; _
-             &quot;\online\CAAScdDriUseCases\samples\CAADriInstantiateDittoSource.CATDrawing&quot;)    
+             &quot;/online/CAAScdDriUseCases/samples/CAADriInstantiateDittoSource.CATDrawing&quot;)    
+```
   ...
 ```
 
 ```vbscript
 ...
     ' Retrieve the sheets collection of the drawing document
+```vbscript
     Dim oSheets As DrawingSheets
     Set oSheets = oDrawing.Sheets
     
     ' Retrieve the sheet where the detail view will be instantiated
+```
+```vbscript
     Dim oSheet As DrawingSheet
     Set oSheet = oSheets.Item(&quot;Sheet.1&quot;)
     
     ' Retrieve the view where the detail view will be instantiated
+```
+```vbscript
     Dim oView As DrawingView
     Set oView = oSheet.Views.Item(&quot;View.3&quot;)
     oView.Activate
+```
   ...
 ```
 
 ```vbscript
 ...
     ' Retrieve the detail sheet containing the detail view to be instantiated
+```vbscript
     Dim oDetailSheet As DrawingSheet
     Set oDetailSheet = oSheets.Item(&quot;Sheet.2 (Detail)&quot;)
     
     ' Retrieve the detail view to be instantiated
+```
+```vbscript
     Dim oDetailView As DrawingView
     Set oDetailView = oDetailSheet.Views.Item(&quot;DrwDetail.1&quot;)
   ...
+```
 ```
 
 ```vbscript
 ...
     ' Indicate the ditto location
+```vbscript
     Dim ReturnStatus As String
     Dim iDittoCoordinates(1)
     Dim oDraw
     Set oDraw = oDrawing
     ReturnStatus = oDraw.Indicate2D(&quot;Indicate the ditto location&quot;, iDittoCoordinates)
+```
   ...
 ```
 
 ```vbscript
 ...
     ' Retrieve the drawing components collection of the target drawing view
+```vbscript
     Dim o2DComponents As DrawingComponents
     Set o2DComponents = oView.Components
     
     ' Create the ditto
+```
+```vbscript
     Dim o2DComponent As DrawingComponent
     Set o2DComponent = o2DComponents.Add(oDetailView, iDittoCoordinates(0), iDittoCoordinates(1))
   ...
+```
 ```
 
 ```vbscript
 ...
     ' Retrieve the modifiable text of the ditto
+```vbscript
     Dim oText As DrawingText
     Set oText = o2DComponent.GetModifiableObject(1)
     
     ' Modify the modifiable text value
+```
+```vbscript
     Dim ReturnValue As String
     ReturnValue = InputBox(&quot;Enter a value&quot;, &quot;&quot;, &quot;New Value For Text&quot;)
+```
     oText.Text = ReturnValue
   ...
 ```

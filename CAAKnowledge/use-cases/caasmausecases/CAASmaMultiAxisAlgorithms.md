@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAASmaUseCases"
 tags: ["CAASmaResultContourDriven", "CAASurfaceMachiningAlgoItf", "CATIDescendants_var", "CAADocStyleSheets", "CATIGSMPoint_var", "CATInstantiateComponent", "CATIPrtContainer_var", "CATIPartRequest", "CATIGSMFactory", "CAASmaResultSweeping", "CATIVisProperties_var", "CAAMultiAxisAlgorithms", "CATIMfgMachiningContainer", "CAADocUseCases", "CATISpecObject_var", "CAASmaMultiAxisAlgorithms", "CATIGeometricalElement", "CATIGeometricalElement_var", "CATIContainer_var", "CATIMfgMultiAxisAlgorithm"]
-source_file: "Doc/online/CAASmaUseCases/CAASmaMultiAxisAlgorithms.htm"
+source_file: "Doc/online/CAASmaUseCases/CAASmaMultiAxisAlgorithms.htmmd"
 converted: "2026-05-11T11:27:02.770050"
 ---
 
@@ -286,8 +286,6 @@ method of *CATIVisProperties* interface.
 
  
 
-
-
 ```vbscript
 CATDocument *pPartDoc = NULL;
    rc = CATDocumentServices::OpenDocument(InputPathName, pPartDoc);
@@ -301,18 +299,20 @@ CATDocument *pPartDoc = NULL;
 ```
 
 ```vbscript
+```vbscript
 &nbsp;&nbsp;&nbsp;&nbsp;  CATIDescendants_var spDescOnSurfacicSet = ListOfSurfacicSets[1];
 &nbsp;&nbsp;&nbsp;&nbsp;  if (NULL_var != spDescOnSurfacicSet)
+```
 &nbsp;&nbsp;&nbsp;&nbsp;  {
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  CATListValCATISpecObject_var ListOfGeometricalElts;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  spDescOnSurfacicSet-&gt;GetDirectChildren(CATIGeometricalElement::ClassName(), ListOfGeometricalElts);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  spDescOnSurfacicSet-&gt;GetDirectChildren(CATIGeometricalElement::ClassName(#), ListOfGeometricalElts);
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  ...
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  for (int ig=1;ig&lt;=NbGeometricalElts;ig++)
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  {
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  CATIGeometricalElement_var spGeomElement = ListOfGeometricalElts[ig];
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  if (NULL_var != spGeomElement)
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  {
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  CATBody_var spBody = spGeomElement-&gt;GetBodyResult();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  CATBody_var spBody = spGeomElement-&gt;GetBodyResult(#);
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  ...
 ```
 
@@ -335,7 +335,7 @@ CATDocument *pPartDoc = NULL;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  CATEdge_var spEdge = ListOfCells[i];
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  if (NULL_var != spEdge)
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  {
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  CATEdgeCurve * pEdgeCurve = spEdge-&gt;GetCurve();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  CATEdgeCurve * pEdgeCurve = spEdge-&gt;GetCurve(#);
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  CATCurve_var spCurve = pEdgeCurve;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  if (NULL_var != spCurve)
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  {
@@ -349,7 +349,7 @@ CATDocument *pPartDoc = NULL;
 &nbsp;  rc = CATDocumentServices::New(&quot;Process&quot;, pProcessDoc );
 &nbsp;  ...
 &nbsp;  CATIMfgMachiningContainer * piMfgEnvt = NULL;
-&nbsp;  piProcessContainer-&gt;QueryInterface(CATIMfgMachiningContainer::ClassId(), (void**)&amp;piMfgEnvt);
+&nbsp;  piProcessContainer-&gt;QueryInterface(CATIMfgMachiningContainer::ClassId(#), (void**)&amp;piMfgEnvt);
 &nbsp;  if (piMfgEnvt)
 &nbsp;  {
 &nbsp;&nbsp;&nbsp;  piMfgEnvt-&gt;InitContainer(FALSE,0);
@@ -358,7 +358,7 @@ CATDocument *pPartDoc = NULL;
 &nbsp;  CATIContainer_var spTPContainer;
 &nbsp;  CATIMfgManufacturingFactories *piFact =NULL;
 &nbsp;  CATString ClassName(&quot;CATMfgManufacturingFactories&quot;);
-&nbsp;  ::CATInstantiateComponent (ClassName, CATIMfgManufacturingFactories::ClassId(), (void**)&amp; piFact);
+&nbsp;  ::CATInstantiateComponent (ClassName, CATIMfgManufacturingFactories::ClassId(#), (void**)&amp; piFact);
 &nbsp;  if (piFact)
 &nbsp;  {
 &nbsp;&nbsp;&nbsp;  piFact-&gt;GetManufacturingToolPathFactory(spTPContainer);
@@ -367,7 +367,7 @@ CATDocument *pPartDoc = NULL;
 
 ```vbscript
 &nbsp;  CATIMfgMultiAxisAlgorithm *piMMSweepingAlgo =NULL;
-&nbsp;  ::CATInstantiateComponent (&quot;CATMfgAlgoMultiAxisSweeping&quot;, CATIMfgMultiAxisAlgorithm::ClassId(), (void**)&amp; piMMSweepingAlgo);
+&nbsp;  ::CATInstantiateComponent (&quot;CATMfgAlgoMultiAxisSweeping&quot;, CATIMfgMultiAxisAlgorithm::ClassId(#), (void**)&amp; piMMSweepingAlgo);
 &nbsp;  ...
 &nbsp;  rc = piMMSweepingAlgo-&gt;SetValue(MfgAlgMachiningTolerance,0.1); // Machining tolerance
 &nbsp;  rc = piMMSweepingAlgo-&gt;SetValue(MfgAlgMaxDiscretizationStep,100.); // Maximum discretization step
@@ -403,7 +403,7 @@ CATDocument *pPartDoc = NULL;
 
 ```vbscript
 CATIMfgMultiAxisAlgorithm *piMMContourDriven =NULL;
-&nbsp;  ::CATInstantiateComponent (&quot;CATMfgAlgoMultiAxisContourDriven&quot;, CATIMfgMultiAxisAlgorithm::ClassId(), (void**)&amp; piMMContourDriven);
+&nbsp;  ::CATInstantiateComponent (&quot;CATMfgAlgoMultiAxisContourDriven&quot;, CATIMfgMultiAxisAlgorithm::ClassId(#), (void**)&amp; piMMContourDriven);
 &nbsp;  ...
 &nbsp;  rc = piMMContourDriven-&gt;SetValue(MfgAlgMachiningTolerance,0.1); // Machining tolerance
 &nbsp;  rc = piMMContourDriven-&gt;SetValue(MfgAlgMaxDistance,10.); // Distance on part
@@ -437,7 +437,7 @@ CATIMfgMultiAxisAlgorithm *piMMContourDriven =NULL;
 &nbsp;  CATIPrtContainer_var spPrtContainer = ispPartContainer;
 &nbsp;  if (NULL_var != spPrtContainer)
 &nbsp;  {
-&nbsp;&nbsp;&nbsp;&nbsp;  CATISpecObject_var spRootPart = spPrtContainer-&gt;GetPart();
+&nbsp;&nbsp;&nbsp;&nbsp;  CATISpecObject_var spRootPart = spPrtContainer-&gt;GetPart(#);
 &nbsp;&nbsp;&nbsp;&nbsp;  spMechRootFactory-&gt;CreateGeometricalSet(&quot;&quot;,spRootPart,ospGeomSet);&nbsp;&nbsp;&nbsp;&nbsp; 
 &nbsp;  }
 &nbsp;  ...

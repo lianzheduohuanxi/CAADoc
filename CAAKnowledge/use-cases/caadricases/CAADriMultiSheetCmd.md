@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating a Multi Sheet Interactive Command"
-category: "use case"
+category: use-case case"
 module: "CAADriUseCases"
 tags: ["CATIADocument", "CATIModelEvents_var", "CAADrwMultiSheetCmd", "CAADrwAddin", "CAAUseCaseCommands", "CATIADrawingDocument", "CAADraftingInterfaces", "CATIA", "CATIDftMultiSheetCmd", "CATIDrwText", "CATIDftMultiSheetMode", "CATIAApplication"]
-source_file: "Doc/online/CAADriUseCases/CAADriMultiSheetCmd.htm"
+source_file: "Doc/online/CAADriUseCases/CAADriMultiSheetCmd.htmmd"
 converted: "2026-05-11T17:31:51.012436"
 ```
 
@@ -93,10 +93,10 @@ Fig 3: Sheet.2 is the current sheet ![](images/CAADrwMultiSheet3.jpg)
 The CAADrwMultiSheetCmd use case is made of two source files named CAADrwMultiSheetCmd.h and CAADrwMultiSheetCmd.cpp located in the CAADrwMultiSheetCmd.m module of the CAADraftingInterfaces.edu framework:
 
 The CAADrwMultiSheetCmd use case is made of two source files named CAADrwMultiSheetCmd.h and CAADrwMultiSheetCmd.cpp located in the CAADrwMultiSheetCmd.m module of the CAADraftingInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwMultiSheetCmd.m\`
+Windows | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwMultiSheetCmd.m/`
 
 The CAADrwMultiSheetCmd use case is made of two source files named CAADrwMultiSheetCmd.h and CAADrwMultiSheetCmd.cpp located in the CAADrwMultiSheetCmd.m module of the CAADraftingInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwMultiSheetCmd.m\`
+Windows | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwMultiSheetCmd.m/`
 Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwMultiSheetCmd.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -119,15 +119,15 @@ There are seven steps in CAADrwMultiSheetCmd:
 #### Retrieving the Current Drawing from the Frame
 
     // ----------------------------------------------------------------------------
-    CAADrwMultiSheetCmd::CAADrwMultiSheetCmd()
+    CAADrwMultiSheetCmd::CAADrwMultiSheetCmd(#)
                         :CATStateCommand(CATString("AlignText")),
                                          _pObjectAgent(NULL)
     {
       // Get the current drawing from the frame
-CAADrwMultiSheetCmd::CAADrwMultiSheetCmd()
+CAADrwMultiSheetCmd::CAADrwMultiSheetCmd(#)
 _pObjectAgent(NULL)
       __piSheetsOnDrawing = NULL;
-      CATApplicationFrame *appFrame = CATApplicationFrame::GetFrame();
+      CATApplicationFrame *appFrame = CATApplicationFrame::GetFrame(#);
       CATIAApplication *ptApp = NULL;
 ```vbscript
       if (SUCCEEDED(appFrame->QueryInterface(IID_CATIAApplication, (void**) &ptApp)))
@@ -136,7 +136,7 @@ _pObjectAgent(NULL)
 
       {
 __piSheetsOnDrawing = NULL;
-CATApplicationFrame *appFrame = CATApplicationFrame::GetFrame();
+CATApplicationFrame *appFrame = CATApplicationFrame::GetFrame(#);
 CATIAApplication *ptApp = NULL;
 if (SUCCEEDED(appFrame->QueryInterface(IID_CATIAApplication, (void**) &ptApp)))
         CATIADocument *ptDoc = NULL;
@@ -160,27 +160,27 @@ if (SUCCEEDED(ptApp->get_ActiveDocument(ptDoc)))
 CATIADrawingDocument *piDrawing = NULL;
 if (SUCCEEDED(ptDoc->QueryInterface(IID_CATIADrawingDocument, (void**) &piDrawing)))
             piDrawing->get_Sheets(__piSheetsOnDrawing);
-            piDrawing->Release();
+            piDrawing->Release(#);
 ```
 
           }
 ```vbscript
 if (SUCCEEDED(ptDoc->QueryInterface(IID_CATIADrawingDocument, (void**) &piDrawing)))
 piDrawing->get_Sheets(__piSheetsOnDrawing);
-piDrawing->Release();
-          ptDoc->Release();
+piDrawing->Release(#);
+          ptDoc->Release(#);
 ```
 
         }
 piDrawing->get_Sheets(__piSheetsOnDrawing);
-piDrawing->Release();
-ptDoc->Release();
-        ptApp->Release();
+piDrawing->Release(#);
+ptDoc->Release(#);
+        ptApp->Release(#);
 
       }
       // Save Multi sheet mode to restitute it at the end of the command
-ptDoc->Release();
-ptApp->Release();
+ptDoc->Release(#);
+ptApp->Release(#);
       GetMultiSheetMode(_PreviousMode);
 
       // Activate Multi sheet mode
@@ -240,7 +240,7 @@ if (!!__piSheetsOnDrawing)
 CATIDftMultiSheetMode *multiSheetManager=NULL;
 if (SUCCEEDED(__piSheetsOnDrawing->QueryInterface(IID_CATIDftMultiSheetMode, (void **) &multiSheetManager)))
           multiSheetManager->GetMultiSheetMode(&oMode);
-          multiSheetManager->Release();
+          multiSheetManager->Release(#);
 ```
 
         }
@@ -283,7 +283,7 @@ if (!!__piSheetsOnDrawing)
 CATIDftMultiSheetMode *multiSheetManager=NULL;
 if (SUCCEEDED(__piSheetsOnDrawing->QueryInterface(IID_CATIDftMultiSheetMode, (void **) &multiSheetManager)))
           multiSheetManager->SetMultiSheetMode(iMode);
-          multiSheetManager->Release();
+          multiSheetManager->Release(#);
 ```
 
         }
@@ -299,10 +299,10 @@ if (SUCCEEDED(__piSheetsOnDrawing->QueryInterface(IID_CATIDftMultiSheetMode, (vo
 ---
 
     // ----------------------------------------------------------------------------
-    void CAADrwMultiSheetCmd::BuildGraph()
+    void CAADrwMultiSheetCmd::BuildGraph(#)
     {
       // Creation of the acquisition agent
-void CAADrwMultiSheetCmd::BuildGraph()
+void CAADrwMultiSheetCmd::BuildGraph(#)
       _pObjectAgent = new CATPathElementAgent("pObjectAgent");
       _pObjectAgent ->SetBehavior( CATDlgEngWithPrevaluation |
                                    CATDlgEngMultiAcquisition |
@@ -358,7 +358,7 @@ In this section we create a CATPathElementAgent and set the corresponding elemen
     {
       // We get the Selected set of objects
 boolean CAADrwMultiSheetCmd::CheckText(void *)
-      CATSO* pObjSO = _pObjectAgent->GetListOfValues();
+      CATSO* pObjSO = _pObjectAgent->GetListOfValues(#);
       CATPathElement *pElemPath = NULL;
 
 ```vbscript
@@ -370,14 +370,14 @@ boolean CAADrwMultiSheetCmd::CheckText(void *)
         // There is a selection, we will scan it from the beginning
 ```vbscript
 if (NULL != pObjSO)
-        pObjSO->InitElementList();
-        while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement()))
+        pObjSO->InitElementList(#);
+        while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement(#)))
 ```
 
         {
           // Make sure the element is a text
-pObjSO->InitElementList();
-while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement()))
+pObjSO->InitElementList(#);
+while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement(#)))
           CATIDrwText *piText = (CATIDrwText *)pElemPath->FindElement(IID_CATIDrwText);
 
 ```vbscript
@@ -389,17 +389,17 @@ while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement()))
 CATIDrwText *piText = (CATIDrwText *)pElemPath->FindElement(IID_CATIDrwText);
 if (NULL != piText)
             piText->GetPosition(_Xposition,_Yposition);
-            piText->Release();
+            piText->Release(#);
 
           }
         }
 piText->GetPosition(_Xposition,_Yposition);
-piText->Release();
-      _pObjectAgent -> InitializeAcquisition();
+piText->Release(#);
+      _pObjectAgent -> InitializeAcquisition(#);
       return TRUE;
 
       }
-_pObjectAgent -> InitializeAcquisition();
+_pObjectAgent -> InitializeAcquisition(#);
 return TRUE;
       return FALSE;
 
@@ -418,7 +418,7 @@ The acquisition agent did put the selected text into the CSO. So we get the set 
     {
       // We get the Selected set of objects
 boolean CAADrwMultiSheetCmd::MoveText(void *)
-      CATSO* pObjSO = _pObjectAgent->GetListOfValues();
+      CATSO* pObjSO = _pObjectAgent->GetListOfValues(#);
       CATPathElement *pElemPath = NULL;
 
 ```vbscript
@@ -430,16 +430,16 @@ boolean CAADrwMultiSheetCmd::MoveText(void *)
         // There is a selection, we will scan it from the beginning
 CATPathElement *pElemPath = NULL;
 if (NULL != pObjSO)
-        pObjSO->InitElementList();
+        pObjSO->InitElementList(#);
 ```vbscript
-        while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement()))
+        while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement(#)))
 
 ```
 
         {
           // Make sure the element is a text
-pObjSO->InitElementList();
-while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement()))
+pObjSO->InitElementList(#);
+while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement(#)))
           CATIDrwText *piText = (CATIDrwText *)pElemPath->FindElement(IID_CATIDrwText);
 
 ```vbscript
@@ -469,14 +469,14 @@ if (event !=NULL_var)
 if (event !=NULL_var)
 CATModify info((CATBaseUnknown *)piText);
 event->Dispatch(info);
-            piText->Release();
+            piText->Release(#);
 ```
 
           }
         }
 event->Dispatch(info);
-piText->Release();
-        _pObjectAgent -> InitializeAcquisition();
+piText->Release(#);
+        _pObjectAgent -> InitializeAcquisition(#);
         return TRUE;
 
       }

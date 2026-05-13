@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Parameters Automation Objects"
-category: "use-case"
+category: tech-article
 module: "CAAScdKniTechArticles"
 tags: []
-source_file: "Doc/online/CAAScdKniTechArticles/CAAKniTocParameter.htm"
+source_file: "Doc/online/CAAScdKniTechArticles/CAAKniTocParameter.htmmd"
 converted: "2026-05-11T17:31:52.006491"
 ```
 

@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAAScrBase", "CATIA", "CAAScrJavaScript", "CAAScdSchUseCases", "CAASchPlatformModeler", "CAAScdInfUseCases", "CAAInfLauchMacro", "CAASCH_CompRoute01", "CAASCHEDUApp", "CATIASchCntrLocation", "CAADoc", "CAASchQueryCompRouteSource", "CAASchAppBase", "CAASchQueryCompRoute", "CAASchAppUtilities", "CAASchQueryCompRoute_02", "CAASchQueryCompRoute_01"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchQueryCompRoute.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchQueryCompRoute.htmmd"
 converted: "2026-05-11T11:27:02.604894"
 ---
 
@@ -50,8 +50,10 @@ The SchematicRoot interface provides the GetComponents method to return
      of specific graphical image of a Schematic component instance
      
 
+```vbscript
 This macro provides the GetComponentImage internal Function to return a 
      specific SchGRRComp interface handle on a specific graphical image of a 
+```
      component instance. This interface provides the GetTransformation2D method 
      to return the positioning matrix of the image.
      
@@ -141,9 +143,11 @@ This use case shows how to query the data of a Schematic document and of its
             '------------------------------------------------------------------
             If ( Not ( objSchRouteGraph Is Nothing ) ) Then
 
+```vbscript
                Set objGRRRoute = GetRoutePrimitives (objSchRouteGraph,objSchRoot)
 
                If ( Not ( objGRRRoute Is Nothing ) ) Then
+```
 
                   objGRRRoute.GetPath objSchLDbRoute
 
@@ -152,12 +156,14 @@ This use case shows how to query the data of a Schematic document and of its
 
                      intNb = objSchLDbRoute.Count
 
+```vbscript
                      Dim iIndex As Integer
                      Dim jIndex As integer
                      Dim dbX As Double
                      Dim dbY As Double
                      Dim intNbPoint As Integer
                      intNbPoint = intNbOut/2
+```
 
                      If ( (intNbOut = intNb ) And  (intNbPoint &gt; 1) ) Then
 ```

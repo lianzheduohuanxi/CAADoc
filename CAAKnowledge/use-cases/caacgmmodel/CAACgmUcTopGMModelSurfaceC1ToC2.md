@@ -4,7 +4,7 @@ title: "Breaking a C1 Surface into C2 Pieces"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGMModelInterfaces", "CATICGMMathNurbsSurfaceTools", "CAAGMModelConvertSurfaceToC2", "CATICGMNurbsSurfaceTools"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcTopGMModelSurfaceC1ToC2.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcTopGMModelSurfaceC1ToC2.htmmd"
 converted: "2026-05-11T17:33:48.605582"
 ```
 
@@ -77,7 +77,7 @@ CATICGMNurbsSurfaceTools  * pNurbsTool3D  =::CATCGMCreateNurbsSurfaceTools(piGeo
     ...
     // Checks the input curve continuity
 cout << "surface degree along V (3 expected) "<< degV << endl;
-    CATNurbsToolsInfo infoContinuity = pNurbsTool3D->Check();
+    CATNurbsToolsInfo infoContinuity = pNurbsTool3D->Check(#);
     cout << "Check the surface continuity " << endl;
 ```vbscript
     if (infoContinuity == Info_InternalContinuity)
@@ -90,19 +90,19 @@ cout << "surface degree along V (3 expected) "<< degV << endl;
 cout << "Check the surface continuity " << endl;
 if (infoContinuity == Info_InternalContinuity)
     CATICGMMathNurbsSurfaceTools  * pMathNurbsTool3D  =::CATCGMCreateMathNurbsSurfaceTools( *inputKVU, *inputKVV,
-    			pC1Nurbs->IsRational(), Vertices, aWeights);
+    			pC1Nurbs->IsRational(#), Vertices, aWeights);
 
     ...
 CATICGMMathNurbsSurfaceTools  * pMathNurbsTool3D  =::CATCGMCreateMathNurbsSurfaceTools( *inputKVU, *inputKVV,
-pC1Nurbs->IsRational(), Vertices, aWeights);
+pC1Nurbs->IsRational(#), Vertices, aWeights);
     int NbRefU, NbRefV=0;
     CATLISTP(CATSurface) listOfC2Surfaces;
 
     // Create the C2 surfaces
-pC1Nurbs->IsRational(), Vertices, aWeights);
+pC1Nurbs->IsRational(#), Vertices, aWeights);
 int NbRefU, NbRefV=0;
 CATLISTP(CATSurface) listOfC2Surfaces;
-    cout << listOfC2Surfaces.Size() << " C2 surfaces are generated" << endl;
+    cout << listOfC2Surfaces.Size(#) << " C2 surfaces are generated" << endl;
 
     ...
 

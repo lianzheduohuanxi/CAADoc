@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CAAScrBase", "CAAInfIcon2", "CAAInfAdd1", "CAAInfAdd3", "CAAInfDefaultIcon", "CAAInfIicon1", "CAAInfAdd2"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfAddingMacroInToolbar.htm"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfAddingMacroInToolbar.htmmd"
 converted: "2026-05-11T11:27:02.700099"
 ---
 

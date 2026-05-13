@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Computing the Area of a CATFace and the Length of a CATEdge"
-category: "use case"
+category: use-case case"
 module: "CAATopUseCases"
 tags: ["CAAGemBrowser", "CAATopologicalOperators", "CATICGMObject", "CAATopProperties"]
-source_file: "Doc/online/CAATopUseCases/CAATopProperties.htm"
+source_file: "Doc/online/CAATopUseCases/CAATopProperties.htmmd"
 converted: "2026-05-11T17:31:50.757850"
 ```
 
@@ -82,10 +82,10 @@ This NCGM file can be displayed using the CAAGemBrowser use case.
 The CAATopProperties use case is made of a main named CAATopProperties.cpp located in the CAATopProperties.m module of the CAATopologicalOperators.edu framework:
 
 The CAATopProperties use case is made of a main named CAATopProperties.cpp located in the CAATopProperties.m module of the CAATopologicalOperators.edu framework:
-Windows | `InstallRootDirectory\CAATopologicalOperators.edu\CAATopProperties.m\`
+Windows | `InstallRootDirectory/CAATopologicalOperators.edu/CAATopProperties.m/`
 
 The CAATopProperties use case is made of a main named CAATopProperties.cpp located in the CAATopProperties.m module of the CAATopologicalOperators.edu framework:
-Windows | `InstallRootDirectory\CAATopologicalOperators.edu\CAATopProperties.m\`
+Windows | `InstallRootDirectory/CAATopologicalOperators.edu/CAATopProperties.m/`
 Unix | `InstallRootDirectory/CAATopologicalOperators.edu/CAATopProperties.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -112,7 +112,7 @@ The CATGeoFactory creation itself is done by the global function `::CATCreateCGM
 
 Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
 
-    CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**() ;
+    CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**(#) ;
 ```vbscript
     if (NULL==piGeomFactory) return (1);
 
@@ -140,14 +140,14 @@ CATSolidSphere * pSphereOpe = ::CATCreateSolidSphere(piGeomFactory,
 CATSolidSphere * pSphereOpe = ::CATCreateSolidSphere(piGeomFactory,
 p1,
 100.0); // the radius
-    pSphereOpe -> Run();
-    CATBody * pBodySphere = pSphereOpe -> GetResult();
+    pSphereOpe -> Run(#);
+    CATBody * pBodySphere = pSphereOpe -> GetResult(#);
 
     ...
 
 ---
-pSphereOpe -> Run();
-CATBody * pBodySphere = pSphereOpe -> GetResult();
+pSphereOpe -> Run(#);
+CATBody * pBodySphere = pSphereOpe -> GetResult(#);
 __
 
 [Top]
@@ -184,7 +184,7 @@ if (NULL == pDynMassOpe0)
          }
          // Expected area 4*PI*(R**2)/4
 return (1);
-         cout << "Face " << i << " area: " << pDynMassOpe0->GetWetArea() << endl;
+         cout << "Face " << i << " area: " << pDynMassOpe0->GetWetArea(#) << endl;
          delete pDynMassOpe0; pDynMassOpe0=NULL;
 
      }
@@ -226,8 +226,8 @@ if (NULL == pDynMassOpe1)
          }
 
 return (1);
-         cout << "Edge " << i << " length: " << pDynMassOpe1->GetLength() << endl;
-         cout << pEdge->GetPersistentTag() << endl;
+         cout << "Edge " << i << " length: " << pDynMassOpe1->GetLength(#) << endl;
+         cout << pEdge->GetPersistentTag(#) << endl;
          delete pDynMassOpe1; pDynMassOpe1=NULL;
 
      }
@@ -259,11 +259,11 @@ Edge 4 length: 314.159
 Before ending, we must first release the software configuration.
 
     // Releases the configuration
-        pConfig->Release();
+        pConfig->Release(#);
 
 ---
 
-pConfig->Release();
+pConfig->Release(#);
 To save the model in a file, the `::CATSaveCGMContainer` global function is used. Notice that in the use case, the save is conditioned by an input parameter representing the file inside which the model must be saved.
 
 The use case ends with the closure of the geometry factory, done by the `::CATCloseCGMContainer` global function.
@@ -287,7 +287,7 @@ ofstream filetowrite(pfileName, ios::binary ) ;
     #endif
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
-       filetowrite.close();
+       filetowrite.close(#);
      }
 
      //

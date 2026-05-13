@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAASkiUseCases"
 tags: ["CATI2DWFFactory_var", "CAADocStyleSheets", "CATISketchFactory_var", "CAASketcherInterfaces", "CATI2DConstraintFactory", "CATIPrtContainer", "CATI2DWFGeometry_var", "CATIContainer", "CAASketcherTitleBlock", "CAASkiBasicGeometries", "CATI2DConstraintFactory_var", "CAADocUseCases", "CATISpecObject_var", "CATI2DLine_var", "CATI2DCurve_var", "CATI2DAxis_var", "CATISketch", "CATISketch_var", "CAAOmbUseCases", "CAADocRunSample"]
-source_file: "Doc/online/CAASkiUseCases/CAASkiBasicGeometries.htm"
+source_file: "Doc/online/CAASkiUseCases/CAASkiBasicGeometries.htmmd"
 converted: "2026-05-11T11:27:02.766921"
 ---
 
@@ -211,8 +211,6 @@ interface to create contrainst on the elements and also solve dimension system.
 
 *Copyright  2000, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 e:&gt; CAASkiBasicGeometries Result.CATPart
 ```
@@ -244,14 +242,14 @@ int main(int    iArgc,   // Number of arguments (1)
   CATIPrtContainer *piPrtContainer = NULL;
   HRESULT hr = piContainer-&gt;QueryInterface( IID_CATIPrtContainer, (void **)&amp;piPrtContainer );
   if ( FAILED(hr) ) return 5;
-  CATIPrtPart_var spPart(piPrtContainer-&gt;GetPart());
-  piPrtContainer-&gt;Release();
+  CATIPrtPart_var spPart(piPrtContainer-&gt;GetPart(#));
+  piPrtContainer-&gt;Release(#);
 ...
 ```
 
 ```vbscript
 ...
-  CATLISTV(CATISpecObject_var) spRefPlanes = spPart-&gt;GetReferencePlanes();
+  CATLISTV(CATISpecObject_var) spRefPlanes = spPart-&gt;GetReferencePlanes(#);
 
   //------------------------------------------------------------------------------------------
   // SKETCH CREATION and EDIT:Instantiates the sketch with the plane XY (refPlanes[1])
@@ -260,7 +258,7 @@ int main(int    iArgc,   // Number of arguments (1)
   if ( NULL_var == spSketchFactory ) return 6;
   CATISketch_var spSketch(spSketchFactory-&gt;CreateSketch(spRefPlanes[1]));
   if ( NULL_var == spSketch ) return 7;
-	spSketch-&gt;OpenEdition();
+	spSketch-&gt;OpenEdition(#);
 ...
 ```
 
@@ -337,9 +335,9 @@ int main(int    iArgc,   // Number of arguments (1)
 ...
   CATI2DAxis_var spSupport;
   spSketch-&gt;GetAbsolute2DAxis(spSupport);
-  spConstraint2DFactory-&gt;CreateConstraint( spPt_bottom_left, NULL, spSupport-&gt;GetHDirection(), NULL, NULL, NULL, NULL,
+  spConstraint2DFactory-&gt;CreateConstraint( spPt_bottom_left, NULL, spSupport-&gt;GetHDirection(#), NULL, NULL, NULL, NULL,
                                            Cst2DType_Distance, 0, 0 );
-  spConstraint2DFactory-&gt;CreateConstraint( spPt_bottom_left, NULL, spSupport-&gt;GetVDirection(), NULL, NULL, NULL, NULL,
+  spConstraint2DFactory-&gt;CreateConstraint( spPt_bottom_left, NULL, spSupport-&gt;GetVDirection(#), NULL, NULL, NULL, NULL,
                                            Cst2DType_Distance, 0, 0 );
 ...
 ```
@@ -362,7 +360,7 @@ int main(int    iArgc,   // Number of arguments (1)
 
 ```vbscript
 ...
-  spSketch-&gt;CloseEdition();
+  spSketch-&gt;CloseEdition(#);
 ...
 ```
 
@@ -372,7 +370,7 @@ int main(int    iArgc,   // Number of arguments (1)
   pSession-&gt;Delete_Session(pSessionIdent);
 
   // Memory cleaning
-  piContainer-&gt;Release();
+  piContainer-&gt;Release(#);
 
   return 0;
 }

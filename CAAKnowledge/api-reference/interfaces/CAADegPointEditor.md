@@ -2,9 +2,7 @@
 title: "CAADegPointEditor"
 type: "interface"
 module: "CAADialogEngine"
-category: "framework"
-base: "CATDlgDialog"
-inheritance_chain: "CAADegPointEditor → CATDlgDialog"
+category: api-reference
 method_count: 0
 visibility: "local"
 has_tie_binding: false
@@ -12,8 +10,6 @@ verified: true
 ---
 # CAADegPointEditor
 
-**基类**: CATDlgDialog  
-**继承链**: CAADegPointEditor → CATDlgDialog  
 **模块**: CAADialogEngine  
 **分类**: framework  
 **可见性**: local  
@@ -25,6 +21,35 @@ verified: true
 
 ## 依赖
 
-- `CATDlgDialog.h`
 - `CATMathPoint.h`
 
+---
+
+## Interface Overview
+
+**Inherited Methods**: Please refer to the base interface documentation above.
+
+---
+
+## Interface Overview
+
+This interface inherits from **from**. 
+
+**Inherited Methods**: Please refer to the base interface documentation above.
+
+---
+
+## Related Use Cases
+
+- [CAADegSampleDialogWithAgent](../../use-cases/caadegcases/CAADegSampleDialogWithAgent.md)
+- [CAADegSampleDialogWithPanelState](../../use-cases/caadegcases/CAADegSampleDialogWithPanelState.md)
+
+## Interface Notes
+
+This interface is part of the **CAA** module.
+
+**Status**: This interface document is a template. Please refer to the official API documentation for more information.
+
+**Related Resources**:
+- [Quick References](../..//quick-refs/)
+- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)

@@ -4,13 +4,13 @@ title: "Associating a Dialog Box with a Dialog Agent - 2"
 category: "use case"
 module: "CAADegUseCases"
 tags: ["CAADegHstChartWndDlg", "CAAGeometry", "CAADegHistogramChartWindowCmdDo", "CAADialogEngine", "CAADegHistogramChartWindowCmd", "CAADegEditor1DeselectedNotification", "CAADegEditor1SelectedNotification", "CAADegGeoCommands"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleDialogWithAgent2.htm"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleDialogWithAgent2.htmmd"
 converted: "2026-05-11T17:33:49.642672"
 ```
 
 ---
 tags: ["CAADegHstChartWndDlg", "CAAGeometry", "CAADegHistogramChartWindowCmdDo", "CAADialogEngine", "CAADegHistogramChartWindowCmd", "CAADegEditor1DeselectedNotification", "CAADegEditor1SelectedNotification", "CAADegGeoCommands"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleDialogWithAgent2.htm"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleDialogWithAgent2.htmmd"
 converted: "2026-05-11T17:33:49.642672"
 3D PLM Enterprise Architecture |  User Interface - Commands |  Associating a Dialog Box with a Dialog Agent - 2 _Using a new notification to value a dialog agent_
 
@@ -57,9 +57,9 @@ The CAADegHistogramChartWindowCmd command is a state dialog command according to
     * _CAADegHstChartWndDlg,_ the Dialog box
     * _CAADegEditor1SelectedNotification_ , The notification sent when the Point.1 editor gets the focus
     * _CAADegEditor1DeselectedNotification_ , The notification sent when the Point.1 editor loses the focus
-located in the CAADegGeoCommands.m module of the CAADialogEngine.edu framework: Windows | `InstallRootDirectory\CAADialogEngine.edu\CAADegGeoCommands.m\`
+located in the CAADegGeoCommands.m module of the CAADialogEngine.edu framework: Windows | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 ---|---
-located in the CAADegGeoCommands.m module of the CAADialogEngine.edu framework: Windows | `InstallRootDirectory\CAADialogEngine.edu\CAADegGeoCommands.m\`
+located in the CAADegGeoCommands.m module of the CAADialogEngine.edu framework: Windows | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.  [Top] Step-by-Step There are three logical steps in CAADegHistogramChartWindowCmd use case:
     1. Creating the Histogram Chart Window Command
@@ -105,12 +105,12 @@ This header file includes:
     2. Implementing the State Chart Diagram
 It is done in the command `BuildGraph` method [5].
 
-    void CAADegHistogramChartWindowCmd::BuildGraph()
+    void CAADegHistogramChartWindowCmd::BuildGraph(#)
 
     {
 2. Implementing the State Chart Diagram
 It is done in the command `BuildGraph` method [5].
-void CAADegHistogramChartWindowCmd::BuildGraph()
+void CAADegHistogramChartWindowCmd::BuildGraph(#)
        a/ Creating the Dialog Box
        b/ Creating the Dialog Agent
        c/ Creating the State
@@ -125,7 +125,7 @@ a/  Creating the Dialog Box
 
     CATApplicationFrame * pFrame = NULL ;
       CATDialog * pParent = NULL ;
-      pFrame = CATApplicationFrame::**GetFrame**() ;
+      pFrame = CATApplicationFrame::**GetFrame**(#) ;
 ```vbscript
 ```vbscript
       if ( NULL != pFrame )
@@ -137,11 +137,11 @@ a/  Creating the Dialog Box
       {
 CATApplicationFrame * pFrame = NULL ;
 CATDialog * pParent = NULL ;
-pFrame = CATApplicationFrame::**GetFrame**() ;
+pFrame = CATApplicationFrame::**GetFrame**(#) ;
 ```vbscript
 ```vbscript
 if ( NULL != pFrame )
-           pParent = pFrame->**GetMainWindow**() ;
+           pParent = pFrame->**GetMainWindow**(#) ;
 
 ```
 
@@ -153,19 +153,19 @@ if ( NULL != pFrame )
 if ( NULL != pFrame )
 ```vbscript
 ```vbscript
-pParent = pFrame->**GetMainWindow**() ;
+pParent = pFrame->**GetMainWindow**(#) ;
       _pHstChartWndDlg = new **CAADegHstChartWndDlg**(pParent);
 ```
 
 ```
 
-      _pHstChartWndDlg->**Build**();
+      _pHstChartWndDlg->**Build**(#);
 
 ```
 
 ---
 _pHstChartWndDlg = new **CAADegHstChartWndDlg**(pParent);
-_pHstChartWndDlg->**Build**();
+_pHstChartWndDlg->**Build**(#);
 The dialog box is instantiated and built. It is an instance of the _CAADegHstChartWndDlg_**** class that derives from the _CATDlgDialog_ class and that simply includes some dialog objects such as two _CATDlgEditor_ class instances and two push buttons OK and Cancel. Dialog boxes should always be instantiated without controls (or other dialog objects). Instantiating these controls in a ` Build` method called after the constructor has returned make sure that the control resources will be correctly allocated. The parent of this dialog box is an invisible dialog object which contains all the windows of the same document. This object is returned by the `GetMainWindow` method on the application frame. Refer to the article entitled "Understanding the Application Frame Layout" [6] for complete details about this object. b/  Creating the Dialog AgentThe dialog agent is created as following:
 
     ...
@@ -226,25 +226,25 @@ A pointer to the dialog agent was created in the command `BuildGraph` method as 
 The `AddTransition` method creates a transition and adds it to the transitions managed by the dialog command. Pointers to the transition's source and target states are the first and second arguments respectively. This transition goes from the `PanelState` state to the `PanelState1` state (not explained). The transition trigger is defined in the guard condition as the condition to be checked using the `IsLastModifiedAgentCondition` method applied to the dialog agent. When the dialog agent prevalue is modified, the transition fire. In this case, the ` Editor1Selected` action method is executed. (method without interest for the use case, so not explained)
 3. Releasing the Agents and the Dialog Box
 A pointer to the dialog agent was created in the command `BuildGraph` method as a data member to be accessed and used in different methods. It should be released when it becomes useless. This can be done in the command destructor, as shown here. This could also be done in the `Cancel` method called just before the destructor. In the same way, the dialog box should be destructed by using the `RequestDelayedDestruction` method.
-    CAADegHistogramChartWindowCmd::~CAADegHistogramChartWindowCmd()
+    CAADegHistogramChartWindowCmd::~CAADegHistogramChartWindowCmd(#)
 
     {
 A pointer to the dialog agent was created in the command `BuildGraph` method as a data member to be accessed and used in different methods. It should be released when it becomes useless. This can be done in the command destructor, as shown here. This could also be done in the `Cancel` method called just before the destructor. In the same way, the dialog box should be destructed by using the `RequestDelayedDestruction` method.
-CAADegHistogramChartWindowCmd::~CAADegHistogramChartWindowCmd()
+CAADegHistogramChartWindowCmd::~CAADegHistogramChartWindowCmd(#)
 ```vbscript
       if ( NULL != _pHstChartWndDlg )
 
 ```
 
       {
-CAADegHistogramChartWindowCmd::~CAADegHistogramChartWindowCmd()
+CAADegHistogramChartWindowCmd::~CAADegHistogramChartWindowCmd(#)
 if ( NULL != _pHstChartWndDlg )
-         _pHstChartWndDlg->**RequestDelayedDestruction**() ;
+         _pHstChartWndDlg->**RequestDelayedDestruction**(#) ;
          _pHstChartWndDlg = NULL ;
 
       }
 
-_pHstChartWndDlg->**RequestDelayedDestruction**() ;
+_pHstChartWndDlg->**RequestDelayedDestruction**(#) ;
 _pHstChartWndDlg = NULL ;
 ```vbscript
       if ( NULL != _daEditor1Selected )
@@ -254,7 +254,7 @@ _pHstChartWndDlg = NULL ;
       {
 _pHstChartWndDlg = NULL ;
 if ( NULL != _daEditor1Selected )
-         _daEditor1Selected->**RequestDelayedDestruction**();
+         _daEditor1Selected->**RequestDelayedDestruction**(#);
          _daEditor1Selected = NULL ;
 
       }
@@ -278,8 +278,8 @@ The _CAADegEditor1SelectedNotification_ class derives from the _CATNotification_
 
 class CAADegEditor1SelectedNotification : public CATNotification
       public:
-        CAADegEditor1SelectedNotification();
-        virtual ~CAADegEditor1SelectedNotification();
+        CAADegEditor1SelectedNotification(#);
+        virtual ~CAADegEditor1SelectedNotification(#);
 
       private:
         CAADegEditor1SelectedNotification(const CAADegEditor1SelectedNotification
@@ -299,12 +299,12 @@ The `CATDeclareClass` macro declares that the `CAADegEditor1SelectedNotification
     **CATImplementClass**(CAADegEditor1SelectedNotification,Implementation,
                               **CATNotification** ,CATNull);
 
-    CAADegEditor1SelectedNotification::CAADegEditor1SelectedNotification()
+    CAADegEditor1SelectedNotification::CAADegEditor1SelectedNotification(#)
                             : CATNotification(**CATNotificationDeleteOn**)
     {
     }
 
-    CAADegEditor1SelectedNotification::~CAADegEditor1SelectedNotification()
+    CAADegEditor1SelectedNotification::~CAADegEditor1SelectedNotification(#)
     {
     }
 
@@ -328,16 +328,16 @@ The `CATDeclareClass` macro declares that the `CAADegEditor1SelectedNotification
 class CAADegHstChartWndDlg : public CATDlgDialog
       public :
         CAADegHstChartWndDlg(CATDialog *iParent);
-        virtual ~CAADegHstChartWndDlg();
+        virtual ~CAADegHstChartWndDlg(#);
 
-        void **Build**();
+        void **Build**(#);
 ```vbscript
       private :
 
 ```
 
         ...
-void **Build**();
+void **Build**(#);
 private :
         void **Editor1Selected** (CATCommand        * iPublisher,
     		          CATNotification      * iNotification,
@@ -356,17 +356,17 @@ As usual the `Build` method constructs the dialog objects inside the dialog box.
 As usual the Dialog box has a `Build` method to construct all the dialog objects and arrange them. The `Editor1Selected` method is a callback method called when the end user clicks in the first editor. This editor is not a data member once it is not used in the different methods of the class.
 2. Creating the Build method
 As usual the `Build` method constructs the dialog objects inside the dialog box. `pEditor1` is a _CATDlgEditor_ class instance. The` ``Editor1Selected` callback method is declared to be executed when the editor will send a `GetEditFocusInNotification` notification.
-    void CAADegHstChartWndDlg::Build()
+    void CAADegHstChartWndDlg::Build(#)
 
     {
       ...
-void CAADegHstChartWndDlg::Build()
+void CAADegHstChartWndDlg::Build(#)
       CATDlgEditor * pEditor1 = new CATDlgEditor(pFrameMaxHeight,"Editor1Id" );
 
       ...
-void CAADegHstChartWndDlg::Build()
+void CAADegHstChartWndDlg::Build(#)
 CATDlgEditor * pEditor1 = new CATDlgEditor(pFrameMaxHeight,"Editor1Id" );
-      AddAnalyseNotificationCB(pEditor1, pEditor1->**GetEditFocusInNotification**(),
+      AddAnalyseNotificationCB(pEditor1, pEditor1->**GetEditFocusInNotification**(#),
                     (CATCommandMethod)&CAADegHstChartWndDlg::Editor1Selected,
                                 NULL);
 
@@ -391,14 +391,14 @@ CATNotification      * iNotification,
 CATCommandClientData   iUsefulData)
        CAADegEditor1SelectedNotification * pEdt1Notification = NULL ;
 ```vbscript
-       pEdt1Notification = new **CAADegEditor1SelectedNotification**();
+       pEdt1Notification = new **CAADegEditor1SelectedNotification**(#);
 
 ```
 
-       **SendNotification**(**GetFather**(),pEdt1Notification);
+       **SendNotification**(**GetFather**(#),pEdt1Notification);
 CATCommandClientData   iUsefulData)
 CAADegEditor1SelectedNotification * pEdt1Notification = NULL ;
-pEdt1Notification = new **CAADegEditor1SelectedNotification**();
+pEdt1Notification = new **CAADegEditor1SelectedNotification**(#);
        pEdt1Notification = NULL ;
 
     }

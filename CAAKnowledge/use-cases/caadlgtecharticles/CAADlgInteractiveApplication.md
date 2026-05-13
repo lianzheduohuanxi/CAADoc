@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Designing Your Interactive Application"
-category: "use-case"
+category: tech-article
 module: "CAADlgTechArticles"
 tags: ["CAADlgWindowApplication", "CAADlgInterWindow", "CAADlgInterWindowId", "CAADlgInterApplication", "CATInteractiveApplication", "CAADialog"]
-source_file: "Doc/online/CAADlgTechArticles/CAADlgInteractiveApplication.htm"
+source_file: "Doc/online/CAADlgTechArticles/CAADlgInteractiveApplication.htmmd"
 converted: "2026-05-11T17:17:56.042541"
 ```
 
@@ -43,11 +43,11 @@ A CAA V5 interactive application is a program that you can launch and that can e
 
 The figure below shows the objects involved and their main methods using the Unified Modeling Language (UML).
 
-![CATInteractiveApplication.jpg \(30073 bytes\)](images/CATInteractiveApplication.jpg)
+![CATInteractiveApplication.jpg /(30073 bytes/)](images/CATInteractiveApplication.jpg)
 
 The application derives from the _CATInteractiveApplication_ class while the window derives from the _CATDlgDocument_ class. The application aggregates a pointer to the window and instantiates it in the `BeginApplication` method. Symmetrically, the window aggregates a pointer to the application.
 
-![warning.gif \(206 bytes\)](../CAAIcons/images/warning.gif) Note that the window constructor does not include any statement. It only instantiates, that is allocates memory areas for the window and its base classes. The `Build` method is dedicated to create the objects with the proper values. This is because the external resources to allocate use virtual methods, and as long as the constructor is not exited, the virtual method table update may not be completed and thus its contents may be inaccurate. This `Build` method does not exist in any Dialog framework base class and thus can not be redefined. You must create it when deriving a Dialog framework class.
+![warning.gif /(206 bytes/)](../CAAIcons/images/warning.gif) Note that the window constructor does not include any statement. It only instantiates, that is allocates memory areas for the window and its base classes. The `Build` method is dedicated to create the objects with the proper values. This is because the external resources to allocate use virtual methods, and as long as the constructor is not exited, the virtual method table update may not be completed and thus its contents may be inaccurate. This `Build` method does not exist in any Dialog framework base class and thus can not be redefined. You must create it when deriving a Dialog framework class.
 
 [Top]
 ### An Interactive Application Example
@@ -66,9 +66,9 @@ First look at the _CAADlgInterApplication_ header file:
 class CAADlgInterApplication : public CATInteractiveApplication
       public:
         CAADlgInterApplication (const CATString & iAppliName);
-        virtual void BeginApplication();
-        virtual int  EndApplication();
-        virtual ~MyApplication();
+        virtual void BeginApplication(#);
+        virtual int  EndApplication(#);
+        virtual ~MyApplication(#);
 
     };
 
@@ -86,8 +86,8 @@ class CATInteractiveApplication;
 class CAADlgInterWindow: public CATDlgDocument
       public:
         CAADlgInterWindow(CATInteractiveApplication * pp);
-        virtual ~CAADlgInterWindow();
-        void Build();
+        virtual ~CAADlgInterWindow(#);
+        void Build(#);
       private:
         void CloseAppli(CATCommand           * iSendingCommand,
                         CATNotification      * iSentNotification,
@@ -116,25 +116,25 @@ The _CAADlgInterApplication_ source file:
     { }
 
 CAADlgInterApplication ::CAADlgInterApplication (const CATString & IAppliName)
-    void CAADlgInterApplication ::**BeginApplication**()
+    void CAADlgInterApplication ::**BeginApplication**(#)
 
     {
-void CAADlgInterApplication ::**BeginApplication**()
+void CAADlgInterApplication ::**BeginApplication**(#)
       MyDoc = new CAADlgInterWindow(this);
-      MyDoc->Build();
+      MyDoc->Build(#);
       SetVisibility(CATDlgShow);          // make window visible
 
     }
 
 MyDoc = new CAADlgInterWindow(this);
-MyDoc->Build();
+MyDoc->Build(#);
 SetVisibility(CATDlgShow);          // make window visible
-    int  CAADlgInterApplication ::**EndApplication**()    // called by Destroy
+    int  CAADlgInterApplication ::**EndApplication**(#)    // called by Destroy
 
     { return **0** ; }
 
-int  CAADlgInterApplication ::**EndApplication**()    // called by Destroy
-    CAADlgInterApplication ::~MyApplication() { }
+int  CAADlgInterApplication ::**EndApplication**(#)    // called by Destroy
+    CAADlgInterApplication ::~MyApplication(#) { }
 
     CAADlgInterApplication **ApplicationInstance** ("MyNiceApplication"); // instantiate the application
 
@@ -152,13 +152,13 @@ The _CAADlgWindowApplication_ source file is the following:
       // Empty constructor to allocate, but not to valuate
     }
 
-    void CAADlgInterWindow ::Build() {
+    void CAADlgInterWindow ::Build(#) {
       ... // Put here the code required to build the window
       // set a callback to close the application when closing the window
-void CAADlgInterWindow ::Build() {
+void CAADlgInterWindow ::Build(#) {
       AddAnalyseNotificationCB(this,
 ```vbscript
-                               GetWindCloseNotification(),
+                               GetWindCloseNotification(#),
 ```
 
                                (CATCommandMethod)&MyDocument::CloseAppli,
@@ -168,12 +168,12 @@ void CAADlgInterWindow ::Build() {
 ```vbscript
 AddAnalyseNotificationCB(this,
 ```vbscript
-GetWindCloseNotification(),
+GetWindCloseNotification(#),
 ```
 
 (CATCommandMethod)&MyDocument::CloseAppli,
 NULL);
-    CAADlgInterWindow ::~CAADlgInterWindow () { }
+    CAADlgInterWindow ::~CAADlgInterWindow (#) { }
 
     void CAADlgInterWindow ::CloseAppli            // close the application
                    (CATCommand * _ICommand,
@@ -181,7 +181,7 @@ NULL);
                     CATCommandClientData UsefulData)
 ```
 
-    { _pApplication->**Destroy**();
+    { _pApplication->**Destroy**(#);
 void CAADlgInterWindow ::CloseAppli            // close the application
 (CATCommand * _ICommand,
 CATNotification * _INotification,

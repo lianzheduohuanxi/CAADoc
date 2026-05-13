@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAASchUseCases"
 tags: ["CATInit", "CAADocStyleSheets", "CAASchPlatformModeler", "CAASchAppSample2Main", "CAASchAppBaseEnv", "CAASchEduIn2", "CAASchApp", "CAASCHEDU_SamplePID", "CAADocUseCases", "CATISchCompGraphic", "CAASchAppUtilities", "CATISpecObject", "CATISchComponent", "CAASchEduOut2", "CATISchAppObjectFactory", "CAASchAppSample2", "CAASchAppBase", "CAASchAppSample1", "CATIView", "CATISchSession"]
-source_file: "Doc/online/CAASchUseCases/CAASchSample2.htm"
+source_file: "Doc/online/CAASchUseCases/CAASchSample2.htmmd"
 converted: "2026-05-11T11:27:02.667683"
 ---
 
@@ -220,8 +220,6 @@ occurrence. Specifically, it has illustrated:
 
 *Copyright  2000, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 CAASchAppSample2::InitEnvironment
 CAASchAppSample2::GetAppReference
@@ -261,7 +259,7 @@ CreateCATProductEnv::CreateCATProductEnv
              {
                 if ( SUCCEEDED (piUK-&gt;QueryInterface (IID_CATIView,(void **) &amp;piViewGRR1)))
                 {
-                   spDtlSheet = piViewGRR1-&gt;GetSheet();
+                   spDtlSheet = piViewGRR1-&gt;GetSheet(#);
                    if (!!spDtlSheet)
                    {
                       cout &lt;&lt; &quot;Got detail sheet containing the GRR detail &quot;

@@ -1,11 +1,11 @@
 ---
 ```vbscript
 title: "GeometricOperators Framework Modifications in V5R20"
-category: "use-case"
+category: use-case
 module: "CAACenAPIChangesR20"
 version: "V5R20"
 tags: []
-source_file: "Doc/online/CAACenAPIChangesR20/GeometricOperators.htm"
+source_file: "Doc/online/CAACenAPIChangesR20/GeometricOperators.htmmd"
 converted: "2026-05-11T17:33:51.630150"
 ```
 

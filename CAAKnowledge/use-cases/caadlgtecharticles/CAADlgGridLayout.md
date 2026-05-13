@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Arranging Dialog Objects Using a Grid"
-category: "use-case"
+category: tech-article
 module: "CAADlgTechArticles"
 tags: []
-source_file: "Doc/online/CAADlgTechArticles/CAADlgGridLayout.htm"
+source_file: "Doc/online/CAADlgTechArticles/CAADlgGridLayout.htmmd"
 converted: "2026-05-11T17:17:56.038135"
 ```
 
@@ -50,7 +50,7 @@ The grid layout applies to CATDlgDocument, CATDlgDialog, CATDlgFrame, and CATDlg
 
 Assume you need to create the following window, as a class that derives from CATDlgDialog.
 
-![CATDlgGridLayoutWindow.jpg \(13714 bytes\)](images/CATDlgGridLayoutWindow.jpg)
+![CATDlgGridLayoutWindow.jpg /(13714 bytes/)](images/CATDlgGridLayoutWindow.jpg)
 
 It contains a spinner and two check buttons aligned on the first row, then a combo alone on the second row, and three push buttons aligned on the third row. The OK, Cancel, and Help push buttons are supplied with the CATDlgDialog derived class and are not to be arranged in the window. The window constructor must be as follows:
 
@@ -74,7 +74,7 @@ And the object that instantiate it must use the CATDlgGridLayout style as follow
 
 The grid to build is as follows:
 
-![CATDlgGridLayout.gif \(25066 bytes\)](images/CATDlgGridLayout.gif)
+![CATDlgGridLayout.gif /(25066 bytes/)](images/CATDlgGridLayout.gif)
 
 The grid to build is as follows:
 The grid could be built using the SetGridConstraints method. It is used on each control to associate with it the positioning parameters, as the five arguments of SetGridConstraints:
@@ -227,7 +227,7 @@ When the containing window is resized, the controls or containers that are sprea
 
 ```
 
-![CATDlgGridLayoutWindowResize.jpg \(15412 bytes\)](images/CATDlgGridLayoutWindowResize.jpg)
+![CATDlgGridLayoutWindowResize.jpg /(15412 bytes/)](images/CATDlgGridLayoutWindowResize.jpg)
 
 The third row is resizable, as well as the first three columns. This is coded as follows:
 
@@ -265,15 +265,19 @@ Layout using a grid is available only if the CATDlgGridLayout style is used in t
 
 ```vbscript
 ```vbscript
+```vbscript
 Set 1st row as resizable |
 
+```
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Set 1st row as resizable |
     int RowIndex = 0;        // First row
+```
     int Resizability = 1;    // 0 means non resizable
     pFrame->**SetGridRowResizable**(RowIndex, Resizability);
 
@@ -281,15 +285,19 @@ Set 1st row as resizable |
 
 ```vbscript
 ```vbscript
+```vbscript
 Set 3rd column as resizable |
 
+```
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Set 3rd column as resizable |
     int ColumnIndex = 2;     // Third column
+```
     Resizability = 1;        // 0 means non resizable
     pFrame->**SetGridColumnResizable**(ColumnIndex, Resizability);
 

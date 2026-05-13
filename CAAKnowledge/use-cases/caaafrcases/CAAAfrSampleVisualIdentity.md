@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating a Product Line Visual Identity"
-category: "use case"
+category: use-case case"
 module: "CAAAfrUseCases"
 tags: ["CAADecorationP1", "CAADecorationP2", "CAAProductLine", "CAABackgroundNT", "CAAProduct", "CAALogoP1IX", "CAALogoP1NT", "CAAAfrProductLine", "CAABackgroundIX", "CAALogoP2NT", "CAALogoP2IX", "CAASplash", "CAAApplicationFrame"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleVisualIdentity.htm"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleVisualIdentity.htmmd"
 converted: "2026-05-11T17:17:55.820891"
 ```
 
@@ -68,10 +68,10 @@ Do not type the module name on the command line, but type the **product name**.
 The CAAAfrProductLine use case is made of a single source file named _CAAAfrProductLine.cpp_ located in the CAAAfrProductLine.m module of the CAAApplicationFrame.edu framework:
 
 The CAAAfrProductLine use case is made of a single source file named _CAAAfrProductLine.cpp_ located in the CAAAfrProductLine.m module of the CAAApplicationFrame.edu framework:
-Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrProductLine.m\`
+Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrProductLine.m/`
 
 The CAAAfrProductLine use case is made of a single source file named _CAAAfrProductLine.cpp_ located in the CAAAfrProductLine.m module of the CAAApplicationFrame.edu framework:
-Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrProductLine.m\`
+Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrProductLine.m/`
 Unix | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrProductLine.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -164,7 +164,7 @@ When the icon is created, use Save As to save the icon in the src directory of y
 1 TEXTINCLUDE DISCARDABLE
            BEGIN
 
-               "resource.h\0"
+               "resource.h/0"
 1 TEXTINCLUDE DISCARDABLE
 BEGIN
            END
@@ -172,8 +172,8 @@ BEGIN
            2 TEXTINCLUDE DISCARDABLE
            BEGIN
 
-               "#include ""afxres.h""\r\n"
-               "\0"
+               "#include ""afxres.h""/r/n"
+               "/0"
 2 TEXTINCLUDE DISCARDABLE
 BEGIN
            END
@@ -181,8 +181,8 @@ BEGIN
            3 TEXTINCLUDE DISCARDABLE
            BEGIN
 
-               "\r\n"
-               "\0"
+               "/r/n"
+               "/0"
 3 TEXTINCLUDE DISCARDABLE
 BEGIN
            END
@@ -227,11 +227,11 @@ Move the resource.h file to the LocalInterfaces directory, and build the module 
 [Top]
 #### Providing the Graphic Resources
 
-The graphic resources to provide should be copied into the CNext\resources\graphic directory or in its subdirectories of the framework used. They are:
+The graphic resources to provide should be copied into the CNext/resources/graphic directory or in its subdirectories of the framework used. They are:
 
   * **The product line icon** for the window title bars: CAAProduct.bmp. Its characteristics are the following for both Window and UNIX:
     * ![](images/CAAAfrVIIcon.jpg) width: 16 pixels; height: 17 pixels; resolution: 96 pixels per inch; 16 indexed color image.
-  * **The product line logo**. It should be copied in the CNext\resources\graphic\icons directory. It can be different for P1 and P2 looks. Its characteristics are the following:
+  * **The product line logo**. It should be copied in the CNext/resources/graphic/icons directory. It can be different for P1 and P2 looks. Its characteristics are the following:
     * Window: width: 130 pixels; height: 29 pixels; resolution: 72 pixels per inch; real color 24 bits image  For Windows with P1 look: CAALogoP1NT.bmp
 ---|---
 ```vbscript
@@ -244,17 +244,17 @@ For Windows with P2 look: CAALogoP2NT.bmp
 For UNIX with P2 Look: CAALogoP2IX.bmp
 ```
 
-  * **The product line splash screen** : a bit map and an animation: CAASplash.bmp and CAASplash.avi. They should be copied in the CNext\resources\graphic\splashscreens directory
+  * **The product line splash screen** : a bit map and an animation: CAASplash.bmp and CAASplash.avi. They should be copied in the CNext/resources/graphic/splashscreens directory
 
 ![](images/CAAAfrVISplash.jpg)
 
-  * **The product line background image**. It should be copied in the CNext\resources\graphic\icons directory. Its characteristics are the following:
+  * **The product line background image**. It should be copied in the CNext/resources/graphic/icons directory. Its characteristics are the following:
     * Windows (CAABackgroundNT.bmp): width: 640 pixels; height: 512 pixels; resolution: 254 pixels per inch; real color 24 bits image. It is shown as 320x256 pixels
 ![](images/CAAAfrVIBkgNT.jpg)
     * UNIX (CAABackgroundIX.bmp): width: 1280 pixels; height: 1024 pixels; resolution: 254 pixels per inch; real color 24 bits image. It is shown below as 320x256 pixels
 ![](images/CAAAfrVIBkgIX.jpg)
 
-  * **The product line dialog box background image** , available with Windows NT only. It should be copied in the CNext\resources\graphic\icons directory.  Its characteristics are the following:
+  * **The product line dialog box background image** , available with Windows NT only. It should be copied in the CNext/resources/graphic/icons directory.  Its characteristics are the following:
     * P1 (CAADecorationP1.bmp): width: 500 pixels; height: 36 pixels; resolution: 72 pixels per inch; 256 indexed color image
 ![](images/CAAAfrVIDecorationP1.jpg)
     * P2 (CAADecorationP2.bmp): width: 55 pixels; height: 1000 pixels; resolution: 72 pixels per inch; real color 24 bits image. It is shown cropped to its lower part

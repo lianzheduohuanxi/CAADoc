@@ -4,7 +4,7 @@ title: "Creating a Drawing Table"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CATIA", "CAADriDrawingtable", "CAADriDrawingTable", "CAADriUseCases"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriDrawingTable.htm"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriDrawingTable.htmmd"
 converted: "2026-05-11T17:31:51.064833"
 ```
 
@@ -37,22 +37,28 @@ This macro shows you how to create a drawing table in Drawing document. This mac
 
       ...
 ```vbscript
+```vbscript
         ' Set the CATIA popup file alerts to False
 ```
+```
 
+```vbscript
 ```vbscript
 ```vbscript
 ```vbscript
 ' Set the CATIA popup file alerts to False
         ' It prevents to stop the macro at each alert during its execution
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
         CATIA.DisplayFileAlerts = False
+```
 ```
 
       ...
@@ -73,11 +79,15 @@ The CATIA prompts are disabled thanks to the `DisplayFileAlerts` property of the
 ```
 
 ```vbscript
+```vbscript
         Set oDrwDocument = CATIA.Documents.Add("Drawing")
+```vbscript
+```
 ```vbscript
 ```vbscript
         ' Set the drawing document standard
         oDrwDocument.Standard = catISO
+```
 ```
 
 ```
@@ -102,15 +112,19 @@ A new drawing document is created and its standard is set to ISO.
 ```
 
 ```vbscript
+```vbscript
         Set oDrwSheets = oDrwDocument.Sheets
+```
 ```
 
 ```vbscript
 ```vbscript
 ```vbscript
         ' Retrieve the active sheet
+```vbscript
         Set oDrwSheet = oDrwSheets.ActiveSheet
         ' Set the sheet properties
+```
 ```
 
 ```
@@ -121,9 +135,11 @@ A new drawing document is created and its standard is set to ISO.
 ```vbscript
 ```vbscript
 ' Retrieve the active sheet
+```vbscript
 Set oDrwSheet = oDrwSheets.ActiveSheet
 ' Set the sheet properties
         oDrwSheet.PaperSize = catPaperA4
+```
         oDrwSheet.Orientation = catPaperLandscape
         oDrwSheet.Scale2 = 1
 ```
@@ -153,7 +169,9 @@ The `oDrwSheet` properties set are A4 format, landscape orientation and 1:1 scal
 ```
 
 ```vbscript
+```vbscript
         Set oDrwView = oDrwSheet.Views.ActiveView
+```
 ```
 
       ...
@@ -174,12 +192,16 @@ The view object is retrieved from the `oDrwSheet` object using the `ActiveView` 
 ```
 
 ```vbscript
+```vbscript
         Set oDrwTables = oDrwView.Tables
 ```vbscript
+```
 ```vbscript
         ' Create a new drawing table
+```vbscript
         Set oDrwTable = oDrwTables.Add(107, 70, 9, 9, 5, 20)
 
+```
 ```
 
 ```
@@ -190,9 +212,11 @@ The view object is retrieved from the `oDrwSheet` object using the `ActiveView` 
 ```vbscript
 ```vbscript
 ' Create a new drawing table
+```vbscript
 Set oDrwTable = oDrwTables.Add(107, 70, 9, 9, 5, 20)
         ' Set the drawing table's name
         oDrwTable.Name = "Title Block"
+```
 ```
 
 ```
@@ -255,7 +279,9 @@ The `CatTableComputeOFF` enumerate allows you to modify the drawing table withou
         oDrwTable.MergeCells 8, 8, 2, 1
         oDrwTable.MergeCells 8, 9, 2, 1
 ```vbscript
+```vbscript
         ' Set the drawing table's row sizes
+```
 ```
 
         oDrwTable.SetRowSize 1, 20
@@ -268,7 +294,9 @@ The `CatTableComputeOFF` enumerate allows you to modify the drawing table withou
         oDrwTable.SetRowSize 8, 3
         oDrwTable.SetRowSize 9, 7
 ```vbscript
+```vbscript
         ' Set the drawing table's column sizes
+```
 ```
 
         oDrwTable.SetColumnSize 1, 45
@@ -314,7 +342,7 @@ The `CatTableComputeON` enumerate allows you to update drawing table visualizati
 
 > End of the macro.
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

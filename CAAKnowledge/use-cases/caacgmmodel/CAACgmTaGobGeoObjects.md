@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "The Objects of CATIA Geometric Modeler"
-category: "use-case"
+category: use-case
 module: "CAACgmModel"
 tags: ["CATICGMContainer", "CATICGMObject", "CATIContainer", "CATICGMObjects", "CATIA"]
-source_file: "Doc/online/CAACgmModel/CAACgmTaGobGeoObjects.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmTaGobGeoObjects.htmmd"
 converted: "2026-05-11T17:33:47.936600"
 ```
 

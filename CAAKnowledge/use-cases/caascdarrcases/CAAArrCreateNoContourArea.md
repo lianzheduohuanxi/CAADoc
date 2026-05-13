@@ -4,7 +4,7 @@ title: "Creating an ArrangementArea without a Contour"
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CATIA", "CAAArrCreateNoContourArea", "CAAScdArrUseCases"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateNoContourArea.htm"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateNoContourArea.htmmd"
 converted: "2026-05-11T17:31:51.556574"
 ```
 
@@ -49,12 +49,16 @@ This macro shows you how to create an _ArrangementArea_ object that has no conto
 ```
 
 ```vbscript
+```vbscript
        Dim objProdDoc        As ProductDocument
+```vbscript
+```
 ```vbscript
 ```vbscript
        Dim objRootProd       As Product
        Set objProdDoc      = CATIA.Documents.Add("Product")
        Set objRootProd     = objProdDoc.Product
+```
 ```
 
 ```
@@ -80,12 +84,16 @@ Once the new product document has been created, fetch the _ArrangementProduct_ a
 ```
 
 ```vbscript
+```vbscript
        Dim objMove           As Move
+```vbscript
+```
 ```vbscript
 ```vbscript
        Dim objPosition       As Position
        Set objMove      = objRootProd.Move
        Set objPosition  = objRootProd.Position
+```
 ```
 
 ```
@@ -97,8 +105,10 @@ Once the new product document has been created, fetch the _ArrangementProduct_ a
 ```vbscript
        '----------------------------------------------
        ' Get ArrangementProduct
+```vbscript
        Dim objArrProd        As ArrangementProduct
        Set objArrProd   = objRootProd.GetTechnologicalObject("ArrangementProduct")
+```
 ```
 
 ```
@@ -124,21 +134,29 @@ The _ArrangementAreas_ object is a collection object that manages _ArrangementAr
 ```
 
 ```vbscript
+```vbscript
        Dim dblAreaPosition(11)  As Double
+```vbscript
+```
 ```vbscript
 ```vbscript
        Dim objArea     As ArrangementArea
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Dim dblAreaPosition(11)  As Double
 ```vbscript
+```
+```vbscript
 Dim objArea     As ArrangementArea
+```
 ```
 
        objPosition.GetComponents dblAreaPosition
@@ -151,7 +169,9 @@ Dim objArea     As ArrangementArea
 ```
 
 ```vbscript
+```vbscript
        Set objArea     = objArrProd.ArrangementAreas.AddArea(objMove, dblAreaPosition, 50.0)
+```
 ```
 
       ...
@@ -163,13 +183,15 @@ The newly created _ArrangementArea_ object does not have a contour and in additi
 
     ...
 ```vbscript
+```vbscript
      End Sub
 
+```
 ```
 
 ---
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

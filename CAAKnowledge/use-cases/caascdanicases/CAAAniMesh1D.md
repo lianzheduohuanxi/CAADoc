@@ -4,7 +4,7 @@ title: "Creating 1D Mesh"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAScdAniUseCases", "CAAAniMesh1D"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMesh1D.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMesh1D.htmmd"
 converted: "2026-05-11T17:31:51.602053"
 ```
 
@@ -34,7 +34,10 @@ This use case shows how to create 1D mesh parts in an existing analysis document
     ...
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
+
+```
 
 ```
 
@@ -43,17 +46,21 @@ This use case shows how to create 1D mesh parts in an existing analysis document
 ```vbscript
     '-----------------------------------------------------------
     'Optional: allows to find the sample wherever it's installed
+```vbscript
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
     Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
 ```vbscript
     End If
     '-----------------------------------------------------------
@@ -70,17 +77,21 @@ End If
 ```vbscript
 '-----------------------------------------------------------
     'Open the Analysis document
-    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Beam.CATAnalysis")
+```vbscript
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Beam.CATAnalysis")
+```
 ```
 
 ```
 
 ```
 
+```vbscript
 ```vbscript
 ```vbscript
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
+```
 ```
 
 ```
@@ -100,91 +111,119 @@ Open the Analysis document. The Analysis document is fetched in the documentatio
 
 ```vbscript
 ```vbscript
+```vbscript
     Set oAnalysisManager = oAnalysisDocument.Analysis
 
 ```
+```
 
 ```
 
 ```vbscript
+```vbscript
 Set oAnalysisManager = oAnalysisDocument.Analysis
 ```vbscript
+```
     'Retreive the part document from Analysis manager
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisLinkedDocument = oAnalysisManager.LinkedDocuments
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set partDocument = oAnalysisLinkedDocuments.Item(1)
     Set product = partDocument.Product
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Set product = partDocument.Product
 ```vbscript
+```
     'Retrieve the analysis model from the list of models
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisModels = oAnalysisManager.AnalysisModels
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oAnalysisModel = oAnalysisManager.Item(1)
 
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Set oAnalysisModels = oAnalysisManager.AnalysisModels
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set oAnalysisModel = oAnalysisManager.Item(1)
     'Retrieve mesh manager and mesh part
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisMeshManager = oAnalysisModel.MeshManager
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
 ```vbscript
+```
     'Retrieve publications from product and retrieve the published face.
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set publications = product.Publications
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set pubLine = publications.Item("Line.3")
 
+```
 ```
 
 ```
@@ -195,11 +234,11 @@ Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
 
 ---
 
-According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. The extraction of pre-defined geometric elements is done with the help of Reference interface. This is equivalent to the selection of a B-Rep element inside the interactive applications. In this macro the reference is created from the published face.
+According to the general [ Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. The extraction of pre-defined geometric elements is done with the help of Reference interface. This is equivalent to the selection of a B-Rep element inside the interactive applications. In this macro the reference is created from the published face.
 #### Creating the Mesh Part and Assigning Values to its Attributes.
 
     ...
-According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. The extraction of pre-defined geometric elements is done with the help of Reference interface. This is equivalent to the selection of a B-Rep element inside the interactive applications. In this macro the reference is created from the published face.
+According to the general [ Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. The extraction of pre-defined geometric elements is done with the help of Reference interface. This is equivalent to the selection of a B-Rep element inside the interactive applications. In this macro the reference is created from the published face.
 ```vbscript
 ```vbscript
     'Add the new beam mesh part to the list of mesh parts
@@ -210,15 +249,19 @@ According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniToc
 
 ```vbscript
 ```vbscript
+```vbscript
     Set beamPart = oAnalysisMeshParts.Add("MSHPart1D")
 
+```
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Set beamPart = oAnalysisMeshParts.Add("MSHPart1D")
     beamPart.AddSupportFromPublication product, pubLine
+```
     beamPart.SetGlobalSpecification "SizeValue", "10.0 mm"
     beamPart.SetGlobalSpecification "AbsoluteSag", 1
     beamPart.SetGlobalSpecification "AbsoluteSagValue", "1.1 mm"
@@ -243,14 +286,16 @@ Calling update on the mesh part computes the mesh.
 #### Epilog
 
     ...
+```vbscript
      End Sub
+```
     ...
 
 ---
 
 To run the macro interactively CATDocView environment variables must be defined. After running the macro the mesh may not be immediately visible, the user has to go to the Advanced Meshing Tools workbench to see the mesh.
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

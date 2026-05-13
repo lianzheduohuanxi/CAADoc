@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAASmiUseCases"
 tags: ["CAASurfaceMachiningItf", "CAASmgOperationWithMA", "CAASmiConnectUserOperationWithMA", "CAAESmiUserOperationWithMAGeometryEditor", "CAASmiOperationSampleOverview", "CATIM3xFeature", "CAADocStyleSheets", "CAADocRunSample", "CATIMfgGeometryActivity", "CATIAlias", "CAASmiUserOperationWithMAToolPath", "CAASmiUserOperationWithMA", "CAASmiTechArticles", "CAASmiOperationWithMAPanel", "CATISmgFactory", "CAASmiUserOperationWithMAGeometryPanel", "CATIEdit", "CAADocUseCases"]
-source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationWithMA.htm"
+source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationWithMA.htmmd"
 converted: "2026-05-11T11:27:02.780633"
 ---
 
@@ -147,8 +147,6 @@ We will see now how to compute the tool path of our operation [3].
 
 *Copyright  2002, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 ...
 // Tie the implementation to its interface
@@ -172,7 +170,7 @@ TIE_CATIMfgGeometryActivity( CAAESmiUserOperationWithMAGeometryEditor);
         // Link the machining area to the activity
         pActivity-&gt;SetFeature(spMachFeature);
       }
-      pSmgFactory-&gt;Release();
+      pSmgFactory-&gt;Release(#);
       pSmgFactory = NULL;
     }
     ...
@@ -195,7 +193,7 @@ TIE_CATIMfgGeometryActivity( CAAESmiUserOperationWithMAGeometryEditor);
     {
       // Finds all machining areas inside the model
       _pListOfMAs = spFeatCont-&gt;ListMembers(&quot;CATIM3xFeature&quot;);		
-      int NumbOfMAs = _pListOfMAs.Size();
+      int NumbOfMAs = _pListOfMAs.Size(#);
       for (int i=1;i&lt;=NumbOfMAs;i++)
       {  				
         CATUnicodeString Name;
@@ -206,9 +204,9 @@ TIE_CATIMfgGeometryActivity( CAAESmiUserOperationWithMAGeometryEditor);
           HRESULT RC = spMachArea-&gt;QueryInterface(IID_CATIAlias, (void**) &amp;pAlias);
           if (SUCCEEDED(RC))
           {
-            Name = pAlias-&gt;GetAlias();
+            Name = pAlias-&gt;GetAlias(#);
             _pDlgCombo-&gt;SetLine(Name);
-            pAlias-&gt;Release();
+            pAlias-&gt;Release(#);
             pAlias = NULL;
           }
 
@@ -221,7 +219,7 @@ TIE_CATIMfgGeometryActivity( CAAESmiUserOperationWithMAGeometryEditor);
     // Adds a callback 
     AddAnalyseNotificationCB(
       _pDlgCombo,
-      _pDlgCombo-&gt;GetComboSelectNotification(),
+      _pDlgCombo-&gt;GetComboSelectNotification(#),
       (CATCommandMethod) &amp;CAASmiUserOperationWithMAGeometryPanel::SelectMachArea,NULL);
 
     // Creates the Machining Area editor
@@ -234,7 +232,7 @@ TIE_CATIMfgGeometryActivity( CAAESmiUserOperationWithMAGeometryEditor);
         CATDlgFrame * pMAFrame = pEdit-&gt;GetPanelItem(this,&quot;MAFrameID&quot;);
         if (pMAFrame) 
           pMAFrame-&gt;SetGridConstraints( 1, 0, 2, 1, CATGRID_4SIDES);
-        pEdit-&gt;Release();
+        pEdit-&gt;Release(#);
         pEdit = NULL;
       }
     }		
@@ -251,7 +249,7 @@ TIE_CATIMfgGeometryActivity( CAAESmiUserOperationWithMAGeometryEditor);
     // As a frame called &quot;MAFrameID&quot; has already been created, the method GetPanelItem
     // will refresh it
     pEdit-&gt;GetPanelItem(this,&quot;MAFrameID&quot;);
-    pEdit-&gt;Release();
+    pEdit-&gt;Release(#);
     pEdit = NULL;
   }
  ...

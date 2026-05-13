@@ -4,7 +4,7 @@ title: "Adding a New Product"
 category: "use-case"
 module: "CAAScdPstUseCases"
 tags: ["CAAPstPad1_2", "CAAPstAddNewProduct", "CATIA", "CAAScdPstUseCases", "CAAPstPad1_1"]
-source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddNewProduct.htm"
+source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddNewProduct.htmmd"
 converted: "2026-05-11T17:31:52.326450"
 ```
 
@@ -51,9 +51,13 @@ This macro shows you how to create a simple product structure containing two par
 ```
 
 ```vbscript
+```vbscript
           Dim oProductDoc As Document
 ```vbscript
+```
+```vbscript
           Set oProductDoc = CATIA.Documents.**Add**("Product")
+```
 ```
 
 ```
@@ -62,21 +66,27 @@ This macro shows you how to create a simple product structure containing two par
 ```vbscript
 ```vbscript
           'Retrieve the root product.
+```vbscript
           Dim oRootProduct As Product
           Set oRootProduct = oProductDoc.Product
           'Declare the root product's part number and name.
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Dim oRootProduct As Product
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set oRootProduct = oProductDoc.Product
 'Declare the root product's part number and name.
+```
           oRootProduct.PartNumber = "Root"
           oRootProduct.Name = "The_Root_Product"
 ```
@@ -89,8 +99,10 @@ Set oRootProduct = oProductDoc.Product
 ```vbscript
 ```vbscript
           'Retrieve the product's collection under the root product.
+```vbscript
           Dim oRootChildren As Products
           Set oRootChildren = oRootProduct.Products
+```
 ```
 
 ```
@@ -116,11 +128,15 @@ A new Product document is created using the `Add` method of the documents collec
 ```
 
 ```vbscript
+```vbscript
           Dim oChildProduct1 As Product
+```vbscript
+```
 ```vbscript
 ```vbscript
           Set oChildProduct1 = oRootChildren.**AddNewProduct**("Child_1_Type")
           'Declare the part number and name for this product.
+```
           oChildProduct1.PartNumber = "Child_001"
           oChildProduct1.Name = "1st_Child"
 ```
@@ -149,7 +165,9 @@ A new product is added to the collection using the `AddNewProduct` method of the
         oChildProduct1.**AddMasterShapeRepresentation** sDocPath & "CAAPstPad1_1.CATPart"
 
 ```vbscript
+```vbscript
         CATIA.ActiveWindow.ActiveViewer.**Reframe**
+```
 ```
 
       ...
@@ -171,23 +189,31 @@ Using the `AddMasterShapeRepresentation` method of the _Product_ object, an exis
 ```
 
 ```vbscript
+```vbscript
           Dim oChildProduct2 As Product
+```vbscript
+```
 ```vbscript
 ```vbscript
           Set oChildProduct2 = oRootChildren.AddNewProduct("Child_2_Type")
 
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Dim oChildProduct2 As Product
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set oChildProduct2 = oRootChildren.AddNewProduct("Child_2_Type")
           'Declare the part number and name for this product.
+```
           oChildProduct2.PartNumber = "Child_002"
           oChildProduct2.Name = "2nd_Child"
 ```
@@ -216,7 +242,9 @@ A second new product is added to the collection in the same way as the first. Th
         oChildProduct2.**AddMasterShapeRepresentation** sDocPath & "CAAPstPad1_2.CATPart"
 
 ```vbscript
-        CATIA.ActiveWindow.ActiveViewer.**Reframe**()
+```vbscript
+        CATIA.ActiveWindow.ActiveViewer.**Reframe**(#)
+```
 ```
 
       ...
@@ -225,7 +253,7 @@ A second new product is added to the collection in the same way as the first. Th
 
 Using the `AddMasterShapeRepresentation` method of the _Product_ object, another existing Part from a second external Part document is added to the product and the viewer is reframed.
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

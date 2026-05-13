@@ -4,7 +4,7 @@ title: "CAAAniMeshSweep3D.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniMeshSweep3D", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSweep3DSource.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSweep3DSource.htmmd"
 converted: "2026-05-11T17:31:51.714618"
 ```
 
@@ -31,7 +31,10 @@ converted: "2026-05-11T17:31:51.714618"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
+
+```
 
 ```
 
@@ -40,18 +43,22 @@ converted: "2026-05-11T17:31:51.714618"
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
+```vbscript
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
         End If
 ```
 
@@ -62,8 +69,10 @@ converted: "2026-05-11T17:31:51.714618"
 ```vbscript
     ' -----------------------------------------------------------
     ' Open the CATAnalysis Document
-    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\WeldConnections.CATAnalysis")
+```vbscript
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/WeldConnections.CATAnalysis")
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+```
 ```
 
 ```
@@ -75,9 +84,13 @@ converted: "2026-05-11T17:31:51.714618"
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisManagar = oAnalysisDocument.Analysis
 ```vbscript
+```
+```vbscript
     Set oAnalysisSet = oAnalysisManagar.AnalysisSets
+```
 ```
 
 ```
@@ -86,23 +99,33 @@ converted: "2026-05-11T17:31:51.714618"
 ```vbscript
 ```vbscript
     ' Retrieve the part document and product
+```vbscript
     Set oAnalysisLinkedDocuments = oAnalysisManagar.LinkedDocuments
     Set partDocument = oAnalysisLinkedDocuments.Item(1)
     Set product = partDocument.Product
     'Retrieve the publications
+```
+```vbscript
     Set publications = product.Publications
     Set pubBody = publications.Item("PartBody")
     Set pubTopFace = publications.Item("Top")
     Set pubBotFace = publications.Item("Bottom")
     ' Retrieve the analysis model
+```
+```vbscript
     Set oAnalysisModels = oAnalysisManagar.AnalysisModels
     Set oAnalysisModel = oAnalysisModels.Item(1)
     'Retrieve the mesh manager and list of mesh parts
+```
+```vbscript
     Set oAnalysisMeshManager = oAnalysisModel.MeshManager
     Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
     'Add Sweep 3D mesh part to the list of mesh parts
+```
+```vbscript
     Set sweep3D = oAnalysisMeshParts.Add ("MSHPartSweep3D")
     'Add support from the published body
+```
 ```
 
 ```
@@ -113,8 +136,10 @@ converted: "2026-05-11T17:31:51.714618"
 ```vbscript
 ```vbscript
 'Add Sweep 3D mesh part to the list of mesh parts
+```vbscript
 Set sweep3D = oAnalysisMeshParts.Add ("MSHPartSweep3D")
 'Add support from the published body
+```
 ```
 
 ```
@@ -128,7 +153,9 @@ sweep3D.AddSupportFromPublication product, pubBody
 
     sweep3D.SetSpecificationFromPublication "Bottom", product, pubBotFace, 0
 ```vbscript
+```vbscript
     'Set the global specification
+```
 ```
 
     sweep3D.SetGlobalSpecification "ElementOrder", "Linear"
@@ -141,6 +168,8 @@ sweep3D.AddSupportFromPublication product, pubBody
     sweep3D.Update
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

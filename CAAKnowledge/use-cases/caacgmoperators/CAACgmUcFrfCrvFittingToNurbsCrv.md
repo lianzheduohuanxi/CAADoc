@@ -4,13 +4,13 @@ title: "Converting Curves into NURBS"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CAACrvFittingToNurbsCrv", "CAAGMOperatorsCrvFittingToNurbsCrv", "CATICGMCrvFittingToNurbsCrv", "CATICGMObject", "CAAGMModelGemBrowser", "CATIA"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcFrfCrvFittingToNurbsCrv.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcFrfCrvFittingToNurbsCrv.htmmd"
 converted: "2026-05-11T17:33:48.934549"
 ```
 
 ---
 tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CAACrvFittingToNurbsCrv", "CAAGMOperatorsCrvFittingToNurbsCrv", "CATICGMCrvFittingToNurbsCrv", "CATICGMObject", "CAAGMModelGemBrowser", "CATIA"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcFrfCrvFittingToNurbsCrv.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcFrfCrvFittingToNurbsCrv.htmmd"
 converted: "2026-05-11T17:33:48.934549"
 Converting Curves into NURBS
 
@@ -41,22 +41,24 @@ What You Will Learn With This Use Case This use case is intended to help you use
 2. If the ADVANCED mode is chosen, tuning of the parameters by using the Setxxx methods then run of the operator.
 3. Retrieve the created NURBS by using the GetPNurbs method.
     1. Operator creation.
+```vbscript
     2. Set of parameters.
     3. Run.
+```
     4. GetPNurbs.
     5. Operator deletion.
 As many times as you need. The CAAGMOperatorsCrvFittingToNurbsCrv Use Case CAAGMOperatorsCrvFittingToNurbsCrv is a use case of the CAAGMOperatorsInterfaces.edu framework that illustrates the GMOperatorsInterfaces framework capabilities. What Does CAAGMOperatorsCrvFittingToNurbsCrv __ Do This use case:
     1. Creates a PSpline to be converted into a Nurbs.
     2. Creates a CATICGMCrvFittingToNurbsCrv operator to be used to convert the initial curve into a rational curve _._ A constraint __ is __ set on the minimum length of an arc.
     3. Retrieves the created Nurbs.
-How to Launch CAAGMOperatorsCrvFittingToNurbsCrv To launch CAAGMOperatorsCrvFittingToNurbsCrv, you will need to set up the build time environment, then compile CAAGMOperatorsCrvFittingToNurbsCrv.m along with its prerequisites, set up the run time environment, and then execute the use case [4]. If you simply type CAAGMOperatorsCrvFittingToNurbsCrv with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsCrvFittingToNurbsCrv e/NurbsSur.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMOperatorsCrvFittingToNurbsCrv Code The CAAGMOperatorsCrvFittingToNurbsCrv use case is made of a main named CAACrvFittingToNurbsCrv.cpp located in the CAAGMOperatorsCrvFittingToNurbsCrv.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsCrvFittingToNurbsCrv.m\` where `InstallRootFolder` [4] is the folder where the API CD-ROM is installed. Step-by-Step CAAGMOperatorsCrvFittingToNurbsCrv .cpp is divided into four logical steps:
+How to Launch CAAGMOperatorsCrvFittingToNurbsCrv To launch CAAGMOperatorsCrvFittingToNurbsCrv, you will need to set up the build time environment, then compile CAAGMOperatorsCrvFittingToNurbsCrv.m along with its prerequisites, set up the run time environment, and then execute the use case [4]. If you simply type CAAGMOperatorsCrvFittingToNurbsCrv with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsCrvFittingToNurbsCrv e/NurbsSur.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMOperatorsCrvFittingToNurbsCrv Code The CAAGMOperatorsCrvFittingToNurbsCrv use case is made of a main named CAACrvFittingToNurbsCrv.cpp located in the CAAGMOperatorsCrvFittingToNurbsCrv.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder/CAADoc/CAAGMOperatorsInterfaces.edu/CAAGMOperatorsCrvFittingToNurbsCrv.m/` where `InstallRootFolder` [4] is the folder where the API CD-ROM is installed. Step-by-Step CAAGMOperatorsCrvFittingToNurbsCrv .cpp is divided into four logical steps:
     1. Creating the Geometry Factory
     2. Creating the Curve to Be Converted into a NURBS
     3. Converting the Created Curve into a NURBS and Specifying a Constraint on the Minimum Length of an Arc
     4. Writing the Model and Closing the Container
 Creating the Geometry Factory The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject (and the curves and surfaces in particular) [1]. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
 
-    CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**() ;
+    CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**(#) ;
 ```vbscript
     if (NULL==piGeomFactory) return (1);
 
@@ -88,12 +90,12 @@ If you want to get the converted NURBS, you must Run the operator and retrieve t
 
 ```
 
-    pCrvFitting1->Run();
-    CATPNurbs * piPNurbs1 = pCrvFitting1->GetPNurbs();
+    pCrvFitting1->Run(#);
+    CATPNurbs * piPNurbs1 = pCrvFitting1->GetPNurbs(#);
 
 The transformation of the curve into NURBS is not exact. To check this, you can use the IsExactTransformation method or retrieve the maximum deviation (0.899 is returned in the present use case).
 
-    cout << "Maximum deviation is " << pCrvFitting1->GetMaxDeviation() << endl;
+    cout << "Maximum deviation is " << pCrvFitting1->GetMaxDeviation(#) << endl;
 
 Writing the Model and Closing the Factory To save the model in a file, the `::CATSaveCGMContainer` global function is used. Notice that in the use case, the save is conditioned by an input parameter representing the file inside which the model must be saved. The use case ends with the closure of the geometry factory, done by the ` ::CATCloseCGMContainer` global function.
 
@@ -115,7 +117,7 @@ ofstream filetowrite(pfileName, ios::binary ) ;
     #endif
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
-       filetowrite.close();
+       filetowrite.close(#);
      }
 
      //

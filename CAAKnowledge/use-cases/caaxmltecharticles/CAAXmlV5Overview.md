@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Using XML in V5"
-category: "use-case"
+category: tech-article
 module: "CAAXmlTechArticles"
 tags: ["CATIDOMElement", "CATIDOM", "CATIXMLSAXFactory_var", "CATISAXDocumentHandler", "CATIXML", "CATIDOMNode_var", "CATISAXAttributeList_var", "CATIDOMImplementation", "CATIDOMDocument_var", "CATISAXErrorHandler", "CATISAXInputSource_var", "CATIDOMXXX_var", "CATIXMLSAXFactory", "CATISAXYYY_var", "CATIXMLDOMDocumentBuilder", "CATISAXInputSource", "CATIDOMDocumentType_var", "CATIDOMElement_var", "CATIXMLDOMDocumentBuilder_var", "CATISAXEntityResolver"]
-source_file: "Doc/online/CAAXmlTechArticles/CAAXmlV5Overview.htm"
+source_file: "Doc/online/CAAXmlTechArticles/CAAXmlV5Overview.htmmd"
 converted: "2026-05-11T17:33:45.712135"
 ```
 
@@ -52,7 +52,7 @@ To make the development of XML-based solutions easier for CAA developers, the XM
   * A set of V5 interfaces (based on the DOM or the SAX models) to access all the parsers in a uniform, v5-friendly way.
   * An adaptor layer which makes the various XML parsers accessible through the V5 interfaces in a uniform way.
 
-![xmlparsers.png \(9296 bytes\)](images/xmlparsers.png)
+![xmlparsers.png /(9296 bytes/)](images/xmlparsers.png)
 #### Support for Multiple Parsers
 
 Each parser component in the XMLParser framework is identified by a GUID. To instantiate the parser, developers invoke a global function, passing it the identifier of the parser they want to use. Since there are two families of APIs (DOM and SAX), there are two global functions. If the developer fails to pass an identifier, a default value is used (corresponding to the XML4C3 parser).
@@ -83,9 +83,9 @@ CATIXMLSAXFactory_var factory;
 HRESULT hr = CreateCATIXMLSAXFactory(factory, CLSID_XML4C5_SAX);
 _Compatibility between parsers_
 
-![warning.gif \(206 bytes\)](../CAAIcons/images/warning.gif) DOM V5 components have dependencies on SAX V5 components. For instance a DOM parser needs to be able to fetch XML from various physical sources (an HTTP server, a file, a relational database, etc.); rather than defining yet another interface for input sources, the V5 DOM parser accepts parsing from a CATISAXInputSource; to create such input sources, one uses the V5 SAX component.
+![warning.gif /(206 bytes/)](../CAAIcons/images/warning.gif) DOM V5 components have dependencies on SAX V5 components. For instance a DOM parser needs to be able to fetch XML from various physical sources (an HTTP server, a file, a relational database, etc.); rather than defining yet another interface for input sources, the V5 DOM parser accepts parsing from a CATISAXInputSource; to create such input sources, one uses the V5 SAX component.
 
-![warning.gif \(206 bytes\)](../CAAIcons/images/warning.gif) V5 parsers are not interoperable: you cannot append a _CATIDOMElement_ created with XML4C3 to a _CATIDOMElement_ created with XML4C5. However, several parsers can coexist in the same process.
+![warning.gif /(206 bytes/)](../CAAIcons/images/warning.gif) V5 parsers are not interoperable: you cannot append a _CATIDOMElement_ created with XML4C3 to a _CATIDOMElement_ created with XML4C5. However, several parsers can coexist in the same process.
 
 [Top]
 #### Choosing the Right Parser
@@ -278,7 +278,7 @@ The XML specification defines the XML syntax using the character model defined b
 
 The XML specification mandates that XML parsers support UTF-8. Therefore, this encoding is universally available. Furthermore, this encoding supports the whole Unicode standard, which guarantees that national characters can be read and written on any machine in the world without loss or corruption, or need to install a specific code page configuration file.
 
-![warning.gif \(206 bytes\)](../CAAIcons/images/warning.gif)When you have the choice of the encoding, use the UTF-8 encoding.
+![warning.gif /(206 bytes/)](../CAAIcons/images/warning.gif)When you have the choice of the encoding, use the UTF-8 encoding.
 
 [Top]
 #### Other Supported Encodings

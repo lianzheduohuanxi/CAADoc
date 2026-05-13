@@ -4,13 +4,13 @@ title: "Threading a Rod"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMCheckForPart", "CAAGMOperatorsInterfaces", "CAAGMOperatorsJournalThreadOpMain", "CAADoc", "CAAGMModelGemBrowser", "CAASweepProfile", "CAAGMOperatorsJournalThreadUtility", "CAASweepCreate", "CATICGMFrFTopologicalSweep", "CAAAdtJournalThread", "CAAAdtJournalCreateThread"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtThreadOperator.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtThreadOperator.htmmd"
 converted: "2026-05-11T17:33:48.868926"
 ```
 
 ---
 tags: ["CAAGMCheckForPart", "CAAGMOperatorsInterfaces", "CAAGMOperatorsJournalThreadOpMain", "CAADoc", "CAAGMModelGemBrowser", "CAASweepProfile", "CAAGMOperatorsJournalThreadUtility", "CAASweepCreate", "CATICGMFrFTopologicalSweep", "CAAAdtJournalThread", "CAAAdtJournalCreateThread"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtThreadOperator.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtThreadOperator.htmmd"
 converted: "2026-05-11T17:33:48.868926"
 Threading a Rod
 
@@ -49,18 +49,18 @@ For information on journal checking, refer to:
     * [Topological Journal: Creation and Validation (1)](CAACgmUcJournalChecking1.md)
     * [Topological Journal: Creation and Validation (2)](CAACgmUcJournalChecking2.md)
 
-This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMOperatorsJournalThreadOpMain and CAAGMOperatorsJournalThreadUtility Code The CAAGMOperatorsJournalThreadOpMain use case is made of a main named CAAAdtJournalCreateThread.cpp located in the CAAGMOperatorsJournalThreadOpMain.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsJournalThreadOpMain.m\` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. This use case uses the CAAAdtJournalThread class which is defined in the CAAGMOperatorsJournalThreadUtility.m module. Step-by-Step The CAAGMOperatorsJournalThreadOpMain use case is divided into the following main steps:
+This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMOperatorsJournalThreadOpMain and CAAGMOperatorsJournalThreadUtility Code The CAAGMOperatorsJournalThreadOpMain use case is made of a main named CAAAdtJournalCreateThread.cpp located in the CAAGMOperatorsJournalThreadOpMain.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder/CAADoc/CAAGMOperatorsInterfaces.edu/CAAGMOperatorsJournalThreadOpMain.m/` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. This use case uses the CAAAdtJournalThread class which is defined in the CAAGMOperatorsJournalThreadUtility.m module. Step-by-Step The CAAGMOperatorsJournalThreadOpMain use case is divided into the following main steps:
     * Creation of the geometry factory (not discussed below - see for example [2]).
     * Creation of a CATSolidCylinder (see [2]).
     * Creation of the thread operator by using the CAAAdtJournalThread operator defined in the CAAGMOperatorsJournalThreadUtility.m module. This is the most interesting part of the use case. In this part, we must define:
       * The constructor and the destructor of the operator.
-      * The Run() method whose operations are going to be reviewed below:
+      * The Run(#) method whose operations are going to be reviewed below:
         1. Creation of a first sweep.
         2. Boolean remove from the initial rod.
         3. Creation of a second sweep.
         4. Boolean remove from the body resulting from the first remove.
 
-      * The GetResult() method.
+      * The GetResult(#) method.
     * Running the CAAAdtJournalThread operator and retrieving the resulting body in the main program.
 2. Boolean remove from the initial rod.
 3. Creation of a second sweep.
@@ -114,14 +114,14 @@ The helix parameters are:
           CATBody * piBPOrigin = CATCGMCreateTopPointXYZ (
             _factory,
             _topData,
-            P1.GetX() + (cylRadius + **0.001**),
-            P1.GetY(),
-            P1.GetZ());
+            P1.GetX(#) + (cylRadius + **0.001**),
+            P1.GetY(#),
+            P1.GetZ(#));
 
     * The start and end angle. The end angle (the number of helix turns) is roughly determined so that the portion of the rod to be threaded goes until an extremity of the rod. The distance where the thread starts is passed as the argument of the CAAAdtJournalThread constructor in the form of a length.
-P1.GetX() + (cylRadius + **0.001**),
-P1.GetY(),
-P1.GetZ());
+P1.GetX(#) + (cylRadius + **0.001**),
+P1.GetY(#),
+P1.GetZ(#));
 Specifying the Profile The profiles are defined in the CAASweepProfile function. They are originally created in the XOY plane but their positioning is moved to the beginning of the helix.
 
     CATMathAxis Ref; // the canonical math axis

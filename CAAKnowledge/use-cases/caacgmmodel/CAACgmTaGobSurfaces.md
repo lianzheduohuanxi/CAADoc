@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "About NURBS"
-category: "use-case"
+category: use-case
 module: "CAACgmModel"
 tags: ["CATIA"]
-source_file: "Doc/online/CAACgmModel/CAACgmTaGobSurfaces.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmTaGobSurfaces.htmmd"
 converted: "2026-05-11T17:33:47.967121"
 ```
 
@@ -39,16 +39,16 @@ CGM offers a great variety of surfaces. This paper describes their common proper
 
 A surface is a function from a closed interval of R^2 to R^3. Hence, it is defined by three scalar functions of two variables. The variables are usually called **parameters** of a point on the surface and denoted through **U** and **V** , while the scalar functions represent the mapping, for each point of the surface, between the Cartesian coordinates, usually called X, Y, Z, and the corresponding parameters U and V.
 
-Fig. 1: The mapping between the parameters and the Cartesian coordinates ![Surfaces1.gif \(3848 bytes\)](images/CAACgmGobSurfaces1.gif) | Three scalar functions FX, FY and FZ map the (U,V) parameters into the Cartesian coordinates (X, Y, Z) for each point P of the surface.
+Fig. 1: The mapping between the parameters and the Cartesian coordinates ![Surfaces1.gif /(3848 bytes/)](images/CAACgmGobSurfaces1.gif) | Three scalar functions FX, FY and FZ map the (U,V) parameters into the Cartesian coordinates (X, Y, Z) for each point P of the surface.
 ---|---
 
 A surface is a function from a closed interval of R^2 to R^3. Hence, it is defined by three scalar functions of two variables. The variables are usually called **parameters** of a point on the surface and denoted through **U** and **V** , while the scalar functions represent the mapping, for each point of the surface, between the Cartesian coordinates, usually called X, Y, Z, and the corresponding parameters U and V.
-Fig. 1: The mapping between the parameters and the Cartesian coordinates ![Surfaces1.gif \(3848 bytes\)](images/CAACgmGobSurfaces1.gif) | Three scalar functions FX, FY and FZ map the (U,V) parameters into the Cartesian coordinates (X, Y, Z) for each point P of the surface.
+Fig. 1: The mapping between the parameters and the Cartesian coordinates ![Surfaces1.gif /(3848 bytes/)](images/CAACgmGobSurfaces1.gif) | Three scalar functions FX, FY and FZ map the (U,V) parameters into the Cartesian coordinates (X, Y, Z) for each point P of the surface.
 Multi-patches surfaces are defined as a set of (n_u*n_v) connected pieces, each piece, called patch, having its own parameterization. Hence, a point belonging to the surface can be expressed in terms of:
 
     * Local parameters: (u,v) parameters on a given patch, independently of the other patches
     * Global parameters: (U,V) parameters taking into account the preceding patches parameterization.
-Fig. 1b: Local and global parameters on a 3*2 patches surface ![Surfaces1b.gif \(5335 bytes\)](images/CAACgmGobSurfaces1b.gif) | The Cartesian coordinates of the point P can be evaluated using the global parameter (U,V), or the local parameter (u_3,v_2) on the (3,2)th patch.
+Fig. 1b: Local and global parameters on a 3*2 patches surface ![Surfaces1b.gif /(5335 bytes/)](images/CAACgmGobSurfaces1b.gif) | The Cartesian coordinates of the point P can be evaluated using the global parameter (U,V), or the local parameter (u_3,v_2) on the (3,2)th patch.
 ---|---
 
 [Top]
@@ -111,16 +111,16 @@ It is useful to retrieve the equations representing the surface, especially when
 
 All surface modification changes the equations. Thus, it is necessary to precisely define the use of the geometry equations. There are 3 main methods for using equations.
 
-    * `CATSurface::Lock()`: _Locks the geometric object before asking for its equation._ This operation:
+    * `CATSurface::Lock(#)`: _Locks the geometric object before asking for its equation._ This operation:
       * Declares a reference on the object, so that it cannot be deleted anymore.
       * Increments the number of customers that wants to prevent the object from future modifications, except the relimitation.
       * Does not compute anything.
-    * `CATSurface::GetEquation()`: _Asks for the equation._ This operation:
+    * `CATSurface::GetEquation(#)`: _Asks for the equation._ This operation:
       * Throws an exception if the object is not locked.
       * Allocate the memory (if needed).
       * Computes the equations (if needed).
       * Returns a constant pointer to the required equation.
-    * `CATSurface::Unlock()`: _Unlocks the geometric object when you do not need to use its equation no more_. This operation:
+    * `CATSurface::Unlock(#)`: _Unlocks the geometric object when you do not need to use its equation no more_. This operation:
       * Releases the reference
       * Decrements the number of customers which want to prevent the object from future modifications, except the relimitation.
       * Keeps the allocated memory and computed equations as long as the object is not modified.
@@ -252,10 +252,10 @@ CATMathSetOfPointsND | `Limit2` | Corresponding passing points on the second lim
 CATMathSetOfPointsND | `Limit2` | Corresponding passing points on the second limitation curve
 The multi-represented surface simply delegates, without computation, its evaluation to a pointed surface.This model allows CGM to keep as long as possible the object canonicity: for example, an object implementing the CATFilletSurface interface point to an objet implementing a canonical surface (such as CATCylinder, CATCone) or to an object implementing the CATGenericFillet if the resulting fillet is not canonical. The canonical representation, if it exists, is returned by the `CATSurface::GetGeometricRep` method.
 
-Fig. 3: The multi-represented surfaces ![Surfaces2.gif \(5852 bytes\)](images/CAACgmGobSurfaces2.gif) | CATFilletSurface, CATDraftSurface, CATSweepSurface, CATOffsetSurface are interfaces for various multi-represented surfaces. Each of these surface refers to another one for the evaluation process. The referred surface is preferably a canonical surface. If it is not possible, sampled or procedural surfaces are chosen.
+Fig. 3: The multi-represented surfaces ![Surfaces2.gif /(5852 bytes/)](images/CAACgmGobSurfaces2.gif) | CATFilletSurface, CATDraftSurface, CATSweepSurface, CATOffsetSurface are interfaces for various multi-represented surfaces. Each of these surface refers to another one for the evaluation process. The referred surface is preferably a canonical surface. If it is not possible, sampled or procedural surfaces are chosen.
 
 The multi-represented surface simply delegates, without computation, its evaluation to a pointed surface.This model allows CGM to keep as long as possible the object canonicity: for example, an object implementing the CATFilletSurface interface point to an objet implementing a canonical surface (such as CATCylinder, CATCone) or to an object implementing the CATGenericFillet if the resulting fillet is not canonical. The canonical representation, if it exists, is returned by the `CATSurface::GetGeometricRep` method.
-Fig. 3: The multi-represented surfaces ![Surfaces2.gif \(5852 bytes\)](images/CAACgmGobSurfaces2.gif) | CATFilletSurface, CATDraftSurface, CATSweepSurface, CATOffsetSurface are interfaces for various multi-represented surfaces. Each of these surface refers to another one for the evaluation process. The referred surface is preferably a canonical surface. If it is not possible, sampled or procedural surfaces are chosen.
+Fig. 3: The multi-represented surfaces ![Surfaces2.gif /(5852 bytes/)](images/CAACgmGobSurfaces2.gif) | CATFilletSurface, CATDraftSurface, CATSweepSurface, CATOffsetSurface are interfaces for various multi-represented surfaces. Each of these surface refers to another one for the evaluation process. The referred surface is preferably a canonical surface. If it is not possible, sampled or procedural surfaces are chosen.
 Multi-represented surfaces are often created with geometric operators that are dedicated to this creation. The following array displays the geometric operator or the method of the CATGeoFactory to use for the creation of each type of multi-represented surface:
 
 Surface | Creation | Definition parameters
@@ -302,10 +302,10 @@ operator |
 operator |
 The procedural surface uses the evaluation of another surface, call the reference, for the computation of its own evaluation. The reference can be any type of surface, even a procedural one. But in this last case, this will be more time consuming: two evaluations are done, one for each level. In case of a CATProcOffsetSurface referring another CATProcOffsetSurface however, the offset values are directly cumulated at the surface creation, so that only one evaluation is done.
 
-Fig. 4: The evaluation mechanism and the special case of procedural offset surface ![Surfaces3.gif \(7309 bytes\)](images/CAACgmGobSurfaces3.gif) | When you ask for an evaluation of a procedural surface, the procedural surface uses the evaluation of its reference. This process is recursive if the reference is a procedural surface itself, so that it could be time consuming, because each procedural surface do computations at each level. This is not the case for a procedural offset surface of another procedural offset surface: here, the offset are cumulated, eliminating the recursivity.
+Fig. 4: The evaluation mechanism and the special case of procedural offset surface ![Surfaces3.gif /(7309 bytes/)](images/CAACgmGobSurfaces3.gif) | When you ask for an evaluation of a procedural surface, the procedural surface uses the evaluation of its reference. This process is recursive if the reference is a procedural surface itself, so that it could be time consuming, because each procedural surface do computations at each level. This is not the case for a procedural offset surface of another procedural offset surface: here, the offset are cumulated, eliminating the recursivity.
 
 The procedural surface uses the evaluation of another surface, call the reference, for the computation of its own evaluation. The reference can be any type of surface, even a procedural one. But in this last case, this will be more time consuming: two evaluations are done, one for each level. In case of a CATProcOffsetSurface referring another CATProcOffsetSurface however, the offset values are directly cumulated at the surface creation, so that only one evaluation is done.
-Fig. 4: The evaluation mechanism and the special case of procedural offset surface ![Surfaces3.gif \(7309 bytes\)](images/CAACgmGobSurfaces3.gif) | When you ask for an evaluation of a procedural surface, the procedural surface uses the evaluation of its reference. This process is recursive if the reference is a procedural surface itself, so that it could be time consuming, because each procedural surface do computations at each level. This is not the case for a procedural offset surface of another procedural offset surface: here, the offset are cumulated, eliminating the recursivity.
+Fig. 4: The evaluation mechanism and the special case of procedural offset surface ![Surfaces3.gif /(7309 bytes/)](images/CAACgmGobSurfaces3.gif) | When you ask for an evaluation of a procedural surface, the procedural surface uses the evaluation of its reference. This process is recursive if the reference is a procedural surface itself, so that it could be time consuming, because each procedural surface do computations at each level. This is not the case for a procedural offset surface of another procedural offset surface: here, the offset are cumulated, eliminating the recursivity.
 We detail now the various procedural surfaces.
 
 CATProcOffsetSurface | Generated by offsetting each point of a reference surface in the direction of the reference surface normal and of length a given offset that may be positive or negative.

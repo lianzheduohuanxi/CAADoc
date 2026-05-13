@@ -4,13 +4,13 @@ title: "Weld Offset Calculation"
 category: "use case"
 module: "CAACloUseCases"
 tags: ["CAACommonLayoutItf", "CAAECloAppWeldOffset", "CAACloSetup", "CATICloAppWeldOffset"]
-source_file: "Doc/online/CAACloUseCases/CAAECloAppWeldOffset.htm"
+source_file: "Doc/online/CAACloUseCases/CAAECloAppWeldOffset.htmmd"
 converted: "2026-05-11T17:33:49.540616"
 ```
 
 ---
 tags: ["CAACommonLayoutItf", "CAAECloAppWeldOffset", "CAACloSetup", "CATICloAppWeldOffset"]
-source_file: "Doc/online/CAACloUseCases/CAAECloAppWeldOffset.htm"
+source_file: "Doc/online/CAACloUseCases/CAAECloAppWeldOffset.htmmd"
 converted: "2026-05-11T17:33:49.540616"
 Equipment & Systems |  Systems Layout |  Weld Offset Calculation _How to customize weld offset calculation_
 
@@ -44,14 +44,14 @@ What You Will Learn With This Use Case This use case is intended to show you how
        * Route a run and place an Elbow or value.
        * place a bendable next to the created part.
        * CAAECloAppWeldOffset should be invoked when a weld is placed.
-[Top] Where to Find the CAAECloAppWeldOffset Code CAAECloAppWeldOffset code is located in the CAACloSetup.m use case module of the CAACommonLayoutItf.edu framework: Windows | `InstallRootDirectory\CAACommonLayoutItf.edu\CAACloSetup.m\src\CAAECloAppWeldOffset.cpp`
+[Top] Where to Find the CAAECloAppWeldOffset Code CAAECloAppWeldOffset code is located in the CAACloSetup.m use case module of the CAACommonLayoutItf.edu framework: Windows | `InstallRootDirectory/CAACommonLayoutItf.edu/CAACloSetup.m/src/CAAECloAppWeldOffset.cpp`
 ---|---
 Unix | `InstallRootDirectory/CAACommonLayoutItf.edu/CAACloSetup.m/src/CAAECloAppWeldOffset.cpp`
 Unix | `InstallRootDirectory/CAACommonLayoutItf.edu/CAACloSetup.m/src/CAAECloAppWeldOffset.cpp`
-The following contains the dictionary file that references the implementation: Windows | `InstallRootDirectory\CAACommonLayoutItf.edu\CNext\code\dictionary\CAACommonLayoutItf.edu.dico`
+The following contains the dictionary file that references the implementation: Windows | `InstallRootDirectory/CAACommonLayoutItf.edu/CNext/code/dictionary/CAACommonLayoutItf.edu.dico`
 
 Unix | `InstallRootDirectory/CAACommonLayoutItf.edu/CAACloSetup.m/src/CAAECloAppWeldOffset.cpp`
-The following contains the dictionary file that references the implementation: Windows | `InstallRootDirectory\CAACommonLayoutItf.edu\CNext\code\dictionary\CAACommonLayoutItf.edu.dico`
+The following contains the dictionary file that references the implementation: Windows | `InstallRootDirectory/CAACommonLayoutItf.edu/CNext/code/dictionary/CAACommonLayoutItf.edu.dico`
 Unix | `InstallRootDirectory/CAACommonLayoutItf.edu/CNext/code/dictionary/CAACommonLayoutItf.edu.dico`
 where `InstallRootDirectory` is the root directory of your CAA V5 installation. [Top] Step-by-Step
     1. Prolog

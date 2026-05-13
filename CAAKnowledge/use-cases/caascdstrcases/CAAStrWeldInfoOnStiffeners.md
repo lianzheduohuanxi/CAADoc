@@ -4,7 +4,7 @@ title: "Retrieving Weld Information on Stiffener Objects"
 category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CATIA", "CATIASfmStiffener", "CAAScdStrUseCases", "CAAStrWeldInfoOnStiffeners"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrWeldInfoOnStiffeners.htm"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrWeldInfoOnStiffeners.htmmd"
 converted: "2026-05-11T17:31:50.922064"
 ```
 
@@ -42,19 +42,27 @@ CAAStrWeldInfoOnStiffeners includes the following steps:
 
 10. Retrieving Weld Features on the Stiffener with No Operating Element (Weld Use Case 2)
 11. Retrieving Weld Attributes of Weld Use Case 2 Features
+```vbscript
 Opens the CAAStrWeldInfoOnStiffeners.CATPart in CATIA.
 
 ```vbscript
-    Sub CATMain()
+```
+```vbscript
+    Sub CATMain(#)
 
+```
 ```
 
 ```vbscript
+```vbscript
     Dim ObjPart As Part
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set ObjPart = CATIA.ActiveDocument.Part
 
+```
 ```
 
 ```
@@ -64,7 +72,9 @@ Opens the CAAStrWeldInfoOnStiffeners.CATPart in CATIA.
 #### Retrieving Factory Object from Part Document
 
 ```vbscript
+```vbscript
 Set ObjPart = CATIA.ActiveDocument.Part
+```
 ```
 
 This step describes how to get the Structure Functional Modeler Factory. The Factory Object will be used for creating Structure Functional Modeler Objects.
@@ -78,11 +88,15 @@ This step describes how to get the Structure Functional Modeler Factory. The Fac
 ```
 
 ```vbscript
+```vbscript
     Dim FactoryObj As SfmFactory
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set FactoryObj = ObjPart.GetCustomerFactory("SfmFactory")
 
+```
 ```
 
 ```
@@ -92,7 +106,9 @@ This step describes how to get the Structure Functional Modeler Factory. The Fac
 #### Getting the Manager from Factory
 
 ```vbscript
+```vbscript
 Set FactoryObj = ObjPart.GetCustomerFactory("SfmFactory")
+```
 ```
 
 The Manager Object is obtained by GetManager.
@@ -106,11 +122,15 @@ The Manager Object is obtained by GetManager.
 ```
 
 ```vbscript
+```vbscript
     Dim ManagerObj As SfmManager
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set ManagerObj = FactoryObj.GetManager
 
+```
 ```
 
 ```
@@ -120,7 +140,9 @@ The Manager Object is obtained by GetManager.
 #### Retrieving the Super Stiffeners
 
 ```vbscript
+```vbscript
 Set ManagerObj = FactoryObj.GetManager
+```
 ```
 
 This step describes how to get the collection of Super Stiffeners and how to get one specific element in it.
@@ -134,7 +156,10 @@ This step describes how to get the collection of Super Stiffeners and how to get
 ```
 
 ```vbscript
+```vbscript
     Dim SuperStiffeners As References
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set SuperStiffeners = ManagerObj.GetSuperStiffeners
@@ -142,6 +167,7 @@ This step describes how to get the collection of Super Stiffeners and how to get
     Dim SuperStiffener1 As SfmStiffener
     Set SuperStiffener1 = SuperStiffeners.Item(1)
 
+```
 ```
 
 ```
@@ -151,7 +177,9 @@ This step describes how to get the collection of Super Stiffeners and how to get
 #### Retrieving Split Stiffeners of Super Stiffener
 
 ```vbscript
+```vbscript
 Set SuperStiffener1 = SuperStiffeners.Item(1)
+```
 ```
 
 This step describes how to get the collection of Split Stiffeners and how to get one specific element in it.
@@ -165,7 +193,10 @@ This step describes how to get the collection of Split Stiffeners and how to get
 ```
 
 ```vbscript
+```vbscript
     Dim SplitStiffeners As References
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set SplitStiffeners = SuperStiffener1.SplitProfiles
@@ -173,6 +204,7 @@ This step describes how to get the collection of Split Stiffeners and how to get
     Dim SplitStiffener1 As Reference
     Set SplitStiffener1 = SplitStiffeners.Item(1)
 
+```
 ```
 
 ```
@@ -184,17 +216,23 @@ This step describes how to get the collection of Split Stiffeners and how to get
 This step describes how to get the SfmStiffener object from Reference of split stiffener.
 
 ```vbscript
+```vbscript
     Set SelctionObj = CATIA.ActiveDocument.Selection
 ```vbscript
+```
     'DECK STIFFENER
 ```
 
     SelctionObj.Add SplitStiffener1
+```vbscript
     Dim DeckStiffener1 As SfmStiffener
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set DeckStiffener1 = SelctionObj.FindObject("CATIASfmStiffener")
 
+```
 ```
 
 ```
@@ -204,7 +242,9 @@ This step describes how to get the SfmStiffener object from Reference of split s
 #### Retrieving Super Plate which is Used as Support for Stiffener
 
 ```vbscript
+```vbscript
 Set DeckStiffener1 = SelctionObj.FindObject("CATIASfmStiffener")
+```
 ```
 
 This step describes how to get the Plate used as support for the Stiffener and accessing each element in it.
@@ -218,9 +258,13 @@ This step describes how to get the Plate used as support for the Stiffener and a
 ```
 
 ```vbscript
+```vbscript
     Dim SuperPlates As References
 ```vbscript
+```
+```vbscript
     Set SuperPlates = ManagerObj.GetSuperPlates
+```
 ```
 
 ```
@@ -229,14 +273,18 @@ This step describes how to get the Plate used as support for the Stiffener and a
 ```vbscript
 ```vbscript
     'Retrieving Operating Super Plate
+```vbscript
     Dim SuperPlate1 As SfmSuperPlate
     Set SuperPlate1 = SuperPlates.Item(1)
     'Retrieving the SplitPlates of SuperPlate1
+```
+```vbscript
     Dim OperatingSplitPlateRefs As References
     Set OperatingSplitPlateRefs = SuperPlate1.SplitPlates
 
     Dim OperatingSplitPlate As Reference
     Set OperatingSplitPlate = OperatingSplitPlateRefs.Item(1)
+```
 ```
 
 ```
@@ -248,7 +296,10 @@ This step describes how to get the Plate used as support for the Stiffener and a
 This step describes how to get the collection of Weld features with operating element and how to get one specific element in it.
 
 ```vbscript
+```vbscript
     Dim WeldsUC1 As SfmWelds
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set WeldsUC1 = DeckStiffener1.GetWelds(OperatingSplitPlate)
@@ -256,6 +307,7 @@ This step describes how to get the collection of Weld features with operating el
     Dim WeldUC1 As SfmWeld
     Set WeldUC1 = WeldsUC1.Item(1)
 
+```
 ```
 
 ```
@@ -283,7 +335,10 @@ This step describes how to get the collection of Weld features with no operating
 ```
 
 ```vbscript
+```vbscript
     Dim WeldsUC2 As SfmWelds
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set WeldsUC2 = DeckStiffener1.GetWelds(Nothing)
@@ -291,6 +346,7 @@ This step describes how to get the collection of Weld features with no operating
     Dim WeldUC2 As SfmWeld
     Set WeldUC2 = WeldsUC2.Item(1)
 
+```
 ```
 
 ```
@@ -308,11 +364,13 @@ This step describes how to get the weld information set on the Operated split St
     ustrEdgePrepUC2 = WeldUC2.EdgePreparation
 
 ```vbscript
+```vbscript
     End Sub
 
 ```
+```
 
-![End Task Icon](../CAAScrBase/images/aendtask.gif)
+![End Task Icon](./assets/images/aendtask.gif)
 
 [Top]
 

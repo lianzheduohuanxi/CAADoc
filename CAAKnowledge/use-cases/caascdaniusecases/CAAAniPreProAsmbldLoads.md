@@ -3,7 +3,7 @@ title: "Creating Assembled Loads"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CAAScrBase", "CATIA", "CAAScdAniUseCases", "CAAScrJavaScript", "CATIAAnalysisSet", "CAAAniTocAnalysisDocument", "CAAScdInfUseCases", "CAAAniPreProAsmbldLoadsSource", "CAAScdAniTechArticles", "CAAAniPreProAsmbldLoads", "CAAInfLauchMacro"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProAsmbldLoads.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProAsmbldLoads.htmmd"
 converted: "2026-05-11T11:27:02.509271"
 ---
 
@@ -24,7 +24,7 @@ Open the Analysis document. The Analysis document is retrieved in the
 
 According to the general
 		[
-		Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.htm) structure, this macro uses some standard procedures 
+		Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures 
 		to navigate or retrieve the required objects. First, from the **Document**, 
 		we find the **Analysis Manager Object**, and  **Analysis Models**. 
 		From analysis models we retrieve the **Analysis Cases.**
@@ -69,7 +69,7 @@ To run the macro interactively CATDocView
 		environment variable must be defined.
 	
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 
@@ -98,8 +98,6 @@ object using the selection interface.
 
  
 
-
-
 ```vbscript
 ...
 ```
@@ -107,15 +105,19 @@ object using the selection interface.
 ```vbscript
 ' ----------------------------------------------------------- 
 ' Optional: allows to find the sample wherever it's installed
+```vbscript
 sDocPath=CATIA.SystemService.Environ("CATDocView")
 
 If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 Err.Raise 9999,,"No Doc Path Defined"
 End If
+```
 ' ----------------------------------------------------------- 
 ' Open the Analysis document 
-sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\Assembled_Loads_Solutions.CATAnalysis&quot;)
+```vbscript
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online/CAAScdAniUseCases/samples/Assembled_Loads_Solutions.CATAnalysis&quot;)
 Set analysisDocument1 = CATIA.Documents.Open(sFilePath)
+```
 ```
 
 ```vbscript
@@ -128,20 +130,29 @@ Set analysisDocument1 = CATIA.Documents.Open(sFilePath)
 
 ```vbscript
 'Retrieve the Analysis Manager from the analysis document
+```vbscript
 Set analysisManager1 = analysisDocument1.Analysis
 
 'Retrieve the product document from the linked document
+```
+```vbscript
 Set analysisLinkedDocuments1 = analysisManager1.LinkedDocuments
 Set productDocument1 = analysisLinkedDocuments1.Item(1)
 
 'From product document retrieve products
+```
+```vbscript
 Set product1 = productDocument1.Product
 Set products1 = product1.Products
 Set product2 = products1.Item("Analysis1.1")
 
 'Retrieve the analysis models and the first model
+```
+```vbscript
 Set analysisModels1 = analysisManager1.AnalysisModels
 Set analysisModel1 = analysisModels1.Item(1)
+
+```
 
 ...
 ```
@@ -152,30 +163,42 @@ Set analysisModel1 = analysisModels1.Item(1)
 
 ```vbscript
 'Retrieve the analysis cases from analysis model
+```vbscript
 Set analysisCases1 = analysisModel1.AnalysisCases
+```
 ```
 
 ```vbscript
 'Retrieve the first object that is Static Case.1
 'from the list of analysis cases
+```vbscript
 Set analysisCase1 = analysisCases1.Item(1)
+```
 ```
 
 ```vbscript
 'Retrieve the analysis sets and load set
+```vbscript
 Set analysisSets1 = analysisCase1.AnalysisSets
 Set analysisSet1 = analysisSets1.Item("Loads.1", catAnalysisSetSearchAll)
 
 'Retrieve the analysis entities from the load set
+```
+```vbscript
 Set analysisEntities1 = analysisSet1.AnalysisEntities
 
 'Add assembled loads to the list
+```
+```vbscript
 Set analysisEntity1 = analysisEntities1.Add("SAMLoadAssembly")
 
 'Retrieve the basic component from analysis entity
+```
+```vbscript
 Set basicComponents1 = analysisEntity1.BasicComponents
 Set basicComponent1 = basicComponents1.GetItem("SAMLoadP.1")
 ...
+```
 ```
 
 ```vbscript
@@ -184,23 +207,32 @@ Set basicComponent1 = basicComponents1.GetItem("SAMLoadP.1")
 
 ```vbscript
 'Search and select
+```vbscript
 Set selection1 = analysisDocument1.Selection
 selection1.Search "Name=*Load*,all"
+```
 
 'Retrieve the analysis manager object from the analysis document
+```vbscript
 Set documents1 = CATIA.Documents
 Set analysisDocument2 = documents1.Item("Analysis1.CATAnalysis")
 Set analysisManager2 = analysisDocument2.Analysis
 
+```
+
 'Go through the selections and find out the the analysis set
 'create a reference from the analysis set and add it to the basic component
 For i =1 To selection1.Count
+```vbscript
 Set analysisSet = selection1.FindObject("CATIAAnalysisSet")
 Set entity =   analysisSet.AnalysisEntities.Item(1)
           IF ( entity.Type = "SAMLoadAssembly") Then 'DO NOTHING
+```
           ELSE 
+```vbscript
               Set Reference =analysisManager2.CreateReferenceFromObject(analysisSet)
               basicComponent1.AddSupportFromProduct product2, Reference
+```
           END IF       
 Next
 

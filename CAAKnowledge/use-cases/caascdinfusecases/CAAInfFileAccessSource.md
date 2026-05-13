@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CAAInfFileAccess", "CAAScrBase", "CATIA"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfFileAccessSource.htm"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfFileAccessSource.htmmd"
 converted: "2026-05-11T11:27:02.694469"
 ---
 
@@ -19,48 +19,64 @@ Option Explicit
 '   CATIA Level:  V5R6 
 ' ***********************************************************************
 
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
 
     Dim sLF As String
     sLF = Chr(10) 
+```
 
+```vbscript
     Dim sMessage As String
     sMessage = InputBox ("Enter a message", "Message", "Hello World")
+```
 
     ' ------------------------------------------
     ' Get the file system object
+```vbscript
     Dim oFileSys As FileSystem
     Set oFileSys = CATIA.FileSystem
 
     ' ------------------------------------------
+```
     ' Retrieve a folder for temporary files
+```vbscript
     Dim sTmpPath As String 
     sTmpPath=CATIA.SystemService.Environ("CATTemp")
     If (Not oFileSys.FolderExists(sTmpPath)) Then
+```
+```vbscript
       Err.Raise 9999,,"No Tmp Path Defined"
     End If
+```
 
     ' ------------------------------------------
     ' Delete possibly existing input and output files
+```vbscript
     Dim sFilOu As String ' Output file full path
     sFilOu = CATIA.FileSystem.ConcatenatePaths(sTmpPath, "caatmpfilou.txt")
     If (oFileSys.FileExists(sFilou)) Then 
+```
         oFileSys.DeleteFile sFilOu
     End If
 
+```vbscript
     Dim sFilIn As String ' Intput file full path
     sFilIn = CATIA.FileSystem.ConcatenatePaths(sTmpPath, "caatmpfilin.txt")
     If (oFileSys.FileExists(sFilIn)) Then 
+```
         oFileSys.DeleteFile sFilIn
     End If
 
     ' ---------------------------------------
     ' Create file FilIn  
+```vbscript
     Dim oFilIn As File    
     Set oFilIn = oFileSys.CreateFile(sFilIn, FALSE)
     Dim oStream As TextStream
     Set oStream = oFilIn.OpenAsTextStream("ForWriting")
     oStream.Write "<MESSAGE>"  & sLF
+```
     oStream.Write "<VALUE>"
     oStream.Write sMessage 
     oStream.Write "</VALUE>"   & sLF
@@ -73,12 +89,14 @@ Sub CATMain()
 
     ' ---------------------------------------
     ' Get the result from the output file  
+```vbscript
     Dim oFilOu As File
     Set oFilOu = oFileSys.GetFile(sFilOu)
     Set oStream = oFilOu.OpenAsTextStream("ForReading")
 
     Dim sBuffer As String
     sMessage = ""
+```
     sBuffer = oStream.ReadLine
     Do  Until oStream.AtEndOfStream
         sMessage = sMessage & sBuffer 
@@ -89,9 +107,10 @@ Sub CATMain()
 
     msgbox sMessage
 
+```vbscript
 End Sub
 
-
+```
 
 ```vbscript
 Option Explicit
@@ -106,49 +125,64 @@ Option Explicit
 '   CATIA Level:  V5R6 
 ' ***********************************************************************
 
-
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
 
     Dim sLF As String
     sLF = Chr(10) 
+```
 
+```vbscript
     Dim sMessage As String
     sMessage = InputBox ("Enter a message", "Message", "Hello World")
+```
 
     ' ------------------------------------------
     ' Get the file system object
+```vbscript
     Dim oFileSys As FileSystem
     Set oFileSys = CATIA.FileSystem
 
     ' ------------------------------------------
+```
     ' Retrieve a folder for temporary files
+```vbscript
     Dim sTmpPath As String 
     sTmpPath=CATIA.SystemService.Environ("CATTemp")
     If (Not oFileSys.FolderExists(sTmpPath)) Then
+```
+```vbscript
       Err.Raise 9999,,"No Tmp Path Defined"
     End If
+```
 
     ' ------------------------------------------
     ' Delete possibly existing input and output files
+```vbscript
     Dim sFilOu As String ' Output file full path
     sFilOu = CATIA.FileSystem.ConcatenatePaths(sTmpPath, "caatmpfilou.txt")
     If (oFileSys.FileExists(sFilou)) Then 
+```
         oFileSys.DeleteFile sFilOu
     End If
 
+```vbscript
     Dim sFilIn As String ' Intput file full path
     sFilIn = CATIA.FileSystem.ConcatenatePaths(sTmpPath, "caatmpfilin.txt")
     If (oFileSys.FileExists(sFilIn)) Then 
+```
         oFileSys.DeleteFile sFilIn
     End If
 
     ' ---------------------------------------
     ' Create file FilIn  
+```vbscript
     Dim oFilIn As File    
     Set oFilIn = oFileSys.CreateFile(sFilIn, FALSE)
     Dim oStream As TextStream
     Set oStream = oFilIn.OpenAsTextStream("ForWriting")
     oStream.Write "&lt;MESSAGE&gt;"  & sLF
+```
     oStream.Write "&lt;VALUE&gt;"
     oStream.Write sMessage 
     oStream.Write "&lt;/VALUE&gt;"   & sLF
@@ -161,12 +195,14 @@ Sub CATMain()
 
     ' ---------------------------------------
     ' Get the result from the output file  
+```vbscript
     Dim oFilOu As File
     Set oFilOu = oFileSys.GetFile(sFilOu)
     Set oStream = oFilOu.OpenAsTextStream("ForReading")
 
     Dim sBuffer As String
     sMessage = ""
+```
     sBuffer = oStream.ReadLine
     Do  Until oStream.AtEndOfStream
         sMessage = sMessage & sBuffer 
@@ -177,5 +213,7 @@ Sub CATMain()
 
     msgbox sMessage
 
+```vbscript
 End Sub
+```
 ```

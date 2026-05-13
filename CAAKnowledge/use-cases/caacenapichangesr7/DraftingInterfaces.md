@@ -5,13 +5,13 @@ category: "use-case"
 module: "CAACenAPIChangesR7"
 version: "V5R7"
 tags: ["CATISpecObject", "CATIGenerSpec", "CATIDrwSubString", "CATIDrwText", "CATIDrwAnnotationFactory", "CATIDrwLeader"]
-source_file: "Doc/online/CAACenAPIChangesR7/DraftingInterfaces.htm"
+source_file: "Doc/online/CAACenAPIChangesR7/DraftingInterfaces.htmmd"
 converted: "2026-05-11T17:33:52.011735"
 ```
 
 ---
 tags: ["CATISpecObject", "CATIGenerSpec", "CATIDrwSubString", "CATIDrwText", "CATIDrwAnnotationFactory", "CATIDrwLeader"]
-source_file: "Doc/online/CAACenAPIChangesR7/DraftingInterfaces.htm"
+source_file: "Doc/online/CAACenAPIChangesR7/DraftingInterfaces.htmmd"
 converted: "2026-05-11T17:33:52.011735"
 CAA API Modifications|  DraftingInterfaces  |
 

@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Topological Objects"
-category: "use-case"
+category: use-case
 module: "CAACgmModel"
 tags: []
-source_file: "Doc/online/CAACgmModel/CAACgmTcTobTopologicalObjects.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmTcTobTopologicalObjects.htmmd"
 converted: "2026-05-11T17:33:48.130556"
 ```
 

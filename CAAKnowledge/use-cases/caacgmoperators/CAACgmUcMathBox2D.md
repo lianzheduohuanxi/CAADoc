@@ -4,13 +4,13 @@ title: "Retrieving the CATMathBox2D of An Edge or a Face "
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperators2DBoxComputation", "CAAGMOperatorsInterfaces", "CATICGM2DBoxComputation"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcMathBox2D.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcMathBox2D.htmmd"
 converted: "2026-05-11T17:33:48.991063"
 ```
 
 ---
 tags: ["CAAGMOperators2DBoxComputation", "CAAGMOperatorsInterfaces", "CATICGM2DBoxComputation"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcMathBox2D.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcMathBox2D.htmmd"
 converted: "2026-05-11T17:33:48.991063"
 Retrieving the CATMathBox2D of An Edge or a Face
 
@@ -48,7 +48,7 @@ CATEdge *iEdge = (CATEdge *) piGeomFactory->FindObjectFromTag(13);
 CATEdge *iEdge = (CATEdge *) piGeomFactory->FindObjectFromTag(13);
 CATICGM2DBoxComputation *pComp2DBoxOp = NULL;
 pComp2DBoxOp = CATCGMCreate2DBoxComputation(piGeomFactory, &topdata;, iFace);
-    pComp2DBoxOp->Run();
+    pComp2DBoxOp->Run(#);
 
     CATSurLimits uvLimitsFace;
     pComp2DBoxOp->Get2DBox(uvLimitsFace);
@@ -69,7 +69,7 @@ you retrieve a CATMathBox2D with the properties below: Low corner= ( 0 , 0 )  Hi
 CATFace *iFace = (CATFace *) piGeomFactory->FindObjectFromTag(9);
 CATEdge *iEdge = (CATEdge *) piGeomFactory->FindObjectFromTag(13);
     pComp2DBoxOp = CATCGMCreate2DBoxComputation(piGeomFactory, &topdata;, iEdge, iFace);
-    pComp2DBoxOp->Run();
+    pComp2DBoxOp->Run(#);
 
     CATSurLimits uvLimitsEdge;
     pComp2DBoxOp->Get2DBox(uvLimitsEdge);

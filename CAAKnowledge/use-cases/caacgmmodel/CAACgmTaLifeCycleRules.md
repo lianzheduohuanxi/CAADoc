@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Object Life Cycle: Rules"
-category: "use-case"
+category: use-case
 module: "CAACgmModel"
 tags: ["CATICGMContainer", "CATICGMTopWire"]
-source_file: "Doc/online/CAACgmModel/CAACgmTaLifeCycleRules.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmTaLifeCycleRules.htmmd"
 converted: "2026-05-11T17:33:47.987993"
 ```
 
@@ -61,12 +61,12 @@ There are two factories:
 
     1. the explicit one which is dedicated to topology
 
-`CATGeoFactory* theFactory = ::CATCreateCGMContainer() ;`
+`CATGeoFactory* theFactory = ::CATCreateCGMContainer(#) ;`
 There are two factories:
 1. the explicit one which is dedicated to topology
     2. and the implicit one which is dedicated to geometry.
 
-`CATGeoFactory * piImplicitFactory = theFactory- >GetImplicitGeoFactory( );`
+`CATGeoFactory * piImplicitFactory = theFactory- >GetImplicitGeoFactory(#);`
 ## Implicit and Explicit Objects
 
 The implicit/explicit status of an object is related to its life cycle. Any object created as implicit is removed when:

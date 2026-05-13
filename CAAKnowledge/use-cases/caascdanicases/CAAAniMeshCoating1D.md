@@ -4,7 +4,7 @@ title: "Creating 1D Coating Mesh Part"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniMeshCoating1D", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshCoating1D.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshCoating1D.htmmd"
 converted: "2026-05-11T17:31:51.621507"
 ```
 
@@ -34,7 +34,10 @@ This use case shows you how to create coating 1D mesh part by extracting edge el
     ...
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
+
+```
 
 ```
 
@@ -43,18 +46,22 @@ This use case shows you how to create coating 1D mesh part by extracting edge el
 ```vbscript
     '-----------------------------------------------------------
     'Optional: allows to find the sample wherever it's installed
+```vbscript
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
         End If
 ```
 
@@ -65,8 +72,10 @@ This use case shows you how to create coating 1D mesh part by extracting edge el
 ```vbscript
     '-----------------------------------------------------------
     ' Open the Analysis document
-    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Surface.CATAnalysis")
+```vbscript
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Surface.CATAnalysis")
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+```
 ```
 
 ```
@@ -88,89 +97,117 @@ Open the Analysis document. The Analysis document is fetched in the documentatio
 
 ```vbscript
 ```vbscript
+```vbscript
     Set oAnalysisManager = oAnalysisDocument.Analysis
 
 ```
+```
 
 ```
 
 ```vbscript
+```vbscript
 Set oAnalysisManager = oAnalysisDocument.Analysis
 ```vbscript
+```
     'Retreive the part document from Analysis manager
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisLinkedDocument = oAnalysisManager.LinkedDocuments
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set partDocument = oAnalysisLinkedDocuments.Item(1)
     Set product = partDocument.Product
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Set product = partDocument.Product
 ```vbscript
+```
     'Retrieve the analysis model from the list of models
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisModels = oAnalysisManager.AnalysisModels
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oAnalysisModel = oAnalysisManager.Item(1)
 
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Set oAnalysisModels = oAnalysisManager.AnalysisModels
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set oAnalysisModel = oAnalysisManager.Item(1)
     'Retrieve mesh manager and mesh part
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisMeshManager = oAnalysisModel.MeshManager
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
 ```vbscript
+```
     'Retrieve publications from product and retrieve the published surface and edge
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set publications1 = product.Publications
 ```vbscript
+```
+```vbscript
     Set pubEdge = publications1.Item("Edge")
+```
 ```
 
 ```
@@ -179,11 +216,11 @@ Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
 
 ---
 
-According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. The extraction of pre-defined geometrical elements is done by using the Reference interface. This is equivalent to the selection of a B-Rep elements inside the interactive application. In this macro the reference is created from the surface mesh part.
+According to the general [ Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. The extraction of pre-defined geometrical elements is done by using the Reference interface. This is equivalent to the selection of a B-Rep elements inside the interactive application. In this macro the reference is created from the surface mesh part.
 #### Creating the Mesh Part and Assigning Values to its Attributes.
 
     ...
-According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. The extraction of pre-defined geometrical elements is done by using the Reference interface. This is equivalent to the selection of a B-Rep elements inside the interactive application. In this macro the reference is created from the surface mesh part.
+According to the general [ Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. The extraction of pre-defined geometrical elements is done by using the Reference interface. This is equivalent to the selection of a B-Rep elements inside the interactive application. In this macro the reference is created from the surface mesh part.
 ```vbscript
 ```vbscript
     'Add the new Coating mesh part to the list of mesh parts
@@ -193,9 +230,13 @@ According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniToc
 ```
 
 ```vbscript
+```vbscript
     Set coat1D = oAnalysisMeshPart.Add ("MSHPart1DCoating")
 ```vbscript
+```
+```vbscript
     'Set the reference to the surface mesh part
+```
 ```
 
     coat1D.AddSupportFromReference product, reference1
@@ -220,9 +261,13 @@ coat1D.SetGlobalSpecification "ExtractionType", 1
 ```
 
 ```vbscript
+```vbscript
     Set meshSpecs = coat2D.AnalysisMeshLocalSpecifications
 ```vbscript
+```
+```vbscript
     Set spec = meshSpecs.Add("MSHCoatingLocalSpecification")
+```
 ```
 
     spec.SetAttribute "LocalExtractionType", 2
@@ -230,7 +275,9 @@ coat1D.SetGlobalSpecification "ExtractionType", 1
 ```
 
 ```vbscript
+```vbscript
 Set spec = meshSpecs.Add("MSHCoatingLocalSpecification")
+```
 ```
 
 spec.SetAttribute "LocalExtractionType", 2
@@ -248,14 +295,16 @@ spec.SetAttribute "LocalExtractionType", 2
 #### Epilog
 
     ...
+```vbscript
      End Sub
+```
     ...
 
 ---
 
 To run the macro interactively CATDocView environment variables must be defined.
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

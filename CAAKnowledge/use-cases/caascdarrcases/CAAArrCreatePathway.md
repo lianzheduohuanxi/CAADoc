@@ -4,7 +4,7 @@ title: "Creating an ArrangementPathway Object"
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CATIA", "CAAArrCreatePathway", "CAAScdArrUseCases"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreatePathway.htm"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreatePathway.htmmd"
 converted: "2026-05-11T17:31:51.563057"
 ```
 
@@ -50,12 +50,16 @@ This macro shows you how to create an _ArrangementPathway_ under a product. This
 ```
 
 ```vbscript
+```vbscript
        Dim objProdDoc        As ProductDocument
+```vbscript
+```
 ```vbscript
 ```vbscript
        Dim objRootProd       As Product
        Set objProdDoc      = CATIA.Documents.Add("Product")
        Set objRootProd     = objProdDoc.Product
+```
 ```
 
 ```
@@ -81,9 +85,13 @@ Once the new product document has been created, fetch the _ArrangementProduct_ a
 ```
 
 ```vbscript
+```vbscript
        Dim objMove           As Move
 ```vbscript
+```
+```vbscript
        Set objMove      = objRootProd.Move
+```
 ```
 
 ```
@@ -93,8 +101,10 @@ Once the new product document has been created, fetch the _ArrangementProduct_ a
 ```vbscript
        '----------------------------------------------
        ' Get ArrangementProduct
+```vbscript
        Dim objArrProd        As ArrangementProduct
        Set objArrProd   = objRootProd.GetTechnologicalObject("ArrangementProduct")
+```
 ```
 
 ```
@@ -119,21 +129,27 @@ The _ArrangementPathways_ object is a collection object that manages _Arrangemen
 ```
 
 ```vbscript
+```vbscript
        Dim dblPathwayPoints(75)      As Double
+```vbscript
+```
 ```vbscript
 ```vbscript
        Dim dblMathDirection(3)        As Double
        Dim objArrPathway             As ArrangementPathway
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Dim objArrPathway             As ArrangementPathway
 ```vbscript
+```
        dblPathwayPoints(0)   =  300.0
        dblPathwayPoints(1)   =  100.0
        dblPathwayPoints(2)   =  0.0
@@ -168,8 +184,10 @@ dblPathwayPoints(5)   =  1.25
 ```
 
 ```vbscript
+```vbscript
        Set objArrPathway        = objArrProd.ArrangementPathways.AddPathway(objMove, _
                                                                             dblPathwayPoints, _
+```
                                                                             dblMathDirection)
 ```
 
@@ -197,8 +215,10 @@ The newly created _ArrangementPathway_ object is visualized as a curve and does 
 ```
 
 ```vbscript
+```vbscript
        Dim intK As Integer
 ```vbscript
+```
        For intK = 1 To objArrPathway.Nodes.Count
 ```
 
@@ -215,13 +235,15 @@ Here we define a round section and change the visualization mode to `CatArrangem
 
     ...
 ```vbscript
+```vbscript
      End Sub
 
+```
 ```
 
 ---
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

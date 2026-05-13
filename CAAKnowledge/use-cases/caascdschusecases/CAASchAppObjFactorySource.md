@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CATIA", "CATIASchAppConnector", "CAASchAppObjFactory", "CATIASchCompGraphic", "CAAScrBase", "CAASCHEDUFuncString", "CATIASchComponent2", "CATIASchRouteGraphic", "CAASCHEDU_SamplePID", "CATIASchCntrLocation", "CATIASchGRRComp", "CATIASchGRR", "CAASCHEDUCompressFunc", "CATIASchListOfBSTRs", "CAAScdSchUseCases", "CAASCHEDUConnector", "CATIASchCompatible", "CAASCH_Detail01", "CATIASchAppConnectable", "CATIASchCompConnector"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchAppObjFactorySource.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchAppObjFactorySource.htmmd"
 converted: "2026-05-11T11:27:02.660655"
 ---
 
@@ -19,26 +19,36 @@ Option Explicit
 '   CATIA Level:  V5R15 
 ' *****************************************************************************
 
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
+
+```
 
     ' ------------------------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
+```vbscript
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,sDocPath,"No Doc Path Defined"
     End If
+```
     ' ------------------------------------------------------------------------- 
     ' Open the schematic document 
+```vbscript
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
-            "online\CAAScdSchUseCases\samples\CAASCH_Detail01.CATProduct")
+            "online/CAAScdSchUseCases/samples/CAASCH_Detail01.CATProduct")
+```
 
+```vbscript
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
     Dim strMessage As String
+
+```
 
     strMessage = _
       "--------------------------------------------------------------------" & vbCr
@@ -46,27 +56,39 @@ Sub CATMain()
       "Output traces from CAASchAppObjFactory.CATScript" & vbCrLf
 
     ' Find the top node of the schematic object tree - schematic root.
+```vbscript
     Dim objPrdRoot As Product
     Dim objSchRoot As SchematicRoot
     If ( Not ( objSchDoc Is Nothing ) ) Then
+```
+```vbscript
       Set objPrdRoot = objSchDoc.Product 
       If ( Not ( objPrdRoot Is Nothing ) ) Then
+```
+```vbscript
         Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
       End If
+```
     End If
 
+```vbscript
     Dim objAppObjFact As SchAppObjectFactory
     Dim objSchBaseFact As SchBaseFactory
     Dim objSchTempListFact As SchTempListFactory
+
+```
 
     If ( Not ( objSchRoot Is Nothing ) ) Then
 
        '-----------------------------------------------------------------------
        ' Get all the necessary factories.
        '-----------------------------------------------------------------------
+```vbscript
        Set objAppObjFact = objSchRoot.GetApplObjFactFromVirtualType ("CAASCHEDU_SamplePID")
        Set objSchBaseFact = objSchRoot.GetSchBaseFactory 
        Set objSchTempListFact = objSchRoot.GetTemporaryListFactory
+
+```
 
        If ( Not ( objAppObjFact Is Nothing ) And _
             Not ( objSchBaseFact Is Nothing )  And _
@@ -74,12 +96,15 @@ Sub CATMain()
 
          strMessage = strMessage &  "Got Application object factory " & vbCr
 
+```vbscript
          Dim objAppCompRef As AnyObject
          Dim objSchSymbol As AnyObject
          Dim objSchCompRef As SchComponent 
          Dim objSchListGRR As SchListOfObjects
          Dim objSchComp2Ref As SchComponent2
          Dim objSchCompInst As SchComponent
+
+```
 
          '---------------------------------------------------------------------
          ' Ask application to create a component reference
@@ -93,13 +118,19 @@ Sub CATMain()
            '---------------------------------------------------------------------
            ' Find a unassociated component symbol in the document
            '---------------------------------------------------------------------   
+```vbscript
            Set objSchSymbol = GetComponentSymbol (objSchRoot)
            If ( Not ( objSchSymbol Is Nothing ) ) Then
+```
+```vbscript
               Set objSchListGRR = objSchTempListFact.CreateListOfObjects
               If ( Not ( objSchListGRR Is Nothing ) ) Then
+```
                  objSchListGRR.Append objSchSymbol
+```vbscript
                  Set objSchCompRef = objSchBaseFact.CreateSchComponent ( _
                    objAppCompRef, objSchListGRR)
+```
                  If ( Not ( objSchCompRef Is Nothing ) ) Then
                     strMessage = strMessage &  "schematic reference component attached" & vbCr
                  End If
@@ -109,22 +140,29 @@ Sub CATMain()
            '---------------------------------------------------------------------
            ' Add two connectors to the reference component
            '---------------------------------------------------------------------   
+```vbscript
            Dim objSchCntr As SchCompConnector
            Dim objSchAppCntr As SchAppConnector
            Dim objSchCntrLoc As SchCntrLocation
 
            Set objSchCntr = objSchRoot.GetInterface ("CATIASchCompConnector", _
              objSchCompRef)
+```
 
            If ( Not ( objSchCntr Is Nothing ) ) Then
 
+```vbscript
               Dim iCntr As Integer
               Dim db2CntrPos (2) As CATSafeArrayVariant
               Dim db2CntrVec (2) As CATSafeArrayVariant
    
               For iCntr = 1 To 2
+```
+```vbscript
                 Set objSchCntrLoc = Nothing
                 Set objSchAppCntr = Nothing
+
+```
 
                 '-------------------------------------------------------------
                 ' connector position and alignment vector are in coordinates
@@ -147,8 +185,10 @@ Sub CATMain()
                   Db2CntrPos, objSchAppCntr 
 
                 If ( Not ( objSchAppCntr Is Nothing ) ) Then
+```vbscript
                    Set objSchCntrLoc = objSchRoot.GetInterface ( _
                      "CATIASchCntrLocation", objSchAppCntr)
+```
                    If ( Not ( objSchCntrLoc Is Nothing ) ) Then
 
                       objSchCntrLoc.SetAlignVector objSchSymbol, Db2CntrVec
@@ -174,16 +214,20 @@ Sub CATMain()
            ' y-axis = (0.0,1.0)
            ' origin = (100.0,100.0)
            '-------------------------------------------------------------------
+```vbscript
            Dim db6Matrix(6) As CATSafeArrayVariant
            db6Matrix(0)=1.0
+```
            db6Matrix(1)=0.0
            db6Matrix(2)=0.0
            db6Matrix(3)=1.0
            db6Matrix(4)=100.0
            db6Matrix(5)=100.0
   
+```vbscript
            Set objSchComp2Ref = objSchRoot.GetInterface ( _
              "CATIASchComponent2",objAppCompRef)
+```
 
            If ( Not ( objSchComp2Ref Is Nothing ) ) Then
 
@@ -212,6 +256,7 @@ Sub CATMain()
          '---------------------------------------------------------------------
          If ( Not  ( objSchCompInst Is Nothing ) ) Then
 
+```vbscript
             Dim bCompatible As Boolean
             Dim objLCntrs As SchListOfObjects
             Dim objSchGRRCompInst As SchGRRComp
@@ -220,16 +265,21 @@ Sub CATMain()
 
             Set objSchCompGraphic = objSchRoot.GetInterface ( _
               "CATIASchCompGraphic",objSchCompInst)
+```
 
             '-------------------------------------------------------------------
             ' Get the image (ditto) of the component instance
             '-------------------------------------------------------------------
             If ( Not ( objSchCompGraphic Is Nothing ) ) Then
+```vbscript
                Set objSchGRRCompInst = GetComponentImage (objSchCompGraphic)                 
             End If  
+```
 
+```vbscript
             Set objSchCompCompat = objSchRoot.GetInterface ( _
              "CATIASchCompatible",objSchCompInst)
+```
 
             If ( Not ( objSchCompCompat Is Nothing ) And _ 
                  Not ( objSchGRRCompInst Is Nothing ) ) Then
@@ -243,16 +293,20 @@ Sub CATMain()
                '  be connected to the start point of the route.
                '---------------------------------------------------------------
 
+```vbscript
                Dim objSchGRRInst As SchGRR
                Dim objAppCntrCompBest As SchAppConnector
                Dim objLDbOut As SchListOfDoubles
                Dim db2SelectPt(2) As CATSafeArrayVariant
  
                db2SelectPt(0) = 130.0
+```
                db2SelectPt(1) = 110.0
 
+```vbscript
                Set objSchGRRInst = objSchRoot.GetInterface ( _
                  "CATIASchGRR",objSchGRRCompInst)
+```
 
                If ( Not ( objLCntrs Is Nothing ) And  _
                     Not ( objSchGRRInst Is Nothing ) And bCompatible ) Then
@@ -265,6 +319,7 @@ Sub CATMain()
                   objSchCompCompat.GetBestCntrForRoute db2SelectPt, _
                     objSchGRRInst, objLCntrs, objLDbOut, objAppCntrCompBest
 
+```vbscript
                   Dim objAppRouteRef As AnyObject
                   Dim objSchRoute As AnyObject
                   Dim strLogLineID As String
@@ -273,6 +328,8 @@ Sub CATMain()
                   Dim objAppConnection As SchAppConnection
                   Dim objRouteCntbl As SchAppConnectable
                   Dim IntNbCoord As Integer
+
+```
 
                   dbPtArray(0) = 0.0
                   dbPtArray(1) = 0.0
@@ -310,11 +367,15 @@ Sub CATMain()
                     If ( Not ( objSchRoute Is Nothing ) ) Then
                       strMessage = strMessage &  "schematic route created" & vbCr
 
+```vbscript
                       Set objRouteCntbl = objSchRoot.GetInterface ( _
                         "CATIASchAppConnectable",objSchRoute)
+```
 
+```vbscript
                       Set objAppCntrRouteBest = FindConnectorAtPosition ( _
                         dbPtArray(0), dbPtArray(1), objRouteCntbl, objSchRoot)
+```
 
                       If ( Not (objAppCntrRouteBest Is Nothing ) And _
                            Not (objAppCntrCompBest Is Nothing ) ) Then
@@ -322,8 +383,10 @@ Sub CATMain()
                          '-----------------------------------------------------
                          ' Connect "Connector A" to "Connector B"
                          '-----------------------------------------------------
+```vbscript
                          Set objAppConnection = objAppCntrCompBest.AppConnect _
                            (objAppCntrRouteBest)
+```
 
                          If ( Not ( objAppConnection Is Nothing ) ) Then
                             strMessage = strMessage & "route has been connected"
@@ -350,9 +413,12 @@ Sub CATMain()
 
     strMessage = strMessage & _
       "--------------------------------------------------------------------" & vbCr
+```vbscript
     MsgBox strMessage
 
 End Sub
+
+```
 
 ' -----------------------------------------------------------------------------
 ' | Find a component symbol that has not been associated with a schematic
@@ -360,15 +426,24 @@ End Sub
 ' | Input: objSchRootArg:  the root of the document.
 ' | Returns: component symbol object.
 ' -----------------------------------------------------------------------------
+```vbscript
 Private Function GetComponentSymbol (objSchRootArg As SchematicRoot) As AnyObject
    Dim objSchLSymbols As SchListOfObjects
    If ( Not ( objSchRootArg Is Nothing ) ) Then
+```
+```vbscript
       Set objSchLSymbols = objSchRootArg.GetUnassociatedSymbols
       If ( Not ( objSchLSymbols Is Nothing ) ) Then
+```
+```vbscript
          Set GetComponentSymbol = objSchLSymbols.Item (1,"CATIASchGRR")
       End If
+```
    End If
+```vbscript
 End Function
+
+```
 
 ' -----------------------------------------------------------------------------
 ' | Find the first symbol used for the input schematic component.
@@ -376,15 +451,24 @@ End Function
 ' |        (a CATIASchCompGraphic interface handle).
 ' | Returns: the component image (the symbol instance)
 ' -----------------------------------------------------------------------------
+```vbscript
 Private Function GetComponentImage (objSchCompGraphArg As SchCompGraphic) As SchGRRComp
    Dim objSchLSymbols As SchListOfObjects
    If ( Not ( objSchCompGraphArg Is Nothing ) ) Then
+```
+```vbscript
       Set objSchLSymbols = objSchCompGraphArg.ListGraphicalImages
       If ( Not ( objSchLSymbols Is Nothing ) ) Then
+```
+```vbscript
          Set GetComponentImage = objSchLSymbols.Item (1,"CATIASchGRRComp")
       End If
+```
    End If
+```vbscript
 End Function
+
+```
 
 ' -----------------------------------------------------------------------------
 ' | Find the first graphical primitives of an input route.
@@ -392,17 +476,28 @@ End Function
 ' |        (a CATIASchRouteGraphic interface handle).
 ' | Returns: the route graphic primitives
 ' -----------------------------------------------------------------------------
+```vbscript
 Private Function GetRoutePrimitives (objSchRouteGraphArg As SchRouteGraphic) _
   As SchGRR
+```
 
+```vbscript
    Dim objSchLGRR As SchListOfObjects
    If ( Not ( objSchRouteGraphArg Is Nothing ) ) Then
+```
+```vbscript
       Set objSchLGRR = objSchRouteGraphArg.ListGraphicalPrimitives
       If ( Not ( objSchLGRR Is Nothing ) ) Then
+```
+```vbscript
          Set GetRoutePrimitives = objSchLGRR.Item (1,"CATIASchGRR")
       End If
+```
    End If
+```vbscript
 End Function
+
+```
 
 ' -----------------------------------------------------------------------------
 ' | Find a connector that matches the input x-y coordinates.
@@ -411,31 +506,40 @@ End Function
 ' |        objSchCntbl: the connectable to search for the connectors
 ' | Returns: the connector handle
 ' -----------------------------------------------------------------------------
+```vbscript
 Private Function FindConnectorAtPosition ( dbXArg As Double, dbYArg As Double, _
   objSchCntblArg As SchAppConnectable, _
+```
   objSchRootArg As SchematicRoot ) As SchAppConnector
 
+```vbscript
    Dim objLCntr As SchListOfObjects
    Dim objLFilter As CATIASchListOfBSTRs
    Dim objSchRouteGraphic As SchRouteGraphic
    Dim objGRR As SchGRR
 
    If ( Not ( objSchCntblArg Is Nothing ) And _
+```
         Not ( objSchRootArg Is Nothing ) ) Then
+```vbscript
       Set objLFilter = Nothing
 
       Set objLCntr = objSchCntblArg.AppListConnectors (objLFilter)
 
       Set objSchRouteGraphic = objSchRootArg.GetInterface ( _
         "CATIASchRouteGraphic", objSchCntblArg)
+```
       If ( Not ( objSchRouteGraphic Is Nothing ) ) Then
+```vbscript
          Set objGRR = GetRoutePrimitives (objSchRouteGraphic)
       End If
+```
    End If '--- If ( Not ( objSchCntblArg Is Nothing ) ...
 
    If ( Not ( objLCntr Is Nothing )  And _
          Not ( objGRR Is Nothing ) ) Then
 
+```vbscript
       Dim intNbCntr As Integer
       Dim iCntr As Integer
       Dim objLDbOut As SchListOfDoubles
@@ -444,15 +548,19 @@ Private Function FindConnectorAtPosition ( dbXArg As Double, dbYArg As Double, _
       Dim dbXOut As Double
       Dim dbYOut As Double
 
+```
+
       intNbCntr = objLCntr.Count
       If (intNbCntr > 0) Then
          For iCntr = 1 To intNbCntr
+```vbscript
            Set objCntrLoc = Nothing
            Set objLDbOut = Nothing
 
            Set objCntrLoc = objLCntr.Item (iCntr,"CATIASchCntrLocation")
 
            If (Not ( objCntrLoc Is Nothing ) ) Then
+```
 
               objCntrLoc.GetPosition objGRR,objLDbOut
 
@@ -464,8 +572,10 @@ Private Function FindConnectorAtPosition ( dbXArg As Double, dbYArg As Double, _
                    If ( ( dbXOut = dbXArg ) And _ 
                         ( dbYOut = dbYArg ) ) Then
 
+```vbscript
                       Set FindConnectorAtPosition =  objSchRootArg.GetInterface ( _
                          "CATIASchAppConnector", objCntrLoc )
+```
 
                       Exit For
 
@@ -477,9 +587,10 @@ Private Function FindConnectorAtPosition ( dbXArg As Double, dbYArg As Double, _
       End If '--- If (intNbCntr > 0) ...
    End If '--- If ( Not ( objLCntr Is Nothing ) ...
 
+```vbscript
 End Function
 
-
+```
 
 ```vbscript
 Option Explicit
@@ -494,26 +605,36 @@ Option Explicit
 '   CATIA Level:  V5R15 
 ' *****************************************************************************
 
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
+
+```
 
     ' ------------------------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
+```vbscript
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,sDocPath,"No Doc Path Defined"
     End If
+```
     ' ------------------------------------------------------------------------- 
     ' Open the schematic document 
+```vbscript
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
-            "online\CAAScdSchUseCases\samples\CAASCH_Detail01.CATProduct")
+            "online/CAAScdSchUseCases/samples/CAASCH_Detail01.CATProduct")
+```
 
+```vbscript
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
     Dim strMessage As String
+
+```
 
     strMessage = _
       "--------------------------------------------------------------------" & vbCr
@@ -521,27 +642,39 @@ Sub CATMain()
       "Output traces from CAASchAppObjFactory.CATScript" & vbCrLf
 
     ' Find the top node of the schematic object tree - schematic root.
+```vbscript
     Dim objPrdRoot As Product
     Dim objSchRoot As SchematicRoot
     If ( Not ( objSchDoc Is Nothing ) ) Then
+```
+```vbscript
       Set objPrdRoot = objSchDoc.Product 
       If ( Not ( objPrdRoot Is Nothing ) ) Then
+```
+```vbscript
         Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
       End If
+```
     End If
 
+```vbscript
     Dim objAppObjFact As SchAppObjectFactory
     Dim objSchBaseFact As SchBaseFactory
     Dim objSchTempListFact As SchTempListFactory
+
+```
 
     If ( Not ( objSchRoot Is Nothing ) ) Then
 
        '-----------------------------------------------------------------------
        ' Get all the necessary factories.
        '-----------------------------------------------------------------------
+```vbscript
        Set objAppObjFact = objSchRoot.GetApplObjFactFromVirtualType ("CAASCHEDU_SamplePID")
        Set objSchBaseFact = objSchRoot.GetSchBaseFactory 
        Set objSchTempListFact = objSchRoot.GetTemporaryListFactory
+
+```
 
        If ( Not ( objAppObjFact Is Nothing ) And _
             Not ( objSchBaseFact Is Nothing )  And _
@@ -549,12 +682,15 @@ Sub CATMain()
 
          strMessage = strMessage &  "Got Application object factory " & vbCr
 
+```vbscript
          Dim objAppCompRef As AnyObject
          Dim objSchSymbol As AnyObject
          Dim objSchCompRef As SchComponent 
          Dim objSchListGRR As SchListOfObjects
          Dim objSchComp2Ref As SchComponent2
          Dim objSchCompInst As SchComponent
+
+```
 
          '---------------------------------------------------------------------
          ' Ask application to create a component reference
@@ -568,13 +704,19 @@ Sub CATMain()
            '---------------------------------------------------------------------
            ' Find a unassociated component symbol in the document
            '---------------------------------------------------------------------   
+```vbscript
            Set objSchSymbol = GetComponentSymbol (objSchRoot)
            If ( Not ( objSchSymbol Is Nothing ) ) Then
+```
+```vbscript
               Set objSchListGRR = objSchTempListFact.CreateListOfObjects
               If ( Not ( objSchListGRR Is Nothing ) ) Then
+```
                  objSchListGRR.Append objSchSymbol
+```vbscript
                  Set objSchCompRef = objSchBaseFact.CreateSchComponent ( _
                    objAppCompRef, objSchListGRR)
+```
                  If ( Not ( objSchCompRef Is Nothing ) ) Then
                     strMessage = strMessage &  "schematic reference component attached" & vbCr
                  End If
@@ -584,22 +726,29 @@ Sub CATMain()
            '---------------------------------------------------------------------
            ' Add two connectors to the reference component
            '---------------------------------------------------------------------   
+```vbscript
            Dim objSchCntr As SchCompConnector
            Dim objSchAppCntr As SchAppConnector
            Dim objSchCntrLoc As SchCntrLocation
 
            Set objSchCntr = objSchRoot.GetInterface ("CATIASchCompConnector", _
              objSchCompRef)
+```
 
            If ( Not ( objSchCntr Is Nothing ) ) Then
 
+```vbscript
               Dim iCntr As Integer
               Dim db2CntrPos (2) As CATSafeArrayVariant
               Dim db2CntrVec (2) As CATSafeArrayVariant
    
               For iCntr = 1 To 2
+```
+```vbscript
                 Set objSchCntrLoc = Nothing
                 Set objSchAppCntr = Nothing
+
+```
 
                 '-------------------------------------------------------------
                 ' connector position and alignment vector are in coordinates
@@ -622,8 +771,10 @@ Sub CATMain()
                   Db2CntrPos, objSchAppCntr 
 
                 If ( Not ( objSchAppCntr Is Nothing ) ) Then
+```vbscript
                    Set objSchCntrLoc = objSchRoot.GetInterface ( _
                      "CATIASchCntrLocation", objSchAppCntr)
+```
                    If ( Not ( objSchCntrLoc Is Nothing ) ) Then
 
                       objSchCntrLoc.SetAlignVector objSchSymbol, Db2CntrVec
@@ -643,23 +794,26 @@ Sub CATMain()
            ' Note that the target document is an input to PlaceInSpace
            '-------------------------------------------------------------------
 
-
            '-------------------------------------------------------------------
            ' Component instance (to be created below) orientation matrix.
            ' x-axis = (1.0,0.0)
            ' y-axis = (0.0,1.0)
            ' origin = (100.0,100.0)
            '-------------------------------------------------------------------
+```vbscript
            Dim db6Matrix(6) As CATSafeArrayVariant
            db6Matrix(0)=1.0
+```
            db6Matrix(1)=0.0
            db6Matrix(2)=0.0
            db6Matrix(3)=1.0
            db6Matrix(4)=100.0
            db6Matrix(5)=100.0
   
+```vbscript
            Set objSchComp2Ref = objSchRoot.GetInterface ( _
              "CATIASchComponent2",objAppCompRef)
+```
 
            If ( Not ( objSchComp2Ref Is Nothing ) ) Then
 
@@ -671,10 +825,7 @@ Sub CATMain()
               End If 
            End If 
 
-
          End If '--- If ( Not ( objAppCompRef Is Nothing ) ...
-
-
 
          '---------------------------------------------------------------------
          ' Find the coordinates of the route point by asking an existing
@@ -691,6 +842,7 @@ Sub CATMain()
          '---------------------------------------------------------------------
          If ( Not  ( objSchCompInst Is Nothing ) ) Then
 
+```vbscript
             Dim bCompatible As Boolean
             Dim objLCntrs As SchListOfObjects
             Dim objSchGRRCompInst As SchGRRComp
@@ -699,16 +851,21 @@ Sub CATMain()
 
             Set objSchCompGraphic = objSchRoot.GetInterface ( _
               "CATIASchCompGraphic",objSchCompInst)
+```
 
             '-------------------------------------------------------------------
             ' Get the image (ditto) of the component instance
             '-------------------------------------------------------------------
             If ( Not ( objSchCompGraphic Is Nothing ) ) Then
+```vbscript
                Set objSchGRRCompInst = GetComponentImage (objSchCompGraphic)                 
             End If  
+```
 
+```vbscript
             Set objSchCompCompat = objSchRoot.GetInterface ( _
              "CATIASchCompatible",objSchCompInst)
+```
 
             If ( Not ( objSchCompCompat Is Nothing ) And _ 
                  Not ( objSchGRRCompInst Is Nothing ) ) Then
@@ -722,16 +879,20 @@ Sub CATMain()
                '  be connected to the start point of the route.
                '---------------------------------------------------------------
 
+```vbscript
                Dim objSchGRRInst As SchGRR
                Dim objAppCntrCompBest As SchAppConnector
                Dim objLDbOut As SchListOfDoubles
                Dim db2SelectPt(2) As CATSafeArrayVariant
  
                db2SelectPt(0) = 130.0
+```
                db2SelectPt(1) = 110.0
 
+```vbscript
                Set objSchGRRInst = objSchRoot.GetInterface ( _
                  "CATIASchGRR",objSchGRRCompInst)
+```
 
                If ( Not ( objLCntrs Is Nothing ) And  _
                     Not ( objSchGRRInst Is Nothing ) And bCompatible ) Then
@@ -744,6 +905,7 @@ Sub CATMain()
                   objSchCompCompat.GetBestCntrForRoute db2SelectPt, _
                     objSchGRRInst, objLCntrs, objLDbOut, objAppCntrCompBest
 
+```vbscript
                   Dim objAppRouteRef As AnyObject
                   Dim objSchRoute As AnyObject
                   Dim strLogLineID As String
@@ -752,6 +914,8 @@ Sub CATMain()
                   Dim objAppConnection As SchAppConnection
                   Dim objRouteCntbl As SchAppConnectable
                   Dim IntNbCoord As Integer
+
+```
 
                   dbPtArray(0) = 0.0
                   dbPtArray(1) = 0.0
@@ -789,11 +953,15 @@ Sub CATMain()
                     If ( Not ( objSchRoute Is Nothing ) ) Then
                       strMessage = strMessage &  "schematic route created" & vbCr
 
+```vbscript
                       Set objRouteCntbl = objSchRoot.GetInterface ( _
                         "CATIASchAppConnectable",objSchRoute)
+```
 
+```vbscript
                       Set objAppCntrRouteBest = FindConnectorAtPosition ( _
                         dbPtArray(0), dbPtArray(1), objRouteCntbl, objSchRoot)
+```
 
                       If ( Not (objAppCntrRouteBest Is Nothing ) And _
                            Not (objAppCntrCompBest Is Nothing ) ) Then
@@ -801,8 +969,10 @@ Sub CATMain()
                          '-----------------------------------------------------
                          ' Connect "Connector A" to "Connector B"
                          '-----------------------------------------------------
+```vbscript
                          Set objAppConnection = objAppCntrCompBest.AppConnect _
                            (objAppCntrRouteBest)
+```
 
                          If ( Not ( objAppConnection Is Nothing ) ) Then
                             strMessage = strMessage & "route has been connected"
@@ -829,10 +999,12 @@ Sub CATMain()
 
     strMessage = strMessage & _
       "--------------------------------------------------------------------" & vbCr
+```vbscript
     MsgBox strMessage
 
-
 End Sub
+
+```
 
 ' -----------------------------------------------------------------------------
 ' | Find a component symbol that has not been associated with a schematic
@@ -840,16 +1012,24 @@ End Sub
 ' | Input: objSchRootArg:  the root of the document.
 ' | Returns: component symbol object.
 ' -----------------------------------------------------------------------------
+```vbscript
 Private Function GetComponentSymbol (objSchRootArg As SchematicRoot) As AnyObject
    Dim objSchLSymbols As SchListOfObjects
    If ( Not ( objSchRootArg Is Nothing ) ) Then
+```
+```vbscript
       Set objSchLSymbols = objSchRootArg.GetUnassociatedSymbols
       If ( Not ( objSchLSymbols Is Nothing ) ) Then
+```
+```vbscript
          Set GetComponentSymbol = objSchLSymbols.Item (1,"CATIASchGRR")
       End If
+```
    End If
+```vbscript
 End Function
 
+```
 
 ' -----------------------------------------------------------------------------
 ' | Find the first symbol used for the input schematic component.
@@ -857,15 +1037,24 @@ End Function
 ' |        (a CATIASchCompGraphic interface handle).
 ' | Returns: the component image (the symbol instance)
 ' -----------------------------------------------------------------------------
+```vbscript
 Private Function GetComponentImage (objSchCompGraphArg As SchCompGraphic) As SchGRRComp
    Dim objSchLSymbols As SchListOfObjects
    If ( Not ( objSchCompGraphArg Is Nothing ) ) Then
+```
+```vbscript
       Set objSchLSymbols = objSchCompGraphArg.ListGraphicalImages
       If ( Not ( objSchLSymbols Is Nothing ) ) Then
+```
+```vbscript
          Set GetComponentImage = objSchLSymbols.Item (1,"CATIASchGRRComp")
       End If
+```
    End If
+```vbscript
 End Function
+
+```
 
 ' -----------------------------------------------------------------------------
 ' | Find the first graphical primitives of an input route.
@@ -873,18 +1062,28 @@ End Function
 ' |        (a CATIASchRouteGraphic interface handle).
 ' | Returns: the route graphic primitives
 ' -----------------------------------------------------------------------------
+```vbscript
 Private Function GetRoutePrimitives (objSchRouteGraphArg As SchRouteGraphic) _
   As SchGRR
+```
 
+```vbscript
    Dim objSchLGRR As SchListOfObjects
    If ( Not ( objSchRouteGraphArg Is Nothing ) ) Then
+```
+```vbscript
       Set objSchLGRR = objSchRouteGraphArg.ListGraphicalPrimitives
       If ( Not ( objSchLGRR Is Nothing ) ) Then
+```
+```vbscript
          Set GetRoutePrimitives = objSchLGRR.Item (1,"CATIASchGRR")
       End If
+```
    End If
+```vbscript
 End Function
 
+```
 
 ' -----------------------------------------------------------------------------
 ' | Find a connector that matches the input x-y coordinates.
@@ -893,31 +1092,40 @@ End Function
 ' |        objSchCntbl: the connectable to search for the connectors
 ' | Returns: the connector handle
 ' -----------------------------------------------------------------------------
+```vbscript
 Private Function FindConnectorAtPosition ( dbXArg As Double, dbYArg As Double, _
   objSchCntblArg As SchAppConnectable, _
+```
   objSchRootArg As SchematicRoot ) As SchAppConnector
 
+```vbscript
    Dim objLCntr As SchListOfObjects
    Dim objLFilter As CATIASchListOfBSTRs
    Dim objSchRouteGraphic As SchRouteGraphic
    Dim objGRR As SchGRR
 
    If ( Not ( objSchCntblArg Is Nothing ) And _
+```
         Not ( objSchRootArg Is Nothing ) ) Then
+```vbscript
       Set objLFilter = Nothing
 
       Set objLCntr = objSchCntblArg.AppListConnectors (objLFilter)
 
       Set objSchRouteGraphic = objSchRootArg.GetInterface ( _
         "CATIASchRouteGraphic", objSchCntblArg)
+```
       If ( Not ( objSchRouteGraphic Is Nothing ) ) Then
+```vbscript
          Set objGRR = GetRoutePrimitives (objSchRouteGraphic)
       End If
+```
    End If '--- If ( Not ( objSchCntblArg Is Nothing ) ...
 
    If ( Not ( objLCntr Is Nothing )  And _
          Not ( objGRR Is Nothing ) ) Then
 
+```vbscript
       Dim intNbCntr As Integer
       Dim iCntr As Integer
       Dim objLDbOut As SchListOfDoubles
@@ -926,15 +1134,19 @@ Private Function FindConnectorAtPosition ( dbXArg As Double, dbYArg As Double, _
       Dim dbXOut As Double
       Dim dbYOut As Double
 
+```
+
       intNbCntr = objLCntr.Count
       If (intNbCntr &gt; 0) Then
          For iCntr = 1 To intNbCntr
+```vbscript
            Set objCntrLoc = Nothing
            Set objLDbOut = Nothing
 
            Set objCntrLoc = objLCntr.Item (iCntr,"CATIASchCntrLocation")
 
            If (Not ( objCntrLoc Is Nothing ) ) Then
+```
 
               objCntrLoc.GetPosition objGRR,objLDbOut
 
@@ -946,8 +1158,10 @@ Private Function FindConnectorAtPosition ( dbXArg As Double, dbYArg As Double, _
                    If ( ( dbXOut = dbXArg ) And _ 
                         ( dbYOut = dbYArg ) ) Then
 
+```vbscript
                       Set FindConnectorAtPosition =  objSchRootArg.GetInterface ( _
                          "CATIASchAppConnector", objCntrLoc )
+```
 
                       Exit For
 
@@ -959,5 +1173,7 @@ Private Function FindConnectorAtPosition ( dbXArg As Double, dbYArg As Double, _
       End If '--- If (intNbCntr &gt; 0) ...
    End If '--- If ( Not ( objLCntr Is Nothing ) ...
 
+```vbscript
 End Function
+```
 ```

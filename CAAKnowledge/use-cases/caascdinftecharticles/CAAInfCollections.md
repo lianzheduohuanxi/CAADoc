@@ -4,7 +4,7 @@ title: "About Collections"
 category: "use-case"
 module: "CAAScdInfTechArticles"
 tags: ["CATIA"]
-source_file: "Doc/online/CAAScdInfTechArticles/CAAInfCollections.htm"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfCollections.htmmd"
 converted: "2026-05-11T17:31:52.408942"
 ```
 
@@ -22,21 +22,29 @@ converted: "2026-05-11T17:31:52.408942"
  An item is retrieved from the collection using the **Item** method and the index of the item in the collection. Usually, the argument representing the index in the **Item** method is a Variant. This means that it can either represent the rank of the item in the collection or the name you assigned to this item using the **Name** property. The rank in a collection begins at 1. For example, assume that the document named **MyDocument** is the sixth document in the Documents collection. To retrieve this document in the **Doc** variable, write:
 
 ```vbscript
+```vbscript
      Dim Doc As Document
+```vbscript
+```
 ```vbscript
 ```vbscript
      Set Doc = CATIA.Documents.Item(6)
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Dim Doc As Document
 ```vbscript
+```
+```vbscript
 Set Doc = CATIA.Documents.Item(6)
+```
 ```
 
  or write:
@@ -44,30 +52,40 @@ Set Doc = CATIA.Documents.Item(6)
 ```
 
 ```vbscript
+```vbscript
      Dim Doc As Document
+```vbscript
+```
 ```vbscript
 ```vbscript
      Set Doc = CATIA.Documents.Item("MyDocument")
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Dim Doc As Document
 ```vbscript
+```
+```vbscript
 Set Doc = CATIA.Documents.Item("MyDocument")
+```
 ```
 
  Each collection has a **Count** property that holds the number of items in the collection. This is a handy property to scan the whole collection. For example, to print the name of each document in the collection in a message box, write:
 
 ```
 
+```vbscript
      **For I = 1 To CATIA.Documents.Count**
        **msgbox CATIA.Documents.Item(I).Name**
 ```vbscript
+```
      Next
 
 ```
@@ -81,22 +99,30 @@ Next
        I = I + 1
 ```
 
+```vbscript
        **msgbox CATIA.Documents.Item(I).Name**
 I = 0
+```
 Do
 I = I + 1
+```vbscript
      Until I = **CATIA.Documents.Count**
 
  or you can use the **For Each** instruction to scan the collection, and get rid of the counter:
+```
 
 ```vbscript
+```vbscript
      For Each Doc In CATIA.Documents
+```
 ```
 
        **msgbox Doc.Name**
 ```vbscript
+```vbscript
 For Each Doc In CATIA.Documents
 ```vbscript
+```
 ```vbscript
      Next
 

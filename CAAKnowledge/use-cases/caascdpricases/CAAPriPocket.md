@@ -4,7 +4,7 @@ title: "Creating Pocket"
 category: "use-case"
 module: "CAAScdPriUseCases"
 tags: ["CAAScdPriUseCases", "CATIA", "CAAPriPocket"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriPocket.htm"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriPocket.htmmd"
 converted: "2026-05-11T17:31:51.231457"
 ```
 
@@ -50,9 +50,13 @@ The macro first loads CAAPriPocket.CATPart that contains a sketch: Sketch.2  Th
 ```
 
 ```vbscript
+```vbscript
     Dim oPart As Part
 ```vbscript
+```
+```vbscript
     Set oPart = CATIA.ActiveDocument.Part
+```
 ```
 
 ```
@@ -63,13 +67,17 @@ The macro first loads CAAPriPocket.CATPart that contains a sketch: Sketch.2  Th
     ' ------------
     ' Get the part body in the part
     ' ------------
+```vbscript
     Dim oBody As Body
     Set oBody = oPart.Bodies.Item  ( "PartBody" )
     ' ------------
+```
     ' Get the sketch in the body
     ' ------------
+```vbscript
     Dim oSketch As Sketch
     Set oSketch = oBody.Sketches.Item  ( "Sketch.1" )
+```
 ```
 
 ```
@@ -106,13 +114,19 @@ Once the part document has been loaded, the `oPart`, `oBody` and `oSketch` varia
 
 ```
 
+```vbscript
     MsgBox "Click OK to create the pocket."
+```
 ```
 
 ```vbscript
+```vbscript
     Dim oPocket As Pocket
 ```vbscript
+```
+```vbscript
     Set oPocket= oPart.ShapeFactory.AddNewPocket    ( oSketch, 20.000000 )
+```
 ```
 
 ```
@@ -176,8 +190,10 @@ The _Pocket_ is then updated with the following result.
 
 ```
 
+```vbscript
     MsgBox "Click OK to set the pocket first limit to 30mm."
     oPocket.FirstLimit.Dimension.Value = 30.000000
+```
 ```
 
 ```vbscript
@@ -213,7 +229,7 @@ The `FirstLimit` property of the _Pocket_ object is set to 30mm.
 
 ![](images/img007.jpg)
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

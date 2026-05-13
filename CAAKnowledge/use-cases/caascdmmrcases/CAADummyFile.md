@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Dummy file"
-category: "use-case"
+category: use-case
 module: "CAAScdMmrUseCases"
 tags: []
-source_file: "Doc/online/CAAScdMmrUseCases/CAADummyFile.htm"
+source_file: "Doc/online/CAAScdMmrUseCases/CAADummyFile.htmmd"
 converted: "2026-05-11T17:31:51.138169"
 ```
 

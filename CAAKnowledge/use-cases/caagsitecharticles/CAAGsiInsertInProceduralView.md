@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Inserting a Shape Design Feature in the Procedural View"
-category: "technical article"
+category: tech-article article"
 module: "CAAGsiTechArticles"
 tags: ["CATIPrtPart", "CAAGsiNozzle", "CATIGSMProceduralView_var", "CATIGSMInsertInProceduralView", "CAAGSMInterfaces", "CAAGsiUserTools", "CATIContainer_var", "CATIA", "CATIGSMTool", "CATIPrtPart_var", "CATIDescendants_var", "CATIBasicTool_var", "CATISpecObject_var", "CATISpecObject", "CATIDescendants", "CAAGsiToolkit", "CATIBasicTool", "CATIGSMTool_var", "CATIPrtContainer_var"]
-source_file: "Doc/online/CAAGsiTechArticles/CAAGsiInsertInProceduralView.htm"
+source_file: "Doc/online/CAAGsiTechArticles/CAAGsiInsertInProceduralView.htmmd"
 converted: "2026-05-11T17:31:50.666036"
 ```
 
@@ -73,10 +73,10 @@ The goal of CAAGsiUserTools Object is to show how to insert a feature in an open
 The goal of CAAGsiUserTools Object is to show how to insert a feature in an open body feature, which is a basic task when you create shape design features in a part document. CAAGsiUserTools illustrates some backbone concepts that are shared by all mechanical applications.
 The CAAGsiUserTools Object is made of a single class named CAAGsiUserTools located in the CAAGsiToolkit.m module of the CAAGSMInterfaces.edu framework:
 
-Windows | `InstallRootDirectory\CAAGSMInterfaces.edu\CAAGsiToolkit.m\`
+Windows | `InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiToolkit.m/`
 
 The CAAGsiUserTools Object is made of a single class named CAAGsiUserTools located in the CAAGsiToolkit.m module of the CAAGSMInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAAGSMInterfaces.edu\CAAGsiToolkit.m\`
+Windows | `InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiToolkit.m/`
 Unix | `InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiToolkit.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -171,7 +171,7 @@ const CATISpecObject_var &ispInputParent)
 spTool = **GetCurrentGSMTool**("",1);
 We first get a _CATIGSMTool_ smart pointer from the `ispInputParent` smart pointer. If the given _CATISpecObject_ Smart Pointer `ispInputParent` equals NULL_var then we call the `GetCurrentGSMTool` method to retrieve a GMTool. If we call `InsertInProceduralView` with a null `ispInputParent` then we will retrieve the GSMTool automatically.
 
-We have stored the _pFact pointer in the CAAGsiUserTools class in the method `Init` that has to be called before doing anything, we call the `GetCurrentGSMTool()` method to retrieve a Current GSMTool or create one and set it current. This enable the user to directly call `InsertInProceduralView()` without calling `CreateGSMTool()` before.
+We have stored the _pFact pointer in the CAAGsiUserTools class in the method `Init` that has to be called before doing anything, we call the `GetCurrentGSMTool(#)` method to retrieve a Current GSMTool or create one and set it current. This enable the user to directly call `InsertInProceduralView(#)` without calling `CreateGSMTool(#)` before.
 
 ![](../CAAIcons/images/warning.gif)The main drawback of this, is that we will make a lot of unuseful calls to retrieve the Part, the current Tool and finally insert a feature in the GSMTool.
 
@@ -185,7 +185,7 @@ CAAGsiUserTools::GetCurrentGSMTool**(const CATUnicodeString &iName,
 int iSetAsCurrent)
       CATIContainer_var    spCont      = _pFact;
       CATIPrtContainer_var spPartCont  = spCont;
-      CATIPrtPart_var      spPart      = spPartCont -> GetPart();
+      CATIPrtPart_var      spPart      = spPartCont -> GetPart(#);
 
       CATIGSMTool_var spTool = NULL_var;
 ```vbscript
@@ -194,10 +194,10 @@ int iSetAsCurrent)
 ```
 
       {
-CATIPrtPart_var      spPart      = spPartCont -> GetPart();
+CATIPrtPart_var      spPart      = spPartCont -> GetPart(#);
 CATIGSMTool_var spTool = NULL_var;
 if (NULL_var != spPart)
-        CATIBasicTool_var spCurrentTool = spPart->**GetCurrentTool**();
+        CATIBasicTool_var spCurrentTool = spPart->**GetCurrentTool**(#);
         spTool = spCurrentTool;
 ```vbscript
         if (NULL_var != spTool)
@@ -205,15 +205,15 @@ if (NULL_var != spPart)
 ```
 
         {
-CATIBasicTool_var spCurrentTool = spPart->**GetCurrentTool**();
+CATIBasicTool_var spCurrentTool = spPart->**GetCurrentTool**(#);
 spTool = spCurrentTool;
 if (NULL_var != spTool)
-          CATISpecObject_var spExternalRef = spPart->**GetBodyForExternalReferences**();
+          CATISpecObject_var spExternalRef = spPart->**GetBodyForExternalReferences**(#);
           if (NULL_var != spExternalRef && spTool == spExternalRef)
                  spTool = NULL_var;
 
         }
-CATISpecObject_var spExternalRef = spPart->**GetBodyForExternalReferences**();
+CATISpecObject_var spExternalRef = spPart->**GetBodyForExternalReferences**(#);
 if (NULL_var != spExternalRef && spTool == spExternalRef)
 spTool = NULL_var;
 ```vbscript
@@ -259,7 +259,7 @@ At this stage, we have to check that the tool retrieved is not the open body ded
 
 Now that we have retrieved (or created) an open body, we can aggregate the shape design feature inside it.
 
-    **HRESULT CAAGsiUserTools::InsertInProceduralView()**
+    **HRESULT CAAGsiUserTools::InsertInProceduralView(#)**
       {
       ...
       if ( NULL_var != ispObjectToAppend && NULL_var != spTool)

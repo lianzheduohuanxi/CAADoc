@@ -4,13 +4,13 @@ title: "CAAInfSaveDocument.CATScript"
 category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CAAScdInfUseCases", "CATIA", "CAAInfSaveDocument", "CAAInfReadDocument"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfSaveDocumentSource.htm"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfSaveDocumentSource.htmmd"
 converted: "2026-05-11T17:31:52.396971"
 ```
 
 ---
 tags: ["CAAScdInfUseCases", "CATIA", "CAAInfSaveDocument", "CAAInfReadDocument"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfSaveDocumentSource.htm"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfSaveDocumentSource.htmmd"
 converted: "2026-05-11T17:31:52.396971"
 Option Explicit
 
@@ -34,8 +34,10 @@ Option Explicit
 
 ```
 
-     Sub CATMain()
 ```vbscript
+     Sub CATMain(#)
+```vbscript
+```
 ```vbscript
          ' -----------------------------------------------------------------------------------------------
          ' Optional: allows to find the sample wherever it may be installed
@@ -45,13 +47,17 @@ Option Explicit
 ```
 
 ```vbscript
+```vbscript
          Dim sDocPath As String
+```vbscript
+```
 ```vbscript
 ```vbscript
          sDocPath=CATIA.SystemService.Environ("CATDocView")
          If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
            Err.Raise 9999,,"No Doc Path Defined"
          End If
+```
 ```
 
 ```
@@ -65,22 +71,28 @@ Option Explicit
          'Open the document and add it as the last item of the collection of documents.
          'Create and display a new window for the document.
          'Activate the document and its window.
+```vbscript
          Dim sFilePath
          sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
-
 ```
 
 ```
 
-            "online\CAAScdInfUseCases\samples\CAAInfReadDocument.CATPart")
+```
+
+            "online/CAAScdInfUseCases/samples/CAAInfReadDocument.CATPart")
+```vbscript
 ```vbscript
 Dim sFilePath
+```vbscript
+```
 ```vbscript
 ```vbscript
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
          Dim iPartDoc As Document
          Set iPartDoc = CATIA.Documents.Open(sFilePath)
+```
 ```
 
 ```
@@ -92,11 +104,15 @@ sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```vbscript
          'The document just opened is the active document.
          'Save the active document and then close it.
-          CATIA.ActiveDocument.Save()
-          CATIA.ActiveDocument.Close()
+```vbscript
+          CATIA.ActiveDocument.Save(#)
+          CATIA.ActiveDocument.Close(#)
          'Open the same document again.
+```
+```vbscript
           Set iPartDoc = CATIA.Documents.Open(sFilePath)
          'Save the document just opened using the variable name defined for it.
+```
          'Close the document in the same way.
 ```
 
@@ -105,8 +121,10 @@ sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
 
 ```vbscript
+```vbscript
 Set iPartDoc = CATIA.Documents.Open(sFilePath)
 ```vbscript
+```
 ```vbscript
 'Save the document just opened using the variable name defined for it.
 'Close the document in the same way.
@@ -114,18 +132,22 @@ Set iPartDoc = CATIA.Documents.Open(sFilePath)
 
 ```
 
-          iPartDoc.Save()
-          iPartDoc.Close()
+          iPartDoc.Save(#)
+          iPartDoc.Close(#)
 ```
 
 ```vbscript
 ```vbscript
 ```vbscript
          'Open the same document a third time.
+```vbscript
           Set iPartDoc = CATIA.Documents.Open(sFilePath)
          'Save the document by specifying its name and then close it.
-          CATIA.Documents.Item("CAAInfReadDocument.CATPart").Save()
-          CATIA.Documents.Item("CAAInfReadDocument.CATPart").Close()
+```
+```vbscript
+          CATIA.Documents.Item("CAAInfReadDocument.CATPart").Save(#)
+          CATIA.Documents.Item("CAAInfReadDocument.CATPart").Close(#)
+```
 ```
 
 ```
@@ -133,6 +155,8 @@ Set iPartDoc = CATIA.Documents.Open(sFilePath)
 ```
 
 ```vbscript
+```vbscript
      End Sub
 
+```
 ```

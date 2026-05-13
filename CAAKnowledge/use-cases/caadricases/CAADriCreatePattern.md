@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating a Hatching Pattern On 2D Geometry"
-category: "use case"
+category: use-case case"
 module: "CAADriUseCases"
 tags: ["CATIDrwAnnotationFactory_var", "CATISheet_var", "CATISketch_var", "CATIDftDocumentServices", "CATI2DCurve", "CATIDftHatchingPattern", "CATIContainer_var", "CATIA", "CAADrwCreatePattern", "CATIDftAnnotationFactory", "CATIAlias_var", "CATIDrawing", "CATIView_var", "CAADRWCreatePattern", "CATISpecObject_var", "CATISpecObject", "CATIDrwBreakElem_var", "CAADraftingInterfaces", "CATIDrwAreaFill_var", "CATI2DCurve_var"]
-source_file: "Doc/online/CAADriUseCases/CAADriCreatePattern.htm"
+source_file: "Doc/online/CAADriUseCases/CAADriCreatePattern.htmmd"
 converted: "2026-05-11T17:31:50.962468"
 ```
 
@@ -86,10 +86,10 @@ When you launch the use case, pass the full pathname of the file into which you 
 The CAADrwCreatePattern use case is made of one source file named CAADrwCreatePattern.cpp located in the CAADrwCreatePattern.m module of the CAADraftingInterfaces.edu framework:
 
 The CAADrwCreatePattern use case is made of one source file named CAADrwCreatePattern.cpp located in the CAADrwCreatePattern.m module of the CAADraftingInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwCreatePattern.m\`
+Windows | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCreatePattern.m/`
 
 The CAADrwCreatePattern use case is made of one source file named CAADrwCreatePattern.cpp located in the CAADrwCreatePattern.m module of the CAADraftingInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwCreatePattern.m\`
+Windows | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCreatePattern.m/`
 Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCreatePattern.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -169,16 +169,16 @@ This section represents the usual sequence for creating a CATIA document.
 ```vbscript
 if (SUCCEEDED(pDoc->QueryInterface(IID_CATIDftDocumentServices, (void **)&piDftDocServices)))
           piDftDocServices->GetDrawing(IID_CATIDrawing, (void **)&piDrawing);
-          piDftDocServices->Release();
+          piDftDocServices->Release(#);
           spSpecObj=piDrawing;
-          spDrwcont = spSpecObj->GetFeatContainer();
+          spDrwcont = spSpecObj->GetFeatContainer(#);
           spDrwFact = spDrwcont;
 ```
 
        }
-piDftDocServices->Release();
+piDftDocServices->Release(#);
 spSpecObj=piDrawing;
-spDrwcont = spSpecObj->GetFeatContainer();
+spDrwcont = spSpecObj->GetFeatContainer(#);
 spDrwFact = spDrwcont;
        else
 
@@ -201,9 +201,9 @@ The root feature of a drawing document is the Drawing that is the feature that i
        // ===================
 
        // We are working in main view of the current sheet
-       CATISheet_var spSheet = piDrawing->GetCurrentSheet();
-       piDrawing->Release();
-       CATIView_var spMainView = spSheet->GetMainView();
+       CATISheet_var spSheet = piDrawing->GetCurrentSheet(#);
+       piDrawing->Release(#);
+       CATIView_var spMainView = spSheet->GetMainView(#);
 
        // GEOMETRY READING IN THE MAIN VIEW
        // =================================
@@ -215,10 +215,10 @@ The root feature of a drawing document is the Drawing that is the feature that i
        CATLISTV(CATISpecObject_var) ListValidElem;
        CATListValCATI2DWFGeometry_var spListElem;
        CATUnicodeString namealias;
-       hr = spSketch->GetComponents(CATI2DCurve::ClassName(),spListElem);
+       hr = spSketch->GetComponents(CATI2DCurve::ClassName(#),spListElem);
 ```vbscript
 ```vbscript
-       for (int i=1; i<=spListElem.Size(); i++)
+       for (int i=1; i<=spListElem.Size(#); i++)
 
 ```
 
@@ -227,11 +227,11 @@ The root feature of a drawing document is the Drawing that is the feature that i
        {
           // Get all geometric elements containing the string "area" in their external name.
 CATUnicodeString namealias;
-hr = spSketch->GetComponents(CATI2DCurve::ClassName(),spListElem);
+hr = spSketch->GetComponents(CATI2DCurve::ClassName(#),spListElem);
 ```vbscript
 ```vbscript
-for (int i=1; i<=spListElem.Size(); i++)
-          namealias = CATIAlias_var(spListElem[i])->GetAlias();
+for (int i=1; i<=spListElem.Size(#); i++)
+          namealias = CATIAlias_var(spListElem[i])->GetAlias(#);
           if (namealias.SearchSubString("area") != -1)
 
 ```
@@ -239,7 +239,7 @@ for (int i=1; i<=spListElem.Size(); i++)
 ```
 
           {
-namealias = CATIAlias_var(spListElem[i])->GetAlias();
+namealias = CATIAlias_var(spListElem[i])->GetAlias(#);
 ```vbscript
 if (namealias.SearchSubString("area") != -1)
 ```
@@ -323,19 +323,19 @@ if (spDrwcont != NULL_var)
 spBreakElemfact = spDrwcont;
 else
 ```vbscript
-          if (iHatching) iHatching->Release();
+          if (iHatching) iHatching->Release(#);
 
 ```
 
           // Ends session
           ::Delete_Session("SampleSession");
 else
-if (iHatching) iHatching->Release();
+if (iHatching) iHatching->Release(#);
           return 5;
 
        }
 ```vbscript
-if (iHatching) iHatching->Release();
+if (iHatching) iHatching->Release(#);
 return 5;
        CATLISTV(CATISpecObject_var) ListBreakElem;
        CATI2DCurve_var spCurveElm;
@@ -349,13 +349,13 @@ CATI2DCurve_var spCurveElm;
 double pStartParam, pEndParam, pInter ;
 int index=0, creation=0, containment=0;
 ```vbscript
-       for (i=1; i<=spListElem.Size(); i++)
+       for (i=1; i<=spListElem.Size(#); i++)
 
 ```
 
        {
 int index=0, creation=0, containment=0;
-for (i=1; i<=spListElem.Size(); i++)
+for (i=1; i<=spListElem.Size(#); i++)
           spCurveElm = spListElem[i];
           spCurveElm->GetParamExtents(&pStartParam,&pEndParam);
 
@@ -415,7 +415,7 @@ if (SUCCEEDED(iHatching->QueryInterface(IID_CATISpecObject, (void **)&piSpecObj)
           AreaFill = spAnnFactory -> CreateDrwAreaFill(ListBreakElem, piSpecObj, "");
 ```
 
-          piSpecObj->Release();
+          piSpecObj->Release(#);
 
        }
 ```vbscript
@@ -424,30 +424,30 @@ if (SUCCEEDED(iHatching->QueryInterface(IID_CATISpecObject, (void **)&piSpecObj)
 AreaFill = spAnnFactory -> CreateDrwAreaFill(ListBreakElem, piSpecObj, "");
 ```
 
-piSpecObj->Release();
+piSpecObj->Release(#);
        else
 ```
 
        {
 AreaFill = spAnnFactory -> CreateDrwAreaFill(ListBreakElem, piSpecObj, "");
-piSpecObj->Release();
+piSpecObj->Release(#);
 else
 ```vbscript
-          if (iHatching) iHatching->Release();
+          if (iHatching) iHatching->Release(#);
 
 ```
 
           // Ends session
           ::Delete_Session("SampleSession");
 else
-if (iHatching) iHatching->Release();
+if (iHatching) iHatching->Release(#);
           return 5;
 
        }
 
        // memory cleaning
 ```vbscript
-       if (iHatching) iHatching->Release();
+       if (iHatching) iHatching->Release(#);
 
 ```
 

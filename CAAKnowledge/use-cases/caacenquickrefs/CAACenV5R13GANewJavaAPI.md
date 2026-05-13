@@ -4,13 +4,13 @@ title: "New Java Authorized APIs in CAA V5R13 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATITranslator"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R13GANewJavaAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R13GANewJavaAPI.htmmd"
 converted: "2026-05-11T17:33:47.146371"
 ```
 
 ---
 tags: ["CATITranslator"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R13GANewJavaAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R13GANewJavaAPI.htmmd"
 converted: "2026-05-11T17:33:47.146371"
 CAA V5 Encyclopedia |  New Java Authorized APIs in CAA V5R13 GA
 

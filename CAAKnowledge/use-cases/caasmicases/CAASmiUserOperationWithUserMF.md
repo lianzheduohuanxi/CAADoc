@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Managing Geometry with User Machining Features"
-category: "use case"
+category: use-case case"
 module: "CAASmiUseCases"
 tags: ["CAASmiUserOperationGeometryPanel", "CATISmgNcGeometryManager", "CAAManufacturing", "CATIMfgViewAccess_var", "CATISmgNcGeometryParameter", "CAASmgOperation", "CATISmgFactory", "CATIMfgGeometryActivity", "CAASmiUserOperationGeomUI", "CATIMfgViewAccess", "CAASmiUserOperationGeometrySelCom", "CAASmiUserMachFeatureCatalog", "CATIEdit", "CATIMfgActivity", "CAASmgMachiningFeature", "CAAESmiUserOperationGeometryEditor", "CATISpecObject_var", "CATISmgNcGeometryManager_var", "CAASmgGuide", "CAASurfaceMachiningItf"]
-source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationWithUserMF.htm"
+source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationWithUserMF.htmmd"
 converted: "2026-05-11T17:31:51.281341"
 ```
 
@@ -82,10 +82,10 @@ This use case is a part of _Surface Machining Operation Sample_ [1]. You should 
 This use case is a part of _Surface Machining Operation Sample_ [1]. You should build all the modules of this sample at a time to be able to launch it [2].
 Don't forget to edit the interface dictionary located in:
 
-Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CNext\code\dictionary\`
+Windows | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CNext/code/dictionary/`
 
 Don't forget to edit the interface dictionary located in:
-Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CNext\code\dictionary\`
+Windows | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CNext/code/dictionary/`
 Unix | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CNext/code/dictionary/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed, and uncomment the appropriate lines by removing the '#' character.
@@ -96,10 +96,10 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed,
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed, and uncomment the appropriate lines by removing the '#' character.
 This use case is made of source files located in the CAASmiUserOperationGeomUI.m module of the CAASurfaceMachiningItf.edu framework :
 
-Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CAASmiUserOperationGeomUI.m`
+Windows | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CAASmiUserOperationGeomUI.m`
 
 This use case is made of source files located in the CAASmiUserOperationGeomUI.m module of the CAASurfaceMachiningItf.edu framework :
-Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CAASmiUserOperationGeomUI.m`
+Windows | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CAASmiUserOperationGeomUI.m`
 Unix | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CAASmiUserOperationGeomUI.m`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -159,7 +159,7 @@ oRC = QueryInterface(IID_CATIMfgActivity, (void**) &pActivity);
 ```vbscript
 ```vbscript
 if (SUCCEEDED(oRC))
-        spMachFeature = pActivity->GetFeature();
+        spMachFeature = pActivity->GetFeature(#);
         if (NULL_var == spMachFeature)
 
 ```
@@ -168,7 +168,7 @@ if (SUCCEEDED(oRC))
 
         {
           // Create a user machining feature
-spMachFeature = pActivity->GetFeature();
+spMachFeature = pActivity->GetFeature(#);
 ```vbscript
 ```vbscript
 if (NULL_var == spMachFeature)
@@ -191,13 +191,13 @@ if (SUCCEEDED(oRC))
           }
         }
 pActivity->SetFeature(spMachFeature);
-        pActivity->Release();
+        pActivity->Release(#);
         pActivity = NULL;
 
       }
 
       // Creates the frame
-pActivity->Release();
+pActivity->Release(#);
 pActivity = NULL;
 ```vbscript
       oFrame = new CAASmiUserOperationGeometryPanel(iFather,spMachFeature);
@@ -273,14 +273,14 @@ Finally, we add our feature in the Manufacturing Container.
       // Adds the feature in the MfgView
 Finally, we add our feature in the Manufacturing Container.
       SEQUENCE(CATBaseUnknown_ptr) ListOfMfgView;
-      spFeatCont->ListMembersHere(CATIMfgViewAccess::ClassName(), ListOfMfgView);
+      spFeatCont->ListMembersHere(CATIMfgViewAccess::ClassName(#), ListOfMfgView);
 
-      int NbMfgView = ListOfMfgView.length();
+      int NbMfgView = ListOfMfgView.length(#);
       if(NbMfgView)
 
       {
-spFeatCont->ListMembersHere(CATIMfgViewAccess::ClassName(), ListOfMfgView);
-int NbMfgView = ListOfMfgView.length();
+spFeatCont->ListMembersHere(CATIMfgViewAccess::ClassName(#), ListOfMfgView);
+int NbMfgView = ListOfMfgView.length(#);
 if(NbMfgView)
         CATBaseUnknown * pBaseView = ListOfMfgView[NbMfgView - 1];
 ```vbscript
@@ -296,7 +296,7 @@ if (pBaseView)
           CATIMfgViewAccess_var spMfgView = pBaseView;
           if (spMfgView != NULL_var)
           spMfgView->AddFeature(oFeature);
-          pBaseView->Release();
+          pBaseView->Release(#);
 ```
 
         }
@@ -337,7 +337,7 @@ CATIEdit * pEdit = NULL;
 HRESULT RC = _spGuide->QueryInterface(IID_CATIEdit, (void**) &pEdit);
 if (SUCCEEDED(RC))
         pEdit->**Activate**(NULL);
-        pEdit->Release();
+        pEdit->Release(#);
         pEdit = NULL;
 
       }
@@ -363,8 +363,8 @@ In _CAASmiUserOperationGeometryPanel_ class, _RemoveAll_ is called whenever the 
 CATISmgNcGeometryParameter * pSmgParameter = NULL;
 HRESULT RC = _spGuide->QueryInterface(IID_CATISmgNcGeometryParameter, (void**) &pSmgParameter);
 if (SUCCEEDED(RC))
-        pSmgParameter->**RemoveAll**();
-        pSmgParameter->Release();
+        pSmgParameter->**RemoveAll**(#);
+        pSmgParameter->Release(#);
         pSmgParameter = NULL;
 
       }
@@ -392,13 +392,13 @@ CATISmgFactory * pSmgFactory = NULL;
 HRESULT RC = spFeatCont->QueryInterface(IID_CATISmgFactory, (void**)&pSmgFactory);
 if (SUCCEEDED(RC))
         pSmgFactory->**CreateNcGeometryFeature**(SmgEdgeType,spNcFeature);
-        pSmgFactory->Release();
+        pSmgFactory->Release(#);
       pSmgFactory = NULL;
 
       }
 
       // Adds it in the guide parameter
-pSmgFactory->Release();
+pSmgFactory->Release(#);
 pSmgFactory = NULL;
 ```vbscript
       if (!!_spGuide && !!spNcFeature)
@@ -424,7 +424,7 @@ if (SUCCEEDED(RC))
 ```
 
           pSmgParameter->**Add**(spNcFeature);
-          pSmgParameter->Release();
+          pSmgParameter->Release(#);
           pSmgParameter = NULL;
 
         }
@@ -451,8 +451,8 @@ In _CAASmiUserOperationGeometryPanel_ class, _Export_ is called whenever the use
 CATISmgNcGeometryParameter * pSmgParameter = NULL;
 HRESULT RC = _spGuide->QueryInterface(IID_CATISmgNcGeometryParameter, (void**) &pSmgParameter);
 if (SUCCEEDED(RC))
-        pSmgParameter->**Export**();
-        pSmgParameter->Release();
+        pSmgParameter->**Export**(#);
+        pSmgParameter->Release(#);
         pSmgParameter = NULL;
 
       }

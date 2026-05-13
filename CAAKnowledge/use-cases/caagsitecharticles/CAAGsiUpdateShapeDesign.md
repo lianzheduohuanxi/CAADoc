@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Updating Shape Design Features"
-category: "technical article"
+category: tech-article article"
 module: "CAAGsiTechArticles"
 tags: ["CAAGSMInterfaces", "CATIPrtPart", "CAAGsiNozzle", "CATIGSMTool", "CAAAGsiService", "CAAGsiService", "CAAGsiServices", "CATIAV5", "CAAGsiObjectUpdate", "CATISpecObject_var"]
-source_file: "Doc/online/CAAGsiTechArticles/CAAGsiUpdateShapeDesign.htm"
+source_file: "Doc/online/CAAGsiTechArticles/CAAGsiUpdateShapeDesign.htmmd"
 converted: "2026-05-11T17:31:50.677519"
 ```
 
@@ -56,10 +56,10 @@ CAAGsiObjectUpdate is an update method available for Shape Design features, Part
 CAAGsiObjectUpdate is an update method available for Shape Design features, Part Design features to be used when features are inserted in Body, OGS and GS
 The CAAGsiServices header export a list of self-contain tools , is located in PublicInterfaces of CAAGSMInterfaces.edu and is implements in the CAAGsiServices.m module of the CAAGSMInterfaces.edu framework:
 
-Windows | `InstallRootDirectory\CAAGSMInterfaces.edu\CAAGsiServices.m\`
+Windows | `InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiServices.m/`
 
 The CAAGsiServices header export a list of self-contain tools , is located in PublicInterfaces of CAAGSMInterfaces.edu and is implements in the CAAGsiServices.m module of the CAAGSMInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAAGSMInterfaces.edu\CAAGsiServices.m\`
+Windows | `InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiServices.m/`
 Unix | `InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiServices.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -93,7 +93,7 @@ CAAGsiObjectUpdate(const CATISpecObject_var & ispSpec)
        HRESULT rc = S_OK ;
        CATTry {
 ```vbscript
-        iStat = ispSpec -> Update();
+        iStat = ispSpec -> Update(#);
 
 ```
 
@@ -101,29 +101,29 @@ CAAGsiObjectUpdate(const CATISpecObject_var & ispSpec)
         }
        // This block is specific for Update Errors
 CATTry {
-iStat = ispSpec -> Update();
+iStat = ispSpec -> Update(#);
 ```vbscript
        CATCatch(CATMfErrUpdate,error) {
 ```
 
-           cerr << " Update Error: " << (error-> GetDiagnostic()).ConvertToChar() << endl;
+           cerr << " Update Error: " << (error-> GetDiagnostic(#)).ConvertToChar(#) << endl;
            return E_FAIL;
 
        }
        // This block treats every other exception
 ```vbscript
 CATCatch(CATMfErrUpdate,error) {
-cerr << " Update Error: " << (error-> GetDiagnostic()).ConvertToChar() << endl;
+cerr << " Update Error: " << (error-> GetDiagnostic(#)).ConvertToChar(#) << endl;
 return E_FAIL;
        CATCatch(CATError,error) {
-           cerr << " Error: " << (error->GetMessageText()).ConvertToChar() << endl;
+           cerr << " Error: " << (error->GetMessageText(#)).ConvertToChar(#) << endl;
            return E_FAIL;
 ```
 
        }
 ```vbscript
 CATCatch(CATError,error) {
-cerr << " Error: " << (error->GetMessageText()).ConvertToChar() << endl;
+cerr << " Error: " << (error->GetMessageText(#)).ConvertToChar(#) << endl;
 return E_FAIL;
        CATEndTry;
        return rc ;
@@ -139,26 +139,30 @@ To be done after feature update
     ...
     // check Linearity / useful for absorbent feature inserted in OGS
 To be done after feature update
-    CATISpecObject_var spFather = ispSpec->GetFather();
+    CATISpecObject_var spFather = ispSpec->GetFather(#);
 ```vbscript
     if ( NULL_var != spFather )
 
 ```
 
     {
-CATISpecObject_var spFather = ispSpec->GetFather();
+CATISpecObject_var spFather = ispSpec->GetFather(#);
 if ( NULL_var != spFather )
-       spFather -> Release();
+       spFather -> Release(#);
        CATIGSMTool *piGSMToolFather = NULL;
        rc =spFather->QueryInterface ( IID_CATIGSMTool, (void**)&piGSMToolFather);
 ```vbscript
        if ( SUCCEEDED(rc) ) {
 ```
 
+```vbscript
          int IsAnAbsorbantSet = -1 ;
          piGSMToolFather->GetType(IsAnbsorbantSet) ;
+```
+```vbscript
          if ( 1 == IsAnAbsorbantSet ) {
             CATBaseUnknown_var spUnkwnSpec = ispSpec;
+```
 ```vbscript
             rc = CATMmrLinearBodyServices::Insert(spUnkwnSpec) ;
 
@@ -166,10 +170,12 @@ if ( NULL_var != spFather )
 
         }
 piGSMToolFather->GetType(IsAnbsorbantSet) ;
+```vbscript
 if ( 1 == IsAnAbsorbantSet ) {
 CATBaseUnknown_var spUnkwnSpec = ispSpec;
+```
 rc = CATMmrLinearBodyServices::Insert(spUnkwnSpec) ;
-       piGSMToolFather->Release() ; piGSMToolFather=NULL;
+       piGSMToolFather->Release(#) ; piGSMToolFather=NULL;
 
     }
     ...

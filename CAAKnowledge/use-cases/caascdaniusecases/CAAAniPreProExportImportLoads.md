@@ -3,7 +3,7 @@ title: "Export/Import of Loads"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CAAScrBase", "CATIA", "CAAScdAniUseCases", "CAAScrJavaScript", "CATIAAnalysisManager", "CAAAniPreProExportImportLoadsSource", "CAAAniPreProExportImportLoads", "CAAAniTocAnalysisDocument", "CAAScdAniTechArticles", "CAAScdInfUseCases", "CAAInfLauchMacro"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProExportImportLoads.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProExportImportLoads.htmmd"
 converted: "2026-05-11T11:27:02.544734"
 ---
 
@@ -16,7 +16,7 @@ Open the Analysis document. The Analysis document is retrieved from the
 		`sDocPath` variable. In the collection of documents, two documents 
 		can be retrieved; the Analysis document and the Part document. The 
 		CATTemp environment variable stores temporary data. On windows it points 
-		to C:\Documents and Settings\user\Local Settings\Application Data\DassaultSystemes\CATTemp and on unix it points 
+		to C:/Documents and Settings/user/Local Settings/Application Data/DassaultSystemes/CATTemp and on unix it points 
 		to /CATSettings/CATTemp.
 		
 
@@ -27,7 +27,7 @@ Open the Analysis document. The Analysis document is retrieved from the
 
 According to the general
 		[
-		Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.htm) structure, this macro uses standard procedures 
+		Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses standard procedures 
 		to navigate/retrieve the required objects. First, from the **Document**, 
 		we find the **Analysis Manager Object**, and then **Analysis Models**, 
 		from analysis models we retrieve the analysis cases.
@@ -67,7 +67,7 @@ To run the macro interactively CATDocView
 		environment variable must be defined.
 	
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 
@@ -95,8 +95,6 @@ This use case has shown how to export and import the loads.
 
  
 
-
-
 ```vbscript
 ...
 ```
@@ -104,16 +102,20 @@ This use case has shown how to export and import the loads.
 ```vbscript
 ' ----------------------------------------------------------- 
 ' Optional: allows to find the sample wherever it's installed
+```vbscript
 sDocPath=CATIA.SystemService.Environ("CATDocView")
 sOut = CATIA.SystemService.Environ(&quot;CATTemp&quot;)
 
 If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 Err.Raise 9999,,"No Doc Path Defined"
 End If
+```
 ' ----------------------------------------------------------- 
 ' Open the Analysis document 
-sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\Assembled_Loads_Solutions.CATAnalysis&quot;)
+```vbscript
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online/CAAScdAniUseCases/samples/Assembled_Loads_Solutions.CATAnalysis&quot;)
 Set analysisDocument1 = CATIA.Documents.Open(sFilePath)
+```
 ```
 
 ```vbscript
@@ -126,22 +128,31 @@ Set analysisDocument1 = CATIA.Documents.Open(sFilePath)
 
 ```vbscript
 'Retrieve the Analysis Manager from the analysis document
+```vbscript
 Set analysisManager1 = analysisDocument1.Analysis
 
 'Retrieve the analysis models and the first model
+```
+```vbscript
 Set analysisModels1 = analysisManager1.AnalysisModels
 Set analysisModel1 = analysisModels1.Item(1)
 
 'Retrieve the list of analysis cases from analysis model and the first case
+```
 'from the list of cases
+```vbscript
 Set analysisCases1 = analysisModel1.AnalysisCases
 Set analysisCase1 = analysisCases1.Item(1)
+```
 ```
 
 ```vbscript
 'Retrieve the list of solution case and the static case solution
+```vbscript
 Set analysisSets1 = analysisCase1.AnalysisSets
 Set analysisSet1 = analysisSets1.Item("Static Case Solution.1", catAnalysisSetSearchAll)
+
+```
 
 ...
 ```
@@ -152,16 +163,20 @@ Set analysisSet1 = analysisSets1.Item("Static Case Solution.1", catAnalysisSetSe
 
 ```vbscript
 'Search for the Analysis Manager in the document
+```vbscript
 Set selection1 = analysisDocument1.Selection
 selection1.Search "Name=*Analysis Manager*,all"
+```
 
 'Remove the first Analysis Manager that is the manager of
 'analysis assembly document
 selection1.Remove(1)
 
 'Get the AnalysisExport interface from analysis set
+```vbscript
 Set analysisExport =  analysisSet1.GetItem("AnalysisExport")
 analysisSet1.Update
+```
 
 ...
 ```
@@ -175,20 +190,27 @@ analysisSet1.Update
 'The exported loads are transferred to their respective
 'sub analysis with AnalysisImport interface
 For i =1 To selection1.Count
+```vbscript
           Set manager = selection1.FindObject("CATIAAnalysisManager")
+   
+```
    
          'Export the computed loads
           fullPath = sout + sSep + "ComputedLoads"+ CStr(i) + ".CATAnalysisExport" 
           analysisExport.Export  fullPath, "ComputedLoads", array, manager
 
+```vbscript
           Set analysisModel = manager.AnalysisModels.Item(1)
           Set analysisCases = analysisModel.AnalysisCases         
 
           'Import Loads  
+```
+```vbscript
           'Set preProCase = analysisCases.NewCase("AnalysisPreproCase")
           Set preProCase = analysisCases.Item("Preprocessing Case.1")  
           Set importCase =  preProCase.GetItem("AnalysisImport")
           importCase.ImportForce preProCase, fullPath, manager, NOTHING
+```
  
 
 Next

@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Infrastructure Automation Objects"
-category: "use-case"
+category: tech-article
 module: "CAAScdInfTechArticles"
 tags: ["CATIA"]
-source_file: "Doc/online/CAAScdInfTechArticles/CAAInfTocApplication.htm"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfTocApplication.htmmd"
 converted: "2026-05-11T17:31:52.485667"
 ```
 
@@ -18,7 +18,7 @@ converted: "2026-05-11T17:31:52.485667"
 ![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parderim.gif)![](../CAAScrAutomationImages/images/partdoc.gif)[![Part Document Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdMmrTechArticles/CAAMmrTocPartDocument.md)
 ![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/proddoc.gif)[![Product Structure Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdPstTechArticles/CAAPstTocProductDocument.md)
 ![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)[![](../CAAScrAutomationImages/images/draftdoc.gif)](../CAAScdDriTechArticles/CAADriObjDrawingDocument.md)[![Drawing Document Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdDriTechArticles/CAADriTocDrawingDocument.md)
-![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/analydoc.gif)[![Analysis Document Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md)
+![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/analydoc.gif)[![Analysis Document Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md)
 ![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/processdoc.gif)[![Process Document Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdDmiTechArticles/CAADmiTocActivity.md)
 ![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/functdoc.gif)[![Functional Document Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdFsiTechArticles/CAAFsiTocFunctionalDocument.md)
 ![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/matdoc.gif)[![Material Document Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdMatTechArticles/CAAMatTocMaterial.md)

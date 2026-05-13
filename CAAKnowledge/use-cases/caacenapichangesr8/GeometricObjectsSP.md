@@ -5,13 +5,13 @@ category: "use-case"
 module: "CAACenAPIChangesR8"
 version: "V5R8"
 tags: ["CATICGMObject"]
-source_file: "Doc/online/CAACenAPIChangesR8/GeometricObjectsSP.htm"
+source_file: "Doc/online/CAACenAPIChangesR8/GeometricObjectsSP.htmmd"
 converted: "2026-05-11T17:33:52.567329"
 ```
 
 ---
 tags: ["CATICGMObject"]
-source_file: "Doc/online/CAACenAPIChangesR8/GeometricObjectsSP.htm"
+source_file: "Doc/online/CAACenAPIChangesR8/GeometricObjectsSP.htmmd"
 converted: "2026-05-11T17:33:52.567329"
 CAA C++ API Modifications|  GeometricObjects  |
 

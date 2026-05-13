@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAADlgUseCases"
 tags: ["CAADlgBBReceiverWindow", "CAAIDlgDataRequest", "CAASysTechArticles", "CAADocStyleSheets", "CATInstantiateComponent", "CAADialog", "CAASysSampleBBSendRecDataMsg", "CAADlgBBMessageInt", "CAASysOMInheritance", "CAASysUseCases", "CAADlgBBEditorMessage", "CAASysSampleBBSimpleMsg", "CAADlgBBReceiver", "CAADocUseCases", "CAADlgBBMessage", "CAASysSampleBBSendRecSimpleMsg", "CATInteractiveApplication", "CAASystem", "CATImplementClass", "CAADlgBBMessageManager"]
-source_file: "Doc/online/CAADlgUseCases/CAADlgSampleBBMsg.htm"
+source_file: "Doc/online/CAADlgUseCases/CAADlgSampleBBMsg.htmmd"
 converted: "2026-05-11T11:27:02.785913"
 ---
 
@@ -196,7 +196,7 @@ message manager thanks to the `EventToDispatch` method.
 The framework interface dictionary is updated to declare that *CAADlgBBEditorMessageHandler*
 implements the *CATIMessageReceiver*  interface in the
 libCAADlgBBReceiver shared library or DLL. This interface dictionary is a file
-located in the CNext\code\dictionary directory, and is named CAADialog.edu.dico.
+located in the CNext/code/dictionary directory, and is named CAADialog.edu.dico.
 There is one and only one interface dictionary per framework, named using the
 framework name suffixed by dico.
 
@@ -290,8 +290,6 @@ the message sender.
 
 *Copyright  2000, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 CAADlgBBSender
 CAADlgBBReceiver
@@ -304,11 +302,11 @@ CAADlgBBReceiver &amp;
 
 ```vbscript
 ...
-HRESULT CAADlgBBSenderWindow::BackboneInit()
+HRESULT CAADlgBBSenderWindow::BackboneInit(#)
 {
   HRESULT  rc = E_FAIL;
   // Retrieves an instance of a backbone bus (default bus)
-  _pICommunicator = ::CATGetBackboneConnection();
+  _pICommunicator = ::CATGetBackboneConnection(#);
   if ( NULL != _pICommunicator )
   {
      CATApplicationClass ApplicationSenderId = &quot;CAADlgBBSender&quot;;
@@ -334,7 +332,7 @@ void CAADlgBBSenderWindow::PushSend(CATCommand         * iSendingCommand,
                                          (void **)&amp;pIDataRequest);
   if ( SUCCEEDED(rc) )
   {
-    pIDataRequest-&gt;SetData(Line.CastToCharPtr());
+    pIDataRequest-&gt;SetData(Line.CastToCharPtr(#));
 
     CATICommMsg * pICommMsg =NULL;
     rc = pIDataRequest-&gt;QueryInterface(IID_CATICommMsg,(void**)&amp;pICommMsg);
@@ -343,10 +341,10 @@ void CAADlgBBSenderWindow::PushSend(CATCommand         * iSendingCommand,
     {
       CATApplicationClass ReceiverApplicationId = &quot;CAADlgBBReceiver&quot;;
       rc = _pICommunicator-&gt;SendRequest(ReceiverApplicationId, pICommMsg);
-      pICommMsg-&gt;Release();
+      pICommMsg-&gt;Release(#);
       pICommMsg = NULL;
     }
-    pIDataRequest-&gt;Release();
+    pIDataRequest-&gt;Release(#);
     pIDataRequest = NULL;
   }
 }
@@ -362,8 +360,8 @@ class  CAADlgBBEditorMessageHandler : public CATBaseUnknown
 {
    CATDeclareClass;
    public:
-      CAADlgBBEditorMessageHandler();
-      virtual ~CAADlgBBEditorMessageHandler();
+      CAADlgBBEditorMessageHandler(#);
+      virtual ~CAADlgBBEditorMessageHandler(#);
 
       // CATIMessageReceiver Interface
       void HandleMessage(CATICommMsg * iMessage);
@@ -387,9 +385,9 @@ CATImplementClass(CAADlgBBEditorMessageHandler,
                   CATBaseUnknown,
                   CATNull);
 
-CAADlgBBEditorMessageHandler::CAADlgBBEditorMessageHandler(){}
+CAADlgBBEditorMessageHandler::CAADlgBBEditorMessageHandler(#){}
 
-CAADlgBBEditorMessageHandler::~CAADlgBBEditorMessageHandler(){}
+CAADlgBBEditorMessageHandler::~CAADlgBBEditorMessageHandler(#){}
 
 void CAADlgBBEditorMessageHandler::HandleMessage(CATICommMsg* iMessage)
 {
@@ -401,16 +399,16 @@ void CAADlgBBEditorMessageHandler::HandleMessage(CATICommMsg* iMessage)
     {
        char * Text = NULL;
        pIRequest-&gt;GetData(&amp;Text);
-       pIRequest-&gt;Release();
+       pIRequest-&gt;Release(#);
        pIRequest= NULL;
 
-       CAADlgBBMessageManager * pManager = CAADlgBBMessageManager::GetManager();
+       CAADlgBBMessageManager * pManager = CAADlgBBMessageManager::GetManager(#);
        pManager-&gt;EventToDispatch(Text);
         
        delete [] Text;
        Text = NULL;
 
-       pManager-&gt;Release();
+       pManager-&gt;Release(#);
        pManager= NULL;
     }
   } 
@@ -432,10 +430,10 @@ CATImplementClass(CAADlgBBMessageManager,Implementation,CATBaseUnknown,CATNull);
 
 CAADlgBBMessageManager * CAADlgBBMessageManager::_Manager = NULL;
 
-CAADlgBBMessageManager::CAADlgBBMessageManager()
+CAADlgBBMessageManager::CAADlgBBMessageManager(#)
 {}
 
-CAADlgBBMessageManager::~CAADlgBBMessageManager()
+CAADlgBBMessageManager::~CAADlgBBMessageManager(#)
 {}
 
 void CAADlgBBMessageManager::EventToDispatch(char * iText)
@@ -447,27 +445,27 @@ void CAADlgBBMessageManager::EventToDispatch(char * iText)
 
      pCBManager-&gt;DispatchCallbacks(pNotification, this);
 
-     pNotification-&gt;Release();
+     pNotification-&gt;Release(#);
      pNotification = NULL;
   }	
 }
 
-CAADlgBBMessageManager * CAADlgBBMessageManager::GetManager()
+CAADlgBBMessageManager * CAADlgBBMessageManager::GetManager(#)
 {
   if ( NULL == _Manager )
   {
-    _Manager = new CAADlgBBMessageManager();
+    _Manager = new CAADlgBBMessageManager(#);
   }
-  _Manager-&gt;AddRef();
+  _Manager-&gt;AddRef(#);
   return _Manager;
 }
 ...
 ```
 
 ```vbscript
-void CAADlgBBReceiverWindow::Build()
+void CAADlgBBReceiverWindow::Build(#)
 {
-  HRESULT Init = BackboneInit();
+  HRESULT Init = BackboneInit(#);
 
   if ( SUCCEEDED(Init) )
   {
@@ -479,7 +477,7 @@ void CAADlgBBReceiverWindow::Build()
      _pEditor = new CATDlgEditor(pFrame,&quot;EditorId&quot;,CATDlgEdtReadOnly);
      _pEditor-&gt;SetGridConstraints(0,1,1,1,CATGRID_LEFT); 
   
-     _pMessageManager = CAADlgBBMessageManager::GetManager();
+     _pMessageManager = CAADlgBBMessageManager::GetManager(#);
      ::AddCallback(this,
                    _pMessageManager,
                    &quot;CAADlgBBMessageNotification&quot;,
@@ -487,17 +485,17 @@ void CAADlgBBReceiverWindow::Build()
                    NULL);
   }
   AddAnalyseNotificationCB(this,
-                           GetWindCloseNotification(),
+                           GetWindCloseNotification(#),
                            (CATCommandMethod)&amp;CAADlgBBReceiverWindow::Exit, NULL);
 }
 ...
 ```
 
 ```vbscript
-HRESULT CAADlgBBReceiverWindow::BackboneInit()
+HRESULT CAADlgBBReceiverWindow::BackboneInit(#)
 {
   HRESULT rc = E_FAIL;
-  _pICommunicator = ::CATGetBackboneConnection();
+  _pICommunicator = ::CATGetBackboneConnection(#);
   if ( NULL == _pICommunicator )
       ... // Process failure
   else
@@ -510,7 +508,7 @@ HRESULT CAADlgBBReceiverWindow::BackboneInit()
     {
       CATMessageClass MessageClassName = &quot;CAADlgBBEditorMessage&quot;; 
       CAADlgBBEditorMessageHandler * pHandlerForMessage = NULL;
-      pHandlerForMessage = new CAADlgBBEditorMessageHandler();
+      pHandlerForMessage = new CAADlgBBEditorMessageHandler(#);
 
       if ( NULL != pHandlerForMessage )
       {
@@ -523,7 +521,7 @@ HRESULT CAADlgBBReceiverWindow::BackboneInit()
                                                  _pIMessageReceiver);
           ... // Process failure
         }
-        pHandlerForMessage-&gt;Release();
+        pHandlerForMessage-&gt;Release(#);
         pHandlerForMessage = NULL;
       }
     }
@@ -554,7 +552,7 @@ void CAADlgBBReceiverWindow::ModifyEditor(CATCallbackEvent  ievent,
 
 ```vbscript
 ...
-CAADlgBBReceiverWindow::~CAADlgBBReceiverWindow()
+CAADlgBBReceiverWindow::~CAADlgBBReceiverWindow(#)
 { 
   _pApplication = NULL;
   _pEditor = NULL;
@@ -567,15 +565,15 @@ CAADlgBBReceiverWindow::~CAADlgBBReceiverWindow()
       _pICommunicator-&gt;RemoveHandler(&quot;CAADlgBBReceiver&quot;,
                                      MessageClassName,
                                      _pIMessageReceiver);
-      _pIMessageReceiver-&gt;Release();
+      _pIMessageReceiver-&gt;Release(#);
       _pIMessageReceiver = NULL;
     }
-    _pICommunicator-&gt;Release();
+    _pICommunicator-&gt;Release(#);
     _pICommunicator = NULL;
   }
   if ( NULL != _pMessageManager )
   {
-    _pMessageManager-&gt;Destroy();      
+    _pMessageManager-&gt;Destroy(#);      
     _pMessageManager = NULL;
   }
 }

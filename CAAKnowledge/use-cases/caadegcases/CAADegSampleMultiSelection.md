@@ -4,13 +4,13 @@ title: "Managing Multi-Selection"
 category: "use case"
 module: "CAADegUseCases"
 tags: ["CAADegCreateNumericCmd", "CAADegAnalysisNumericCmd", "CAADegChoiceBehaviorDlg", "CAADialogEngine", "CAAGeometry", "CAADegAnalysisNumericDlg", "CAADegGeoCommands"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleMultiSelection.htm"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleMultiSelection.htmmd"
 converted: "2026-05-11T17:33:49.728334"
 ```
 
 ---
 tags: ["CAADegCreateNumericCmd", "CAADegAnalysisNumericCmd", "CAADegChoiceBehaviorDlg", "CAADialogEngine", "CAAGeometry", "CAADegAnalysisNumericDlg", "CAADegGeoCommands"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleMultiSelection.htm"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleMultiSelection.htmmd"
 converted: "2026-05-11T17:33:49.728334"
 3D PLM Enterprise Architecture |  User Interface - Commands |  Managing Multi-Selection _Retrieving existing objects from mouse click or trap selection_
 
@@ -128,9 +128,9 @@ If the end user clicks the Close button, the Numeric command is canceled. [Top] 
     * _CAADegAnalysisNumericCmd ,_ the _CATStateCommand  _
     * _CAADegAnalysisNumericDlg_ , the dialog box [Fig.4] to display the count of selected object. This class is not explained here.
     * _CAADegChoiceBehaviorDlg_ , the dialog box [Fig.2] to choose the behavior of the selection's agent. This class is not explained here.
-located in the CAADegGeoCommands.m module of the CAADialogEngine.edu framework: Windows | `InstallRootDirectory\CAADialogEngine.edu\CAADegGeoCommands.m\`
+located in the CAADegGeoCommands.m module of the CAADialogEngine.edu framework: Windows | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 ---|---
-located in the CAADegGeoCommands.m module of the CAADialogEngine.edu framework: Windows | `InstallRootDirectory\CAADialogEngine.edu\CAADegGeoCommands.m\`
+located in the CAADegGeoCommands.m module of the CAADialogEngine.edu framework: Windows | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed. [Top] Step-by-Step There is five logical steps:
     1. Declaring the Selection Agents
@@ -169,10 +169,10 @@ A pointer for each selection agent is declared as a private data member. Selecti
     * _daMultiAcquisitionUserCtrl for the `CATDlgEngMultiAcquisitionUserCtrl `behavior`.`
 [Top] Instantiating the Selection Agents The selection agents are instantiated in the command `BuildGraph` method. For the `_daMultiAcquisitionSelModes `agent,
 
-    void CAADegCreateNumericCmd::BuildGraph()
+    void CAADegCreateNumericCmd::BuildGraph(#)
     {
       ...
-void CAADegCreateNumericCmd::BuildGraph()
+void CAADegCreateNumericCmd::BuildGraph(#)
 ```vbscript
        _daMultiAcquisitionSelModes = new **CATPathElementAgent**("PathEltMultiAcquisitionSelModes");
 
@@ -351,11 +351,11 @@ CATBoolean CAADegAnalysisNumericCmd::DisplaySelectedElement(void * iData)
       **CATSO * pSO = NULL ;**
 
 ```vbscript
-      if ( 1 == CaseAgent ) pSO = _daMultiAcquisitionSelModes->**GetListOfValues**();
+      if ( 1 == CaseAgent ) pSO = _daMultiAcquisitionSelModes->**GetListOfValues**(#);
 ```vbscript
 ```vbscript
-      if ( 2 == CaseAgent ) pSO = _daMultiAcquisitionCtrl->**GetListOfValues**();
-      if ( 3 == CaseAgent ) pSO = _daMultiAcquisitionUserCtrl->**GetListOfValues**();
+      if ( 2 == CaseAgent ) pSO = _daMultiAcquisitionCtrl->**GetListOfValues**(#);
+      if ( 3 == CaseAgent ) pSO = _daMultiAcquisitionUserCtrl->**GetListOfValues**(#);
 
       if ( NULL != pSO )
 ```
@@ -366,22 +366,22 @@ CATBoolean CAADegAnalysisNumericCmd::DisplaySelectedElement(void * iData)
 
       {
 ```vbscript
-if ( 2 == CaseAgent ) pSO = _daMultiAcquisitionCtrl->**GetListOfValues**();
+if ( 2 == CaseAgent ) pSO = _daMultiAcquisitionCtrl->**GetListOfValues**(#);
 ```vbscript
 ```vbscript
-if ( 3 == CaseAgent ) pSO = _daMultiAcquisitionUserCtrl->**GetListOfValues**();
+if ( 3 == CaseAgent ) pSO = _daMultiAcquisitionUserCtrl->**GetListOfValues**(#);
 if ( NULL != pSO )
 ```
 
 ```
 
-         int lg = pSO->**GetSize**();
+         int lg = pSO->**GetSize**(#);
 
          for ( int i=0 ; i < lg ; i++)
 ```
 
          {
-int lg = pSO->**GetSize**();
+int lg = pSO->**GetSize**(#);
 for ( int i=0 ; i < lg ; i++)
            CATPathElement * pPath = (CATPathElement*) (*pSO)[i] ;
 
@@ -391,50 +391,50 @@ for ( int i=0 ; i < lg ; i++)
 ---
 To retrieve the selected element use the `GetListOfValues` method on the current agent. The list is a _CATSO_ object.  [Top] Releasing the Selection Agents A pointer to each selection agent was created in the command `BuildGraph` method as a data member to be accessed and used in different methods. It should be released when it becomes useless. This can be done in the command destructor, as shown here. This could also be done in the `Cancel` method called just before the destructor.
 
-    CAADegCreateNumericCmd::~CAADegCreateNumericCmd()
+    CAADegCreateNumericCmd::~CAADegCreateNumericCmd(#)
     {
       ...
 To retrieve the selected element use the `GetListOfValues` method on the current agent. The list is a _CATSO_ object.  [Top] Releasing the Selection Agents A pointer to each selection agent was created in the command `BuildGraph` method as a data member to be accessed and used in different methods. It should be released when it becomes useless. This can be done in the command destructor, as shown here. This could also be done in the `Cancel` method called just before the destructor.
-CAADegCreateNumericCmd::~CAADegCreateNumericCmd()
+CAADegCreateNumericCmd::~CAADegCreateNumericCmd(#)
 ```vbscript
       if ( NULL != _daMultiAcquisitionSelModes  )
 
 ```
 
       {
-CAADegCreateNumericCmd::~CAADegCreateNumericCmd()
+CAADegCreateNumericCmd::~CAADegCreateNumericCmd(#)
 if ( NULL != _daMultiAcquisitionSelModes  )
-         _daMultiAcquisitionSelModes  -> **RequestDelayedDestruction**()  ;
+         _daMultiAcquisitionSelModes  -> **RequestDelayedDestruction**(#)  ;
          _daMultiAcquisitionSelModes  = NULL ;
 
       }
 ```vbscript
 if ( NULL != _daMultiAcquisitionSelModes  )
-_daMultiAcquisitionSelModes  -> **RequestDelayedDestruction**()  ;
+_daMultiAcquisitionSelModes  -> **RequestDelayedDestruction**(#)  ;
 _daMultiAcquisitionSelModes  = NULL ;
       if ( NULL != _daMultiAcquisitionCtrl )
 ```
 
       {
-_daMultiAcquisitionSelModes  -> **RequestDelayedDestruction**()  ;
+_daMultiAcquisitionSelModes  -> **RequestDelayedDestruction**(#)  ;
 _daMultiAcquisitionSelModes  = NULL ;
 if ( NULL != _daMultiAcquisitionCtrl )
-         _daMultiAcquisitionCtrl -> RequestDelayedDestruction()  ;
+         _daMultiAcquisitionCtrl -> RequestDelayedDestruction(#)  ;
          _daMultiAcquisitionCtrl = NULL ;
 
       }
 ```vbscript
 if ( NULL != _daMultiAcquisitionCtrl )
-_daMultiAcquisitionCtrl -> RequestDelayedDestruction()  ;
+_daMultiAcquisitionCtrl -> RequestDelayedDestruction(#)  ;
 _daMultiAcquisitionCtrl = NULL ;
       if ( NULL != _daMultiAcquisitionUserCtrl )
 ```
 
       {
-_daMultiAcquisitionCtrl -> RequestDelayedDestruction()  ;
+_daMultiAcquisitionCtrl -> RequestDelayedDestruction(#)  ;
 _daMultiAcquisitionCtrl = NULL ;
 if ( NULL != _daMultiAcquisitionUserCtrl )
-         _daMultiAcquisitionUserCtrl -> RequestDelayedDestruction()  ;
+         _daMultiAcquisitionUserCtrl -> RequestDelayedDestruction(#)  ;
          _daMultiAcquisitionUserCtrl = NULL ;
 
       }

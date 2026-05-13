@@ -3,7 +3,7 @@ title: "Selecting a mesh entity (node, element)"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CAAScrBase", "CATIA", "CAAAniMeshSelectFEEntitySource", "CAAScrJavaScript", "CAAScdAniUseCases", "CAAScdInfUseCases", "CAAAniMeshSelectFEEntity", "CAAInfLauchMacro"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSelectFEEntity.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSelectFEEntity.htmmd"
 converted: "2026-05-11T11:27:02.547047"
 ---
 
@@ -44,7 +44,7 @@ To run the macro interactively CATDocView environment
 		
 	
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 
@@ -66,8 +66,6 @@ This use case has shown how to use the **Selection** object in order to select m
 
 *Copyright  2001, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 ...
 ```
@@ -75,42 +73,53 @@ This use case has shown how to use the **Selection** object in order to select m
 ```vbscript
 &#39;----------------------------------------------------------- 
 &#39;Optional: allows to find the sample wherever it&#39;s installed
+```vbscript
   sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,&quot;No Doc Path Defined&quot;
     End If
+```
 &#39;-----------------------------------------------------------
 ```
 
 ```vbscript
 &#39;Open the Analysis document 
-sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\AllElementsAndNode.CATAnalysis&quot;)
+```vbscript
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online/CAAScdAniUseCases/samples/AllElementsAndNode.CATAnalysis&quot;)
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+```
 ```
 
 ```vbscript
 &#39;Get the Selection object 
+```vbscript
 Set oSelection = oAnalysisDocument.Selection
 ```
-
-```vbscript
-...
 ```
 
 ```vbscript
 ...
 ```
 
+```vbscript
+...
+```
+
+```vbscript
 ```vbscript
 &#39;Set the selection type
 InputObjectType(0) = &quot;AnalysisMeshElement&quot;
+```
 
 &#39;Get the status
 oStatus = oSelection.SelectElement2 ( InputObjectType, &quot;Select a mesh element&quot;, True )
 
 &#39;Get the object in the selection
+```vbscript
 Set oMeshElement = oSelection.Item(1).Value
+
+```
 
 ...
 ```
@@ -119,21 +128,28 @@ Set oMeshElement = oSelection.Item(1).Value
 ...
 ```
 
+```vbscript
 ```vbscript
 &#39;Set the selection type
 InputObjectType(0) = &quot;AnalysisMeshNode&quot;
+```
 
 &#39;Get the status
 oStatus = oSelection.SelectElement2 ( InputObjectType, &quot;Select a mesh node&quot;, True )
 
 &#39;Get the object in the selection
+```vbscript
 Set oMeshNode = oSelection.Item(1).Value
+
+```
 
 ...
 ```
 
 ```vbscript
 ...
+```vbscript
  End Sub
 ...
+```
 ```

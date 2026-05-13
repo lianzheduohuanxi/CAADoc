@@ -4,18 +4,23 @@ title: "CAAStrEditCutout.CATScript"
 category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CATIA", "CAAStrEditCutout"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfCutoutSource.htm"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfCutoutSource.htmmd"
 converted: "2026-05-11T17:31:50.897562"
 ```
 
 ---
 ```vbscript
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
 
+```
 ```
 
 ```vbscript
+```vbscript
     Dim StrWorkbench As StrWorkbench
+```vbscript
+```
 ```vbscript
 ```vbscript
     Dim strFactory As StrObjectFactory
@@ -33,15 +38,20 @@ Sub CATMain()
     Set selection1 = doc.Selection
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Dim selection1 As Selection
 ```vbscript
+```
+```vbscript
 Set selection1 = doc.Selection
+```
 ```
 
     selection1.Search "Name='StrCutout.1',all"
@@ -49,9 +59,13 @@ Set selection1 = doc.Selection
 ```
 
 ```vbscript
+```vbscript
     Dim CutoutToEdit As StrCutoutFeature
 ```vbscript
+```
+```vbscript
     Set CutoutToEdit = selection1.Item(1).Value
+```
 ```
 
 ```
@@ -60,7 +74,9 @@ Set selection1 = doc.Selection
 ```vbscript
 ```vbscript
     'Get the Cutout Type
+```vbscript
     Dim FormingMode As String
+```
 ```
 
 ```
@@ -69,9 +85,12 @@ Set selection1 = doc.Selection
 ```vbscript
 ```vbscript
     'Get the Current Contour
+```vbscript
     Dim CurrentContour As Reference
     Set CurrentContour = CutoutToEdit.Contour
     'Get the Current Direction Element
+```
+```vbscript
     Dim CurrentDirElement As Reference
     Set CurrentDirElement = CutoutToEdit.DirectionElement
     'Set the New Direction Element
@@ -82,23 +101,29 @@ Set selection1 = doc.Selection
     Set Newdir = part1.FindObjectByName("Sketch.4")
     Set NewDirElement = part1.CreateReferenceFromObject(Newdir)
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Set Newdir = part1.FindObjectByName("Sketch.4")
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set NewDirElement = part1.CreateReferenceFromObject(Newdir)
     CutoutToEdit.DirectionElement = NewDirElement
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 ```vbscript
 ```vbscript
@@ -106,11 +131,13 @@ Set NewDirElement = part1.CreateReferenceFromObject(Newdir)
     Dim NewContour As Reference
     Set NewContour = rootProduct.CreateReferenceFromName("Product1/Grid/!Sketch.2")
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 ```vbscript
 ```vbscript
@@ -118,6 +145,7 @@ Set NewDirElement = part1.CreateReferenceFromObject(Newdir)
 Dim NewContour As Reference
 Set NewContour = rootProduct.CreateReferenceFromName("Product1/Grid/!Sketch.2")
     CutoutToEdit.Contour = NewContour
+```
 
 ```
 
@@ -126,6 +154,8 @@ Set NewContour = rootProduct.CreateReferenceFromName("Product1/Grid/!Sketch.2")
 ```
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

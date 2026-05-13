@@ -4,7 +4,7 @@ title: "Generating Images"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniPostProImageCreation", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPostProImageCreation.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPostProImageCreation.htmmd"
 converted: "2026-05-11T17:31:51.754031"
 ```
 
@@ -38,20 +38,26 @@ This use case shows you how to generate image under different Analysis Sets. The
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
+```vbscript
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
+```
 
+```vbscript
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
         End If
 ```
 
@@ -62,8 +68,10 @@ This use case shows you how to generate image under different Analysis Sets. The
 ```vbscript
     ' -----------------------------------------------------------
     ' Open the Analysis document
-    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis")
+```vbscript
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Cube_R13_Freq.CATAnalysis")
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+```
 ```
 
 ```
@@ -84,15 +92,19 @@ Open the Analysis document. The Analysis document is retrieved in the documentat
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisManager = oAnalysisDocument.Analysis
+```
 ```
 
 ```vbscript
 ```vbscript
 ```vbscript
     ' Retrieve the analysis model from the list of models
+```vbscript
     Set oAnalysisModels = oAnalysisManager.AnalysisModels
     Set oAnalysisModel = oAnalysisModels.Item(1)
+```
 ```
 
 ```
@@ -104,44 +116,58 @@ Open the Analysis document. The Analysis document is retrieved in the documentat
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisCases = oAnalysisModel.AnalysisCases
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oAnalysisCase = oAnalysisCases.Item(1)
 
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Set oAnalysisCases = oAnalysisModel.AnalysisCases
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set oAnalysisCase = oAnalysisCases.Item(1)
     ' Retrieve the analysis sets and analysis set by its name
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisSets = oAnalysisCase.AnalysisSets
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oAnalysisSet = oAnalysisSets.Item("Frequency Case Solution.1", catAnalysisSetSearchAll)
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Set oAnalysisSet = oAnalysisSets.Item("Frequency Case Solution.1", catAnalysisSetSearchAll)
 ```vbscript
+```
     ' Get the list of images from analysis set
 ```
 
@@ -149,8 +175,10 @@ Set oAnalysisSet = oAnalysisSets.Item("Frequency Case Solution.1", catAnalysisSe
 
 ```vbscript
 ```vbscript
+```vbscript
     Set oAnalysisImages = oAnalysisSet.AnalysisImages
 
+```
 ```
 
 ```
@@ -159,7 +187,7 @@ Set oAnalysisSet = oAnalysisSets.Item("Frequency Case Solution.1", catAnalysisSe
 
 ---
 
-According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , and the **Analysis Model**.
+According to the general [ Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , and the **Analysis Model**.
 
 The Analysis case is retrieved from list of cases by its index. The model contains only one analysis case hence we pass 1 to the method _Item._ Otherwise we pass the appropriate index of the desired case if there are more Analysis cases. The Analysis  set is retrieved from the list of Analysis sets by its name. The name is same as that appears in the interactive application.
 #### Create Image under different Analysis Sets
@@ -171,61 +199,79 @@ The Analysis case is retrieved from list of cases by its index. The model contai
 ```
 
 ```vbscript
+```vbscript
     Set analysisImage1 = oAnalysisImages.Add("Disp_Symbol", False, False, True)
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set analysisImage2 = oAnalysisImages.Add("Mesh_Deformed", True, False, True)
 
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Set analysisImage1 = oAnalysisImages.Add("Disp_Symbol", False, False, True)
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set analysisImage2 = oAnalysisImages.Add("Mesh_Deformed", True, False, True)
     ' Retrieve the Restraint set from the list of analysis sets
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 ```vbscript
     Set analysisSet2 = oAnalysisSets.Item("Restraints.1", catAnalysisSetSearchAll)
 
 ```
+```
 
 ```
 
 ```vbscript
+```vbscript
 Set analysisSet2 = oAnalysisSets.Item("Restraints.1", catAnalysisSetSearchAll)
 ```vbscript
+```
     ' Retrieve list of Analysis Images from Restraint set
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set analysisEntities1 = analysisSet2.AnalysisEntities
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set analysisEntity1 = analysisEntities1.Item(1)
     Set analysisImages2 = analysisEntity1.AnalysisImages
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Set analysisImages2 = analysisEntity1.AnalysisImages
 ```vbscript
+```
     ' Add new image under the Restraint set
 ```
 
@@ -233,8 +279,10 @@ Set analysisImages2 = analysisEntity1.AnalysisImages
 
 ```vbscript
 ```vbscript
+```vbscript
     Set analysisImage3 = analysisImages2.Add("Restraint", True, True, False)
 
+```
 ```
 
 ```
@@ -247,15 +295,17 @@ Images can be created under different Analysis sets, for example Analysis Case s
 #### Epilog
 
     ...
+```vbscript
     End Sub
     ...
+```
 
 ---
 
 To run the macro interactively CATDocView environment variable must be defined.
   |
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

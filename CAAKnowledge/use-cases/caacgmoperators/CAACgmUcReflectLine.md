@@ -4,13 +4,13 @@ title: "Extract a Face from a Solid"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CATICGMTopReflectLine", "CAAGMOperatorsInterfaces", "CAAGMOperatorsReflectLine"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcReflectLine.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcReflectLine.htmmd"
 converted: "2026-05-11T17:33:49.029685"
 ```
 
 ---
 tags: ["CATICGMTopReflectLine", "CAAGMOperatorsInterfaces", "CAAGMOperatorsReflectLine"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcReflectLine.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcReflectLine.htmmd"
 converted: "2026-05-11T17:33:49.029685"
 Reflect Line
 
@@ -43,13 +43,13 @@ and the code below:
 and the code below:
 CATICGMTopReflectLine *pConicalReflectLineOp = CATCGMCreateTopReflectLine( pGeomFactory, &topdata;,
 pSkin, pOriginBody, 140*CATDegreeToRadian);
-    pConicalReflectLineOp->Run();
-    CATBody * pConicalReflectLineBody = pConicalReflectLineOp->GetResult();
-    pConicalReflectLineOp->Release();
+    pConicalReflectLineOp->Run(#);
+    CATBody * pConicalReflectLineBody = pConicalReflectLineOp->GetResult(#);
+    pConicalReflectLineOp->Release(#);
     pConicalReflectLineOp = 0;
 
 ---
-pConicalReflectLineOp->Release();
+pConicalReflectLineOp->Release(#);
 pConicalReflectLineOp = 0;
 you get this result: Fig.2 Conical Reflect Line Result  ![Conical Reflect Line Result](images/CGM_reflect_line_1.png)
 
@@ -68,13 +68,13 @@ Case 2: Cylindrical Reflect Line with 40 Degree Angle with x Axis With the same 
 CATMathDirection ReflectDir( 1, 0, 0);
 CATICGMTopReflectLine *pCylReflectLineOp = CATCGMCreateTopReflectLine( pGeomFactory, pSkin,
 ReflectDir, 40*CATDegreeToRadian, &topdata;);
-    pCylReflectLineOp->Run();
-    CATBody * pCylReflectLineBody = pCylReflectLineOp->GetResult();
-    pCylReflectLineOp->Release();
+    pCylReflectLineOp->Run(#);
+    CATBody * pCylReflectLineBody = pCylReflectLineOp->GetResult(#);
+    pCylReflectLineOp->Release(#);
     pCylReflectLineOp = 0;
 
 ---
-pCylReflectLineOp->Release();
+pCylReflectLineOp->Release(#);
 pCylReflectLineOp = 0;
 you get this result: Fig.3 Cylindrical Reflect Line Result  ![Conical Reflect Line Result](images/CGM_reflect_line_2.png)
 

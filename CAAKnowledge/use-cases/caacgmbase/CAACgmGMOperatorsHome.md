@@ -4,13 +4,13 @@ title: "GM Operators"
 category: "use-case"
 module: "CAACgmBase"
 tags: ["CAAGMOperatorsInterfaces"]
-source_file: "Doc/online/CAACgmBase/CAACgmGMOperatorsHome.htm"
+source_file: "Doc/online/CAACgmBase/CAACgmGMOperatorsHome.htmmd"
 converted: "2026-05-11T17:33:47.820915"
 ```
 
 ---
 tags: ["CAAGMOperatorsInterfaces"]
-source_file: "Doc/online/CAACgmBase/CAACgmGMOperatorsHome.htm"
+source_file: "Doc/online/CAACgmBase/CAACgmGMOperatorsHome.htmmd"
 converted: "2026-05-11T17:33:47.820915"
 GM Operators
 

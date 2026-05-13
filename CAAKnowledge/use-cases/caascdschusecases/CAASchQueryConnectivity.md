@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAAScrBase", "CATIA", "CAAScrJavaScript", "CAAScdSchUseCases", "CAASchPlatformModeler", "CAAScdInfUseCases", "CAAInfLauchMacro", "CAASchQueryConnectivity_01", "CAASchQueryConnectivity", "CAASCHEDUApp", "CAASchQueryConnectivitySource", "CAASCH_CompRoute01", "CATIASchAppConnectable", "CAASchAppBase", "CAADoc", "CAASchAppUtilities"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchQueryConnectivity.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchQueryConnectivity.htmmd"
 converted: "2026-05-11T11:27:02.656223"
 ---
 

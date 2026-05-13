@@ -4,7 +4,7 @@ title: "Creating Pad"
 category: "use-case"
 module: "CAAScdPriUseCases"
 tags: ["CAAScdPriUseCases", "CATIA", "CAAPriPad"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriPad.htm"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriPad.htmmd"
 converted: "2026-05-11T17:31:51.225469"
 ```
 
@@ -50,9 +50,13 @@ The macro first loads CAAPriPad.CATPart that contains a sketch: Sketch.1  This 
 ```
 
 ```vbscript
+```vbscript
     Dim oPart As Part
 ```vbscript
+```
+```vbscript
     Set oPart = CATIA.ActiveDocument.Part
+```
 ```
 
 ```
@@ -63,13 +67,17 @@ The macro first loads CAAPriPad.CATPart that contains a sketch: Sketch.1  This 
     ' ------------
     ' Get the part body in the part
     ' ------------
+```vbscript
     Dim oBody As Body
     Set oBody = oPart.Bodies.Item  ( "PartBody" )
     ' ------------
+```
     ' Get the sketch in the body
     ' ------------
+```vbscript
     Dim oSketch As Sketch
     Set oSketch = oBody.Sketches.Item  ( "Sketch.1" )
+```
 ```
 
 ```
@@ -106,13 +114,19 @@ Once the part document has been loaded, the `oPart`, `oBody` and `oSketch` varia
 
 ```
 
+```vbscript
     MsgBox "Click OK to create the pad."
+```
 ```
 
 ```vbscript
+```vbscript
     Dim oPad As Pad
 ```vbscript
+```
+```vbscript
     Set oPad = oPart.ShapeFactory.AddNewPad  ( oSketch, 20.000000 )
+```
 ```
 
 ```
@@ -176,8 +190,10 @@ The _Pad_ is then updated with the following result.
 
 ```
 
+```vbscript
     MsgBox "Click OK to set the pad first limit to 40mm."
     oPad.FirstLimit.Dimension.Value = 40.000000
+```
 ```
 
 ```vbscript
@@ -237,8 +253,10 @@ The `FirstLimit` property of the _Pad_ object is set to 40mm.
 
 ```
 
+```vbscript
     MsgBox "Click OK to mirror the extrusion offset."
     oPad.IsSymmetric = True
+```
 ```
 
 ```vbscript
@@ -274,7 +292,7 @@ The `IsSymmetric` property of the _Pad_ object is set to 40mm.
 
 ![](images/img004.jpg)
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

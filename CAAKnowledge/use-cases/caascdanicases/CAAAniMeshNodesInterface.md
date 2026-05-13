@@ -4,7 +4,7 @@ title: "Creating Nodes Interface Mesh Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniMeshNodesInterface", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshNodesInterface.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshNodesInterface.htmmd"
 converted: "2026-05-11T17:31:51.659597"
 ```
 
@@ -38,20 +38,26 @@ This use case shows how to create nodes interface mesh parts. This scenario requ
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
+```vbscript
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
+```
 
+```vbscript
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
         End If
 ```
 
@@ -62,8 +68,10 @@ This use case shows how to create nodes interface mesh parts. This scenario requ
 ```vbscript
     ' -----------------------------------------------------------
     ' Open the Analysis document
-    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\WeldConnections.CATAnalysis")
+```vbscript
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/WeldConnections.CATAnalysis")
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+```
 ```
 
 ```
@@ -84,9 +92,13 @@ Open the Analysis document. The Analysis document is retrieved in the documentat
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisManagar = oAnalysisDocument.Analysis
 ```vbscript
+```
+```vbscript
     Set oAnalysisSet = oAnalysisManagar.AnalysisSets
+```
 ```
 
 ```
@@ -95,15 +107,21 @@ Open the Analysis document. The Analysis document is retrieved in the documentat
 ```vbscript
 ```vbscript
     ' Retrieve the part document and product
+```vbscript
     Set oAnalysisLinkedDocuments = oAnalysisManagar.LinkedDocuments
     Set partDocument = oAnalysisLinkedDocuments.Item(1)
     Set product = partDocument.Product
     ' Retreive the analysis model
+```
+```vbscript
     Set oAnalysisModels = oAnalysisManagar.AnalysisModels
     Set oAnalysisModel = oAnalysisModels.Item(1)
     'Retrieve the mesh manager and list of mesh parts
+```
+```vbscript
     Set oAnalysisMeshManager = oAnalysisModel.MeshManager
     Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
+```
 ```
 
 ```
@@ -115,7 +133,10 @@ Open the Analysis document. The Analysis document is retrieved in the documentat
 ```
 
 ```vbscript
+```vbscript
     Set connection = oAnalysisSet.ItemByType("ConnectionDesignManager")
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set connSet = connection.AnalysisSets
@@ -123,8 +144,11 @@ Open the Analysis document. The Analysis document is retrieved in the documentat
     Set entity = conn.AnalysisEntities
     Set surfConn  = entity.Item(1)
     'Create reference from the surface analysis connection
+```
+```vbscript
     Set reference1 = oAnalysisManagar.CreateReferenceFromObject(surfConn)
 
+```
 ```
 
 ```
@@ -135,11 +159,11 @@ Open the Analysis document. The Analysis document is retrieved in the documentat
 
 ---
 
-According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. The extraction of pre-defined geometric elements is done by using the Reference interface. This is equivalent to the selection of a B-Rep element inside the interactive application. In this macro reference is created from the analysis connection.
+According to the general [ Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. The extraction of pre-defined geometric elements is done by using the Reference interface. This is equivalent to the selection of a B-Rep element inside the interactive application. In this macro reference is created from the analysis connection.
 #### Creating the Mesh Part and Assigning Values to its Attributes.
 
     ...
-According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. The extraction of pre-defined geometric elements is done by using the Reference interface. This is equivalent to the selection of a B-Rep element inside the interactive application. In this macro reference is created from the analysis connection.
+According to the general [ Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. The extraction of pre-defined geometric elements is done by using the Reference interface. This is equivalent to the selection of a B-Rep element inside the interactive application. In this macro reference is created from the analysis connection.
 ```vbscript
 ```vbscript
     'Add nodes interface mesh part to the list of mesh  parts
@@ -149,8 +173,10 @@ According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniToc
 ```
 
 ```vbscript
+```vbscript
     Set nodeMesh = oAnalysisMeshParts.Add ("MSHPartConnHalfPoint")
 ```vbscript
+```
     'Assign previously create reference as support
 ```
 
@@ -175,14 +201,16 @@ nodeMesh.SetGlobalSpecification "MiddleCombination", 1
 #### Epilog
 
     ...
+```vbscript
      End Sub
     ...
+```
 
 ---
 
 To run the macro interactively CATDocView environment variable must be defined.
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

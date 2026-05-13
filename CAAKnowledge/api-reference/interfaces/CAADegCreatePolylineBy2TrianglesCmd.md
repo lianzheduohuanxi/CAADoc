@@ -2,7 +2,7 @@
 title: "CAADegCreatePolylineBy2TrianglesCmd"
 type: "interface"
 module: "CAADialogEngine"
-category: "framework"
+category: api-reference
 base: "CATStateCommand"
 inheritance_chain: "CAADegCreatePolylineBy2TrianglesCmd → CATStateCommand"
 method_count: 1
@@ -25,3 +25,28 @@ verified: true
 
 - `CATStateCommand.h`
 
+---
+
+## Interface Overview
+
+This interface inherits from **CATStateCommand**. 
+
+**Inherited Methods**: Please refer to the base interface documentation above.
+
+---
+
+## Interface Overview
+
+This interface inherits from **from**. 
+
+**Inherited Methods**: Please refer to the base interface documentation above.
+
+## Interface Notes
+
+This interface is part of the **CAA** module.
+
+**Status**: This interface document is a template. Please refer to the official API documentation for more information.
+
+**Related Resources**:
+- [Quick References](../..//quick-refs/)
+- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)

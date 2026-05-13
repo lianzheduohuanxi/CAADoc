@@ -5,13 +5,13 @@ category: "use-case"
 module: "CAACenAPIChangesR8"
 version: "V5R8"
 tags: []
-source_file: "Doc/online/CAACenAPIChangesR8/FreeFormOperators.htm"
+source_file: "Doc/online/CAACenAPIChangesR8/FreeFormOperators.htmmd"
 converted: "2026-05-11T17:33:52.555293"
 ```
 
 ---
 tags: []
-source_file: "Doc/online/CAACenAPIChangesR8/FreeFormOperators.htm"
+source_file: "Doc/online/CAACenAPIChangesR8/FreeFormOperators.htmmd"
 converted: "2026-05-11T17:33:52.555293"
 CAA C++ API Modifications|  FreeFormOperators  |
 

@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Computing the Minimum Distance between Geometries"
-category: "use case"
+category: use-case case"
 module: "CAACgmModel"
 tags: ["CAAGMModelDistanceMinOpe", "CATICGMDistanceMinPtSur", "CAAGMModelInterfaces", "CATICGMDistanceMinCrvCrv", "CATICGMDistanceMinPtCrv"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelDistanceMin.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelDistanceMin.htmmd"
 converted: "2026-05-11T17:33:48.298158"
 ```
 
@@ -52,14 +52,14 @@ and the code below:
     //
 piCartP1,
 piNurbsSurface, TRUE);
-    double dist1 = pDistMinPtSurOpe->GetDistance();
+    double dist1 = pDistMinPtSurOpe->GetDistance(#);
     cout << "distance point - surface " << dist1 << endl;
-    CATPointOnSurface * pPtOnSur = pDistMinPtSurOpe->GetPointOnSurface() ;
+    CATPointOnSurface * pPtOnSur = pDistMinPtSurOpe->GetPointOnSurface(#) ;
 
     ...
 
 ---
-CATPointOnSurface * pPtOnSur = pDistMinPtSurOpe->GetPointOnSurface() ;
+CATPointOnSurface * pPtOnSur = pDistMinPtSurOpe->GetPointOnSurface(#) ;
 generates this message on the standard output:
 
     distance point - surface 21.5346
@@ -93,20 +93,20 @@ CATICGMDistanceMinPtCrv * pDistMinPtCrvOpe =::CATCGMCreateDistanceMin(piGeomFact
 pConfig,
 piCartP1,
 pNurbsCurve, ADVANCED);
-    pDistMinPtCrvOpe->Run();
+    pDistMinPtCrvOpe->Run(#);
 
     //     d - retrieves the distance, resulting point and CATSurParam
     //
 pNurbsCurve, ADVANCED);
-pDistMinPtCrvOpe->Run();
-    double dist2= pDistMinPtCrvOpe->GetDistance();
+pDistMinPtCrvOpe->Run(#);
+    double dist2= pDistMinPtCrvOpe->GetDistance(#);
     cout << "distance point - curve "<< dist2 << endl;
-    CATPointOnCurve * ptOnCrv = pDistMinPtCrvOpe->GetPointOnCurve() ;
+    CATPointOnCurve * ptOnCrv = pDistMinPtCrvOpe->GetPointOnCurve(#) ;
 
 ---
-double dist2= pDistMinPtCrvOpe->GetDistance();
+double dist2= pDistMinPtCrvOpe->GetDistance(#);
 cout << "distance point - curve "<< dist2 << endl;
-CATPointOnCurve * ptOnCrv = pDistMinPtCrvOpe->GetPointOnCurve() ;
+CATPointOnCurve * ptOnCrv = pDistMinPtCrvOpe->GetPointOnCurve(#) ;
 generates this message on the standard output:
 
     distance point - curve 32.0743
@@ -139,17 +139,17 @@ CATICGMDistanceMinCrvCrv * pDistMinCrvCrvOpe =::CATCGMCreateDistanceMin(piGeomFa
 pConfig,
 pLine,
 pNurbsCurve);
-    pDistMinCrvCrvOpe->Run();
+    pDistMinCrvCrvOpe->Run(#);
 
     //     c - retrieves the distance min between both curves
     //         zero is expected as one end of the line is located on the curve
 pNurbsCurve);
-pDistMinCrvCrvOpe->Run();
-    double dist3= pDistMinCrvCrvOpe->GetDistance();
+pDistMinCrvCrvOpe->Run(#);
+    double dist3= pDistMinCrvCrvOpe->GetDistance(#);
     cout << "distance curve - curve "<< dist3 << endl;
 
 ---
-double dist3= pDistMinCrvCrvOpe->GetDistance();
+double dist3= pDistMinCrvCrvOpe->GetDistance(#);
 cout << "distance curve - curve "<< dist3 << endl;
 generates this message on the standard output:
 

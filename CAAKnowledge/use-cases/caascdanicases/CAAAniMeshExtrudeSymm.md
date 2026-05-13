@@ -4,7 +4,7 @@ title: "Creating Extrude with Symmetry Mesh Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CAAAniMeshExtrudeSymm", "CATIA", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshExtrudeSymm.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshExtrudeSymm.htmmd"
 converted: "2026-05-11T17:31:51.647580"
 ```
 
@@ -43,21 +43,27 @@ This use case shows how to create extrude with symmetry mesh parts.  This macro 
 '-----------------------------------------------------------
     'Optional: allows to find the sample wherever it's installed
 
+```vbscript
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
+```
 
+```vbscript
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
 ```vbscript
         End If
     '-----------------------------------------------------------
@@ -74,7 +80,9 @@ End If
 ```vbscript
 '-----------------------------------------------------------
     'Open the Analysis document
-    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Surface.CATAnalysis")
+```vbscript
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Surface.CATAnalysis")
+```
 ```
 
 ```
@@ -82,7 +90,9 @@ End If
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+```
 ```
 
     ...
@@ -99,9 +109,13 @@ Open the Analysis document. The Analysis document is retrieved in the documentat
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisManagar = oAnalysisDocument.Analysis
 ```vbscript
+```
+```vbscript
     Set oAnalysisSet = oAnalysisManagar.AnalysisSets
+```
 ```
 
 ```
@@ -110,9 +124,11 @@ Open the Analysis document. The Analysis document is retrieved in the documentat
 ```vbscript
 ```vbscript
     'Retrieve the part document and product
+```vbscript
     Set oAnalysisLinkedDocuments = oAnalysisManagar.LinkedDocuments
     Set partDocument = oAnalysisLinkedDocuments.Item(1)
     Set product = partDocument.Product
+```
 ```
 
 ```
@@ -135,29 +151,39 @@ Open the Analysis document. The Analysis document is retrieved in the documentat
 ```
 
 ```vbscript
+```vbscript
     Set publications = product.Publications
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set pubPlane = publications.Item("SymmetryPlane")
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Set pubPlane = publications.Item("SymmetryPlane")
 ```vbscript
+```
     'Retrieve the analysis model
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisModels = oAnalysisManagar.AnalysisModels
 ```vbscript
+```
+```vbscript
     Set oAnalysisModel = oAnalysisModels.Item(1)
+```
 ```
 
 ```
@@ -166,11 +192,15 @@ Set pubPlane = publications.Item("SymmetryPlane")
 ```vbscript
 ```vbscript
     'Retrieve the mesh manager and list of mesh parts
+```vbscript
     Set oAnalysisMeshManager = oAnalysisModel.MeshManager
     Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
     Set surfMesh = oAnalysisMeshParts.Item("Surface Mesh.1")
     'Create the reference of the surface mesh
+```
+```vbscript
     Set reference = oAnalysisManagar.CreateReferenceFromObject(surfMesh)
+```
 ```
 
 ```
@@ -181,11 +211,11 @@ Set pubPlane = publications.Item("SymmetryPlane")
 
 ---
 
-According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. The extraction of pre-defined geometric elements is done with the help of Reference interface. This is equivalent to the selection of B-Rep elements inside the interactive application. In this macro reference is created from the surface mesh part.
+According to the general [ Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. The extraction of pre-defined geometric elements is done with the help of Reference interface. This is equivalent to the selection of B-Rep elements inside the interactive application. In this macro reference is created from the surface mesh part.
 #### Creating the Mesh Part and Assigning Values to its Attributes.
 
     ...
-According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. The extraction of pre-defined geometric elements is done with the help of Reference interface. This is equivalent to the selection of B-Rep elements inside the interactive application. In this macro reference is created from the surface mesh part.
+According to the general [ Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. The extraction of pre-defined geometric elements is done with the help of Reference interface. This is equivalent to the selection of B-Rep elements inside the interactive application. In this macro reference is created from the surface mesh part.
 ```vbscript
 ```vbscript
     'Add the extrude with translation mesh part to the list of mesh parts
@@ -195,14 +225,18 @@ According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniToc
 ```
 
 ```vbscript
+```vbscript
     Set extrudeMesh = oAnalysisMeshParts.Add("MSHPartExtrSymmetry")
 ```vbscript
+```
     'Assign the surface mesh part as support
 ```
 
     extrudeMesh.AddSupportFromReference NOTHING, reference
 ```vbscript
+```vbscript
     'Set the global specifications
+```
 ```
 
     extrudeMesh.SetGlobalSpecification "Condensation", 0
@@ -213,7 +247,9 @@ According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniToc
 extrudeMesh.SetGlobalSpecification "Condensation", 0
 extrudeMesh.SetGlobalSpecification "Tolerance", "1.0 mm"
 ```vbscript
+```vbscript
     'Set the specification; specifying the plane of symmetry
+```
 ```
 
     extrudeMesh.SetSpecificationFromPublication "Direction", product, pubPlane, 0
@@ -226,9 +262,13 @@ extrudeMesh.SetGlobalSpecification "Tolerance", "1.0 mm"
 ```
 
 ```vbscript
+```vbscript
     Set basicComps = extrudeMesh.BasicComponents
 ```vbscript
+```
+```vbscript
     Set subBasicComps = basicComps.Item(1).BasicComponents
+```
 ```
 
 ```
@@ -237,7 +277,9 @@ extrudeMesh.SetGlobalSpecification "Tolerance", "1.0 mm"
 ```vbscript
 ```vbscript
     'Retrieve each of the attributes by name and set their values
+```vbscript
     Set subBasicComp1 = subBasicComps.Item("Type")
+```
 ```
 
 ```
@@ -248,21 +290,29 @@ extrudeMesh.SetGlobalSpecification "Tolerance", "1.0 mm"
 ```vbscript
 ```vbscript
 'Retrieve each of the attributes by name and set their values
+```vbscript
 Set subBasicComp1 = subBasicComps.Item("Type")
+```
 ```
 
 ```
 
     subBasicComp1.SetValue "", 0, 0, 0, "Geometric"
 
+```vbscript
     Set subBasicComp2 = subBasicComps.Item("NbNodes")
     subBasicComp2.SetValue "", 0, 0, 0, 20
+```
 
+```vbscript
     Set subBasicComp3 = subBasicComps.Item("Symmetric")
     subBasicComp3.SetValue "", 0, 0, 0, 2
+```
 
+```vbscript
     Set subBasicComp4 = subBasicComps.Item("Ratio")
     subBasicComp4.SetValue "", 0, 0, 0, 10
+```
 ```vbscript
     'Update the mesh
 ```
@@ -278,14 +328,16 @@ Set subBasicComp1 = subBasicComps.Item("Type")
 #### Epilog
 
     ...
+```vbscript
     End Sub
     ...
+```
 
 ---
 
 To run the macro interactively CATDocView and ADL_ODT_SLASH environment variables must be defined.
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

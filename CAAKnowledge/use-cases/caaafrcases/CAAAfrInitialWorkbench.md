@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Defining the Activated Workbench"
-category: "use case"
+category: use-case case"
 module: "CAAAfrUseCases"
 tags: ["CAAEAfrActivateWorkbenchOnPart", "CATIAfrActivateWorkbench", "CAAAfrInitialWorkbench", "CATIAApplicationFrm", "CAACATIAApplicationFrm", "CAAAfrProduct", "CAAApplicationFrame"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrInitialWorkbench.htm"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrInitialWorkbench.htmmd"
 converted: "2026-05-11T17:17:55.614529"
 ```
 
@@ -66,10 +66,10 @@ This article shows an implementation of the _CATIAfrActivateWorkbench_ interface
 #### How to Launch CAAAfrInitialWorkbench
 
 This article shows an implementation of the _CATIAfrActivateWorkbench_ interface __ on the **MechanicalPart** object. The activated workbench, among the Part workbenches, is the **Part Design** workbench. ![](images/CAAAfrInitialWkbPartDesign.gif) [Top]
-To launch CAAAfrInitialWorkbench, you will need to set up the build time environment, then compile CAAAfrInitialWorkbench along with its prerequisites, set up the run time environment, and then execute the use case [3]. But just before launching the execution, edit the CAAApplicationFrame.edu.dico interface dictionary file located in the dictionary directory of the CAAApplicationFrame.edu framework: | Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CNext\code\dictionary\`
+To launch CAAAfrInitialWorkbench, you will need to set up the build time environment, then compile CAAAfrInitialWorkbench along with its prerequisites, set up the run time environment, and then execute the use case [3]. But just before launching the execution, edit the CAAApplicationFrame.edu.dico interface dictionary file located in the dictionary directory of the CAAApplicationFrame.edu framework: | Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CNext/code/dictionary/`
 
 This article shows an implementation of the _CATIAfrActivateWorkbench_ interface __ on the **MechanicalPart** object. The activated workbench, among the Part workbenches, is the **Part Design** workbench. ![](images/CAAAfrInitialWkbPartDesign.gif) [Top]
-To launch CAAAfrInitialWorkbench, you will need to set up the build time environment, then compile CAAAfrInitialWorkbench along with its prerequisites, set up the run time environment, and then execute the use case [3]. But just before launching the execution, edit the CAAApplicationFrame.edu.dico interface dictionary file located in the dictionary directory of the CAAApplicationFrame.edu framework: | Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CNext\code\dictionary\`
+To launch CAAAfrInitialWorkbench, you will need to set up the build time environment, then compile CAAAfrInitialWorkbench along with its prerequisites, set up the run time environment, and then execute the use case [3]. But just before launching the execution, edit the CAAApplicationFrame.edu.dico interface dictionary file located in the dictionary directory of the CAAApplicationFrame.edu framework: | Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CNext/code/dictionary/`
 UNIX | `InstallRootDirectory/CAAApplicationFrame.edu/CNext/code/dictionary/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -120,9 +120,9 @@ Without the _CATIAfrActivateWorkbench_ implementation, the current workbench wou
 (*)The document is located in the InputData directory of the CAAApplicationFrame.edu framework:
 
 Without the _CATIAfrActivateWorkbench_ implementation, the current workbench would have been **Wireframe and Surface Design,** the last used workbench for a Part.
-Windows | `InstallRootDirectory\CAACATIAApplicationFrm.edu\InputData\`
+Windows | `InstallRootDirectory/CAACATIAApplicationFrm.edu/InputData/`
 
-Windows | `InstallRootDirectory\CAACATIAApplicationFrm.edu\InputData\`
+Windows | `InstallRootDirectory/CAACATIAApplicationFrm.edu/InputData/`
 Unix | `InstallRootDirectory/CAACATIAApplicationFrm.edu/InputData/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -133,10 +133,10 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 The CAAAfrInitialWorkbench use case is made of one single class, the _CAAEAfrActivateWorkbenchOnPart_ class, located in the CAAAfrInitialWorkbench.m module of the CAAApplicationFrame.edu framework:
 
-Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrInitialWorkbench.m\`
+Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrInitialWorkbench.m/`
 
 The CAAAfrInitialWorkbench use case is made of one single class, the _CAAEAfrActivateWorkbenchOnPart_ class, located in the CAAAfrInitialWorkbench.m module of the CAAApplicationFrame.edu framework:
-Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrInitialWorkbench.m\`
+Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrInitialWorkbench.m/`
 Unix | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrInitialWorkbench.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -164,10 +164,10 @@ class CAAEAfrActivateWorkbenchOnPart: public CATBaseUnknown
 
       public:
 
-        CAAEAfrActivateWorkbenchOnPart();
-        virtual ~CAAEAfrActivateWorkbenchOnPart();
+        CAAEAfrActivateWorkbenchOnPart(#);
+        virtual ~CAAEAfrActivateWorkbenchOnPart(#);
 
-        CATString & **GetInitialWorkbench**();
+        CATString & **GetInitialWorkbench**(#);
 
       private:
 
@@ -206,22 +206,22 @@ TIE_CATIAfrActivateWorkbench(CAAEAfrActivateWorkbenchOnPart);
 The _CAAEAfrActivateWorkbenchOnPart_ class states that it implements the _CATIAfrActivateWorkbench_ interface thanks to the `TIE_CATIAfrActivateWorkbench` macro. The `CATImplementClass` macro declares that the _CAAEAfrActivateWorkbenchOnPart_ class is a data extension, thanks to the `DataExtension` keyword, that extends `MechanicalPart`. The third argument must always be set as _CATBaseUnknown_ or _CATNull_ for any kind of extension.
 
     ...
-    CAAEAfrActivateWorkbenchOnPart::CAAEAfrActivateWorkbenchOnPart()
+    CAAEAfrActivateWorkbenchOnPart::CAAEAfrActivateWorkbenchOnPart(#)
 
     {
-CAAEAfrActivateWorkbenchOnPart::CAAEAfrActivateWorkbenchOnPart()
+CAAEAfrActivateWorkbenchOnPart::CAAEAfrActivateWorkbenchOnPart(#)
         _WbName = "**PrtCfg** " ;
 
     }
-CAAEAfrActivateWorkbenchOnPart::CAAEAfrActivateWorkbenchOnPart()
+CAAEAfrActivateWorkbenchOnPart::CAAEAfrActivateWorkbenchOnPart(#)
 _WbName = "**PrtCfg** " ;
-    CAAEAfrActivateWorkbenchOnPart::~CAAEAfrActivateWorkbenchOnPart()
+    CAAEAfrActivateWorkbenchOnPart::~CAAEAfrActivateWorkbenchOnPart(#)
 
     {
     }
 _WbName = "**PrtCfg** " ;
-CAAEAfrActivateWorkbenchOnPart::~CAAEAfrActivateWorkbenchOnPart()
-    CATString & CAAEAfrActivateWorkbenchOnPart::**GetInitialWorkbench**()
+CAAEAfrActivateWorkbenchOnPart::~CAAEAfrActivateWorkbenchOnPart(#)
+    CATString & CAAEAfrActivateWorkbenchOnPart::**GetInitialWorkbench**(#)
 
     {
 

@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Editing Objects"
-category: "use case"
+category: use-case case"
 module: "CAAAfrUseCases"
 tags: ["CAASysPoint", "CAAISysPoint", "CAAAfrGeoEdition", "CAAEAfrEditPoint", "CATIModelEvents", "CAAGeometry", "CATIEdit", "CAAAfrPointEditDlg", "CAAAfrPointEditCmd", "CAAAfrPointEditDlgId", "CAAApplicationFrame"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleObjectEdit.htm"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleObjectEdit.htmmd"
 converted: "2026-05-11T17:17:55.785009"
 ```
 
@@ -52,7 +52,7 @@ CAAAfrGeoEdition is a use case of the CAAApplicationFrame.edu framework that ill
 
 The CAAAfrGeoEdition use case makes the Point object an editable object, and provides it with an editing command and an editing dialog.
 
-![CAAAfrPointEditMenu.gif \(27004 bytes\)](images/CAAAfrPointEditMenu.gif)
+![CAAAfrPointEditMenu.gif /(27004 bytes/)](images/CAAAfrPointEditMenu.gif)
 
 [Top]
 #### How to Launch CAAAfrGeoEdition
@@ -75,10 +75,10 @@ Do not type the module name on the command line, but type CNEXT instead. When th
 The CAAAfrGeoEdition use case is made of three classes located in the CAAAfrGeoEdition.m module of the CAAApplicationFrame.edu framework:
 
 The CAAAfrGeoEdition use case is made of three classes located in the CAAAfrGeoEdition.m module of the CAAApplicationFrame.edu framework:
-Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeoEdition.m\`
+Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeoEdition.m/`
 
 The CAAAfrGeoEdition use case is made of three classes located in the CAAAfrGeoEdition.m module of the CAAApplicationFrame.edu framework:
-Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeoEdition.m\`
+Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeoEdition.m/`
 Unix | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeoEdition.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -123,8 +123,8 @@ To make the _CAASysPoint_ component implements the _CATIEdit_ interface, we crea
            **CATDeclareClass** ;
 class CAAEAfrEditPoint : public **CATExtIEdit**
            public :
-             CAAEAfrEditPoint();
-             virtual ~CAAEAfrEditPoint();
+             CAAEAfrEditPoint(#);
+             virtual ~CAAEAfrEditPoint(#);
              virtual CATCommand  * **Activate**(CATPathElement * iPath);
            private :
              CAAEAfrEditPoint(const CAAEAfrEditPoint &iObjectToCopy);
@@ -182,13 +182,13 @@ CAAISysPoint * pISysPointOnPoint = NULL;
 HRESULT rc = **QueryInterface**(**IID_CAAISysPoint** , (void**)&pISysPointOnPoint);
 if (SUCCEEDED(rc))
              CAAAfrPointEditCmd *  pEdtCmd = new **CAAAfrPointEditCmd**(pISysPointOnPoint);
-             pISysPointOnPoint->**Release**();
+             pISysPointOnPoint->**Release**(#);
 
            }
 ```vbscript
 if (SUCCEEDED(rc))
 CAAAfrPointEditCmd *  pEdtCmd = new **CAAAfrPointEditCmd**(pISysPointOnPoint);
-pISysPointOnPoint->**Release**();
+pISysPointOnPoint->**Release**(#);
            return (CATCommand*) pEdtCmd;
 ```
 
@@ -223,7 +223,7 @@ CAAAfrPointEditCmd::CAAAfrPointEditCmd(CAAISysPoint * ipEdit)
 _pEdit(ipEdit),_DialogPoint(NULL)
 ```vbscript
 ```vbscript
-          if (_pEdit) _pEdit -> AddRef();
+          if (_pEdit) _pEdit -> AddRef(#);
 
 ```
 
@@ -260,25 +260,25 @@ if ( ! _DialogPoint)
                                 CATDlgWndTitleBarHelp| // help in the title bar (Windows only)
                                 CATDlgGridLayout ;
             CATString id ("CAAAfrPointEditDlgId");
-            CATDialog * pParent = (CATApplicationFrame::GetFrame())->GetMainWindow() ;
+            CATDialog * pParent = (CATApplicationFrame::GetFrame(#))->GetMainWindow(#) ;
 
 ```vbscript
             _DialogPoint = new **CAAAfrPointEditDlg**(pParent,id,style,_pEdit);
 
 ```
 
-            **AddAnalyseNotificationCB**(_DialogPoint, _DialogPoint->**GetWindCloseNotification**(),
-CATDialog * pParent = (CATApplicationFrame::GetFrame())->GetMainWindow() ;
+            **AddAnalyseNotificationCB**(_DialogPoint, _DialogPoint->**GetWindCloseNotification**(#),
+CATDialog * pParent = (CATApplicationFrame::GetFrame(#))->GetMainWindow(#) ;
 _DialogPoint = new **CAAAfrPointEditDlg**(pParent,id,style,_pEdit);
                                      (CATCommandMethod)&CAAAfrPointEditCmd::**CloseBox** ,
                                      NULL);
 
-            _DialogPoint->**Build**();
+            _DialogPoint->**Build**(#);
 
           }
 
 NULL);
-_DialogPoint->**Build**();
+_DialogPoint->**Build**(#);
           _DialogPoint->**SetVisibility**(CATDlgShow);
           return (CATStatusChangeRCCompleted);
 
@@ -321,7 +321,7 @@ return (CATStatusChangeRCCompleted);
 CATStatusChangeRC CAAAfrPointEditCmd::**Cancel**(CATCommand      * iCmd,
 CATNotification * iNotif)
           _DialogPoint->SetVisibility(CATDlgHide);
-          RequestDelayedDestruction();
+          RequestDelayedDestruction(#);
 ```vbscript
           return (CATStatusChangeRCCompleted);
 
@@ -330,7 +330,7 @@ CATNotification * iNotif)
         }
 
 _DialogPoint->SetVisibility(CATDlgHide);
-RequestDelayedDestruction();
+RequestDelayedDestruction(#);
 ```vbscript
 return (CATStatusChangeRCCompleted);
 ```
@@ -344,7 +344,7 @@ void CAAAfrPointEditCmd::**CloseBox**(CATCommand           * iSendingCommand,
 CATNotification      * iSentNotification,
 CATCommandClientData   iUsefulData)
           _DialogPoint->SetVisibility(CATDlgHide);
-          RequestDelayedDestruction();
+          RequestDelayedDestruction(#);
 
         }
 
@@ -357,24 +357,24 @@ These methods do the following:
   * The destructor is called by `RequestDelayedDestruction` and should first remove the callback set on the dialog before requesting the dialog destruction.
 
         ...
-        CAAAfrPointEditCmd::~CAAAfrPointEditCmd()
+        CAAAfrPointEditCmd::~CAAAfrPointEditCmd(#)
         {
-CAAAfrPointEditCmd::~CAAAfrPointEditCmd()
+CAAAfrPointEditCmd::~CAAAfrPointEditCmd(#)
 ```vbscript
           if (_DialogPoint)
 
 ```
 
           {
-CAAAfrPointEditCmd::~CAAAfrPointEditCmd()
+CAAAfrPointEditCmd::~CAAAfrPointEditCmd(#)
 if (_DialogPoint)
 ```vbscript
             RemoveAnalyseNotificationCB(_DialogPoint,
 ```
 
-                                        _DialogPoint->GetWindCloseNotification(),
+                                        _DialogPoint->GetWindCloseNotification(#),
                                         NULL);
-            _DialogPoint->RequestDelayedDestruction();
+            _DialogPoint->RequestDelayedDestruction(#);
 
           }
         }
@@ -407,17 +407,17 @@ We'll examine the callback methods, then `CloseBox`, and finally `ModifyModelAnd
 void CAAAfrPointEditDlg::ClickOK(CATCommand * iSendingCommmand,
 CATNotification * iSentNotification,
 CATCommandClientData UsefulData)
-           ModifyModelAndVisu(_XSpinner->GetCurrentValue(),
-                              _YSpinner->GetCurrentValue(),
-                              _ZSpinner->GetCurrentValue());
-           CloseBox();
+           ModifyModelAndVisu(_XSpinner->GetCurrentValue(#),
+                              _YSpinner->GetCurrentValue(#),
+                              _ZSpinner->GetCurrentValue(#));
+           CloseBox(#);
 
          }
 
 ---
 
 ```vbscript
-CloseBox();
+CloseBox(#);
 This method is executed whenever the end user clicks the OK push button. It first modifies the point and the display thanks to the `ModifyModelAndVisu` method using the current values of the spinners and calls the `CloseBox` method that takes appropriate actions to close the dialog.
 
   2. `ClickApply`
@@ -431,15 +431,15 @@ This method is executed whenever the end user clicks the OK push button. It firs
 void CAAAfrPointEditDlg::ClickApply(CATCommand * iSendingCommmand,
 CATNotification * iSentNotification,
 CATCommandClientData UsefulData)
-           ModifyModelAndVisu(_XSpinner->GetCurrentValue(),
-                              _YSpinner->GetCurrentValue(),
-                              _ZSpinner->GetCurrentValue());
+           ModifyModelAndVisu(_XSpinner->GetCurrentValue(#),
+                              _YSpinner->GetCurrentValue(#),
+                              _ZSpinner->GetCurrentValue(#));
 
          }
 
 ---
 
-_ZSpinner->GetCurrentValue());
+_ZSpinner->GetCurrentValue(#));
 This method is executed whenever the end user clicks the Apply push button. It just modifies the point and the display like `ClickOK`, but leaves the dialog box displayed.
 
   3. `ClickCancel`
@@ -454,7 +454,7 @@ CATNotification * iSentNotification,
 CATCommandClientData UsefulData)
            ModifyModelAndVisu(_Xfirst,_Yfirst,_Zfirst);
 ```vbscript
-           CloseBox();
+           CloseBox(#);
 
 ```
 
@@ -463,7 +463,7 @@ CATCommandClientData UsefulData)
 ---
 
 ```vbscript
-CloseBox();
+CloseBox(#);
 This method is executed whenever the end user clicks the Cancel push button. It just restores the point and the display using the point initial coordinates, and closes the dialog.
 
   4. `ClickClose`
@@ -477,33 +477,33 @@ This method is executed whenever the end user clicks the Cancel push button. It 
 void CAAAfrPointEditDlg::ClickClose(CATCommand * iSendingCommmand,
 CATNotification * iSentNotification,
 CATCommandClientData UsefulData)
-           CloseBox();
+           CloseBox(#);
 
          }
 
 ---
 
 ```vbscript
-CloseBox();
+CloseBox(#);
 This method is executed whenever the end user closes the dialog. It calls the `CloseBox` method.
 
   5. `CloseBox`
 
-         void CAAAfrPointEditDlg::CloseBox()
+         void CAAAfrPointEditDlg::CloseBox(#)
 ```
 
          {
 5. `CloseBox`
-void CAAAfrPointEditDlg::CloseBox()
+void CAAAfrPointEditDlg::CloseBox(#)
            SetVisibility(CATDlgHide);
 
-           RemoveAnalyseNotificationCB(this, this->GetDiaOKNotification(),NULL);
+           RemoveAnalyseNotificationCB(this, this->GetDiaOKNotification(#),NULL);
 ```vbscript
-           RemoveAnalyseNotificationCB(this, this->GetDiaAPPLYNotification(),NULL);
-           RemoveAnalyseNotificationCB(this, this->GetDiaCANCELNotification(),NULL);
-           RemoveAnalyseNotificationCB(this, this->GetWindCloseNotification(),NULL);
+           RemoveAnalyseNotificationCB(this, this->GetDiaAPPLYNotification(#),NULL);
+           RemoveAnalyseNotificationCB(this, this->GetDiaCANCELNotification(#),NULL);
+           RemoveAnalyseNotificationCB(this, this->GetWindCloseNotification(#),NULL);
 
-           SendNotification(GetFather(),CATDlgDialog::GetWindCloseNotification());
+           SendNotification(GetFather(#),CATDlgDialog::GetWindCloseNotification(#));
 
 ```
 
@@ -512,7 +512,7 @@ void CAAAfrPointEditDlg::CloseBox()
 ---
 
 ```vbscript
-SendNotification(GetFather(),CATDlgDialog::GetWindCloseNotification());
+SendNotification(GetFather(#),CATDlgDialog::GetWindCloseNotification(#));
 This method hides the dialog, and sends a notification to state that the dialog should be closed This notification is sent to the dialog father, set to the frame window as the first parameter of its constructor. This notification moves from a command to its parent along the command tree structure up to the first command that have set a callback for this notification and for this dialog. Since there are few chances that such a command exists, the notification reaches the command selector that resends it to the active command, which fortunately has set such a callback execute its own `CloseBox` method when such a notification is received from the dialog.
 
   6. The `ModifyModelAndVisu` method modifies the point in the document and sends a notification to request the display to update accordingly.
@@ -539,7 +539,7 @@ if (SUCCEEDED(rc))
              CATModify * pNotif = new **CATModify**(pModelEvents);
              pModelEvents->Dispatch(*pNotif);
              delete pNotif;
-             pModelEvents->Release();
+             pModelEvents->Release(#);
 
            }
          }

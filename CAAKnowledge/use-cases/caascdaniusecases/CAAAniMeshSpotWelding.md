@@ -3,7 +3,7 @@ title: "Creating Spot Welding Connection Mesh Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CAAScrBase", "CATIA", "CAAAniMeshSpotWeldingSource", "CAAScrJavaScript", "CAAScdAniUseCases", "CAAAniTocAnalysisDocument", "CAAScdInfUseCases", "CAAScdAniTechArticles", "CAAInfLauchMacro", "CAAAniMeshSpotWelding"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSpotWelding.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSpotWelding.htmmd"
 converted: "2026-05-11T11:27:02.501885"
 ---
 
@@ -24,7 +24,7 @@ Open the Analysis document. The Analysis document is retrieve in the
 
 According to the general
 		[
-		Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.htm) structure, this macro uses some standard procedures 
+		Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures 
 		to navigate or retrieve the required objects. First, from the **Document**, 
 		we find the **Analysis Manager Object**, the **Analysis Models** and 
 		the **Mesh Manager Objects**. 
@@ -49,7 +49,7 @@ To run the macro interactively CATDocView environment
 		
 	
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 
@@ -78,8 +78,6 @@ how to assign values to its global attributes.
 
  
 
-
-
 ```vbscript
 ...
 ```
@@ -87,15 +85,19 @@ how to assign values to its global attributes.
 ```vbscript
 &#39; ----------------------------------------------------------- 
 &#39; Optional: allows to find the sample wherever it&#39;s installed
+```vbscript
   sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,&quot;No Doc Path Defined&quot;
     End If
+```
 &#39; ----------------------------------------------------------- 
 &#39;Open the Analysis document 
-sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\WeldConnections.CATAnalysis&quot;)
+```vbscript
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online/CAAScdAniUseCases/samples/WeldConnections.CATAnalysis&quot;)
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+```
 ```
 
 ```vbscript
@@ -108,30 +110,40 @@ Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ```vbscript
 &#39;Retrieve the analysis Manager 
+```vbscript
 Set oAnalysisManagar = oAnalysisDocument.Analysis
 Set oAnalysisSet = oAnalysisManagar.AnalysisSets
 
 &#39;Retrieve the part document and product
+```
+```vbscript
 Set oAnalysisLinkedDocuments = oAnalysisManagar.LinkedDocuments
 Set partDocument = oAnalysisLinkedDocuments.Item(1)
 Set product = partDocument.Product
 
 &#39;Retrieve the analysis model
+```
+```vbscript
 Set oAnalysisModels = oAnalysisManagar.AnalysisModels
 Set oAnalysisModel = oAnalysisModels.Item(1)
 
 &#39;Retrieve the mesh manager and list of mesh parts
+```
+```vbscript
 Set oAnalysisMeshManager = oAnalysisModel.MeshManager 
 Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
 
-
 &#39;Retrieve the connection design manager and connection
+```
+```vbscript
 Set connection = oAnalysisSet.ItemByType(&quot;ConnectionDesignManager&quot;)
 Set connSet = connection.AnalysisSets
 Set conn = connSet.ItemByType(&quot;ConnectionDesignSet&quot;)
 Set entity = conn.AnalysisEntities
 Set surfConn  = entity.Item(1)
 Set reference1 = oAnalysisManagar.CreateReferenceFromObject(surfConn)
+
+```
 
 ...
 ```
@@ -142,11 +154,13 @@ Set reference1 = oAnalysisManagar.CreateReferenceFromObject(surfConn)
 
 ```vbscript
 &#39;Add new surface analysis connection mesh to the list of mesh parts
+```vbscript
 Set surfWeld = oAnalysisMeshParts.Add (&quot;MSHPartConnWeldSurf&quot;) 
+
+```
 
 &#39;Assign previously created reference as support
 surfWeld.AddSupportFromReference NOTHING, reference1
-
 
 &#39;Assign values to its global specifications
 spotWeldMesh.SetGlobalSpecification &quot;MaximalGap&quot;, &quot;10.0 mm&quot;

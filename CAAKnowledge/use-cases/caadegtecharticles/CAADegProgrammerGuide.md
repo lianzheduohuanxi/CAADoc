@@ -4,13 +4,13 @@ title: "DialogEngine Programmer's Guide"
 category: "use-case"
 module: "CAADegTechArticles"
 tags: []
-source_file: "Doc/online/CAADegTechArticles/CAADegProgrammerGuide.htm"
+source_file: "Doc/online/CAADegTechArticles/CAADegProgrammerGuide.htmmd"
 converted: "2026-05-11T17:33:49.859894"
 ```
 
 ---
 tags: []
-source_file: "Doc/online/CAADegTechArticles/CAADegProgrammerGuide.htm"
+source_file: "Doc/online/CAADegTechArticles/CAADegProgrammerGuide.htmmd"
 converted: "2026-05-11T17:33:49.859894"
 3D PLM Enterprise Architecture |  User Interface - Commands |  DialogEngine Programmer's Guide _Programming step-by-step_
 

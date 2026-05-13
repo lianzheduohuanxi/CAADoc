@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Converting Print Files"
-category: "use case"
+category: use-case case"
 module: "CAAPrtUseCases"
 tags: ["CAAPrtOut", "CAAPrint", "CAACPrtChangeFormat", "CAAPrtChangeFormat"]
-source_file: "Doc/online/CAAPrtUseCases/CAAPrtSampleChangeFormat.htm"
+source_file: "Doc/online/CAAPrtUseCases/CAAPrtSampleChangeFormat.htmmd"
 converted: "2026-05-11T17:17:56.103894"
 ```
 
@@ -64,7 +64,7 @@ In addition, the `CAAPrtOut` environment variable should be set to the directory
 
 In addition, the `CAAPrtOut` environment variable should be set to the directory into which you want to create the resulting TIFF file, prior to launching CAAPrtChangeFormat with the path of the input CGM file as argument.
         E:>set CAAPrtOut=DirForOutputTIFFFile
-        E:>CAAPrtChangeFormat InstallRootDirectory\CAAPrint.edu\CNext\resources\graphic\images\CAAPrtChangeFormat.cgm
+        E:>CAAPrtChangeFormat InstallRootDirectory/CAAPrint.edu/CNext/resources/graphic/images/CAAPrtChangeFormat.cgm
 
 ---
   * With UNIX
@@ -86,10 +86,10 @@ where:
 The CAAPrtChangeFormat use case is made of a single source file located in the CAAPrtChangeFormat.m module of the CAAPrint.edu framework:
 
 The CAAPrtChangeFormat use case is made of a single source file located in the CAAPrtChangeFormat.m module of the CAAPrint.edu framework:
-Windows | ` InstallRootDirectory\CAAPrint.edu\CAAPrtChangeFormat.m\src\CAACPrtChangeFormat.cpp`
+Windows | ` InstallRootDirectory/CAAPrint.edu/CAAPrtChangeFormat.m/src/CAACPrtChangeFormat.cpp`
 
 The CAAPrtChangeFormat use case is made of a single source file located in the CAAPrtChangeFormat.m module of the CAAPrint.edu framework:
-Windows | ` InstallRootDirectory\CAAPrint.edu\CAAPrtChangeFormat.m\src\CAACPrtChangeFormat.cpp`
+Windows | ` InstallRootDirectory/CAAPrint.edu/CAAPrtChangeFormat.m/src/CAACPrtChangeFormat.cpp`
 Unix | ` InstallRootDirectory/CAAPrint.edu/CAAPrtChangeFormat.m/src/CAACPrtChangeFormat.cpp`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -123,7 +123,7 @@ Some preliminary tasks are not described. They deal with retrieving the input fi
       ... _// Retrieving the input file name, setting the output file directory, and
       ... // building the output file name is not described here_
 
-      **CATPrinterManager::Begin()** ;
+      **CATPrinterManager::Begin(#)** ;
       ...
 
 ---
@@ -191,12 +191,14 @@ A print parameter object should be defined to be associated with the print file 
 ```
 
       {
+```vbscript
         // Set the output image dimensions: width increases from 50%, height doesn't change
 float imageWidth=0, imageHeight=0;
+```
 int result = pImage->**GetSize**(imageWidth, imageHeight); _// Retrieve input file dimensions_
 if (result)
-        CATPrintForm CurrentForm = Parameters.**GetCurrentForm**();
-        CurrentForm().**SetSize**(imageWidth*1.5, imageHeight);
+        CATPrintForm CurrentForm = Parameters.**GetCurrentForm**(#);
+        CurrentForm(#).**SetSize**(imageWidth*1.5, imageHeight);
 
       }
       ...
@@ -248,7 +250,7 @@ The `Print` method converts the print file image from CGM to TIFF using the para
 delete pDevice;
       delete pImage;
 
-      **CATPrinterManager::End()** ;
+      **CATPrinterManager::End(#)** ;
 delete pDevice;
 delete pImage;
       return ReturnCode;

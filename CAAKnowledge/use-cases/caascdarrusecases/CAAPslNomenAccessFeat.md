@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CAAScrBase", "CATIAArrNomenclatureTrees", "CATIA", "CAAScrJavaScript", "CATIArrNomenclatureTrees", "CAAPslNomenAccessFeat", "CATIArrNomenclatures", "CATIArrNomenclature"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAPslNomenAccessFeat.htm"
+source_file: "Doc/online/CAAScdArrUseCases/CAAPslNomenAccessFeat.htmmd"
 converted: "2026-05-11T11:27:02.686987"
 ---
 
@@ -38,7 +38,7 @@ Thus we saw how to read a CATProduct document, retrieve the objects we
  
  
 
- ![](../CAAScrBase/images/aendtask.gif)
+ ![image](../../assets/images/aendtask.gif)
  
 
 [Top]
@@ -85,35 +85,49 @@ Thus we saw how to read a CATProduct document, retrieve the objects we are
 ```vbscript
 ...
    '//---------- Get Arrworkbench from current document
+```vbscript
    Dim objDocument0 As Object
    Set objDocument0 = CATIA.ActiveDocument  
    Dim objArrWorkbench1 As Workbench
    Set objArrWorkbench1 = objDocument0.GetWorkbench  ( &quot;ArrWorkbench&quot; )
    '//---------- Get ArrNomenclatureTree from ArrWorkbench
+```
+```vbscript
    Dim objArrNomTree1 As ArrNomenclatureTree
    Set objArrNomTree1 = objArrWorkbench1.ArrNomenclatureTree
+```
 ```
 
 ```vbscript
 ...
+```vbscript
    Dim intK
    Dim objKArrNom As ArrNomenclature
    Dim strIntSysClassName
    Dim strNLSInstanceName
    Dim strIconName
   '// -------- Recursively loop Through each Nomenclature and do the following
+```
+```vbscript
    Set objKArrNom = objArrNomTopNode.Item(intK)
    strIntSysClassName = objKArrNom.IntSysClassName
+```
    strNLSInstanceName = objKArrNom.NLSInstanceName
    strIconName = objKArrNom.IconName
    '// ArrNomenclature can contain various subtypes
+```vbscript
    Dim objArrSubTypes As ArrNomenclatures
    Set objArrSubTypes = iobjArrNomen.SubTypes
    intNBOfNom = objArrSubtypes.Count
+```
+```vbscript
    Dim objJArrNom As ArrNomenclature
    For intJ=1 to intNBOfNom  
+```
+```vbscript
    Set objJArrNom = objArrSubTypes.Item(intJ) 
    strNLSInstanceName = objJArrNom.NLSInstanceName
+```
    strIntSysClassName = objJArrNom.IntSysClassName
    strIconName = objJArrNom.IconName
    ' Call recursive function again on objJArrNom
@@ -122,5 +136,7 @@ Thus we saw how to read a CATProduct document, retrieve the objects we are
 
 ```vbscript
 ...
+```vbscript
 End Sub
+```
 ```

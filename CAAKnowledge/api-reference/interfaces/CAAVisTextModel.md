@@ -2,7 +2,7 @@
 title: "CAAVisTextModel"
 type: "interface"
 module: "CAAVisualization"
-category: "framework"
+category: api-reference
 base: "CATModelForRep3D"
 inheritance_chain: "CAAVisTextModel → CATModelForRep3D"
 method_count: 1
@@ -23,3 +23,29 @@ verified: true
 
 - `CATModelForRep3D.h`
 
+---
+
+## Interface Overview
+
+This interface inherits from **CATModelForRep3D**. 
+
+**Inherited Methods**: Please refer to the base interface documentation above.
+
+---
+
+## Related Use Cases
+
+This interface is used in the following use cases:
+
+- [CAAVisSampleISO](../../use-cases/caaviscases/CAAVisSampleISO.md)
+- [CAAVisSampleTempObject](../../use-cases/caaviscases/CAAVisSampleTempObject.md)
+
+## Interface Notes
+
+This interface is part of the **CAA** module.
+
+**Status**: This interface document is a template. Please refer to the official API documentation for more information.
+
+**Related Resources**:
+- [Quick References](../..//quick-refs/)
+- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)

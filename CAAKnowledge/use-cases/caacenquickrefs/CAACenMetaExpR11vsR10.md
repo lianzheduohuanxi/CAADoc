@@ -4,13 +4,13 @@ title: "Changes to ENOVIA LCA Metadata in V5R11 Compared with V5R10"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: []
-source_file: "Doc/online/CAACenQuickRefs/CAACenMetaExpR11vsR10.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenMetaExpR11vsR10.htmmd"
 converted: "2026-05-11T17:33:46.563961"
 ```
 
 ---
 tags: []
-source_file: "Doc/online/CAACenQuickRefs/CAACenMetaExpR11vsR10.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenMetaExpR11vsR10.htmmd"
 converted: "2026-05-11T17:33:46.563961"
 CAA V5 Encyclopedia |  Changes to ENOVIA LCA Metadata in V5R11 Compared with V5R10
 
@@ -29,8 +29,10 @@ Object inheritance change | PRODUCT | TEMPLAT | VPMProductClass | Class | from <
 Object inheritance change | PRODUCT | TEMPLAT | VPMProductRootClass | Class | from <VPMTPObjectID> to <> |   |
 Object inheritance change | PRODUCT | TEMPLAT | VPMProductSpecification | Class | from <VPMTPObject> to <> |   |
 Object inheritance change | PRODUCT | TEMPLAT | VPMProductComponent | Class | from <VPMTPObjectID> to <> |   |
+```vbscript
 Object inheritance change | PRODUCT | TEMPLAT | VPMProductFunction | Class | from <VPMTPObjectID> to <> |   |
 Object inheritance change | PRODUCT | TEMPLAT | VPMItemInstance | Class | from <VPMTPObject> to <> |   |
+```
 New attribute | PRODUCT | TEMPLAT | VPMItemInstance | Class |   | C511_ExpandString | String/Simple
 New attribute | PRODUCT | TEMPLAT | VPMItemInstance | Class |   | V511_Substitutes | Oid/Simple
 New attribute | PRODUCT | TEMPLAT | VPMItemInstance | Class |   | V511_PlanningCode | String/Simple

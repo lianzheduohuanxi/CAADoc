@@ -4,7 +4,7 @@ title: "Selecting Groups for Visualization of Images"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAScdAniUseCases", "CAAAniPostProSelection"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPostProSelection.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPostProSelection.htmmd"
 converted: "2026-05-11T17:31:51.767002"
 ```
 
@@ -38,20 +38,26 @@ This use case shows how groups are selected image visualization. The macro opens
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
+```vbscript
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
+```
 
+```vbscript
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
         End If
 ```
 
@@ -62,8 +68,10 @@ This use case shows how groups are selected image visualization. The macro opens
 ```vbscript
     ' -----------------------------------------------------------
     ' Open the Analysis document
-    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis")
+```vbscript
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Cube_R13_Freq.CATAnalysis")
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+```
 ```
 
 ```
@@ -84,15 +92,19 @@ Open the Analysis document. The Analysis document is fetched in the documentatio
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisManager = oAnalysisDocument.Analysis
+```
 ```
 
 ```vbscript
 ```vbscript
 ```vbscript
     ' Retrieve the analysis model from the list of models
+```vbscript
     Set oAnalysisModels = oAnalysisManager.AnalysisModels
     Set oAnalysisModel = oAnalysisModels.Item(1)
+```
 ```
 
 ```
@@ -104,56 +116,74 @@ Open the Analysis document. The Analysis document is fetched in the documentatio
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisCases = oAnalysisModel.AnalysisCases
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oAnalysisCase = oAnalysisCases.Item(1)
 
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Set oAnalysisCases = oAnalysisModel.AnalysisCases
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set oAnalysisCase = oAnalysisCases.Item(1)
     ' Retrieve the analysis sets and analysis set by its name
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisSets = oAnalysisCase.AnalysisSets
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set analysisSet2 = oAnalysisSets.Item("Frequency Case Solution.1", catAnalysisSetSearchAll)
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Set analysisSet2 = oAnalysisSets.Item("Frequency Case Solution.1", catAnalysisSetSearchAll)
 ```vbscript
+```
     ' Retrieve the analysis Entity and create a reference
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set analysisEntities1 = oAnalysisSet.AnalysisEntities
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set analysisEntity1 = analysisEntities1.Item(1)
     Set reference1 = oAnalysisManager.CreateReferenceFromObject(analysisEntity1)
 
+```
 ```
 
 ```
@@ -164,7 +194,7 @@ Set analysisSet2 = oAnalysisSets.Item("Frequency Case Solution.1", catAnalysisSe
 
 ---
 
-According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , and the **Analysis Model**.
+According to the general [ Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , and the **Analysis Model**.
 
 The Analysis case is retrieved from list of cases by its index. The model contains only one analysis case hence we pass 1 to the method _Item._ Otherwise we pass the appropriate index of the frequency case if there are more Analysis cases. The Analysis Case is retrieved from the list of image by its name. The name is same as that appears in the interactive application.
 #### Create References from different Groups and set them as Selection
@@ -176,9 +206,13 @@ The Analysis case is retrieved from list of cases by its index. The model contai
 ```
 
 ```vbscript
+```vbscript
     Set analysisImages1 = analysisSet2.AnalysisImages
 ```vbscript
+```
+```vbscript
     Set analysisImage1 = analysisImages1.Item("Von Mises Stress (nodal values).1")
+```
 ```
 
     analysisImage1.SetSelection reference1, True
@@ -197,7 +231,10 @@ analysisImage1.Update
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisSet = oAnalysisModel.AnalysisSets
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set analysisSet3 = analysisSets2.ItemByType("GroupSet")
@@ -205,6 +242,7 @@ analysisImage1.Update
     Set analysisEntity2 = analysisEntities2.Item(1)
     Set reference2 = oAnalysisManager.CreateReferenceFromObject(analysisEntity2)
     ' Set the created reference for Selection in Von Mises Stress Image
+```
 ```
 
 ```
@@ -231,14 +269,20 @@ analysisImage1.Update
 ```
 
 ```vbscript
+```vbscript
     Set analysisSets3 = oAnalysisModel.AnalysisSets
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oAnalysisMeshManager = analysisSets3.ItemByType("MSHMeshSet")
     Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
     Set analysisMeshPart1 = oAnalysisMeshParts.Item("OCTREE Tetrahedron Mesh.1 : Part1")
     'Create reference from the mesh part and set the selection
+```
+```vbscript
     Set reference3 = oAnalysisManager.CreateReferenceFromObject(analysisMeshPart1)
+```
 ```
 
 ```
@@ -256,15 +300,17 @@ Creating reference from objects and setting them is achieved by Reference interf
 #### Epilog
 
     ...
+```vbscript
     End Sub
     ...
+```
 
 ---
 
 To run the macro interactively CATDocView environment variable must be defined.
   |
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

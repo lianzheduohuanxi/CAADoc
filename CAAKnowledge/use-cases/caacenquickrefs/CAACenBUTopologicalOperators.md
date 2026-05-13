@@ -4,13 +4,13 @@ title: "TopologicalOperators Changed Classes or Interfaces"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATICGMHybDisconnect", "CATICGMHybTrim", "CATICGMTopBodyExtremum", "CATICGMHybIntersect", "CATICGMSolidCuboid", "CATICGMDynChamfer", "CATICGMTopParallel", "CATICGMDynTransformation", "CATICGMTopWire", "CATICGMTopExtrude", "CATICGMDynThickness", "CATICGMTopSimplify", "CATICGMTopReflectLine", "CATICGMDynMassProperties3D", "CATICGMDynDraft", "CATICGMDistanceMinBodyBody", "CATICGMSolidTorus", "CATICGMTopExtrapolWireOnShell", "CATICGMWireExtrapolationOp", "CATICGMTopVertex"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenBUTopologicalOperators.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenBUTopologicalOperators.htmmd"
 converted: "2026-05-11T17:33:46.502758"
 ```
 
 ---
 tags: ["CATICGMHybDisconnect", "CATICGMHybTrim", "CATICGMTopBodyExtremum", "CATICGMHybIntersect", "CATICGMSolidCuboid", "CATICGMDynChamfer", "CATICGMTopParallel", "CATICGMDynTransformation", "CATICGMTopWire", "CATICGMTopExtrude", "CATICGMDynThickness", "CATICGMTopSimplify", "CATICGMTopReflectLine", "CATICGMDynMassProperties3D", "CATICGMDynDraft", "CATICGMDistanceMinBodyBody", "CATICGMSolidTorus", "CATICGMTopExtrapolWireOnShell", "CATICGMWireExtrapolationOp", "CATICGMTopVertex"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenBUTopologicalOperators.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenBUTopologicalOperators.htmmd"
 converted: "2026-05-11T17:33:46.502758"
 TopologicalOperators Changed Classes or Interfaces
 

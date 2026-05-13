@@ -4,13 +4,13 @@ title: "Part Selection"
 category: "use case"
 module: "CAACloUseCases"
 tags: ["CAACommonLayoutItf", "CAACloPartSelection", "CATICloPartSelection", "CATICatalogDescription", "CATIUnknownList", "CAAECloPartSelection", "CATICkeParm"]
-source_file: "Doc/online/CAACloUseCases/CAAECloPartSelection.htm"
+source_file: "Doc/online/CAACloUseCases/CAAECloPartSelection.htmmd"
 converted: "2026-05-11T17:33:49.550794"
 ```
 
 ---
 tags: ["CAACommonLayoutItf", "CAACloPartSelection", "CATICloPartSelection", "CATICatalogDescription", "CATIUnknownList", "CAAECloPartSelection", "CATICkeParm"]
-source_file: "Doc/online/CAACloUseCases/CAAECloPartSelection.htm"
+source_file: "Doc/online/CAACloUseCases/CAAECloPartSelection.htmmd"
 converted: "2026-05-11T17:33:49.550794"
 Equipment & Systems |  Systems Layout |  Part Selection _How to customize part selection_
 
@@ -43,14 +43,14 @@ What You Will Learn With This Use Case This use case is intended to show you how
        * Start CNext and select Piping Design workbench.
        * Route a run and place an Elbow.
        * CAAECloPartSelection should be invoked and a elbow should be created since there is only one elbow selected.
-[Top] Where to Find the CAAECloPartSelection Code CAAECloPartSelection code is located in the CAACloPartSelection.m use case module of the CAACommonLayoutItf.edu framework: Windows | `InstallRootDirectory\CAACommonLayoutItf.edu\CAACloPartSelection.m\src\CAAECloPartSelection.cpp`
+[Top] Where to Find the CAAECloPartSelection Code CAAECloPartSelection code is located in the CAACloPartSelection.m use case module of the CAACommonLayoutItf.edu framework: Windows | `InstallRootDirectory/CAACommonLayoutItf.edu/CAACloPartSelection.m/src/CAAECloPartSelection.cpp`
 ---|---
 Unix | `InstallRootDirectory/CAACommonLayoutItf.edu/CAACloPartSelection.m/src/CAAECloPartSelection.cpp`
 Unix | `InstallRootDirectory/CAACommonLayoutItf.edu/CAACloPartSelection.m/src/CAAECloPartSelection.cpp`
-The following contains the dictionary file that references the implementation: Windows | `InstallRootDirectory\CAACommonLayoutItf.edu\CNext\code\dictionary\CAACommonLayoutItf.edu.dico`
+The following contains the dictionary file that references the implementation: Windows | `InstallRootDirectory/CAACommonLayoutItf.edu/CNext/code/dictionary/CAACommonLayoutItf.edu.dico`
 
 Unix | `InstallRootDirectory/CAACommonLayoutItf.edu/CAACloPartSelection.m/src/CAAECloPartSelection.cpp`
-The following contains the dictionary file that references the implementation: Windows | `InstallRootDirectory\CAACommonLayoutItf.edu\CNext\code\dictionary\CAACommonLayoutItf.edu.dico`
+The following contains the dictionary file that references the implementation: Windows | `InstallRootDirectory/CAACommonLayoutItf.edu/CNext/code/dictionary/CAACommonLayoutItf.edu.dico`
 Unix | `InstallRootDirectory/CAACommonLayoutItf.edu/CNext/code/dictionary/CAACommonLayoutItf.edu.dico`
 where `InstallRootDirectory` is the root directory of your CAA V5 installation. [Top] Step-by-Step
     1. Prolog
@@ -103,15 +103,15 @@ CATUnicodeString parmValue;
 CATICkeParm* piCkeParm = NULL;
 piUnknown->QueryInterface(IID_CATICkeParm,(void**)&piCkeParm);
 if ( piCkeParm )
-            cout << (piCkeParm->Name()).ConvertToChar() << "=" << (piCkeParm->Show()).ConvertToChar() << endl;
-            piCkeParm->Release();   piCkeParm = NULL;
+            cout << (piCkeParm->Name(#)).ConvertToChar(#) << "=" << (piCkeParm->Show(#)).ConvertToChar(#) << endl;
+            piCkeParm->Release(#);   piCkeParm = NULL;
 
           }
 ```vbscript
 if ( piCkeParm )
-cout << (piCkeParm->Name()).ConvertToChar() << "=" << (piCkeParm->Show()).ConvertToChar() << endl;
-piCkeParm->Release();   piCkeParm = NULL;
-          piUnknown->Release(); piUnknown = NULL;
+cout << (piCkeParm->Name(#)).ConvertToChar(#) << "=" << (piCkeParm->Show(#)).ConvertToChar(#) << endl;
+piCkeParm->Release(#);   piCkeParm = NULL;
+          piUnknown->Release(#); piUnknown = NULL;
 ```
 
         }
@@ -162,15 +162,15 @@ CATUnicodeString parmValue;
 CATICkeParm* piCkeParm = NULL;
 piUnknown->QueryInterface(IID_CATICkeParm,(void**)&piCkeParm);
 if ( piCkeParm )
-            cout << (piCkeParm->Name()).ConvertToChar() << "=" << (piCkeParm->Show()).ConvertToChar() << endl;
-            piCkeParm->Release();   piCkeParm = NULL;
+            cout << (piCkeParm->Name(#)).ConvertToChar(#) << "=" << (piCkeParm->Show(#)).ConvertToChar(#) << endl;
+            piCkeParm->Release(#);   piCkeParm = NULL;
 
           }
 ```vbscript
 if ( piCkeParm )
-cout << (piCkeParm->Name()).ConvertToChar() << "=" << (piCkeParm->Show()).ConvertToChar() << endl;
-piCkeParm->Release();   piCkeParm = NULL;
-          piUnknown->Release(); piUnknown = NULL;
+cout << (piCkeParm->Name(#)).ConvertToChar(#) << "=" << (piCkeParm->Show(#)).ConvertToChar(#) << endl;
+piCkeParm->Release(#);   piCkeParm = NULL;
+          piUnknown->Release(#); piUnknown = NULL;
 ```
 
         }
@@ -226,7 +226,7 @@ piUnknown->QueryInterface(IID_CATICatalogDescription,(void**)&piDescription);
 if ( piDescription )
             CATUnicodeString descName;
             piDescription->GetName(descName);
-            cout << descName.ConvertToChar() << endl;
+            cout << descName.ConvertToChar(#) << endl;
 
 ```vbscript
             if ( iuPartType == "PipingNonReduceElbow" )
@@ -235,7 +235,7 @@ if ( piDescription )
 
             {
               //add code for filtering...use CenterToFace >= 3in only for example
-cout << descName.ConvertToChar() << endl;
+cout << descName.ConvertToChar(#) << endl;
 if ( iuPartType == "PipingNonReduceElbow" )
               double oValue = 0.0;
 
@@ -286,17 +286,17 @@ else
             }
 else
 oListDescription->Add(selected++, piUnknown);
-            piDescription->Release(); piDescription=NULL;
+            piDescription->Release(#); piDescription=NULL;
 
           }
 oListDescription->Add(selected++, piUnknown);
-piDescription->Release(); piDescription=NULL;
-          piUnknown->Release(); piUnknown = NULL;
+piDescription->Release(#); piDescription=NULL;
+          piUnknown->Release(#); piUnknown = NULL;
 
         }
       }
-piDescription->Release(); piDescription=NULL;
-piUnknown->Release(); piUnknown = NULL;
+piDescription->Release(#); piDescription=NULL;
+piUnknown->Release(#); piUnknown = NULL;
       if ( selected > 0 ) RC = S_OK;
       else RC = E_FAIL;
       return RC;

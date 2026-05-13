@@ -4,13 +4,13 @@ title: "Creating a Blend"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsBlendWithCouplingModes", "CATICGMTopBlend", "CAAGMOperatorsBlendWithCouplingLines"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopBlend.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopBlend.htmmd"
 converted: "2026-05-11T17:33:49.079944"
 ```
 
 ---
 tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsBlendWithCouplingModes", "CATICGMTopBlend", "CAAGMOperatorsBlendWithCouplingLines"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopBlend.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopBlend.htmmd"
 converted: "2026-05-11T17:33:49.079944"
 Blend
 
@@ -47,13 +47,13 @@ piMainBody0);
     pBlendOpe->SetTransitionContinuity(1,2);  // curvature continuity at the first wire side
     pBlendOpe->SetTransitionContinuity(2,1);  // tangency continuity at the second wire side
 
-    pBlendOpe->Run();
-    CATBody * pBodyBlend = pBlendOpe->GetResult();
-    pBlendOpe->Release();
+    pBlendOpe->Run(#);
+    CATBody * pBodyBlend = pBlendOpe->GetResult(#);
+    pBlendOpe->Release(#);
     pBlendOpe=NULL;
 
 ---
-pBlendOpe->Release();
+pBlendOpe->Release(#);
 pBlendOpe=NULL;
 you get this result: Fig.2 Result of Blend Operation with Coupling Lines ![Blend Operation: Result G1G2 Continuity](images/CGM_blend_coupling_lines_1.png)
 
@@ -85,9 +85,9 @@ piMainBody0);
     pBlendOpe->SetTransitionContinuity(1,2);  // curvature continuity at the first wire side
     pBlendOpe->SetTransitionContinuity(2,1);  // tangency continuity at the second wire side
 
-    pBlendOpe->Run();
-    CATBody * pBodyBlend = pBlendOpe->GetResult();
-    pBlendOpe->Release();
+    pBlendOpe->Run(#);
+    CATBody * pBodyBlend = pBlendOpe->GetResult(#);
+    pBlendOpe->Release(#);
     pBlendOpe=NULL;
 
 ---

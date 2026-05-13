@@ -4,13 +4,13 @@ title: "Type Libraries in C++ for Windows"
 category: "use-case"
 module: "CAABtlTechArticles"
 tags: []
-source_file: "Doc/online/CAABtlTechArticles/CAABtlMANtlb.htm"
+source_file: "Doc/online/CAABtlTechArticles/CAABtlMANtlb.htmmd"
 converted: "2026-05-11T17:33:46.134211"
 ```
 
 ---
 tags: []
-source_file: "Doc/online/CAABtlTechArticles/CAABtlMANtlb.htm"
+source_file: "Doc/online/CAABtlTechArticles/CAABtlMANtlb.htmmd"
 converted: "2026-05-11T17:33:46.134211"
 RADE |  Multi-Workspace Application Builder |  Type Libraries in C++ for Windows _Support of type libraries import in C++ sources for Windows_
 

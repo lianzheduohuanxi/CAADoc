@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAADlgUseCases"
 tags: ["CAADocStyleSheets", "CAADlgDemoWindow", "CAADlgGridLayout", "CAADlgTabulationFrameReplaceTech1", "CAADlgTabulationMoreLess1", "CAADialog", "CAADlgDemoApplication", "CAADlgTabulationMoreLessTech3", "CAADlgTabulationRadioTech2", "CAADlgMoreRadioDlg", "CAADocUseCases", "CAADlgTabulationRadio1", "CAADlgTabulationRadio2", "CATInteractiveApplication", "CAADlgFrameReplaceDlg", "CAADlgMoreButtonDlg", "CAADlgTabulationMoreLessTech1", "CAADlgTabulationMoreLessTech2", "CAADlgResources", "CAADlgTabulationRadioTech1"]
-source_file: "Doc/online/CAADlgUseCases/CAADlgSampleTabulation.htm"
+source_file: "Doc/online/CAADlgUseCases/CAADlgSampleTabulation.htmmd"
 converted: "2026-05-11T11:27:02.795626"
 ---
 
@@ -809,8 +809,6 @@ dialog boxes, such as a more and less dialog box.
 
 *Copyright  2003, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 CAADlgMoreButtonDlg::CAADlgMoreButtonDlg(CATDialog * pParentDlg) :
   CATDlgDialog (pParentDlg,&quot;CAADlgMoreButtonDlg&quot;, CATDlgWndBtnOKCancel |
@@ -823,7 +821,7 @@ CAADlgMoreButtonDlg::CAADlgMoreButtonDlg(CATDialog * pParentDlg) :
 ```
 
 ```vbscript
-void CAADlgMoreButtonDlg::Build()
+void CAADlgMoreButtonDlg::Build(#)
 {
    a/ Creating Dialog Objects
    
@@ -871,7 +869,7 @@ void CAADlgMoreButtonDlg::Build()
 ```vbscript
 ...
    AddAnalyseNotificationCB  (pPushButtonMore, 
-                              pPushButtonMore-&gt;GetPushBActivateNotification(),
+                              pPushButtonMore-&gt;GetPushBActivateNotification(#),
      (CATCommandMethod)&amp;CAADlgMoreButtonDlg::OnPushButtonMorePushBActivateNotification,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
                    NULL);
 ...
@@ -879,7 +877,7 @@ void CAADlgMoreButtonDlg::Build()
 
 ```vbscript
 ...
-void CAADlgMoreRadioDlg::Build()
+void CAADlgMoreRadioDlg::Build(#)
 {
   a/ Creating Dialog Objects
 
@@ -917,16 +915,16 @@ void CAADlgMoreRadioDlg::Build()
 ```vbscript
 ...
    AddAnalyseNotificationCB (pRadioButtonND, 
-                               pRadioButtonND-&gt;GetRadBModifyNotification(),
+                               pRadioButtonND-&gt;GetRadBModifyNotification(#),
      (CATCommandMethod)&amp;CAADlgMoreRadioDlg::OnRadioButtonNDRadBModifyNotification,
                                NULL);
    AddAnalyseNotificationCB (pRadioButtonDB, 
-                               pRadioButtonDB-&gt;GetRadBModifyNotification(),
+                               pRadioButtonDB-&gt;GetRadBModifyNotification(#),
      (CATCommandMethod)&amp;CAADlgMoreRadioDlg::OnRadioButtonDBRadBModifyNotification,
                                NULL);
 
    AddAnalyseNotificationCB (pRadioButtonDA, 
-                               pRadioButtonDA-&gt;GetRadBModifyNotification(),
+                               pRadioButtonDA-&gt;GetRadBModifyNotification(#),
      (CATCommandMethod)&amp;CAADlgMoreRadioDlg::OnRadioButtonDARadBModifyNotification,
                                NULL);
 ...
@@ -934,7 +932,7 @@ void CAADlgMoreRadioDlg::Build()
 
 ```vbscript
 ...
-void CAADlgFrameReplaceDlg::Build()
+void CAADlgFrameReplaceDlg::Build(#)
 {
    a/ Creating Dialog objects 
 
@@ -985,7 +983,7 @@ void CAADlgFrameReplaceDlg::Build()
 ```vbscript
 ...
    AddAnalyseNotificationCB (_pComboPointType, 
-                 _pComboPointType-&gt;GetComboSelectNotification(),
+                 _pComboPointType-&gt;GetComboSelectNotification(#),
           (CATCommandMethod)&amp;CAADlgFrameReplaceDlg::OnComboSelectNotification,
                                NULL);
 ...
@@ -1029,7 +1027,7 @@ void CAADlgMoreRadioDlg::OnRadioButtonDARadBModifyNotification(CATCommand* cmd,
   CATDlgRadioButton * pRadioButton = (CATDlgRadioButton *) cmd ;
   if ( (NULL != _pFrameDetailA) &amp;&amp; ( NULL != pRadioButton) )
   {
-     if (pRadioButton-&gt;GetState() == CATDlgCheck) 
+     if (pRadioButton-&gt;GetState(#) == CATDlgCheck) 
      {
         SetVerticalAttachment(10, CATDlgTopOrLeft, _pFrameDetailA, NULL);
         _pFrameDetailA-&gt;SetVisibility(CATDlgShow);         
@@ -1053,7 +1051,7 @@ void CAADlgFrameReplaceDlg::OnComboSelectNotification(CATCommand* cmd, CATNotifi
       ResetAttachment(_pListFrame[_CurrentSelection]);
       _pListFrame[_CurrentSelection]-&gt;SetVisibility(CATDlgHide);
       
-      int NewCurrentSelection = _pComboPointType-&gt;GetSelect() ;
+      int NewCurrentSelection = _pComboPointType-&gt;GetSelect(#) ;
       SetHorizontalAttachment(5, CATDlgTopOrLeft
                                      , _pListFrame[NewCurrentSelection], NULL);
       _pListFrame[NewCurrentSelection]-&gt;SetVisibility(CATDlgShow);

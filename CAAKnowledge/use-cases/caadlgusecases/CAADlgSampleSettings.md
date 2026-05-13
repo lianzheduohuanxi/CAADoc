@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAADlgUseCases"
 tags: ["CATInteractiveApplication", "CATISpecObject", "CAADialog", "CAADlgDemoApplication", "CAADlgFrameReplaceDlg", "CAASysTechArticles", "CAADocStyleSheets", "CAADlgTabulationFrameReplace1", "CAADlgDemoWindow", "CAADocRunSample", "CAASysSettingRepositories", "CAADlgDialogDemonstrator", "CAADlgSampleTabulation", "CAADlgTabulationFrameReplace3", "CAADocUseCases", "CAADlgTabulationFrameReplace2", "CAADlgFrameReplace"]
-source_file: "Doc/online/CAADlgUseCases/CAADlgSampleSettings.htm"
+source_file: "Doc/online/CAADlgUseCases/CAADlgSampleSettings.htmmd"
 converted: "2026-05-11T11:27:02.782971"
 ---
 
@@ -274,8 +274,6 @@ restore the Dialog object values.
 
 *Copyright  2003, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 #include &quot;CATDlgDialog.h&quot;   // To derive from
 ...
@@ -287,9 +285,9 @@ class CAADlgFrameReplaceDlg: public CATDlgDialog
   public:
 
       CAADlgFrameReplaceDlg(CATDialog * pParentDlg);
-      virtual ~CAADlgFrameReplaceDlg();
+      virtual ~CAADlgFrameReplaceDlg(#);
 
-      void Build ();
+      void Build (#);
 
   private:
       ...
@@ -321,7 +319,7 @@ CAADlgFrameReplaceDlg::CAADlgFrameReplaceDlg(CATDialog * pParentDlg) :
 ```
 
 ```vbscript
-CAADlgFrameReplaceDlg::~CAADlgFrameReplaceDlg()
+CAADlgFrameReplaceDlg::~CAADlgFrameReplaceDlg(#)
 {
     _pSettingFrameReplace = NULL ;
     ...
@@ -329,7 +327,7 @@ CAADlgFrameReplaceDlg::~CAADlgFrameReplaceDlg()
 ```
 
 ```vbscript
-void CAADlgFrameReplaceDlg::Build()
+void CAADlgFrameReplaceDlg::Build(#)
 {
    a/ Creating the Dialog objects and Arranging them
 
@@ -366,16 +364,16 @@ void CAADlgFrameReplaceDlg::Build()
 ```vbscript
 ...
    AddAnalyseNotificationCB (this, 
-                               GetDiaCANCELNotification(),
+                               GetDiaCANCELNotification(#),
                                (CATCommandMethod)&amp;CAADlgFrameReplaceDlg::CloseWindow,
                                NULL);
 
    AddAnalyseNotificationCB (this, 
-                               GetDiaOKNotification(),
+                               GetDiaOKNotification(#),
                                (CATCommandMethod)&amp;CAADlgFrameReplaceDlg::CloseWindowOK,
                                NULL);
    AddAnalyseNotificationCB (this, 
-                               GetWindCloseNotification(),
+                               GetWindCloseNotification(#),
                                (CATCommandMethod)&amp;CAADlgFrameReplaceDlg::CloseWindow,
                                NULL);
 ...
@@ -389,17 +387,17 @@ void CAADlgFrameReplaceDlg::CloseWindowOK(CATCommand* cmd, CATNotification* evt,
    {
        if ( NULL != _pComboPointType )
        {
-          int PointType = _pComboPointType-&gt;GetSelect() ;
+          int PointType = _pComboPointType-&gt;GetSelect(#) ;
           _pSettingFrameReplace-&gt;WriteSetting(&quot;ComboPointType&quot;,&amp;PointType);
        }
 
        if ( (NULL !=_pSpinnerX) &amp;&amp; (NULL !=_pSpinnerY) &amp;&amp; (NULL !=_pSpinnerZ) )
        {
-          double XVal = _pSpinnerX-&gt;GetValue() ;
+          double XVal = _pSpinnerX-&gt;GetValue(#) ;
           _pSettingFrameReplace-&gt;WriteSetting(&quot;XCoord&quot;,&amp;XVal);
-          double YVal = _pSpinnerY-&gt;GetValue() ;
+          double YVal = _pSpinnerY-&gt;GetValue(#) ;
           _pSettingFrameReplace-&gt;WriteSetting(&quot;YCoord&quot;,&amp;YVal);
-          double ZVal = _pSpinnerZ-&gt;GetValue() ;
+          double ZVal = _pSpinnerZ-&gt;GetValue(#) ;
           _pSettingFrameReplace-&gt;WriteSetting(&quot;ZCoord&quot;,&amp;ZVal);
        }
 ...
@@ -407,7 +405,7 @@ void CAADlgFrameReplaceDlg::CloseWindowOK(CATCommand* cmd, CATNotification* evt,
 
 ```vbscript
 ...
-       _pSettingFrameReplace-&gt;SaveRepository();
+       _pSettingFrameReplace-&gt;SaveRepository(#);
  ...
 }
 ```

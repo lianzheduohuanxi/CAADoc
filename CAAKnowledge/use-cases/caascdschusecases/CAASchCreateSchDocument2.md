@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAAScrBase", "CATIA", "CAASchCreateSchDocument2", "CAAScrJavaScript", "CAASchCreateSchDocument2Source", "CAAScdSchUseCases", "CAAScdInfUseCases", "CAAInfLauchMacro"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchCreateSchDocument2.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchCreateSchDocument2.htmmd"
 converted: "2026-05-11T11:27:02.611363"
 ---
 
@@ -18,8 +18,10 @@ converted: "2026-05-11T11:27:02.611363"
      
      
 
+```vbscript
 #### Set the drawing standard of the 
      drafting viewer in the schematic document
+```
      
 
 A schematic document has a drafting viewer embedded in it. The drawing 

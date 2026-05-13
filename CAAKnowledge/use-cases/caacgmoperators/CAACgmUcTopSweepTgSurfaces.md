@@ -4,13 +4,13 @@ title: "Creating a Sweep from a Spine and Two Tangency Surfaces"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CATICGMTopSweepSkinSkinSegment", "CAAGMOperatorsInterfaces", "CAAGMOperatorsSweepTangentSkinSkin"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopSweepTgSurfaces.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopSweepTgSurfaces.htmmd"
 converted: "2026-05-11T17:33:49.337299"
 ```
 
 ---
 tags: ["CATICGMTopSweepSkinSkinSegment", "CAAGMOperatorsInterfaces", "CAAGMOperatorsSweepTangentSkinSkin"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopSweepTgSurfaces.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopSweepTgSurfaces.htmmd"
 converted: "2026-05-11T17:33:49.337299"
 Creating a Sweep from a Spine and Two Tangency Surfaces
 
@@ -54,25 +54,25 @@ SweepTopOp->SetSecondShellOrientation( orient2 );
      SweepTopOp->SetFirstShellModeTrim( trim1 );
      SweepTopOp->SetSecondShellModeTrim( trim2 );
 
-    SweepTopOp->Run();
+    SweepTopOp->Run(#);
 
     ...
 SweepTopOp->SetFirstShellModeTrim( trim1 );
 SweepTopOp->SetSecondShellModeTrim( trim2 );
-SweepTopOp->Run();
-    SweepTopOp->BeginningResult();
+SweepTopOp->Run(#);
+    SweepTopOp->BeginningResult(#);
     int firstShellOrient = 0, secondShellOrient = 0, firstCoupledOrient = 0, secondCoupledOrient = 0, index = 0;
-    CATSoftwareConfiguration * pConfig = iTopData->GetSoftwareConfiguration();
+    CATSoftwareConfiguration * pConfig = iTopData->GetSoftwareConfiguration(#);
 
 ```vbscript
-      while (SweepTopOp->NextResult())
+      while (SweepTopOp->NextResult(#))
 
 ```
 
             {
 int firstShellOrient = 0, secondShellOrient = 0, firstCoupledOrient = 0, secondCoupledOrient = 0, index = 0;
-CATSoftwareConfiguration * pConfig = iTopData->GetSoftwareConfiguration();
-while (SweepTopOp->NextResult())
+CATSoftwareConfiguration * pConfig = iTopData->GetSoftwareConfiguration(#);
+while (SweepTopOp->NextResult(#))
                 CATCGMJournalList * pTempJournal =  new CATCGMJournalList(pConfig,NULL);//get the journal corresponding to this result
 
                 CATBody * pTempBody = SweepTopOp->GetResult(pTempJournal);

@@ -4,7 +4,7 @@ title: "Creating Tetrahedron Filler Mesh Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAScdAniUseCases", "CAAAniMeshTetraFiller"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshTetraFiller.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshTetraFiller.htmmd"
 converted: "2026-05-11T17:31:51.724099"
 ```
 
@@ -38,20 +38,26 @@ This use case shows you how to create tetrahedron filler mesh part in an existin
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
+```vbscript
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
+```
 
+```vbscript
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
         End If
 ```
 
@@ -62,8 +68,10 @@ This use case shows you how to create tetrahedron filler mesh part in an existin
 ```vbscript
     ' -----------------------------------------------------------
     ' Open the Analysis document
-    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis")
+```vbscript
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Cube_R13_Freq.CATAnalysis")
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+```
 ```
 
 ```
@@ -84,25 +92,35 @@ Open the Analysis document. The Analysis document is retrieved in the documentat
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisManager = oAnalysisDocument.Analysis
+```
 ```
 
 ```vbscript
 ```vbscript
 ```vbscript
     ' Retrieve the part document and product
+```vbscript
     Set oAnalysisLinkedDocument = oAnalysisManager.LinkedDocuments
     Set PartDocument = oAnalysisLinkedDocuments.Item(1)
     Set product = partDocument.Product
     ' Retrieve the analysis model from the list of models
+```
+```vbscript
     Set oAnalysisModels = oAnalysisManager.AnalysisModels
     Set oAnalysisModel = oAnalysisModels.Item(1)
     ' Retrieve mesh manager and mesh part from the list of mesh parts specifying its name
+```
+```vbscript
     Set oAnalysisMeshManager = oAnalysisModel.MeshManager
     Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
     Set oAnalysisMeshPart = oAnalysisMeshParts.Item("Surface Mesh.1")
     ' Create Reference from the mesh part.
+```
+```vbscript
     Set reference1 = oAnalysisManager.CreateReferenceFromObject(oAnalysisMeshPart)
+```
 ```
 
 ```
@@ -113,7 +131,7 @@ Open the Analysis document. The Analysis document is retrieved in the documentat
 
 ---
 
-According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**.
+According to the general [ Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**.
 
 The extraction of pre-defined geometric elements is done with the help of Reference interface. This is equivalent to the selection of a B-Rep element inside the interactive applications.
 #### Creating Mesh Part and Assigning Values to its Attributes
@@ -125,14 +143,18 @@ The extraction of pre-defined geometric elements is done with the help of Refere
 ```
 
 ```vbscript
+```vbscript
     Set tetraFiller = oAnalysisMeshParts.Add("MHSPartGHS3D")
 ```vbscript
+```
     ' Add reference previously created
 ```
 
     tetraFiller.AddSupportFromReference NOTHING, reference1
 ```vbscript
+```vbscript
     ' Set the global Specifications
+```
 ```
 
     tetraFiller.SetGlobalSpecification "Propagation", 1.5
@@ -152,8 +174,10 @@ The extraction of pre-defined geometric elements is done with the help of Refere
     ...
 
 ```vbscript
+```vbscript
 End Sub
 
+```
 ```
 
     ...
@@ -162,7 +186,7 @@ End Sub
 
 To run the macro interactively CATDocView  environment variable must be defined. After running the macro the mesh may not be immediately visible, the user has to go to the Advanced Meshing Tools workbench to see the mesh.
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

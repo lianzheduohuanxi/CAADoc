@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "The Versioning of the Topological Operators"
-category: "use-case"
+category: tech-article
 module: "CAATopTechArticles"
 tags: []
-source_file: "Doc/online/CAATopTechArticles/TopoVersioning.htm"
+source_file: "Doc/online/CAATopTechArticles/TopoVersioning.htmmd"
 converted: "2026-05-11T17:31:50.815757"
 ```
 
@@ -61,12 +61,12 @@ To create an open configuration (a configuration for the current software level)
 
 To create an open configuration (a configuration for the current software level), use the default constructor. Notice that you must use the `new` operator.
     _//_ _Defines an open configuration for the operator_
-    CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration();
+    CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration(#);
 
 ---
 
 _//_ _Defines an open configuration for the operator_
-CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration();
+CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration(#);
 ```vbscript
 If you use feature applications, please refer to their documentation to see how to retrieve the configuration associated with a given feature.
 
@@ -75,7 +75,7 @@ If you use feature applications, please refer to their documentation to see how 
 The configuration must be released after use in the following way:
 
     _//_ _Releases the configuration after the deletion of the operators_
-    pConfig->**Release**();
+    pConfig->**Release**(#);
 
 ---
 

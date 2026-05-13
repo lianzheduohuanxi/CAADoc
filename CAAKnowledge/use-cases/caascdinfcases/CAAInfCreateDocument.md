@@ -4,7 +4,7 @@ title: "Creating a New CATIA Document"
 category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CAAScdInfUseCases", "CAAInfSaveAsDocument", "CAAInfCloseDocument", "CAAInfCreateDocument", "CATIA"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfCreateDocument.htm"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfCreateDocument.htmmd"
 converted: "2026-05-11T17:31:52.355066"
 ```
 
@@ -44,9 +44,13 @@ This macro shows you how to create a new CATIA document. It details the programm
 ```
 
 ```vbscript
+```vbscript
          Dim oNewPartDoc As Document
 ```vbscript
+```
+```vbscript
          Set oNewPartDoc = CATIA.Documents.**Add**("Part")
+```
 ```
 
 ```

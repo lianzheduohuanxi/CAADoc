@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAASmiUseCases"
 tags: ["CATIMfgActivityParameters", "CAAMaiToolEditionCustomization", "CAADocStyleSheets", "CATIMacroEditorActivity", "CATIMfgStrategyActivity", "CATIMfgTool", "CAAESmiUserOperationToolEditor", "CAAESmiUserOperationStrategyEditor", "CAASurfaceMachiningItf", "CAASmiOperationSampleOverview", "CAASmiUserOperationUI", "CAAESmiUserOperationMacroEditor", "CAASmiOperationUIStrategyIcon", "CAAToolAngle", "CAASmiOperationUIMacrosIcon", "CAADocUseCases", "CAASmgOperation", "CAASmiOperationUIMacros", "CATIMfgResourceFactory", "CAASmiOperationUIStrategy"]
-source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationUI.htm"
+source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationUI.htmmd"
 converted: "2026-05-11T11:27:02.771855"
 ---
 
@@ -160,8 +160,6 @@ How to customize geometry tab page is described in the next use cases [4]
 
 *Copyright  2002, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 ...
 // Tie the implementation to its interface
@@ -269,7 +267,7 @@ HRESULT CAAESmiUserOperationToolEditor::CreateDefaultTool (CATBaseUnknown_var &a
       // Creates Default Tool
       CATUnicodeString ToolTypeToCreate = MfgEndMillTool;
       oTool = pResourceFactory-&gt;CreateResource(ToolTypeToCreate);
-      pResourceFactory-&gt;Release();
+      pResourceFactory-&gt;Release(#);
       pResourceFactory = NULL;
 
       // Defines a Default tool for our user operation
@@ -279,9 +277,9 @@ HRESULT CAAESmiUserOperationToolEditor::CreateDefaultTool (CATBaseUnknown_var &a
         oRC = oTool-&gt;QueryInterface(IID_CATIMfgTool, (void**) &amp;pMfgTool);
         if (SUCCEEDED(oRC))
         {
-          pMfgTool-&gt;SetDefaultValues();
-          pMfgTool-&gt;SetDefaultName();
-          pMfgTool-&gt;Release();
+          pMfgTool-&gt;SetDefaultValues(#);
+          pMfgTool-&gt;SetDefaultName(#);
+          pMfgTool-&gt;Release(#);
           pMfgTool = NULL;
         }
 
@@ -290,7 +288,7 @@ HRESULT CAAESmiUserOperationToolEditor::CreateDefaultTool (CATBaseUnknown_var &a
         if (SUCCEEDED(oRC))
         {
           pActivity-&gt;SetDefaultTool(oTool);
-          pActivity-&gt;Release();
+          pActivity-&gt;Release(#);
           pActivity = NULL;
         }
       }

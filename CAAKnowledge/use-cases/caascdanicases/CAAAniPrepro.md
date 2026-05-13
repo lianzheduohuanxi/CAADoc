@@ -4,7 +4,7 @@ title: "Creating Preprocessing Data"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniPrepro", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPrepro.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPrepro.htmmd"
 converted: "2026-05-11T17:31:51.774983"
 ```
 
@@ -42,20 +42,26 @@ This macro shows you how to create preprocessing commands on an existing Analysi
      ' -----------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String
+```vbscript
         sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
+```
 
+```vbscript
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
         End If
 ```
 
@@ -66,13 +72,15 @@ This macro shows you how to create preprocessing commands on an existing Analysi
 ```vbscript
         ' -----------------------------------------------------------
         ' Open the Analysis document
+```vbscript
         Dim oAnalysisDocument As Document
         Set oAnalysisDocument = CATIA.Documents.Open
 ```
+```
 
 ```
 
-            (sDocPath & "\CAAScdAniUseCases\samples\AnalysisCrank.CATAnalysis")
+            (sDocPath & "/CAAScdAniUseCases/samples/AnalysisCrank.CATAnalysis")
 ```
 
        ...
@@ -93,9 +101,13 @@ Open the Analysis document. The Analysis document is fetched in the documentatio
 ```
 
 ```vbscript
+```vbscript
     Dim PartDocument As PartDocument
 ```vbscript
+```
+```vbscript
     Set PartDocument = documents1.Item(3)
+```
 ```
 
 ```
@@ -104,17 +116,23 @@ Open the Analysis document. The Analysis document is fetched in the documentatio
 ```vbscript
 ```vbscript
     ' Retreive the Part from this document
+```vbscript
     Dim part1 As Part
     Set part1 = PartDocument.Part
     ' Retrieve the References
+```
+```vbscript
     Dim referenceBound As Reference
-    Set referenceBound = part1.CreateReferenceFromName("Selection_RSur:(Face:(Brp:(GSRotate.2...));None:());...)")
+    Set referenceBound = part1.CreateReferenceFromName("Selection_RSur:(Face:(Brp:(GSRotate.2...));None:(#));...)")
 
     Dim referenceLoad As Reference
-    Set referenceLoad = part1.CreateReferenceFromName("Selection_RSur:(Face:(Brp:(GSMRotate.2...));None:());...)")
+    Set referenceLoad = part1.CreateReferenceFromName("Selection_RSur:(Face:(Brp:(GSMRotate.2...));None:(#));...)")
     ' Extract the product as input of preprocessing feature.
+```
+```vbscript
     Dim product1 As Product
     Set product1 = PartDocument.Product
+```
 ```
 
 ```
@@ -138,9 +156,13 @@ The extraction of pre-defined geometrical arena is done by using the Reference i
 ```
 
 ```vbscript
+```vbscript
         Dim AnaManager As AnalysisManager
 ```vbscript
+```
+```vbscript
         Set AnaManager = oAnalysisDocument.Analysis
+```
 ```
 
 ```
@@ -149,26 +171,36 @@ The extraction of pre-defined geometrical arena is done by using the Reference i
 ```vbscript
 ```vbscript
         ' Retrieve the AnalysisModels
+```vbscript
         Dim AnaModels As AnalysisModels
         Set AnaModels = AnaManager.AnalysisModels
         ' To work with the first AnalysisModel of the collection
+```
+```vbscript
         Dim AnaModel As AnalysisModel
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
         >Set AnaModel = AnaModels.Item(1)
 ```vbscript
+```
 ```vbscript
 ```vbscript
         ' Retrieve the AnalysisCases
+```vbscript
         Dim Cases As AnalysisCases
          Set Cases=AnaModel.AnalysisCases
         ' To work with the first AnalysisCase of the collection
+```
+```vbscript
          Dim MyCase  As AnalysisCase
          Set MyCase=Cases.Item(1)
+```
 ```
 
 ```
@@ -179,23 +211,29 @@ The extraction of pre-defined geometrical arena is done by using the Reference i
 
 ---
 
-According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **document** , we find the **Analysis manager Object** , the **Analysis models** and the **Analysis cases Objects**. From both last object (Analysis Model and Analysis case), you can get access to **Analysis Sets** and **Analysis entities** that defines the preprocessing actions.
+According to the general [ Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **document** , we find the **Analysis manager Object** , the **Analysis models** and the **Analysis cases Objects**. From both last object (Analysis Model and Analysis case), you can get access to **Analysis Sets** and **Analysis entities** that defines the preprocessing actions.
 #### Defining the Boundaries
 
       ...
-According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **document** , we find the **Analysis manager Object** , the **Analysis models** and the **Analysis cases Objects**. From both last object (Analysis Model and Analysis case), you can get access to **Analysis Sets** and **Analysis entities** that defines the preprocessing actions.
+According to the general [ Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **document** , we find the **Analysis manager Object** , the **Analysis models** and the **Analysis cases Objects**. From both last object (Analysis Model and Analysis case), you can get access to **Analysis Sets** and **Analysis entities** that defines the preprocessing actions.
+```vbscript
 ```vbscript
 ```vbscript
         ' To work with the AnalysisSet of the collection that is typed for Boundary condition
 
 ```
+```
 
 ```
 
 ```vbscript
+```vbscript
         Dim MySet As AnalysisSet
 ```vbscript
+```
+```vbscript
         Set MySet= ListSets.ItemByType("RestraintSet")
+```
 ```
 
 ```
@@ -204,11 +242,15 @@ According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniToc
 ```vbscript
 ```vbscript
         ' Retrieve the AnalysisEntities collection defined on the set.
+```vbscript
         Dim anEntities As AnalysisEntities
         Set anEntities = MySet.AnalysisEntities
         ' Define an Analysis Entity on the set in order to Fix the referencebound of the part.
+```
+```vbscript
         Dim analysisEntity As AnalysisEntity
         Set analysisEntity = anEntities.Add("SAMClamp")
+```
 ```
 
 ```
@@ -219,8 +261,10 @@ According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniToc
 ```vbscript
 ```vbscript
 ' Define an Analysis Entity on the set in order to Fix the referencebound of the part.
+```vbscript
 Dim analysisEntity As AnalysisEntity
 Set analysisEntity = anEntities.Add("SAMClamp")
+```
 ```
 
 ```
@@ -239,23 +283,31 @@ From the collection of analysis sets defined on the analysis case, we retrieve t
 From the collection of analysis sets defined on the analysis case, we retrieve the preprocessing set that allows you to define boundary conditions. This set is made of analysis entities. We add to this collection a fix (clamp) boundary condition and apply it on the reference extracted from the Part document.
 ```vbscript
 ```vbscript
+```vbscript
         ' To work with the AnalysisSet of the collection that is typed for Loading condition
 
+```
 ```
 
 ```
 
 ```vbscript
+```vbscript
         Set MySet= ListSets.ItemByType("LoadSet")
+```
 ```
 
 ```vbscript
 ```vbscript
 ```vbscript
         ' Retrieve the AnalysisEntities collection defined on the set.
+```vbscript
        Set anEntities = MySet.AnalysisEntities
         ' Define an Analysis Entity on the set in order to load the referenceLoad of the part.
+```
+```vbscript
        Set analysisEntity = anEntities.Add("SAMMoment")
+```
 ```
 
 ```
@@ -300,15 +352,17 @@ This method will launch the mesher, generate the finite element model for prepro
     ...
 
 ```vbscript
+```vbscript
 End Sub
 
+```
 ```
 
     ...
 
 ---
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 
@@ -324,7 +378,7 @@ This use case has shown how to create preprocessing entities and launch a comput
 
 [1] | [Replaying a Macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)
 ---|---
-[2] |  [ The Physical Types for Structural Analysis](../CAAScdAniTechArticles/CAAAniPreprocessingFeatures.md)
+[2] |  [ The Physical Types for Structural Analysis](../use-cases/caascdaniusecases/CAAAniPreprocessingFeatures.md)
 [Top]
 
 * * *

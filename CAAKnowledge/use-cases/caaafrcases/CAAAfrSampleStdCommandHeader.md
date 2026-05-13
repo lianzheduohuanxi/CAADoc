@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating Standard Command Headers"
-category: "use case"
+category: use-case case"
 module: "CAAAfrUseCases"
 tags: ["CAADegGeoCommands", "CAAAfrChangeViewNormalCmd", "CAAAfrGeometryWksHeader", "CAAAfrGeometryWks", "CAAAfrGeometryWshop", "CAADegCreatePointCmd", "CAAGeometry", "CAAAfrGeoCommands", "CAADegCreateCircleCmd", "CATINT32ToPtr", "CAADegCreateLineCmd", "CAAApplicationFrame"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleStdCommandHeader.htm"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleStdCommandHeader.htmmd"
 converted: "2026-05-11T17:17:55.814448"
 ```
 
@@ -73,10 +73,10 @@ The CAAAfrGeometryWshop is loaded with the CAAGeometry document.
 The CAAAfrGeometryWshop is loaded with the CAAGeometry document.
 The CAAAfrGeometryWshop use case is made of classes and interfaces located in the CAAAfrGeometryWshop.m module and in the ProtectedInterfaces directory of the CAAApplicationFrame.edu framework:
 
-Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeometryWshop.m\`
+Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeometryWshop.m/`
 
 The CAAAfrGeometryWshop use case is made of classes and interfaces located in the CAAAfrGeometryWshop.m module and in the ProtectedInterfaces directory of the CAAApplicationFrame.edu framework:
-Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeometryWshop.m\`
+Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeometryWshop.m/`
 Unix | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeometryWshop.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -130,11 +130,11 @@ where:
 
 Different commands can share the same command header class to create their command headers. For example, to creating a workshop [1], we have created the following instances of the _CAAAfrGeometryWksHeader_ class in the `CreateCommands` method of the CAAAfrGeometryWshop workshop description class:
 
-    void CAAAfrGeometryWks::CreateCommands()
+    void CAAAfrGeometryWks::CreateCommands(#)
     {
       ...
       //     1-a Cases without argument
-void CAAAfrGeometryWks::CreateCommands()
+void CAAAfrGeometryWks::CreateCommands(#)
       new CAAAfrGeometryWksHeader("Point",  "CAADegGeoCommands",
 
                                   "CAADegCreatePointCmd",    (void *) NULL);
@@ -206,7 +206,7 @@ These resources are:
 Title | Text displayed in the menu bar for the command
 ShortHelp | Text displayed in a balloon as the command short help message when the mouse moves over the command. This is not applicable to commands located in the menu bar
 Help | Text displayed in the status bar as the command help message when the mouse moves over the command. This is not applicable to commands located only in the menu bar, but is applicable for commands located in both the menu bar and a toolbar
-LongHelp | Text displayed in a balloon when the end user clicks ![I_WhatsThisP2.gif \(235 bytes\)](images/I_WhatsThisP2.gif), which turns the mouse cursor as a question mark, and then clicks on the icon representing the command. This is not applicable to commands located in the menu bar
+LongHelp | Text displayed in a balloon when the end user clicks ![I_WhatsThisP2.gif /(235 bytes/)](images/I_WhatsThisP2.gif), which turns the mouse cursor as a question mark, and then clicks on the icon representing the command. This is not applicable to commands located in the menu bar
 Category | An attribute associated with the command and used to sort the commands in the Command tab page of the Customize window
 
 The CAAAfrGeometryWksHeader.CATRsc file includes the following for the Point command:

@@ -4,7 +4,7 @@ title: "Creating a Detail Sheet"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CAADriDetailSheet", "CAAScdPriUseCases", "CAAPriPad", "CATIA", "CAADriSheet"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriDetailSheet.htm"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriDetailSheet.htmmd"
 converted: "2026-05-11T17:31:51.047373"
 ```
 
@@ -50,9 +50,13 @@ The macro first loads CAADriDetailSheet.CATDrawing that contains a sheet: Sheet.
 ```
 
 ```vbscript
+```vbscript
     Dim oDrawingSheets As DrawingSheets
 ```vbscript
+```
+```vbscript
     Set oDrawingSheets = oDoc.Sheets
+```
 ```
 
 ```
@@ -87,13 +91,19 @@ Once the drawing document has been loaded, the `odrawingSheets` is declared to r
 
 ```
 
+```vbscript
     MsgBox "Click OK to create the new sheet."
+```
 ```
 
 ```vbscript
+```vbscript
     Dim oDrawingSheet As DrawingSheet
 ```vbscript
+```
+```vbscript
     Set oDrawingSheet = oDrawingSheets.AddDetail("New Detail Sheet")
+```
 ```
 
 ```
@@ -132,8 +142,10 @@ The _oDrawingSheet_ is then displayed with the following result but not activate
 
 ```
 
+```vbscript
     MsgBox "Click OK to activate the new detail sheet."
     oDrawingSheet.Activate
+```
 ```
 
     ...
@@ -144,7 +156,7 @@ The `Activate` property of the _DrawingSheet_ object is used to activate it.
 
 ![](images/img006.jpg)
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

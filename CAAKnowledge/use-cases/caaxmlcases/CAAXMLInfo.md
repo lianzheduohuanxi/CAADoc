@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Determining available parsers"
-category: "use case"
+category: use-case case"
 module: "CAAXmlUseCases"
 tags: ["CAAXMLInfo", "CAAXMLParser"]
-source_file: "Doc/online/CAAXmlUseCases/CAAXMLInfo.htm"
+source_file: "Doc/online/CAAXmlUseCases/CAAXMLInfo.htmmd"
 converted: "2026-05-11T17:33:45.634065"
 ```
 
@@ -86,10 +86,10 @@ The use case should be launched as follows from the command line:
 CAAXMLInfo
 The CAAXMLInfo use case is made of one class located in the CAAXMLInfo.m module of the CAAXMLParser.edu framework:
 
-Windows | `InstallRootDirectory\CAAXMLParser.edu\CAAXMLInfo.m\`
+Windows | `InstallRootDirectory/CAAXMLParser.edu/CAAXMLInfo.m/`
 
 The CAAXMLInfo use case is made of one class located in the CAAXMLInfo.m module of the CAAXMLParser.edu framework:
-Windows | `InstallRootDirectory\CAAXMLParser.edu\CAAXMLInfo.m\`
+Windows | `InstallRootDirectory/CAAXMLParser.edu/CAAXMLInfo.m/`
 Unix | `InstallRootDirectory/CAAXMLParser.edu/CAAXMLInfo.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.

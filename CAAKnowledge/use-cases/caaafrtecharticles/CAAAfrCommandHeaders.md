@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "The Command Headers"
-category: "use-case"
+category: tech-article
 module: "CAAAfrTechArticles"
 tags: ["CAAAfrNormalZHdr", "CATIAfrPaletteOptions", "CAAAfrMRUHeader", "CATIA", "CAAAfrNormalXHdr", "CAAAfrCommandHeader", "CAADegGeoCommands", "CATIAfrCommandHeaderRep", "CATINT32ToPtr", "CAAAfrMyCommandHdr", "CAAAfrGeometryWks", "CATImplementHeaderResources", "CAAAfrGeoCommands", "CAAAfrCommandClass", "CATIAfrCmdPaletteOptions", "CAAAfrPointHdr", "CAA2", "CAAAfrChangeViewNormalCmd", "CAAAfrGeometryWksHeader"]
-source_file: "Doc/online/CAAAfrTechArticles/CAAAfrCommandHeaders.htm"
+source_file: "Doc/online/CAAAfrTechArticles/CAAAfrCommandHeaders.htmmd"
 converted: "2026-05-11T17:17:55.868797"
 ```
 
@@ -172,7 +172,7 @@ where:
 
 Different commands can share the same command header class to create their command headers. Refer to the use case that creates a workbench [4]. The following example shows how to create command header instances with and without an argument to pass to the command:
 
-    void CAAAfrGeometryWks::CreateCommands()
+    void CAAAfrGeometryWks::CreateCommands(#)
     {
       ...
       // Case without argument
@@ -254,13 +254,13 @@ A customized command header class cannot be created using macros. The example be
 class MyCustomizedCommandHeader : public **HdrBaseClass**
       public :
         MyCustomizedCommandHeader (const CATString & iHeaderName);
-        virtual MyCustomizedCommandHeader ();
-        CATCommandHeader * **Clone**();
+        virtual MyCustomizedCommandHeader (#);
+        CATCommandHeader * **Clone**(#);
 
       private :
         MyCustomizedCommandHeader (CATCommandHeader *ipHeaderToCopy);
 
-        MyCustomizedCommandHeader ();
+        MyCustomizedCommandHeader (#);
 ```vbscript
         MyCustomizedCommandHeader (const MyCustomizedCommandHeader &iObjectToCopy);
 
@@ -322,7 +322,7 @@ The constructor must call one of the constructors of the base class, and the des
 
     {...}
 
-    MyCustomizedCommandHeader ::MyCustomizedCommandHeader ()
+    MyCustomizedCommandHeader ::MyCustomizedCommandHeader (#)
     {}
     ...
 
@@ -332,13 +332,13 @@ The `Clone` method calls the constructor class with `this` as an argument. The c
 
     ...
 The `Clone` method calls the constructor class with `this` as an argument. The constructor class with a _CATCommandHeader_ pointer is called. This constructor calls the same constructor of the base class.
-    CATCommandHeader * MyCustomizedCommandHeader ::**Clone**()
+    CATCommandHeader * MyCustomizedCommandHeader ::**Clone**(#)
 
     {
       return new MyCustomizedCommandHeader (this);
     }
 
-CATCommandHeader * MyCustomizedCommandHeader ::**Clone**()
+CATCommandHeader * MyCustomizedCommandHeader ::**Clone**(#)
 return new MyCustomizedCommandHeader (this);
     MyCustomizedCommandHeader ::MyCustomizedCommandHeader (CATCommandHeader * ipHeaderToCopy)
 
@@ -362,9 +362,9 @@ MyCustomizedCommandHeader ::MyCustomizedCommandHeader (const CATString &iHeaderN
 
 ```
 
-          **BecomeAvailable**();
+          **BecomeAvailable**(#);
         else
-          **BecomeUnavailable**();
+          **BecomeUnavailable**(#);
 
         ::**AddCallback**(this,
 else
@@ -403,7 +403,7 @@ In addition, the ` constructor` , and/or methods called by it, can set a callbac
     					  CATCallback         iCallbackId)
 
     {
-      **BecomeUnavailable**();
+      **BecomeUnavailable**(#);
     }
 CATSubscriberData   iUsefulData,
 CATCallback         iCallbackId)
@@ -414,7 +414,7 @@ CATCallback         iCallbackId)
     					  CATCallback         iCallbackId)
 
     {
-      **BecomeAvailable**();
+      **BecomeAvailable**(#);
     }
     ...
 
@@ -487,11 +487,11 @@ _MyRep_ is a class which derives from the _CATAfrCommandHeaderRep_ class. The ma
 The “More Info …” shortcut from the LongHelp message is available only if the Dialog (CATDlgxxx) object SetLongHelpId method was called. On Standard command headers SetLongHelpId is automatically called on the button using the LongHelpId resource of the command header. For customized command headers the command header does not know the Dialog objects so no SetLongHelpId is called. SetLongHelpId has to be called explicitely on the Dialog objects created to represent the customized command header.
 
     ...
-    void MyCustomizedCommandHeader ::**Build**()
+    void MyCustomizedCommandHeader ::**Build**(#)
     {
     **
 
-    ... pDialogItem->SetLongHelpId(pCustomizedCommandHeader->GetContextualHelp());
+    ... pDialogItem->SetLongHelpId(pCustomizedCommandHeader->GetContextualHelp(#));
     **  ...
     }
 
@@ -683,7 +683,7 @@ Version: **1** [Jan 2000] | Document created
 Version: **1** [Jan 2000] | Document created
 Version: **2** [Feb 2003] | Command header re-usage explanations
 Version: **3** [Sep 2003] | Palette and General workshop add-in Integration
-Version: **4** [Jan 2004] | Customized command header integration \+ a complete review
+Version: **4** [Jan 2004] | Customized command header integration /+ a complete review
 
 [Top]
 

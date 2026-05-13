@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating Center Lines in a CATDrawing Document"
-category: "use case"
+category: use-case case"
 module: "CAADriUseCases"
 tags: ["CAADrwCenterLineCmd", "CAADrwAddin", "CAADrwCenterLine", "CAAUseCaseCommands", "CATI2Dxxx", "CAADraftingInterfaces", "CATIA", "CATI2Dxx", "CATIDrwAnnotationFactory"]
-source_file: "Doc/online/CAADriUseCases/CAADriCenterLine.htm"
+source_file: "Doc/online/CAADriUseCases/CAADriCenterLine.htmmd"
 converted: "2026-05-11T17:31:50.937531"
 ```
 
@@ -103,10 +103,10 @@ Top]
 Top]
 The CAADrwCenterLine use case is made of two source files named CAADrwCenterLine.h and CAADrwCenterLine.cpp located in the CAADrwCenterLine.m module of the CAADraftingInterfaces.edu framework:
 
-Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwCenterLine.m\`
+Windows | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCenterLine.m/`
 
 The CAADrwCenterLine use case is made of two source files named CAADrwCenterLine.h and CAADrwCenterLine.cpp located in the CAADrwCenterLine.m module of the CAADraftingInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwCenterLine.m\`
+Windows | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCenterLine.m/`
 Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCenterLine.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -123,10 +123,10 @@ There are two steps in CAADrwCenterLine:
 [Top]
 #### Building the State Chart and Creating the Appropriate Selection Agent
 
-    void CAADrwCenterLineCmd::BuildGraph()
+    void CAADrwCenterLineCmd::BuildGraph(#)
     {
        // Creation of the acquisition agent
-void CAADrwCenterLineCmd::BuildGraph()
+void CAADrwCenterLineCmd::BuildGraph(#)
        _ObjectAgent = new CATPathElementAgent("_ObjectAgent A");
        _ObjectAgent ->SetBehavior( CATDlgEngWithPrevaluation |
                                    CATDlgEngMultiAcquisition |
@@ -166,7 +166,7 @@ In this section we create a CATPathElementAgent and set the corresponding elemen
     boolean CAADrwCenterLineCmd::CreateCtrLine(void *iData)
     {
 boolean CAADrwCenterLineCmd::CreateCtrLine(void *iData)
-       CATSO* pObjSO = _ObjectAgent->GetListOfValues();
+       CATSO* pObjSO = _ObjectAgent->GetListOfValues(#);
        CATPathElement *pElemPath = NULL;
 
 ```vbscript
@@ -178,9 +178,9 @@ boolean CAADrwCenterLineCmd::CreateCtrLine(void *iData)
           // We will scan the CSO from the begining
 CATPathElement *pElemPath = NULL;
 if (NULL != pObjSO)
-          pObjSO->InitElementList();
+          pObjSO->InitElementList(#);
 ```vbscript
-          while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement())  )
+          while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement(#))  )
 
 ```
 
@@ -188,7 +188,7 @@ if (NULL != pObjSO)
 
              // Make sure the element is a circle type
              // This circle can be interactive or a generative result (from part, model, ...)
-while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement())  )
+while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement(#))  )
              IDMCircle2D *piElementRef = (IDMCircle2D *)pElemPath->**FindElement(IID_IDMCircle2D)** ;
 
 ```vbscript
@@ -205,23 +205,23 @@ while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement())  )
 ```vbscript
 if (NULL != piDrwFact)
                    piDrwFact->**CreateDrwCenterLine**((CATBaseUnknown *)piElementRef);
-                   piDrwFact->Release();
+                   piDrwFact->Release(#);
 ```
 
                 }
 piDrwFact->**CreateDrwCenterLine**((CATBaseUnknown *)piElementRef);
-piDrwFact->Release();
-                piElementRef->Release();
+piDrwFact->Release(#);
+                piElementRef->Release(#);
 
              }
           }
 
-piElementRef->Release();
-          _ObjectAgent -> InitializeAcquisition();
+piElementRef->Release(#);
+          _ObjectAgent -> InitializeAcquisition(#);
           return TRUE;
 
        }
-_ObjectAgent -> InitializeAcquisition();
+_ObjectAgent -> InitializeAcquisition(#);
 return TRUE;
        return FALSE;
 

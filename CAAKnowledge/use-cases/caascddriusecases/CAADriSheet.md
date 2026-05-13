@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CAAScrBase", "CATIA", "CAAScrJavaScript", "CAAScdInfUseCases", "CAADriSheet", "CAADriSheetSource", "CAAScdPriUseCases", "CAAInfLauchMacro", "CAAPriPad", "CAAlink"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriSheet.htm"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriSheet.htmmd"
 converted: "2026-05-11T11:27:02.764801"
 ---
 
@@ -42,7 +42,7 @@ The `Activate` property of the *DrawingSheet *object is
     
   
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 
@@ -62,16 +62,16 @@ This use case has shown how to create and activate a sheet using macros.
 
 *Copyright  2001, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 ...
 ' ------------
 ' Get the sheets collection of the drawing
 ' ------------
+```vbscript
 Dim oDrawingSheets As DrawingSheets
 Set oDrawingSheets = oDoc.Sheets
 ...
+```
 ```
 
 ```vbscript
@@ -79,10 +79,12 @@ Set oDrawingSheets = oDoc.Sheets
 ' ------------
 ' Add the sheet with a default name to the sheets collection of the drawing
 ' ------------
+```vbscript
 MsgBox &quot;Click OK to create the new sheet.&quot;
 Dim oDrawingSheet As DrawingSheet
 Set oDrawingSheet = oDrawingSheets.Add(&quot;New Sheet&quot;) 
 ...
+```
 ```
 
 ```vbscript
@@ -90,7 +92,9 @@ Set oDrawingSheet = oDrawingSheets.Add(&quot;New Sheet&quot;)
 ' ------------
 ' Activate the sheet
 ' ------------
+```vbscript
 MsgBox &quot;Click OK to activate the new sheet.&quot;
 oDrawingSheet.Activate 
+```
 ...
 ```

@@ -4,7 +4,7 @@ title: "CAAStrWeldInfoOnPlate.CATScript"
 category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CATIA", "CAAStrWeldInfoOnPlate"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrWeldInfoOnPlateSource.htm"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrWeldInfoOnPlateSource.htmmd"
 converted: "2026-05-11T17:31:50.917575"
 ```
 
@@ -27,14 +27,20 @@ converted: "2026-05-11T17:31:50.917575"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
 
+```
 ```
 
 ```vbscript
+```vbscript
     Dim ObjPart As Part
 ```vbscript
+```
+```vbscript
     Set ObjPart = CATIA.ActiveDocument.Part
+```
 ```
 
 ```
@@ -43,24 +49,37 @@ converted: "2026-05-11T17:31:50.917575"
 ```vbscript
 ```vbscript
     'Get the Factory Object
+```vbscript
     Dim FactoryObj As SfmFactory
     Set FactoryObj = ObjPart.GetCustomerFactory("SfmFactory")
     'Get the Manager Object
+```
+```vbscript
     Dim ManagerObj As SfmManager
     Set ManagerObj = FactoryObj.GetManager
     'Retrieving Super Plates
+```
+```vbscript
     Dim SuperPlates As References
     Set SuperPlates = ManagerObj.GetSuperPlates
     'Retrieving Operating Super Plate
+```
+```vbscript
     Dim SuperPlate1 As SfmSuperPlate
     Set SuperPlate1 = SuperPlates.Item(1)
     'Retrieving Operated Super Plate
+```
+```vbscript
     Dim SuperPlate2 As SfmSuperPlate
     Set SuperPlate2 = SuperPlates.Item(2)
     'Retrieving the SplitPlates of SuperPlate1
+```
+```vbscript
     Dim OperatingSplitPlateRefs As References
     Set OperatingSplitPlateRefs = SuperPlate1.SplitPlates
     'Retrieving the SplitPlates of SuperPlate2
+```
+```vbscript
     Dim OperatedSplitPlateRefs As SfmSplitPlates
     Set OperatedSplitPlateRefs = SuperPlate2.SplitPlatesObjects
 
@@ -70,11 +89,14 @@ converted: "2026-05-11T17:31:50.917575"
     Dim OperatedSplitPlate As SfmSplitPlate
     Set OperatedSplitPlate = OperatedSplitPlateRefs.Item(1)
     'Weld Use Case 1 features.
+```
+```vbscript
     Dim ListWeldsUC1 As SfmWelds
     Set ListWeldsUC1 = OperatedSplitPlate.GetWelds(OperatingSplitPlate)
 
     Dim WeldUC1Feature As SfmWeld
     Set WeldUC1Feature = ListWeldsUC1.Item(1)
+```
 ```
 
 ```
@@ -93,7 +115,10 @@ converted: "2026-05-11T17:31:50.917575"
 ```
 
 ```vbscript
+```vbscript
     Dim ListWeldsUC2 As SfmWelds
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set ListWeldsUC2 = OperatedSplitPlate.GetWelds(Nothing)
@@ -102,15 +127,20 @@ converted: "2026-05-11T17:31:50.917575"
     Set WeldUC2Feature = ListWeldsUC2.Item(1)
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Dim WeldUC2Feature As SfmWeld
 ```vbscript
+```
+```vbscript
 Set WeldUC2Feature = ListWeldsUC2.Item(1)
+```
 ```
 
     ustrWeldTypeUC2 = WeldUC2Feature.WeldType
@@ -121,6 +151,8 @@ Set WeldUC2Feature = ListWeldsUC2.Item(1)
 ```
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

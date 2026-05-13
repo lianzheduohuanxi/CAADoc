@@ -4,13 +4,13 @@ title: "Placing Parts"
 category: "use case"
 module: "CAACloUseCases"
 tags: ["CATIArrNode_var", "CATIPspConnection", "CATIProduct", "CATIAHybridShapeFactory", "CAAPspUtilities", "CATIPspConnectable", "CATIArrSegment", "CAACloPlacePart", "CATIArrSegmentsString", "CATIPspPhysicalProduct", "CAACloEduRuns", "CATIAPart", "CATIArrSegment_var", "CATIPspPlacePartOnRun", "CATIUnknownList", "CATIPspLogicalLine", "CATIPspConnector", "CATIPspPartConnector", "CAACommonLayoutItf", "CATIUnknownListImpl"]
-source_file: "Doc/online/CAACloUseCases/CAACloPlacePart.htm"
+source_file: "Doc/online/CAACloUseCases/CAACloPlacePart.htmmd"
 converted: "2026-05-11T17:33:49.487432"
 ```
 
 ---
 tags: ["CATIArrNode_var", "CATIPspConnection", "CATIProduct", "CATIAHybridShapeFactory", "CAAPspUtilities", "CATIPspConnectable", "CATIArrSegment", "CAACloPlacePart", "CATIArrSegmentsString", "CATIPspPhysicalProduct", "CAACloEduRuns", "CATIAPart", "CATIArrSegment_var", "CATIPspPlacePartOnRun", "CATIUnknownList", "CATIPspLogicalLine", "CATIPspConnector", "CATIPspPartConnector", "CAACommonLayoutItf", "CATIUnknownListImpl"]
-source_file: "Doc/online/CAACloUseCases/CAACloPlacePart.htm"
+source_file: "Doc/online/CAACloUseCases/CAACloPlacePart.htmmd"
 converted: "2026-05-11T17:33:49.487432"
 Equipment & Systems |  Distributive Systems |  Placing Parts _How to place parts._
 
@@ -123,11 +123,11 @@ if (argc > 1)
 
         }
 
-        if (FileToBeLoaded.IsNull())
+        if (FileToBeLoaded.IsNull(#))
         {
 
 ```vbscript
-if (FileToBeLoaded.IsNull())
+if (FileToBeLoaded.IsNull(#))
            cout << "**** must input the file name of " << endl;
            cout << "a CATProduct with Piping application objects " << endl;
 ```
@@ -248,43 +248,45 @@ cout << "Product environment created." << endl;
 ```vbscript
 ApplicationInit("CATTubing");
 cout << "Tubing application initialized." << endl;
-        HRESULT rcSpace = PlacePartInSpace();
+        HRESULT rcSpace = PlacePartInSpace(#);
         cout << "rcSpace = " << rcSpace << endl;
 
 ```
 
         // Route a string in space.
-HRESULT rcSpace = PlacePartInSpace();
+HRESULT rcSpace = PlacePartInSpace(#);
 cout << "rcSpace = " << rcSpace << endl;
-        HRESULT rcStringInSpace = RouteStringPartInSpace();
+        HRESULT rcStringInSpace = RouteStringPartInSpace(#);
         cout << "rcStringInSpace = " << rcStringInSpace << endl;
 
         // Place parts on run segments.
-HRESULT rcStringInSpace = RouteStringPartInSpace();
+HRESULT rcStringInSpace = RouteStringPartInSpace(#);
 cout << "rcStringInSpace = " << rcStringInSpace << endl;
-        HRESULT rcSegment = PlacePartOnRunSegment();
+        HRESULT rcSegment = PlacePartOnRunSegment(#);
         cout << "rcSegment = " << rcSegment << endl;
 
         // Place parts on part conntectors.
-HRESULT rcSegment = PlacePartOnRunSegment();
+HRESULT rcSegment = PlacePartOnRunSegment(#);
 cout << "rcSegment = " << rcSegment << endl;
-        HRESULT rcPartCtr = PlacePartOnPartConnector();
+        HRESULT rcPartCtr = PlacePartOnPartConnector(#);
         cout << "rcPartCtr = " << rcPartCtr << endl;
 
         // Place parts on run nodes.
-HRESULT rcPartCtr = PlacePartOnPartConnector();
+HRESULT rcPartCtr = PlacePartOnPartConnector(#);
 cout << "rcPartCtr = " << rcPartCtr << endl;
-        HRESULT rcNode = PlacePartOnRunNode();
+        HRESULT rcNode = PlacePartOnRunNode(#);
         cout << "rcNode = " << rcNode << endl;
 
         // Place part on part conntector and reconnect run.
-HRESULT rcNode = PlacePartOnRunNode();
+HRESULT rcNode = PlacePartOnRunNode(#);
 cout << "rcNode = " << rcNode << endl;
-        HRESULT rcPartCtrNCnt = PlacePartOnPartConnectorAndReconnectRun();
+        HRESULT rcPartCtrNCnt = PlacePartOnPartConnectorAndReconnectRun(#);
         cout  << "rcPartCtrNCnt = " << rcPartCtrNCnt  << endl;
 
+```vbscript
         // Set return code.
-HRESULT rcPartCtrNCnt = PlacePartOnPartConnectorAndReconnectRun();
+HRESULT rcPartCtrNCnt = PlacePartOnPartConnectorAndReconnectRun(#);
+```
 cout  << "rcPartCtrNCnt = " << rcPartCtrNCnt  << endl;
         if (SUCCEEDED(rcSpace) &&
 ```vbscript
@@ -353,9 +355,11 @@ IUnknown *&opiPartConnector)
       cout <<"===    CAACloPlacePart::GetPartConnector                 ==="<< endl;
       cout <<"============================================================"<< endl;
 
+```vbscript
       cout <<" Part: " << ipiPartUnk << ": " << GetObjectName(ipiPartUnk) << endl;
 
       cout <<" Connector number " << iConnectorNumber << endl;
+```
 
       opiPartConnector = NULL;
 
@@ -442,9 +446,9 @@ cout << pError;
 rc = CATReturnError(pError);
       CATEndTry;
 
-      if (piPhysProd) {piPhysProd->Release(); piPhysProd = NULL;}
+      if (piPhysProd) {piPhysProd->Release(#); piPhysProd = NULL;}
 ```vbscript
-      if (piListCtrs) {piListCtrs->Release(); piListCtrs = NULL;}
+      if (piListCtrs) {piListCtrs->Release(#); piListCtrs = NULL;}
 ```
 
       cout <<" opiPartConnector = " << opiPartConnector << endl;
@@ -473,9 +477,11 @@ CATMathDirection &oCtrUp)
       cout <<"===    CAACloPlacePart::GetPartConnectorData             ==="<< endl;
       cout <<"============================================================"<< endl;
 
+```vbscript
       cout <<" Part: " << ipiPartUnk << ": " << GetObjectName(ipiPartUnk) << endl;
 
       cout <<" Connector number " << iConnectorNumber << endl;
+```
 
       HRESULT rc = CATReturnFailure;
 
@@ -539,17 +545,17 @@ piPartCntr->GetAlignmentDirection(piRelAxis,oCtrAlign);
             piPartCntr->GetUpDirection(piRelAxis,oCtrUp);
 
 ```vbscript
-            if (piPartCntr) {piPartCntr->Release(); piPartCntr = NULL;}
+            if (piPartCntr) {piPartCntr->Release(#); piPartCntr = NULL;}
 
 ```
 
           } // End if valid part connector.
 
 piPartCntr->GetUpDirection(piRelAxis,oCtrUp);
-if (piPartCntr) {piPartCntr->Release(); piPartCntr = NULL;}
+if (piPartCntr) {piPartCntr->Release(#); piPartCntr = NULL;}
 ```vbscript
 ```vbscript
-          if (piCtrUnk) {piCtrUnk->Release(); piCtrUnk = NULL;}
+          if (piCtrUnk) {piCtrUnk->Release(#); piCtrUnk = NULL;}
 
 ```
 
@@ -560,7 +566,7 @@ if (piPartCntr) {piPartCntr->Release(); piPartCntr = NULL;}
       } // end CATTry
 
 ```vbscript
-if (piCtrUnk) {piCtrUnk->Release(); piCtrUnk = NULL;}
+if (piCtrUnk) {piCtrUnk->Release(#); piCtrUnk = NULL;}
 ```vbscript
     	CATCatch (CATError, pError)
 ```
@@ -583,11 +589,11 @@ CATCatch (CATError, pError)
 rc = CATReturnError(pError);
       CATEndTry;
 
-      if (piRelAxis) {piRelAxis->Release(); piRelAxis = NULL;}
+      if (piRelAxis) {piRelAxis->Release(#); piRelAxis = NULL;}
 ```vbscript
 ```vbscript
-      if (piCtrUnk) {piCtrUnk->Release(); piCtrUnk = NULL;}
-      if (piPartCntr) {piPartCntr->Release(); piPartCntr = NULL;}
+      if (piCtrUnk) {piCtrUnk->Release(#); piCtrUnk = NULL;}
+      if (piPartCntr) {piPartCntr->Release(#); piPartCntr = NULL;}
 
 ```
 
@@ -619,9 +625,11 @@ IUnknown *&opiConnectedPart)
       cout <<"===    CAACloPlacePart::GetConnectedPart                 ==="<< endl;
       cout <<"============================================================"<< endl;
 
+```vbscript
       cout <<" Part: " << ipiPartUnk << ": " << GetObjectName(ipiPartUnk) << endl;
 
       cout <<" Connector number " << iConnectorNumber << endl;
+```
 
       opiConnectedCtr = NULL;
 
@@ -724,7 +732,7 @@ if ( SUCCEEDED(piListConnections->Item(iiCnx,&piUnk)) && (NULL != piUnk) )
                   cout << "piPspConnection = " << piPspConnection << endl;
 
 ```vbscript
-                  if (piUnk) {piUnk->Release(); piUnk = NULL;}
+                  if (piUnk) {piUnk->Release(#); piUnk = NULL;}
 
                   if (piPspConnection &&
 ```
@@ -771,7 +779,7 @@ if ( SUCCEEDED(piListCtr->Item(iiCtr,&piUnk)) && (NULL != piUnk) )
                         cout << "piPspConnectedCtr = " << piPspConnectedCtr << endl;
 
 ```vbscript
-                        if (piUnk) {piUnk->Release(); piUnk = NULL;}
+                        if (piUnk) {piUnk->Release(#); piUnk = NULL;}
 
                         if (piPspConnectedCtr)
 ```
@@ -780,7 +788,7 @@ if ( SUCCEEDED(piListCtr->Item(iiCtr,&piUnk)) && (NULL != piUnk) )
 
                         {
 ```vbscript
-if (piUnk) {piUnk->Release(); piUnk = NULL;}
+if (piUnk) {piUnk->Release(#); piUnk = NULL;}
 ```vbscript
 if (piPspConnectedCtr)
 ```
@@ -804,10 +812,10 @@ if (piPspConnectedPart)
 piPspConnectedCtr->QueryInterface(IID_IUnknown,(void**)&opiConnectedCtr);
 piPspConnectedPart->QueryInterface(IID_IUnknown,(void**)&opiConnectedPart);
 break;
-                          if (piPspConnectedCtr) {piPspConnectedCtr->Release(); piPspConnectedCtr = NULL;}
+                          if (piPspConnectedCtr) {piPspConnectedCtr->Release(#); piPspConnectedCtr = NULL;}
 ```vbscript
 ```vbscript
-                          if (piPspConnectedPart) {piPspConnectedPart->Release(); piPspConnectedPart = NULL;}
+                          if (piPspConnectedPart) {piPspConnectedPart->Release(#); piPspConnectedPart = NULL;}
 
 ```
 
@@ -817,24 +825,24 @@ break;
                       } // End if valid ctr list item.
 
                     } // End loop on connected ctrs.
-                    if (piListCtr) {piListCtr->Release(); piListCtr = NULL;}
+                    if (piListCtr) {piListCtr->Release(#); piListCtr = NULL;}
                   } // End if valid list of ctrs.
 
-                  if (piPspConnection) {piPspConnection->Release(); piPspConnection = NULL;}
+                  if (piPspConnection) {piPspConnection->Release(#); piPspConnection = NULL;}
                 } // End if valid cnx list item.
 
               } // End loop on connections.
-              if (piListConnections) {piListConnections->Release(); piListConnections = NULL;}
+              if (piListConnections) {piListConnections->Release(#); piListConnections = NULL;}
             } // End if valid list of connections.
 
           } // End if valid psp ctr
-          if (piCtrUnk) {piCtrUnk->Release(); piCtrUnk = NULL;}
+          if (piCtrUnk) {piCtrUnk->Release(#); piCtrUnk = NULL;}
         } // End if valid ctr.
 
       } // end CATTry
 
 ```vbscript
-if (piCtrUnk) {piCtrUnk->Release(); piCtrUnk = NULL;}
+if (piCtrUnk) {piCtrUnk->Release(#); piCtrUnk = NULL;}
 ```vbscript
     	CATCatch (CATError, pError)
 ```
@@ -857,16 +865,16 @@ CATCatch (CATError, pError)
 rc = CATReturnError(pError);
       CATEndTry;
 
-      if (piCtrUnk) {piCtrUnk->Release(); piCtrUnk = NULL;}
+      if (piCtrUnk) {piCtrUnk->Release(#); piCtrUnk = NULL;}
 ```vbscript
 ```vbscript
-      if (piPspConnection) {piPspConnection->Release(); piPspConnection = NULL;}
-      if (piPspConnector) {piPspConnector->Release(); piPspConnector = NULL;}
-      if (piListConnections) {piListConnections->Release(); piListConnections = NULL;}
-      if (piUnk) {piUnk->Release(); piUnk = NULL;}
-      if (piListCtr) {piListCtr->Release(); piListCtr = NULL;}
-      if (piPspConnectedCtr) {piPspConnectedCtr->Release(); piPspConnectedCtr = NULL;}
-      if (piPspConnectedPart) {piPspConnectedPart->Release(); piPspConnectedPart = NULL;}
+      if (piPspConnection) {piPspConnection->Release(#); piPspConnection = NULL;}
+      if (piPspConnector) {piPspConnector->Release(#); piPspConnector = NULL;}
+      if (piListConnections) {piListConnections->Release(#); piListConnections = NULL;}
+      if (piUnk) {piUnk->Release(#); piUnk = NULL;}
+      if (piListCtr) {piListCtr->Release(#); piListCtr = NULL;}
+      if (piPspConnectedCtr) {piPspConnectedCtr->Release(#); piPspConnectedCtr = NULL;}
+      if (piPspConnectedPart) {piPspConnectedPart->Release(#); piPspConnectedPart = NULL;}
 
 ```
 
@@ -928,7 +936,10 @@ const CATMathDirection &iCtrUp)
       cout <<"===    CAACloPlacePart::TestPartConnectorData            ==="<< endl;
       cout <<"============================================================"<< endl;
 
+```vbscript
       cout <<" Part: " << ipiPartUnk << ": " << GetObjectName(ipiPartUnk) << endl;
+
+```
 
       cout <<" Connector number " << iConnectorNumber << endl;
       cout << "iCtrPosition = " << iCtrPosition << endl;
@@ -1015,11 +1026,11 @@ cout << pError;
 rc = CATReturnError(pError);
       CATEndTry;
 
-      if (piRelAxis) {piRelAxis->Release(); piRelAxis = NULL;}
+      if (piRelAxis) {piRelAxis->Release(#); piRelAxis = NULL;}
 ```vbscript
 ```vbscript
-      if (piCtrUnk) {piCtrUnk->Release(); piCtrUnk = NULL;}
-      if (piPartCntr) {piPartCntr->Release(); piPartCntr = NULL;}
+      if (piCtrUnk) {piCtrUnk->Release(#); piCtrUnk = NULL;}
+      if (piPartCntr) {piPartCntr->Release(#); piPartCntr = NULL;}
 
 ```
 
@@ -1086,10 +1097,10 @@ piObjectUnk0 == piObjectUnk1)
       }
 
 rc = 1;
-      if (piObjectUnk0) {piObjectUnk0->Release(); piObjectUnk0 = NULL;}
+      if (piObjectUnk0) {piObjectUnk0->Release(#); piObjectUnk0 = NULL;}
 ```vbscript
 ```vbscript
-      if (piObjectUnk1) {piObjectUnk1->Release(); piObjectUnk1 = NULL;}
+      if (piObjectUnk1) {piObjectUnk1->Release(#); piObjectUnk1 = NULL;}
 
 ```
 
@@ -1116,7 +1127,10 @@ const int &iConnectedConnectorNumber)
       cout <<"===    CAACloPlacePart::TestConnectedPart                ==="<< endl;
       cout <<"============================================================"<< endl;
 
+```vbscript
       cout <<" Part: " << ipiPartUnk << ": " << GetObjectName(ipiPartUnk) << endl;
+
+```
 
       cout <<" Connector number " << iConnectorNumber << endl;
       cout <<" ipiConnectedPart = " << ipiConnectedPart << endl;
@@ -1194,11 +1208,11 @@ cout << pError;
 rc = CATReturnError(pError);
       CATEndTry;
 
-      if (piConnectedCtr) {piConnectedCtr->Release(); piConnectedCtr = NULL;}
+      if (piConnectedCtr) {piConnectedCtr->Release(#); piConnectedCtr = NULL;}
 ```vbscript
 ```vbscript
-      if (piConnectedPart) {piConnectedPart->Release(); piConnectedPart = NULL;}
-      if (piConnectedCtrExpected) {piConnectedCtrExpected->Release(); piConnectedCtrExpected = NULL;}
+      if (piConnectedPart) {piConnectedPart->Release(#); piConnectedPart = NULL;}
+      if (piConnectedCtrExpected) {piConnectedCtrExpected->Release(#); piConnectedCtrExpected = NULL;}
 
 ```
 
@@ -1214,9 +1228,9 @@ rc = CATReturnError(pError);
     //=============================================================================
     //  Place parts in space.
     //=============================================================================
-    HRESULT CAACloPlacePart::PlacePartInSpace()
+    HRESULT CAACloPlacePart::PlacePartInSpace(#)
     {
-HRESULT CAACloPlacePart::PlacePartInSpace()
+HRESULT CAACloPlacePart::PlacePartInSpace(#)
       cout <<"============================================================"<< endl;
       cout <<"===       CAACloPlacePart::PlacePartInSpace              ==="<< endl;
 
@@ -1316,7 +1330,7 @@ cout << "piLogicalLine = " << piLogicalLine << endl;
                                                          piReferencePart,
                                                          uCatalogPartName);
 
-          cout << "piReferencePart = " << piReferencePart << "uCatalogPartName = " << uCatalogPartName.ConvertToChar() << endl;
+          cout << "piReferencePart = " << piReferencePart << "uCatalogPartName = " << uCatalogPartName.ConvertToChar(#) << endl;
 
           if (SUCCEEDED(rc) &&
               piReferencePart)
@@ -1351,8 +1365,10 @@ piReferencePart)
 ```
 
             {
+```vbscript
               // Set catalog part name
 cout << "piInstancePart = " << piInstancePart << endl;
+```
 if (piInstancePart)
               piPlacePart->SetCatalogPartName(piInstancePart,uCatalogPartName);
 
@@ -1437,14 +1453,14 @@ CATCatch (CATError, pError)
 rc = CATReturnError(pError);
       CATEndTry;
 
-      if (piAppObject) {piAppObject->Release(); piAppObject = NULL;}
+      if (piAppObject) {piAppObject->Release(#); piAppObject = NULL;}
 ```vbscript
 ```vbscript
-      if (piPlacePart) {piPlacePart->Release(); piPlacePart = NULL;}
-      if (piReferencePart) {piReferencePart->Release(); piReferencePart = NULL;}
-      if (piParentProduct) {piParentProduct->Release(); piParentProduct = NULL;}
-      if (piLogicalLine) {piLogicalLine->Release(); piLogicalLine = NULL;}
-      if (piInstancePart) {piInstancePart->Release(); piInstancePart = NULL;}
+      if (piPlacePart) {piPlacePart->Release(#); piPlacePart = NULL;}
+      if (piReferencePart) {piReferencePart->Release(#); piReferencePart = NULL;}
+      if (piParentProduct) {piParentProduct->Release(#); piParentProduct = NULL;}
+      if (piLogicalLine) {piLogicalLine->Release(#); piLogicalLine = NULL;}
+      if (piInstancePart) {piInstancePart->Release(#); piInstancePart = NULL;}
 
 ```
 
@@ -1463,10 +1479,10 @@ After CAACloPlacePart places a valve in space it places a tube in space. The tub
     //  Place string parts in space.
     //=============================================================================
 After CAACloPlacePart places a valve in space it places a tube in space. The tube is placed by the method RouteStringPartInSpace. RouteStringPartInSpace is very similar to PlacePartInSpace. A minor difference is that RouteStringPartInSpace finds a tube in the catalog instead of a valve. Another relatively minor difference is that RouteStringPartInSpace sets an ID for the new part using the uPlacedPartID argument. The major difference is that RouteStringPartInSpace must define the tube node points and bend radii. The bend radii are defined with a list of double values that are interpretted as millimeter lengths. The tube node points are defined by creating a part and creating points in the new part. Connector data is tested using the TestPartConnectorData method.  The code for RouteStringPartInSpace is shown below.
-    HRESULT CAACloPlacePart::RouteStringPartInSpace()
+    HRESULT CAACloPlacePart::RouteStringPartInSpace(#)
 
     {
-HRESULT CAACloPlacePart::RouteStringPartInSpace()
+HRESULT CAACloPlacePart::RouteStringPartInSpace(#)
       cout <<"============================================================"<< endl;
       cout <<"===       CAACloPlacePart::RouteStringPartInSpace        ==="<< endl;
 
@@ -1581,7 +1597,7 @@ cout << "piLogicalLine = " << piLogicalLine << endl;
                                                          piReferencePart,
                                                          uCatalogPartName);
 
-          cout << "piReferencePart = " << piReferencePart << "uCatalogPartName = " << uCatalogPartName.ConvertToChar() << endl;
+          cout << "piReferencePart = " << piReferencePart << "uCatalogPartName = " << uCatalogPartName.ConvertToChar(#) << endl;
 
           if (SUCCEEDED(rc) &&
               piReferencePart)
@@ -1681,7 +1697,7 @@ cout << "piHybridShapeFactory = " << piHybridShapeFactory << endl;
 if (piHybridShapeFactory)
 ```vbscript
 ```vbscript
-                      piListImpl = new CATIUnknownListImpl();
+                      piListImpl = new CATIUnknownListImpl(#);
                       if (piListImpl)
 
 ```
@@ -1720,7 +1736,7 @@ for (unsigned int iiPoint = 0; iiPoint < 4; iiPoint++)
                           cout << "piPoint = " << piPoint << endl;
                           piListPoints->Add(iiPoint, piPoint);
 
-                          if (piPoint) {piPoint->Release(); piPoint = NULL;}
+                          if (piPoint) {piPoint->Release(#); piPoint = NULL;}
 ```
 
                         } // End loop on points.
@@ -1739,7 +1755,7 @@ uFunctionType = "CATTubTubeFunction";
             uPlacedPartID = "TestTubeWithBends";
 
             firstPointUpDirection.SetCoord(0, 0, 1); // Up direction parallel to z-axis.
-            listBendRadii.RemoveAll();
+            listBendRadii.RemoveAll(#);
 
             listBendRadii.Append(25.4); // Bend radius in mm (1in).
             listBendRadii.Append(25.4);
@@ -1765,8 +1781,10 @@ uFunctionType = "CATTubTubeFunction";
 ```
 
             {
+```vbscript
               // Set catalog part name
 cout << "piInstancePart = " << piInstancePart << endl;
+```
 if (piInstancePart)
               piPlacePart->SetCatalogPartName(piInstancePart,uCatalogPartName);
 
@@ -1851,24 +1869,24 @@ CATCatch (CATError, pError)
 rc = CATReturnError(pError);
       CATEndTry;
 
-      if (piAppObject) {piAppObject->Release(); piAppObject = NULL;}
+      if (piAppObject) {piAppObject->Release(#); piAppObject = NULL;}
 ```vbscript
 ```vbscript
-      if (piPlacePart) {piPlacePart->Release(); piPlacePart = NULL;}
-      if (piReferencePart) {piReferencePart->Release(); piReferencePart = NULL;}
-      if (piParentProduct) {piParentProduct->Release(); piParentProduct = NULL;}
-      if (piLogicalLine) {piLogicalLine->Release(); piLogicalLine = NULL;}
-      if (piListPoints) {piListPoints->Release(); piListPoints = NULL;}
-      if (piInstancePart) {piInstancePart->Release(); piInstancePart = NULL;}
-      if (piParentProducts) {piParentProducts->Release(); piParentProducts = NULL;}
-      if (piPartForPointsProduct) {piPartForPointsProduct->Release(); piPartForPointsProduct = NULL;}
-      if (piPartForPointsShape) {piPartForPointsShape->Release(); piPartForPointsShape = NULL;}
-      if (piPartForPointsDoc) {piPartForPointsDoc->Release(); piPartForPointsDoc = NULL;}
-      if (piPartForPoints) {piPartForPoints->Release(); piPartForPoints = NULL;}
-      if (piShapeFactory) {piShapeFactory->Release(); piShapeFactory = NULL;}
-      if (piHybridShapeFactory) {piHybridShapeFactory->Release(); piHybridShapeFactory = NULL;}
-      if (piPoint) {piPoint->Release(); piPoint = NULL;}
-      if (piListImpl) {piListImpl->Release(); piListImpl = NULL;}
+      if (piPlacePart) {piPlacePart->Release(#); piPlacePart = NULL;}
+      if (piReferencePart) {piReferencePart->Release(#); piReferencePart = NULL;}
+      if (piParentProduct) {piParentProduct->Release(#); piParentProduct = NULL;}
+      if (piLogicalLine) {piLogicalLine->Release(#); piLogicalLine = NULL;}
+      if (piListPoints) {piListPoints->Release(#); piListPoints = NULL;}
+      if (piInstancePart) {piInstancePart->Release(#); piInstancePart = NULL;}
+      if (piParentProducts) {piParentProducts->Release(#); piParentProducts = NULL;}
+      if (piPartForPointsProduct) {piPartForPointsProduct->Release(#); piPartForPointsProduct = NULL;}
+      if (piPartForPointsShape) {piPartForPointsShape->Release(#); piPartForPointsShape = NULL;}
+      if (piPartForPointsDoc) {piPartForPointsDoc->Release(#); piPartForPointsDoc = NULL;}
+      if (piPartForPoints) {piPartForPoints->Release(#); piPartForPoints = NULL;}
+      if (piShapeFactory) {piShapeFactory->Release(#); piShapeFactory = NULL;}
+      if (piHybridShapeFactory) {piHybridShapeFactory->Release(#); piHybridShapeFactory = NULL;}
+      if (piPoint) {piPoint->Release(#); piPoint = NULL;}
+      if (piListImpl) {piListImpl->Release(#); piListImpl = NULL;}
 
 ```
 
@@ -1884,9 +1902,9 @@ rc = CATReturnError(pError);
     //=============================================================================
     //  Place parts on run segments.
     //=============================================================================
-    HRESULT CAACloPlacePart::PlacePartOnRunSegment()
+    HRESULT CAACloPlacePart::PlacePartOnRunSegment(#)
     {
-HRESULT CAACloPlacePart::PlacePartOnRunSegment()
+HRESULT CAACloPlacePart::PlacePartOnRunSegment(#)
       cout <<"============================================================"<< endl;
       cout <<"===       CAACloPlacePart::PlacePartOnRunSegment         ==="<< endl;
 
@@ -1989,7 +2007,7 @@ cout << "piParentProduct = " << piParentProduct << endl;
 cout << "piRun = " << piRun << endl;
 if (piRun)
             piRun->ListSegments(listOfSegments);
-            cout << "listOfSegments.Size() = " << listOfSegments.Size() << endl;
+            cout << "listOfSegments.Size(#) = " << listOfSegments.Size(#) << endl;
 
             do
 
@@ -2010,7 +2028,7 @@ uPartType = "CATTubUnion";
                                                              piReferencePart,
                                                              uCatalogPartName);
 
-              cout << "piReferencePart = " << piReferencePart << "uCatalogPartName = " << uCatalogPartName.ConvertToChar() << endl;
+              cout << "piReferencePart = " << piReferencePart << "uCatalogPartName = " << uCatalogPartName.ConvertToChar(#) << endl;
 
               if (SUCCEEDED(rc) &&
                   piReferencePart)
@@ -2020,12 +2038,12 @@ uPartType = "CATTubUnion";
 ```vbscript
 if (SUCCEEDED(rc) &&
 piReferencePart)
-                if (listOfSegments.Size() >= 1)
+                if (listOfSegments.Size(#) >= 1)
 ```
 
                 {
 piReferencePart)
-if (listOfSegments.Size() >= 1)
+if (listOfSegments.Size(#) >= 1)
                   spSegment = listOfSegments[1];
 
                   if (!!spSegment)
@@ -2066,8 +2084,10 @@ if (piSegment)
 ```
 
                   {
+```vbscript
       	         // Set catalog part name
 cout << "piInstancePart = " << piInstancePart << endl;
+```
 if (piInstancePart)
                     piPlacePart->SetCatalogPartName(piInstancePart,uCatalogPartName);
 
@@ -2255,13 +2275,13 @@ rc = CATReturnFailure;
 ```vbscript
               if (FAILED(rc)) break;
 
-              if (piReferencePart) {piReferencePart->Release(); piReferencePart = NULL;}
+              if (piReferencePart) {piReferencePart->Release(#); piReferencePart = NULL;}
 ```
 
 ```vbscript
 ```vbscript
-              if (piSegment) {piSegment->Release(); piSegment = NULL;}
-              if (piInstancePart) {piInstancePart->Release(); piInstancePart = NULL;}
+              if (piSegment) {piSegment->Release(#); piSegment = NULL;}
+              if (piInstancePart) {piInstancePart->Release(#); piInstancePart = NULL;}
 
 ```
 
@@ -2283,7 +2303,7 @@ uPartType = "CATTubBendableTube";
                                                              piReferencePart,
                                                              uCatalogPartName);
 
-              cout << "piReferencePart = " << piReferencePart << "uCatalogPartName = " << uCatalogPartName.ConvertToChar() << endl;
+              cout << "piReferencePart = " << piReferencePart << "uCatalogPartName = " << uCatalogPartName.ConvertToChar(#) << endl;
 
               if (SUCCEEDED(rc) &&
                   piReferencePart)
@@ -2293,12 +2313,12 @@ uPartType = "CATTubBendableTube";
 ```vbscript
 if (SUCCEEDED(rc) &&
 piReferencePart)
-                if (listOfSegments.Size() >= 2)
+                if (listOfSegments.Size(#) >= 2)
 ```
 
                 {
 piReferencePart)
-if (listOfSegments.Size() >= 2)
+if (listOfSegments.Size(#) >= 2)
                   spSegment = listOfSegments[2];
 
                   if (!!spSegment)
@@ -2339,8 +2359,10 @@ if (piSegment)
 ```
 
                   {
+```vbscript
                     // Set catalog part name
 cout << "piInstancePart = " << piInstancePart << endl;
+```
 if (piInstancePart)
                     piPlacePart->SetCatalogPartName(piInstancePart,uCatalogPartName);
 
@@ -2442,18 +2464,18 @@ cout << pError;
 rc = CATReturnError(pError);
       CATEndTry;
 
-      if (piAppObject) {piAppObject->Release(); piAppObject = NULL;}
+      if (piAppObject) {piAppObject->Release(#); piAppObject = NULL;}
 ```vbscript
 ```vbscript
-      if (piPlacePart) {piPlacePart->Release(); piPlacePart = NULL;}
-      if (piParentProduct) {piParentProduct->Release(); piParentProduct = NULL;}
-      if (piLogicalLine) {piLogicalLine->Release(); piLogicalLine = NULL;}
-      if (piRun) {piRun->Release(); piRun = NULL;}
-      if (piReferencePart) {piReferencePart->Release(); piReferencePart = NULL;}
-      if (piSegment) {piSegment->Release(); piSegment = NULL;}
-      if (piInstancePart) {piInstancePart->Release(); piInstancePart = NULL;}
-      if (piConnectedPart) {piConnectedPart->Release(); piConnectedPart = NULL;}
-      if (piInstanceUnion) {piInstanceUnion->Release(); piInstanceUnion = NULL;}
+      if (piPlacePart) {piPlacePart->Release(#); piPlacePart = NULL;}
+      if (piParentProduct) {piParentProduct->Release(#); piParentProduct = NULL;}
+      if (piLogicalLine) {piLogicalLine->Release(#); piLogicalLine = NULL;}
+      if (piRun) {piRun->Release(#); piRun = NULL;}
+      if (piReferencePart) {piReferencePart->Release(#); piReferencePart = NULL;}
+      if (piSegment) {piSegment->Release(#); piSegment = NULL;}
+      if (piInstancePart) {piInstancePart->Release(#); piInstancePart = NULL;}
+      if (piConnectedPart) {piConnectedPart->Release(#); piConnectedPart = NULL;}
+      if (piInstanceUnion) {piInstanceUnion->Release(#); piInstanceUnion = NULL;}
 
 ```
 
@@ -2469,9 +2491,9 @@ rc = CATReturnError(pError);
     //=============================================================================
     //  Place parts on run nodes.
     //=============================================================================
-    HRESULT CAACloPlacePart::PlacePartOnRunNode()
+    HRESULT CAACloPlacePart::PlacePartOnRunNode(#)
     {
-HRESULT CAACloPlacePart::PlacePartOnRunNode()
+HRESULT CAACloPlacePart::PlacePartOnRunNode(#)
       cout <<"============================================================"<< endl;
       cout <<"===       CAACloPlacePart::PlacePartOnRunNode            ==="<< endl;
 
@@ -2575,7 +2597,7 @@ cout << "piParentProduct = " << piParentProduct << endl;
 cout << "piRun = " << piRun << endl;
 if (piRun)
             piRun->ListNodes(listOfNodes);
-            cout << "listOfNodes.Size() = " << listOfNodes.Size() << endl;
+            cout << "listOfNodes.Size(#) = " << listOfNodes.Size(#) << endl;
 
             do
 
@@ -2596,7 +2618,7 @@ uPartType = "CATTubControlValve";
                                                              piReferencePart,
                                                              uCatalogPartName);
 
-              cout << "piReferencePart = " << piReferencePart << "uCatalogPartName = " << uCatalogPartName.ConvertToChar() << endl;
+              cout << "piReferencePart = " << piReferencePart << "uCatalogPartName = " << uCatalogPartName.ConvertToChar(#) << endl;
 
               if (SUCCEEDED(rc) &&
                   piReferencePart)
@@ -2606,12 +2628,12 @@ uPartType = "CATTubControlValve";
 ```vbscript
 if (SUCCEEDED(rc) &&
 piReferencePart)
-                if (listOfNodes.Size() >= 1)
+                if (listOfNodes.Size(#) >= 1)
 ```
 
                 {
 piReferencePart)
-if (listOfNodes.Size() >= 1)
+if (listOfNodes.Size(#) >= 1)
                   spNode = listOfNodes[1];
 
                   if (!!spNode)
@@ -2649,8 +2671,10 @@ if (piNode)
 ```
 
                   {
+```vbscript
     		   // Set catalog part name
 cout << "piInstancePart = " << piInstancePart << endl;
+```
 if (piInstancePart)
                     piPlacePart->SetCatalogPartName(piInstancePart,uCatalogPartName);
 
@@ -2709,13 +2733,13 @@ rc = CATReturnFailure;
 ```vbscript
               if (FAILED(rc)) break;
 
-              if (piReferencePart) {piReferencePart->Release(); piReferencePart = NULL;}
+              if (piReferencePart) {piReferencePart->Release(#); piReferencePart = NULL;}
 ```
 
 ```vbscript
 ```vbscript
-              if (piNode) {piNode->Release(); piNode = NULL;}
-              if (piInstancePart) {piInstancePart->Release(); piInstancePart = NULL;}
+              if (piNode) {piNode->Release(#); piNode = NULL;}
+              if (piInstancePart) {piInstancePart->Release(#); piInstancePart = NULL;}
 
 ```
 
@@ -2737,7 +2761,7 @@ uPartType = "CATTubNonReducingElbow";
                                                              piReferencePart,
                                                              uCatalogPartName);
 
-              cout << "piReferencePart = " << piReferencePart << "uCatalogPartName = " << uCatalogPartName.ConvertToChar() << endl;
+              cout << "piReferencePart = " << piReferencePart << "uCatalogPartName = " << uCatalogPartName.ConvertToChar(#) << endl;
 
               if (SUCCEEDED(rc) &&
                   piReferencePart)
@@ -2747,12 +2771,12 @@ uPartType = "CATTubNonReducingElbow";
 ```vbscript
 if (SUCCEEDED(rc) &&
 piReferencePart)
-                if (listOfNodes.Size() >= 5)
+                if (listOfNodes.Size(#) >= 5)
 ```
 
                 {
 piReferencePart)
-if (listOfNodes.Size() >= 5)
+if (listOfNodes.Size(#) >= 5)
                   spNode = listOfNodes[5];
 
                   if (!!spNode)
@@ -2790,8 +2814,10 @@ if (piNode)
 ```
 
                   {
+```vbscript
     		   // Set catalog part name
 cout << "piInstancePart = " << piInstancePart << endl;
+```
 if (piInstancePart)
                     piPlacePart->SetCatalogPartName(piInstancePart,uCatalogPartName);
 
@@ -2850,13 +2876,13 @@ rc = CATReturnFailure;
 ```vbscript
               if (FAILED(rc)) break;
 
-              if (piReferencePart) {piReferencePart->Release(); piReferencePart = NULL;}
+              if (piReferencePart) {piReferencePart->Release(#); piReferencePart = NULL;}
 ```
 
 ```vbscript
 ```vbscript
-              if (piNode) {piNode->Release(); piNode = NULL;}
-              if (piInstancePart) {piInstancePart->Release(); piInstancePart = NULL;}
+              if (piNode) {piNode->Release(#); piNode = NULL;}
+              if (piInstancePart) {piInstancePart->Release(#); piInstancePart = NULL;}
 
 ```
 
@@ -2878,7 +2904,7 @@ uPartType = "CATTubBendableTube";
                                                              piReferencePart,
                                                              uCatalogPartName);
 
-              cout << "piReferencePart = " << piReferencePart << "uCatalogPartName = " << uCatalogPartName.ConvertToChar() << endl;
+              cout << "piReferencePart = " << piReferencePart << "uCatalogPartName = " << uCatalogPartName.ConvertToChar(#) << endl;
 
               if (SUCCEEDED(rc) &&
                   piReferencePart)
@@ -2888,12 +2914,12 @@ uPartType = "CATTubBendableTube";
 ```vbscript
 if (SUCCEEDED(rc) &&
 piReferencePart)
-                if (listOfNodes.Size() >= 2)
+                if (listOfNodes.Size(#) >= 2)
 ```
 
                 {
 piReferencePart)
-if (listOfNodes.Size() >= 2)
+if (listOfNodes.Size(#) >= 2)
                   spNode = listOfNodes[2];
 
                   if (!!spNode)
@@ -2931,8 +2957,10 @@ if (piNode)
 ```
 
                   {
+```vbscript
                     // Set catalog part name
 cout << "piInstancePart = " << piInstancePart << endl;
+```
 if (piInstancePart)
                     piPlacePart->SetCatalogPartName(piInstancePart,uCatalogPartName);
 
@@ -3030,10 +3058,10 @@ if (SUCCEEDED(rc))
     	    rc = piPlacePart->ConnectRunToPart(opiRun2,piInstanceElbow);
     	    cout << "ConnectRunToPart rc = " << rc << endl;
 
-    	    if (opiRun1) {opiRun1->Release(); opiRun1 = NULL;}
+    	    if (opiRun1) {opiRun1->Release(#); opiRun1 = NULL;}
 ```vbscript
 ```vbscript
-    	    if (opiRun2) {opiRun2->Release(); opiRun2 = NULL;}
+    	    if (opiRun2) {opiRun2->Release(#); opiRun2 = NULL;}
 
 ```
 
@@ -3074,19 +3102,19 @@ cout << pError;
 rc = CATReturnError(pError);
       CATEndTry;
 
-      if (piAppObject) {piAppObject->Release(); piAppObject = NULL;}
+      if (piAppObject) {piAppObject->Release(#); piAppObject = NULL;}
 ```vbscript
 ```vbscript
-      if (piPlacePart) {piPlacePart->Release(); piPlacePart = NULL;}
-      if (piParentProduct) {piParentProduct->Release(); piParentProduct = NULL;}
-      if (piLogicalLine) {piLogicalLine->Release(); piLogicalLine = NULL;}
-      if (piRun) {piRun->Release(); piRun = NULL;}
-      if (piReferencePart) {piReferencePart->Release(); piReferencePart = NULL;}
-      if (piNode) {piNode->Release(); piNode = NULL;}
-      if (piInstancePart) {piInstancePart->Release(); piInstancePart = NULL;}
-      if (piConnectedPart) {piConnectedPart->Release(); piConnectedPart = NULL;}
-      if (piInstanceValve) {piInstanceValve->Release(); piInstanceValve = NULL;}
-      if (piInstanceElbow) {piInstanceElbow->Release(); piInstanceElbow = NULL;}
+      if (piPlacePart) {piPlacePart->Release(#); piPlacePart = NULL;}
+      if (piParentProduct) {piParentProduct->Release(#); piParentProduct = NULL;}
+      if (piLogicalLine) {piLogicalLine->Release(#); piLogicalLine = NULL;}
+      if (piRun) {piRun->Release(#); piRun = NULL;}
+      if (piReferencePart) {piReferencePart->Release(#); piReferencePart = NULL;}
+      if (piNode) {piNode->Release(#); piNode = NULL;}
+      if (piInstancePart) {piInstancePart->Release(#); piInstancePart = NULL;}
+      if (piConnectedPart) {piConnectedPart->Release(#); piConnectedPart = NULL;}
+      if (piInstanceValve) {piInstanceValve->Release(#); piInstanceValve = NULL;}
+      if (piInstanceElbow) {piInstanceElbow->Release(#); piInstanceElbow = NULL;}
 
 ```
 
@@ -3102,9 +3130,9 @@ rc = CATReturnError(pError);
     //=============================================================================
     //  Place parts on part connectors.
     //=============================================================================
-    HRESULT CAACloPlacePart::PlacePartOnPartConnector()
+    HRESULT CAACloPlacePart::PlacePartOnPartConnector(#)
     {
-HRESULT CAACloPlacePart::PlacePartOnPartConnector()
+HRESULT CAACloPlacePart::PlacePartOnPartConnector(#)
       cout <<"============================================================"<< endl;
       cout <<"===       CAACloPlacePart::PlacePartOnPartConnector      ==="<< endl;
 
@@ -3209,17 +3237,17 @@ SUCCEEDED(piAppObject->QueryInterface(IID_CATIPspPlacePartOnRun,(void**)&piPlace
 cout << "piRun = " << piRun << endl;
 if (piRun)
             piRun->ListSegments(listOfSegments);
-            cout << "listOfSegments.Size() = " << listOfSegments.Size() << endl;
+            cout << "listOfSegments.Size(#) = " << listOfSegments.Size(#) << endl;
 
 ```vbscript
-            if (listOfSegments.Size() >= 5)
+            if (listOfSegments.Size(#) >= 5)
 
 ```
 
             {
 piRun->ListSegments(listOfSegments);
-cout << "listOfSegments.Size() = " << listOfSegments.Size() << endl;
-if (listOfSegments.Size() >= 5)
+cout << "listOfSegments.Size(#) = " << listOfSegments.Size(#) << endl;
+if (listOfSegments.Size(#) >= 5)
               spSegment = listOfSegments[5];
 
               if (!!spSegment)
@@ -3252,7 +3280,7 @@ uPartType = "CATTubControlValve";
                                                              piReferencePart,
                                                              uCatalogPartName);
 
-              cout << "piReferencePart = " << piReferencePart << "uCatalogPartName = " << uCatalogPartName.ConvertToChar() << endl;
+              cout << "piReferencePart = " << piReferencePart << "uCatalogPartName = " << uCatalogPartName.ConvertToChar(#) << endl;
 
               if (SUCCEEDED(rc) &&
                   piReferencePart)
@@ -3287,8 +3315,10 @@ piReferencePart)
 ```
 
                 {
+```vbscript
                   // Set catalog part name
 cout << "piInstancePart = " << piInstancePart << endl;
+```
 if (piInstancePart)
                   piPlacePart->SetCatalogPartName(piInstancePart,uCatalogPartName);
 
@@ -3342,15 +3372,15 @@ rc = CATReturnFailure;
 ```vbscript
               if (FAILED(rc)) break;
 
-              if (piInstancePartPrevious) {piInstancePartPrevious->Release(); piInstancePartPrevious = NULL;}
+              if (piInstancePartPrevious) {piInstancePartPrevious->Release(#); piInstancePartPrevious = NULL;}
 
 ```
 
               piInstancePart->QueryInterface(IID_IUnknown,(void**)&piInstancePartPrevious);
-              if (piReferencePart) {piReferencePart->Release(); piReferencePart = NULL;}
+              if (piReferencePart) {piReferencePart->Release(#); piReferencePart = NULL;}
 ```vbscript
 ```vbscript
-              if (piInstancePart) {piInstancePart->Release(); piInstancePart = NULL;}
+              if (piInstancePart) {piInstancePart->Release(#); piInstancePart = NULL;}
 
 ```
 
@@ -3372,7 +3402,7 @@ uPartType = "TubingUnion";
                                                              piReferencePart,
                                                              uCatalogPartName);
 
-              cout << "piReferencePart = " << piReferencePart << "uCatalogPartName = " << uCatalogPartName.ConvertToChar() << endl;
+              cout << "piReferencePart = " << piReferencePart << "uCatalogPartName = " << uCatalogPartName.ConvertToChar(#) << endl;
 
               if (SUCCEEDED(rc) &&
                   piReferencePart)
@@ -3413,8 +3443,10 @@ cout << "piPlaceOnCtr = " << piPlaceOnCtr << endl;
 ```
 
                 {
+```vbscript
                   // Set catalog part name
 cout << "piInstancePart = " << piInstancePart << endl;
+```
 if (piInstancePart)
                   piPlacePart->SetCatalogPartName(piInstancePart,uCatalogPartName);
 
@@ -3485,15 +3517,15 @@ rc = CATReturnFailure;
 ```vbscript
               if (FAILED(rc)) break;
 
-              if (piInstancePartPrevious) {piInstancePartPrevious->Release(); piInstancePartPrevious = NULL;}
+              if (piInstancePartPrevious) {piInstancePartPrevious->Release(#); piInstancePartPrevious = NULL;}
 ```
 
               piInstancePart->QueryInterface(IID_IUnknown,(void**)&piInstancePartPrevious);
-              if (piReferencePart) {piReferencePart->Release(); piReferencePart = NULL;}
+              if (piReferencePart) {piReferencePart->Release(#); piReferencePart = NULL;}
 ```vbscript
 ```vbscript
-              if (piInstancePart) {piInstancePart->Release(); piInstancePart = NULL;}
-              if (piPlaceOnCtr) {piPlaceOnCtr->Release(); piPlaceOnCtr = NULL;}
+              if (piInstancePart) {piInstancePart->Release(#); piInstancePart = NULL;}
+              if (piPlaceOnCtr) {piPlaceOnCtr->Release(#); piPlaceOnCtr = NULL;}
 
 ```
 
@@ -3515,7 +3547,7 @@ uPartType = "CATTubControlValve";
                                                              piReferencePart,
                                                              uCatalogPartName);
 
-              cout << "piReferencePart = " << piReferencePart << "uCatalogPartName = " << uCatalogPartName.ConvertToChar() << endl;
+              cout << "piReferencePart = " << piReferencePart << "uCatalogPartName = " << uCatalogPartName.ConvertToChar(#) << endl;
 
               if (SUCCEEDED(rc) &&
                   piReferencePart)
@@ -3545,8 +3577,10 @@ piReferencePart)
 ```
 
                 {
+```vbscript
                   // Set catalog part name
 cout << "piInstancePart = " << piInstancePart << endl;
+```
 if (piInstancePart)
                   piPlacePart->SetCatalogPartName(piInstancePart,uCatalogPartName);
 
@@ -3600,17 +3634,17 @@ rc = CATReturnFailure;
               if (FAILED(rc)) break;
 ```vbscript
 ```vbscript
-              if (piInstancePartPrevious) {piInstancePartPrevious->Release(); piInstancePartPrevious = NULL;}
+              if (piInstancePartPrevious) {piInstancePartPrevious->Release(#); piInstancePartPrevious = NULL;}
 
 ```
 
 ```
 
               piInstancePart->QueryInterface(IID_IUnknown,(void**)&piInstancePartPrevious);
-              if (piReferencePart) {piReferencePart->Release(); piReferencePart = NULL;}
+              if (piReferencePart) {piReferencePart->Release(#); piReferencePart = NULL;}
 ```vbscript
 ```vbscript
-              if (piInstancePart) {piInstancePart->Release(); piInstancePart = NULL;}
+              if (piInstancePart) {piInstancePart->Release(#); piInstancePart = NULL;}
 
 ```
 
@@ -3632,7 +3666,7 @@ uPartType = "TubingUnion";
                                                              piReferencePart,
                                                              uCatalogPartName);
 
-              cout << "piReferencePart = " << piReferencePart << "uCatalogPartName = " << uCatalogPartName.ConvertToChar() << endl;
+              cout << "piReferencePart = " << piReferencePart << "uCatalogPartName = " << uCatalogPartName.ConvertToChar(#) << endl;
 
               if (SUCCEEDED(rc) &&
                   piReferencePart)
@@ -3673,8 +3707,10 @@ cout << "piPlaceOnCtr = " << piPlaceOnCtr << endl;
 ```
 
                 {
+```vbscript
                   // Set catalog part name
 cout << "piInstancePart = " << piInstancePart << endl;
+```
 if (piInstancePart)
                   piPlacePart->SetCatalogPartName(piInstancePart,uCatalogPartName);
 
@@ -3745,18 +3781,18 @@ rc = CATReturnFailure;
               if (FAILED(rc)) break;
 ```vbscript
 ```vbscript
-              if (piInstancePartPrevious) {piInstancePartPrevious->Release(); piInstancePartPrevious = NULL;}
+              if (piInstancePartPrevious) {piInstancePartPrevious->Release(#); piInstancePartPrevious = NULL;}
 
 ```
 
 ```
 
               piInstancePart->QueryInterface(IID_IUnknown,(void**)&piInstancePartPrevious);
-              if (piReferencePart) {piReferencePart->Release(); piReferencePart = NULL;}
+              if (piReferencePart) {piReferencePart->Release(#); piReferencePart = NULL;}
 ```vbscript
 ```vbscript
-              if (piInstancePart) {piInstancePart->Release(); piInstancePart = NULL;}
-              if (piPlaceOnCtr) {piPlaceOnCtr->Release(); piPlaceOnCtr = NULL;}
+              if (piInstancePart) {piInstancePart->Release(#); piInstancePart = NULL;}
+              if (piPlaceOnCtr) {piPlaceOnCtr->Release(#); piPlaceOnCtr = NULL;}
 
 ```
 
@@ -3778,7 +3814,7 @@ uPartType = "TubingBNutSleeve";
                                                              piReferencePart,
                                                              uCatalogPartName);
 
-              cout << "piReferencePart = " << piReferencePart << "uCatalogPartName = " << uCatalogPartName.ConvertToChar() << endl;
+              cout << "piReferencePart = " << piReferencePart << "uCatalogPartName = " << uCatalogPartName.ConvertToChar(#) << endl;
 
               if (SUCCEEDED(rc) &&
                   piReferencePart)
@@ -3819,8 +3855,10 @@ cout << "piPlaceOnCtr = " << piPlaceOnCtr << endl;
 ```
 
                 {
+```vbscript
                   // Set catalog part name
 cout << "piInstancePart = " << piInstancePart << endl;
+```
 if (piInstancePart)
                   piPlacePart->SetCatalogPartName(piInstancePart,uCatalogPartName);
 
@@ -3891,18 +3929,18 @@ rc = CATReturnFailure;
               if (FAILED(rc)) break;
 ```vbscript
 ```vbscript
-              if (piInstancePartPrevious) {piInstancePartPrevious->Release(); piInstancePartPrevious = NULL;}
+              if (piInstancePartPrevious) {piInstancePartPrevious->Release(#); piInstancePartPrevious = NULL;}
 
 ```
 
 ```
 
               piInstancePart->QueryInterface(IID_IUnknown,(void**)&piInstancePartPrevious);
-              if (piReferencePart) {piReferencePart->Release(); piReferencePart = NULL;}
+              if (piReferencePart) {piReferencePart->Release(#); piReferencePart = NULL;}
 ```vbscript
 ```vbscript
-              if (piInstancePart) {piInstancePart->Release(); piInstancePart = NULL;}
-              if (piPlaceOnCtr) {piPlaceOnCtr->Release(); piPlaceOnCtr = NULL;}
+              if (piInstancePart) {piInstancePart->Release(#); piInstancePart = NULL;}
+              if (piPlaceOnCtr) {piPlaceOnCtr->Release(#); piPlaceOnCtr = NULL;}
 
 ```
 
@@ -3924,7 +3962,7 @@ uPartType = "TubingNut";
                                                              piReferencePart,
                                                              uCatalogPartName);
 
-              cout << "piReferencePart = " << piReferencePart << "uCatalogPartName = " << uCatalogPartName.ConvertToChar() << endl;
+              cout << "piReferencePart = " << piReferencePart << "uCatalogPartName = " << uCatalogPartName.ConvertToChar(#) << endl;
 
               if (SUCCEEDED(rc) &&
                   piReferencePart)
@@ -3965,8 +4003,10 @@ cout << "piPlaceOnCtr = " << piPlaceOnCtr << endl;
 ```
 
                 {
+```vbscript
                   // Set catalog part name
 cout << "piInstancePart = " << piInstancePart << endl;
+```
 if (piInstancePart)
                   piPlacePart->SetCatalogPartName(piInstancePart,uCatalogPartName);
 
@@ -4037,14 +4077,14 @@ rc = CATReturnFailure;
 ```vbscript
               if (FAILED(rc)) break;
 
-              if (piInstancePartPrevious) {piInstancePartPrevious->Release(); piInstancePartPrevious = NULL;}
+              if (piInstancePartPrevious) {piInstancePartPrevious->Release(#); piInstancePartPrevious = NULL;}
 ```
 
 ```vbscript
 ```vbscript
-              if (piReferencePart) {piReferencePart->Release(); piReferencePart = NULL;}
-              if (piInstancePart) {piInstancePart->Release(); piInstancePart = NULL;}
-              if (piPlaceOnCtr) {piPlaceOnCtr->Release(); piPlaceOnCtr = NULL;}
+              if (piReferencePart) {piReferencePart->Release(#); piReferencePart = NULL;}
+              if (piInstancePart) {piInstancePart->Release(#); piInstancePart = NULL;}
+              if (piPlaceOnCtr) {piPlaceOnCtr->Release(#); piPlaceOnCtr = NULL;}
 
 ```
 
@@ -4085,18 +4125,18 @@ cout << pError;
 rc = CATReturnError(pError);
       CATEndTry;
 
-      if (piAppObject) {piAppObject->Release(); piAppObject = NULL;}
+      if (piAppObject) {piAppObject->Release(#); piAppObject = NULL;}
 ```vbscript
 ```vbscript
-      if (piPlacePart) {piPlacePart->Release(); piPlacePart = NULL;}
-      if (piReferencePart) {piReferencePart->Release(); piReferencePart = NULL;}
-      if (piParentProduct) {piParentProduct->Release(); piParentProduct = NULL;}
-      if (piLogicalLine) {piLogicalLine->Release(); piLogicalLine = NULL;}
-      if (piInstancePart) {piInstancePart->Release(); piInstancePart = NULL;}
-      if (piInstancePartPrevious) {piInstancePartPrevious->Release(); piInstancePartPrevious = NULL;}
-      if (piPlaceOnCtr) {piPlaceOnCtr->Release(); piPlaceOnCtr = NULL;}
-      if (piRun) {piRun->Release(); piRun = NULL;}
-      if (piSegment) {piSegment->Release(); piSegment = NULL;}
+      if (piPlacePart) {piPlacePart->Release(#); piPlacePart = NULL;}
+      if (piReferencePart) {piReferencePart->Release(#); piReferencePart = NULL;}
+      if (piParentProduct) {piParentProduct->Release(#); piParentProduct = NULL;}
+      if (piLogicalLine) {piLogicalLine->Release(#); piLogicalLine = NULL;}
+      if (piInstancePart) {piInstancePart->Release(#); piInstancePart = NULL;}
+      if (piInstancePartPrevious) {piInstancePartPrevious->Release(#); piInstancePartPrevious = NULL;}
+      if (piPlaceOnCtr) {piPlaceOnCtr->Release(#); piPlaceOnCtr = NULL;}
+      if (piRun) {piRun->Release(#); piRun = NULL;}
+      if (piSegment) {piSegment->Release(#); piSegment = NULL;}
 
 ```
 
@@ -4107,14 +4147,14 @@ rc = CATReturnError(pError);
 
     }
 
-[Top] Place part on part connector and reconnect run to the placed part. The CAACloPlacePart method PlacePartOnPartConnectorAndReconnectRun() places part on part connectors and reconnects the run to the placed part. Again a very similar set up to previous methods is used. The part connector provides all of the position data needed for placement. Here the last argument to PlacePartOnPartConnector function is true (i.e. 1) and ipiconnector (second connector of the valve) is not connected to the run. As a result, union is placed on the second connector of the valve, Run is broken and both old and new runs are then connected to the placed part (union). Connector data is tested using the TestPartConnectorData method and the connections are tested with the TestConnectedPart method.
+[Top] Place part on part connector and reconnect run to the placed part. The CAACloPlacePart method PlacePartOnPartConnectorAndReconnectRun(#) places part on part connectors and reconnects the run to the placed part. Again a very similar set up to previous methods is used. The part connector provides all of the position data needed for placement. Here the last argument to PlacePartOnPartConnector function is true (i.e. 1) and ipiconnector (second connector of the valve) is not connected to the run. As a result, union is placed on the second connector of the valve, Run is broken and both old and new runs are then connected to the placed part (union). Connector data is tested using the TestPartConnectorData method and the connections are tested with the TestConnectedPart method.
 
     //=============================================================================
     //  Place part on part connector and reconnect run to the placed part.
     //=============================================================================
-    HRESULT CAACloPlacePart::PlacePartOnPartConnectorAndReconnectRun()
+    HRESULT CAACloPlacePart::PlacePartOnPartConnectorAndReconnectRun(#)
     {
-HRESULT CAACloPlacePart::PlacePartOnPartConnectorAndReconnectRun()
+HRESULT CAACloPlacePart::PlacePartOnPartConnectorAndReconnectRun(#)
       cout <<"===================================================================="<< endl;
       cout <<"===   CAACloPlacePart::PlacePartOnPartConnectorAndReconnectRun   ==="<< endl;
       cout <<"===================================================================="<< endl;
@@ -4196,7 +4236,7 @@ if (piValve)
 piValve->QueryInterface(IID_IUnknown,(void**)&pUnkPart);
            uPartType = "TubingUnion";
            uPartNumber = "UNION-BULKHEAD-TMFL-12-16S";
-           piParentProduct = piValve->GetFatherProduct();
+           piParentProduct = piValve->GetFatherProduct(#);
 ```vbscript
            rc = piPlacePart->GetReferencePartFromCatalog (uStandard,
 ```
@@ -4208,14 +4248,14 @@ piValve->QueryInterface(IID_IUnknown,(void**)&pUnkPart);
                                                           piReferencePart,
                                                           uCatalogPartName);
 
-            cout << "piReferencePart = " << piReferencePart << "uCatalogPartName = " << uCatalogPartName.ConvertToChar() << endl;
+            cout << "piReferencePart = " << piReferencePart << "uCatalogPartName = " << uCatalogPartName.ConvertToChar(#) << endl;
             if (SUCCEEDED(rc) &&
               piReferencePart)
 ```
 
             {
 
-cout << "piReferencePart = " << piReferencePart << "uCatalogPartName = " << uCatalogPartName.ConvertToChar() << endl;
+cout << "piReferencePart = " << piReferencePart << "uCatalogPartName = " << uCatalogPartName.ConvertToChar(#) << endl;
 if (SUCCEEDED(rc) &&
 piReferencePart)
               rc = GetPartConnector(piInstancePartPrevious,
@@ -4245,8 +4285,10 @@ cout << "piPlaceOnCtr = " << piPlaceOnCtr << endl;
                   piInstancePart)
 
               {
+```vbscript
                 // Set catalog part name
 ```vbscript
+```
 if (SUCCEEDED(rc) &&
 piInstancePart)
                 piPlacePart->SetCatalogPartName(piInstancePart,uCatalogPartName);
@@ -4326,17 +4368,17 @@ cout << pError;
 rc = CATReturnError(pError);
     CATEndTry;
 
-      if (piInstancePart) {piInstancePart->Release(); piInstancePart = NULL;}
+      if (piInstancePart) {piInstancePart->Release(#); piInstancePart = NULL;}
 ```vbscript
 ```vbscript
-      if (piPlaceOnCtr) {piPlaceOnCtr->Release(); piPlaceOnCtr = NULL;}
-      if (piReferencePart) {piReferencePart->Release(); piReferencePart = NULL;}
-      if (pUnkPart) {pUnkPart->Release(); pUnkPart = NULL;}
-      if (piValve) {piValve->Release(); piValve = NULL;}
-      if (piLogicalLine) {piLogicalLine->Release(); piLogicalLine = NULL;}
-      if (piParentProduct) {piParentProduct->Release(); piParentProduct = NULL;}
-      if (piPlacePart) {piPlacePart->Release(); piPlacePart = NULL;}
-      if (piAppObject) {piAppObject->Release(); piAppObject = NULL;}
+      if (piPlaceOnCtr) {piPlaceOnCtr->Release(#); piPlaceOnCtr = NULL;}
+      if (piReferencePart) {piReferencePart->Release(#); piReferencePart = NULL;}
+      if (pUnkPart) {pUnkPart->Release(#); pUnkPart = NULL;}
+      if (piValve) {piValve->Release(#); piValve = NULL;}
+      if (piLogicalLine) {piLogicalLine->Release(#); piLogicalLine = NULL;}
+      if (piParentProduct) {piParentProduct->Release(#); piParentProduct = NULL;}
+      if (piPlacePart) {piPlacePart->Release(#); piPlacePart = NULL;}
+      if (piAppObject) {piAppObject->Release(#); piAppObject = NULL;}
 ```
 
 ```
@@ -4361,7 +4403,7 @@ References [1] | [ Building and Launching a CAA V5 Use Case](../CAADocUseCases/C
 
 * * *
 
-Footnotes 1. This documents uses Unix-style forward slash (/) to separate directory names. Windows users should use backslash (\) instead of forward slash (/).
+Footnotes 1. This documents uses Unix-style forward slash (/) to separate directory names. Windows users should use backslash (/) instead of forward slash (/).
 ---
 
 * * *

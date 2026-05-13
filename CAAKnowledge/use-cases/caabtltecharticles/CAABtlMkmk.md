@@ -1,16 +1,16 @@
 ---
 ```vbscript
 title: "The Workbench Code Builder mkmk"
-category: "use-case"
+category: tech-article
 module: "CAABtlTechArticles"
 tags: []
-source_file: "Doc/online/CAABtlTechArticles/CAABtlMkmk.htm"
+source_file: "Doc/online/CAABtlTechArticles/CAABtlMkmk.htmmd"
 converted: "2026-05-11T17:33:46.154216"
 ```
 
 ---
 tags: []
-source_file: "Doc/online/CAABtlTechArticles/CAABtlMkmk.htm"
+source_file: "Doc/online/CAABtlTechArticles/CAABtlMkmk.htmmd"
 converted: "2026-05-11T17:33:46.154216"
 RADE |  Multi-Workspace Application Builder |  The Workbench Code Builder mkmk _Principles - What does it do for CAA developers?_
 
@@ -108,7 +108,7 @@ New build step checking interfaces usage A new build step has been added to mkmk
   * Local (of a module) interfaces
 
 If an interface uses a lower level header, an error message is displayed. Example: _/WS/MyFW/PublicInterfaces/NameOfTheInterface.h file PUBLIC cannot use /WS/MyFW/ProtectedInterfaces/UsedInterface.h as include since it is PROTECTED.
-# make-ERROR: MyFW/PublicInterfaces/NameOfTheInterface.h_ 2 - If an interface uses an header from another framework, it must be a direct prerequisite framework. If an interface uses interfaces from a non direct prerequisite an error message is displayed. Example: _/WS/MyFW/PublicInterfaces/NameOfTheInterface.h cannot use /WS/PrereqFW/PublicInterfaces\UsedInterface.h as include since it is in framework [PrereqFW] which is not a direct prerequisite
+# make-ERROR: MyFW/PublicInterfaces/NameOfTheInterface.h_ 2 - If an interface uses an header from another framework, it must be a direct prerequisite framework. If an interface uses interfaces from a non direct prerequisite an error message is displayed. Example: _/WS/MyFW/PublicInterfaces/NameOfTheInterface.h cannot use /WS/PrereqFW/PublicInterfaces/UsedInterface.h as include since it is in framework [PrereqFW] which is not a direct prerequisite
 # make-ERROR: MyFW/PublicInterfaces/NameOfTheInterface.h_ _**Those new messages have no effect on the build time process. There is only new messages in the output of the command.**_ mkmk compilation phases When you run mkmk (whether to compile a framework or a module), the compilation goes through four main steps. These steps can be controlled using specific mkmk [ options](../CAABtlQuickRefs/CAABtlMANMkmk.htm#Usage).
 
 ```vbscript

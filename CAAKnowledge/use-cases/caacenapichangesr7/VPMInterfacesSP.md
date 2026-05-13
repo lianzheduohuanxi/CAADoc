@@ -5,13 +5,13 @@ category: "use-case"
 module: "CAACenAPIChangesR7"
 version: "V5R7"
 tags: ["CATIConfigurable", "CATIAVPMBusinessObject", "CATICfgManager", "CATIABase", "CATIAVPMBOProductInstance", "CATIConfigHandler", "CATIVpmAFLAffectedObject", "CATICfgModification", "CATICfgNormalValue", "CATIVpmFactoryObject", "CATICfgEffectivity", "CATICfgFilter", "CATIAVPMBOProductComponent", "CATICfgSpecCategory", "CATIVpmAFLAction", "CATICfgSimpleSpecification", "CATIConfigurableObject", "CATIVpmLoginSession", "CATICfgORExpression", "CATIAVPMBOPartReference"]
-source_file: "Doc/online/CAACenAPIChangesR7/VPMInterfacesSP.htm"
+source_file: "Doc/online/CAACenAPIChangesR7/VPMInterfacesSP.htmmd"
 converted: "2026-05-11T17:33:52.330246"
 ```
 
 ---
 tags: ["CATIConfigurable", "CATIAVPMBusinessObject", "CATICfgManager", "CATIABase", "CATIAVPMBOProductInstance", "CATIConfigHandler", "CATIVpmAFLAffectedObject", "CATICfgModification", "CATICfgNormalValue", "CATIVpmFactoryObject", "CATICfgEffectivity", "CATICfgFilter", "CATIAVPMBOProductComponent", "CATICfgSpecCategory", "CATIVpmAFLAction", "CATICfgSimpleSpecification", "CATIConfigurableObject", "CATIVpmLoginSession", "CATICfgORExpression", "CATIAVPMBOPartReference"]
-source_file: "Doc/online/CAACenAPIChangesR7/VPMInterfacesSP.htm"
+source_file: "Doc/online/CAACenAPIChangesR7/VPMInterfacesSP.htmmd"
 converted: "2026-05-11T17:33:52.330246"
 CAA API Modifications|  VPMInterfaces  |
 

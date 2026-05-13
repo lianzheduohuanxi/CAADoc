@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Inserting Commands in Contextual Menus"
-category: "use case"
+category: use-case case"
 module: "CAAAfrUseCases"
 tags: ["CAASysEllipse", "CAAAfrEllipseHdr", "CAACafContextualMenu", "CAA2", "CAAEMmrCombinedCurveContSubMenu", "CAAECafContextualMenuEllipse", "CAACafContextualMenuCircleStr", "CAAAfrCircleHdr", "CAAAfrGeometryWks", "CAAGeometry", "CAACafContextualMenuEllipseStr", "CAACafContextualMenuSep", "CATIContextualMenu", "CATIA", "CATIAApplicationFrm", "CAACATIAApplicationFrm", "CATIAApplicationFrame"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleContextualMenu.htm"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleContextualMenu.htmmd"
 converted: "2026-05-11T17:17:55.668604"
 ```
 
@@ -70,7 +70,7 @@ Launch CATIA, when the application is ready:
 ---
     * Select the **CAAAfrGeometryWks****** workshop
     * Enter a Path in the **Directory** editor
-    * Click **Print  \- **The **CAAAfrGeometryWks****.txt** file is generated
+    * Click **Print  /- **The **CAAAfrGeometryWks****.txt** file is generated
     * Click**OK**
 
 In the **CAAAfrGeometryWks****.txt** find out the "`Ellipse` " and "`Circle`" strings:
@@ -95,10 +95,10 @@ See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The C
 The CAACafContextualMenu use case is made of one single class, the CAAECafContextualMenuEllipse class, located in the CAACafContextualMenu.m module of the CAACATIAApplicationFrm.edu framework:
 
 The CAACafContextualMenu use case is made of one single class, the CAAECafContextualMenuEllipse class, located in the CAACafContextualMenu.m module of the CAACATIAApplicationFrm.edu framework:
-Windows | `InstallRootDirectory\CAACATIAApplicationFrm.edu\CAACafContextualMenu.m\`
+Windows | `InstallRootDirectory/CAACATIAApplicationFrm.edu/CAACafContextualMenu.m/`
 
 The CAACafContextualMenu use case is made of one single class, the CAAECafContextualMenuEllipse class, located in the CAACafContextualMenu.m module of the CAACATIAApplicationFrm.edu framework:
-Windows | `InstallRootDirectory\CAACATIAApplicationFrm.edu\CAACafContextualMenu.m\`
+Windows | `InstallRootDirectory/CAACATIAApplicationFrm.edu/CAACafContextualMenu.m/`
 Unix | `InstallRootDirectory/CAACATIAApplicationFrm.edu/CAACafContextualMenu``.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -128,8 +128,8 @@ class CAAECafContextualMenuEllipse : public **CATExtIContextualMenu**
 
       public:
 
-        CAAECafContextualMenuEllipse();
-        virtual ~CAAECafContextualMenuEllipse();
+        CAAECafContextualMenuEllipse(#);
+        virtual ~CAAECafContextualMenuEllipse(#);
 
       private:
         CAAECafContextualMenuEllipse(const CAAECafContextualMenuEllipse &iObjectToCopy);
@@ -159,13 +159,13 @@ The implementation class derives from the _CATExtIContextualMenu_ adapter class.
 The CAAECafContextualMenuEllipse class states that it implements the _CATIContextualMenu_ interface thanks to the `TIE_CATIContextualMenu` macro. The `CATImplementClass` macro declares that the CAAECafContextualMenuEllipse class is a data extension, thanks to the `DataExtension` keyword, that extends _CAASysEllipse_. The third argument must always be set as _CATBaseUnknown_ or _CATNull_ for any kind of extension.
 
     ...
-    CAAEMmrCombinedCurveContSubMenu::CAAEMmrCombinedCurveContSubMenu()
+    CAAEMmrCombinedCurveContSubMenu::CAAEMmrCombinedCurveContSubMenu(#)
 
     {
         Creating the Contextual Menu
     }
 
-    CAAEMmrCombinedCurveContSubMenu::~CAAEMmrCombinedCurveContSubMenu()
+    CAAEMmrCombinedCurveContSubMenu::~CAAEMmrCombinedCurveContSubMenu(#)
     {
     }
 

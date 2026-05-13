@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating or Computing an Edge Curve"
-category: "use case"
+category: use-case case"
 module: "CAACgmModel"
 tags: ["CATICGMComputeEdgeCurve", "CATICGMObject", "CAAGMModelInterfaces", "CAAGMModelTetra", "CATICGMEdgeCurveComputation", "CAAGMModelEdgeCurveComputation"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcEdgeCurveCreation.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcEdgeCurveCreation.htmmd"
 converted: "2026-05-11T17:33:48.198981"
 ```
 
@@ -46,8 +46,8 @@ piPlanexy->GetParam(CATMathPoint(0,       10.04, 0.05) ,Pxy2);
     CATICGMEdgeCurveComputation * pEdgeComputationOpe20=::CATCGMCreateEdgeCurveComputation(piGeomFactory,pConfig,
     piPLinexy20,piPLineyz01);
     pEdgeComputationOpe20->SetMaxGap(0.11);
-    pEdgeComputationOpe20->Run();
-    CATEdgeCurve * piSimCurve20= pEdgeComputationOpe20->GetEdgeCurve();
+    pEdgeComputationOpe20->Run(#);
+    CATEdgeCurve * piSimCurve20= pEdgeComputationOpe20->GetEdgeCurve(#);
 
 generates this result if the Data Checker is not activated. The max gap is around 0.101mm: Fig.1 Edge Curve Computation ![ddd](images/CGM_computeEdgeCurve_0.png)
 

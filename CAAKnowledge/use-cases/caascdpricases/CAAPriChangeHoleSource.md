@@ -4,13 +4,13 @@ title: "CAAPriChangeHole.CATScript"
 category: "use-case"
 module: "CAAScdPriUseCases"
 tags: ["CAAScdPriUseCases", "CATIA", "CATIAHole", "CAAPriChangeHole"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangeHoleSource.htm"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangeHoleSource.htmmd"
 converted: "2026-05-11T17:31:51.200028"
 ```
 
 ---
 tags: ["CAAScdPriUseCases", "CATIA", "CATIAHole", "CAAPriChangeHole"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangeHoleSource.htm"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangeHoleSource.htmmd"
 converted: "2026-05-11T17:31:51.200028"
     Option Explicit
 
@@ -33,12 +33,17 @@ converted: "2026-05-11T17:31:51.200028"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
 
+```
 ```
 
 ```vbscript
+```vbscript
     Dim oPartDocument As PartDocument
+```vbscript
+```
 ```vbscript
 ```vbscript
     Dim oCATIAFileSys
@@ -58,6 +63,7 @@ converted: "2026-05-11T17:31:51.200028"
     Dim i as Long
 
 ```
+```
 
 ```
 
@@ -69,7 +75,9 @@ converted: "2026-05-11T17:31:51.200028"
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String
+```vbscript
     sDocPath=CATIA.SystemService.Environ("CATDocView")
+```
 ```
 
 ```
@@ -77,11 +85,15 @@ converted: "2026-05-11T17:31:51.200028"
 ```
 
 ```vbscript
+```vbscript
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+```vbscript
+```
 ```vbscript
 ```vbscript
       Err.Raise 9999,,"No Doc Path Defined"
     End If
+```
 ```
 
 ```
@@ -99,26 +111,34 @@ converted: "2026-05-11T17:31:51.200028"
 
 ```
 
-    iDelimiter = "\\"
+    iDelimiter = "//"
 ```vbscript
 ```vbscript
     ' ------------
     ' Get the CATIA file system
     ' ------------
+```vbscript
     Set oCATIAFileSys = CATIA.FileSystem
     ' ------------
+```
     ' Get the file containing the hole parameters
     ' ------------
-    Set oFile = oCATIAFileSys.GetFile(sDocPath & "\online\CAAScdPriUseCases\macros\CAAPriChangeHole.txt")
+```vbscript
+    Set oFile = oCATIAFileSys.GetFile(sDocPath & "/online/CAAScdPriUseCases/macros/CAAPriChangeHole.txt")
     ' ------------
+```
     ' Get the text stream
     ' ------------
+```vbscript
     Set oTextSteam = oFile.OpenAsTextStream("ForReading")
     ' ------------
+```
     ' Get the part document
     ' ------------
+```vbscript
     Set oPartDocument = CATIA.ActiveDocument
     ' ------------
+```
     ' Test the selection content
     ' ------------
     If oPartDocument.Selection.Count = 0 Then
@@ -141,8 +161,10 @@ converted: "2026-05-11T17:31:51.200028"
 
 ```
 
+```vbscript
         MsgBox "Please select the holes you wish to transform before running the macro.", vbOKOnly, "Warning"
     Else
+```
 ```
 
 ```vbscript
@@ -401,15 +423,19 @@ Select Case iArray(iRow, 5)
                     oHole.Diameter.Value = CDbl(iArray(iRow, 2))
                     oHole.Diameter.MaximumTolerance = (CDbl(iArray(iRow, 3)) - CDbl(iArray(iRow, 2))) * oUnit
                     oHole.Diameter.MinimumTolerance = (CDbl(iArray(iRow, 4)) - CDbl(iArray(iRow, 2))) * oUnit
+```vbscript
                     Set oParameters = oPartDocument.Part.Parameters.SubList(oHole, True)
+```
 ```
 
 ```vbscript
 ```vbscript
 ```vbscript
                     ' ------------
+```vbscript
                     ' Set the hole description parameter
                     ' ------------
+```
                     If ParameterExists("Hole_Description", oParameters) = True Then
 ```
 
@@ -420,8 +446,10 @@ Select Case iArray(iRow, 5)
 ```vbscript
 ```vbscript
 ```vbscript
+```vbscript
 ' Set the hole description parameter
 ' ------------
+```
 If ParameterExists("Hole_Description", oParameters) = True Then
 ```
 
@@ -576,10 +604,13 @@ Select Case iArray(iRow, 6)
 ```
 
 ```vbscript
+```vbscript
     End Sub
 
 End Sub
     Private Function CatObjectExistsInSelection(CatSelection As Selection, CatObjectName As String, CatObject As Object) As Boolean
+
+```
 
 ```
 
@@ -605,12 +636,16 @@ End Sub
 
 ```
 
+```vbscript
     On Error Resume Next
+```
 ```
 
 ```vbscript
+```vbscript
     Set CatObject = CatSelection.FindObject(CatObjectName)
 ```vbscript
+```
 ```vbscript
     CatObjectExistsInSelection = (Err.Number = 0)
     Err.Clear
@@ -622,10 +657,13 @@ End Sub
 ```
 
 ```vbscript
+```vbscript
     End Function
 
 End Function
     Private Function ParameterExists(ItemIndex As String, ItemCollection As Object) As Boolean
+
+```
 
 ```
 
@@ -642,10 +680,12 @@ End Function
 ```
 
 ```vbscript
+```vbscript
     Dim TmpItem As Variant
     On Error Resume Next
     Set TmpItem = ItemCollection.Item(ItemIndex)
 ```vbscript
+```
 ```vbscript
     ParameterExists = (Err.Number = 0)
     Err.Clear
@@ -657,6 +697,8 @@ End Function
 ```
 
 ```vbscript
+```vbscript
     End Function
 
+```
 ```

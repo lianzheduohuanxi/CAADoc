@@ -5,13 +5,13 @@ category: "use-case"
 module: "CAACenAPIChangesR7"
 version: "V5R7"
 tags: ["CATIDraft"]
-source_file: "Doc/online/CAACenAPIChangesR7/PartInterfacesSP.htm"
+source_file: "Doc/online/CAACenAPIChangesR7/PartInterfacesSP.htmmd"
 converted: "2026-05-11T17:33:52.215562"
 ```
 
 ---
 tags: ["CATIDraft"]
-source_file: "Doc/online/CAACenAPIChangesR7/PartInterfacesSP.htm"
+source_file: "Doc/online/CAACenAPIChangesR7/PartInterfacesSP.htmmd"
 converted: "2026-05-11T17:33:52.215562"
 CAA API Modifications|  PartInterfaces  |
 

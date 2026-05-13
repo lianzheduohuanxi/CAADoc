@@ -5,13 +5,13 @@ category: "use-case"
 module: "CAACenAPIChangesR7"
 version: "V5R7"
 tags: ["CATIGSMAssemble", "CATIGSMFillet"]
-source_file: "Doc/online/CAACenAPIChangesR7/GSMInterfacesSP.htm"
+source_file: "Doc/online/CAACenAPIChangesR7/GSMInterfacesSP.htmmd"
 converted: "2026-05-11T17:33:52.096015"
 ```
 
 ---
 tags: ["CATIGSMAssemble", "CATIGSMFillet"]
-source_file: "Doc/online/CAACenAPIChangesR7/GSMInterfacesSP.htm"
+source_file: "Doc/online/CAACenAPIChangesR7/GSMInterfacesSP.htmmd"
 converted: "2026-05-11T17:33:52.096015"
 CAA API Modifications|  GSMInterfaces  |
 

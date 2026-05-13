@@ -4,7 +4,7 @@ title: "Detail Of C++ API Changes"
 category: "api-changes"
 module: "CAACenAPIChanges"
 tags: ["CAA2Usage", "CAA2Level"]
-source_file: "Doc/online/CAACenAPIChanges/CAACenAPIChangeDetail.htm"
+source_file: "Doc/online/CAACenAPIChanges/CAACenAPIChangeDetail.htmmd"
 converted: "2026-05-11T17:33:50.031668"
 ```
 
@@ -38,12 +38,12 @@ Framework | Header | Class | Method | Signature | Modification | To Do
 Framework | Header | Class | Method | Signature | Modification | To Do
 AutomationInterfaces | CATScriptUtilities.h | CATScriptUtilities | ExecuteScript | static HRESULT ExecuteScript(const CATUnicodeString& iLibraryName,CatScriptLibraryType iType,const CATUnicodeString& iProgramName,CATVariant & oResult,const CATUnicodeString& iFunctionName ="CATMain",CATVariant* iParams = NULL,unsigned int iParamCount = 0,CATBoolean iAutomaticReplay = TRUE | MHBDM | The type of the last parameter is now an enum with 3 values instead of a CATBoolean. Please note that the default value (iAutomaticReplay = TRUE) produces the same behaviour as before.
 Dialog | CATDlgBlackBox.h | CATDlgBlackBox | CATDlgBlackBox | CATDlgBlackBox(CATDialog*pParent,const CATString& rObjectName,CATDlgStyle nStyle=NULL) | MHBDM | Constructor and destructor are now protected. A CATDlgWindows cannot be constructed directly anymore: it can only be constructed as the base class of one of its derived classes.
-Dialog | CATDlgBlackBox.h | CATDlgBlackBox | ExecuteScript | virtual ~CATDlgBlackBox() | MHBDM | Destructor is now protected.
+Dialog | CATDlgBlackBox.h | CATDlgBlackBox | ExecuteScript | virtual ~CATDlgBlackBox(#) | MHBDM | Destructor is now protected.
 References
 
 * * *
 
-Dialog | CATDlgBlackBox.h | CATDlgBlackBox | ExecuteScript | virtual ~CATDlgBlackBox() | MHBDM | Destructor is now protected.
+Dialog | CATDlgBlackBox.h | CATDlgBlackBox | ExecuteScript | virtual ~CATDlgBlackBox(#) | MHBDM | Destructor is now protected.
 References
 History Version: **1** [Aug 2017] | Document created
 

@@ -4,13 +4,13 @@ title: "Topological Journal: Creation and Validation (1)"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMCheckForPart", "CAAGMOperatorsInterfaces", "CAAGMTopDumpJournal", "CAATopCheckNoCopy", "CAAAddInputBody", "CAAGMOperatorsCheckGnKO", "CAACheck"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcJournalChecking1.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcJournalChecking1.htmmd"
 converted: "2026-05-11T17:33:48.964948"
 ```
 
 ---
 tags: ["CAAGMCheckForPart", "CAAGMOperatorsInterfaces", "CAAGMTopDumpJournal", "CAATopCheckNoCopy", "CAAAddInputBody", "CAAGMOperatorsCheckGnKO", "CAACheck"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcJournalChecking1.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcJournalChecking1.htmmd"
 converted: "2026-05-11T17:33:48.964948"
 Topological Journal: Creation and Validation (1)
 
@@ -49,11 +49,11 @@ CATCGMJournalList* pJournalNew = new CATCGMJournalList(pConfig,NULL);
 pJournalNew->ReportCreation( edgeOperand, edgeList[2], new CATCGMJournalInfo(2));
 pJournalNew->ReportCreation( vertexOperand1, edgeList[1], new CATCGMJournalInfo(4));
 pJournalNew->ReportCreation( vertexOperand2, edgeList[3], new CATCGMJournalInfo(3));
-    pJournalNew->Tass();
+    pJournalNew->Tass(#);
     CAAGMTopDumpJournal(pJournalNew);
 
 ---
-pJournalNew->Tass();
+pJournalNew->Tass(#);
 CAAGMTopDumpJournal(pJournalNew);
 you get this result on the standard output: ****************************************
 
@@ -78,11 +78,11 @@ CATUnicodeString mafeat("MyFeature");
 CAAGMCheckForPart * reportCheck = new CAAGMCheckForPart(pJournalNew,
 piPrismBody,
     reportCheck->CAAAddInputBody(piCurve, CAATopCheckNoCopy);
-    int checkReturn = reportCheck->CAACheck();
+    int checkReturn = reportCheck->CAACheck(#);
 
 ---
 reportCheck->CAAAddInputBody(piCurve, CAATopCheckNoCopy);
-int checkReturn = reportCheck->CAACheck();
+int checkReturn = reportCheck->CAACheck(#);
 checks the created journal and generates two output .md files containing information on the journal.  **Step 1 -** Open the first file, you can read something like this. The journal is valid:
 
     (1) - Mandatory Checking that all cells in result body can be traced back OK

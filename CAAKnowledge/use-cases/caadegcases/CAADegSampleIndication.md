@@ -4,13 +4,13 @@ title: "Managing Indication"
 category: "use case"
 module: "CAADegUseCases"
 tags: ["CAACreateCircleCmd", "CAADegCreateCircleCmd", "CAADialogEngine", "CAAGeometry", "CATIndicationAgent", "CAADegGeoCommands"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleIndication.htm"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleIndication.htmmd"
 converted: "2026-05-11T17:33:49.684430"
 ```
 
 ---
 tags: ["CAACreateCircleCmd", "CAADegCreateCircleCmd", "CAADialogEngine", "CAAGeometry", "CATIndicationAgent", "CAADegGeoCommands"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleIndication.htm"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleIndication.htmmd"
 converted: "2026-05-11T17:33:49.684430"
 3D PLM Enterprise Architecture |  User Interface - Commands |  Managing Indication _Retrieving a 3D point from a mouse click_
 
@@ -33,9 +33,9 @@ Abstract This article shows how to retrieve a point in the 3D space from an end 
 
 * * *
 
-What You Will Learn With This Use Case This use case is intended to show how to retrieve, in a state dialog command, a 3D point using its coordinates in the 3D space from a mouse click on the screen. This 3D point can be used afterwards as input for any object creation, modification, or analysis in the document, such as creating the center of a circle in this example. [Top] The Circle Command Use Case CAADegCreateCircleCmd creates a circle in the 3D space. We will focus on the circle center creation. [Top] What Does the Circle Command Do The Circle command is a state dialog command that creates a circle in the 3D space according to the following UML statechart diagram [1]. ![CAACreateCircleStatechart.jpg \(21192 bytes\)](images/CAACreateCircleStatechart.jpg) The dialog is as follows: ![CAACreateCircle1.jpg \(19537 bytes\)](images/CAACreateCircle1.jpg) | Select an existing plane that will be used as the circle plane. The active state becomes GetPlane.
+What You Will Learn With This Use Case This use case is intended to show how to retrieve, in a state dialog command, a 3D point using its coordinates in the 3D space from a mouse click on the screen. This 3D point can be used afterwards as input for any object creation, modification, or analysis in the document, such as creating the center of a circle in this example. [Top] The Circle Command Use Case CAADegCreateCircleCmd creates a circle in the 3D space. We will focus on the circle center creation. [Top] What Does the Circle Command Do The Circle command is a state dialog command that creates a circle in the 3D space according to the following UML statechart diagram [1]. ![CAACreateCircleStatechart.jpg /(21192 bytes/)](images/CAACreateCircleStatechart.jpg) The dialog is as follows: ![CAACreateCircle1.jpg /(19537 bytes/)](images/CAACreateCircle1.jpg) | Select an existing plane that will be used as the circle plane. The active state becomes GetPlane.
 ---|---
-What You Will Learn With This Use Case This use case is intended to show how to retrieve, in a state dialog command, a 3D point using its coordinates in the 3D space from a mouse click on the screen. This 3D point can be used afterwards as input for any object creation, modification, or analysis in the document, such as creating the center of a circle in this example. [Top] The Circle Command Use Case CAADegCreateCircleCmd creates a circle in the 3D space. We will focus on the circle center creation. [Top] What Does the Circle Command Do The Circle command is a state dialog command that creates a circle in the 3D space according to the following UML statechart diagram [1]. ![CAACreateCircleStatechart.jpg \(21192 bytes\)](images/CAACreateCircleStatechart.jpg) The dialog is as follows: ![CAACreateCircle1.jpg \(19537 bytes\)](images/CAACreateCircle1.jpg) | Select an existing plane that will be used as the circle plane. The active state becomes GetPlane.
+What You Will Learn With This Use Case This use case is intended to show how to retrieve, in a state dialog command, a 3D point using its coordinates in the 3D space from a mouse click on the screen. This 3D point can be used afterwards as input for any object creation, modification, or analysis in the document, such as creating the center of a circle in this example. [Top] The Circle Command Use Case CAADegCreateCircleCmd creates a circle in the 3D space. We will focus on the circle center creation. [Top] What Does the Circle Command Do The Circle command is a state dialog command that creates a circle in the 3D space according to the following UML statechart diagram [1]. ![CAACreateCircleStatechart.jpg /(21192 bytes/)](images/CAACreateCircleStatechart.jpg) The dialog is as follows: ![CAACreateCircle1.jpg /(19537 bytes/)](images/CAACreateCircle1.jpg) | Select an existing plane that will be used as the circle plane. The active state becomes GetPlane.
  The viewpoint changes to make the selected plane and the screen plane coincide. The active state is GetCircle.
  Click to indicate a point for the circle center. The active state becomes GetRadius. This image is captured just after the click. The indicated point is shown beside the plane. The mouse has not yet moved.
  Move the mouse from this center. A temporary circle is drawn and increases or decreases to follow the mouse moves. The active state remains GetRadius. The self transition loops onto this state.
@@ -51,7 +51,7 @@ Indicating a point means clicking on the screen at the desired location with the
     * Select Insert->Circle
     * Click to create the circle center
     * Click to create the circle.
-[Top] Where to Find the Circle Command Code The Circle command is made of a single class named _CAADegCreateCircleCmd_ located in the CAADegGeoCommands.m module of the CAADialogEngine.edu framework: Windows | `InstallRootDirectory\CAADialogEngine.edu\CAADegGeoCommands.m\`
+[Top] Where to Find the Circle Command Code The Circle command is made of a single class named _CAADegCreateCircleCmd_ located in the CAADegGeoCommands.m module of the CAADialogEngine.edu framework: Windows | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 ---|---
 Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
@@ -61,8 +61,10 @@ Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed. [Top] Step-by-Step To create the circle center, there are seven steps: # | Step | Where
 1 | Declare the indication agent | Header file
 2 | Instantiate the indication agent | `BuildGraph` method [3]
+```vbscript
 3 | Set the indication agent projection plane | Transition action method `SetPlane`
 4 | Assign the indication agent to the GetCenter state | `BuildGraph` method
+```
 5 | Create a transition from the GetCenter state triggered by the indication agent valuation | `BuildGraph` method
 6 | Retrieve the indication agent value and convert this value into a 3D point | Transition action method `CreateCircleCenter`
 7 | Release the indication agent | Destructor or `Cancel` method
@@ -89,12 +91,12 @@ CATMathPlane         _ProjPlane;
 CATMathPoint         _CircleCenter;
 A pointer to the indication agent, its projection plane, and the temporary point to keep the circle center are declared as private data members. [Top] Instantiating the Indication Agent The indication agent is instantiated in the command `BuildGraph` method.
 
-    void CAACreateCircleCmd::BuildGraph()
+    void CAACreateCircleCmd::BuildGraph(#)
 
     {
       ...
 A pointer to the indication agent, its projection plane, and the temporary point to keep the circle center are declared as private data members. [Top] Instantiating the Indication Agent The indication agent is instantiated in the command `BuildGraph` method.
-void CAACreateCircleCmd::BuildGraph()
+void CAACreateCircleCmd::BuildGraph(#)
 ```vbscript
       _daIndicCircleCenter = **new** **CATIndicationAgent**("GetCircleCenter");
 
@@ -117,18 +119,24 @@ CATBoolean CAACreateCircleCmd::SetPlane(void *iDummy)
       modelplane->GetOrigin(PlaneOrigin);
       modelplane->GetPlane(U,V);
 
+```vbscript
       _// Set these retrieved origin and axes to the _ProjPlane_
       _ProjPlane.**SetOrigin**(PlaneOrigin);
+```
       _ProjPlane.**SetDirections**(U,V);
 
+```vbscript
       _// Set _ProjPlane as the indiation agent projection plane_
       _daIndicCircleCenter->**SetMathPlane**(_ProjPlane);
+```
 
       ...
 
 ---
+```vbscript
 _// Set _ProjPlane as the indiation agent projection plane_
 _daIndicCircleCenter->**SetMathPlane**(_ProjPlane);
+```
 The plane selected in the document is retrieved in `modelplane`. Its origin and directions are retrieved using the methods of this object, and are set to `_ProjPlane` using the `SetOrigin` and `SetDirections` methods of the CATMathPlane class. Then `_ProjPlane` is set as the indication agent projection plane. [Top] Assigning the Indication Agent to the GetCenter State Still in the `BuildGraph` method, the GetCenter state is created, and the indication agent is added to this state. This makes it possible to value the indication agent when this state becomes the active one.
 
     ...
@@ -175,28 +183,28 @@ The `AddTransition` method creates a transition and adds it to the transitions m
 The `AddTransition` method creates a transition and adds it to the transitions managed by the dialog command. Pointers to the transition's source and target states are the first and second arguments respectively. The transition trigger is defined in the guard condition as the first condition to be checked using the `IsOutputSetCondition` method applied to the indication agent. A second condition that is useless for this use case purpose uses the `CheckCircleCenter` method. Because we use `AndCondition` to create the guard condition, both condition methods must return True to fire the transition. In this case, the `CreateCircleCenter` action method is executed. [Top] Retrieving the Indicated Point and Converting it to a 3D Point When the end user has clicked to indicate a point, the transition between the GetCenter and GetRadius states is triggered, and if the guard condition returns True, the following action method executes.
 CATBoolean CAACreateCircleCmd::CreateCircleCenter(void * iData)
       _// Get the indicated point from the indication agent_
-      CATMathPoint2D point2D = _daIndicCircleCenter->**GetValue**();
+      CATMathPoint2D point2D = _daIndicCircleCenter->**GetValue**(#);
       _// Convert this point to a 3D point for the circle center_
-      _ProjPlane.**EvalPoint**(point2D.GetX(), point2D.GetY(), _CircleCenter);
+      _ProjPlane.**EvalPoint**(point2D.GetX(#), point2D.GetY(#), _CircleCenter);
       _// Retrieve the circle center coordinates_
-      float x = (float) _CircleCenter.GetX();
-      float y = (float) _CircleCenter.GetY();
-      float z = (float) _CircleCenter.GetZ();
+      float x = (float) _CircleCenter.GetX(#);
+      float y = (float) _CircleCenter.GetY(#);
+      float z = (float) _CircleCenter.GetZ(#);
 
       ...
 
 ---
-float y = (float) _CircleCenter.GetY();
-float z = (float) _CircleCenter.GetZ();
+float y = (float) _CircleCenter.GetY(#);
+float z = (float) _CircleCenter.GetZ(#);
 The indication agent is valued by the end user click. Its value is a 2D point located on the indication agent projection plane, obtained by the projection of the point corresponding to the mouse location on the screen when the click happens along a line passing through the viewpoint eye and the point clicked onto the projection plane. The indication agent `GetValue` method retrieves this 2D point whose coordinates are expressed according to the projection plane axis system. Then the CATMathPlane `EvalPoint` method creates a 3D point from these coordinates. Then you can use the 3D point as you wish, for example retrieve its coordinates expressed with respect of the 3D global axis system. [Top] Releasing the Indication Agent A pointer to the indication agent was created in the command `BuildGraph` method as a data member to be accessed and used in different methods. It should be released when it becomes useless. This can be done in the command destructor, as shown here. This could also be done in the `Cancel` method called just before the destructor.
 
-    CAACreateCircleCmd::~CAACreateCircleCmd()
+    CAACreateCircleCmd::~CAACreateCircleCmd(#)
 
     {
       ...
 The indication agent is valued by the end user click. Its value is a 2D point located on the indication agent projection plane, obtained by the projection of the point corresponding to the mouse location on the screen when the click happens along a line passing through the viewpoint eye and the point clicked onto the projection plane. The indication agent `GetValue` method retrieves this 2D point whose coordinates are expressed according to the projection plane axis system. Then the CATMathPlane `EvalPoint` method creates a 3D point from these coordinates. Then you can use the 3D point as you wish, for example retrieve its coordinates expressed with respect of the 3D global axis system. [Top] Releasing the Indication Agent A pointer to the indication agent was created in the command `BuildGraph` method as a data member to be accessed and used in different methods. It should be released when it becomes useless. This can be done in the command destructor, as shown here. This could also be done in the `Cancel` method called just before the destructor.
-CAACreateCircleCmd::~CAACreateCircleCmd()
-      if (NULL != _daIndicCircleCenter) _daIndicCircleCenter->**RequestDelayedDestruction**();
+CAACreateCircleCmd::~CAACreateCircleCmd(#)
+      if (NULL != _daIndicCircleCenter) _daIndicCircleCenter->**RequestDelayedDestruction**(#);
       daIndicCircleCenter = NULL ;
 
       ...

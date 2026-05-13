@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdPriUseCases"
 tags: ["CAAScrBase", "CATIAHole", "CAAPriChangeHole", "CATIA", "CAAScrJavaScript", "CAAPriChangeHole06", "CAAPriChangeHole04", "CAAPriChangeHole03", "CAAScdInfUseCases", "CAAPriChangeHole05", "CAAScdPriUseCases", "CAAPriChangeHole01", "CAAPriChangeHole02", "CAAInfLauchMacro", "CAAlink"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangeHole.htm"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangeHole.htmmd"
 converted: "2026-05-11T11:27:02.730957"
 ---
 
@@ -100,7 +100,7 @@ The part is updated, the parameter is displayed.
 ![](images/CAAPriChangeHole04.gif)
   
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 
@@ -122,32 +122,38 @@ an object.
 
 *Copyright  2004, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 ...
 ' ------------
 ' The string as delimiter between input in the text file
 ' ------------
-iDelimiter = &quot;\\&quot;
+iDelimiter = &quot;//&quot;
 
 ' ------------
 ' Get the CATIA file system
 ' ------------
+```vbscript
 Set oCATIAFileSys = CATIA.FileSystem
 ' ------------
+```
 ' Get the file containing the hole parameters
 ' ------------
-Set oFile = oCATIAFileSys.GetFile(sDocPath &amp; &quot;\online\CAAScdPriUseCases\macros\CAAPriChangeHole.txt&quot;)
+```vbscript
+Set oFile = oCATIAFileSys.GetFile(sDocPath &amp; &quot;/online/CAAScdPriUseCases/macros/CAAPriChangeHole.txt&quot;)
 ' ------------
+```
 ' Get the text stream
 ' ------------
+```vbscript
 Set oTextSteam = oFile.OpenAsTextStream(&quot;ForReading&quot;)
 ' ------------
+```
 ' Get the part document
 ' ------------
+```vbscript
 Set oPartDocument = CATIA.ActiveDocument
    ...
+```
 ```
 
 ```vbscript
@@ -156,8 +162,10 @@ If oPartDocument.Selection.Count = 0 Then
     ' ------------
     ' The selection content is empty, the macro ends
     ' ------------
+```vbscript
     MsgBox &quot;Select the holes you wish to transform before running the macro.&quot;, vbOKOnly, &quot;Warning&quot;
 ...
+```
 ```
 
 ```vbscript
@@ -268,10 +276,14 @@ Else
 
 ```vbscript
 ...
+```vbscript
                 Set oParameters = oPartDocument.Part.Parameters.SubList(oHole, True)
                 ' ------------
+```
+```vbscript
                 ' Set the hole parameter
                 ' ------------
+```
                 If ParameterExists(&quot;Hole_Description&quot;, oParameters) = True Then
                     oParameters.Item(&quot;Hole_Description&quot;).ValuateFromString (iArray(iRow, 0))
                 Else

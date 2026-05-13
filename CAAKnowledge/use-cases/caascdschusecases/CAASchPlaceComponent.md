@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAAScrBase", "CAASchPlaceComponent_01", "CATIA", "CAAScrJavaScript", "CAAScdSchUseCases", "CATIASchComponent2", "CAASchPlatformModeler", "CAAScdInfUseCases", "CAAInfLauchMacro", "CAASCH_Sample", "CAASchPlaceComponentSource", "CAASCH_RouteForPlacement2", "CAASchPlaceComponent", "CAASCHEDUApp", "CAASchAppBase", "CAADoc", "CAASchAppUtilities", "CAASchPlaceComponent_02"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchPlaceComponent.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchPlaceComponent.htmmd"
 converted: "2026-05-11T11:27:02.629767"
 ---
 
@@ -107,21 +107,29 @@ This use case shows how to create component instances. A message logging the
 ...
     ' ------------------------------------------------------------------------- 
     ' Open the schematic document 
+```vbscript
     Dim sCtlgFilePath
     sCtlgFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
-            "online\CAAScdSchUseCases\samples\CAASCH_Sample.catalog")
+            "online/CAAScdSchUseCases/samples/CAASCH_Sample.catalog")
+```
 
+```vbscript
     Dim objSchCtlgDoc As Document
     Set objSchCtlgDoc = CATIA.Documents.Open(sCtlgFilePath)
+```
 ```
 
 ```vbscript
 ' Open main schematic P&amp;ID design document (for new component instances created here)
+```vbscript
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
-            "online\CAAScdSchUseCases\samples\CAASCH_RouteForPlacement2.CATProduct")
+            "online/CAAScdSchUseCases/samples/CAASCH_RouteForPlacement2.CATProduct")
+```
 
+```vbscript
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
     ...
+```
 ```

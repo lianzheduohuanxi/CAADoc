@@ -4,13 +4,13 @@ title: "New C++ Authorized APIs in CAA V5R18 SP3"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIIniSearchJapaneseNameCriterion", "CATIMfgCatalogServices", "CATIIniSearchJapaneseGraphNameCriterion", "CATIA", "CATIOmbContainerLinksUpdateStatus", "CATIMmiInternalCopyWithLink"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R18SP3NewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R18SP3NewCPPAPI.htmmd"
 converted: "2026-05-11T17:33:47.394923"
 ```
 
 ---
 tags: ["CATIIniSearchJapaneseNameCriterion", "CATIMfgCatalogServices", "CATIIniSearchJapaneseGraphNameCriterion", "CATIA", "CATIOmbContainerLinksUpdateStatus", "CATIMmiInternalCopyWithLink"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R18SP3NewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R18SP3NewCPPAPI.htmmd"
 converted: "2026-05-11T17:33:47.394923"
 CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R18 SP3
 
@@ -50,4 +50,7 @@ History Version: **1** [Dec 2007] | Document created
 * * *
 
 _Copyright © 1999-2007, Dassault Systèmes. All rights reserved._
+```vbscript
 Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.md) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.md) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.md)
+
+```

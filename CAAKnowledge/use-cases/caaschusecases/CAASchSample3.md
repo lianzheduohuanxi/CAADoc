@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAASchUseCases"
 tags: ["CATInit", "CAADocStyleSheets", "CAASchPlatformModeler", "CAASchAppSample3", "CAASchAppBaseEnv", "CAASchApp", "CATISchRoute", "CAASCHEDU_SamplePID", "CAADocUseCases", "CAASchAppUtilities", "CAASchSample1", "CATISchAppObjectFactory", "CAASchAppSample2", "CAASchAppBase", "CAASchEduIn", "CATISchSession", "CATISchBaseFactory", "CAASchAppSample3Main", "CAAESchAppObjectFactory", "CAADocRunSample"]
-source_file: "Doc/online/CAASchUseCases/CAASchSample3.htm"
+source_file: "Doc/online/CAASchUseCases/CAASchSample3.htmmd"
 converted: "2026-05-11T11:27:02.665786"
 ---
 
@@ -129,7 +129,7 @@ retrieves it and creates the application route instance from it.
 
 The method `AppCreateRoute` is implemented in the file **CAAESchAppObjectFactory.cpp**.
 See the the section [Creating an
-Application Reference Object](CAASchSample1.htm) in CAASchSample1 for more information.
+Application Reference Object](CAASchSample1.md) in CAASchSample1 for more information.
 
 [Top]
 
@@ -181,8 +181,6 @@ using two different methods. Specifically, it has illustrated:
 
 *Copyright  2000, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 CAASchAppSample2::InitEnvironment
 CreateCATProductEnv::CreateCATProductEnv
@@ -195,7 +193,7 @@ CATISchSession* piSchSession = NULL;
       piSchSession-&gt;GetSchObjInterface(SCHEDUApplication_Name,
         IID_CATISchAppObjectFactory, (void**)&amp;_piSchAppObjFact);
 
-      piSchSession-&gt;Release(); piSchSession = NULL;
+      piSchSession-&gt;Release(#); piSchSession = NULL;
     } 
     else
     {

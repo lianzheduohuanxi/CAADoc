@@ -4,13 +4,13 @@ title: "Creating a Multi Patch NURBS Surface"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsOverview", "CAAGMOperatorsInterfaces", "CAATopNurbsSurfMultiPatch", "CAADoc", "CATICGMObject", "CAAGMModelGemBrowser", "CAAGMOperatortsNurbsSurfMultiPatch", "CATICGMTopSkin", "CATIA", "CAAGMOperatorsNurbsSurfMultiPatch"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopNurbsSurfMultiPatch.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopNurbsSurfMultiPatch.htmmd"
 converted: "2026-05-11T17:33:49.224912"
 ```
 
 ---
 tags: ["CAAGMOperatorsOverview", "CAAGMOperatorsInterfaces", "CAATopNurbsSurfMultiPatch", "CAADoc", "CATICGMObject", "CAAGMModelGemBrowser", "CAAGMOperatortsNurbsSurfMultiPatch", "CATICGMTopSkin", "CATIA", "CAAGMOperatorsNurbsSurfMultiPatch"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopNurbsSurfMultiPatch.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopNurbsSurfMultiPatch.htmmd"
 converted: "2026-05-11T17:33:49.224912"
 Creating a Multi Patch NURBS Surface
 
@@ -36,7 +36,7 @@ What You Will Learn With This Use Case This use case is intended to help you cre
     * Creates a rational NURBS surface and modifies one of the pole weight.
     * Creates a skin relying on the NURBS
     * Writes the model and closes the container.
-How to Launch CAAGMOperatorsNurbsSurfMultiPatch To launch CAAGMOperatortsNurbsSurfMultiPatch , you will need to set up the build time environment, then compile CAAGMOperatorsNurbsSurfMultiPatch.m along with its prerequisites, set up the run time environment, and then execute the use case [1]. If you simply type CAAGMOperatorsNurbsSurfMultiPatch with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsNurbsSurfMultiPatch e/NurbsSurfMultiPatch .NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMOperatorsNurbsSurfMultiPatch Code The CAAGMOperatorsNurbsSurfMultiPatch use case is made of a main named CAATopNurbsSurfMultiPatch.cpp located in the CAAGMOperatorsNurbsSurfMultiPatch .m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsNurbsSurfMultiPatch.m\` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. Step-by-Step There are six steps in CAATopNurbsSurfMultiPatch.cpp:
+How to Launch CAAGMOperatorsNurbsSurfMultiPatch To launch CAAGMOperatortsNurbsSurfMultiPatch , you will need to set up the build time environment, then compile CAAGMOperatorsNurbsSurfMultiPatch.m along with its prerequisites, set up the run time environment, and then execute the use case [1]. If you simply type CAAGMOperatorsNurbsSurfMultiPatch with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsNurbsSurfMultiPatch e/NurbsSurfMultiPatch .NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMOperatorsNurbsSurfMultiPatch Code The CAAGMOperatorsNurbsSurfMultiPatch use case is made of a main named CAATopNurbsSurfMultiPatch.cpp located in the CAAGMOperatorsNurbsSurfMultiPatch .m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder/CAADoc/CAAGMOperatorsInterfaces.edu/CAAGMOperatorsNurbsSurfMultiPatch.m/` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. Step-by-Step There are six steps in CAATopNurbsSurfMultiPatch.cpp:
     1. Creating the Geometry Factory
     2. Creating the Knot Vector
     3. Creating the Grid of Poles
@@ -45,7 +45,7 @@ How to Launch CAAGMOperatorsNurbsSurfMultiPatch To launch CAAGMOperatortsNurbsSu
     6. Writing the Model and Closing the Container
 Creating the Geometry Factory The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
 
-    CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**() ;
+    CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**(#) ;
 ```vbscript
     if (NULL==piGeomFactory) return (1);
 
@@ -182,13 +182,13 @@ Creating the Skin For how to create a skin, see the CAAGMOperatorsOverview use c
     CATSurLimits surMaxLimits ;
     piSurf1->GetInternalMaxLimits(1,0,surMaxLimits) ;
 
-    CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration();
+    CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration(#);
     CATTopData topdata(pConfig);
 
     CATICGMTopSkin * pSkinOpe =::CATCGMCreateTopSkin(piGeomFactory,
 
             &topdata,
-CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration();
+CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration(#);
 CATTopData topdata(pConfig);
 CATICGMTopSkin * pSkinOpe =::CATCGMCreateTopSkin(piGeomFactory,
             piSurf1,
@@ -217,7 +217,7 @@ ofstream filetowrite(pfileName, ios::binary ) ;
     #endif
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
-       filetowrite.close();
+       filetowrite.close(#);
      }
 
      //

@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdPriUseCases"
 tags: ["CAAScrBase", "CAAPriPatternDescription", "CATIA", "CAAScrJavaScript", "CAAPriChangePattern02", "CAAPriChangePatternSource", "CAAScdInfUseCases", "CAAPriChangePattern03", "CAAPriChangePattern01", "CAAPriChangePattern", "CAAInfLauchMacro", "CAAlink"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangePattern.htm"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangePattern.htmmd"
 converted: "2026-05-11T11:27:02.720499"
 ---
 
@@ -64,7 +64,7 @@ The part document is updated, the circular pattern is modified.
 ![](images/CAAPriChangePattern02.gif)
   
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 
@@ -85,19 +85,21 @@ pattern.
 
 *Copyright  2004, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 ...
 ' ------------
 ' Get the part document
 ' ------------
+```vbscript
 Set oPartDocument = CATIA.ActiveDocument
 ' ------------
+```
 ' Get the part
 ' ------------
+```vbscript
 Set oPart = oPartDocument.Part
    ...
+```
 ```
 
 ```vbscript
@@ -105,10 +107,14 @@ Set oPart = oPartDocument.Part
 ' ------------
 ' Get the selection
 ' ------------
+```vbscript
 Set oSelection = oPartDocument.Selection
 ' ------------
+```
+```vbscript
 ' Set the selection type
 ' ------------
+```
 InputObjectType(0) = &quot;CircPattern&quot;
 ' ------------
 ' Get the status
@@ -117,14 +123,18 @@ oStatus = oSelection.SelectElement2 ( InputObjectType, &quot;Select a circular p
 ' ------------
 ' Get the object in the selection
 ' ------------
+```vbscript
 Set oCircularPattern = oSelection.Item(1).Value...
+```
 ```
 
 ```vbscript
 ...
 ' ------------
+```vbscript
 ' Set the circular pattern instance number
 ' ------------
+```
 oCircularPattern.AngularRepartition.InstancesCount.Value = 6
 ...
 ```
@@ -132,8 +142,10 @@ oCircularPattern.AngularRepartition.InstancesCount.Value = 6
 ```vbscript
 ...
 ' ------------
+```vbscript
 ' Set the circular pattern instance as Unequal Angular Spacing mode
 ' ------------
+```
 oCircularPattern.CircularPatternParameters = catUnequalAngularSpacing
 oCircularPattern.SetUnequalStep 6
 ...
@@ -142,8 +154,10 @@ oCircularPattern.SetUnequalStep 6
 ```vbscript
 ...
 ' ------------
+```vbscript
 ' Set the circular pattern Unequal Angular Spacing
 ' ------------
+```
 oCircularPattern.SetInstanceAngularSpacing 2, 30.000000
 oCircularPattern.SetInstanceAngularSpacing 3, 75.000000
 oCircularPattern.SetInstanceAngularSpacing 4, 75.000000

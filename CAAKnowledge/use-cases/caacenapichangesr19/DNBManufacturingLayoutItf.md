@@ -1,11 +1,11 @@
 ---
 ```vbscript
 title: "DNBManufacturingLayoutItf Framework Modifications in V5R19"
-category: "use-case"
+category: use-case
 module: "CAACenAPIChangesR19"
 version: "V5R19"
 tags: ["CATIArrIgpAttachment", "CATIArrAttachmentFactory", "CATISpecObject"]
-source_file: "Doc/online/CAACenAPIChangesR19/DNBManufacturingLayoutItf.htm"
+source_file: "Doc/online/CAACenAPIChangesR19/DNBManufacturingLayoutItf.htmmd"
 converted: "2026-05-11T17:33:51.555782"
 ```
 

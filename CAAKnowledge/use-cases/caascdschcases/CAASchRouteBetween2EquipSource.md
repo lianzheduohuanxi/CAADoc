@@ -4,13 +4,13 @@ title: "CAASchRouteBetween2Equip.CATScript"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CATIASchAppConnectable", "CATIAProduct", "CAASchRouteBetween2Equip", "CATIASchRouteGraphic", "CAAScdSchUseCases", "CATIASchAppConnector", "CATIASchGRRComp", "CATIA", "CATIASchListOfBSTRs", "CAASCHEDU_SamplePID", "CAASCHEDUConnector", "CATIASchGRR", "CAASCHEDUFuncString", "CATIASchCompatible", "CAASCH_RouteBetween2Equip", "CATIASchCompGraphic", "CATIASchCntrLocation"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchRouteBetween2EquipSource.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchRouteBetween2EquipSource.htmmd"
 converted: "2026-05-11T17:31:51.497816"
 ```
 
 ---
 tags: ["CATIASchAppConnectable", "CATIAProduct", "CAASchRouteBetween2Equip", "CATIASchRouteGraphic", "CAAScdSchUseCases", "CATIASchAppConnector", "CATIASchGRRComp", "CATIA", "CATIASchListOfBSTRs", "CAASCHEDU_SamplePID", "CAASCHEDUConnector", "CATIASchGRR", "CAASCHEDUFuncString", "CATIASchCompatible", "CAASCH_RouteBetween2Equip", "CATIASchCompGraphic", "CATIASchCntrLocation"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchRouteBetween2EquipSource.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchRouteBetween2EquipSource.htmmd"
 converted: "2026-05-11T17:31:51.497816"
     Option Explicit
 
@@ -25,8 +25,10 @@ converted: "2026-05-11T17:31:51.497816"
     '   CATIA Level:  V5R15
     ' *****************************************************************************
     '------------------------------------------------------------------------------
+```vbscript
     ' These variables are visible to private Sub and CATMain
     '------------------------------------------------------------------------------
+```
 ```
 
 ```
@@ -34,20 +36,27 @@ converted: "2026-05-11T17:31:51.497816"
 ```
 
 ```vbscript
+```vbscript
     Dim objLGRRComp_g As SchListOfObjects
+```vbscript
+```
 ```vbscript
 ```vbscript
     Dim objLCompat_g As SchListOfObjects
     Dim strMessage_g As String
 
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
+
+```
 
 ```
 
@@ -57,40 +66,52 @@ converted: "2026-05-11T17:31:51.497816"
         ' -------------------------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String
+```vbscript
         sDocPath=CATIA.SystemService.Environ("CATDocView")
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
           Err.Raise 9999,sDocPath,"No Doc Path Defined"
         End If
+```
         ' -------------------------------------------------------------------------
         ' Open the schematic document
+```vbscript
         Dim sFilePath
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
-
 ```
 
 ```
 
-                "online\CAAScdSchUseCases\samples\CAASCH_RouteBetween2Equip.CATProduct")
+```
+
+                "online/CAAScdSchUseCases/samples/CAASCH_RouteBetween2Equip.CATProduct")
 
 ```vbscript
+```vbscript
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+```vbscript
+```
 ```vbscript
 ```vbscript
         Dim objSchDoc As Document
         Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Dim objSchDoc As Document
 ```vbscript
+```
+```vbscript
 Set objSchDoc = CATIA.Documents.Open(sFilePath)
+```
 ```
 
         strMessage_g = _
@@ -112,15 +133,23 @@ strMessage_g = strMessage_g & _
 ```
 
 ```vbscript
+```vbscript
         Dim objPrdRoot As Product
+```vbscript
+```
 ```vbscript
 ```vbscript
         Dim objSchRoot As SchematicRoot
         If ( Not ( objSchDoc Is Nothing ) ) Then
+```
+```vbscript
           Set objPrdRoot = objSchDoc.Product
           If ( Not ( objPrdRoot Is Nothing ) ) Then
+```
+```vbscript
             Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
           End If
+```
         End If
 
 ```
@@ -133,11 +162,14 @@ strMessage_g = strMessage_g & _
 ```vbscript
         If ( Not ( objSchRoot Is Nothing ) ) Then
 
+```vbscript
            Dim objSchTempListFact As SchTempListFactory
 
            Dim objSchCompCompatA As SchCompatible
 ```
+```
 
+```vbscript
 ```vbscript
 ```vbscript
            Dim objSchGRRCompA As SchGRRComp
@@ -148,6 +180,7 @@ strMessage_g = strMessage_g & _
            Set objSchTempListFact = objSchRoot.GetTemporaryListFactory
 
 ```
+```
 
 ```
 
@@ -157,9 +190,11 @@ strMessage_g = strMessage_g & _
            If ( Not ( objSchTempListFact Is Nothing )) Then
 ```vbscript
 ```vbscript
+```vbscript
               Set objLCompat_g = objSchTempListFact.CreateListOfObjects
               Set objLGRRComp_g = objSchTempListFact.CreateListOfObjects
            End If
+```
 
 ```
 
@@ -248,10 +283,15 @@ End If '--- If ( Not ( objSchRoot Is Nothing )...
 ```
 
           "--------------------------------------------------------------------" & vbCr
+```vbscript
         MsgBox strMessage_g
 
 ```vbscript
+```
+```vbscript
     End Sub
+
+```
 
 ```
 
@@ -268,24 +308,34 @@ End If '--- If ( Not ( objSchRoot Is Nothing )...
 
 ```
 
+```vbscript
     Private Function GetComponentImage (objSchCompGraphArg As SchCompGraphic) As SchGRRComp
+```
 ```
 
 ```vbscript
+```vbscript
        Dim objSchLSymbols As SchListOfObjects
 ```vbscript
+```
 ```vbscript
        If ( Not ( objSchCompGraphArg Is Nothing ) ) Then
+```vbscript
           Set objSchLSymbols = objSchCompGraphArg.ListGraphicalImages
           If ( Not ( objSchLSymbols Is Nothing ) ) Then
+```
+```vbscript
              Set GetComponentImage = objSchLSymbols.Item (1,"CATIASchGRRComp")
           End If
+```
        End If
 ```
 
 ```
 
+```vbscript
     End Function
+```
 ```
 
 ```vbscript
@@ -301,7 +351,9 @@ End If '--- If ( Not ( objSchRoot Is Nothing )...
 
 ```
 
+```vbscript
     Private Function GetRoutePrimitives (objSchRouteGraphArg As SchRouteGraphic) _
+```
 ```
 
 ```vbscript
@@ -313,25 +365,35 @@ End If '--- If ( Not ( objSchRoot Is Nothing )...
 
 ```
 
+```vbscript
 Private Function GetRoutePrimitives (objSchRouteGraphArg As SchRouteGraphic) _
       As SchGRR
+```
 
+```vbscript
        Dim objSchLGRR As SchListOfObjects
 ```vbscript
+```
 ```vbscript
        If ( Not ( objSchRouteGraphArg Is Nothing ) ) Then
+```vbscript
           Set objSchLGRR = objSchRouteGraphArg.ListGraphicalPrimitives
           If ( Not ( objSchLGRR Is Nothing ) ) Then
+```
+```vbscript
              Set GetRoutePrimitives = objSchLGRR.Item (1,"CATIASchGRR")
           End If
+```
        End If
 ```
 
 ```
 
 ```vbscript
+```vbscript
     End Function
 
+```
 ```
 
 ```
@@ -350,7 +412,9 @@ Private Function GetRoutePrimitives (objSchRouteGraphArg As SchRouteGraphic) _
 
 ```
 
+```vbscript
     Private Function FindConnectorAtPosition ( dbXArg As Double, dbYArg As Double, _
+```
 ```
 
 ```vbscript
@@ -362,20 +426,26 @@ Private Function GetRoutePrimitives (objSchRouteGraphArg As SchRouteGraphic) _
 
 ```
 
+```vbscript
 Private Function FindConnectorAtPosition ( dbXArg As Double, dbYArg As Double, _
       objSchCntblArg As SchAppConnectable, _
+```
       objSchRootArg As SchematicRoot ) As SchAppConnector
 
 ```
 
 ```vbscript
+```vbscript
        Dim objLCntr As SchListOfObjects
+```vbscript
+```
 ```vbscript
 ```vbscript
        Dim objLFilter As CATIASchListOfBSTRs
        Dim objSchRouteGraphic As SchRouteGraphic
        Dim objGRR As SchGRR
 
+```
 ```
 
 ```
@@ -387,11 +457,13 @@ Private Function FindConnectorAtPosition ( dbXArg As Double, dbYArg As Double, _
 ```vbscript
             Not ( objSchRootArg Is Nothing ) ) Then
 ```vbscript
+```vbscript
           Set objLFilter = Nothing
 
           Set objLCntr = objSchCntblArg.AppListConnectors (objLFilter)
 
           Set objSchRouteGraphic = objSchRootArg.GetInterface ( _
+```
 ```
 
 ```
@@ -400,13 +472,19 @@ Private Function FindConnectorAtPosition ( dbXArg As Double, dbYArg As Double, _
 
             "CATIASchRouteGraphic", objSchCntblArg)
 ```vbscript
+```vbscript
 Set objLCntr = objSchCntblArg.AppListConnectors (objLFilter)
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set objSchRouteGraphic = objSchRootArg.GetInterface ( _
           If ( Not ( objSchRouteGraphic Is Nothing ) ) Then
+```
+```vbscript
              Set objGRR = GetRoutePrimitives (objSchRouteGraphic)
           End If
+```
        End If '--- If ( Not ( objSchRoute Is Nothing ) ...
 
 ```
@@ -421,6 +499,7 @@ Set objSchRouteGraphic = objSchRootArg.GetInterface ( _
              Not ( objGRR Is Nothing ) ) Then
 
 ```vbscript
+```vbscript
           Dim intNbCntr As Integer
           Dim iCntr As Integer
           Dim objLDbOut As SchListOfDoubles
@@ -430,15 +509,20 @@ Set objSchRouteGraphic = objSchRootArg.GetInterface ( _
           Dim dbYOut As Double
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Dim dbXOut As Double
 ```vbscript
+```
+```vbscript
 Dim dbYOut As Double
+```
 ```
 
           intNbCntr = objLCntr.Count
@@ -449,11 +533,13 @@ Dim dbYOut As Double
 ```vbscript
 ```vbscript
              For iCntr = 1 To intNbCntr
+```vbscript
                Set objCntrLoc = Nothing
                Set objLDbOut = Nothing
 
                Set objCntrLoc = objLCntr.Item (iCntr,"CATIASchCntrLocation")
 
+```
 ```
 
 ```
@@ -493,7 +579,9 @@ dbXOut = objLDbOut.Item(1)
 ```vbscript
 dbYOut = objLDbOut.Item(2)
 If ( ( dbXOut = dbXArg ) And _
+```vbscript
                           Set FindConnectorAtPosition =  objSchRootArg.GetInterface ( _
+```
 ```
 
 ```
@@ -528,7 +616,10 @@ If ( ( dbXOut = dbXArg ) And _
 ```
 
 ```vbscript
+```vbscript
     End Function
+
+```
 
 ```
 
@@ -549,7 +640,9 @@ If ( ( dbXOut = dbXArg ) And _
 
 ```
 
+```vbscript
     Private Sub Find2ComponentInst (objSchRootArg As SchematicRoot)
+```
 ```
 
 ```vbscript
@@ -558,9 +651,11 @@ If ( ( dbXOut = dbXArg ) And _
 ```vbscript
        If ( objLGRRComp_g Is Nothing ) Then Exit Sub
 
+```vbscript
        Dim objLCompInst As SchListOfObjects
        Dim intNbComp As Integer
 
+```
 ```
 
 ```
@@ -571,8 +666,10 @@ If ( ( dbXOut = dbXArg ) And _
        If ( Not ( objSchRootArg Is Nothing ) ) Then
 ```vbscript
 ```vbscript
+```vbscript
           Set objLCompInst = objSchRootArg.GetComponents
           If ( Not ( objLCompInst Is Nothing ) ) Then
+```
 ```
 
 ```
@@ -583,6 +680,7 @@ If ( ( dbXOut = dbXArg ) And _
 ```vbscript
        End If
 
+```vbscript
        Dim intIndex As Integer
        Dim objCompCompat As SchCompatible
        Dim objGRRComp As SchGRRComp
@@ -605,6 +703,7 @@ If ( ( dbXOut = dbXArg ) And _
        Set objCompCompatTo = Nothing
        Set objGRRCompTo  = Nothing
        If (Not ( objLCompInst Is Nothing ) ) Then
+```
 ```
 
 ```
@@ -645,8 +744,10 @@ For intIndex = 1 To intNbComp
 
 ```vbscript
 ```vbscript
+```vbscript
             Set objCompCompat = objLCompInst.Item (intIndex,"CATIASchCompatible")
 
+```
 ```
 
 ```
@@ -655,7 +756,9 @@ For intIndex = 1 To intNbComp
 ```vbscript
             If ( Not ( objCompCompat Is Nothing ) ) Then
 
+```vbscript
                Set objPrd = objSchRootArg.GetInterface ( _
+```
 ```
 
 ```
@@ -692,11 +795,15 @@ For intIndex = 1 To intNbComp
 ```vbscript
                If ( intFound > 0 ) Then
 
+```vbscript
                  Dim ObjSchCompGraph As SchCompGraphic
+```
 ```
 
 ```vbscript
+```vbscript
                  Set objSchCompGraph = objSchRootArg.GetInterface ( _
+```
 ```
 
 ```
@@ -706,10 +813,12 @@ For intIndex = 1 To intNbComp
 If ( intFound > 0 ) Then
 ```vbscript
 ```vbscript
+```vbscript
 Dim ObjSchCompGraph As SchCompGraphic
 Set objSchCompGraph = objSchRootArg.GetInterface ( _
                  Set objGRRComp = GetComponentImage (objSchCompGraph)
 
+```
 ```
 
 ```
@@ -721,18 +830,24 @@ Set objSchCompGraph = objSchRootArg.GetInterface ( _
 ```vbscript
 ```vbscript
                     If ( intStoreIndex = 1 ) Then
+```vbscript
                       Set objCompCompatFrom = objCompCompat
                       Set objGRRCompFrom = objGRRComp
+```
 ```
 
 ```
 
                     Else
+```vbscript
                       Set objCompCompatTo = objCompCompat
+```vbscript
+```
 ```vbscript
 ```vbscript
                       Set objGRRCompTo = objGRRComp
                     End If
+```
 ```
 
 ```
@@ -829,7 +944,10 @@ Not ( objGRRCompTo Is Nothing ) ) Then
 ```
 
 ```vbscript
+```vbscript
     End Sub
+
+```
 
 ```
 
@@ -849,17 +967,21 @@ Not ( objGRRCompTo Is Nothing ) ) Then
 ```
 
 ```vbscript
+```vbscript
     Private Sub RouteLineBetween2Component (objSchRootArg As SchematicRoot)
        If ( objLCompat_g Is Nothing ) Then Exit Sub
+```
 ```
 
 ```vbscript
 ```vbscript
        If ( objLGRRComp_g Is Nothing ) Then Exit Sub
 
+```vbscript
        Dim intNbComp As Integer
        Dim intNbGRR As Integer
        Dim intIndex As Integer
+```
 ```
 
 ```
@@ -876,14 +998,19 @@ Not ( objGRRCompTo Is Nothing ) ) Then
        If ( intNbComp <> intNbGRR ) Then Exit Sub
        If ( objSchRootArg Is Nothing ) Then Exit Sub
 
+```vbscript
        Dim objAppObjFact As SchAppObjectFactory
        Set objAppObjFact = objSchRootArg.GetApplObjFactFromVirtualType ("CAASCHEDU_SamplePID")
        If ( objAppObjFact Is Nothing ) Then Exit Sub
+```
 
+```vbscript
        Dim objSchBaseFact As SchBaseFactory
        Set objSchBaseFact = objSchRootArg.GetSchBaseFactory
        If ( objSchBaseFact Is Nothing ) Then Exit Sub
+```
 
+```vbscript
        Dim objCompCompat As SchCompatible
        Dim objGRRComp As SchCompGRR
        Dim bCompatible As Boolean
@@ -902,6 +1029,7 @@ Not ( objGRRCompTo Is Nothing ) ) Then
        Dim strName As String
 
 ```
+```
 
 ```
 
@@ -909,6 +1037,7 @@ Not ( objGRRCompTo Is Nothing ) ) Then
 
 ```vbscript
        For intIndex = 1 To 2
+```vbscript
 ```vbscript
 ```vbscript
           Set objCompCompat = Nothing
@@ -922,6 +1051,7 @@ Not ( objGRRCompTo Is Nothing ) ) Then
 
           Set objPrd = objSchRootArg.GetInterface ("CATIAProduct",objCompCompat)
           If ( Not ( objPrd Is Nothing ) ) Then
+```
 ```
 
 ```
@@ -997,8 +1127,10 @@ strMessage_g = strMessage_g &  _
                objGRRComp, objLCntrs, bCompatible
 
 ```vbscript
+```vbscript
              Set objSchGRR = objSchRootArg.GetInterface ("CATIASchGRR",objGRRComp)
 
+```
 ```
 
 ```
@@ -1036,8 +1168,10 @@ strMessage_g = strMessage_g &  _
                 '  the output list that is closest
                 '  to a user selection point.
                 '------------------------------------------------------------------
+```vbscript
                 Set objLDbOut = Nothing
                 Set objAppCntrBest = Nothing
+```
 ```
 
 ```
@@ -1048,8 +1182,10 @@ strMessage_g = strMessage_g &  _
 ```vbscript
 ```vbscript
 '------------------------------------------------------------------
+```vbscript
 Set objLDbOut = Nothing
 Set objAppCntrBest = Nothing
+```
 ```
 
 ```
@@ -1078,7 +1214,9 @@ objSchGRR, objLCntrs, objLDbOut, objAppCntrBest
 ```vbscript
                      db2CntrPt1(0) =  db2CntrPt(0)
                      db2CntrPt1(1) =  db2CntrPt(1)
+```vbscript
                      Set objAppCntrCompBest1 = objAppCntrBest
+```
 ```
 
                      strMessage_g = strMessage_g &  _
@@ -1089,7 +1227,9 @@ objSchGRR, objLCntrs, objLDbOut, objAppCntrBest
 db2CntrPt1(0) =  db2CntrPt(0)
 ```vbscript
 db2CntrPt1(1) =  db2CntrPt(1)
+```vbscript
 Set objAppCntrCompBest1 = objAppCntrBest
+```
 ```
 
 ```
@@ -1116,8 +1256,10 @@ strMessage_g = strMessage_g &  _
                      strMessage_g = strMessage_g &  "Route point ends at " & _
                        db2CntrPt(0) & " " & db2CntrPt(1) & vbCr
 ```vbscript
+```vbscript
                      Set objAppCntrCompBest2 = objAppCntrBest
 ```vbscript
+```
 ```vbscript
                   End If
                 End If '--- If (IntNbCoord > 1) Then
@@ -1136,7 +1278,10 @@ strMessage_g = strMessage_g &  _
 
        Next '--- For intIndex
 
+```vbscript
        Dim objAppRouteRef As AnyObject
+```vbscript
+```
 ```vbscript
 ```vbscript
        Dim objSchRoute As AnyObject
@@ -1144,13 +1289,17 @@ strMessage_g = strMessage_g &  _
        Dim dbPtArray(8) As CATSafeArrayVariant
 
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
        Dim objAppCntrRouteBest1 As SchAppConnector
+```vbscript
+```
 ```vbscript
 ```vbscript
        Dim objAppCntrRouteBest2 As SchAppConnector
@@ -1159,16 +1308,21 @@ strMessage_g = strMessage_g &  _
        Dim objRouteCntbl As SchAppConnectable
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Dim objAppConnection As SchAppConnection
 ```vbscript
+```
+```vbscript
 Dim objRouteCntbl As SchAppConnectable
        dbPtArray(0) = db2CntrPt1(0)
+```
        dbPtArray(1) = db2CntrPt1(1)
 
 ```
@@ -1232,7 +1386,9 @@ strMessage_g = strMessage_g &  _
          If ( Not ( objSchRoute Is Nothing ) ) Then
            strMessage_g = strMessage_g &  "schematic route created" & vbCr
 
+```vbscript
            Set objRouteCntbl = objSchRootArg.GetInterface ( _
+```
 ```
 
              "CATIASchAppConnectable",objSchRoute)
@@ -1244,7 +1400,9 @@ strMessage_g = strMessage_g &  _
            ' component connector position at each end
            '-----------------------------------------------------------------------
 
+```vbscript
            Set objAppCntrRouteBest1 = FindConnectorAtPosition ( _
+```
 ```
 
 ```
@@ -1255,13 +1413,17 @@ strMessage_g = strMessage_g &  _
 ```vbscript
 ```vbscript
 '-----------------------------------------------------------------------
+```vbscript
 Set objAppCntrRouteBest1 = FindConnectorAtPosition ( _
+```
 ```
 
              db2CntrPt1(0), db2CntrPt1(1), objRouteCntbl, objSchRootArg)
 
+```vbscript
            Set objAppCntrRouteBest2 = FindConnectorAtPosition ( _
              db2CntrPt2(0), db2CntrPt2(1), objRouteCntbl, objSchRootArg)
+```
 ```
 
 ```
@@ -1298,7 +1460,9 @@ If ( Not (objAppCntrRouteBest1 Is Nothing ) And _
               '--------------------------------------------------------------------
               ' Connect start point of route to "*_from" component
               '--------------------------------------------------------------------
+```vbscript
               Set objAppConnection = objAppCntrCompBest1.AppConnect _
+```
 ```
 
 ```
@@ -1349,7 +1513,9 @@ strMessage_g = strMessage_g & _
               '--------------------------------------------------------------------
               ' Connect end point of route to "*_to" component
               '--------------------------------------------------------------------
+```vbscript
               Set objAppConnection = objAppCntrCompBest2.AppConnect _
+```
 ```
 
 ```
@@ -1403,6 +1569,8 @@ strMessage_g = strMessage_g & _
 ```
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

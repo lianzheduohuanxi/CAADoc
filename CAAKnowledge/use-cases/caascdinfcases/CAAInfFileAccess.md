@@ -4,7 +4,7 @@ title: "Accessing Files and Folders"
 category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CAAScdInfUseCases", "CATIA", "CAAInfFileAccess"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfFileAccess.htm"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfFileAccess.htmmd"
 converted: "2026-05-11T17:31:52.362048"
 ```
 
@@ -35,13 +35,17 @@ This macro shows you how to access files and folders using CAA V5 portable autom
 
       ...
 ```vbscript
+```vbscript
         Dim sLF as String
 ```vbscript
+```
 ```vbscript
         sLF = Chr(10)
 
+```vbscript
         Dim sMessage as String
         sMessage = InputBox ("Enter a message", "Message", "Hello World")
+```
 ```
 
 ```
@@ -53,15 +57,21 @@ This macro shows you how to access files and folders using CAA V5 portable autom
 ```vbscript
         ' ------------------------------------------
         ' Get the file system object
+```vbscript
         Dim oFileSys as FileSystem
         Set oFileSys = CATIA.FileSystem
         ' ------------------------------------------
+```
         ' Retrieve a folder for temporary files
+```vbscript
         Dim sTmpPath as String
         sTmpPath=CATIA.SystemService.Environ("CATTemp")
         If (Not oFileSys.FolderExists(sTmpPath)) Then
+```
+```vbscript
           Err.Raise 9999,,"No Tmp Path Defined"
         End If
+```
 ```
 
 ```
@@ -95,8 +105,10 @@ The existence of this folder is checked using the `FolderExists` method of the _
 ```
 
 ```vbscript
+```vbscript
         Dim sFilOu As String ' Output file full path
         sFilOu = sTmpPath & "/caatmpfilou.txt"
+```
         If (oFileSys.FileExists(sFilou)) Then
             oFileSys.DeleteFile sFilOu
         End If
@@ -126,12 +138,16 @@ The existence of this folder is checked using the `FolderExists` method of the _
 ```
 
 ```vbscript
+```vbscript
         Dim oFilIn As File
+```vbscript
+```
 ```vbscript
 ```vbscript
         Set oFilIn = oFileSys.CreateFile(sFilIn, FALSE)
         Dim oStream As TextStream
         Set oStream = oFilIn.OpenAsTextStream("ForWriting")
+```
 ```
 
 ```
@@ -184,13 +200,17 @@ The `CopyFile` method of the _FileSystem_ object creates a copy of the input fil
 ```
 
 ```vbscript
+```vbscript
         Dim oFilOu As File
+```vbscript
+```
 ```vbscript
 ```vbscript
         Set oFilOu = oFileSys.GetFile(sFilOu)
         Set oStream = oFilOu.OpenAsTextStream("ForReading")
 
         Dim sBuffer As String
+```
 ```
 
 ```
@@ -217,11 +237,13 @@ Loop
 
 Using the `GetFile` method, a File object is obtained for the output file. `OpenAsTextStream` is then used to get a text stream, but this time a _ForReading_ usage is specified. The `ReadLine` method is used in a loop to read each line of the output file. Each read line is concatenated to the `sMessage` string. The end of the file is detected using the `AtEndOfStream` method.
 
+```vbscript
 The `sMessage` variable now contains the whole content of the output file. The `MsgBox` function is used to display this content in a message box.
 
 ![](images/filac2.gif)
+```
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

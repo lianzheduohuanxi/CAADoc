@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CAAScrBase", "CATIA", "CAAInfOpenDocument", "CAAScrJavaScript", "CAAInfCloseDocument", "CAAInfReadDocument", "CAAScdInfUseCases", "CAAInfOpenDocumentSource", "CAAInfLauchMacro", "CAAInfSaveDocument"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfOpenDocument.htm"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfOpenDocument.htmmd"
 converted: "2026-05-11T11:27:02.700964"
 ---
 
@@ -60,10 +60,9 @@ interactive session.
 
 *Copyright  2001, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 ' Optional: allows to find the sample wherever it's installed
+```vbscript
      Dim sDocPath As String
      sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
 
@@ -71,11 +70,14 @@ interactive session.
         Err.Raise 9999,,&quot;No Doc Path Defined&quot;
      End If
 ```
+```
 
 ```vbscript
 ...
+```vbscript
     Dim iPartDoc As Document
     Set iPartDoc = CATIA.Documents.Open(sDocPath &amp; _
-       &quot;\online\CAAScdInfUseCases\samples\CAAInfReadDocument.CATPart&quot;)
+       &quot;/online/CAAScdInfUseCases/samples/CAAInfReadDocument.CATPart&quot;)
+```
   ...
 ```

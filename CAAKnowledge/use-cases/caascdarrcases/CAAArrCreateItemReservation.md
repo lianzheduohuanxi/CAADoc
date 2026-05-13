@@ -4,7 +4,7 @@ title: "Creating an ArrangementItemReservation Object"
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CAAArrCreateItemReservation", "CATIA", "CAAScdArrUseCases"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateItemReservation.htm"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateItemReservation.htmmd"
 converted: "2026-05-11T17:31:51.550095"
 ```
 
@@ -50,12 +50,16 @@ This macro shows you how to create an _ArrangementItemReservation_ object in a p
 ```
 
 ```vbscript
+```vbscript
        Dim objProdDoc        As ProductDocument
+```vbscript
+```
 ```vbscript
 ```vbscript
        Dim objRootProd       As Product
        Set objProdDoc      = CATIA.Documents.Add("Product")
        Set objRootProd     = objProdDoc.Product
+```
 ```
 
 ```
@@ -81,12 +85,16 @@ Once the new product document has been created, fetch the _ArrangementProduct_ a
 ```
 
 ```vbscript
+```vbscript
        Dim objMove           As Move
+```vbscript
+```
 ```vbscript
 ```vbscript
        Dim objPosition       As Position
        Set objMove      = objRootProd.Move
        Set objPosition  = objRootProd.Position
+```
 ```
 
 ```
@@ -98,8 +106,10 @@ Once the new product document has been created, fetch the _ArrangementProduct_ a
 ```vbscript
        '----------------------------------------------
        ' Get ArrangementProduct
+```vbscript
        Dim objArrProd        As ArrangementProduct
        Set objArrProd   = objRootProd.GetTechnologicalObject("ArrangementProduct")
+```
 ```
 
 ```
@@ -125,29 +135,39 @@ The _ArrangementItemReservations_ object is a collection object that manages _Ar
 ```
 
 ```vbscript
+```vbscript
        Dim dblItemResPos(11)  As Double
+```vbscript
+```
 ```vbscript
 ```vbscript
        Dim objItemRes     As ArrangementItemReservation
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Dim dblItemResPos(11)  As Double
 ```vbscript
+```
+```vbscript
 Dim objItemRes     As ArrangementItemReservation
+```
 ```
 
        objPosition.GetComponents dblItemResPos
 ```
 
 ```vbscript
+```vbscript
        Set objItemRes      = objArrProd.ArrangementItemReservations.AddItemReservation(objMove, _
     dblItemResPos, 200.0, 500.0, 200.0, 500.0, 0.0, 0.0)
+```
 ```
 
     ...
@@ -176,13 +196,15 @@ The newly created _ArrangementItemReservation_ object is displayed by default in
 
     ...
 ```vbscript
+```vbscript
      End Sub
 
+```
 ```
 
 ---
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

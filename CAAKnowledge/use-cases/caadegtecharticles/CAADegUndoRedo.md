@@ -4,13 +4,13 @@ title: "Managing Undo/Redo"
 category: "use-case"
 module: "CAADegTechArticles"
 tags: ["CAACreateTriangleCmd", "CAACreateTriangleCmdGlobalUndo", "CATIUndoTransaction", "CAAIPolyline"]
-source_file: "Doc/online/CAADegTechArticles/CAADegUndoRedo.htm"
+source_file: "Doc/online/CAADegTechArticles/CAADegUndoRedo.htmmd"
 converted: "2026-05-11T17:33:49.900168"
 ```
 
 ---
 tags: ["CAACreateTriangleCmd", "CAACreateTriangleCmdGlobalUndo", "CATIUndoTransaction", "CAAIPolyline"]
-source_file: "Doc/online/CAADegTechArticles/CAADegUndoRedo.htm"
+source_file: "Doc/online/CAADegTechArticles/CAADegUndoRedo.htmmd"
 converted: "2026-05-11T17:33:49.900168"
 3D PLM Enterprise Architecture |  User Interface - Commands |  Managing Undo/Redo _How to undo and redo end user input, transition actions, and command results_
 
@@ -96,9 +96,9 @@ Since the action is created using the `Action` method, it is automatically delet
 ---
 [Top] Command Undo/Redo without Object Undo/Redo A command history is managed for command undo/redo. This makes it possible to cancel the effects of the last state dialog commands recorded in this history, and to redo them. For example, the Point command undo deletes the point created, and its redo recreates the deleted point. To make this possible, the command should provide an undo/redo object, instance of the _CATCommandGlobalUndo_ class, using the `GetGlobalUndo` method overridden from the _CATStateCommand_ class. This undo/redo object has, as function members, the methods to be called when the command undo or redo is requested by the end  user, and a method to manage the memory used. The `GetGlobalUndo` method is called when the command completes to put the undo/redo object in the command history ready for use. Command undo/redo is illustrated using a command that creates a triangle. [Top] Providing the Global Undo Object This is possible by overriding the `GetGlobalUndo` method to return an instance of the _CATCommandGlobalUndo_ class with appropriate methods to undo and redo the triangle command effect.
 
-    CATCommandGlobalUndo * CAACreateTriangleCmd::GetGlobalUndo()
+    CATCommandGlobalUndo * CAACreateTriangleCmd::GetGlobalUndo(#)
     {
-CATCommandGlobalUndo * CAACreateTriangleCmd::GetGlobalUndo()
+CATCommandGlobalUndo * CAACreateTriangleCmd::GetGlobalUndo(#)
       CATCommandGlobalUndo * CAACreateTriangleCmdGlobalUndo = NULL;
 
 ```vbscript
@@ -166,7 +166,7 @@ void  CAACreateTriangleCmd::DesallocatTriangle(void * iUsefulData)
 if (iUsefulData)
         CAAIPolyline * Elt = (CAAIPolyline *) iUsefulData;
 ```vbscript
-        if (Elt) Elt->Release();
+        if (Elt) Elt->Release(#);
 
 ```
 
@@ -176,9 +176,9 @@ if (iUsefulData)
 ---
 [Top] Command Undo/Redo with Object Undo/Redo As with input undo/redo, the objects that implement the _CATIUndoTransaction_ interface manage themselves their undo and redo, and the action methods you provide for undo/redo must not modify them. These object undos are automatically registered when a command that modifies them completes. [Top] Providing the Global Undo Object The `GetGlobalUndo` method can be used to return an instance of the _CATCommandGlobalUndo_ class with appropriate methods. These methods are executed before the object undo/redo methods and must not modify the object.
 
-    CATCommandGlobalUndo * CAACreateTriangleCmd::GetGlobalUndo()
+    CATCommandGlobalUndo * CAACreateTriangleCmd::GetGlobalUndo(#)
     {
-CATCommandGlobalUndo * CAACreateTriangleCmd::GetGlobalUndo()
+CATCommandGlobalUndo * CAACreateTriangleCmd::GetGlobalUndo(#)
       CATCommandGlobalUndo * CAACreateTriangleCmdGlobalUndo = NULL;
 
 ```vbscript
@@ -253,12 +253,12 @@ It is called when the command undo/redo object is removed from the command histo
 class MyCommandGlobalUndo : public CATCommandGlobalUndo
       CATDeclareClass;
       public :
-        MyCommandGlobalUndo();
-        virtual ~MyCommandGlobalUndo();
-        virtual HRESULT BeforeUndo();
-        virtual HRESULT BeforeRedo();
-        virtual HRESULT AfterUndo();
-        virtual HRESULT AfterRedo();
+        MyCommandGlobalUndo(#);
+        virtual ~MyCommandGlobalUndo(#);
+        virtual HRESULT BeforeUndo(#);
+        virtual HRESULT BeforeRedo(#);
+        virtual HRESULT AfterUndo(#);
+        virtual HRESULT AfterRedo(#);
 
     };
 

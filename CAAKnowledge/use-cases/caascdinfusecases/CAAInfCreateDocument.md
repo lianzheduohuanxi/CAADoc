@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CAAScrBase", "CATIA", "CAAScrJavaScript", "CAAInfSaveAsDocument", "CAAScdInfUseCases", "CAAInfCloseDocument", "CAAInfLauchMacro", "CAAInfCreateDocument", "CAAInfCreateDocumentSource"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfCreateDocument.htm"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfCreateDocument.htmmd"
 converted: "2026-05-11T11:27:02.687842"
 ---
 
@@ -49,15 +49,15 @@ interactive session.
 
 *Copyright  2001, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 ...
     'Create a new part document.
     'Add the new document to the end of the collection of documents.
     'Create and display a new window for the new document.
     'Activate the new document and the window.
+```vbscript
      Dim oNewPartDoc As Document
      Set oNewPartDoc = CATIA.Documents.Add(&quot;Part&quot;)
   ...
+```
 ```

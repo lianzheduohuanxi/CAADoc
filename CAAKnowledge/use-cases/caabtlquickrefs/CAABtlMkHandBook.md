@@ -4,13 +4,13 @@ title: "mkmk Handbook"
 category: "use-case"
 module: "CAABtlQuickRefs"
 tags: ["CATIA"]
-source_file: "Doc/online/CAABtlQuickRefs/CAABtlMkHandBook.htm"
+source_file: "Doc/online/CAABtlQuickRefs/CAABtlMkHandBook.htmmd"
 converted: "2026-05-11T17:33:49.970359"
 ```
 
 ---
 tags: ["CATIA"]
-source_file: "Doc/online/CAABtlQuickRefs/CAABtlMkHandBook.htm"
+source_file: "Doc/online/CAABtlQuickRefs/CAABtlMkHandBook.htmmd"
 converted: "2026-05-11T17:33:49.970359"
 RADE |  Multi-Workspace Application Builder |  mkmk Handbook _Summary of mkmk capabilities_
 
@@ -58,11 +58,15 @@ Refer prerequisites for static access | _`[mkCopyPreq](CAABtlMkOthers.htm#mkCopy
 [Top] Run applications **Purpose** | **Commands** | **Parameter(s)**
 ---|---|---
 ```vbscript
+```vbscript
 Set environment before
+```
 ```
 
 ```vbscript
+```vbscript
 Set environment before
+```
 ```
 
 running a program | _`[mkCreateRuntimeView](CAABtlMkOthers.htm#mkCreateRuntimeView)`_ | _`[-c | -l | -f] [-d]`_

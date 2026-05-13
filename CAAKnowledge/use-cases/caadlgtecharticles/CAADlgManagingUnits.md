@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Managing Magnitudes and Units"
-category: "use-case"
+category: tech-article
 module: "CAADlgTechArticles"
 tags: ["CATInteractiveApplication", "CATIA"]
-source_file: "Doc/online/CAADlgTechArticles/CAADlgManagingUnits.htm"
+source_file: "Doc/online/CAADlgTechArticles/CAADlgManagingUnits.htmmd"
 converted: "2026-05-11T17:17:56.047533"
 ```
 
@@ -99,7 +99,7 @@ For each control you create that displays and/or is used to enter a value, you m
 
 ```
 
-![CATDlgUnit1.gif \(4686 bytes\)](images/CATDlgUnit1.gif)
+![CATDlgUnit1.gif /(4686 bytes/)](images/CATDlgUnit1.gif)
 
 The example given uses a combo which is assigned a length magnitude. The length unit is set to inch  for the application.
 
@@ -146,11 +146,11 @@ These three methods `SetMagnitude`, `SetUnit`, and `SetPrecision`, have their ge
     CATDlgControl::Magnitude EditorCurrentMagnitude;
     CATDlgControl::Unit      EditorCurrentUnit;
     int                      EditorCurrentPrecision;
-    EditorCurrentMagnitude = pEditor1->GetMagnitude();
+    EditorCurrentMagnitude = pEditor1->GetMagnitude(#);
 ```vbscript
 ```vbscript
-    EditorCurrentUnit      = pEditor1->GetUnit();
-    EditorCurrentPrecision = pEditor1->GetPrecision();
+    EditorCurrentUnit      = pEditor1->GetUnit(#);
+    EditorCurrentPrecision = pEditor1->GetPrecision(#);
 
 ```
 

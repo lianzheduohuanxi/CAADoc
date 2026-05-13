@@ -5,7 +5,7 @@ category: "use-case"
 module: "CAACenAPIChangesR14"
 version: "V5R14"
 tags: []
-source_file: "Doc/online/CAACenAPIChangesR14/CATSchPlatformInterfaces.htm"
+source_file: "Doc/online/CAACenAPIChangesR14/CATSchPlatformInterfaces.htmmd"
 converted: "2026-05-11T17:33:50.859971"
 ```
 

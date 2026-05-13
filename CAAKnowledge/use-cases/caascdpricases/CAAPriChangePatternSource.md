@@ -4,13 +4,13 @@ title: "CAAPriPatternDescription.CATScript"
 category: "use-case"
 module: "CAAScdPriUseCases"
 tags: ["CATIA", "CAAPriChangePattern", "CAAPriPatternDescription"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangePatternSource.htm"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangePatternSource.htmmd"
 converted: "2026-05-11T17:31:51.213996"
 ```
 
 ---
 tags: ["CATIA", "CAAPriChangePattern", "CAAPriPatternDescription"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangePatternSource.htm"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangePatternSource.htmmd"
 converted: "2026-05-11T17:31:51.213996"
     Option Explicit
 
@@ -33,12 +33,17 @@ converted: "2026-05-11T17:31:51.213996"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
 
+```
 ```
 
 ```vbscript
+```vbscript
     Dim oPartDocument As PartDocument
+```vbscript
+```
 ```vbscript
 ```vbscript
     Dim oPart As Part
@@ -46,6 +51,7 @@ converted: "2026-05-11T17:31:51.213996"
     Dim InputObjectType(0) As String
     Dim oStatus as String
     Dim oCircularPattern as CircPattern
+```
 ```
 
 ```
@@ -58,19 +64,27 @@ converted: "2026-05-11T17:31:51.213996"
     ' ------------
     ' Get the part document
     ' ------------
+```vbscript
     Set oPartDocument = CATIA.ActiveDocument
     ' ------------
+```
     ' Get the part
     ' ------------
+```vbscript
     Set oPart = oPartDocument.Part
     ' ------------
+```
     ' Get the selection
     ' ------------
+```vbscript
     Set oSelection = oPartDocument.Selection
     ' ------------
+```
+```vbscript
     ' Set the selection type
     ' ------------
 ```
+```
 
 ```
 
@@ -80,8 +94,10 @@ converted: "2026-05-11T17:31:51.213996"
 ```vbscript
 ```vbscript
 ' ------------
+```vbscript
 ' Set the selection type
 ' ------------
+```
 ```
 
     InputObjectType(0) = "CircPattern"
@@ -99,11 +115,15 @@ converted: "2026-05-11T17:31:51.213996"
     ' ------------
     ' Get the object in the selection
     ' ------------
+```vbscript
     Set oCircularPattern = oSelection.Item(1).Value
     ' ------------
+```
+```vbscript
     ' Set the circular pattern instance number
     ' ------------
 ```
+```
 
 ```
 
@@ -113,8 +133,10 @@ converted: "2026-05-11T17:31:51.213996"
 ```vbscript
 ```vbscript
 ' ------------
+```vbscript
 ' Set the circular pattern instance number
 ' ------------
+```
 ```
 
 ```
@@ -126,9 +148,11 @@ converted: "2026-05-11T17:31:51.213996"
 ```vbscript
 ```vbscript
     ' ------------
+```vbscript
     ' Set the circular pattern instance as Unequal Angular Spacing mode
     ' ------------
 ```
+```
 
 ```
 
@@ -138,8 +162,10 @@ converted: "2026-05-11T17:31:51.213996"
 ```vbscript
 ```vbscript
 ' ------------
+```vbscript
 ' Set the circular pattern instance as Unequal Angular Spacing mode
 ' ------------
+```
     oCircularPattern.CircularPatternParameters = catUnequalAngularSpacing
 ```
 
@@ -152,9 +178,11 @@ converted: "2026-05-11T17:31:51.213996"
 ```vbscript
 ```vbscript
     ' ------------
+```vbscript
     ' Set the circular pattern Unequal Angular Spacing
     ' ------------
 ```
+```
 
 ```
 
@@ -164,8 +192,10 @@ converted: "2026-05-11T17:31:51.213996"
 ```vbscript
 ```vbscript
 ' ------------
+```vbscript
 ' Set the circular pattern Unequal Angular Spacing
 ' ------------
+```
 ```
 
 ```
@@ -204,6 +234,8 @@ converted: "2026-05-11T17:31:51.213996"
 ```
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

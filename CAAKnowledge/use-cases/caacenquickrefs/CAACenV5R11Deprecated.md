@@ -4,13 +4,13 @@ title: "Deprecated CAA V5R9 APIs Removed from CAA V5R11"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATITPSReferenceFrame", "CATIGSMAssemble", "CATITTRS", "CATIVpmAFLAffectedObject", "CATIVpmAFLAction", "CATIDrwAnnotationFactory", "CATIMechanicalPartProperties"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R11Deprecated.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R11Deprecated.htmmd"
 converted: "2026-05-11T17:33:47.051543"
 ```
 
 ---
 tags: ["CATITPSReferenceFrame", "CATIGSMAssemble", "CATITTRS", "CATIVpmAFLAffectedObject", "CATIVpmAFLAction", "CATIDrwAnnotationFactory", "CATIMechanicalPartProperties"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R11Deprecated.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R11Deprecated.htmmd"
 converted: "2026-05-11T17:33:47.051543"
 CAA V5 Encyclopedia |  Deprecated CAA V5R9 APIs Removed from CAA V5R11
 
@@ -31,8 +31,10 @@ The following deprecated classes, interfaces, methods, or global functions in V5
   * **GetElementAtPosition** method in interface CATIGSMAssemble
   * **GetFeatureOfSize** method in interface CATITTRS
   * **GetMRGE** method in interface CATITTRS
+```vbscript
   * **GetObjectFromParameter** method in class CATCkeEvalContext
   * **GetPosition** method in interface CATIGSMAssemble
+```
   * **GetRefTTRS** method in interface CATITPSReferenceFrame
   * **GetReferenceFromObject** global function in MecModInterfaces
   * **GetValue** method in interface CATIVpmAFLAction

@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "The Burger Order Dialog Box"
-category: "use case"
+category: use-case case"
 module: "CAADlgUseCases"
 tags: ["CAABurgerApplication", "CAABurgerApplication_h", "CAABurgerDialogBox_h", "CATInteractiveApplication", "CATIA", "CAADlgBurger", "CAADialog", "CAABurgerDialogBox"]
-source_file: "Doc/online/CAADlgUseCases/CAADlgBurger.htm"
+source_file: "Doc/online/CAADlgUseCases/CAADlgBurger.htmmd"
 converted: "2026-05-11T17:17:55.961678"
 ```
 
@@ -61,15 +61,15 @@ This example introduces some objects of the Dialog framework, how to arrange the
 
 Below is the how the dialog box looks like.
 
-![CATDlgBurger1.jpg \(23422 bytes\)](images/CATDlgBurger1.jpg)
+![CATDlgBurger1.jpg /(23422 bytes/)](images/CATDlgBurger1.jpg)
 
 The Dialog framework objects that you can use for selecting a value or an attribute and that react to your selection are controls (like radio buttons, combos or spinners). The different controls are gathered in frames. For example, the Hamburgers frame includes a slider to select the number of hamburgers you want, radio buttons to choose the cooking, and click buttons to add condiments. Separators help to distinguish the three frames, and above, labels help to understand what their contents refer to. Labels can also be used for other Dialog framework objects such as the combo to choose the fries size, or the editor to choose the number of fries. A selector list with a scrollbar allows you to select a drink within the list and a spinner lets you order the number of drinks you want. These objects are shown below.
 
-![CAADlgBurgerObjects.jpg \(37618 bytes\)](images/CAADlgBurgerObjects.jpg)
+![CAADlgBurgerObjects.jpg /(37618 bytes/)](images/CAADlgBurgerObjects.jpg)
 
 Checking, selecting, or entering values display traces in the command prompt window. When you have chosen, the Apply push button builds the order and displays it in another window. You can reset the different objects to their default value using the Reset push button, and exit the window using the Dismiss push button. If you press Apply, you order is generated in the following window:
 
-![CATDlgBurger2.jpg \(8252 bytes\)](images/CATDlgBurger2.jpg)
+![CATDlgBurger2.jpg /(8252 bytes/)](images/CATDlgBurger2.jpg)
 
 [Top]
 #### How to Launch CAADlgBurger
@@ -82,10 +82,10 @@ To launch CAADlgBurger, you will need to set up the build time environment, then
 To launch CAADlgBurger, you will need to set up the build time environment, then compile CAADlgBurger along with its prerequisites, set up the run time environment, and then execute the use case [1].
 The CAADlgBurger use case is made of a several classes located in the CAADlgBurger.m module of the CAADialog.edu framework:
 
-Windows | `InstallRootDirectory\CAADialog.edu\CAADlgBurger.m\`
+Windows | `InstallRootDirectory/CAADialog.edu/CAADlgBurger.m/`
 
 The CAADlgBurger use case is made of a several classes located in the CAADlgBurger.m module of the CAADialog.edu framework:
-Windows | `InstallRootDirectory\CAADialog.edu\CAADlgBurger.m\`
+Windows | `InstallRootDirectory/CAADialog.edu/CAADlgBurger.m/`
 Unix | `InstallRootDirectory/CAADialog.edu/CAADlgBurger.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -100,12 +100,12 @@ _CAABurgerApplication.cpp_ | The interactive application source file
 _CAABurgerDialogBox.h_ | The dialog box header file
 _CAABurgerDialogBox.cpp_ | The dialog box source file
 
-The resource file CAABurgerDialogBox.CATNls is located in the CNext\resources\msgcatalog directory.
+The resource file CAABurgerDialogBox.CATNls is located in the CNext/resources/msgcatalog directory.
 
 [Top]
 ### Step-by-Step
 
-The resource file CAABurgerDialogBox.CATNls is located in the CNext\resources\msgcatalog directory.
+The resource file CAABurgerDialogBox.CATNls is located in the CNext/resources/msgcatalog directory.
   1. Creating an Interactive Application to Display the Dialog Box
   2. Creating Dialog Objects and Setting their Behaviors and Styles
   3. Arranging the Dialog Objects in the Dialog Box
@@ -131,9 +131,9 @@ class CAABurgerDialogBox;  _// Forward declaration to the burger dialog box clas
 class CAABurgerApplication : public CATInteractiveApplication
       public:
                      CAABurgerApplication(const CATString & iApplicationId);
-        virtual     ~CAABurgerApplication();
-        virtual void BeginApplication();
-        virtual int  EndApplication();
+        virtual     ~CAABurgerApplication(#);
+        virtual void BeginApplication(#);
+        virtual int  EndApplication(#);
       private:
         CAABurgerDialogBox * _pBurgerDialogBox; _// The dialog box_
 
@@ -151,32 +151,32 @@ The dialog box is created in the `BeginApplication` method, and the `EndApplicat
 
     ...
 The dialog box is created in the `BeginApplication` method, and the `EndApplication` has nothing to deallocate since the only data member is this dialog box.
-    void CAABurgerApplication::BeginApplication()
+    void CAABurgerApplication::BeginApplication(#)
 
     {
-void CAABurgerApplication::BeginApplication()
+void CAABurgerApplication::BeginApplication(#)
 ```vbscript
       _pBurgerDialogBox = new CAABurgerDialogBox(this,              _// Parent_
 
 ```
 
                                                  "BurgerId",        _// Identifier_
-void CAABurgerApplication::BeginApplication()
+void CAABurgerApplication::BeginApplication(#)
 _pBurgerDialogBox = new CAABurgerDialogBox(this,              _// Parent_
                                                  CATDlgGridLayout); _// Style_
-      _pBurgerDialogBox->Build();
+      _pBurgerDialogBox->Build(#);
       _pBurgerDialogBox->SetVisibility(CATDlgShow);
 
     }
 
 CATDlgGridLayout); _// Style_
-_pBurgerDialogBox->Build();
+_pBurgerDialogBox->Build(#);
 _pBurgerDialogBox->SetVisibility(CATDlgShow);
-    int CAABurgerApplication::EndApplication()
+    int CAABurgerApplication::EndApplication(#)
 
     {
 _pBurgerDialogBox->SetVisibility(CATDlgShow);
-int CAABurgerApplication::EndApplication()
+int CAABurgerApplication::EndApplication(#)
       return 0;
 
     }
@@ -222,8 +222,8 @@ class CAABurgerDialogBox : public CATDlgDocument
         CAABurgerDialogBox(CATInteractiveApplication * iParentCommand,
                            const CATString           & iDialogBoxId,
                            CATDlgStyle                 iDialogBoxStyle);
-        virtual ~CAABurgerDialogBox();
-        void     Build();
+        virtual ~CAABurgerDialogBox(#);
+        void     Build(#);
 
       private:
         CATDlgFrame           * _pHamburgerFrame, * _pFriesFrame, * _pDrinkFrame;
@@ -337,19 +337,19 @@ _pCAABurgerApplication(iParentCommand)
 
 cout << "------- Burger constructor -------" << endl;
 cout << "-------  to allocate only  -------" << endl;
-    void CAPBurger::Build()
+    void CAPBurger::Build(#)
 
     {
 cout << "-------  to allocate only  -------" << endl;
-void CAPBurger::Build()
+void CAPBurger::Build(#)
       CATString BurgerMsgCatalogName("CAABurgerDialogBox");
-      _pMsgCat = new CATMsgCatalog();
+      _pMsgCat = new CATMsgCatalog(#);
       int rc = _pMsgCat->LoadMsgCatalog(BurgerMsgCatalogName);
       if(!rc) cout << "The message catalog is not found" << endl;
 
       ...
 CATString BurgerMsgCatalogName("CAABurgerDialogBox");
-_pMsgCat = new CATMsgCatalog();
+_pMsgCat = new CATMsgCatalog(#);
 int rc = _pMsgCat->LoadMsgCatalog(BurgerMsgCatalogName);
 if(!rc) cout << "The message catalog is not found" << endl;
 ```vbscript
@@ -380,7 +380,7 @@ if(!rc) cout << "The message catalog is not found" << endl;
 
 The constructor is empty, but calls the base class CATDlgDocument constructor,and sets the parent command of the window as the interactive appliction itself. The `Build` method begins with the message catalog creation from the file designated using the `DeclareResource` macro in the header file. This message catalog creation is required because some controls cannot have their resources automatically assigned. This is the case for the combo and editor lines. The labels, frames, and push buttons are then instantiated. Now we shall arrange these objets in the window in a grid as follows:
 
-![Burger.gif \(22430 bytes\)](images/Burger.gif)
+![Burger.gif /(22430 bytes/)](images/Burger.gif)
 
 Three rows and five columns are necessary to accommodate the labels for the titles, the frames and separators, and the three push buttons. This is coded using instances of the _CATDlgGridConstraints_ class for the three frames and the two separators as follows:
 
@@ -477,12 +477,12 @@ _pHamburgerQuantity = new CATDlgSlider(_pHamburgerFrame,
 
 The labels, frames, and push buttons are then instantiated and arranged using a grid. This is described with the hamburger frame taken as an example:
 
-![CAADlgBurgerFrame.jpg \(18368 bytes\)](images/CAADlgBurgerFrame.jpg)
+![CAADlgBurgerFrame.jpg /(18368 bytes/)](images/CAADlgBurgerFrame.jpg)
 
 The controls of the Hamburger frame are instantiated by passing their father in the command tree structure, here the frame itself, and their identifier. They are arranged in the grid as they are created. For example, the Rare radio button is instantiated, and it location is declared using the `SetGridConstraints` method that creates a grid constraint object with the control with the following parameters
 
   * The control top left corner is placed in the grid cell located at the intersection of the row 0 with the column 0 using the first two parameters of  `SetGridConstraints`
-  * It spans over one grid cell in the row 0, and one grid cell in the column 0\. This is declared using the third and fourth argument of `SetGridConstraints`
+  * It spans over one grid cell in the row 0, and one grid cell in the column 0/. This is declared using the third and fourth argument of `SetGridConstraints`
   * It is attached the object to the left side of the cell thanks to the last argument.
 
 The other controls are instantiated and placed in the frame in the same way. The slider is set vertical and ranges from 0 to 10 with 10 steps and no decimal point. It thus takes the values 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, and 10.
@@ -494,11 +494,11 @@ We will now set the callbacks to trigger the appropriate method when a specific 
 
     ...
 We will now set the callbacks to trigger the appropriate method when a specific control is activated. Have a look at what happens with the hamburger frame for the hamburger cooking radio buttons:
-      AddAnalyseNotificationCB(_pRare, _pRare->GetRadBModifyNotification(),
+      AddAnalyseNotificationCB(_pRare, _pRare->GetRadBModifyNotification(#),
                                (CATCommandMethod)&CAABurgerDialogBox::WellDone, NULL);
-      AddAnalyseNotificationCB(_pMedium, _pMedium->GetRadBModifyNotification(),
+      AddAnalyseNotificationCB(_pMedium, _pMedium->GetRadBModifyNotification(#),
                                (CATCommandMethod)&CAABurgerDialogBox::Medium, NULL);
-      AddAnalyseNotificationCB(_pRare, _pRare->GetRadBModifyNotification(),
+      AddAnalyseNotificationCB(_pRare, _pRare->GetRadBModifyNotification(#),
                                (CATCommandMethod)&CAABurgerDialogBox::WellDone, NULL);
 
     ...
@@ -525,8 +525,8 @@ void CAABurgerDialogBox::Rare(CATCommand           * pSendingCommand,
 CATNotification      * pSentNotification,
 CATCommandClientData   UsefulData)
       CATUnicodeString usParam[2];
-      usParam[0] = ((CATDlgRadioButton *)pSendingCommand)->GetTitle();
-      if (((CATDlgRadioButton *)pSendingCommand)->GetState()==CATDlgCheck)
+      usParam[0] = ((CATDlgRadioButton *)pSendingCommand)->GetTitle(#);
+      if (((CATDlgRadioButton *)pSendingCommand)->GetState(#)==CATDlgCheck)
         usParam[1] = "checked";
       else
         usParam[1] = "unchecked";
@@ -542,13 +542,13 @@ This method simply writes a trace in the command window. It retrieves from the o
 [Top]
 #### Internationalizing the Texts and Messages
 
-The file that contains texts and messages is named CAADlgBurger.CATNls and is stored in CNext\resources\msgcatalog directory.
+The file that contains texts and messages is named CAADlgBurger.CATNls and is stored in CNext/resources/msgcatalog directory.
 
-The file that contains texts and messages is named CAADlgBurger.CATNls and is stored in CNext\resources\msgcatalog directory.
+The file that contains texts and messages is named CAADlgBurger.CATNls and is stored in CNext/resources/msgcatalog directory.
     Title                     = "Burger Order-Entry Box";
 
     ...
-The file that contains texts and messages is named CAADlgBurger.CATNls and is stored in CNext\resources\msgcatalog directory.
+The file that contains texts and messages is named CAADlgBurger.CATNls and is stored in CNext/resources/msgcatalog directory.
 Title                     = "Burger Order-Entry Box";
     HamburgerLabelId.Title     = "Hamburgers";
 ```vbscript

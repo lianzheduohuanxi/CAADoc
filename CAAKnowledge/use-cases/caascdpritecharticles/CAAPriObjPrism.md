@@ -1,17 +1,17 @@
 ---
 ```vbscript
 title: "Prism Object"
-category: "use-case"
+category: tech-article
 module: "CAAScdPriTechArticles"
 tags: []
-source_file: "Doc/online/CAAScdPriTechArticles/CAAPriObjPrism.htm"
+source_file: "Doc/online/CAAScdPriTechArticles/CAAPriObjPrism.htmmd"
 converted: "2026-05-11T17:31:51.237447"
 ```
 
 ---
 # Prism Object
 
-source_file: "Doc/online/CAAScdPriTechArticles/CAAPriObjPrism.htm"
+source_file: "Doc/online/CAAScdPriTechArticles/CAAPriObjPrism.htmmd"
 converted: "2026-05-11T17:31:51.237447"
 See Also | UseCases | Properties | Methods
 

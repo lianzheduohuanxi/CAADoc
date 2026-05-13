@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CAAScrBase", "CAADriObjDrawingSheets", "CATIA", "CAADriDimension", "CAAScrJavaScript", "CAADriUseCases", "CAAScdDriTechArticles", "CAAScdInfUseCases", "CAADriObjDrawingView", "CAADriObjDrawingSheet", "CAADriObjDrawingDocument", "CAAInfLauchMacro", "CAADriDimensionSource"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriDimension.htm"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriDimension.htmmd"
 converted: "2026-05-11T11:27:02.742748"
 ---
 
@@ -96,7 +96,7 @@ By this way the Drawing document keep his state before macro
     
   
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 
@@ -116,36 +116,46 @@ This use case has shown how to get dimension pointed by a Text leader.
 
 *Copyright  2002, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 ...
+```vbscript
     ' Set the CATIA popup file alerts to False
     ' It prevents to stop the macro at each alert during its execution
+```
+```vbscript
     CATIA.DisplayFileAlerts = False
   ...
+```
 ```
 
 ```vbscript
 ...
 ' Get the drawing document
+```vbscript
     Set DrwDoc= CATIA.ActiveDocument
   ...
+```
 ```
 
 ```vbscript
 ...
     ' Retrieve the drawing document's sheets collection
+```vbscript
     Set DrwSheet = DrwDoc.Sheets
 
     ' Retrieve the active sheet to restore it at the end of the macro
+```
+```vbscript
     Set SheetToRestore = oDrwSheets.ActiveSheet
 
     ' Scan all the sheet of the Drawing document
+```
     For numsheet = 1 To DrwSheets.Count
 
+```vbscript
       Set CurrentSheet = DrwSheets.Item(numsheet)
       ' Active Currentsheet
+```
       CurrentSheet.Activate
   ...
 ```
@@ -153,10 +163,14 @@ This use case has shown how to get dimension pointed by a Text leader.
 ```vbscript
 ...
 'get the Views' collection 
+```vbscript
    Set DrwViews = CurrentSheet.Views
 
    'Read the current view to restore it at the end of the macro
+```
+```vbscript
    Set ViewToRestore = DrwViews.ActiveView
+```
 ```
 
 ```vbscript
@@ -164,7 +178,10 @@ This use case has shown how to get dimension pointed by a Text leader.
    
    For numview = 1 To DrwViews.Count
    
+```vbscript
       Set CurrentView = DrwViews.Item(numview)
+      
+```
       
       'Active the current view
       CurrentView.Activate
@@ -174,7 +191,9 @@ This use case has shown how to get dimension pointed by a Text leader.
 ```vbscript
 ...
 'Get the Texts' collection 
+```vbscript
    Set DrwTexts = CurrentView.Texts
+```
 ```
 
 ```vbscript
@@ -182,30 +201,40 @@ This use case has shown how to get dimension pointed by a Text leader.
    
    For numtxt = 1 To DrwTexts.Count
    
+```vbscript
       Set CurrentText = DrwTexts.Item(numtxt)
    ...
+```
 ```
 
 ```vbscript
 ...
 'Get the Leaders' collection 
+```vbscript
    Set DrwLeaders = CurrentText.Leaders
 
    'Scan all the Leader of the current Text
+```
    
    For numlead = 1 To DrwLeaders.Count
    
+```vbscript
      Set CurrentLeader = DrwLeaders.Item(numlead)
+```
 ```
 
 ```vbscript
 ' Manage error on HeadTarget method when
      ' no element is pointed by the text leader.
+```vbscript
      On Error Resume Next
      ' Get object pointed on the leader
+```
+```vbscript
      Set ElemDispatch = Nothing
      Set ElemDispatch = CurrentLeader.HeadTarget
      NomObj = TypeName(ElemDispatch)
+```
   ...
 ```
 
@@ -215,8 +244,11 @@ This use case has shown how to get dimension pointed by a Text leader.
      If NomObj = &quot;DrawingDimension&quot; Then
                             
        ' Get the dimension object
+```vbscript
        Dim PointedDim As DrawingDimension
        Set PointedDim = ElemDispatch
+                   
+```
                    
        ' Read dimension tolerances
        PointedDim.GetTolerances oTolType, oTolName, oUpTolS, oLowTolS, oUpTolD, oLowTolD, oDisplayMode

@@ -5,13 +5,13 @@ category: "use-case"
 module: "CAACenAPIChangesR7"
 version: "V5R7"
 tags: []
-source_file: "Doc/online/CAACenAPIChangesR7/DNBInspectSharedInterfacesSP.htm"
+source_file: "Doc/online/CAACenAPIChangesR7/DNBInspectSharedInterfacesSP.htmmd"
 converted: "2026-05-11T17:33:52.005630"
 ```
 
 ---
 tags: []
-source_file: "Doc/online/CAACenAPIChangesR7/DNBInspectSharedInterfacesSP.htm"
+source_file: "Doc/online/CAACenAPIChangesR7/DNBInspectSharedInterfacesSP.htmmd"
 converted: "2026-05-11T17:33:52.005630"
 CAA API Modifications|  DNBInspectSharedInterfaces  |
 

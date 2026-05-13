@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "3D Operations"
-category: "use-case"
+category: use-case
 module: "CAACgmModel"
 tags: []
-source_file: "Doc/online/CAACgmModel/CAACgmTcGeometryCreationToc.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmTcGeometryCreationToc.htmmd"
 converted: "2026-05-11T17:33:48.089073"
 ```
 

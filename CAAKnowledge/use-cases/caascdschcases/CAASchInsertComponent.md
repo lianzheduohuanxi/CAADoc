@@ -4,7 +4,7 @@ title: "Inserting a Schematic Component into a Schematic Route"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAASCH_Sample", "CAADoc", "CATIASchComponent", "CAAScdSchUseCases", "CAASCH_RouteForPlacement", "CATIA", "CAASchAppBase", "CAASchAppUtilities", "CAASCHEDUApp", "CAASchPlatformModeler", "CAASchInsertComponent"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchInsertComponent.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchInsertComponent.htmmd"
 converted: "2026-05-11T17:31:51.373120"
 ```
 
@@ -29,9 +29,9 @@ converted: "2026-05-11T17:31:51.373120"
   * Setup:
 
 >   1. Build CAASchAppBase.m and CAASchAppUtilities.m, located in CAASchPlatformModeler.edu (RADE is required).
->   2. Copy generated DLLs, CAASchAppBase.dll and CAASchAppUtilities.m, respectively, to the run-time environment folder "intel_a\code\bin."
->   3. Copy CAASCHEDUApp.CATfct, located CAASchPlatformModeler.edu\CNext\resources\graphic, to the run-time environment folder "intel_a\resources\graphic."
->   4. Copy CAASchPlatformModeler.edu\CNext\code\dictionary\CAASchPlatformModeler.edu.dico to the run-time environment folder "intel_a\code\dictionary."
+>   2. Copy generated DLLs, CAASchAppBase.dll and CAASchAppUtilities.m, respectively, to the run-time environment folder "intel_a/code/bin."
+>   3. Copy CAASCHEDUApp.CATfct, located CAASchPlatformModeler.edu/CNext/resources/graphic, to the run-time environment folder "intel_a/resources/graphic."
+>   4. Copy CAASchPlatformModeler.edu/CNext/code/dictionary/CAASchPlatformModeler.edu.dico to the run-time environment folder "intel_a/code/dictionary."
 >
 
 [CAASchInsertComponent.CATScript i](CAASchInsertComponentSource.md)s located in the CAAScdSchUseCases module. [Execute macro](macros/CAASchInsertComponent.CATScript) (Windows only).
@@ -61,17 +61,24 @@ The macro first loads two documents. CAASCH_Sample.catalog and CAASCH_RouteForPl
 ```
 
 ```vbscript
+```vbscript
         Dim sCtlgFilePath
+```vbscript
+```
 ```vbscript
         sCtlgFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
+```
 
 ```
 
-                "online\CAAScdSchUseCases\samples\CAASCH_Sample.catalog")
+                "online/CAAScdSchUseCases/samples/CAASCH_Sample.catalog")
 
 ```vbscript
+```vbscript
 Dim sCtlgFilePath
+```vbscript
+```
 ```vbscript
 ```vbscript
 sCtlgFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
@@ -79,36 +86,47 @@ sCtlgFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
         Set objSchCtlgDoc = CATIA.Documents.Open(sCtlgFilePath)
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Set objSchCtlgDoc = CATIA.Documents.Open(sCtlgFilePath)
 ```vbscript
+```
         ' Open main schematic design document (for new component instances created here)
 ```
 
 ```
 
 ```vbscript
+```vbscript
         Dim sFilePath
+```vbscript
+```
 ```vbscript
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
+```
 
 ```
 
-                "online\CAAScdSchUseCases\samples\CAASCH_RouteForPlacement.CATProduct")
+                "online/CAAScdSchUseCases/samples/CAASCH_RouteForPlacement.CATProduct")
 
 ```vbscript
+```vbscript
 Dim sFilePath
+```vbscript
+```
 ```vbscript
 ```vbscript
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
         Dim objSchDoc As Document
         Set objSchDoc = CATIA.Documents.Open(sFilePath)
+```
 ```
 
 ```
@@ -132,15 +150,23 @@ Next, the macro acquires the schematic root object from the document. The schema
 ```
 
 ```vbscript
+```vbscript
         Dim objPrdRoot As Product
+```vbscript
+```
 ```vbscript
 ```vbscript
         Dim objSchRoot As SchematicRoot
         If ( Not ( IsEmpty ( objSchDoc ) ) Then
+```
+```vbscript
           Set objPrdRoot = objSchDoc.Product
           If ( Not ( IsEmpty ( objPrdRoot ) ) Then
+```
+```vbscript
             Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
           End If
+```
         End If
 
 ```
@@ -158,8 +184,10 @@ The SchematicRoot interface provides a method to retrieve the graphical represen
         ...
 ```vbscript
 ```vbscript
+```vbscript
         Dim objSchGRRCVCtlg As SchGRR
 
+```
 ```
 
 ```
@@ -176,7 +204,9 @@ The SchematicRoot interface provides a method to retrieve the graphical represen
            '-----------------------------------------------------------------------
            ' Get the symbol of a component from the component catalog.
            '-----------------------------------------------------------------------
+```vbscript
            Set objSchGRRCVCtlg = objSchRoot.GetCompSymbolFromCatalog ("Control Valve",objSchCtlgDoc)
+```
 ```
 
 ```
@@ -205,7 +235,9 @@ Given the graphical representation (symbol) from the previous step, the macro ca
 ```
 
 ```vbscript
+```vbscript
          Set objSchCntblCVRef = objSchGRRCVCtlg.GetSchObjOwner
+```
 ```
 
     ...
@@ -224,7 +256,9 @@ Through the GetInterface method, the macro obtains a handle on the SchComponent 
 ```
 
 ```vbscript
+```vbscript
            Set objSchCompCVRef = objSchRoot.GetInterface ("CATIASchComponent",objSchCntblCVRef)
+```
 ```
 
     ...
@@ -292,8 +326,10 @@ The "insert" process includes the following.
 ```
 
 ```vbscript
+```vbscript
                   Set objCompRefPlaceInfo = objSchCompCVRef.QueryConnectAbility _
                     (objSchGRRCVCtlg)
+```
 ```vbscript
                   ' -- step 2
 ```
@@ -301,8 +337,10 @@ The "insert" process includes the following.
                   objSchCompatRoute.IsTargetOKForInsert objCompRefPlaceInfo, _
                     objCompatInfo, bYesCompat
 
+```vbscript
                   Dim db2Pt(2) As CATSafeArrayVariant
 ```vbscript
+```
                   '-- a point at the middle of the route
                   db2Pt(0) = 80.0
                   db2Pt(1) = 50.0
@@ -354,8 +392,10 @@ reference component - approach 2
 
              ...
 ```vbscript
+```vbscript
                      Dim db6Matrix(6) As CATSafeArrayVariant
 ```vbscript
+```
                      db6Matrix(0)=1.0
                      db6Matrix(1)=0.0
                      db6Matrix(2)=0.0

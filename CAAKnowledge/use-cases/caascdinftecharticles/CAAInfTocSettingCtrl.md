@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Infrastructure Automation Objects"
-category: "use-case"
+category: tech-article
 module: "CAAScdInfTechArticles"
 tags: []
-source_file: "Doc/online/CAAScdInfTechArticles/CAAInfTocSettingCtrl.htm"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfTocSettingCtrl.htmmd"
 converted: "2026-05-11T17:31:52.495651"
 ```
 

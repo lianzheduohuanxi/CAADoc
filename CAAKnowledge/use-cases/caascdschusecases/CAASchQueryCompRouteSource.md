@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAAScrBase", "CATIASchGRR", "CATIA", "CAAScdSchUseCases", "CATIASchRouteGraphic", "CATIASchCompGraphic", "CAASCH_CompRoute01", "CATIASchAppConnectable", "CATIASchCntrLocation", "CATIASchGRRComp", "CATIAProduct", "CAASchQueryCompRoute", "CATIASchGRRRoute"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchQueryCompRouteSource.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchQueryCompRouteSource.htmmd"
 converted: "2026-05-11T11:27:02.608438"
 ---
 
@@ -20,26 +20,36 @@ Option Explicit
 '   CATIA Level:  V5R15 
 ' *****************************************************************************
 
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
+
+```
 
     ' ------------------------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
+```vbscript
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,sDocPath,"No Doc Path Defined"
     End If
+```
     ' ------------------------------------------------------------------------- 
     ' Open the schematic document 
+```vbscript
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
-            "online\CAAScdSchUseCases\samples\CAASCH_CompRoute01.CATProduct")
+            "online/CAAScdSchUseCases/samples/CAASCH_CompRoute01.CATProduct")
+```
 
+```vbscript
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
     Dim strMessage As String
+
+```
 
     strMessage = _
       "--------------------------------------------------------------------" & vbCr
@@ -47,15 +57,22 @@ Sub CATMain()
       "Output traces from CAASchQueryCompRoute.CATScript" & vbCrLf
 
     ' Find the top node of the schematic object tree - schematic root.
+```vbscript
     Dim objPrdRoot As Product
     Dim objSchRoot As SchematicRoot
     If ( Not ( objSchDoc Is Nothing ) ) Then
+```
+```vbscript
       Set objPrdRoot = objSchDoc.Product 
       If ( Not ( objPrdRoot Is Nothing ) ) Then
+```
+```vbscript
         Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
       End If
+```
     End If
 
+```vbscript
     Dim objSchLComps As SchListOfObjects
     Dim objSchLCompRefs As SchListOfObjects
     Dim objSchLRoutes As SchListOfObjects
@@ -64,32 +81,44 @@ Sub CATMain()
     Dim strCurDocName As String
 
     If ( Not ( objSchRoot Is Nothing ) ) Then
+```
 
+```vbscript
        Set objSchSession = objSchRoot.GetSchematicSession
+
+```
 
        '-----------------------------------------------------------------------
        '| Query the name of the current document 
        '-----------------------------------------------------------------------
        If ( Not ( objSchSession Is Nothing ) ) Then
+```vbscript
           Set objCurDoc = objSchSession.GetCurrentDocument
           If ( Not ( objCurDoc Is Nothing ) ) Then
+```
              strCurDocName = objCurDoc.Name
              strMessage = strMessage &  "Current Document = " & strCurDocName & vbCr
           End If
        End If
     End If
 
+```vbscript
     Dim intNbComp As Integer
     Dim intNbRoute As Integer
     Dim intIndex As Integer
     Dim objPrd As Product
     Dim strName As String
 
+```
+
     ' ------------------------------------------------------------------------- 
     ' |  List schematic component references in the model
     ' ------------------------------------------------------------------------- 
 
+```vbscript
     Set objSchLCompRefs = objSchRoot.GetRefComponents
+
+```
 
     If ( Not ( objSchLCompRefs Is Nothing ) ) Then
        intNbComp = objSchLCompRefs.Count
@@ -97,10 +126,14 @@ Sub CATMain()
          & intNbComp & vbCr
        If (intNbComp > 0) Then
          For intIndex = 1 To intNbComp
+```vbscript
             Set objPrd = Nothing
             strName = ""
+```
+```vbscript
             Set objPrd = objSchLCompRefs.Item (intIndex,"CATIAProduct")
             If ( Not ( objPrd Is Nothing ) ) Then
+```
                strName = objPrd.Name
                strMessage = strMessage &  "  member " & intIndex _
                  & "= " & strName & vbCr
@@ -113,6 +146,7 @@ Sub CATMain()
     ' |  List schematic component instances in the model
     ' ------------------------------------------------------------------------- 
 
+```vbscript
     Set objSchLComps = objSchRoot.GetComponents
 
     Dim objGRRCompInst As SchGRRComp
@@ -126,6 +160,8 @@ Sub CATMain()
 
     Set objLFilter = Nothing
 
+```
+
     If ( Not ( objSchLComps Is Nothing ) ) Then
        intNbComp = objSchLComps.Count
        strMessage = strMessage &  "Number of schematic component INSTANCES = " _
@@ -133,6 +169,7 @@ Sub CATMain()
 
        If (intNbComp > 0) Then
 
+```vbscript
          Dim iCntr As Integer
          Dim intNbCntr As Integer
          Dim objLDbCntr As SchListOfDoubles
@@ -143,7 +180,9 @@ Sub CATMain()
          Dim dbCntrY As Double
 
          For intIndex = 1 To intNbComp
+```
 
+```vbscript
             Set objPrd = Nothing
             Set objCompGraphInst = Nothing
             Set objGRRCompInst = Nothing
@@ -153,13 +192,18 @@ Sub CATMain()
             Set objSchLDbComp = Nothing
 
             strName = ""
+```
+```vbscript
             Set objPrd = objSchLComps.Item (intIndex,"CATIAProduct")
             If ( Not ( objPrd Is Nothing ) ) Then
+```
                strName = objPrd.Name
                strMessage = strMessage &  "  member " & intIndex _
                  & "= " & strName & vbCr
+```vbscript
                Set objCompGraphInst = objSchRoot.GetInterface  ("CATIASchCompGraphic", _
                  objPrd)                
+```
             End If  
             
             '------------------------------------------------------------------
@@ -167,8 +211,10 @@ Sub CATMain()
             ' component instance.
             '------------------------------------------------------------------
             If ( Not ( objCompGraphInst Is Nothing ) ) Then
+```vbscript
                Set objGRRCompInst = GetComponentImage (objCompGraphInst)
                If ( Not ( objGRRCompInst Is Nothing ) ) Then
+```
                   objGRRCompInst.GetTransformation2D objSchLDbComp
 
                   If ( Not ( objSchLDbComp Is Nothing ) ) Then
@@ -195,9 +241,14 @@ Sub CATMain()
                   End If    
                End If '--- If ( Not ( objGRRComp Is Nothing )...
 
+```vbscript
                Set objCntbl = objSchRoot.GetInterface ("CATIASchAppConnectable",_
                  objCompGraphInst)
+```
+```vbscript
                Set objGRR = objSchRoot.GetInterface ("CATIASchGRR", objGRRCompInst)
+
+```
 
             End If '---if ( Not ( objCompGraphInst Is Nothing ) ...
         
@@ -205,15 +256,19 @@ Sub CATMain()
             ' Get the connector locations of all component instances
             '------------------------------------------------------------------
             If ( Not ( objCntbl Is Nothing ) And  Not ( objGRR Is Nothing ) ) Then
+```vbscript
                Set objLCntrs = objCntbl.AppListConnectors (objLFilter)
                If ( Not ( objLCntrs Is Nothing ) ) Then
+```
                   intNbCntr = objLCntrs.Count
                   If ( intNbCntr > 0) Then
                      For iCntr = 1 To intNbCntr
+```vbscript
                         Set objLDbCntr = Nothing
                         Set objCntr = Nothing
                         Set objCntr = objLCntrs.Item (iCntr,"CATIASchCntrLocation")
                         If ( Not ( objCntr Is Nothing )) Then
+```
                            objCntr.GetPosition objGRR, objLDbCntr
                            If ( Not ( objLDbCntr Is Nothing ) ) Then
                               intNCoord = objLDbCntr.Count
@@ -239,12 +294,15 @@ Sub CATMain()
     ' |  List schematic route instances
     ' ------------------------------------------------------------------------- 
 
+```vbscript
     Set objSchLRoutes = objSchRoot.GetRoutes
 
     Dim objGRRRoute As SchGRRRoute
     Dim objSchRouteGraph As SchRouteGraphic
     Dim objSchLDbRoute As SchListOfDoubles
     Dim intNbOut As Integer
+
+```
 
     If ( Not ( objSchLRoutes Is Nothing ) ) Then
        intNbRoute = objSchLRoutes.Count
@@ -253,19 +311,25 @@ Sub CATMain()
        If (intNbRoute > 0) Then
 
          For intIndex = 1 To intNbRoute
+```vbscript
             Set objPrd = Nothing
             Set objGRRRoute = Nothing
             Set objSchRouteGraph = Nothing
 
             strName = ""
+```
+```vbscript
             Set objPrd = objSchLRoutes.Item (intIndex,"CATIAProduct")
             If ( Not ( objPrd Is Nothing ) ) Then
+```
                'strName = objPrd.Name
                strName = objPrd.PartNumber
                strMessage = strMessage &  "  member " & _
                  intIndex & "= " & strName & vbCr
+```vbscript
                Set objSchRouteGraph = objSchRoot.GetInterface  ("CATIASchRouteGraphic", _
                  objPrd) 
+```
             End If
 
             '------------------------------------------------------------------
@@ -273,23 +337,29 @@ Sub CATMain()
             '------------------------------------------------------------------
             If ( Not ( objSchRouteGraph Is Nothing ) ) Then
 
+```vbscript
                Set objGRRRoute = GetRoutePrimitives (objSchRouteGraph,objSchRoot)
 
                If ( Not ( objGRRRoute Is Nothing ) ) Then
+```
+```vbscript
                   Set objSchLDbRoute = Nothing
                   objGRRRoute.GetPath objSchLDbRoute
+```
 
                   If ( Not ( objSchLDbRoute Is Nothing ) And _
                        intNbOut > 3 ) Then
 
                      intNb = objSchLDbRoute.Count
 
+```vbscript
                      Dim iIndex As Integer
                      Dim jIndex As integer
                      Dim dbX As Double
                      Dim dbY As Double
                      Dim intNbPoint As Integer
                      intNbPoint = intNbOut/2
+```
 
                      If ( (intNbOut = intNb ) And  (intNbPoint > 1) ) Then
                         strMessage = strMessage & "---- route points = [" 
@@ -312,9 +382,12 @@ Sub CATMain()
 
     strMessage = strMessage & _
       "--------------------------------------------------------------------" & vbCr
+```vbscript
     MsgBox strMessage
 
 End Sub
+
+```
 
 ' -----------------------------------------------------------------------------
 ' | Find the first symbol used for the input schematic component.
@@ -322,15 +395,24 @@ End Sub
 ' |        (a CATIASchCompGraphic interface handle).
 ' | Returns: the component image (the symbol instance)
 ' -----------------------------------------------------------------------------
+```vbscript
 Private Function GetComponentImage (objSchCompGraphArg As SchCompGraphic) As SchGRRComp
    Dim objSchLSymbols As SchListOfObjects
    If ( Not ( objSchCompGraphArg Is Nothing ) ) Then
+```
+```vbscript
       Set objSchLSymbols = objSchCompGraphArg.ListGraphicalImages
       If ( Not ( objSchLSymbols Is Nothing ) ) Then
+```
+```vbscript
          Set GetComponentImage = objSchLSymbols.Item (1,"CATIASchGRRComp")
       End If
+```
    End If
+```vbscript
 End Function
+
+```
 
 ' -----------------------------------------------------------------------------
 ' | Find the first graphical primitives of an input route.
@@ -339,24 +421,35 @@ End Function
 ' |        objSchRootGraph: the schematic root 
 ' | Returns: the route graphic primitives
 ' -----------------------------------------------------------------------------
+```vbscript
 Private Function GetRoutePrimitives (objSchRouteGraphArg As SchRouteGraphic, _
   objSchRootArg As SchematicRoot) As SchGRRRoute
+```
+```vbscript
    Dim objSchLGRR As SchListOfObjects
    Dim objSchGRR As SchGRR
    If ( Not ( objSchRouteGraphArg Is Nothing ) And _ 
+```
         Not ( objSchRootArg Is Nothing ) ) Then
+```vbscript
       Set objSchLGRR = objSchRouteGraphArg.ListGraphicalPrimitives
       If ( Not ( objSchLGRR Is Nothing ) ) Then
+```
+```vbscript
          Set objSchGRR = objSchLGRR.Item (1,"CATIASchGRR")
          If ( Not ( objSchGRR Is Nothing ) ) Then
+```
+```vbscript
             Set GetRoutePrimitives = objSchRootArg.GetInterface ("CATIASchGRRRoute", _
               objSchGRR)
+```
          End If
       End If
    End If
+```vbscript
 End Function
 
-
+```
 
 ```vbscript
 Option Explicit
@@ -372,26 +465,36 @@ Option Explicit
 '   CATIA Level:  V5R15 
 ' *****************************************************************************
 
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
+
+```
 
     ' ------------------------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
+```vbscript
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,sDocPath,"No Doc Path Defined"
     End If
+```
     ' ------------------------------------------------------------------------- 
     ' Open the schematic document 
+```vbscript
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
-            "online\CAAScdSchUseCases\samples\CAASCH_CompRoute01.CATProduct")
+            "online/CAAScdSchUseCases/samples/CAASCH_CompRoute01.CATProduct")
+```
 
+```vbscript
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
     Dim strMessage As String
+
+```
 
     strMessage = _
       "--------------------------------------------------------------------" & vbCr
@@ -399,15 +502,22 @@ Sub CATMain()
       "Output traces from CAASchQueryCompRoute.CATScript" & vbCrLf
 
     ' Find the top node of the schematic object tree - schematic root.
+```vbscript
     Dim objPrdRoot As Product
     Dim objSchRoot As SchematicRoot
     If ( Not ( objSchDoc Is Nothing ) ) Then
+```
+```vbscript
       Set objPrdRoot = objSchDoc.Product 
       If ( Not ( objPrdRoot Is Nothing ) ) Then
+```
+```vbscript
         Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
       End If
+```
     End If
 
+```vbscript
     Dim objSchLComps As SchListOfObjects
     Dim objSchLCompRefs As SchListOfObjects
     Dim objSchLRoutes As SchListOfObjects
@@ -416,32 +526,44 @@ Sub CATMain()
     Dim strCurDocName As String
 
     If ( Not ( objSchRoot Is Nothing ) ) Then
+```
 
+```vbscript
        Set objSchSession = objSchRoot.GetSchematicSession
+
+```
 
        '-----------------------------------------------------------------------
        '| Query the name of the current document 
        '-----------------------------------------------------------------------
        If ( Not ( objSchSession Is Nothing ) ) Then
+```vbscript
           Set objCurDoc = objSchSession.GetCurrentDocument
           If ( Not ( objCurDoc Is Nothing ) ) Then
+```
              strCurDocName = objCurDoc.Name
              strMessage = strMessage &  "Current Document = " & strCurDocName & vbCr
           End If
        End If
     End If
 
+```vbscript
     Dim intNbComp As Integer
     Dim intNbRoute As Integer
     Dim intIndex As Integer
     Dim objPrd As Product
     Dim strName As String
 
+```
+
     ' ------------------------------------------------------------------------- 
     ' |  List schematic component references in the model
     ' ------------------------------------------------------------------------- 
 
+```vbscript
     Set objSchLCompRefs = objSchRoot.GetRefComponents
+
+```
 
     If ( Not ( objSchLCompRefs Is Nothing ) ) Then
        intNbComp = objSchLCompRefs.Count
@@ -449,10 +571,14 @@ Sub CATMain()
          & intNbComp & vbCr
        If (intNbComp &gt; 0) Then
          For intIndex = 1 To intNbComp
+```vbscript
             Set objPrd = Nothing
             strName = ""
+```
+```vbscript
             Set objPrd = objSchLCompRefs.Item (intIndex,"CATIAProduct")
             If ( Not ( objPrd Is Nothing ) ) Then
+```
                strName = objPrd.Name
                strMessage = strMessage &  "  member " & intIndex _
                  & "= " & strName & vbCr
@@ -465,6 +591,7 @@ Sub CATMain()
     ' |  List schematic component instances in the model
     ' ------------------------------------------------------------------------- 
 
+```vbscript
     Set objSchLComps = objSchRoot.GetComponents
 
     Dim objGRRCompInst As SchGRRComp
@@ -478,6 +605,8 @@ Sub CATMain()
 
     Set objLFilter = Nothing
 
+```
+
     If ( Not ( objSchLComps Is Nothing ) ) Then
        intNbComp = objSchLComps.Count
        strMessage = strMessage &  "Number of schematic component INSTANCES = " _
@@ -485,6 +614,7 @@ Sub CATMain()
 
        If (intNbComp &gt; 0) Then
 
+```vbscript
          Dim iCntr As Integer
          Dim intNbCntr As Integer
          Dim objLDbCntr As SchListOfDoubles
@@ -495,7 +625,9 @@ Sub CATMain()
          Dim dbCntrY As Double
 
          For intIndex = 1 To intNbComp
+```
 
+```vbscript
             Set objPrd = Nothing
             Set objCompGraphInst = Nothing
             Set objGRRCompInst = Nothing
@@ -505,13 +637,18 @@ Sub CATMain()
             Set objSchLDbComp = Nothing
 
             strName = ""
+```
+```vbscript
             Set objPrd = objSchLComps.Item (intIndex,"CATIAProduct")
             If ( Not ( objPrd Is Nothing ) ) Then
+```
                strName = objPrd.Name
                strMessage = strMessage &  "  member " & intIndex _
                  & "= " & strName & vbCr
+```vbscript
                Set objCompGraphInst = objSchRoot.GetInterface  ("CATIASchCompGraphic", _
                  objPrd)                
+```
             End If  
             
             '------------------------------------------------------------------
@@ -519,8 +656,10 @@ Sub CATMain()
             ' component instance.
             '------------------------------------------------------------------
             If ( Not ( objCompGraphInst Is Nothing ) ) Then
+```vbscript
                Set objGRRCompInst = GetComponentImage (objCompGraphInst)
                If ( Not ( objGRRCompInst Is Nothing ) ) Then
+```
                   objGRRCompInst.GetTransformation2D objSchLDbComp
 
                   If ( Not ( objSchLDbComp Is Nothing ) ) Then
@@ -547,9 +686,14 @@ Sub CATMain()
                   End If    
                End If '--- If ( Not ( objGRRComp Is Nothing )...
 
+```vbscript
                Set objCntbl = objSchRoot.GetInterface ("CATIASchAppConnectable",_
                  objCompGraphInst)
+```
+```vbscript
                Set objGRR = objSchRoot.GetInterface ("CATIASchGRR", objGRRCompInst)
+
+```
 
             End If '---if ( Not ( objCompGraphInst Is Nothing ) ...
         
@@ -557,15 +701,19 @@ Sub CATMain()
             ' Get the connector locations of all component instances
             '------------------------------------------------------------------
             If ( Not ( objCntbl Is Nothing ) And  Not ( objGRR Is Nothing ) ) Then
+```vbscript
                Set objLCntrs = objCntbl.AppListConnectors (objLFilter)
                If ( Not ( objLCntrs Is Nothing ) ) Then
+```
                   intNbCntr = objLCntrs.Count
                   If ( intNbCntr &gt; 0) Then
                      For iCntr = 1 To intNbCntr
+```vbscript
                         Set objLDbCntr = Nothing
                         Set objCntr = Nothing
                         Set objCntr = objLCntrs.Item (iCntr,"CATIASchCntrLocation")
                         If ( Not ( objCntr Is Nothing )) Then
+```
                            objCntr.GetPosition objGRR, objLDbCntr
                            If ( Not ( objLDbCntr Is Nothing ) ) Then
                               intNCoord = objLDbCntr.Count
@@ -591,12 +739,15 @@ Sub CATMain()
     ' |  List schematic route instances
     ' ------------------------------------------------------------------------- 
 
+```vbscript
     Set objSchLRoutes = objSchRoot.GetRoutes
 
     Dim objGRRRoute As SchGRRRoute
     Dim objSchRouteGraph As SchRouteGraphic
     Dim objSchLDbRoute As SchListOfDoubles
     Dim intNbOut As Integer
+
+```
 
     If ( Not ( objSchLRoutes Is Nothing ) ) Then
        intNbRoute = objSchLRoutes.Count
@@ -605,19 +756,25 @@ Sub CATMain()
        If (intNbRoute &gt; 0) Then
 
          For intIndex = 1 To intNbRoute
+```vbscript
             Set objPrd = Nothing
             Set objGRRRoute = Nothing
             Set objSchRouteGraph = Nothing
 
             strName = ""
+```
+```vbscript
             Set objPrd = objSchLRoutes.Item (intIndex,"CATIAProduct")
             If ( Not ( objPrd Is Nothing ) ) Then
+```
                'strName = objPrd.Name
                strName = objPrd.PartNumber
                strMessage = strMessage &  "  member " & _
                  intIndex & "= " & strName & vbCr
+```vbscript
                Set objSchRouteGraph = objSchRoot.GetInterface  ("CATIASchRouteGraphic", _
                  objPrd) 
+```
             End If
 
             '------------------------------------------------------------------
@@ -625,23 +782,29 @@ Sub CATMain()
             '------------------------------------------------------------------
             If ( Not ( objSchRouteGraph Is Nothing ) ) Then
 
+```vbscript
                Set objGRRRoute = GetRoutePrimitives (objSchRouteGraph,objSchRoot)
 
                If ( Not ( objGRRRoute Is Nothing ) ) Then
+```
+```vbscript
                   Set objSchLDbRoute = Nothing
                   objGRRRoute.GetPath objSchLDbRoute
+```
 
                   If ( Not ( objSchLDbRoute Is Nothing ) And _
                        intNbOut &gt; 3 ) Then
 
                      intNb = objSchLDbRoute.Count
 
+```vbscript
                      Dim iIndex As Integer
                      Dim jIndex As integer
                      Dim dbX As Double
                      Dim dbY As Double
                      Dim intNbPoint As Integer
                      intNbPoint = intNbOut/2
+```
 
                      If ( (intNbOut = intNb ) And  (intNbPoint &gt; 1) ) Then
                         strMessage = strMessage & "---- route points = [" 
@@ -664,9 +827,12 @@ Sub CATMain()
 
     strMessage = strMessage & _
       "--------------------------------------------------------------------" & vbCr
+```vbscript
     MsgBox strMessage
 
 End Sub
+
+```
 
 ' -----------------------------------------------------------------------------
 ' | Find the first symbol used for the input schematic component.
@@ -674,16 +840,24 @@ End Sub
 ' |        (a CATIASchCompGraphic interface handle).
 ' | Returns: the component image (the symbol instance)
 ' -----------------------------------------------------------------------------
+```vbscript
 Private Function GetComponentImage (objSchCompGraphArg As SchCompGraphic) As SchGRRComp
    Dim objSchLSymbols As SchListOfObjects
    If ( Not ( objSchCompGraphArg Is Nothing ) ) Then
+```
+```vbscript
       Set objSchLSymbols = objSchCompGraphArg.ListGraphicalImages
       If ( Not ( objSchLSymbols Is Nothing ) ) Then
+```
+```vbscript
          Set GetComponentImage = objSchLSymbols.Item (1,"CATIASchGRRComp")
       End If
+```
    End If
+```vbscript
 End Function
 
+```
 
 ' -----------------------------------------------------------------------------
 ' | Find the first graphical primitives of an input route.
@@ -692,20 +866,32 @@ End Function
 ' |        objSchRootGraph: the schematic root 
 ' | Returns: the route graphic primitives
 ' -----------------------------------------------------------------------------
+```vbscript
 Private Function GetRoutePrimitives (objSchRouteGraphArg As SchRouteGraphic, _
   objSchRootArg As SchematicRoot) As SchGRRRoute
+```
+```vbscript
    Dim objSchLGRR As SchListOfObjects
    Dim objSchGRR As SchGRR
    If ( Not ( objSchRouteGraphArg Is Nothing ) And _ 
+```
         Not ( objSchRootArg Is Nothing ) ) Then
+```vbscript
       Set objSchLGRR = objSchRouteGraphArg.ListGraphicalPrimitives
       If ( Not ( objSchLGRR Is Nothing ) ) Then
+```
+```vbscript
          Set objSchGRR = objSchLGRR.Item (1,"CATIASchGRR")
          If ( Not ( objSchGRR Is Nothing ) ) Then
+```
+```vbscript
             Set GetRoutePrimitives = objSchRootArg.GetInterface ("CATIASchGRRRoute", _
               objSchGRR)
+```
          End If
       End If
    End If
+```vbscript
 End Function
+```
 ```

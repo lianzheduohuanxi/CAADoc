@@ -2,7 +2,7 @@
 title: "CAAIAfrGeometryWksAddin"
 type: "interface"
 module: "CAAApplicationFrame"
-category: "framework"
+category: api-reference
 base: "CATIWorkbenchAddin"
 inheritance_chain: "CAAIAfrGeometryWksAddin → CATIWorkbenchAddin"
 method_count: 0
@@ -41,3 +41,35 @@ verified: true
 - `CAAIAfrGeometryWksAddin.cpp`
 - `CAAIAfrGeometryWksFactory.cpp`
 
+---
+
+## Interface Overview
+
+This interface inherits from **CATIWorkbenchAddin**. 
+
+**Inherited Methods**: Please refer to the base interface documentation above.
+
+---
+
+## Interface Overview
+
+This interface inherits from **from**. 
+
+**Inherited Methods**: Please refer to the base interface documentation above.
+
+---
+
+## Related Use Cases
+
+- [3D PLM Enterprise Architecture](../../use-cases/caaafrcases/CAAAfrSampleComboHdr.md)
+- [3D PLM Enterprise Architecture](../../use-cases/caaafrcases/CAAAfrSampleWorkbench.md)
+
+## Interface Notes
+
+This interface is part of the **CAA** module.
+
+**Status**: This interface document is a template. Please refer to the official API documentation for more information.
+
+**Related Resources**:
+- [Quick References](../..//quick-refs/)
+- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)

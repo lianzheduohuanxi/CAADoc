@@ -1,10 +1,12 @@
 ---
 ```vbscript
+```vbscript
 title: "Interactive Set of Objects"
-category: "use-case"
+category: tech-article
+```
 module: "CAAVisTechArticles"
 tags: ["CATI3DGeoVisu", "CATIModelEvents", "CAAAfrBoundingElementCmd", "CATISO", "CATI2DGeoVisu", "CATICreateInstance", "CAADegClippingByBoxCmd"]
-source_file: "Doc/online/CAAVisTechArticles/CAAVisISO.htm"
+source_file: "Doc/online/CAAVisTechArticles/CAAVisISO.htmmd"
 converted: "2026-05-11T17:31:52.295366"
 ```
 
@@ -15,7 +17,10 @@ converted: "2026-05-11T17:31:52.295366"
 ## 3D Visualization
 
 |
+```vbscript
 ### Interactive Set of Objects
+
+```
 
 What is the ISO and how use it?
 ---|---|---
@@ -24,7 +29,10 @@ Technical Article
 * * *
 ### Abstract
 
+```vbscript
 The Interactive Set of Objects is an interactive object used to visualize temporary components, those not kept by a V5 document. This article describes it in detail, and explains how to use it. The last section is dedicated to the temporary component creation.
+
+```
 
   * **A CATISO Class Instance **
   * **A Bag of Components**
@@ -40,7 +48,10 @@ The Interactive Set of Objects is an interactive object used to visualize tempor
 * * *
 ### A CATISO Class Instance
 
+```vbscript
 The Interactive Set of Objects is a component [1] whose main class is the _CATISO_ class _._ It implements _CATI3DGeoVisu_ , _CATI2DGeoVisu_ , and _CATIModelEvents_ interfaces, as represented by the following UML diagram:
+
+```
 
 ![](images/CAAVisISOUML.jpg)
 ---
@@ -109,17 +120,21 @@ In the C _ATFrmEditor_ class destructor, these three interactive sets of objects
 
 In a V5 document, Part features and the top Product are root components. You can you refer to the referenced article [9] for a brief notion of root object.You will also learn the main role of the unique _CATVisManager_ class instance.
 
+```vbscript
 The _CATISO_ instance class plays the same role. It means that when you want create a new window class [2] for a V5 document, if you want the elements of the ISO to be also drawn in this new window, you must do the relation between each viewer of the window and each Interactive Set of Objects. You can you refer to the use cases [4] [5] which detail the creation of a new window. In the new window class constructor you can have the following lines:
 
     ...
+```
+```vbscript
 The _CATISO_ instance class plays the same role. It means that when you want create a new window class [2] for a V5 document, if you want the elements of the ISO to be also drawn in this new window, you must do the relation between each viewer of the window and each Interactive Set of Objects. You can you refer to the use cases [4] [5] which detail the creation of a new window. In the new window class constructor you can have the following lines:
-      CATISO * pISO = pEditor->**GetISO**()  ;
+      CATISO * pISO = pEditor->**GetISO**(#)  ;
+```
       pISO->**AddViewer**(_pViewer);
 
-      CATISO * pfurtiveISO = pEditor->**GetFurtiveISO**()  ;
+      CATISO * pfurtiveISO = pEditor->**GetFurtiveISO**(#)  ;
       pfurtiveISO->**AddViewer**(_pViewer);
 
-      CATISO * pbgISO = pEditor->**GetBackgrdISO**()  ;
+      CATISO * pbgISO = pEditor->**GetBackgrdISO**(#)  ;
       pbgISO->**AddViewer**(_pViewer);
 
     ...
@@ -157,8 +172,8 @@ This diagram shows that the complete path of an element into the ISO is first th
 
     ...
 This diagram shows that the complete path of an element into the ISO is first the ISO itself and then the component. Here is the code to create this path:
-    CATFrmEditor * pEdt = CATFrmEditor::GetCurrentEditor();
-    CATISO * pISO = pEdt->**GetISO**();
+    CATFrmEditor * pEdt = CATFrmEditor::GetCurrentEditor(#);
+    CATISO * pISO = pEdt->**GetISO**(#);
 
     CATPathElement pPathElement (pISO);
 
@@ -206,7 +221,10 @@ You can you refer to the CAADegClippingByBoxCmd use case [6] where elements are 
 ### Creating Temporary Components
 
 You can you refer to the CAADegClippingByBoxCmd use case [6] where elements are added into ISO, removed with or without deletion from the ISO, and updated.
+```vbscript
 There are three ways to create a component which will be displayed thanks to the Interactive Set of Objects:
+
+```
 
   1. Create an instance of the _CATModelForRep3D_ class
   2. Create a component which derives from the _CATModelForRep3D_ component
@@ -221,13 +239,13 @@ It is the simplest way to create a temporary component. Here is an example:
     ...
 1. Create an instance of the _CATModelForRep3D_ class
 It is the simplest way to create a temporary component. Here is an example:
-    CATModelForRep3D *pModel = new **CATModelForRep3D**();
+    CATModelForRep3D *pModel = new **CATModelForRep3D**(#);
 
-    CAT3DCustomRep *pMyRep = new CAT3DCustomRep() ;
+    CAT3DCustomRep *pMyRep = new CAT3DCustomRep(#) ;
 
     ...
-CATModelForRep3D *pModel = new **CATModelForRep3D**();
-CAT3DCustomRep *pMyRep = new CAT3DCustomRep() ;
+CATModelForRep3D *pModel = new **CATModelForRep3D**(#);
+CAT3DCustomRep *pMyRep = new CAT3DCustomRep(#) ;
     pModel->**SetRep**(pMyRep );
 
     ...
@@ -254,13 +272,13 @@ To create the component, and set it its graphic representation, the method is id
 
     ...
 To create the component, and set it its graphic representation, the method is identical as the one detailed above:
-    CATMyModel *pModel = new **CATMyModel**();
+    CATMyModel *pModel = new **CATMyModel**(#);
 
-    CAT3DCustomRep *pMyRep = new CAT3DCustomRep() ;
+    CAT3DCustomRep *pMyRep = new CAT3DCustomRep(#) ;
 
     ...
-CATMyModel *pModel = new **CATMyModel**();
-CAT3DCustomRep *pMyRep = new CAT3DCustomRep() ;
+CATMyModel *pModel = new **CATMyModel**(#);
+CAT3DCustomRep *pMyRep = new CAT3DCustomRep(#) ;
     pModel->**SetRep**(pMyRep );
 
     ...
@@ -289,7 +307,10 @@ You can refer to the CAADegClippingByBoxCmd use case [7] where these three kinds
 * * *
 ### In Short
 
+```vbscript
 The Interactive Set of Objects (ISO) is an interactive object handled by the _CATISO_ class. It enables you to display components which are not included in a V5 document. These components must only implement the _CATI3DGeoVisu_ (2D) interface.
+
+```
 
 [Top]
 

@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "About NURBS"
-category: "use-case"
+category: use-case
 module: "CAACgmModel"
 tags: ["CATIA"]
-source_file: "Doc/online/CAACgmModel/CAACgmTaGobAboutNurbs.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmTaGobAboutNurbs.htmmd"
 converted: "2026-05-11T17:33:47.874094"
 ```
 

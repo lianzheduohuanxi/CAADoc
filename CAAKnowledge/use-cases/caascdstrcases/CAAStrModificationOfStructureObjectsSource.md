@@ -4,7 +4,7 @@ title: "CAAStrModificationOfStructureObjects.CATScript"
 category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CATIA", "CAAStrModificationOfStructureObjects"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfStructureObjectsSource.htm"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfStructureObjectsSource.htmmd"
 converted: "2026-05-11T17:31:50.903114"
 ```
 
@@ -30,17 +30,23 @@ converted: "2026-05-11T17:31:50.903114"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 ```vbscript
         Dim doc As Document
 
         Dim StrWorkbench As StrWorkbench
 ```
+```
 
+```vbscript
 ```vbscript
 ```vbscript
         Dim strFactory As StrObjectFactory
@@ -49,9 +55,12 @@ converted: "2026-05-11T17:31:50.903114"
         Dim rootProduct As Product
         Set rootProduct = doc.Product
     	dim strMembers as StrMembers
+```
 
+```vbscript
         Set strWorkbench = doc.GetWorkbench("StrWorkbench")
         Set strMembers = rootProduct.GetTechnologicalObject("StructureMembers")
+```
 ```
 
 ```
@@ -143,15 +152,19 @@ dim member as StrMember
 
 ```vbscript
 ```vbscript
+```vbscript
         Set strPlates = rootProduct.GetTechnologicalObject("StructurePlates")
 
 ```
+```
 
 ```
 
 ```vbscript
+```vbscript
 Set strPlates = rootProduct.GetTechnologicalObject("StructurePlates")
 ```vbscript
+```
 ```vbscript
     	dim plate as StrPlates
     	set plate = strPlates.Item("PlateType_11")
@@ -235,6 +248,8 @@ Set strPlates = rootProduct.GetTechnologicalObject("StructurePlates")
 ```
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

@@ -4,7 +4,7 @@ title: "CAAAniMeshOctTetra.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAScdAniUseCases", "CAAAniMeshOctTetra"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshOctTetraSource.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshOctTetraSource.htmmd"
 converted: "2026-05-11T17:31:51.673241"
 ```
 
@@ -32,7 +32,10 @@ converted: "2026-05-11T17:31:51.673241"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
+
+```
 
 ```
 
@@ -41,18 +44,22 @@ converted: "2026-05-11T17:31:51.673241"
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
+```vbscript
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
 ```vbscript
         End If
     ' -----------------------------------------------------------
@@ -69,40 +76,50 @@ End If
 ```vbscript
 ' -----------------------------------------------------------
     ' Open the CATAnalysis Document
-    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis")
+```vbscript
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Cube_R13_Freq.CATAnalysis")
+```
 ```
 
 ```
 
 ```
 
+```vbscript
 ```vbscript
 ```vbscript
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ```
+```
 
 ```
 
 ```vbscript
+```vbscript
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```vbscript
+```
     'Retrieve analysis manager
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisManager = oAnalysisDocument.Analysis
+```
 ```
 
 ```vbscript
 ```vbscript
 ```vbscript
     ' Retrieve the part document and product
+```vbscript
     Set oAnalysisLinkedDocuments = oAnalysisManager.LinkedDocuments
     Set partDocument = oAnalysisLinkedDocuments.Item(1)
     Set product = partDocument.Product
+```
 ```
 
 ```
@@ -114,9 +131,13 @@ Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisModels = oAnalysisManager.AnalysisModels
 ```vbscript
+```
+```vbscript
     Set oAnalysisModel = oAnalysisModels.Item(1)
+```
 ```
 
 ```
@@ -125,12 +146,16 @@ Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```vbscript
 ```vbscript
     ' Retrieve mesh manager and mesh part
+```vbscript
     Set oAnalysisMeshManager = oAnalysisModel.MeshManager
     Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
     ' Retrieve publications from product and retrieve the published face.
+```
+```vbscript
     Set publications = product.Publications
     Set pubedge = publications.Item("Edge")
     Set pubPartBody = publications.Item("PartBody")
+```
 ```
 
 ```
@@ -142,8 +167,10 @@ Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```
 
 ```vbscript
+```vbscript
     Set octreePart = oAnalysisMeshParts.Add ("MSHPartOctree3D")
 ```vbscript
+```
     ' Add reference previously created
 ```
 
@@ -158,7 +185,9 @@ Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 octreePart.AddSupportFromPublication product, pubPartBody
 ```vbscript
+```vbscript
     ' Set the global Specifications
+```
 ```
 
     octreePart.SetGlobalSpecification "SizeValue", "10.0 mm"
@@ -184,9 +213,13 @@ octreePart.AddSupportFromPublication product, pubPartBody
 ```
 
 ```vbscript
+```vbscript
     Set meshspecs1 = octreePart.AnalysisMeshLocalSpecifications
 ```vbscript
+```
+```vbscript
     Set spec1 = meshspecs1.Add("MSHLocalMeshSize")
+```
 ```
 
     spec1.SetAttribute "MSHMeshSizeMag", "1.5 mm"
@@ -200,6 +233,8 @@ octreePart.AddSupportFromPublication product, pubPartBody
 ```
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

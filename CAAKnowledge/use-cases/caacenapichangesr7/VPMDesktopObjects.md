@@ -5,13 +5,13 @@ category: "use-case"
 module: "CAACenAPIChangesR7"
 version: "V5R7"
 tags: ["CATIAVPMVDACommand"]
-source_file: "Doc/online/CAACenAPIChangesR7/VPMDesktopObjects.htm"
+source_file: "Doc/online/CAACenAPIChangesR7/VPMDesktopObjects.htmmd"
 converted: "2026-05-11T17:33:52.285452"
 ```
 
 ---
 tags: ["CATIAVPMVDACommand"]
-source_file: "Doc/online/CAACenAPIChangesR7/VPMDesktopObjects.htm"
+source_file: "Doc/online/CAACenAPIChangesR7/VPMDesktopObjects.htmmd"
 converted: "2026-05-11T17:33:52.285452"
 CAA API Modifications|  VPMDesktopObjects  |
 

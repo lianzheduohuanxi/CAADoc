@@ -4,13 +4,13 @@ title: "Modifying the Faces Orientation in a Shell"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CATICGMTopShellOrientation", "CAAGMOperatorsInterfaces", "CAAGMOperatorsShellOrientation"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcShellOrientation.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcShellOrientation.htmmd"
 converted: "2026-05-11T17:33:49.037216"
 ```
 
 ---
 tags: ["CATICGMTopShellOrientation", "CAAGMOperatorsInterfaces", "CAAGMOperatorsShellOrientation"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcShellOrientation.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcShellOrientation.htmmd"
 converted: "2026-05-11T17:33:49.037216"
 Modifying the Face Orientations in a Shell
 
@@ -35,7 +35,7 @@ and the code below:
     ...
 and the code below:
 CATICGMTopShellOrientation* ShellOrientationOpe = NULL;
-    CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration();
+    CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration(#);
     CATTopData topdata(pConfig, NULL);
     ShellOrientationOpe = CATCGMCreateTopShellOrientation(piGeomFactory, &amptopdata;, piBody );
     CATBody * piInvertedBody = NULL;

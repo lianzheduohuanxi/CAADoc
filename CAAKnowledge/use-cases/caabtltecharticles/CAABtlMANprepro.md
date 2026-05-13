@@ -4,7 +4,7 @@ title: "The Declarative File Preprocessor"
 category: "use-case"
 module: "CAABtlTechArticles"
 tags: []
-source_file: "Doc/online/CAABtlTechArticles/CAABtlMANprepro.htm"
+source_file: "Doc/online/CAABtlTechArticles/CAABtlMANprepro.htmmd"
 converted: "2026-05-11T17:33:46.116441"
 ```
 
@@ -45,7 +45,7 @@ Syntax
 The preprocessor is an internal step which parse any lines that begin with a
     any others are translated to declarative file parser.
 
-    Such lines cannot be continued on next line with the `**\** ' continuing
+    Such lines cannot be continued on next line with the `**/** ' continuing
     character.
     The comments are encapsulated with `**/*** ' and `***/** ' sequence
     characters.

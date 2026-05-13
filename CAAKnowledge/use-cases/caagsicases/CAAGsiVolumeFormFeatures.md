@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating Volume Form Features"
-category: "use case"
+category: use-case case"
 module: "CAAGsiUseCases"
 tags: ["CATIGSMProceduralView_var", "CATICkeParm_var", "CATIPrtBooleanFactory", "CATIPrtContainer", "CATIGSMSweepUnspec_var", "CAAGsiVolumeFormFeature", "CAAGSMInterfaces", "CAAGsiVolumeFormFeatures", "CATIMf3DBehavior2", "CATIGSMFactory", "CATIPrtFactory", "CATIGSMProceduralView", "CATIGSMExtrude_var", "CATIPrtFactory_var", "CATIPrtPart_var", "CAAGsiObjectUpdate", "CAAGsiStartVolume", "CATISpecObject_var", "CATIGSMLoft_var", "CATInit"]
-source_file: "Doc/online/CAAGsiUseCases/CAAGsiVolumeFormFeatures.htm"
+source_file: "Doc/online/CAAGsiUseCases/CAAGsiVolumeFormFeatures.htmmd"
 converted: "2026-05-11T17:31:50.653046"
 ```
 
@@ -57,8 +57,11 @@ CAAGsiVolumeFormFeatures is a use case of the CAAGSMInterfaces.edu framework tha
 
 (Extrude, Revol, Thick, Close, Multi-Sections Volume, and Sweep).
 The goal of CAAGsiVolumeFormFeatures is to illustrate how to create volume either using shape design factory or part design factory.
-Volume features are surfacic features they answer to the TRUE to the IsAShape() method of CATMf3DBehavior, and also answer TRUE to the IsAVolume() method of CATIMf3DBehavior2
+Volume features are surfacic features they answer to the TRUE to the IsAShape(#) method of CATMf3DBehavior, and also answer TRUE to the IsAVolume(#) method of CATIMf3DBehavior2
+```vbscript
 Volume features can only be inserted in the procedural view in Geometrical Set (GS) or Ordered Geometrical Set (OGS)
+
+```
 
 Volume created using shape design factory (CATIGSMFactory)
 
@@ -82,12 +85,12 @@ Launch the use case as follows:
 
   * With Windows
 
-        e/CAAGsiVolumeFormFeatures InstallDir\CAAGSMInterfaces.edu\Data.d\CAAGsiStartVolume.CATPart outputDirectory\CAAGsiVolumeFormFeatures.CATPart
+        e/CAAGsiVolumeFormFeatures InstallDir/CAAGSMInterfaces.edu/Data.d/CAAGsiStartVolume.CATPart outputDirectory/CAAGsiVolumeFormFeatures.CATPart
 
 ---
   * With UNIX
 
-        \CAAGsiVolumeFormFeatures InstallDir\CAAGSMInterfaces.edu\Data.d\CAAGsiStartVolume.CATPart outputDirectory/CAAGsiVolumeFormFeatures.CATPart
+        /CAAGsiVolumeFormFeatures InstallDir/CAAGSMInterfaces.edu/Data.d/CAAGsiStartVolume.CATPart outputDirectory/CAAGsiVolumeFormFeatures.CATPart
 
 ---
 
@@ -104,18 +107,18 @@ where:
 The CAAGsiVolumeFormFeatures use case is made of main program located in the CAAGsiVolumeFormFeatures.m module of the CAAGSMInterfaces.edu framework:
 
 The CAAGsiVolumeFormFeatures use case is made of main program located in the CAAGsiVolumeFormFeatures.m module of the CAAGSMInterfaces.edu framework:
-Windows | ` InstallRootDirectory\CAAGSMInterfaces.edu\CAAGsiVolumeFormFeatures.m\`
+Windows | ` InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiVolumeFormFeatures.m/`
 
 The CAAGsiVolumeFormFeatures use case is made of main program located in the CAAGsiVolumeFormFeatures.m module of the CAAGSMInterfaces.edu framework:
-Windows | ` InstallRootDirectory\CAAGSMInterfaces.edu\CAAGsiVolumeFormFeatures.m\`
+Windows | ` InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiVolumeFormFeatures.m/`
 Unix | ` InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiVolumeFormFeatures.m/`
 
 The input CAAGsiStartVolume.CATPart is proposed in Data.d directory of CAAGSMInterfaces.edu
 
-Windows | ` InstallRootDirectory\CAAGSMInterfaces.edu\Data.d\CAAGsiStartVolume.CATPart `
+Windows | ` InstallRootDirectory/CAAGSMInterfaces.edu/Data.d/CAAGsiStartVolume.CATPart `
 
 The input CAAGsiStartVolume.CATPart is proposed in Data.d directory of CAAGSMInterfaces.edu
-Windows | ` InstallRootDirectory\CAAGSMInterfaces.edu\Data.d\CAAGsiStartVolume.CATPart `
+Windows | ` InstallRootDirectory/CAAGSMInterfaces.edu/Data.d/CAAGsiStartVolume.CATPart `
 Unix | ` InstallRootDirectory/CAAGSMInterfaces.edu/Data.d/CAAGsiStartVolume.CATPart`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -143,11 +146,11 @@ We will now comment each of those sections by looking at the code of the main me
 We will now comment each of those sections by looking at the code of the main method of file CAAGsiVolumeFormFeatures.
 CAAGsiVolumeFormFeatures sample first creates a session and opens the input CATPart.
 
-Note: The important feature of the following sequence of code consists in the required call to the GetPart() method of the CATPrtContainer interfaces. This method allow to load in session the different containers of the part
+Note: The important feature of the following sequence of code consists in the required call to the GetPart(#) method of the CATPrtContainer interfaces. This method allow to load in session the different containers of the part
 
     ....
     // creates a session
-Note: The important feature of the following sequence of code consists in the required call to the GetPart() method of the CATPrtContainer interfaces. This method allow to load in session the different containers of the part
+Note: The important feature of the following sequence of code consists in the required call to the GetPart(#) method of the CATPrtContainer interfaces. This method allow to load in session the different containers of the part
     char *pSessionName = "SampleSession";
     CATSession *pSession = NULL;
     rc = Create_Session(pSessionName, pSession);
@@ -204,10 +207,10 @@ pDoc->QueryInterface(IID_CATInit, (void**)&pDocAsInit) ;
 if ( NULL != pDocAsInit ) {
        piPartContainer =
           (CATIPrtContainer*)pDocAsInit->GetRootContainer("CATIPrtContainer");
-       pDocAsInit->Release(); pDocAsInit = NULL ;
+       pDocAsInit->Release(#); pDocAsInit = NULL ;
 
        if( NULL != piPartContainer ) {
-          CATISpecObject_var spPart = piPartContainer->GetPart() ;
+          CATISpecObject_var spPart = piPartContainer->GetPart(#) ;
           spPrtPart = spPart ;
 
        }
@@ -232,7 +235,7 @@ Then in the initilization phasis the wireframe and shape design and Part Design 
 
          spGsmFact = _pFact;
 ```vbscript
-         if (_pFact) _pFact -> Release(); _pFact = NULL;
+         if (_pFact) _pFact -> Release(#); _pFact = NULL;
 
 ```
 
@@ -240,7 +243,7 @@ Then in the initilization phasis the wireframe and shape design and Part Design 
 
       // Retrieve the Part Design factory Interface
 spGsmFact = _pFact;
-if (_pFact) _pFact -> Release(); _pFact = NULL;
+if (_pFact) _pFact -> Release(#); _pFact = NULL;
        CATIPrtFactory * _pPrtFact =NULL;
        rc = piPartContainer -> QueryInterface(IID_CATIPrtFactory ,(void**)&_pPrtFact);
 ```vbscript
@@ -249,7 +252,7 @@ if (_pFact) _pFact -> Release(); _pFact = NULL;
 
             spPrtFact = _pPrtFact;
 ```vbscript
-           if (_pPrtFact) _pPrtFact ->Release(); _pPrtFact = NULL;
+           if (_pPrtFact) _pPrtFact ->Release(#); _pPrtFact = NULL;
 
 ```
 
@@ -325,7 +328,7 @@ spExtrude1 -> SetContext(CATGSMVolumeCtxt) ;
        if (NULL_var != ispProcView ) {
 ```vbscript
 ```vbscript
-          rc = ispProcView ->InsertInProceduralView();
+          rc = ispProcView ->InsertInProceduralView(#);
 
 ```
 
@@ -336,7 +339,7 @@ spExtrude1 -> SetContext(CATGSMVolumeCtxt) ;
 CATIGSMProceduralView_var ispProcView = spSpecExtr1;
 if (NULL_var != ispProcView ) {
 ```vbscript
-rc = ispProcView ->InsertInProceduralView();
+rc = ispProcView ->InsertInProceduralView(#);
     CAAGsiObjectUpdate(spSpecExtr1) ;
 
 ```
@@ -408,7 +411,7 @@ spRevol1 -> SetContext(CATGSMVolumeCtxt) ;
        if (NULL_var != ispProcView ) {
 ```vbscript
 ```vbscript
-          rc = ispProcView ->InsertInProceduralView();
+          rc = ispProcView ->InsertInProceduralView(#);
 
 ```
 
@@ -419,7 +422,7 @@ spRevol1 -> SetContext(CATGSMVolumeCtxt) ;
 CATIGSMProceduralView_var ispProcView = spSpecRevol1 ;
 if (NULL_var != ispProcView ) {
 ```vbscript
-rc = ispProcView ->InsertInProceduralView();
+rc = ispProcView ->InsertInProceduralView(#);
     CAAGsiObjectUpdate(spSpecRevol1 ) ;
 
 ```
@@ -478,7 +481,7 @@ spLoft1 -> SetContext(CATGSMVolumeCtxt) ;
        if (NULL_var != ispProcView ) {
 ```vbscript
 ```vbscript
-          rc = ispProcView ->InsertInProceduralView();
+          rc = ispProcView ->InsertInProceduralView(#);
 
 ```
 
@@ -489,7 +492,7 @@ spLoft1 -> SetContext(CATGSMVolumeCtxt) ;
 CATIGSMProceduralView_var ispProcView = spSpecLoft1 ;
 if (NULL_var != ispProcView ) {
 ```vbscript
-rc = ispProcView ->InsertInProceduralView();
+rc = ispProcView ->InsertInProceduralView(#);
     CAAGsiObjectUpdate(spSpecLoft1 ) ;
 
 ```
@@ -527,7 +530,7 @@ spExplSweep1 -> SetContext(CATGSMVolumeCtxt) ;
      if (NULL_var != ispProcView ) {
 ```vbscript
 ```vbscript
-     rc = ispProcView ->InsertInProceduralView();
+     rc = ispProcView ->InsertInProceduralView(#);
 
 ```
 
@@ -538,7 +541,7 @@ spExplSweep1 -> SetContext(CATGSMVolumeCtxt) ;
 CATIGSMProceduralView_var ispProcView = spSpecSweep1 ;
 if (NULL_var != ispProcView ) {
 ```vbscript
-rc = ispProcView ->InsertInProceduralView();
+rc = ispProcView ->InsertInProceduralView(#);
     CAAGsiObjectUpdate(spSpecSweep1 ) ;
 
 ```

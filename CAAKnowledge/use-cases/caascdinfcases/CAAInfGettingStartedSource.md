@@ -4,13 +4,13 @@ title: "CAAInfGettingStarted.CATScript"
 category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CATIA", "CAAInfGettingStarted"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfGettingStartedSource.htm"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfGettingStartedSource.htmmd"
 converted: "2026-05-11T17:31:52.376020"
 ```
 
 ---
 tags: ["CATIA", "CAAInfGettingStarted"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfGettingStartedSource.htm"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfGettingStartedSource.htmmd"
 converted: "2026-05-11T17:31:52.376020"
     Language="VBSCRIPT"
 ```vbscript
@@ -22,12 +22,17 @@ converted: "2026-05-11T17:31:52.376020"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
 
+```
 ```
 
 ```vbscript
+```vbscript
     Dim documents1 As Documents
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set documents1 = CATIA.Documents
@@ -54,15 +59,20 @@ converted: "2026-05-11T17:31:52.376020"
     Set reference1 = originElements1.PlaneXY
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Dim reference1 As AnyObject
 ```vbscript
+```
+```vbscript
 Set reference1 = originElements1.PlaneXY
+```
 ```
 
     x = 0
@@ -70,8 +80,10 @@ Set reference1 = originElements1.PlaneXY
 ```
 
 ```vbscript
+```vbscript
     Dim arrayOfVariantOfDouble1(8)
 ```vbscript
+```
     arrayOfVariantOfDouble1(0) = 0.000000
     arrayOfVariantOfDouble1(1) = 0.000000
     arrayOfVariantOfDouble1(2) = 0.000000
@@ -90,23 +102,31 @@ Set reference1 = originElements1.PlaneXY
 ```vbscript
     For I = 1 To 5
 
+```vbscript
       Dim sketch1 As Sketch
 ```
+```
 
+```vbscript
 ```vbscript
 ```vbscript
       Set sketch1 = sketches1.Add(reference1)
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Dim sketch1 As Sketch
 ```vbscript
+```
+```vbscript
 Set sketch1 = sketches1.Add(reference1)
+```
 ```
 
       sketch1.SetAbsoluteAxisData arrayOfVariantOfDouble1
@@ -114,10 +134,13 @@ Set sketch1 = sketches1.Add(reference1)
 ```
 
 ```vbscript
+```vbscript
       Dim factory2D1 As Factory2D
 ```vbscript
+```
 ```vbscript
-      Set factory2D1 = sketch1.OpenEdition()
+```vbscript
+      Set factory2D1 = sketch1.OpenEdition(#)
 
       Dim geometricElements1 As GeometricElements
       Set geometricElements1 = sketch1.GeometricElements
@@ -129,17 +152,22 @@ Set sketch1 = sketches1.Add(reference1)
       Set line2D1 = axis2D1.GetItem("HDirection")
 
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Dim line2D1 As AnyObject
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set line2D1 = axis2D1.GetItem("HDirection")
       line2D1.ReportName = 1
+```
 
 ```
 
@@ -148,23 +176,31 @@ Set line2D1 = axis2D1.GetItem("HDirection")
 ```
 
 ```vbscript
+```vbscript
       Dim line2D2 As AnyObject
+```vbscript
+```
 ```vbscript
 ```vbscript
       Set line2D2 = axis2D1.GetItem("VDirection")
 
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Dim line2D2 As AnyObject
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set line2D2 = axis2D1.GetItem("VDirection")
       line2D2.ReportName = 2
+```
 
 ```
 
@@ -173,23 +209,31 @@ Set line2D2 = axis2D1.GetItem("VDirection")
 ```
 
 ```vbscript
+```vbscript
       Dim circle2D1 As Circle2D
+```vbscript
+```
 ```vbscript
 ```vbscript
       Set circle2D1 = factory2D1.CreateClosedCircle(x, 0.000000, 10.000000)
 
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Dim circle2D1 As Circle2D
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set circle2D1 = factory2D1.CreateClosedCircle(x, 0.000000, 10.000000)
       circle2D1.ReportName = 3
+```
 
 ```
 
@@ -202,7 +246,10 @@ Set circle2D1 = factory2D1.CreateClosedCircle(x, 0.000000, 10.000000)
       part1.Update
 
 ```vbscript
+```vbscript
       Dim shapeFactory1 As Factory
+```vbscript
+```
 ```vbscript
 ```vbscript
       Set shapeFactory1 = part1.ShapeFactory
@@ -211,15 +258,20 @@ Set circle2D1 = factory2D1.CreateClosedCircle(x, 0.000000, 10.000000)
       Set pad1 = shapeFactory1.AddNewPad(sketch1, 20.000000)
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Dim pad1 As Pad
 ```vbscript
+```
+```vbscript
 Set pad1 = shapeFactory1.AddNewPad(sketch1, 20.000000)
+```
 ```
 
       part1.Update
@@ -230,6 +282,8 @@ Set pad1 = shapeFactory1.AddNewPad(sketch1, 20.000000)
 
 ```vbscript
     Next
+```vbscript
     End Sub
 
+```
 ```

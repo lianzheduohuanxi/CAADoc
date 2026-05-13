@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Analysis Document Automation Objects"
-category: "use-case"
+category: tech-article
 module: "CAAScdAniTechArticles"
 tags: []
-source_file: "Doc/online/CAAScdAniTechArticles/CAAAniTocAnalysisDocument.htm"
+source_file: "Doc/online/CAAScdAniTechArticles/CAAAniTocAnalysisDocument.htmmd"
 converted: "2026-05-11T17:31:51.969854"
 ```
 
@@ -24,11 +24,16 @@ converted: "2026-05-11T17:31:51.969854"
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/anameshlocs.gif)
 ![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/anameshloc.gif)
 ![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/anasets.gif)
+```vbscript
 ![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/anaset.gif)[![Analysis Set Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](CAAAniTocAnalysisSet.md)
 ![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/ancases.gif)
+```
 ![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/ancase.gif)
 ![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/anasets.gif)
+```vbscript
 ![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/anaset.gif)[![Analysis Set Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](CAAAniTocAnalysisSet.md)
+
+```
 
 ![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/relatns.gif)
 ![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/relation.gif)[![Relation Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdKniTechArticles/CAAKniTocRelation.md)

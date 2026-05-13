@@ -4,7 +4,7 @@ title: "Querying Schematic Document Content"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAASCH_CompRoute01", "CAADoc", "CAASchQueryCompRoute", "CAAScdSchUseCases", "CATIA", "CAASchAppBase", "CAASCHEDUApp", "CAASchPlatformModeler", "CATIASchCntrLocation", "CAASchAppUtilities"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchQueryCompRoute.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchQueryCompRoute.htmmd"
 converted: "2026-05-11T17:31:51.448432"
 ```
 
@@ -41,9 +41,9 @@ This macro open the CAASCH_CompRoute01.CATProduct document for querying informat
   * Setup:
 
 >   1. Build CAASchAppBase.m and CAASchAppUtilities.m, located in CAASchPlatformModeler.edu (RADE is required).
->   2. Copy generated DLLs, CAASchAppBase.dll and CAASchAppUtilities.m, respectively, to the run-time environment folder "intel_a\code\bin."
->   3. Copy CAASCHEDUApp.CATfct, located CAASchPlatformModeler.edu\CNext\resources\graphic, to the run-time environment folder "intel_a\resources\graphic."
->   4. Copy CAASchPlatformModeler.edu\CNext\code\dictionary\CAASchPlatformModeler.edu.dico to the run-time environment folder "intel_a\code\dictionary."
+>   2. Copy generated DLLs, CAASchAppBase.dll and CAASchAppUtilities.m, respectively, to the run-time environment folder "intel_a/code/bin."
+>   3. Copy CAASCHEDUApp.CATfct, located CAASchPlatformModeler.edu/CNext/resources/graphic, to the run-time environment folder "intel_a/resources/graphic."
+>   4. Copy CAASchPlatformModeler.edu/CNext/code/dictionary/CAASchPlatformModeler.edu.dico to the run-time environment folder "intel_a/code/dictionary."
 >
 
 [CAASchQueryCompRoute.CATScript ](CAASchQueryCompRouteSource.md) is located in the CAAScdSchUseCases module. [Execute macro](macros/CAASchQueryCompRoute.CATScript) (windows only).
@@ -73,22 +73,30 @@ The macro first loads the document: CAASCH_CompRoute01.CATProduct. |     ...
 ```
 
 ```vbscript
+```vbscript
     Dim sFilePath
+```vbscript
+```
 ```vbscript
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
+```
 
 ```
 
-            "online\CAAScdSchUseCases\samples\CAASCH_CompRoute01.CATProduct")
+            "online/CAAScdSchUseCases/samples/CAASCH_CompRoute01.CATProduct")
 
 ```vbscript
+```vbscript
 Dim sFilePath
+```vbscript
+```
 ```vbscript
 ```vbscript
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
+```
 ```
 
 ```
@@ -112,15 +120,23 @@ Next, the macro acquires the schematic root object from the document. The schema
 ```
 
 ```vbscript
+```vbscript
     Dim objPrdRoot As Product
+```vbscript
+```
 ```vbscript
 ```vbscript
     Dim objSchRoot As SchematicRoot
     If ( Not ( objSchDoc Is Nothing ) ) Then
+```
+```vbscript
       Set objPrdRoot = objSchDoc.Product
       If ( Not ( objPrdRoot Is Nothing ) ) Then
+```
+```vbscript
         Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
       End If
+```
     End If
 ```
 
@@ -137,7 +153,9 @@ The SchSession interface provides the GetCurrentDocument method to return the na
 
     ...
 ```vbscript
+```vbscript
        Set objSchSession = objSchRoot.GetSchematicSession
+```
 ```
 
 ```vbscript
@@ -147,7 +165,9 @@ The SchSession interface provides the GetCurrentDocument method to return the na
        '| Query the name of the current document
        '-----------------------------------------------------------------------
        If ( Not ( objSchSession Is Nothing ) ) Then
+```vbscript
           Set objCurDoc = objSchSession.GetCurrentDocument
+```
 ```
 
 ```
@@ -175,7 +195,9 @@ The SchematicRoot interface provides the GetRefComponents method to return a lis
 ```
 
 ```vbscript
+```vbscript
     Set objSchLCompRefs = objSchRoot.GetRefComponents
+```
 ```
 
     ...
@@ -199,7 +221,9 @@ The SchematicRoot interface provides the GetComponents method to return a list o
 ```
 
 ```vbscript
+```vbscript
     Set objSchLComps = objSchRoot.GetComponents
+```
 ```
 
     ...
@@ -207,7 +231,10 @@ The SchematicRoot interface provides the GetComponents method to return a list o
 ---
 #### Find the positioning matrix of specific graphical image of a Schematic component instance
 
+```vbscript
 This macro provides the GetComponentImage internal Function to return a specific SchGRRComp interface handle on a specific graphical image of a component instance. This interface provides the GetTransformation2D method to return the positioning matrix of the image.
+
+```
 
     ...
 ```vbscript
@@ -215,14 +242,18 @@ This macro provides the GetComponentImage internal Function to return a specific
 ```
 
 ```vbscript
+```vbscript
                Set objGRRCompInst = GetComponentImage (objCompGraphInst)
+```
 ```
 
     ...
 ```vbscript
 If ( Not ( objCompGraphInst Is Nothing ) ) Then
 ```vbscript
+```vbscript
 Set objGRRCompInst = GetComponentImage (objCompGraphInst)
+```
 ```
 
                   objGRRCompInst.GetTransformation2D objSchLDbComp
@@ -253,7 +284,9 @@ The macro calls AppListConnectors to list all the connectors. Notice that the in
 ```
 
 ```vbscript
+```vbscript
                Set objLCntrs = objCntbl.AppListConnectors (objLFilter)
+```
 ```
 
     ...
@@ -274,11 +307,15 @@ For each connector in the returned list, the macro calls the method calls GetPos
 ```
 
 ```vbscript
+```vbscript
                         Set objCntr = Nothing
+```vbscript
+```
 ```vbscript
 ```vbscript
                         Set objCntr = objLCntrs.Item (iCntr,"CATIASchCntrLocation")
                         If ( Not ( objCntr Is Nothing )) Then
+```
 ```
 
 ```
@@ -307,7 +344,9 @@ The SchematicRoot interface provides the GetRoutes method to return a list of Sc
 ```
 
 ```vbscript
+```vbscript
     Set objSchLRoutes = objSchRoot.GetRoutes
+```
 ```
 
     ...
@@ -340,8 +379,10 @@ The macro calls the GetRoutePrimitives to get the graphical representation of a 
 
 ```vbscript
 ```vbscript
+```vbscript
                    Set objGRRRoute = GetRoutePrimitives (objSchRouteGraph,objSchRoot)
 
+```
 ```
 
 ```
@@ -370,13 +411,17 @@ intNbOut > 3 ) Then
                          intNb = objSchLDbRoute.Count
 
 ```vbscript
+```vbscript
                          Dim iIndex As Integer
+```vbscript
+```
 ```vbscript
 ```vbscript
                          Dim jIndex As integer
                          Dim dbX As Double
                          Dim dbY As Double
                          Dim intNbPoint As Integer
+```
 ```
 
 ```

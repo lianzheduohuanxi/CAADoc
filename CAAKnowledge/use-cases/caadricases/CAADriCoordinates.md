@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating Annotations on View Components"
-category: "use case"
+category: use-case case"
 module: "CAADriUseCases"
 tags: ["CATIDrwAnnotationFactory_var", "CATISheet_var", "CATIDftTextProperties", "CATIDftText", "CATIDrwAnnotationFactory", "CATIDftDocumentServices", "CAADrwCoordinates", "CATIA", "CATI2DPoint_var", "CATIDrawing", "CATI2DPoint", "CATIView_var", "CAADRWCoordinates", "CATIDescendants_var", "CATIView", "CATIDrwSubString", "CATIDescendants", "CAADraftingInterfaces", "CATIDrwTextProperties", "CATISheet"]
-source_file: "Doc/online/CAADriUseCases/CAADriCoordinates.htm"
+source_file: "Doc/online/CAADriUseCases/CAADriCoordinates.htmmd"
 converted: "2026-05-11T17:31:50.944012"
 ```
 
@@ -98,10 +98,10 @@ When you launch the use case, pass the full pathname of the file into which you 
 The CAADrwCoordinates use case is made of a single source file named CAADrwCoordinates.cpp located in the CAADrwCoordinates.m module of the CAADraftingInterfaces.edu framework:
 
 The CAADrwCoordinates use case is made of a single source file named CAADrwCoordinates.cpp located in the CAADrwCoordinates.m module of the CAADraftingInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwCoordinates.m\`
+Windows | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCoordinates.m/`
 
 The CAADrwCoordinates use case is made of a single source file named CAADrwCoordinates.cpp located in the CAADrwCoordinates.m module of the CAADraftingInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwCoordinates.m\`
+Windows | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCoordinates.m/`
 Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCoordinates.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -177,13 +177,13 @@ This section represents the usual sequence for reading a CATIA document [2].
 ```vbscript
 if (SUCCEEDED(pDoc->QueryInterface(IID_CATIDftDocumentServices, (void **)&piDftDocServices)))
           piDftDocServices->**GetDrawing**(IID_CATIDrawing, (void **)&piDrawing);
-          piDftDocServices->Release();
+          piDftDocServices->Release(#);
 ```
 
        }
 
 piDftDocServices->**GetDrawing**(IID_CATIDrawing, (void **)&piDrawing);
-piDftDocServices->Release();
+piDftDocServices->Release(#);
        if (NULL == piDrawing)
           return 3;
 
@@ -198,12 +198,12 @@ The root feature of a drawing document is the Drawing, that is, the feature that
 
     ...
        // We can get the current sheet
-       **CATISheet** _var spSheet = piDrawing->**GetCurrentSheet**();
+       **CATISheet** _var spSheet = piDrawing->**GetCurrentSheet**(#);
        // And the sheet current view
-       **CATIView** _var spCurrentView = spSheet->**GetCurrentView**();
+       **CATIView** _var spCurrentView = spSheet->**GetCurrentView**(#);
 
        // Memory cleaning
-       piDrawing->Release();
+       piDrawing->Release(#);
     ...
 
 ---
@@ -229,11 +229,11 @@ The view geometry can be retrieved using the _CATIDescendants_ interface. The fi
 
     ...
      // loop on points
-     for (int ii=1; ii<=pointList.Size(); ii++)
+     for (int ii=1; ii<=pointList.Size(#); ii++)
      {
        // Gets the coordinates
 ```vbscript
-for (int ii=1; ii<=pointList.Size(); ii++)
+for (int ii=1; ii<=pointList.Size(#); ii++)
        CATI2DPoint_var spPoint = pointList[ii];
        double coord[2];
        spPoint->GetPointData(coord);
@@ -247,13 +247,13 @@ spPoint->GetPointData(coord);
        CATUnicodeString index;
        index.BuildFromNum(ii);
        textString += index;
-       int titleLength = textString.GetLengthInChar();
-       textString.Append("\n");
+       int titleLength = textString.GetLengthInChar(#);
+       textString.Append("/n");
        textString.Append("X = ");
        CATUnicodeString coordText[2];
        coordText[0].BuildFromNum(coord[0]);
        textString.Append(coordText[0]);
-       textString.Append("\n");
+       textString.Append("/n");
        textString.Append("Y = ");
        coordText[1].BuildFromNum(coord[1]);
        textString.Append(coordText[1]);
@@ -275,7 +275,7 @@ CATIDrwAnnotationFactory_var spAnnFactory = spCurrentView;
 CATIDftText *piDftText = NULL;
 const double txtpos[2] = {coord[0]+10.0,coord[1]+10.0};
 if (SUCCEEDED(spAnnFactory->CreateDftText(txtpos, &piDftText)))
-         wchar_t *ptxtChar = new wchar_t[textString.GetLengthInChar()+1];
+         wchar_t *ptxtChar = new wchar_t[textString.GetLengthInChar(#)+1];
          textString.ConvertToWChar(ptxtChar);
          piDftText->SetString(ptxtChar);
          delete [] ptxtChar;
@@ -306,19 +306,19 @@ CATIDftTextProperties *piTextProp = NULL;
 if (SUCCEEDED(piDftText->GetTextProperties(&piTextProp)))
              piTextProp->SetBold(TRUE);
              piTextProp->SetUnderline(TRUE);
-             piTextProp->Release();piTextProp=NULL;
+             piTextProp->Release(#);piTextProp=NULL;
 
            }
 piTextProp->SetBold(TRUE);
 piTextProp->SetUnderline(TRUE);
-piTextProp->Release();piTextProp=NULL;
-           piDrwSubString->Release();piDrwSubString=NULL;
+piTextProp->Release(#);piTextProp=NULL;
+           piDrwSubString->Release(#);piDrwSubString=NULL;
 
          }
 piTextProp->SetUnderline(TRUE);
-piTextProp->Release();piTextProp=NULL;
-piDrwSubString->Release();piDrwSubString=NULL;
-         piDftText->Release();piDftText=NULL;
+piTextProp->Release(#);piTextProp=NULL;
+piDrwSubString->Release(#);piDrwSubString=NULL;
+         piDftText->Release(#);piDftText=NULL;
 
        }
       }

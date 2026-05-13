@@ -4,7 +4,7 @@ title: "Synchronizing component instances with the catalog reference"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAASchSyncCompInst", "CATIASchComponent", "CAASCH_SyncCompInst", "CAAScdSchUseCases", "CATIA", "CATIASchUpdateInstances"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchSyncCompInst.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchSyncCompInst.htmmd"
 converted: "2026-05-11T17:31:51.502797"
 ```
 
@@ -32,22 +32,30 @@ This macro shows you how to update component instances after the changes in the 
 The macro first loads CAASCH_SyncCompInst.CATProduct. |     ' Open the schematic document
 
 ```vbscript
+```vbscript
     Dim sFilePath
+```vbscript
+```
 ```vbscript
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
+```
 
 ```
 
-            "online\CAAScdSchUseCases\samples\CAASCH_SyncCompInst.CATProduct")
+            "online/CAAScdSchUseCases/samples/CAASCH_SyncCompInst.CATProduct")
 
 ```vbscript
+```vbscript
 Dim sFilePath
+```vbscript
+```
 ```vbscript
 ```vbscript
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
+```
 ```
 
 ```
@@ -67,15 +75,23 @@ Next, the macro acquires the schematic root object from the document. The schema
 ```
 
 ```vbscript
+```vbscript
     Dim objPrdRoot As Product
+```vbscript
+```
 ```vbscript
 ```vbscript
     Dim objSchRoot As SchematicRoot
     If ( Not ( objSchDoc Is Nothing ) ) Then
+```
+```vbscript
       Set objPrdRoot = objSchDoc.Product
       If ( Not ( objPrdRoot Is Nothing ) ) Then
+```
+```vbscript
         Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
       End If
+```
     End If
 ```
 
@@ -97,8 +113,10 @@ Then, the SchUpdateInstances interface is requested on the schematic root. This 
 
 ```vbscript
 ```vbscript
+```vbscript
     Dim objUpdateInstancesAs SchUpdateInstances
 
+```
 ```
 
 ```
@@ -107,8 +125,10 @@ Then, the SchUpdateInstances interface is requested on the schematic root. This 
     If ( Not ( objSchRoot Is Nothing ) ) Then
 ```vbscript
 ```vbscript
+```vbscript
        Set objUpdateInstances = objSchRoot.GetInterface ("CATIASchUpdateInstances",objSchRoot)
     End If
+```
 ```
 
 ```
@@ -128,12 +148,18 @@ The SchematicRoot interface provides the GetRefComponents method to find a list 
 ```
 
 ```vbscript
+```vbscript
     Dim objLCompRefsAs SchListOfObjects
+```vbscript
+```
 ```vbscript
 ```vbscript
     Dim objCompRefAs SchComponent
     If ( Not ( objSchRoot Is Nothing ) ) Then
+```
+```vbscript
        Set objLCompRefs = objSchRoot.GetRefComponents
+```
 ```
 
 ```
@@ -145,8 +171,10 @@ The SchematicRoot interface provides the GetRefComponents method to find a list 
 ```vbscript
        ' Get the first reference component
        If ( Not ( objLCompRefs Is Nothing ) )Then
+```vbscript
           Set objCompRef = objLCompRefs.Item (1,"CATIASchComponent")
        End If
+```
     End If
 ```
 

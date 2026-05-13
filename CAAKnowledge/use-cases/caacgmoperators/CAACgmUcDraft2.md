@@ -4,13 +4,13 @@ title: "Draft: Untwist"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsDraftCreation", "CATICGMDynDraft", "CAATopDraftmain", "CAATopAdvancedDraft", "CATICGMDynAdvancedDraft"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcDraft2.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcDraft2.htmmd"
 converted: "2026-05-11T17:33:48.904800"
 ```
 
 ---
 tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsDraftCreation", "CATICGMDynDraft", "CAATopDraftmain", "CAATopAdvancedDraft", "CATICGMDynAdvancedDraft"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcDraft2.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcDraft2.htmmd"
 converted: "2026-05-11T17:33:48.904800"
 Draft: Untwist
 
@@ -78,16 +78,16 @@ CATICGMDynAdvancedDraft *pDraftOp = CATCGMCreateDynAdvancedDraft(iFactory, iTopD
 CATICGMDynAdvancedDraft *pDraftOp = CATCGMCreateDynAdvancedDraft(iFactory, iTopData, iBody, CATDynBasic);
 pDraftOp->Add(pDraftDomain);
 pDraftOp->SetAutomaticUntwistMode(TRUE);
-    pDraftOp->Run();
+    pDraftOp->Run(#);
     CATBody * pDraftBody = NULL;
 ```vbscript
-    pDraftBody = pDraftOp->GetResult();
+    pDraftBody = pDraftOp->GetResult(#);
 
 ```
 
 ---
 CATBody * pDraftBody = NULL;
-pDraftBody = pDraftOp->GetResult();
+pDraftBody = pDraftOp->GetResult(#);
 you get this result: Fig.2 Advanced Draft: No Untwist Mode and Untwist Mode  ![ Advanced Draft: No Untwist](images/CGM_advanced_draft_1.png)
 
 References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)

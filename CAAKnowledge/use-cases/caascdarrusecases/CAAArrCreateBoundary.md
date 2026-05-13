@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CAAScrBase", "CATIA", "CAAScrJavaScript", "CAAScdInfUseCases", "CAAScdArrUseCases", "CAAArrCreateBoundary", "CAAArrCreateBoundarySource", "CAAInfLauchMacro", "CAAlink"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateBoundary.htm"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateBoundary.htmmd"
 converted: "2026-05-11T11:27:02.672075"
 ---
 
@@ -55,7 +55,7 @@ Here we define a rectangular section and change the visualization mode
     
   
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 
@@ -76,40 +76,46 @@ within a product document.
 
 *Copyright  2000, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 ...
    '----------------------------------------------
    'Create a new product document
+```vbscript
    Dim objProdDoc        As ProductDocument
    Dim objRootProd       As Product
    Set objProdDoc      = CATIA.Documents.Add(&quot;Product&quot;)
    Set objRootProd     = objProdDoc.Product
    ...
 ```
+```
 
 ```vbscript
 ...
    '----------------------------------------------
    'Retrieving Root Product's Relative Axis and Position Information
+```vbscript
    Dim objMove           As Move
    Set objMove      = objRootProd.Move
 
    '----------------------------------------------
+```
    ' Get ArrangementProduct
+```vbscript
    Dim objArrProd        As ArrangementProduct
    Set objArrProd   = objRootProd.GetTechnologicalObject(&quot;ArrangementProduct&quot;)
 ...
+```
 ```
 
 ```vbscript
 ...
    ' Create ArrangementBoundary under the Root Product
+```vbscript
    Dim dblBoundaryPoints(75)      As Double
    Dim dblMathDirection(3)        As Double
    Dim objArrBoundary             As ArrangementBoundary
 
+```
 
    dblBoundaryPoints(0)   =  300.0
    dblBoundaryPoints(1)   =  100.0
@@ -129,13 +135,14 @@ within a product document.
    dblBoundaryPoints(73)  =  100.0
    dblBoundaryPoints(74)  =  30
 
-
    dblMathDirection(0) = 1.0
    dblMathDirection(1) = 0.0
    dblMathDirection(2) = 0.0
 
+```vbscript
    Set objArrBoundary             = objArrProd.ArrangementBoundaries.AddBoundary(objMove, _
                                                                                  dblBoundaryPoints, _
+```
                                                                                  dblMathDirection)
   ...
 ```
@@ -148,8 +155,10 @@ within a product document.
    objArrBoundary.VisuMode        = CatArrangementRouteVisuModeSolid
 
    ' Define Bend Radius of Nodes
+```vbscript
    Dim intK  As Integer
    For intK = 1 To objArrBoundary.Nodes.Count
+```
    objArrBoundary.Nodes.Item(intK).BendRadius = 10.0
    Next
   ...
@@ -157,5 +166,7 @@ within a product document.
 
 ```vbscript
 ...
+```vbscript
  End Sub
+```
 ```

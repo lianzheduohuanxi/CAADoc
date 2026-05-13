@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CAAScrBase", "CAAStrCreationOfStructureObjectsSource", "CATIA", "CAAScrJavaScript", "CAAStrModificationOfStructureObjects", "CAAScdInfUseCases", "CAAScdStrImg2", "CAAScdStrUseCases", "CAAStrCreationOfStructureObjects", "CAAInfLauchMacro", "CAAStrModificationOfStructureObjectsSource", "CAAStrCreateOfStructureObject"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfStructureObjects.htm"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfStructureObjects.htmmd"
 converted: "2026-05-11T11:27:02.595137"
 ---
 
@@ -49,7 +49,7 @@ We reverse the material orientation of the plate and we change its
     
   
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 
@@ -69,10 +69,9 @@ This use case has shown how to modify structure objects.
 
 *Copyright  2001, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 ...
+```vbscript
     Dim doc As Document
 
     Dim StrWorkbench As StrWorkbench
@@ -85,17 +84,22 @@ This use case has shown how to modify structure objects.
     Set strWorkbench = doc.GetWorkbench(&quot;StrWorkbench&quot;)
   ...
 ```
+```
 
 ```vbscript
 ...
+```vbscript
    Dim strMembers as StrMembers
    Set strMembers = rootProduct.GetTechnologicalObject(&quot;StructureMembers&quot;)
 ```
+```
 
+```vbscript
 ```vbscript
 Dim member as StrMember
    Set member = strMembers.Item(&quot;Column_3&quot;)
   ...
+```
 ```
 
 ```vbscript
@@ -108,7 +112,10 @@ Dim member as StrMember
 ```vbscript
 ...
     dim strPlates as StrPlates
+```vbscript
     Set strPlates = rootProduct.GetTechnologicalObject(&quot;StructurePlates&quot;)
+
+```
 
     dim plate as StrPlates
     set plate = strPlates.Item(&quot;PlateType_11&quot;)

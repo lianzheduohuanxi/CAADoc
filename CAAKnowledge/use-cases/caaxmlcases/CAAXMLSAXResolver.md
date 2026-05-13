@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Resolving external entities with SAX"
-category: "use case"
+category: use-case case"
 module: "CAAXmlUseCases"
 tags: ["CAAXMLSAXResolverMain", "CATISAXParser_var", "CAAXMLParser", "CATIXMLSAXFactory", "CATISAXEntityResolver_var", "CAAXMLSAXResolverHandlers", "CATISAXParser", "CATISAXInputSource", "CATISAXEntityResolver", "CAAXMLSAXResolver", "CATISAXErrorHandler_var", "CATISAXErrorHandler", "CATISAXInputSource_var", "CATIXMLSAXFactory_var", "CATISAXDTDHandler", "CATISAXDocumentHandler"]
-source_file: "Doc/online/CAAXmlUseCases/CAAXMLSAXResolver.htm"
+source_file: "Doc/online/CAAXmlUseCases/CAAXMLSAXResolver.htmmd"
 converted: "2026-05-11T17:33:45.664165"
 ```
 
@@ -66,10 +66,10 @@ where `<databasedir>` is the path of the directory, which contains the DTDs and 
 
 A sample XML file and a sample DTD are provided with the use case. To use them, launch the following command from the command line:
 
-Windows | `CAAXMLSAXResolver InstallRoot\OS\resources\xml\CAAXMLSAXResolver\database InstallRoot\OS\resources\xml\CAAXMLSAXResolver\car.xml`
+Windows | `CAAXMLSAXResolver InstallRoot/OS/resources/xml/CAAXMLSAXResolver/database InstallRoot/OS/resources/xml/CAAXMLSAXResolver/car.xml`
 
 A sample XML file and a sample DTD are provided with the use case. To use them, launch the following command from the command line:
-Windows | `CAAXMLSAXResolver InstallRoot\OS\resources\xml\CAAXMLSAXResolver\database InstallRoot\OS\resources\xml\CAAXMLSAXResolver\car.xml`
+Windows | `CAAXMLSAXResolver InstallRoot/OS/resources/xml/CAAXMLSAXResolver/database InstallRoot/OS/resources/xml/CAAXMLSAXResolver/car.xml`
 Unix | `CAAXMLSAXResolver InstallRoot/OS/resources/xml/CAAXMLSAXResolver/database InstallRoot/OS/resources/xml/CAAXMLSAXResolver/car.xml`
 
 where:
@@ -88,10 +88,10 @@ where:
 The CAAXMLSAXResolver use case is made of several classes located in the CAAXMLSAXResolver.m module of the CAAXMLParser.edu framework:
 
 The CAAXMLSAXResolver use case is made of several classes located in the CAAXMLSAXResolver.m module of the CAAXMLParser.edu framework:
-Windows | `InstallRootDirectory\CAAXMLParser.edu\CAAXMLSAXResolver.m\`
+Windows | `InstallRootDirectory/CAAXMLParser.edu/CAAXMLSAXResolver.m/`
 
 The CAAXMLSAXResolver use case is made of several classes located in the CAAXMLSAXResolver.m module of the CAAXMLParser.edu framework:
-Windows | `InstallRootDirectory\CAAXMLParser.edu\CAAXMLSAXResolver.m\`
+Windows | `InstallRootDirectory/CAAXMLParser.edu/CAAXMLSAXResolver.m/`
 Unix | `InstallRootDirectory/CAAXMLParser.edu/CAAXMLSAXResolver.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -114,7 +114,7 @@ To create a SAX parser, create and register event handlers with this parser, and
 #### Implement a V5 Entity Resolver and Error Handler Component
 
 6 | Manage Errors
-The SAX API uses an event-oriented API to process XML documents. The XML SAX parser reads XML documents sequentially and invokes callback functions to indicate the XML construct it comes across. Each invocation is called a SAX event. The SAX API defines V5 interfaces, which specify the signature of the SAX callback functions and group them per theme. The _CATISAXEntityResolver_ interface defines the `ResolveEntity` function. This function is invoked by the parser when it encounters an external entity reference it cannot find by itself. The function must fetch the external entity and return it to the parser in the form of a SAX input source. Other SAX interfaces (_CATISAXDTDHandler_ , _CATISAXErrorHandler_ , _CATISAXDocumentHandler_) define additional events. To make the work easier for the developer, the SAX API provides a _CATSAXHandlerBase_ component, which already provides an empty implementation of all the SAX interfaces. ![saxhandlerbase.png \(3148 bytes\)](images/saxhandlerbase.png).
+The SAX API uses an event-oriented API to process XML documents. The XML SAX parser reads XML documents sequentially and invokes callback functions to indicate the XML construct it comes across. Each invocation is called a SAX event. The SAX API defines V5 interfaces, which specify the signature of the SAX callback functions and group them per theme. The _CATISAXEntityResolver_ interface defines the `ResolveEntity` function. This function is invoked by the parser when it encounters an external entity reference it cannot find by itself. The function must fetch the external entity and return it to the parser in the form of a SAX input source. Other SAX interfaces (_CATISAXDTDHandler_ , _CATISAXErrorHandler_ , _CATISAXDocumentHandler_) define additional events. To make the work easier for the developer, the SAX API provides a _CATSAXHandlerBase_ component, which already provides an empty implementation of all the SAX interfaces. ![saxhandlerbase.png /(3148 bytes/)](images/saxhandlerbase.png).
 
 Therefore, to write a SAX document handler, all you need to do is to create a new V5 component which inherits from _CATSAXHandlerBase_ and override the methods to answer to the events, which are relevant to your application. The following code declares and defines a _CAAXMLSAXResolverHandlers_ V5 component which inherits from _CATSAXHandlerBase_ and re-implements _CATISAXEntityResolver_ and _CATISAXErrorHandler_.
 
@@ -202,21 +202,21 @@ if (SUCCEEDED(hr2) && (factory != NULL_var)) {
 HRESULT hr2 = **::CreateCATIXMLSAXFactory**(factory);
 if (SUCCEEDED(hr2) && (factory != NULL_var)) {
 CATUnicodeString filePath = _databaseDir;
-            filePath.Append("\\");
+            filePath.Append("//");
 
     #else // _WINDOWS_SOURCE
 CATUnicodeString filePath = _databaseDir;
-filePath.Append("\\");
+filePath.Append("//");
             filePath.Append("/");
 
     #endif // _WINDOWS_SOURCE
-filePath.Append("\\");
+filePath.Append("//");
 filePath.Append("/");
-            filePath.Append(iSystemId.SubString(prefix.GetLengthInChar(), iSystemId.GetLengthInChar() - prefix.GetLengthInChar()));
+            filePath.Append(iSystemId.SubString(prefix.GetLengthInChar(#), iSystemId.GetLengthInChar(#) - prefix.GetLengthInChar(#)));
 
             // Create a SAX input source
 filePath.Append("/");
-filePath.Append(iSystemId.SubString(prefix.GetLengthInChar(), iSystemId.GetLengthInChar() - prefix.GetLengthInChar()));
+filePath.Append(iSystemId.SubString(prefix.GetLengthInChar(#), iSystemId.GetLengthInChar(#) - prefix.GetLengthInChar(#)));
 ```vbscript
             hr = factory->**CreateInputSourceFromFile**(filePath, "", oInputSource);
 
@@ -257,19 +257,19 @@ To create a SAX1 parser, one simply invokes the `CreateParser` on the _CATIXMLSA
 [Top]
 #### Create the Entity Resolver and Error Handler Components and Register Them With the Parser
 
-The SAX1 parser created in the previous section is not yet usable as it does not yet know any other objects to which it can send the events it generates. The SAX1 parser can accept up to four event handlers (one for each event interface), as shown in the diagram below. ![saxsaxparser.png \(3115 bytes\)](images/saxparser.png)
+The SAX1 parser created in the previous section is not yet usable as it does not yet know any other objects to which it can send the events it generates. The SAX1 parser can accept up to four event handlers (one for each event interface), as shown in the diagram below. ![saxsaxparser.png /(3115 bytes/)](images/saxparser.png)
 
     ...
-The SAX1 parser created in the previous section is not yet usable as it does not yet know any other objects to which it can send the events it generates. The SAX1 parser can accept up to four event handlers (one for each event interface), as shown in the diagram below. ![saxsaxparser.png \(3115 bytes\)](images/saxparser.png)
+The SAX1 parser created in the previous section is not yet usable as it does not yet know any other objects to which it can send the events it generates. The SAX1 parser can accept up to four event handlers (one for each event interface), as shown in the diagram below. ![saxsaxparser.png /(3115 bytes/)](images/saxparser.png)
     CAAXMLSAXResolverHandlers *handlersImpl = new CAAXMLSAXResolverHandlers(databaseDir);
     CATISAXEntityResolver_var entityHandler = handlersImpl;
     CATISAXErrorHandler_var errHandler = handlersImpl;
-    handlersImpl->Release();
+    handlersImpl->Release(#);
     handlersImpl = NULL;
 
 ---
 
-handlersImpl->Release();
+handlersImpl->Release(#);
 handlersImpl = NULL;
 To instantiate the entity resolver and the error handler you have defined in the previous section, simply do a `new` of the main implementation class, then get interface handles of the right type on the component.
 

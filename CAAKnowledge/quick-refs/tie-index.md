@@ -1,8 +1,10 @@
 ---
+category: quick-ref
 title: "TIE文件索引 (接口绑定映射)"
 type: "quick-reference"
 verified: true
 ---
+category: quick-ref
 
 # TIE文件索引
 
@@ -11,7 +13,6 @@ verified: true
 ## CAAAnalysisInterfaces
 
 | 接口 | 头文件 | 实现文件 |
-|------|--------|----------|
 | CAAIAniAeroImport | CAAIAniAeroImport.h | CAAAniAeroMesher.cpp, CAAAniADCharacCollector.cpp, CAAAniExplicitMP.cpp |
 | CAAIAniAddin | CAAIAniAddin.h | CAAAniCataProvider.cpp, CAAIAniConfigurationFactory.cpp, CAAAniCtxMenu.cpp |
 | CAAIAniConfigurationFactory | CAAIAniConfigurationFactory.h | CAAAniCataProvider.cpp, CAAIAniConfigurationFactory.cpp, CAAAniCtxMenu.cpp |
@@ -19,7 +20,6 @@ verified: true
 ## CAAApplicationFrame
 
 | 接口 | 头文件 | 实现文件 |
-|------|--------|----------|
 | CAAIAfrMRUManagement | CAAIAfrMRUManagement.h | CAAAfrMRUManager.cpp, CAAIAfrTemporaryObjectColor.cpp, CAAAfrMRUManagerNotification.cpp |
 | CAAIAfrTemporaryObjectColor | CAAIAfrTemporaryObjectColor.h | CAAAfrMRUManager.cpp, CAAIAfrTemporaryObjectColor.cpp, CAAAfrMRUManagerNotification.cpp |
 | CATICAAAfrGeometryWksConfiguration | CATICAAAfrGeometryWksConfiguration.h | CAAAfrGeometryWks.cpp, CAAAfrDumpCommandHeader.cpp, CAAAfrGeometryWksFactory.cpp |
@@ -33,7 +33,6 @@ verified: true
 ## CAACATIAApplicationFrm
 
 | 接口 | 头文件 | 实现文件 |
-|------|--------|----------|
 | CAAICafColorPropertyPageEdtFactory | CAAICafColorPropertyPageEdtFactory.h | CAACafColorPropertyPageEdtFactory.cpp, CAAICafColorPropertyPageEdtFactory.cpp, CAACafColorPropertyPageEdt.cpp |
 | CAAICafGeometryEltSettingAtt | CAAICafGeometryEltSettingAtt.h | CAACafGeometryViewSettingCtrl.cpp, CAAICafGeometryViewSettingAtt.cpp, CAAECafGeometryViewSettingAtt.cpp |
 | CAAICafGeometryViewSettingAtt | CAAICafGeometryViewSettingAtt.h | CAACafGeometryViewSettingCtrl.cpp, CAAICafGeometryViewSettingAtt.cpp, CAAECafGeometryViewSettingAtt.cpp |
@@ -44,13 +43,11 @@ verified: true
 ## CAADialog
 
 | 接口 | 头文件 | 实现文件 |
-|------|--------|----------|
 | CAAIDlgDataRequest | CAAIDlgDataRequest.h | CAAIDlgDataRequest.cpp |
 
 ## CAAGSMInterfaces
 
 | 接口 | 头文件 | 实现文件 |
-|------|--------|----------|
 | CAAIGSMSewSkinBasic | CAAIGSMSewSkinBasic.h | CAAIGSMCircleSweepTg.cpp, CAAEGSMCircleSweepTgAttrBehavior.cpp, CAAIGSMFeaturesSplFactory.cpp |
 | CAAIGSMCircleSweepTg | CAAIGSMCircleSweepTg.h | CAAIGSMCircleSweepTg.cpp, CAAEGSMCircleSweepTgAttrBehavior.cpp, CAAIGSMFeaturesSplFactory.cpp |
 | CAAIGSMFeaturesSplFactory | CAAIGSMFeaturesSplFactory.h | CAAIGSMCircleSweepTg.cpp, CAAEGSMCircleSweepTgAttrBehavior.cpp, CAAIGSMFeaturesSplFactory.cpp |
@@ -58,19 +55,16 @@ verified: true
 ## CAALiteralFeatures
 
 | 接口 | 头文件 | 实现文件 |
-|------|--------|----------|
 | CAAILifMyFeatureEvents | CAAILifMyFeatureEvents.h | CAALifMyFeatureEventsExt.cpp, CAALifEventsMain.cpp |
 
 ## CAAManufacturingItf
 
 | 接口 | 头文件 | 实现文件 |
-|------|--------|----------|
 | CAAIMaiUserPostProcessorIntegrationExternalPPClient1 | CAAIMaiUserPostProcessorIntegrationExternalPPClient1.h | CAAIMaiUserPostProcessorIntegrationExternalPPClient1.cpp, CAAEMaiUserPostProcessorIntegrationExtPPProviders.cpp, CAAEMaiUserPostProcessorIntegrationUUID.cpp |
 
 ## CAAMechanicalModeler
 
 | 接口 | 头文件 | 实现文件 |
-|------|--------|----------|
 | CAAIMmrMultiMeasureAndMeasureSetFactory | CAAIMmrMultiMeasureAndMeasureSetFactory.h | CAAIMmrMultiMeasure.cpp, CAAIMmrMultiMeasureAndMeasureSetFactory.cpp, CAAEMmrMultiMeasure.cpp |
 | CAAIMmrMultiMeasure | CAAIMmrMultiMeasure.h | CAAIMmrMultiMeasure.cpp, CAAIMmrMultiMeasureAndMeasureSetFactory.cpp, CAAEMmrMultiMeasure.cpp |
 | CAAIMmrCombinedCurve | CAAIMmrCombinedCurve.h | CAAIMmrCombCrvFactory.cpp, CAAEMmrCombinedCurveBuild.cpp, CAAEMmrCombinedCurveMechProp.cpp |
@@ -81,13 +75,11 @@ verified: true
 ## CAAObjectSpecsModeler
 
 | 接口 | 头文件 | 实现文件 |
-|------|--------|----------|
 | CAAIBiogNovel | CAAIBiogNovel.h | CAAOsmIllustrateExtensions.cpp, CAAEOsmBiogNovel.cpp, CAAIBiogNovel.cpp |
 
 ## CAAProductStructure
 
 | 接口 | 头文件 | 实现文件 |
-|------|--------|----------|
 | CAAIPstINFWire | CAAIPstINFWire.h | CAAIPstINFPoint.cpp, CAAIPstINFRoot.cpp, CAAIPstINFLine.cpp |
 | CAAIPstINFLine | CAAIPstINFLine.h | CAAIPstINFPoint.cpp, CAAIPstINFRoot.cpp, CAAIPstINFLine.cpp |
 | CAAIPstINFPoint | CAAIPstINFPoint.h | CAAIPstINFPoint.cpp, CAAIPstINFRoot.cpp, CAAIPstINFLine.cpp |
@@ -96,20 +88,17 @@ verified: true
 ## CAAProductStructureUI
 
 | 接口 | 头文件 | 实现文件 |
-|------|--------|----------|
 | CAAIPuiPRDWorkshopConfigAddin | CAAIPuiPRDWorkshopConfigAddin.h | CAAIPuiPRDWorkshopConfigFactory.cpp, CAAIPuiPRDWorkshopConfigAddin.cpp, CAAPuiPRDWorkshopConfigCmd.cpp |
 | CAAIPuiPRDWorkshopConfigFactory | CAAIPuiPRDWorkshopConfigFactory.h | CAAIPuiPRDWorkshopConfigFactory.cpp, CAAIPuiPRDWorkshopConfigAddin.cpp, CAAPuiPRDWorkshopConfigCmd.cpp |
 
 ## CAASurfaceMachiningItf
 
 | 接口 | 头文件 | 实现文件 |
-|------|--------|----------|
 | CAAISmiUserMachFeature | CAAISmiUserMachFeature.h | CAAESmiUserMachFeature.cpp, CAAISmiUserMachFeature.cpp |
 
 ## CAASystem
 
 | 接口 | 头文件 | 实现文件 |
-|------|--------|----------|
 | CAAISysPoint | CAAISysPoint.h | CAASysCollectionModifNotif.cpp, CAAISysPoint.cpp, CAAISysName.cpp |
 | CAAISysPointProperties | CAAISysPointProperties.h | CAASysCollectionModifNotif.cpp, CAAISysPoint.cpp, CAAISysName.cpp |
 | CAAISysGeomFactory | CAAISysGeomFactory.h | CAASysCollectionModifNotif.cpp, CAAISysPoint.cpp, CAAISysName.cpp |
@@ -137,7 +126,6 @@ verified: true
 ## CAAV5V6MechanicalModeler
 
 | 接口 | 头文件 | 实现文件 |
-|------|--------|----------|
 | CAAIV5V6ExtMmrCCDataExtension | CAAIV5V6ExtMmrCCDataExtension.h | CAAV5V6ExtMmrAddCCExtension.cpp, CAAV5V6ExtMmrUpdateProvForExtCont.cpp, CAAV5V6ExtMmrParmProvForExtCont.cpp |
 | CAAIV5V6ExtMmrMultiMeasureFactory | CAAIV5V6ExtMmrMultiMeasureFactory.h | CAAEV5V6ExtMmrMultiMeasureNavigateObject.cpp, CAAIV5V6ExtMmrMultiMeasure.cpp, CAAEV5V6ExtMmrMultiMeasureVisProperties.cpp |
 | CAAIV5V6ExtMmrMultiMeasure | CAAIV5V6ExtMmrMultiMeasure.h | CAAEV5V6ExtMmrMultiMeasureNavigateObject.cpp, CAAIV5V6ExtMmrMultiMeasure.cpp, CAAEV5V6ExtMmrMultiMeasureVisProperties.cpp |
@@ -147,7 +135,6 @@ verified: true
 ## CAAVisualization
 
 | 接口 | 头文件 | 实现文件 |
-|------|--------|----------|
 | CAAIVisWireBox | CAAIVisWireBox.h | CAAIVisWireBox.cpp, CAAVisWireBox.cpp, CAAEVisCreateInstanceForWireBox.cpp |
 | CAAIVisTextModel | CAAIVisTextModel.h | CAAVisTextModel.cpp, CAAEVisCreateInstanceForTextModel.cpp, CAAIVisTextModel.cpp |
 | CAAIVisModelObject | CAAIVisModelObject.h | CAAIVisModelSphere.cpp, CAAIVisModelCuboid.cpp, CAAIVis2DGraphVisu.cpp |

@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAAScrBase", "CATIASchGRR", "CATIA", "CAAScdSchUseCases", "CAASCH_Network01", "CATIASchCompGraphic", "CAASchNetwork", "CATIASchAppConnectable", "CATIASchNetworkAnalysis", "CATIAProduct"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchNetworkSource.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchNetworkSource.htmmd"
 converted: "2026-05-11T11:27:02.626590"
 ---
 
@@ -18,33 +18,47 @@ Option Explicit
 ' *****************************************************************************
 
 '------------------------------------------------------------------------------
+```vbscript
 ' These variables are visible to private Sub and CATMain
 '------------------------------------------------------------------------------
+```
+```vbscript
 Dim objLGRR_g As SchListOfObjects
 Dim objLCntbl_g As SchListOfObjects
 
-Sub CATMain()
+Sub CATMain(#)
+
+```
 
     ' ------------------------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
+```vbscript
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     strMessage = strMessage &  "sDocPath = " & sDocPath
+```
 
+```vbscript
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,sDocPath,"No Doc Path Defined"
     End If
+```
     ' ------------------------------------------------------------------------- 
     ' Open the schematic document 
+```vbscript
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
-            "online\CAAScdSchUseCases\samples\CAASCH_Network01.CATProduct")
+            "online/CAAScdSchUseCases/samples/CAASCH_Network01.CATProduct")
+```
 
+```vbscript
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
     Dim strMessage As String
+
+```
 
     strMessage = _
       "--------------------------------------------------------------------" & vbCr
@@ -52,31 +66,45 @@ Sub CATMain()
       "Output traces from CAASchNetwork.CATScript" & vbCrLf
 
     ' Find the top node of the schematic object tree - schematic root.
+```vbscript
     Dim objPrdRoot As Product
     Dim objSchRoot As SchematicRoot
     If ( Not ( objSchDoc Is Nothing ) ) Then
+```
+```vbscript
       Set objPrdRoot = objSchDoc.Product 
       If ( Not ( objPrdRoot Is Nothing ) ) Then
+```
+```vbscript
         Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
       End If
+```
     End If
 
+```vbscript
     Dim objSchBaseFact As SchBaseFactory
     Dim objSchTempListFact As SchTempListFactory
     Dim objLNetWork As SchListOfObjects
+
+```
 
     If ( Not ( objSchRoot Is Nothing ) ) Then
 
        '-----------------------------------------------------------------------
        ' Get all the necessary factories.
        '-----------------------------------------------------------------------
+```vbscript
        Set objSchBaseFact = objSchRoot.GetSchBaseFactory 
        Set objSchTempListFact = objSchRoot.GetTemporaryListFactory
 
        If ( Not ( objSchBaseFact Is Nothing )  And _
+```
             Not ( objSchTempListFact Is Nothing ) ) Then
+```vbscript
           Set objLCntbl_g = objSchTempListFact.CreateListOfObjects
           Set objLGRR_g = objSchTempListFact.CreateListOfObjects
+
+```
 
           If ( Not ( objLCntbl_g Is Nothing )  And _
                Not ( objLGRR_g Is Nothing ) ) Then
@@ -86,8 +114,10 @@ Sub CATMain()
              '-----------------------------------------------------------------
              Find2ComponentInst objSchRoot
 
+```vbscript
              Set objLNetWork = objSchBaseFact.CreateNetwork (objLCntbl_g, _
                objLGRR_g) 
+```
 
           End If
        End If '--- If ( Not ( objSchBaseFact Is Nothing )...
@@ -95,6 +125,7 @@ Sub CATMain()
 
     If (  Not ( objLNetWork Is Nothing ) ) Then
 
+```vbscript
        Dim intNbNet As Integer
        Dim intNetIndex As Integer
        Dim intNbMember As Integer
@@ -103,6 +134,8 @@ Sub CATMain()
        Dim objLNetMember As SchListOfObjects
        Dim objMemPrd As Product
        Dim strName As String
+
+```
 
        intNbNet = objLNetWork.Count
        strMessage = strMessage & "number of network found = " & intNbNet & vbCr
@@ -113,18 +146,23 @@ Sub CATMain()
        For intNetIndex = 1 To intNbNet 
 
          intNbMember = 0
+```vbscript
          Set objLNetMember = Nothing
 
          Set objSchNet = objLNetWork.Item (intNetIndex,"CATIASchNetworkAnalysis")
+
+```
 
          '---------------------------------------------------------------------
          '  Get the members of the list of connectables.
          '---------------------------------------------------------------------
          If ( Not ( objSchNet Is Nothing ) ) Then
 
+```vbscript
             Set objLNetMember = objSchNet.ListNetworkObjects
 
          End If 
+```
 
          If ( Not ( objLNetMember Is Nothing ) ) Then
 
@@ -135,8 +173,10 @@ Sub CATMain()
 
             For intMemIndex = 1 To intNbMember
 
+```vbscript
               Set objMemPrd = objLNetMember.Item (intMemIndex,"CATIAProduct")
               strName = ""
+```
               If ( Not ( objMemPrd Is Nothing ) ) Then
                  strName = objMemPrd.Name
                  strMessage = strMessage & "...member " & intMemIndex _
@@ -152,9 +192,11 @@ Sub CATMain()
          '---------------------------------------------------------------------
          If ( Not ( objSchNet Is Nothing ) ) Then
 
+```vbscript
             Set objLNetMember = objSchNet.ListExtremityObjects
 
          End If 
+```
 
          If ( Not ( objLNetMember Is Nothing ) ) Then
 
@@ -165,8 +207,10 @@ Sub CATMain()
 
             For intMemIndex = 1 To intNbMember
 
+```vbscript
               Set objMemPrd = objLNetMember.Item (intMemIndex,"CATIAProduct")
               strName = ""
+```
               If ( Not ( objMemPrd Is Nothing ) ) Then
                  strName = objMemPrd.Name
                  strMessage = strMessage & "...member " & intMemIndex _
@@ -182,9 +226,12 @@ Sub CATMain()
 
     strMessage = strMessage & _
       "--------------------------------------------------------------------" & vbCr
+```vbscript
     MsgBox strMessage
 
 End Sub
+
+```
 
 ' -----------------------------------------------------------------------------
 ' | Find 2 components and their images.
@@ -192,21 +239,28 @@ End Sub
 ' | Returns: objLCntbl_g: a list of component instance objects
 ' |          objLGRR_g: a list of component instance image objects
 ' -----------------------------------------------------------------------------
+```vbscript
 Private Sub Find2ComponentInst (objSchRootArg As SchematicRoot)
 
    If ( objLCntbl_g Is Nothing ) Then Exit Sub
+```
    If ( objLGRR_g Is Nothing ) Then Exit Sub
 
+```vbscript
    Dim objLCompInst As SchListOfObjects
    Dim intNbComp As Integer
 
    If ( Not ( objSchRootArg Is Nothing ) ) Then
+```
+```vbscript
       Set objLCompInst = objSchRootArg.GetComponents
       If ( Not ( objLCompInst Is Nothing ) ) Then
+```
          intNbComp = objLCompInst.Count
       End If
    End If
 
+```vbscript
    Dim intIndex As Integer
    Dim intNbFlow As Integer
    Dim objCntbl As SchConnectable
@@ -215,6 +269,8 @@ Private Sub Find2ComponentInst (objSchRootArg As SchematicRoot)
    Dim strInstName As String
    Dim intFound As Integer
    Dim intNbFound As Integer
+
+```
 
    If (Not ( objLCompInst Is Nothing ) ) Then
 
@@ -229,12 +285,16 @@ Private Sub Find2ComponentInst (objSchRootArg As SchematicRoot)
         strInstName = ""
         intFound = 0
 
+```vbscript
         Set objCntbl = objLCompInst.Item (intIndex,"CATIASchAppConnectable")
 
         If ( Not ( objCntbl Is Nothing ) ) Then
+```
 
+```vbscript
            Set objPrd = objSchRootArg.GetInterface ( _
              "CATIAProduct", objCntbl)
+```
 
            If ( Not ( objPrd Is Nothing ) ) Then
               strInstName = objPrd.Name
@@ -242,10 +302,15 @@ Private Sub Find2ComponentInst (objSchRootArg As SchematicRoot)
            End If 
 
            If ( intFound > 0 ) Then
+```vbscript
              Dim ObjSchCompGraph As SchCompGraphic
              Set objSchCompGraph = objSchRootArg.GetInterface ( _
                "CATIASchCompGraphic",objCntbl)
+```
+```vbscript
              Set objGRR = GetComponentImage (objSchCompGraph)
+
+```
 
              If ( ( Not ObjGRR Is Nothing ) ) Then
                 objLCntbl_g.Append objCntbl
@@ -261,7 +326,10 @@ Private Sub Find2ComponentInst (objSchRootArg As SchematicRoot)
       Next
 
    End If '--- If (Not ( objLCompInst Is Nothing ) ...
+```vbscript
 End Sub
+
+```
 
 ' -----------------------------------------------------------------------------
 ' | Find the first symbol used for the input schematic component.
@@ -269,17 +337,24 @@ End Sub
 ' |        (a CATIASchCompGraphic interface handle).
 ' | Returns: the component image (the symbol instance)
 ' -----------------------------------------------------------------------------
+```vbscript
 Private Function GetComponentImage (objSchCompGraphArg As SchCompGraphic) As SchGRR
    Dim objSchLSymbols As SchListOfObjects
    If ( Not ( objSchCompGraphArg Is Nothing ) ) Then
+```
+```vbscript
       Set objSchLSymbols = objSchCompGraphArg.ListGraphicalImages
       If ( Not ( objSchLSymbols Is Nothing ) ) Then
+```
+```vbscript
          Set GetComponentImage = objSchLSymbols.Item (1,"CATIASchGRR")
       End If
+```
    End If
+```vbscript
 End Function
 
-
+```
 
 ```vbscript
 Option Explicit
@@ -293,33 +368,47 @@ Option Explicit
 ' *****************************************************************************
 
 '------------------------------------------------------------------------------
+```vbscript
 ' These variables are visible to private Sub and CATMain
 '------------------------------------------------------------------------------
+```
+```vbscript
 Dim objLGRR_g As SchListOfObjects
 Dim objLCntbl_g As SchListOfObjects
 
-Sub CATMain()
+Sub CATMain(#)
+
+```
 
     ' ------------------------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
+```vbscript
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     strMessage = strMessage &  "sDocPath = " & sDocPath
+```
 
+```vbscript
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,sDocPath,"No Doc Path Defined"
     End If
+```
     ' ------------------------------------------------------------------------- 
     ' Open the schematic document 
+```vbscript
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
-            "online\CAAScdSchUseCases\samples\CAASCH_Network01.CATProduct")
+            "online/CAAScdSchUseCases/samples/CAASCH_Network01.CATProduct")
+```
 
+```vbscript
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
     Dim strMessage As String
+
+```
 
     strMessage = _
       "--------------------------------------------------------------------" & vbCr
@@ -327,31 +416,45 @@ Sub CATMain()
       "Output traces from CAASchNetwork.CATScript" & vbCrLf
 
     ' Find the top node of the schematic object tree - schematic root.
+```vbscript
     Dim objPrdRoot As Product
     Dim objSchRoot As SchematicRoot
     If ( Not ( objSchDoc Is Nothing ) ) Then
+```
+```vbscript
       Set objPrdRoot = objSchDoc.Product 
       If ( Not ( objPrdRoot Is Nothing ) ) Then
+```
+```vbscript
         Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
       End If
+```
     End If
 
+```vbscript
     Dim objSchBaseFact As SchBaseFactory
     Dim objSchTempListFact As SchTempListFactory
     Dim objLNetWork As SchListOfObjects
+
+```
 
     If ( Not ( objSchRoot Is Nothing ) ) Then
 
        '-----------------------------------------------------------------------
        ' Get all the necessary factories.
        '-----------------------------------------------------------------------
+```vbscript
        Set objSchBaseFact = objSchRoot.GetSchBaseFactory 
        Set objSchTempListFact = objSchRoot.GetTemporaryListFactory
 
        If ( Not ( objSchBaseFact Is Nothing )  And _
+```
             Not ( objSchTempListFact Is Nothing ) ) Then
+```vbscript
           Set objLCntbl_g = objSchTempListFact.CreateListOfObjects
           Set objLGRR_g = objSchTempListFact.CreateListOfObjects
+
+```
 
           If ( Not ( objLCntbl_g Is Nothing )  And _
                Not ( objLGRR_g Is Nothing ) ) Then
@@ -361,8 +464,10 @@ Sub CATMain()
              '-----------------------------------------------------------------
              Find2ComponentInst objSchRoot
 
+```vbscript
              Set objLNetWork = objSchBaseFact.CreateNetwork (objLCntbl_g, _
                objLGRR_g) 
+```
 
           End If
        End If '--- If ( Not ( objSchBaseFact Is Nothing )...
@@ -370,6 +475,7 @@ Sub CATMain()
 
     If (  Not ( objLNetWork Is Nothing ) ) Then
 
+```vbscript
        Dim intNbNet As Integer
        Dim intNetIndex As Integer
        Dim intNbMember As Integer
@@ -378,6 +484,8 @@ Sub CATMain()
        Dim objLNetMember As SchListOfObjects
        Dim objMemPrd As Product
        Dim strName As String
+
+```
 
        intNbNet = objLNetWork.Count
        strMessage = strMessage & "number of network found = " & intNbNet & vbCr
@@ -388,18 +496,23 @@ Sub CATMain()
        For intNetIndex = 1 To intNbNet 
 
          intNbMember = 0
+```vbscript
          Set objLNetMember = Nothing
 
          Set objSchNet = objLNetWork.Item (intNetIndex,"CATIASchNetworkAnalysis")
+
+```
 
          '---------------------------------------------------------------------
          '  Get the members of the list of connectables.
          '---------------------------------------------------------------------
          If ( Not ( objSchNet Is Nothing ) ) Then
 
+```vbscript
             Set objLNetMember = objSchNet.ListNetworkObjects
 
          End If 
+```
 
          If ( Not ( objLNetMember Is Nothing ) ) Then
 
@@ -410,8 +523,10 @@ Sub CATMain()
 
             For intMemIndex = 1 To intNbMember
 
+```vbscript
               Set objMemPrd = objLNetMember.Item (intMemIndex,"CATIAProduct")
               strName = ""
+```
               If ( Not ( objMemPrd Is Nothing ) ) Then
                  strName = objMemPrd.Name
                  strMessage = strMessage & "...member " & intMemIndex _
@@ -422,15 +537,16 @@ Sub CATMain()
 
          End If '--- If ( Not ( objLNetMember Is Nothing ) ...
 
-
          '---------------------------------------------------------------------
          '  Get the members of the list of extremities (routes).
          '---------------------------------------------------------------------
          If ( Not ( objSchNet Is Nothing ) ) Then
 
+```vbscript
             Set objLNetMember = objSchNet.ListExtremityObjects
 
          End If 
+```
 
          If ( Not ( objLNetMember Is Nothing ) ) Then
 
@@ -441,8 +557,10 @@ Sub CATMain()
 
             For intMemIndex = 1 To intNbMember
 
+```vbscript
               Set objMemPrd = objLNetMember.Item (intMemIndex,"CATIAProduct")
               strName = ""
+```
               If ( Not ( objMemPrd Is Nothing ) ) Then
                  strName = objMemPrd.Name
                  strMessage = strMessage & "...member " & intMemIndex _
@@ -458,9 +576,12 @@ Sub CATMain()
 
     strMessage = strMessage & _
       "--------------------------------------------------------------------" & vbCr
+```vbscript
     MsgBox strMessage
 
 End Sub
+
+```
 
 ' -----------------------------------------------------------------------------
 ' | Find 2 components and their images.
@@ -468,21 +589,28 @@ End Sub
 ' | Returns: objLCntbl_g: a list of component instance objects
 ' |          objLGRR_g: a list of component instance image objects
 ' -----------------------------------------------------------------------------
+```vbscript
 Private Sub Find2ComponentInst (objSchRootArg As SchematicRoot)
 
    If ( objLCntbl_g Is Nothing ) Then Exit Sub
+```
    If ( objLGRR_g Is Nothing ) Then Exit Sub
 
+```vbscript
    Dim objLCompInst As SchListOfObjects
    Dim intNbComp As Integer
 
    If ( Not ( objSchRootArg Is Nothing ) ) Then
+```
+```vbscript
       Set objLCompInst = objSchRootArg.GetComponents
       If ( Not ( objLCompInst Is Nothing ) ) Then
+```
          intNbComp = objLCompInst.Count
       End If
    End If
 
+```vbscript
    Dim intIndex As Integer
    Dim intNbFlow As Integer
    Dim objCntbl As SchConnectable
@@ -491,6 +619,8 @@ Private Sub Find2ComponentInst (objSchRootArg As SchematicRoot)
    Dim strInstName As String
    Dim intFound As Integer
    Dim intNbFound As Integer
+
+```
 
    If (Not ( objLCompInst Is Nothing ) ) Then
 
@@ -505,12 +635,16 @@ Private Sub Find2ComponentInst (objSchRootArg As SchematicRoot)
         strInstName = ""
         intFound = 0
 
+```vbscript
         Set objCntbl = objLCompInst.Item (intIndex,"CATIASchAppConnectable")
 
         If ( Not ( objCntbl Is Nothing ) ) Then
+```
 
+```vbscript
            Set objPrd = objSchRootArg.GetInterface ( _
              "CATIAProduct", objCntbl)
+```
 
            If ( Not ( objPrd Is Nothing ) ) Then
               strInstName = objPrd.Name
@@ -518,10 +652,15 @@ Private Sub Find2ComponentInst (objSchRootArg As SchematicRoot)
            End If 
 
            If ( intFound &gt; 0 ) Then
+```vbscript
              Dim ObjSchCompGraph As SchCompGraphic
              Set objSchCompGraph = objSchRootArg.GetInterface ( _
                "CATIASchCompGraphic",objCntbl)
+```
+```vbscript
              Set objGRR = GetComponentImage (objSchCompGraph)
+
+```
 
              If ( ( Not ObjGRR Is Nothing ) ) Then
                 objLCntbl_g.Append objCntbl
@@ -537,7 +676,10 @@ Private Sub Find2ComponentInst (objSchRootArg As SchematicRoot)
       Next
 
    End If '--- If (Not ( objLCompInst Is Nothing ) ...
+```vbscript
 End Sub
+
+```
 
 ' -----------------------------------------------------------------------------
 ' | Find the first symbol used for the input schematic component.
@@ -545,13 +687,21 @@ End Sub
 ' |        (a CATIASchCompGraphic interface handle).
 ' | Returns: the component image (the symbol instance)
 ' -----------------------------------------------------------------------------
+```vbscript
 Private Function GetComponentImage (objSchCompGraphArg As SchCompGraphic) As SchGRR
    Dim objSchLSymbols As SchListOfObjects
    If ( Not ( objSchCompGraphArg Is Nothing ) ) Then
+```
+```vbscript
       Set objSchLSymbols = objSchCompGraphArg.ListGraphicalImages
       If ( Not ( objSchLSymbols Is Nothing ) ) Then
+```
+```vbscript
          Set GetComponentImage = objSchLSymbols.Item (1,"CATIASchGRR")
       End If
+```
    End If
+```vbscript
 End Function
+```
 ```

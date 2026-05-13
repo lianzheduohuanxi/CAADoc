@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Using the Visualization Manager"
-category: "use case"
+category: use-case case"
 module: "CAAVisUseCases"
 tags: ["CAAVisManager", "CAAVisManagerDefaultDocument", "CAAVisManagerAppli", "CATI3DGeoVisu", "CAAVisManagerInt", "CAAVisManagerDocument", "CAAVisManagerCGRDocument", "CAAIVis2DGraphVisu", "CAAVisManagerCmdSelector", "CATIA", "CAAVisManagerComp", "CAAVisManagerApplicationFrame", "CAAVisManagerImp", "CAAVisManagerApplication", "CAAVisManagerWindow", "CAAVisualization", "CAAVisManagerEditor"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleVisManager.htm"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleVisManager.htmmd"
 converted: "2026-05-11T17:31:52.224318"
 ```
 
@@ -40,7 +40,10 @@ This article discusses the CAAVisManager use case. This use case explains how to
 * * *
 ### What You Will Learn With This Use Case
 
+```vbscript
 The visualization manager is the unique instance of the _CATVisManager_ class that manages the display of all the documents in all their windows. It is a key object in the visualization process that needs information about the documents to display, such as the document root object, the visualization interfaces that the document implements for 3D and 2D viewpoints, the selector to which visualization notifications must be sent, and the PSO (Prehighlighted Set of Objects) and HSO (Highlighted Set of Objects) associated with the document. With this use case, you will learn how to make the visualization manager aware of this information when a document is created or opened, and how to inform it to forget this information when a document is closed. Companion articles of this use case deal with the implementation of a visualization interface of your own [1], and with catching visualization notifications [2].
+
+```
 
 [Top]
 ### The CAAVisManager Use Case
@@ -78,10 +81,10 @@ To launch CAAVisManager, you will need to set up the build time environment, the
 To launch CAAVisManager, you will need to set up the build time environment, then compile the four CAAVisManager modules along with their prerequisites, set up the run time environment, and then execute the use case [5]. You cannot launch CAAVisManager itself. CAAVisManager is simply used by the CAAVisManagerAppli use case. Type CAAVisManagerAppli instead of CAAVisManager to display the interactive application along with a viewer that displays the CAAVisManagerDefaultDocument.
 CAAVisManager code is located in the CAAVisualization.edu framework:
 
-Windows | `InstallRootDirectory\CAAVisualization.edu\`
+Windows | `InstallRootDirectory/CAAVisualization.edu/`
 
 CAAVisManager code is located in the CAAVisualization.edu framework:
-Windows | `InstallRootDirectory\CAAVisualization.edu\`
+Windows | `InstallRootDirectory/CAAVisualization.edu/`
 Unix | `InstallRootDirectory/CAAVisualization.edu/`
 
 where `InstallRootDirectory` is the root directory of your CAA V5 installation.
@@ -124,9 +127,9 @@ To use the visualization manager, there are four main steps:
 [Top]
 #### Retrieving the Visualization Manager
 
-    void CAAVisManagerWindow::Attach()
+    void CAAVisManagerWindow::Attach(#)
     {
-      CATVisManager            *pVisuMgr  = **CATVisManager::GetVisManager()** ;
+      CATVisManager            *pVisuMgr  = **CATVisManager::GetVisManager(#)** ;
       ...
 
 ---
@@ -137,20 +140,20 @@ The `CATVisManager::GetVisManager` static method retrieves a pointer to the visu
 #### Attaching the Visualization Manager to the Main 3D Viewpoint, the HSO and the PSO
 
       ...
-      CAAVisManagerDocument    *pDocument = _pEditor->GetDocument();
-CAAVisManagerDocument    *pDocument = _pEditor->GetDocument();
-      CAAVisManagerCmdSelector *pSelector = _pEditor->GetSelector();
+      CAAVisManagerDocument    *pDocument = _pEditor->GetDocument(#);
+CAAVisManagerDocument    *pDocument = _pEditor->GetDocument(#);
+      CAAVisManagerCmdSelector *pSelector = _pEditor->GetSelector(#);
 
 ```vbscript
-      if ( (NULL != pDocument) && (NULL != pDocument->GetRootContainer()) )
+      if ( (NULL != pDocument) && (NULL != pDocument->GetRootContainer(#)) )
 
 ```
 
       {
-CAAVisManagerDocument    *pDocument = _pEditor->GetDocument();
-CAAVisManagerCmdSelector *pSelector = _pEditor->GetSelector();
-if ( (NULL != pDocument) && (NULL != pDocument->GetRootContainer()) )
-        CATBaseUnknown * pRootObject = pDocument->GetRootContainer();
+CAAVisManagerDocument    *pDocument = _pEditor->GetDocument(#);
+CAAVisManagerCmdSelector *pSelector = _pEditor->GetSelector(#);
+if ( (NULL != pDocument) && (NULL != pDocument->GetRootContainer(#)) )
+        CATBaseUnknown * pRootObject = pDocument->GetRootContainer(#);
 ```vbscript
         _pRootObjectPath = new CATPathElement(pRootObject);
 
@@ -158,7 +161,7 @@ if ( (NULL != pDocument) && (NULL != pDocument->GetRootContainer()) )
 
       }
 
-CATBaseUnknown * pRootObject = pDocument->GetRootContainer();
+CATBaseUnknown * pRootObject = pDocument->GetRootContainer(#);
 _pRootObjectPath = new CATPathElement(pRootObject);
 ```vbscript
 ```vbscript
@@ -174,7 +177,7 @@ _pRootObjectPath = new CATPathElement(pRootObject);
 if ( (NULL != _pViewer) && ( NULL!= _pRootObjectPath) )
 ```
 
-        CAT3DViewpoint * pMain3DViewpoint = &(_pViewer->**GetMain3DViewpoint**());
+        CAT3DViewpoint * pMain3DViewpoint = &(_pViewer->**GetMain3DViewpoint**(#));
 
         list<IID> liste_iid_3D;
         liste_iid_3D += new IID(IID_CATI3DGeoVisu);
@@ -182,8 +185,8 @@ if ( (NULL != _pViewer) && ( NULL!= _pRootObjectPath) )
                               pMain3DViewpoint,
                               liste_iid_3D,
                               pSelector);
-        pVisuMgr->**AttachHSOTo**(_pEditor->GetHSO(), pMain3DViewpoint);
-        pVisuMgr->**AttachPSOTo**(_pEditor->GetPSO(), pMain3DViewpoint);
+        pVisuMgr->**AttachHSOTo**(_pEditor->GetHSO(#), pMain3DViewpoint);
+        pVisuMgr->**AttachPSOTo**(_pEditor->GetPSO(#), pMain3DViewpoint);
         delete liste_iid_3D[0];
 
         ...
@@ -203,17 +206,17 @@ Then the visualization manager is attached for highlighted components to the edi
 #### Attaching the Visualization Manager to the 2D Main Viewpoint, the HSO and the PSO
 
         ...
-        CAT2DViewpoint * pMain2DViewpoint = &(_pViewer->GetMain2DViewpoint());
+        CAT2DViewpoint * pMain2DViewpoint = &(_pViewer->GetMain2DViewpoint(#));
 
-CAT2DViewpoint * pMain2DViewpoint = &(_pViewer->GetMain2DViewpoint());
+CAT2DViewpoint * pMain2DViewpoint = &(_pViewer->GetMain2DViewpoint(#));
         list<IID> liste_iid_2D;
         liste_iid_2D += new IID(IID_CAAIVis2DGraphVisu);
         pVisuMgr->**AttachTo**  (_pRootObjectPath,
                              pMain2DViewpoint,
                              liste_iid_2D,
                              pSelector);
-        pVisuMgr->**AttachHSOTo**(_pEditor->GetHSO(), pMain2DViewpoint);
-        pVisuMgr->**AttachPSOTo**(_pEditor->GetPSO(), pMain2DViewpoint);
+        pVisuMgr->**AttachHSOTo**(_pEditor->GetHSO(#), pMain2DViewpoint);
+        pVisuMgr->**AttachPSOTo**(_pEditor->GetPSO(#), pMain2DViewpoint);
         delete liste_iid_2D[0];
 
         ...
@@ -236,10 +239,10 @@ The main 2D viewpoint zoom and origin are reset.
 [Top]
 #### Detaching the Visualization Manager
 
-    void CAAVisManagerWindow::Detach()
+    void CAAVisManagerWindow::Detach(#)
     {
-void CAAVisManagerWindow::Detach()
-      CATVisManager * pVisuManager = **CATVisManager::GetVisManager**();
+void CAAVisManagerWindow::Detach(#)
+      CATVisManager * pVisuManager = **CATVisManager::GetVisManager**(#);
 
 ```vbscript
       if ( (NULL != _pViewer) && (NULL != _pRootObjectPath) )
@@ -247,15 +250,15 @@ void CAAVisManagerWindow::Detach()
 ```
 
       {
-CATVisManager * pVisuManager = **CATVisManager::GetVisManager**();
+CATVisManager * pVisuManager = **CATVisManager::GetVisManager**(#);
 if ( (NULL != _pViewer) && (NULL != _pRootObjectPath) )
-        CAT3DViewpoint * pMain3DViewpoint = &(_pViewer->GetMain3DViewpoint());
+        CAT3DViewpoint * pMain3DViewpoint = &(_pViewer->GetMain3DViewpoint(#));
 
         pVisuManager->**DetachFrom**(_pRootObjectPath, pMain3DViewpoint);
         pVisuManager->**DetachHSOFrom**(pMain3DViewpoint);
         pVisuManager->**DetachPSOFrom**(pMain3DViewpoint);
 
-        CAT2DViewpoint * pMain2DViewpoint = &(_pViewer->GetMain2DViewpoint());
+        CAT2DViewpoint * pMain2DViewpoint = &(_pViewer->GetMain2DViewpoint(#));
 
         pVisuManager->DetachPSOFrom(pMain2DViewpoint);
         pVisuManager->DetachHSOFrom(pMain2DViewpoint);

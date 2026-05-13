@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CAAScrBase", "CATIA", "CAAScrJavaScript", "CAAScdInfUseCases", "CAAScdArrUseCases", "CAAInfLauchMacro", "CAAArrCreateRun", "CAAArrCreateRunSource", "CAAlink"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateRun.htm"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateRun.htmmd"
 converted: "2026-05-11T11:27:02.675489"
 ---
 
@@ -53,7 +53,7 @@ Here we define a round section and change the visualization mode to `CatArrangem
     
   
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 
@@ -74,40 +74,46 @@ a product document.
 
 *Copyright  2000, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 ...
    '----------------------------------------------
    'Create a new product document
+```vbscript
    Dim objProdDoc        As ProductDocument
    Dim objRootProd       As Product
    Set objProdDoc      = CATIA.Documents.Add(&quot;Product&quot;)
    Set objRootProd     = objProdDoc.Product
    ...
 ```
+```
 
 ```vbscript
 ...
    '----------------------------------------------
    'Retrieving Root Product's Relative Axis and Position Information
+```vbscript
    Dim objMove           As Move
    Set objMove      = objRootProd.Move
 
    '----------------------------------------------
+```
    ' Get ArrangementProduct
+```vbscript
    Dim objArrProd        As ArrangementProduct
    Set objArrProd   = objRootProd.GetTechnologicalObject(&quot;ArrangementProduct&quot;)
 ...
+```
 ```
 
 ```vbscript
 ...
    ' Create ArrangementRun under the Root Product
+```vbscript
    Dim dblRunPoints(75)      As Double
    Dim dblMathDirection(3)        As Double
    Dim objArrRun             As ArrangementRun
 
+```
 
    dblRunPoints(0)   =  300.0
    dblRunPoints(1)   =  100.0
@@ -123,13 +129,14 @@ a product document.
    dblRunPoints(73)  =  100.0
    dblRunPoints(74)  =  30
 
-
    dblMathDirection(0) = 1.0
    dblMathDirection(1) = 0.0
    dblMathDirection(2) = 0.0
 
+```vbscript
    Set objArrRun             = objArrProd.ArrangementRuns.AddRun(objMove,dblRunPoints, dblMathDirection)
   ...
+```
 ```
 
 ```vbscript
@@ -140,8 +147,10 @@ a product document.
 
    '----------------------------------------------
    ' Change Properties of ArrangementRun
+```vbscript
    Dim intK As Integer   
    For intK = 1 To objArrRun.Nodes.Count
+```
   
    objArrRun.Nodes.Item(intK).BendRadius = 10.0
  
@@ -152,8 +161,10 @@ a product document.
 
    '----------------------------------------------
    ' Define Bend Radius of Nodes
+```vbscript
    Dim intK As Integer   
    For intK = 1 To objArrRun.Nodes.Count
+```
    objArrRun.Nodes.Item(intK).BendRadius = 10.0
    Next
   ...
@@ -161,5 +172,7 @@ a product document.
 
 ```vbscript
 ...
+```vbscript
  End Sub
+```
 ```

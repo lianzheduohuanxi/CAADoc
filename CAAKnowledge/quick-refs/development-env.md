@@ -1,7 +1,9 @@
 ---
+category: quick-ref
 title: "CAA开发环境快速参考"
 type: "quick-reference"
 ---
+category: quick-ref
 
 # CAA开发环境快速参考
 
@@ -32,14 +34,14 @@ TEMPLATES = C++AppPyMac
 
 SUBDIRS = ModuleName1 ModuleName2
 
-CATIncludeFiles(ModuleName1) = \
-  LocalInterfaces/*.h        \
+CATIncludeFiles(ModuleName1) = /
+  LocalInterfaces/*.h        /
   PublicInterfaces/*.h
 
-CATSourcesFiles(ModuleName1) = \
+CATSourcesFiles(ModuleName1) = /
   src/*.cpp
 
-CATDllSymbLinks(ModuleName1) = \
+CATDllSymbLinks(ModuleName1) = /
   $(GENERIC_FWK_DIR)/CATIAfrFoundationWindowing
 ```
 
@@ -59,7 +61,6 @@ mkmk -framework FrameworkName -clean
 ## 常用宏
 
 | 宏 | 说明 |
-|-----|------|
 | `CATDeclareClass` | 声明类 |
 | `CATImplementClass` | 实现类 |
 | `CATDeclareInterface` | 声明接口 |
@@ -70,9 +71,9 @@ mkmk -framework FrameworkName -clean
 ## 常用环境变量
 
 | 变量 | 说明 |
-|------|------|
 | `CASROOT` | CAA安装根目录 |
 | `CATAKit` | 工具包目录 |
 | `FrameworkName` | 框架路径 |
 
 ---
+category: quick-ref

@@ -3,7 +3,7 @@ title: "Creating Octree Triangle Mesh Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CAAScrBase", "CATIA", "CAAScdAniUseCases", "CAAScrJavaScript", "CAAAniTocAnalysisDocument", "CAAScdInfUseCases", "CAAScdAniTechArticles", "CAAAniMeshOctTriangleSource", "CAAInfLauchMacro", "CAAAniMeshOctTriangle"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshOctTriangle.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshOctTriangle.htmmd"
 converted: "2026-05-11T11:27:02.536898"
 ---
 
@@ -23,7 +23,7 @@ Open the Analysis document. The Analysis document is retrieved in the
 
 According to the general
 		[
-		Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.htm) structure, this macro uses some standard procedures 
+		Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures 
 		to navigate or retrieve the required objects. First, from the **Document**, 
 		we find the **Analysis Manager Object**, the **Analysis Models** and 
 		the **Mesh Manager Objects**. The extraction of pre-defined geometric 
@@ -55,7 +55,7 @@ To run the macro interactively CATDocView
 
  
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 
@@ -78,8 +78,6 @@ values to its local and global specifications.
 
 *Copyright  2001, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 ...
 ```
@@ -88,15 +86,19 @@ values to its local and global specifications.
 ' ----------------------------------------------------------- 
 ' Optional: allows to find the sample wherever it's installed
 
+```vbscript
   sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,"No Doc Path Defined"
     End If
+```
 ' ----------------------------------------------------------- 
 ' Open the Analysis document 
-sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\Surface.CATAnalysis&quot;)
+```vbscript
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online/CAAScdAniUseCases/samples/Surface.CATAnalysis&quot;)
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+```
 ```
 
 ```vbscript
@@ -109,33 +111,43 @@ Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ```vbscript
 ' Retrieve the Analysis Manager and Analysis Model
+```vbscript
 Set oAnalysisManager = oAnalysisDocument.Analysis
+```
 ```
 
 ```vbscript
 ' Retreive the part document from Analysis manager
+```vbscript
 Set oAnalysisLinkedDocument = oAnalysisManager.LinkedDocuments
 Set partDocument = oAnalysisLinkedDocuments.Item(1)
 Set product = partDocument.Product
 ```
+```
 
 ```vbscript
 ' Retrieve the analysis model from the list of models
+```vbscript
 Set oAnalysisModels = oAnalysisManager.AnalysisModels
 Set oAnalysisModel = oAnalysisManager.Item(1)
+```
 ```
 
 ```vbscript
 ' Retrieve mesh manager and mesh part 
+```vbscript
 Set oAnalysisMeshManager = oAnalysisModel.MeshManager
 Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
+```
 ```
 
 ```vbscript
 ' Retrieve publications from product and retrieve the published surface and edge
+```vbscript
 Set publications1 = product.Publications
 Set pubEdge = publications1.Item("Edge")
 Set pubSurf = publications1.Item("Round Hole.1")
+```
 ```
 
 ```vbscript
@@ -145,7 +157,9 @@ Set pubSurf = publications1.Item("Round Hole.1")
 ```vbscript
 ...
 ' Add the new Octree Triangle mesh part to the list of mesh parts
+```vbscript
 Set  octreePart = meshPart.Add ("MSHPartOctree2D")
+```
 ```
 
 ```vbscript
@@ -154,8 +168,10 @@ octreePart.AddSupportFromPublication product, pubSurf
 ```
 
 ```vbscript
+```vbscript
 ' Set the global Specifications
 octreePart.SetGlobalSpecification "SizeValue", "10.0 mm"
+```
 octreePart.SetGlobalSpecification "AbsoluteSageValue", "3.0 mm"
 octreePart.SetGlobalSpecification "ElementOrder", "Parabolic"
 octreePart.SetGlobalSpecification "MinSizeForSags", "0.5 mm"
@@ -173,9 +189,11 @@ octreePart.SetGlobalSpecification "MinJacobian", 0.3
 octreePart.SetGlobalSpecification "MaxAttempts", 2
 
 ' Add the domain specifications as local specifications and assign it attributes
+```vbscript
 Set meshspecs1 = octreePart.AnalysisMeshLocalSpecifications
 Set spec1 = meshspecs1.Add("MSHLocalMeshSize")
 spec1.SetAttribute "MSHMeshSizeMag", "1.0 mm"
+```
 spec1.AddSupportFromPublication "ConnectorList", Product, pubEdge
 
 'Update mesh part
@@ -185,6 +203,8 @@ octreePart.Update
 
 ```vbscript
 ...
+```vbscript
 End Sub
 ...
+```
 ```

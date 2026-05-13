@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "DrawingSheets Collection"
-category: "use-case"
+category: tech-article
 module: "CAAScdDriTechArticles"
 tags: []
-source_file: "Doc/online/CAAScdDriTechArticles/CAADriObjDrawingSheets.htm"
+source_file: "Doc/online/CAAScdDriTechArticles/CAADriObjDrawingSheets.htmmd"
 converted: "2026-05-11T17:31:51.123204"
 ```
 

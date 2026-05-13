@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Customizing the Surface Machining Operation Editor"
-category: "use case"
+category: use-case case"
 module: "CAASmiUseCases"
 tags: ["CATIMfgMacroEditorActivity", "CAASmiUserOperationUI", "CAAToolAngle", "CAAESmiUserOperationToolEditor", "CATICkeParamFrame_var", "CAASmgOperation", "CAAApproachDistance", "CAAESmiUserOperationStrategyEditor", "CATIMacroEditorActivity", "CAAESmiUserOperationMacroEditor", "CATIMfgResourceFactory", "CATIMfgStrategyActivity", "CATIMfgActivity", "CAAMaiToolEditionCustomization", "CATIMfgActivityParameters", "CATIMfgTool", "CAAStep", "CAASurfaceMachiningItf", "CATIMfgToolActivity"]
-source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationUI.htm"
+source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationUI.htmmd"
 converted: "2026-05-11T17:31:51.261386"
 ```
 
@@ -79,10 +79,10 @@ This use case is a part of _Surface Machining Operation Sample_ [1]. You should 
 This use case is a part of _Surface Machining Operation Sample_ [1]. You should build all the modules of this sample at a time to be able to launch it [2].
 Don't forget to edit the interface dictionary located in:
 
-Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CNext\code\dictionary\`
+Windows | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CNext/code/dictionary/`
 
 Don't forget to edit the interface dictionary located in:
-Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CNext\code\dictionary\`
+Windows | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CNext/code/dictionary/`
 Unix | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CNext/code/dictionary/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed, and uncomment the appropriate lines by removing the '#' character.
@@ -93,10 +93,10 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed,
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed, and uncomment the appropriate lines by removing the '#' character.
 This use case is made of source files located in the CAASmiUserOperationUI.m module of the CAASurfaceMachiningItf.edu framework:
 
-Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CAASmiUserOperationUI.m`
+Windows | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CAASmiUserOperationUI.m`
 
 This use case is made of source files located in the CAASmiUserOperationUI.m module of the CAASurfaceMachiningItf.edu framework:
-Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CAASmiUserOperationUI.m`
+Windows | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CAASmiUserOperationUI.m`
 Unix | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CAASmiUserOperationUI.m`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -326,12 +326,12 @@ if (SUCCEEDED(oRC))
 
           CATUnicodeString ToolTypeToCreate = MfgEndMillTool;
           oTool = pResourceFactory->CreateResource(ToolTypeToCreate);
-          pResourceFactory->Release();
+          pResourceFactory->Release(#);
           pResourceFactory = NULL;
 
           // Defines a Default tool for our user operation
 oTool = pResourceFactory->CreateResource(ToolTypeToCreate);
-pResourceFactory->Release();
+pResourceFactory->Release(#);
 pResourceFactory = NULL;
           if(!!oTool)
 
@@ -355,15 +355,15 @@ oRC = oTool->QueryInterface(IID_CATIMfgTool, (void**) &pMfgTool);
 if (SUCCEEDED(oRC))
 ```
 
-              pMfgTool->SetDefaultValues();
-              pMfgTool->SetDefaultName();
-              pMfgTool->Release();
+              pMfgTool->SetDefaultValues(#);
+              pMfgTool->SetDefaultName(#);
+              pMfgTool->Release(#);
               pMfgTool = NULL;
 
             }
 
-pMfgTool->SetDefaultName();
-pMfgTool->Release();
+pMfgTool->SetDefaultName(#);
+pMfgTool->Release(#);
 pMfgTool = NULL;
             CATIMfgActivity * pActivity = NULL;
             oRC = QueryInterface(IID_CATIMfgActivity, (void**) &pActivity);
@@ -383,7 +383,7 @@ if (SUCCEEDED(oRC))
 ```
 
               pActivity->SetDefaultTool(oTool);
-              pActivity->Release();
+              pActivity->Release(#);
               pActivity = NULL;
 
             }

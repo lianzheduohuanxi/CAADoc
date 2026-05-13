@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "The Clone and Transformation Managers"
-category: "use-case"
+category: use-case
 module: "CAACgmModel"
 tags: ["CATIA", "CATICGMObjects", "CATICGMObject"]
-source_file: "Doc/online/CAACgmModel/CAACgmTaGobClone.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmTaGobClone.htmmd"
 converted: "2026-05-11T17:33:47.903606"
 ```
 
@@ -83,24 +83,30 @@ Fig2: Behavior of the Duplication According to the CATCloneManagerType ![Behavio
 The following example illustrates how to copy the two curves C1 and C1 of the previous section and paste them into an other container. The result will be two new curves laying on the same new surface, with the same characteristics as the initial one.
 
     CATCloneManager MyManager(GeoFactoryForPasting); // the CATGeoFactory is also a container
+```vbscript
     MyManager.Add(C1);
     MyManager.Add(C2);
 
     // Copies C1 and C2 and paste them in GeoFactoryForPasting
+```
 CATCloneManager MyManager(GeoFactoryForPasting); // the CATGeoFactory is also a container
+```vbscript
 MyManager.Add(C1);
 MyManager.Add(C2);
-    MyManager.Run();
+    MyManager.Run(#);
+```
 
     // Retrieves the copy of C1
+```vbscript
 MyManager.Add(C1);
 MyManager.Add(C2);
-MyManager.Run();
+MyManager.Run(#);
+```
     CATICGMObject* ClonedObject=MyManager.ReadImage(C1);
 
 ### How a CATICGMObject and a CATCloneManager Cooperate
 
-MyManager.Run();
+MyManager.Run(#);
 CATICGMObject* ClonedObject=MyManager.ReadImage(C1);
 The CATCloneManager globally manages the cloning, but delegates the copy of a single object to each object.
 

@@ -4,13 +4,13 @@ title: "Splitting a Wire"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsSplitShell", "CATICGMHybSplit"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcSplitShell.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcSplitShell.htmmd"
 converted: "2026-05-11T17:33:49.047706"
 ```
 
 ---
 tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsSplitShell", "CATICGMHybSplit"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcSplitShell.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcSplitShell.htmmd"
 converted: "2026-05-11T17:33:49.047706"
 Splitting a Shell
 
@@ -52,17 +52,17 @@ and the code below:
 and the code below:
 CATICGMHybSplit * pSplitShellByShellOpe = CATCGMCreateTopSplitShell (piGeomFactory, &topdata;, pShell1, pShell2,
 NEGATIVE_NEGATIVE_SIDE);
-    pSplitShellByShellOpe->Run();
-    CATBody * pSplitShellByShellResult = pSplitShellByShellOpe->GetResult();
+    pSplitShellByShellOpe->Run(#);
+    CATBody * pSplitShellByShellResult = pSplitShellByShellOpe->GetResult(#);
 
     ...
 NEGATIVE_NEGATIVE_SIDE);
-pSplitShellByShellOpe->Run();
-CATBody * pSplitShellByShellResult = pSplitShellByShellOpe->GetResult();
-    pSplitShellByShellOpe->Release(); pSplitShellByShellOpe=NULL;
+pSplitShellByShellOpe->Run(#);
+CATBody * pSplitShellByShellResult = pSplitShellByShellOpe->GetResult(#);
+    pSplitShellByShellOpe->Release(#); pSplitShellByShellOpe=NULL;
 
 ---
-pSplitShellByShellOpe->Release(); pSplitShellByShellOpe=NULL;
+pSplitShellByShellOpe->Release(#); pSplitShellByShellOpe=NULL;
 you get this result: Fig.2 Split a shell by a shell: result  ![Split a shell by a shell: Result](images/CGM_splitShellByShell_1.png)
 
 ---
@@ -76,30 +76,30 @@ The same result is obtained if you specify NEGATIVE_POSITIVE_SIDE for the CATHyb
 The same result is obtained if you specify NEGATIVE_POSITIVE_SIDE for the CATHybSelectionMode.  Case 2: Split a Shell by a Shell (Extrapolation is Needed) If the shell to be split is the one in dark green and the splitting shell the one in light green, with the code below:
 CATICGMHybSplit * pSplitShellByShellOpe1 = CATCGMCreateTopSplitShell (piGeomFactory, &topdata;, pShell2, pShell1,
 NEGATIVE_NEGATIVE_SIDE);
-    pSplitShellByShellOpe1->Run();
-    CATBody * pSplitShellByShellResult1 = pSplitShellByShellOpe1->GetResult();
+    pSplitShellByShellOpe1->Run(#);
+    CATBody * pSplitShellByShellResult1 = pSplitShellByShellOpe1->GetResult(#);
 
     ...
 NEGATIVE_NEGATIVE_SIDE);
-pSplitShellByShellOpe1->Run();
-CATBody * pSplitShellByShellResult1 = pSplitShellByShellOpe1->GetResult();
-    pSplitShellByShellOpe1->Release(); pSplitShellByShellOpe1=NULL;
+pSplitShellByShellOpe1->Run(#);
+CATBody * pSplitShellByShellResult1 = pSplitShellByShellOpe1->GetResult(#);
+    pSplitShellByShellOpe1->Release(#); pSplitShellByShellOpe1=NULL;
 
 ---
-CATBody * pSplitShellByShellResult1 = pSplitShellByShellOpe1->GetResult();
-pSplitShellByShellOpe1->Release(); pSplitShellByShellOpe1=NULL;
-you get this result: Fig.3 Split a shell by a shell: extrapolation is needed ![Split a Shell by a Shell \(extrapolation is needed\)](images/CGM_splitShellByShell_2.png)
+CATBody * pSplitShellByShellResult1 = pSplitShellByShellOpe1->GetResult(#);
+pSplitShellByShellOpe1->Release(#); pSplitShellByShellOpe1=NULL;
+you get this result: Fig.3 Split a shell by a shell: extrapolation is needed ![Split a Shell by a Shell /(extrapolation is needed/)](images/CGM_splitShellByShell_2.png)
 
 ---
-pSplitShellByShellOpe1->Release(); pSplitShellByShellOpe1=NULL;
-you get this result: Fig.3 Split a shell by a shell: extrapolation is needed ![Split a Shell by a Shell \(extrapolation is needed\)](images/CGM_splitShellByShell_2.png)
+pSplitShellByShellOpe1->Release(#); pSplitShellByShellOpe1=NULL;
+you get this result: Fig.3 Split a shell by a shell: extrapolation is needed ![Split a Shell by a Shell /(extrapolation is needed/)](images/CGM_splitShellByShell_2.png)
 ```vbscript
 Case 3: Split a Shell by a Wire With the input data below:  Fig.4 Split a Shell by a Wire: Splitting Wire in green - wire and shell orientations in blue  ![Split a shell by a wire: Result](images/CGM_splitShellByWire_0.png)
 
 ```
 
 ---
-you get this result: Fig.3 Split a shell by a shell: extrapolation is needed ![Split a Shell by a Shell \(extrapolation is needed\)](images/CGM_splitShellByShell_2.png)
+you get this result: Fig.3 Split a shell by a shell: extrapolation is needed ![Split a Shell by a Shell /(extrapolation is needed/)](images/CGM_splitShellByShell_2.png)
 Case 3: Split a Shell by a Wire With the input data below:  Fig.4 Split a Shell by a Wire: Splitting Wire in green - wire and shell orientations in blue  ![Split a shell by a wire: Result](images/CGM_splitShellByWire_0.png)
 and the code below:
 
@@ -110,17 +110,17 @@ and the code below:
 and the code below:
 CATICGMHybSplit * pSplitShellByWireOpe = CATCGMCreateTopSplitShell (piGeomFactory, &topdata;,
 pShell1, pBodyWire1,NEGATIVE_NEGATIVE_SIDE);
-    pSplitShellByWireOpe->Run();
-    CATBody * pSplitShellByWireResult = pSplitShellByWireOpe->GetResult();
+    pSplitShellByWireOpe->Run(#);
+    CATBody * pSplitShellByWireResult = pSplitShellByWireOpe->GetResult(#);
 
     ...
 pShell1, pBodyWire1,NEGATIVE_NEGATIVE_SIDE);
-pSplitShellByWireOpe->Run();
-CATBody * pSplitShellByWireResult = pSplitShellByWireOpe->GetResult();
-    pSplitShellByWireOpe->Release(); pSplitShellByWireOpe=NULL;
+pSplitShellByWireOpe->Run(#);
+CATBody * pSplitShellByWireResult = pSplitShellByWireOpe->GetResult(#);
+    pSplitShellByWireOpe->Release(#); pSplitShellByWireOpe=NULL;
 
 ---
-pSplitShellByWireOpe->Release(); pSplitShellByWireOpe=NULL;
+pSplitShellByWireOpe->Release(#); pSplitShellByWireOpe=NULL;
 you get this result: Fig.5 Split a Shell by a Wire (wire in right): Result  ![Split a shell by a wire: Result](images/CGM_splitShellByWire_1.png)
 
 ---

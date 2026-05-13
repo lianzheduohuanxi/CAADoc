@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Optimizations Automation Objects"
-category: "use-case"
+category: tech-article
 module: "CAAScdKniTechArticles"
 tags: []
-source_file: "Doc/online/CAAScdKniTechArticles/CAAKniTocOptimizations.htm"
+source_file: "Doc/online/CAAScdKniTechArticles/CAAKniTocOptimizations.htmmd"
 converted: "2026-05-11T17:31:52.003484"
 ```
 

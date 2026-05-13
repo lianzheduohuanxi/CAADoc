@@ -4,13 +4,13 @@ title: "New C++ Authorized APIs in CAA V5R18 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIPrtThreadStandardServices", "CATIEnovUEAffectedObject", "CATImmCAAServices", "CATI2DLayoutLayout", "CATISchAnnotationBreak", "CATIEhfManageLengthTolerance", "CATITPSTangentPlane", "CATIMmiResultFreeze", "CATICciCompositesWorkbenchAddin", "CATITPSVisualization", "CATI2DLayoutSheet", "CATIMeasurableInContext", "CATICloudQsrAddin", "CATIEhfBundleSegmentLink", "CATISchAppMultiImage", "CATIElbFillerPlugInstance", "CATIPDMUEAllowDocumentLoading", "CATIDrwBGAddin", "CATImportAgentBehavior", "CATIAVPMVDADuplicatePRC"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R18GANewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R18GANewCPPAPI.htmmd"
 converted: "2026-05-11T17:33:47.358944"
 ```
 
 ---
 tags: ["CATIPrtThreadStandardServices", "CATIEnovUEAffectedObject", "CATImmCAAServices", "CATI2DLayoutLayout", "CATISchAnnotationBreak", "CATIEhfManageLengthTolerance", "CATITPSTangentPlane", "CATIMmiResultFreeze", "CATICciCompositesWorkbenchAddin", "CATITPSVisualization", "CATI2DLayoutSheet", "CATIMeasurableInContext", "CATICloudQsrAddin", "CATIEhfBundleSegmentLink", "CATISchAppMultiImage", "CATIElbFillerPlugInstance", "CATIPDMUEAllowDocumentLoading", "CATIDrwBGAddin", "CATImportAgentBehavior", "CATIAVPMVDADuplicatePRC"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R18GANewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R18GANewCPPAPI.htmmd"
 converted: "2026-05-11T17:33:47.358944"
 CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R18 GA
 
@@ -20,11 +20,14 @@ The following are the new CAA V5R18 GA C++ Authorized APIs, compared with CAA V5
 
   * AdvancedTopologicalOpe framework
     * Class CATGeometrySizeOptimization
+```vbscript
     * Global Function CATCreateGeometrySizeOptimization
   * BatchInfrastructure framework
+```
     * Class CATBatchEndNotifCAA
     * Class CATBatchNotif
     * Macro or #define SIZE_T_ID
+```vbscript
     * Global Function CATBatchParamToSplitAccess
     * Global Function CloseParameterFile
     * Global Function GetBatchPublisherCAA
@@ -32,6 +35,7 @@ The following are the new CAA V5R18 GA C++ Authorized APIs, compared with CAA V5
     * Global Function GetOutputXMLFile
     * Global Function InitParameterFile
     * Interface CATBatClientMonitorCAA
+```
   * CAACompositesItf framework
     * Interface CATICciCompositesWorkbenchAddin
   * CATCloudEditorInterfaces framework
@@ -42,8 +46,10 @@ The following are the new CAA V5R18 GA C++ Authorized APIs, compared with CAA V5
   * CATImmENOVIAProvider framework
     * Class CATImmCAAServices
   * CATPDMBase framework
+```vbscript
     * Global Function ExtractDocsToFileDirectory
   * CATPDMBaseInterfaces framework
+```
     * Interface CATIPDMUEAllowDocumentLoading
   * CATPlantShipInterfaces framework
     * Class CATEAPspDesignValidation
@@ -163,17 +169,23 @@ The following are the new CAA V5R18 GA C++ Authorized APIs, compared with CAA V5
     * Enumeration CATMeasModeOfCalc
     * Interface CATIMeasurableInContext
   * System framework
+```vbscript
     * Global Function CATGetAppName
   * TopologicalOperators framework
+```
     * Enumeration CATFilletSectionType
+```vbscript
     * Global Function CATCreateTopNewSplitShell
     * Global Function CATCreateTopNewSplitWire
   * VPMDesktopObjects framework
+```
     * Interface CATIAVPMVDADuplicatePRC
   * Visualization framework
+```vbscript
     * Global Function CATVisGetCurvedPipeGPFromRep
     * Global Function CATVisGetCylinderGPFromRep
     * Interface CATColorManager
+```
     * Interface CATIColorChooser
   * VisualizationBase framework
     * Macro or #define COLOR_INHERITANCE
@@ -193,4 +205,7 @@ History Version: **1** [Apr 2007] | Document created
 * * *
 
 _Copyright © 1999-2007, Dassault Systèmes. All rights reserved._
+```vbscript
 Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.md) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.md) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.md)
+
+```

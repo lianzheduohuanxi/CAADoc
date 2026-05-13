@@ -4,13 +4,13 @@ title: "Creating Contextual Menus"
 category: "use-case"
 module: "CAADegTechArticles"
 tags: ["CAAAnalysisEltTypeCmd", "CAAAnalysisLogCmd", "CAAILine", "CAAxxxCmd"]
-source_file: "Doc/online/CAADegTechArticles/CAADegCtxMenu.htm"
+source_file: "Doc/online/CAADegTechArticles/CAADegCtxMenu.htmmd"
 converted: "2026-05-11T17:33:49.774351"
 ```
 
 ---
 tags: ["CAAAnalysisEltTypeCmd", "CAAAnalysisLogCmd", "CAAILine", "CAAxxxCmd"]
-source_file: "Doc/online/CAADegTechArticles/CAADegCtxMenu.htm"
+source_file: "Doc/online/CAADegTechArticles/CAADegCtxMenu.htmmd"
 converted: "2026-05-11T17:33:49.774351"
 3D PLM Enterprise Architecture |  User Interface - Commands |  Creating Contextual Menus _How to add items to contextual menus when your command is the current one_
 
@@ -46,14 +46,16 @@ For Objects Implementing a Given Interface The command we use as example enables
   Clicking on one of these items displays the start, medium, or end point of the line. To display this contextual menu whenever the end user right clicks on such an object, the following should be done:
     * Create a selection dialog agent [1] that is dedicated to selecting objects that implement _CAAILine_
     * Create a state and a self transition [2] from/to this state triggered by the selection dialog agent valuation and whose action is to create the contextual menu
+```vbscript
     * Set callbacks [3] for each menu item
 Below is the code to write in the `BuildGraph` method:
+```
 
     ...
-    void CAAxxxCmd::BuildGraph()
+    void CAAxxxCmd::BuildGraph(#)
     {
       ...
-void CAAxxxCmd::BuildGraph()
+void CAAxxxCmd::BuildGraph(#)
       _daPathElement = new **CATPathElementAgent**("SelFirstLine");
       _daPathElement->**AddElementType**("CAAILine");
       _daPathElement->**SetBehavior**(**CATDlgEngWithContext** | **CATDlgEngRepeat**);
@@ -86,11 +88,11 @@ For All Objects and the Viewer Background The same command should now react to a
 
 ```vbscript
 For All Objects and the Viewer Background The same command should now react to any object whose representation is right clicked. This includes the viewer background. To do this, replace the `AddElementType` method by the `AcceptOnNotify` method to make the dialog agent match any right click, and remove the `CATDlgEngWithContext` behavior from the `AddElementType` method. The rest of the method is unchanged.
-    void CAAxxxCmd::BuildGraph()
+    void CAAxxxCmd::BuildGraph(#)
 ```
 
     {
-void CAAxxxCmd::BuildGraph()
+void CAAxxxCmd::BuildGraph(#)
       _daPathElement = new **CATPathElementAgent**("SelFirstLine");
       _daPathElement->**AcceptOnNotify**(NULL, "CATContext");
       _daPathElement->**SetBehavior**(**CATDlgEngRepeat**);
@@ -113,17 +115,17 @@ void CAAxxxCmd::BuildGraph()
 
 ```vbscript
 ```vbscript
-For the Viewer Background Only Another command should now only react to a right click in the viewer background. It proposes the following contextual menu. ![CAACtxMenu2.jpg \(2845 bytes\)](images/CAACtxMenu2.jpg) Clicking one of these items highlights the corresponding objects of the document. Below is the code to write in the `BuildGraph` method:
+For the Viewer Background Only Another command should now only react to a right click in the viewer background. It proposes the following contextual menu. ![CAACtxMenu2.jpg /(2845 bytes/)](images/CAACtxMenu2.jpg) Clicking one of these items highlights the corresponding objects of the document. Below is the code to write in the `BuildGraph` method:
 
 ```
 
 ```
 
     ...
-    void CAAAnalysisEltTypeCmd::BuildGraph()
+    void CAAAnalysisEltTypeCmd::BuildGraph(#)
     {
       ...
-void CAAAnalysisEltTypeCmd::BuildGraph()
+void CAAAnalysisEltTypeCmd::BuildGraph(#)
       _daPathElement = new **CATPathElementAgent**("pathelt");
       _daPathElement->**SetBehavior**( CATDlgEngWithContext | CATDlgEngRepeat );
 

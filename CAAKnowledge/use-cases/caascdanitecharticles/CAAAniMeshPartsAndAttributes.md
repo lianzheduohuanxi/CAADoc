@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "The Mesh Parts and their Attributes"
-category: "use-case"
+category: tech-article
 module: "CAAScdAniTechArticles"
 tags: []
-source_file: "Doc/online/CAAScdAniTechArticles/CAAAniMeshPartsAndAttributes.htm"
+source_file: "Doc/online/CAAScdAniTechArticles/CAAAniMeshPartsAndAttributes.htmmd"
 converted: "2026-05-11T17:31:51.914774"
 ```
 

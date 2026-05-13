@@ -4,13 +4,13 @@ title: "CAASchCompRefGraphic.CATScript"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAAScdSchUseCases", "CAASchCompRefGraphic", "CATIA", "CATIASchGRR", "CATIASchCompGraphic", "CAASCH_Detail03"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchCompRefGraphicSource.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchCompRefGraphicSource.htmmd"
 converted: "2026-05-11T17:31:51.333715"
 ```
 
 ---
 tags: ["CAAScdSchUseCases", "CAASchCompRefGraphic", "CATIA", "CATIASchGRR", "CATIASchCompGraphic", "CAASCH_Detail03"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchCompRefGraphicSource.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchCompRefGraphicSource.htmmd"
 converted: "2026-05-11T17:31:51.333715"
     Option Explicit
 
@@ -31,7 +31,10 @@ converted: "2026-05-11T17:31:51.333715"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
+
+```
 
 ```
 
@@ -41,18 +44,22 @@ converted: "2026-05-11T17:31:51.333715"
         ' -------------------------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String
+```vbscript
         sDocPath=CATIA.SystemService.Environ("CATDocView")
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
           Err.Raise 9999,sDocPath,"No Doc Path Defined"
 ```vbscript
+```
         End If
 ```
 
@@ -63,18 +70,23 @@ converted: "2026-05-11T17:31:51.333715"
 ```vbscript
         ' -------------------------------------------------------------------------
         ' Open the schematic document
+```vbscript
         Dim sFilePath
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
-
 ```
 
 ```
 
-                "online\CAAScdSchUseCases\samples\CAASCH_Detail03.CATProduct")
+```
+
+                "online/CAAScdSchUseCases/samples/CAASCH_Detail03.CATProduct")
 
 ```vbscript
+```vbscript
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+```vbscript
+```
 ```vbscript
 ```vbscript
         Dim objSchDoc As Document
@@ -83,14 +95,17 @@ sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
         Dim strMessage As String
 
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Dim strMessage As String
         strMessage = _
+```
 ```
 
           "--------------------------------------------------------------------" & vbCr
@@ -109,20 +124,30 @@ strMessage = strMessage & _
 ```
 
 ```vbscript
+```vbscript
         Dim objPrdRoot As Product
+```vbscript
+```
 ```vbscript
 ```vbscript
         Dim objSchRoot As SchematicRoot
         If ( Not ( objSchDoc Is Nothing ) ) Then
+```
+```vbscript
           Set objPrdRoot = objSchDoc.Product
           If ( Not ( objPrdRoot Is Nothing ) ) Then
+```
+```vbscript
             Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
           End If
+```
         End If
 
+```vbscript
         Dim objLCompRefs As SchListOfObjects
         Dim objCompRefGraphic As SchCompGraphic
 
+```
 ```
 
 ```
@@ -139,7 +164,9 @@ strMessage = strMessage & _
            '-----------------------------------------------------------------------
            ' Find a list of reference component in the model
            '-----------------------------------------------------------------------
+```vbscript
            Set objLCompRefs = objSchRoot.GetRefComponents
+```
 ```
 
 ```
@@ -157,7 +184,9 @@ strMessage = strMessage & _
               ' Get a SchCompGraphic interface handle from a reference
               ' component
               '--------------------------------------------------------------------
+```vbscript
               Set objCompRefGraphic = objLCompRefs.Item (1,"CATIASchCompGraphic")
+```
 ```
 
 ```
@@ -168,7 +197,9 @@ strMessage = strMessage & _
 ```vbscript
               If ( Not ( objCompRefGraphic Is Nothing ) ) Then
 
+```vbscript
                   Dim objUnassocSymbol As AnyObject
+```
 ```
 
 ```
@@ -180,7 +211,9 @@ strMessage = strMessage & _
                   ' Find a symbol that is not associated with any reference in
                   ' the model
                   '----------------------------------------------------------------
+```vbscript
                   Set objUnassocSymbol = GetComponentSymbol (objSchRoot)
+```
 ```
 
 ```
@@ -231,8 +264,10 @@ strMessage = strMessage & _
                   ' Find another symbol that is not associated with
                   ' any reference in the model
                   '----------------------------------------------------------------
+```vbscript
                   Set objUnassocSymbol = GetComponentSymbol (objSchRoot)
                   If ( Not ( objUnassocSymbol Is Nothing ) ) Then
+```
                     '--------------------------------------------------------------
                     '  Add the third graphical representation to the reference
                     '  component using the symbol just found
@@ -263,15 +298,19 @@ strMessage = strMessage & _
 ```vbscript
                   End If
 
+```vbscript
                   Dim intNbGraphic As Integer
 ```
+```
 
+```vbscript
 ```vbscript
 ```vbscript
                   Dim objGRR As SchGRR
                   Dim objLGraphic As SchListOfObjects
                   Set objLGraphic = objCompRefGraphic.ListGraphicalRepresentations
 
+```
 ```
 
 ```
@@ -284,19 +323,25 @@ strMessage = strMessage & _
                      strMessage = strMessage & "Number of graphical representations"
                      strMessage = strMessage & "= " & intNbGraphic & vbCr
 
+```vbscript
                      Set objGRR = Nothing
 ```vbscript
+```
 ```vbscript
                      If (intNbGraphic > 1) Then
+```vbscript
                         Set objGRR = objLGraphic.Item(intNbGraphic,"CATIASchGRR")
                         If ( Not (objGRR Is Nothing ) ) Then
+```
 ```
 
 ```
 
                            objCompRefGraphic.RemoveGraphicalRepresentation objGRR
+```vbscript
                            Set objLGraphic = objCompRefGraphic.ListGraphicalRepresentations
 ```vbscript
+```
                            If ( Not ( objLGraphic Is Nothing ) ) Then
 ```
 
@@ -347,10 +392,15 @@ End If '--- If ( Not ( objSchRoot Is Nothing )...
 ```
 
           "--------------------------------------------------------------------" & vbCr
+```vbscript
         MsgBox strMessage
 
 ```vbscript
+```
+```vbscript
     End Sub
+
+```
 
 ```
 
@@ -368,21 +418,29 @@ End If '--- If ( Not ( objSchRoot Is Nothing )...
 ```
 
 ```vbscript
+```vbscript
     Private Function GetComponentSymbol (objSchRootArg As SchematicRoot) As AnyObject
        Dim objSchLSymbols As SchListOfObjects
+```
 ```
 
 ```vbscript
 ```vbscript
        If ( Not ( objSchRootArg Is Nothing ) ) Then
+```vbscript
           Set objSchLSymbols = objSchRootArg.GetUnassociatedSymbols
           If ( Not ( objSchLSymbols Is Nothing ) ) Then
+```
+```vbscript
              Set GetComponentSymbol = objSchLSymbols.Item (1,"CATIASchGRR")
           End If
+```
        End If
 ```
 
 ```
 
+```vbscript
     End Function
+```
 ```

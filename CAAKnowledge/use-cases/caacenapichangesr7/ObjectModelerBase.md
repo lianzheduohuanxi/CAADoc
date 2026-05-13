@@ -5,13 +5,13 @@ category: "use-case"
 module: "CAACenAPIChangesR7"
 version: "V5R7"
 tags: ["CATIPersistent", "CATICatalogManager"]
-source_file: "Doc/online/CAACenAPIChangesR7/ObjectModelerBase.htm"
+source_file: "Doc/online/CAACenAPIChangesR7/ObjectModelerBase.htmmd"
 converted: "2026-05-11T17:33:52.184516"
 ```
 
 ---
 tags: ["CATIPersistent", "CATICatalogManager"]
-source_file: "Doc/online/CAACenAPIChangesR7/ObjectModelerBase.htm"
+source_file: "Doc/online/CAACenAPIChangesR7/ObjectModelerBase.htmmd"
 converted: "2026-05-11T17:33:52.184516"
 CAA API Modifications|  ObjectModelerBase  |
 
@@ -34,9 +34,14 @@ ObjectModelerBase/Protected/CATSpecNotifications.h/CATModifNotification/~CATModi
 ObjectModelerBase/Protected/CATSpecNotifications.h/CATModifNotification/IsAKindOf| INDM| The class is L1 in R7 but no methods are exposed.
 ObjectModelerBase/Protected/CATSpecNotifications.h/CATModifNotification/IsA| INDM| The class is L1 in R7 but no methods are exposed.
 ObjectModelerBase/Protected/CATSpecNotifications.h/CATModifNotification/ClassName| INDM| The class is L1 in R7 but no methods are exposed.
+```vbscript
 ObjectModelerBase/Protected/CATSpecNotifications.h/CATModifNotification/GetObject| INDM| The class is L1 in R7 but no methods are exposed.
 ObjectModelerBase/Protected/CATSpecNotifications.h/CATCompoNotification/~CATCompoNotification| INDM| The class is L1 in R7 but no methods are exposed.
+```
 ObjectModelerBase/Protected/CATSpecNotifications.h/CATCompoNotification/IsAKindOf| INDM| The class is L1 in R7 but no methods are exposed.
 ObjectModelerBase/Protected/CATSpecNotifications.h/CATCompoNotification/IsA| INDM| The class is L1 in R7 but no methods are exposed.
 ObjectModelerBase/Protected/CATSpecNotifications.h/CATCompoNotification/ClassName| INDM| The class is L1 in R7 but no methods are exposed.
+```vbscript
 ObjectModelerBase/Protected/CATSpecNotifications.h/CATCompoNotification/GetObject| INDM| The class is L1 in R7 but no methods are exposed.
+
+```

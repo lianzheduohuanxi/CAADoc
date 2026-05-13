@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Saving and Restoring the Dialog Box State"
-category: "use case"
+category: use-case case"
 module: "CAADlgUseCases"
 tags: ["CAADlgDemoWindow", "CAADlgDialogDemonstrator", "CATISpecObject", "CAADlgFrameReplace", "CATInteractiveApplication", "CAADlgDemoApplication", "CAADialog", "CAADlgFrameReplaceDlg"]
-source_file: "Doc/online/CAADlgUseCases/CAADlgSampleSettings.htm"
+source_file: "Doc/online/CAADlgUseCases/CAADlgSampleSettings.htmmd"
 converted: "2026-05-11T17:17:55.997189"
 ```
 
@@ -101,10 +101,10 @@ When the `CAADlgDialogDemonstrator` application is launched:
 The CAADlgFrameReplace use case is made of several classes located in the CAADlgDialogDemonstrator.m module of the CAADialog.edu framework:
 
 The CAADlgFrameReplace use case is made of several classes located in the CAADlgDialogDemonstrator.m module of the CAADialog.edu framework:
-Windows | `InstallRootDirectory\CAADialog.edu\CAADlgDialogDemonstrator.m\`
+Windows | `InstallRootDirectory/CAADialog.edu/CAADlgDialogDemonstrator.m/`
 
 The CAADlgFrameReplace use case is made of several classes located in the CAADlgDialogDemonstrator.m module of the CAADialog.edu framework:
-Windows | `InstallRootDirectory\CAADialog.edu\CAADlgDialogDemonstrator.m\`
+Windows | `InstallRootDirectory/CAADialog.edu/CAADlgDialogDemonstrator.m/`
 Unix | `InstallRootDirectory/CAADialog.edu/CAADlgDialogDemonstrator.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -145,14 +145,14 @@ class CAADlgFrameReplaceDlg: public **CATDlgDialog**
       public:
 
           CAADlgFrameReplaceDlg(CATDialog * pParentDlg);
-          virtual ~CAADlgFrameReplaceDlg();
+          virtual ~CAADlgFrameReplaceDlg(#);
 
-          void Build ();
+          void Build (#);
 
       private:
 
           ...
-void Build ();
+void Build (#);
 private:
           virtual void **CloseWindowOK** (CATCommand * iSendingCommand,
                                     CATNotification * iSentNotification,
@@ -219,11 +219,11 @@ _pSpinnerY(NULL),_pSpinnerZ(NULL)
 In the _CAADlgFrameReplaceDlg_ class destructor you have just to set NULL the `_pSettingFrameReplace` pointer.
 
 In the _CAADlgFrameReplaceDlg_ class destructor you have just to set NULL the `_pSettingFrameReplace` pointer.
-    CAADlgFrameReplaceDlg::~CAADlgFrameReplaceDlg()
+    CAADlgFrameReplaceDlg::~CAADlgFrameReplaceDlg(#)
 
     {
 In the _CAADlgFrameReplaceDlg_ class destructor you have just to set NULL the `_pSettingFrameReplace` pointer.
-CAADlgFrameReplaceDlg::~CAADlgFrameReplaceDlg()
+CAADlgFrameReplaceDlg::~CAADlgFrameReplaceDlg(#)
         _pSettingFrameReplace = NULL ;
 
         ...
@@ -237,11 +237,11 @@ CAADlgFrameReplaceDlg::~CAADlgFrameReplaceDlg()
 The `Build` method can be divided in three parts:
 
 The `Build` method can be divided in three parts:
-    void CAADlgFrameReplaceDlg::Build()
+    void CAADlgFrameReplaceDlg::Build(#)
 
     {
 The `Build` method can be divided in three parts:
-void CAADlgFrameReplaceDlg::Build()
+void CAADlgFrameReplaceDlg::Build(#)
        a/ Creating the Dialog objects and Arranging them
 
        b/ Retrieving the initial values
@@ -323,7 +323,7 @@ _pSettingFrameReplace->**ReadSetting**("**ComboPointType** ",&_CurrentSelection)
     ...
        AddAnalyseNotificationCB (this,
 ```vbscript
-                                   GetDiaCANCELNotification(),
+                                   GetDiaCANCELNotification(#),
 ```
 
                                    (CATCommandMethod)&CAADlgFrameReplaceDlg::**CloseWindow** ,
@@ -331,14 +331,14 @@ _pSettingFrameReplace->**ReadSetting**("**ComboPointType** ",&_CurrentSelection)
 
        AddAnalyseNotificationCB (this,
 ```vbscript
-                                   GetDiaOKNotification(),
+                                   GetDiaOKNotification(#),
 ```
 
                                    (CATCommandMethod)&CAADlgFrameReplaceDlg::**CloseWindowOK** ,
                                    NULL);
        AddAnalyseNotificationCB (this,
 ```vbscript
-                                   GetWindCloseNotification(),
+                                   GetWindCloseNotification(#),
 ```
 
                                    (CATCommandMethod)&CAADlgFrameReplaceDlg::**CloseWindow** ,
@@ -383,13 +383,13 @@ if ( NULL != _pSettingFrameReplace )
 if ( NULL != _pComboPointType )
 ```
 
-              int PointType = _pComboPointType->GetSelect() ;
+              int PointType = _pComboPointType->GetSelect(#) ;
               _pSettingFrameReplace->**WriteSetting**("ComboPointType",&PointType);
 ```
 
            }
 
-int PointType = _pComboPointType->GetSelect() ;
+int PointType = _pComboPointType->GetSelect(#) ;
 _pSettingFrameReplace->**WriteSetting**("ComboPointType",&PointType);
 ```vbscript
            if ( (NULL !=_pSpinnerX) && (NULL !=_pSpinnerY) && (NULL !=_pSpinnerZ) )
@@ -399,11 +399,11 @@ _pSettingFrameReplace->**WriteSetting**("ComboPointType",&PointType);
            {
 _pSettingFrameReplace->**WriteSetting**("ComboPointType",&PointType);
 if ( (NULL !=_pSpinnerX) && (NULL !=_pSpinnerY) && (NULL !=_pSpinnerZ) )
-              double XVal = _pSpinnerX->GetValue() ;
+              double XVal = _pSpinnerX->GetValue(#) ;
               _pSettingFrameReplace->**WriteSetting**("XCoord",&XVal);
-              double YVal = _pSpinnerY->GetValue() ;
+              double YVal = _pSpinnerY->GetValue(#) ;
               _pSettingFrameReplace->**WriteSetting**("YCoord",&YVal);
-              double ZVal = _pSpinnerZ->GetValue() ;
+              double ZVal = _pSpinnerZ->GetValue(#) ;
               _pSettingFrameReplace->**WriteSetting**("ZCoord",&ZVal);
 
            }
@@ -414,7 +414,7 @@ if ( (NULL !=_pSpinnerX) && (NULL !=_pSpinnerY) && (NULL !=_pSpinnerZ) )
 To retrieve the values after the session closing use the `SaveRepository` method. The setting repository is saved in a setting file whose the name is those of the setting repository.
 
     ...
-           _pSettingFrameReplace->**SaveRepository**();
+           _pSettingFrameReplace->**SaveRepository**(#);
      ...
     }
 

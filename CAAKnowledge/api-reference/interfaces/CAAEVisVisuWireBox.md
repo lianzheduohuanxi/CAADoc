@@ -2,7 +2,7 @@
 title: "CAAEVisVisuWireBox"
 type: "interface"
 module: "CAAVisualization"
-category: "framework"
+category: api-reference
 base: "CATExtIVisu"
 inheritance_chain: "CAAEVisVisuWireBox → CATExtIVisu"
 method_count: 1
@@ -25,3 +25,36 @@ verified: true
 
 - `CATExtIVisu.h`
 
+---
+
+## Interface Overview
+
+This interface inherits from **CATExtIVisu**. 
+
+**Inherited Methods**: Please refer to the base interface documentation above.
+
+---
+
+## Interface Overview
+
+This interface inherits from **from**. 
+
+**Inherited Methods**: Please refer to the base interface documentation above.
+
+---
+
+## Related Use Cases
+
+This interface is used in the following use cases:
+
+- [CAAVisSampleTempObject](../../use-cases/caaviscases/CAAVisSampleTempObject.md)
+
+## Interface Notes
+
+This interface is part of the **CAA** module.
+
+**Status**: This interface document is a template. Please refer to the official API documentation for more information.
+
+**Related Resources**:
+- [Quick References](../..//quick-refs/)
+- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)

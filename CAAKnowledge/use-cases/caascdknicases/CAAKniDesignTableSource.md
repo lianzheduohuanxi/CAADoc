@@ -4,13 +4,13 @@ title: "CAAKniDesignTable.CATScript"
 category: "use-case"
 module: "CAAScdKniUseCases"
 tags: ["CAAScdKniUseCases", "CATIA", "CAAKniDesignTable"]
-source_file: "Doc/online/CAAScdKniUseCases/CAAKniDesignTableSource.htm"
+source_file: "Doc/online/CAAScdKniUseCases/CAAKniDesignTableSource.htmmd"
 converted: "2026-05-11T17:31:51.978836"
 ```
 
 ---
 tags: ["CAAScdKniUseCases", "CATIA", "CAAKniDesignTable"]
-source_file: "Doc/online/CAAScdKniUseCases/CAAKniDesignTableSource.htm"
+source_file: "Doc/online/CAAScdKniUseCases/CAAKniDesignTableSource.htmmd"
 converted: "2026-05-11T17:31:51.978836"
     Option Explicit
 ```vbscript
@@ -22,8 +22,10 @@ converted: "2026-05-11T17:31:51.978836"
 ```
 
 ```vbscript
+```vbscript
     Dim Language as String
     Language="VBScript"
+```
 ```
 
 ```vbscript
@@ -61,7 +63,10 @@ converted: "2026-05-11T17:31:51.978836"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
+
+```
 
 ```
 
@@ -71,61 +76,79 @@ converted: "2026-05-11T17:31:51.978836"
         ' -----------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String
+```vbscript
         sDocPath=CATIA.SystemService.Environ("CATDocView")
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
           Err.Raise 9999,,"No Doc Path Defined"
         End If
+```
         ' -----------------------------------------------------------
         ' Open the Part document
+```vbscript
         Dim sFilePath
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
-
 ```
 
 ```
 
-    		"online\CAAScdKniUseCases\samples\KwrMacro0.CATPart")
+```
+
+    		"online/CAAScdKniUseCases/samples/KwrMacro0.CATPart")
+```vbscript
 ```vbscript
 Dim sFilePath
+```vbscript
+```
 ```vbscript
 ```vbscript
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
         Dim oDoc As Document
         set oDoc = CATIA.Documents.Open(sFilePath)
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 ```vbscript
 ```vbscript
      ' Set the CATIA popup file alerts to False
      ' It prevents to stop the macro at each alert during its execution
+```
+```vbscript
      CATIA.DisplayFileAlerts = False
      ' Retrieve your active document - CATIA is your application
+```
      ' You get the active document by using the ActiveDocument property
      ' on your application object
+```vbscript
      Dim oActiveDoc As Document
      Set oActiveDoc = CATIA.ActiveDocument
     ' Check whether the document is a CATPart
+```
     ' InStr is a standard VB function
     If (InStr(oActiveDoc.Name,".CATPart")) <> 0  Then
+```vbscript
         ' Set the file system object containing the folder
         Dim oFileSys As FileSystem
         Set oFileSys = CATIA.FileSystem
         ' Define the design table path
+```
+```vbscript
         Dim sFolderPath As String
         sFolderPath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
-
 ```
 
 ```
 
-        "online\CAAScdKniUseCases\samples\KwrMacTable.xls")
+```
+
+        "online/CAAScdKniUseCases/samples/KwrMacTable.xls")
 ```vbscript
 ```vbscript
 ```vbscript
@@ -149,8 +172,10 @@ if (oFileSys.FileExists(sFolderPath) = False) then
 
 ```
 
+```vbscript
             MsgBox sFolderPath & " doesn't exist"
         else
+```
 ```
 
 ```vbscript
@@ -160,13 +185,17 @@ if (oFileSys.FileExists(sFolderPath) = False) then
             ' all the document relations.
             ' The statements below are only valid when the active
             ' document is a CATPart
+```vbscript
             Dim oRelations As Relations
             Set oRelations = oActiveDoc.Part.Relations
             ' Just to be clean before creating relations
+```
             ' Scan the collection of relations and remove the relations
             ' with name "DesignTable.1"
+```vbscript
             Dim i As Integer
             For i = 1 To oRelations.Count
+```
               if oRelations.Item(i).Name  = "DesignTable.1" then
 ```
 
@@ -175,7 +204,9 @@ if (oFileSys.FileExists(sFolderPath) = False) then
 ```
 
 ```vbscript
+```vbscript
 Dim i As Integer
+```
 ```
 
 For i = 1 To oRelations.Count
@@ -201,8 +232,10 @@ if oRelations.Item(i).Name  = "DesignTable.1" then
            ' Argument 1: Design table name
            ' Argument 2: Comment (empty here below)
            ' Argument 3: Allows you to specify whether you want to copy the
+```vbscript
            '             design table data in the document or not. Set this argument
            '             to True whenever you work on a platform (NT/Unix)
+```
            '             and intend to reuse your document on another platform
            '             (Unix/NT). Otherwise, set this argument to False
            ' Argument 4: design table path
@@ -213,9 +246,13 @@ if oRelations.Item(i).Name  = "DesignTable.1" then
 ```
 
 ```vbscript
+```vbscript
            Dim oDesignTable As DesignTable
 ```vbscript
+```
+```vbscript
            Set oDesignTable = oRelations.CreateDesignTable("DesignTable.1","",_
+```
 ```
 
                                                         False,_
@@ -227,37 +264,51 @@ if oRelations.Item(i).Name  = "DesignTable.1" then
 ```vbscript
            ' Retrieve the collection object which contains
            ' all the part bodies
+```vbscript
            Dim oBodies As Bodies
            Set oBodies = oActiveDoc.Part.Bodies
            ' Scan the Bodies collection to determine
+```
            ' whether a PartBody feature exists
            ' if the PartBody exists - creates two associations
+```vbscript
            Dim j As Integer
            For j = 1 to oBodies.Count
+```
               if oBodies.Item(j).Name  = "PartBody" then
                  ' Retrieve the "PartBody" item from the Bodies collection
+```vbscript
                  Dim oPartBody As AnyObject
                  Set oPartBody = CATIA.ActiveDocument.Part.Bodies.Item("PartBody")
                  ' Check there is at least one shape in the Part
+```
+```vbscript
                  Dim oShapes As Shapes
                  Set oShapes = oPartBody.Shapes
                  if (oShapes.Count <> 0) then
+```
                    ' Retrieve the Pad.1 object
+```vbscript
                    Dim Pad2 As AnyObject
                    Set Pad2 = oPartBody.Shapes.Item("Pad.1")
                    ' Creates two associations
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Dim Pad2 As AnyObject
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set Pad2 = oPartBody.Shapes.Item("Pad.1")
 ' Creates two associations
+```
 ```
 
 ```
@@ -303,7 +354,7 @@ Set Pad2 = oPartBody.Shapes.Item("Pad.1")
 
                 msgbox oDesignTable.ConfigurationsNb
                 If (oDesignTable.ConfigurationsNb < 10) Then
-                  oDesignTable.AddNewRow()
+                  oDesignTable.AddNewRow(#)
                 else
                   msgbox "configuration number = 10"
 ```vbscript
@@ -334,8 +385,10 @@ end if
 
 ```vbscript
 ```vbscript
+```vbscript
           CATIA.ActiveDocument.Part.Update
 
+```
 ```
 
 ```
@@ -343,8 +396,10 @@ end if
 ```vbscript
         End If
     else
+```vbscript
         MsgBox "The active document must be a CATPart"
 ```vbscript
+```
     End If
 
 ```
@@ -352,6 +407,8 @@ end if
 ```
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

@@ -4,13 +4,13 @@ title: "CAASchInternalFlow.CATScript"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CATIASchCompFlow", "CATIASchAppConnectable", "CAASchInternalFlow", "CAAScdSchUseCases", "CATIA", "CATIASchComponent", "CATIASchAppConnector", "CAASCH_Detail02"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchInternalFlowSource.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchInternalFlowSource.htmmd"
 converted: "2026-05-11T17:31:51.394565"
 ```
 
 ---
 tags: ["CATIASchCompFlow", "CATIASchAppConnectable", "CAASchInternalFlow", "CAAScdSchUseCases", "CATIA", "CATIASchComponent", "CATIASchAppConnector", "CAASCH_Detail02"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchInternalFlowSource.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchInternalFlowSource.htmmd"
 converted: "2026-05-11T17:31:51.394565"
     Option Explicit
 
@@ -31,7 +31,10 @@ converted: "2026-05-11T17:31:51.394565"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
+
+```
 
 ```
 
@@ -41,18 +44,22 @@ converted: "2026-05-11T17:31:51.394565"
         ' -------------------------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String
+```vbscript
         sDocPath=CATIA.SystemService.Environ("CATDocView")
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
           Err.Raise 9999,sDocPath,"No Doc Path Defined"
 ```vbscript
+```
         End If
 ```
 
@@ -63,18 +70,23 @@ converted: "2026-05-11T17:31:51.394565"
 ```vbscript
         ' -------------------------------------------------------------------------
         ' Open the schematic document
+```vbscript
         Dim sFilePath
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
-
 ```
 
 ```
 
-                "online\CAAScdSchUseCases\samples\CAASCH_Detail02.CATProduct")
+```
+
+                "online/CAAScdSchUseCases/samples/CAASCH_Detail02.CATProduct")
 
 ```vbscript
+```vbscript
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+```vbscript
+```
 ```vbscript
 ```vbscript
         Dim objSchDoc As Document
@@ -83,14 +95,17 @@ sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
         Dim strMessage As String
 
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Dim strMessage As String
         strMessage = _
+```
 ```
 
           "--------------------------------------------------------------------" & vbCr
@@ -109,17 +124,26 @@ strMessage = strMessage & _
 ```
 
 ```vbscript
+```vbscript
         Dim objPrdRoot As Product
+```vbscript
+```
 ```vbscript
 ```vbscript
         Dim objSchRoot As SchematicRoot
         If ( Not ( objSchDoc Is Nothing ) ) Then
+```
+```vbscript
           Set objPrdRoot = objSchDoc.Product
           If ( Not ( objPrdRoot Is Nothing ) ) Then
+```
+```vbscript
             Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
           End If
+```
         End If
 
+```vbscript
         Dim objLCompRefs As SchListOfObjects
         Dim objLCntr As SchListOfObjects
         Dim objCompRef As SchComponent
@@ -127,6 +151,7 @@ strMessage = strMessage & _
         Dim objCompFlow As SchCompFlow
         Dim objSchTempListFact As SchTempListFactory
 
+```
 ```
 
 ```
@@ -137,8 +162,10 @@ strMessage = strMessage & _
 ```vbscript
         If ( Not ( objSchRoot Is Nothing ) ) Then
 
+```vbscript
            Set objSchTempListFact = objSchRoot.GetTemporaryListFactory
 
+```
 ```
 
 ```
@@ -165,7 +192,9 @@ strMessage = strMessage & _
            '-----------------------------------------------------------------------
            ' Find a list of reference component in the model
            '-----------------------------------------------------------------------
+```vbscript
            Set objLCompRefs = objSchRoot.GetRefComponents
+```
 ```
 
 ```
@@ -176,8 +205,10 @@ strMessage = strMessage & _
 ```vbscript
            If ( Not ( objLCompRefs Is Nothing ) ) Then
 
+```vbscript
               Set objCompRef = objLCompRefs.Item (1,"CATIASchComponent")
 
+```
 ```
 
 ```
@@ -186,7 +217,9 @@ strMessage = strMessage & _
 ```vbscript
               If ( Not ( objCompRef Is Nothing ) ) Then
 
+```vbscript
                   Set objCompFlow = objSchRoot.GetInterface ( _
+```
 ```
 
 ```
@@ -197,8 +230,10 @@ strMessage = strMessage & _
 If ( Not ( objCompRef Is Nothing ) ) Then
 ```vbscript
 ```vbscript
+```vbscript
 Set objCompFlow = objSchRoot.GetInterface ( _
                   Set objCntbl = objSchRoot.GetInterface ( _
+```
 ```
 
 ```
@@ -207,11 +242,15 @@ Set objCompFlow = objSchRoot.GetInterface ( _
 
                     "CATIASchAppConnectable",objCompRef)
 ```vbscript
+```vbscript
 Set objCompFlow = objSchRoot.GetInterface ( _
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set objCntbl = objSchRoot.GetInterface ( _
               End If
+```
 
 ```
 
@@ -234,15 +273,18 @@ Set objCntbl = objSchRoot.GetInterface ( _
                  ' Find all the connectors associated with the reference
                  ' component
                  '-----------------------------------------------------------------
+```vbscript
                  Dim objLFilter As SchListOfBSTRs
                  Set objLFilter = Nothing
                  Set objLCntr = objCntbl.AppListConnectors (objLFilter)
                  '-----------------------------------------------------------------
+```
                  ' Add internal flow to the reference component.
                  ' 2 pairs:
                  ' Flow 1: connector 1 to connector 2
                  ' Flow 2: connector 1 to connector 3
                  '-----------------------------------------------------------------
+```vbscript
                  Dim intNbCntr As Integer
                  Dim objFlow1 As SchInternalFlow
                  Dim objFlow2 As SchInternalFlow
@@ -253,6 +295,7 @@ Set objCntbl = objSchRoot.GetInterface ( _
                  Dim objLCntr2 As SchListOfObjects
                  Dim objLFlow As SchListOfObjects
 ```
+```
 
 ```
 
@@ -260,7 +303,10 @@ Set objCntbl = objSchRoot.GetInterface ( _
 
                  intNbCntr = objLCntr.Count
 ```vbscript
+```vbscript
                  Set objLCntr1 = objSchTempListFact.CreateListOfObjects
+```vbscript
+```
 ```vbscript
 ```vbscript
                  Set objLCntr2 = objSchTempListFact.CreateListOfObjects
@@ -270,13 +316,17 @@ Set objCntbl = objSchRoot.GetInterface ( _
                  Set objCntr3 = Nothing
 
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
                  If ( intNbCntr > 0 ) Then Set objCntr1 = objLCntr.Item(1,"CATIASchAppConnector")
+```vbscript
+```
 ```vbscript
 ```vbscript
                  If ( intNbCntr > 1 ) Then Set objCntr2 = objLCntr.Item(2,"CATIASchAppConnector")
@@ -284,6 +334,7 @@ Set objCntbl = objSchRoot.GetInterface ( _
 
                  Set objFlow1 = Nothing
                  If ( Not objLCntr1 Is Nothing ) Then
+```
                     If ( Not ( objCntr1 Is Nothing ) And _
 ```
 
@@ -292,8 +343,10 @@ Set objCntbl = objSchRoot.GetInterface ( _
 
                        objLCntr1.Append (objCntr1)
                        objLCntr1.Append (objCntr2)
+```vbscript
                        Set objFlow1 = objCompFlow.AddInternalFlow (objLCntr1)
 ```vbscript
+```
                        If ( Not ( objFlow1 Is Nothing ) ) Then
 ```
 
@@ -303,7 +356,9 @@ Set objCntbl = objSchRoot.GetInterface ( _
                             "Internal flow between connector 1 and 2 created " & vbCr
 objLCntr1.Append (objCntr2)
 ```vbscript
+```vbscript
 Set objFlow1 = objCompFlow.AddInternalFlow (objLCntr1)
+```
 ```
 
 If ( Not ( objFlow1 Is Nothing ) ) Then
@@ -315,8 +370,10 @@ strMessage = strMessage & _
                     End If
                  End If '--- If ( Not objLCntr1 Is Nothing...
 
+```vbscript
                  Set objFlow2 = Nothing
                  If ( Not objLCntr2 Is Nothing ) Then
+```
                     If ( Not ( objCntr1 Is Nothing ) And _
 ```
 
@@ -325,8 +382,10 @@ strMessage = strMessage & _
 
                        objLCntr2.Append (objCntr1)
                        objLCntr2.Append (objCntr3)
+```vbscript
                        Set objFlow2 = objCompFlow.AddInternalFlow (objLCntr2)
 ```vbscript
+```
                        If ( Not ( objFlow2 Is Nothing ) ) Then
 ```
 
@@ -337,7 +396,9 @@ strMessage = strMessage & _
                             "Internal flow between connector 1 and 3 created " & vbCr
 objLCntr2.Append (objCntr3)
 ```vbscript
+```vbscript
 Set objFlow2 = objCompFlow.AddInternalFlow (objLCntr2)
+```
 ```
 
 If ( Not ( objFlow2 Is Nothing ) ) Then
@@ -363,10 +424,12 @@ strMessage = strMessage & _
                  ' associated to the reference component. There should be 2.
                  '-----------------------------------------------------------------
 
+```vbscript
                  Set objLFlow = objCompFlow.ListInternalFlows
 
                  Dim intNbFlow As Integer
                  If ( Not ( objLFlow Is Nothing ) ) Then
+```
 ```
 
 ```
@@ -416,9 +479,11 @@ strMessage = strMessage & _
                  ' Return a list of all the internal flows
                  ' associated to the reference component. There should be 1.
                  '-----------------------------------------------------------------
+```vbscript
                  Set objLFlow = Nothing
                  Set objLFlow = objCompFlow.ListInternalFlows
                  If ( Not ( objLFlow Is Nothing ) ) Then
+```
 ```
 
 ```
@@ -455,9 +520,13 @@ End If '--- If ( Not ( objSchRoot Is Nothing )...
 ```
 
           "--------------------------------------------------------------------" & vbCr
+```vbscript
         MsgBox strMessage
 
 ```vbscript
+```
+```vbscript
     End Sub
 
+```
 ```

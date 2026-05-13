@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Introduction to XML"
-category: "concept"
+category: tech-article
 module: "CAAXmlTechArticles"
 tags: ["CATIDOMElements", "CATIDOMText"]
-source_file: "Doc/online/CAAXmlTechArticles/CAAXmlIntroduction.htm"
+source_file: "Doc/online/CAAXmlTechArticles/CAAXmlIntroduction.htmmd"
 converted: "2026-05-11T17:33:45.680797"
 ```
 
@@ -54,7 +54,7 @@ XML (Extensible Markup Language) is a data description language. XML has many st
 
 XML documents are composed of elements, delimited by a start tag (of the form `**<** element_name**>**`) and an end tag (of the form `**< /**element_name**>**`). Elements can contain either other elements or free text. Every XML document has one and only one root element, which contains all the other elements. The following XML sample is provided to illustrate the anatomy of an XML document.
 
-![xmlsample.png \(15916 bytes\)](images/xmlsample.png)
+![xmlsample.png /(15916 bytes/)](images/xmlsample.png)
 
 XML documents are composed of elements, delimited by a start tag (of the form `**<** element_name**>**`) and an end tag (of the form `**< /**element_name**>**`). Elements can contain either other elements or free text. Every XML document has one and only one root element, which contains all the other elements. The following XML sample is provided to illustrate the anatomy of an XML document.
 The following syntactic constructs are the most common in XML documents.
@@ -139,7 +139,7 @@ Developers wanting to create, access or manipulate data stored in XML have APIs 
 
 The DOM API uses an object-oriented approach to describe XML documents. The DOM API defines interfaces to represent each of the constructs available in the XML language: elements, attributes, documents, characters, entities, comments, etc. These interfaces have inheritance relationship (a "comment" is a specialized form of "character data"). The inheritance hierarchy is rooted at the abstract "node" class. The following diagram shows the DOM V5 interface hierarchy.
 
-![domhierarchy.png \(8328 bytes\)](images/domhierarchy.png)
+![domhierarchy.png /(8328 bytes/)](images/domhierarchy.png)
 
 The DOM API views XML documents as a tree of XML nodes. The root element of the XML document corresponds to the root of the DOM tree. The sub-elements of the root element are the children of this root node. The following sample shows the DOM tree which corresponds to a sample XML document.
 
@@ -155,7 +155,7 @@ The DOM API views XML documents as a tree of XML nodes. The root element of the 
 
 ---
 
-![dominstance.png \(7116 bytes\)](images/dominstance.png)
+![dominstance.png /(7116 bytes/)](images/dominstance.png)
 
 The DOM API defines methods to parse documents (build the in-memory tree, which corresponds to an XML document), manipulate document (insert elements, edit attribute values, copy or delete sub-trees, etc.), and write documents (generate XML from an in-memory DOM tree).
 

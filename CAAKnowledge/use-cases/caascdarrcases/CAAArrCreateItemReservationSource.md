@@ -4,13 +4,13 @@ title: "CAAArrCreateItemReservation.CATScript"
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CAAArrCreateItemReservation", "CATIA"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateItemReservationSource.htm"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateItemReservationSource.htmmd"
 converted: "2026-05-11T17:31:51.552087"
 ```
 
 ---
 tags: ["CAAArrCreateItemReservation", "CATIA"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateItemReservationSource.htm"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateItemReservationSource.htmmd"
 converted: "2026-05-11T17:31:51.552087"
     Option Explicit
 
@@ -36,15 +36,20 @@ converted: "2026-05-11T17:31:51.552087"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
+
+```
 
 ```
 
 ```vbscript
 ```vbscript
 ```vbscript
+```vbscript
        ' On Error Resume Next
        '----------------------------------------------
+```
        'Create a new product document
 ```
 
@@ -53,12 +58,16 @@ converted: "2026-05-11T17:31:51.552087"
 ```
 
 ```vbscript
+```vbscript
        Dim objProdDoc        As ProductDocument
+```vbscript
+```
 ```vbscript
 ```vbscript
        Dim objRootProd       As Product
        Set objProdDoc      = CATIA.Documents.Add("Product")
        Set objRootProd     = objProdDoc.Product
+```
 ```
 
 ```
@@ -70,10 +79,12 @@ converted: "2026-05-11T17:31:51.552087"
 ```vbscript
        '----------------------------------------------
        'Retrieving Root Product's Relative Axis and Position Information
+```vbscript
        Dim objMove           As Move
        Dim objPosition       As Position
        Set objMove      = objRootProd.Move
        Set objPosition  = objRootProd.Position
+```
 ```
 
 ```
@@ -96,23 +107,31 @@ converted: "2026-05-11T17:31:51.552087"
 ```
 
 ```vbscript
+```vbscript
        Dim objArrProd        As ArrangementProduct
+```vbscript
+```
 ```vbscript
 ```vbscript
        Set objArrProd   = objRootProd.GetTechnologicalObject("ArrangementProduct")
 
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Dim objArrProd        As ArrangementProduct
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set objArrProd   = objRootProd.GetTechnologicalObject("ArrangementProduct")
        '----------------------------------------------
+```
        ' Create Item Reservation under the Root Product
 ```
 
@@ -121,29 +140,39 @@ Set objArrProd   = objRootProd.GetTechnologicalObject("ArrangementProduct")
 ```
 
 ```vbscript
+```vbscript
        Dim dblItemResPos(11)  As Double
+```vbscript
+```
 ```vbscript
 ```vbscript
        Dim objItemRes     As ArrangementItemReservation
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Dim dblItemResPos(11)  As Double
 ```vbscript
+```
+```vbscript
 Dim objItemRes     As ArrangementItemReservation
+```
 ```
 
        objPosition.GetComponents dblItemResPos
 ```
 
 ```vbscript
+```vbscript
        Set objItemRes      = objArrProd.ArrangementItemReservations.AddItemReservation(objMove, dblItemResPos, 200.0, 500.0, 200.0, 500.0, 0.0, 0.0)
 ```vbscript
+```
 ```vbscript
        '----------------------------------------------
        ' Change Properties of ArrangementItemReservation
@@ -156,6 +185,8 @@ Dim objItemRes     As ArrangementItemReservation
 ```
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

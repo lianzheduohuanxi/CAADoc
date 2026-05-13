@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Reading XML from a custom source"
-category: "use case"
+category: use-case case"
 module: "CAAXmlUseCases"
 tags: ["CATISAXXMLReader", "CATIXMLInputStream_var", "CAAXMLParser", "CATIXMLSAXFactory", "CATIXMLInputStream", "CAAXMLMultiFileStream", "CATIXMLDOMDocumentBuilder", "CATISAXParser", "CATIXMLDOMDocumentBuilder_var", "CATISAXInputSource", "CATIDOMDocument_var", "CATISAXInputSource_var", "CATIXMLSAXFactory_var", "CAAXMLCustomStream"]
-source_file: "Doc/online/CAAXmlUseCases/CAAXMLCustomStream.htm"
+source_file: "Doc/online/CAAXmlUseCases/CAAXMLCustomStream.htmmd"
 converted: "2026-05-11T17:33:45.595301"
 ```
 
@@ -66,11 +66,11 @@ where `<file1>` is the path of the file containing the first XML chunk, `<fileN>
 
 A sample XML file split in three chunks is provided with the use case. To use it, launch the following command from the command line:
 
-Windows | `cd InstallRoot\OS\resources\xml\CAAXMLCustomStream
+Windows | `cd InstallRoot/OS/resources/xml/CAAXMLCustomStream
 CAAXMLCustomStream caaxmlchunk1.xml caaxmlchunk2.xml caaxmlchunk3.xml`
 
 A sample XML file split in three chunks is provided with the use case. To use it, launch the following command from the command line:
-Windows | `cd InstallRoot\OS\resources\xml\CAAXMLCustomStream
+Windows | `cd InstallRoot/OS/resources/xml/CAAXMLCustomStream
 CAAXMLCustomStream caaxmlchunk1.xml caaxmlchunk2.xml caaxmlchunk3.xml`
 Unix | `cd InstallRoot/OS/resources/xml/CAAXMLCustomStream ; CAAXMLCustomStream caaxmlchunk1.xml caaxmlchunk2.xml caaxmlchunk3.xml`
 
@@ -90,10 +90,10 @@ where:
 The CAAXMLCustomStream use case is made of several classes located in the CAAXMLCustomStream.m module of the CAAXMLParser.edu framework:
 
 The CAAXMLCustomStream use case is made of several classes located in the CAAXMLCustomStream.m module of the CAAXMLParser.edu framework:
-Windows | `InstallRootDirectory\CAAXMLParser.edu\CAAXMLCustomStream.m\`
+Windows | `InstallRootDirectory/CAAXMLParser.edu/CAAXMLCustomStream.m/`
 
 The CAAXMLCustomStream use case is made of several classes located in the CAAXMLCustomStream.m module of the CAAXMLParser.edu framework:
-Windows | `InstallRootDirectory\CAAXMLParser.edu\CAAXMLCustomStream.m\`
+Windows | `InstallRootDirectory/CAAXMLParser.edu/CAAXMLCustomStream.m/`
 Unix | `InstallRootDirectory/CAAXMLParser.edu/CAAXMLCustomStream.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -118,9 +118,9 @@ Please note that most of the APIs from the XMLParser framework return a _HRESULT
     do {
 ```vbscript
 ```vbscript
-        hr = XMLParserAPI_1();
+        hr = XMLParserAPI_1(#);
         if (FAILED(hr)) { break; }
-        hr = XMLParserAPI_2();
+        hr = XMLParserAPI_2(#);
         if (FAILED(hr)) { break; }
 
 ```
@@ -128,13 +128,13 @@ Please note that most of the APIs from the XMLParser framework return a _HRESULT
 ```
 
         ...
-hr = XMLParserAPI_1();
+hr = XMLParserAPI_1(#);
 ```vbscript
 ```vbscript
 if (FAILED(hr)) { break; }
-hr = XMLParserAPI_2();
+hr = XMLParserAPI_2(#);
 if (FAILED(hr)) { break; }
-        hr = XMLParserAPI_N();
+        hr = XMLParserAPI_N(#);
         if (FAILED(hr)) { break; }
 
 ```
@@ -146,7 +146,7 @@ if (FAILED(hr)) { break; }
 if (FAILED(hr)) { break; }
 ```vbscript
 ```vbscript
-hr = XMLParserAPI_N();
+hr = XMLParserAPI_N(#);
 if (FAILED(hr)) { break; }
     if (FAILED(hr)) {
 ```
@@ -252,13 +252,13 @@ Note that the above code does not specify the CLSID of the component to use, so 
     ...
     CAAXMLMultiFileStream* customStreamImpl = new CAAXMLMultiFileStream(files);
     CATIXMLInputStream_var customStream = customStreamImpl;
-    customStreamImpl->Release();
+    customStreamImpl->Release(#);
     customStreamImpl = NULL;
 
     ...
 CAAXMLMultiFileStream* customStreamImpl = new CAAXMLMultiFileStream(files);
 CATIXMLInputStream_var customStream = customStreamImpl;
-customStreamImpl->Release();
+customStreamImpl->Release(#);
 customStreamImpl = NULL;
     CATISAXInputSource_var source;
 ```vbscript
@@ -270,9 +270,9 @@ customStreamImpl = NULL;
 
 ---
 
-To create a custom XML source, you first need to instantiate your custom XML stream component by doing a `new` of its main implementation class and getting its _CATIXMLInputStream_ handle. Then, you use the `CreateInputSourceFromStream` method from the _CATISAXInputSource_ interface to create the custom XML source. The methods takes as a parameter your custom implementation of the _CATIXMLInputStream_ interface. It uses this implementation to obtain the XML content to parse. ![catixmlinputstream.png \(1853 bytes\)](images/catixmlinputstream.png)
+To create a custom XML source, you first need to instantiate your custom XML stream component by doing a `new` of its main implementation class and getting its _CATIXMLInputStream_ handle. Then, you use the `CreateInputSourceFromStream` method from the _CATISAXInputSource_ interface to create the custom XML source. The methods takes as a parameter your custom implementation of the _CATIXMLInputStream_ interface. It uses this implementation to obtain the XML content to parse. ![catixmlinputstream.png /(1853 bytes/)](images/catixmlinputstream.png)
 
-![warning.gif \(206 bytes\)](../CAAIcons/images/warning.gif) The lifecycle of your _CATIXMLInputStream_ implementation depends on the lifecycle the _CATISAXInputSource_ object. As soon as the _CATISAXInputSource_ goes out of scope, the destructor of the _CATIXMLInputStream_ implementation will be called, provided that you do not have any other references on it. You can they perform cleanup and release resources in this destructor.
+![warning.gif /(206 bytes/)](../CAAIcons/images/warning.gif) The lifecycle of your _CATIXMLInputStream_ implementation depends on the lifecycle the _CATISAXInputSource_ object. As soon as the _CATISAXInputSource_ goes out of scope, the destructor of the _CATIXMLInputStream_ implementation will be called, provided that you do not have any other references on it. You can they perform cleanup and release resources in this destructor.
 
 [Top]
 #### Parse the Custom Source Using DOM
@@ -312,7 +312,7 @@ CATUnicodeString rawOutput;
     ...
 CATUnicodeString rawOutput;
 hr = builder->**Write**(document, rawOutput);
-    cout << rawOutput.ConvertToChar() << endl;
+    cout << rawOutput.ConvertToChar(#) << endl;
 
     ...
 

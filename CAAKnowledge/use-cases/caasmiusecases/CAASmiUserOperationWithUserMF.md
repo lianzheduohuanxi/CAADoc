@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAASmiUseCases"
 tags: ["CAASmiUserOperationGeometrySelCom", "CAADocStyleSheets", "CAASmiUserOperationGeometryPanel", "CAASmiUserOperationGeomUI", "CAAESmiUserOperationGeometryEditor", "CAASmiUserMachFeatureCatalog", "CAASurfaceMachiningItf", "CAASmiOperationSampleOverview", "CATIMfgViewAccess_var", "CATIMfgGeometryActivity", "CAAManufacturing", "CATISmgFactory", "CAASmgOperation", "CATISpecObject_var", "CAAUserMachiningFeatures", "CAADocUseCases", "CATIMfgViewAccess", "CATISmgNcGeometryManager", "CAASmiUserOperationWithUserMF", "CAASmgGuide"]
-source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationWithUserMF.htm"
+source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationWithUserMF.htmmd"
 converted: "2026-05-11T11:27:02.779107"
 ---
 
@@ -219,8 +219,6 @@ We will see now how to compute the tool path of our operation [3].
 
 *Copyright  2002, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 ...
   // Tie the implementation to its interface
@@ -236,7 +234,7 @@ We will see now how to compute the tool path of our operation [3].
   oRC = QueryInterface(IID_CATIMfgActivity, (void**) &amp;pActivity);
   if (SUCCEEDED(oRC))
   {
-    spMachFeature = pActivity-&gt;GetFeature(); 
+    spMachFeature = pActivity-&gt;GetFeature(#); 
     if (NULL_var == spMachFeature)
     {
       // Create a user machining feature
@@ -247,7 +245,7 @@ We will see now how to compute the tool path of our operation [3].
         pActivity-&gt;SetFeature(spMachFeature);
       }
     }
-    pActivity-&gt;Release();
+    pActivity-&gt;Release(#);
     pActivity = NULL;
   }
 
@@ -289,9 +287,9 @@ We will see now how to compute the tool path of our operation [3].
 ...	
   // Adds the feature in the MfgView
   SEQUENCE(CATBaseUnknown_ptr) ListOfMfgView;
-  spFeatCont->ListMembersHere(CATIMfgViewAccess::ClassName(), ListOfMfgView);
+  spFeatCont->ListMembersHere(CATIMfgViewAccess::ClassName(#), ListOfMfgView);
 
-  int NbMfgView = ListOfMfgView.length();
+  int NbMfgView = ListOfMfgView.length(#);
   if(NbMfgView)
   {
     CATBaseUnknown * pBaseView = ListOfMfgView[NbMfgView - 1];
@@ -300,7 +298,7 @@ We will see now how to compute the tool path of our operation [3].
       CATIMfgViewAccess_var spMfgView = pBaseView;
       if (spMfgView != NULL_var)
       spMfgView->AddFeature(oFeature);
-      pBaseView->Release();
+      pBaseView->Release(#);
     }
   }
   ...
@@ -321,7 +319,7 @@ We will see now how to compute the tool path of our operation [3].
   {
     // For zone management
     pEdit-&gt;Activate(NULL);
-    pEdit-&gt;Release();
+    pEdit-&gt;Release(#);
     pEdit = NULL;
   }
   ...
@@ -333,8 +331,8 @@ We will see now how to compute the tool path of our operation [3].
   HRESULT RC = _spGuide-&gt;QueryInterface(IID_CATISmgNcGeometryParameter, (void**) &amp;pSmgParameter);
   if (SUCCEEDED(RC))
   {
-    pSmgParameter-&gt;RemoveAll();
-    pSmgParameter-&gt;Release();
+    pSmgParameter-&gt;RemoveAll(#);
+    pSmgParameter-&gt;Release(#);
     pSmgParameter = NULL;
   }
   ...
@@ -348,7 +346,7 @@ We will see now how to compute the tool path of our operation [3].
   if (SUCCEEDED(RC))
   {
     pSmgFactory-&gt;CreateNcGeometryFeature(SmgEdgeType,spNcFeature);
-    pSmgFactory-&gt;Release();
+    pSmgFactory-&gt;Release(#);
   pSmgFactory = NULL;
   }
 
@@ -360,7 +358,7 @@ We will see now how to compute the tool path of our operation [3].
     if (SUCCEEDED(RC))
     {
       pSmgParameter-&gt;Add(spNcFeature);
-      pSmgParameter-&gt;Release();
+      pSmgParameter-&gt;Release(#);
       pSmgParameter = NULL;
     }
   }
@@ -373,8 +371,8 @@ We will see now how to compute the tool path of our operation [3].
   HRESULT RC = _spGuide-&gt;QueryInterface(IID_CATISmgNcGeometryParameter, (void**) &amp;pSmgParameter);
   if (SUCCEEDED(RC))
   {
-    pSmgParameter-&gt;Export();
-    pSmgParameter-&gt;Release();
+    pSmgParameter-&gt;Export(#);
+    pSmgParameter-&gt;Release(#);
     pSmgParameter = NULL;
   }
   ...

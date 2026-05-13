@@ -4,13 +4,13 @@ title: "New C++ Authorized APIs in CAA V5R19 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIEhiMechanicalImport", "CATIMfgCatalogServices", "CATIDlgTableViewLineModel", "CATIDrwCumulatedDimSystem", "CATITPSCylinder", "CATIDftElementInSystem", "CATIDrwDimSystem", "CATITPSThread", "CATIIniSearchJapaneseGraphNameCriterion", "CATICfgCatLnk", "CATIPspPlacePartOnRun", "CATICkeParm_var", "CATITPSPlane", "CATIPrdHandleImpactsOnInstance", "CAACloudQsrItf", "CATIDlgTableViewColumnModel", "CATIAApplicationFrame", "CATImplementHandler", "CATIQsrCAAPowerFit", "CATIGSMMask"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R19GANewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R19GANewCPPAPI.htmmd"
 converted: "2026-05-11T17:33:47.426935"
 ```
 
 ---
 tags: ["CATIEhiMechanicalImport", "CATIMfgCatalogServices", "CATIDlgTableViewLineModel", "CATIDrwCumulatedDimSystem", "CATITPSCylinder", "CATIDftElementInSystem", "CATIDrwDimSystem", "CATITPSThread", "CATIIniSearchJapaneseGraphNameCriterion", "CATICfgCatLnk", "CATIPspPlacePartOnRun", "CATICkeParm_var", "CATITPSPlane", "CATIPrdHandleImpactsOnInstance", "CAACloudQsrItf", "CATIDlgTableViewColumnModel", "CATIAApplicationFrame", "CATImplementHandler", "CATIQsrCAAPowerFit", "CATIGSMMask"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R19GANewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R19GANewCPPAPI.htmmd"
 converted: "2026-05-11T17:33:47.426935"
 CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R19 GA
 
@@ -21,15 +21,19 @@ The following are the new CAA V5R19 GA C++ Authorized APIs, compared with CAA V5
   * AdvancedMathematics framework
     * Macro or #define CATPolynomXR19NbStaticCoeff
     * Macro or #define CATPolynomXYR19NbStaticCoeff
+```vbscript
     * Global Function ComputeOptimalImage
     * Global Function ComputeOptimalImage
     * Global Function IsMonotone
     * Global Function MinimizeNewton
     * Global Function SolveNewton
   * ApplicationFrame framework
+```
+```vbscript
     * Global Function CATAfrSetCommandHeaderIconName
     * Global Function CATAfrSetCommandHeaderTitle
   * CAACloudQsrItf framework
+```
     * Interface CATIQsrCAAFactory
     * Interface CATIQsrCAAPowerFit
   * CATIAApplicationFrame framework
@@ -75,10 +79,12 @@ The following are the new CAA V5R19 GA C++ Authorized APIs, compared with CAA V5
   * CATPDMBase framework
     * Class CATPDMCATIAServices
     * Class CATPDMCSServices
+```vbscript
     * Global Function E2ESendTo
     * Global Function LoadFromPDM
     * Global Function SetEV5PersistencyMode
   * CATPDMBaseInterfaces framework
+```
     * Class CATListOfCATIPLMIdentificator
     * Interface CATIPDMUEResId
     * Interface CATIPLMIdentificator
@@ -139,11 +145,15 @@ The following are the new CAA V5R19 GA C++ Authorized APIs, compared with CAA V5
     * Macro or #define CATSphereManifoldType
     * Macro or #define CATSubdivisionManifoldType
     * Macro or #define CATTorusManifoldType
+```vbscript
     * Global Function SetNotScaledKnotVector
   * GeometricOperators framework
+```
     * Class CATCurveUserParameterization
+```vbscript
     * Global Function CATCreateCurveUserParameterization
   * InteractiveInterfaces framework
+```
     * Interface CATIIniSearchJapaneseGraphNameCriterion
     * Interface CATIIniSearchJapaneseNameCriterion
   * KnowledgeInterfaces framework
@@ -156,8 +166,10 @@ The following are the new CAA V5R19 GA C++ Authorized APIs, compared with CAA V5
     * Macro or #define CATToleranceCheckStandard
     * Macro or #define CATTolerance_CheckValue
     * Macro or #define CATTolerance_ControlDefault
+```vbscript
     * Global Function CATToleranceError
   * MecModInterfaces framework
+```
     * Interface CATIMmiInternalCopyWithLink
   * ObjectModelerBase framework
     * Class CATDocumentIntegrityServices
@@ -186,9 +198,11 @@ The following are the new CAA V5R19 GA C++ Authorized APIs, compared with CAA V5
     * Macro or #define CATLISTP_DEFINE
     * Macro or #define CATLISTV_DEFINE
   * TopologicalOperators framework
+```vbscript
     * Global Function CATCreateTopNewSplitShell
     * Global Function CATCreateTopTrim
   * VPMInterfaces framework
+```
     * Interface CATICfgCatLnk
     * Interface ENOVIMultiSiteObjectMng
     * Interface ENOVIObjectServiceCode
@@ -208,4 +222,7 @@ History Version: **1** [Mar 2008] | Document created
 * * *
 
 _Copyright © 1999-2008, Dassault Systèmes. All rights reserved._
+```vbscript
 Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.md) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.md) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.md)
+
+```

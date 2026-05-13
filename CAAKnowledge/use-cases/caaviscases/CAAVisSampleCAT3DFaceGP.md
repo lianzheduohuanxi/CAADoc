@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Tessellating and Displaying a Torus"
-category: "use case"
+category: use-case case"
 module: "CAAVisUseCases"
 tags: ["CAAVisBaseView", "CAAVisBaseDocument", "CAAVisBaseDefaultDocument", "CAAVisBasics", "CAAVisBaseApplication", "CAAVisualization"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleCAT3DFaceGP.htm"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleCAT3DFaceGP.htmmd"
 converted: "2026-05-11T17:31:52.036246"
 ```
 
@@ -73,10 +73,10 @@ The torus is displayed in a 3D navigation viewer as soon as the application is l
 The torus is displayed in a 3D navigation viewer as soon as the application is launched.
 The CAAVisBasics use case is made of several classes located in the CAAVisBasics.m module of the CAAVisualization.edu framework:
 
-Windows | `InstallRootDirectory\CAAVisualization.edu\CAAVisBasics.m\`
+Windows | `InstallRootDirectory/CAAVisualization.edu/CAAVisBasics.m/`
 
 The CAAVisBasics use case is made of several classes located in the CAAVisBasics.m module of the CAAVisualization.edu framework:
-Windows | `InstallRootDirectory\CAAVisualization.edu\CAAVisBasics.m\`
+Windows | `InstallRootDirectory/CAAVisualization.edu/CAAVisBasics.m/`
 Unix | `InstallRootDirectory/CAAVisualization.edu/CAAVisBasics.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -125,8 +125,10 @@ The two important parameters of the tessellation are the number of circles, and 
 3 | Create and fill in the arrays for the vertex coordinates and the normal components | `CreateRep` method of _CAAVisBaseDefaultDocument_
 4 | Create and fill in the arrays for the strip triangle vertex indices and the number of vertices per strip | `CreateRep` method of _CAAVisBaseDefaultDocument_
 5 | Create the graphic primitive and its associated bounding box | `CreateRep` method of _CAAVisBaseDefaultDocument_
+```vbscript
 6 | Set graphic attributes to the graphic primitive | `CreateRep` method of _CAAVisBaseDefaultDocument_
 7 | Create the 3D custom representation | `CreateRep` method of _CAAVisBaseDefaultDocument_
+```
 8 | Associate the representation with the graphic primitive | `CreateRep` method of _CAAVisBaseDefaultDocument_
 9 | Compute the representation bounding box | `CreateRep` method of _CAAVisBaseDefaultDocument_
 10 | Display the created 3D representation | `AddRepToViewer` method of _CATVisBaseView_
@@ -139,11 +141,11 @@ The torus is displayed when the CAAVisBasics application is launched. The torus 
 The 3D navigation viewer is an instance of the _CATNavigation3DViewer_ class. It is created in the `CreateViewer` method of the _CAAVisBaseView_ class that is called when the application is launched.
 
 The 3D navigation viewer is an instance of the _CATNavigation3DViewer_ class. It is created in the `CreateViewer` method of the _CAAVisBaseView_ class that is called when the application is launched.
-    void CAAVisBaseView::CreateViewer()
+    void CAAVisBaseView::CreateViewer(#)
 
     {
 The 3D navigation viewer is an instance of the _CATNavigation3DViewer_ class. It is created in the `CreateViewer` method of the _CAAVisBaseView_ class that is called when the application is launched.
-void CAAVisBaseView::CreateViewer()
+void CAAVisBaseView::CreateViewer(#)
       _pViewer = new CATNavigation3DViewer(this, "3DViewer",
                                           CATDlgFraNoTitle | CATDlgFraNoFrame,
                                           500, 500);
@@ -179,13 +181,13 @@ The _CAAVisBaseDefaultDocument_ constructor creates the representation bag to at
 CAAVisBaseDefaultDocument::CAAVisBaseDefaultDocument(CATCommand * iParent,
 CATDialog  * iDialogParent,
 CATString  * const iDocumentName)
-      _pRootContainer  = new CAT3DBagRep();
+      _pRootContainer  = new CAT3DBagRep(#);
 ```vbscript
-      CreateRep();
+      CreateRep(#);
 ```
 
       _pRootContainer->AddChild(*_pTorus);
-      AddRepToViewer();
+      AddRepToViewer(#);
 
     }
 
@@ -199,11 +201,11 @@ Let's examine what `CreateRep` does.
 First set the tessellation parameters.
 
 First set the tessellation parameters.
-    void CAAVisBaseDefaultDocument::CreateRep()
+    void CAAVisBaseDefaultDocument::CreateRep(#)
 
     {
 First set the tessellation parameters.
-void CAAVisBaseDefaultDocument::CreateRep()
+void CAAVisBaseDefaultDocument::CreateRep(#)
       int R = TORUS_RADIUS;
       int r = CIRCLE_RADIUS;
 
@@ -428,7 +430,7 @@ nbVertexPerTriangleFan,
                                             );
 nbVertexPerTriangleFan,
 ALLOCATE_VERTICES | ALLOCATE_NORMALS**
-      pFace->ComputeBox();
+      pFace->ComputeBox(#);
 
     ...
 
@@ -443,7 +445,10 @@ The graphic attribute set can be customized.
 
     ...
 The graphic attribute set can be customized.
+```vbscript
       CATGraphicAttributeSet pGraphicAttributes;
+
+```
 
       //We specify within the graphic attributs that our surface is a SOLID.
       pGraphicAttributes.SetType(3);
@@ -464,7 +469,7 @@ The value 3 passed as the parameter of `SetType` indicates that the graphic prim
 #### Creating the 3D Custom Representation
 
     ...
-      CAT3DCustomRep * _pTorusCustomRep = new CAT3DCustomRep();  // ou CAT3DCustomRep(pFace, pGraphicAttributes);
+      CAT3DCustomRep * _pTorusCustomRep = new CAT3DCustomRep(#);  // ou CAT3DCustomRep(pFace, pGraphicAttributes);
     ...
 
 ---
@@ -513,11 +518,11 @@ This bounding box is the sphere whose center is the torus center, and whose radi
 The `AddRepToViewer` method displays the created representation.
 
 The `AddRepToViewer` method displays the created representation.
-    void CAAVisBaseDocument::AddRepToViewer()
+    void CAAVisBaseDocument::AddRepToViewer(#)
 
     {
 The `AddRepToViewer` method displays the created representation.
-void CAAVisBaseDocument::AddRepToViewer()
+void CAAVisBaseDocument::AddRepToViewer(#)
       _pView->Add3DRep(_pRootContainer);
 
     }

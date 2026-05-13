@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating Dialog Boxes Automatically Resizable"
-category: "use case"
+category: use-case case"
 module: "CAADlgUseCases"
 tags: ["CAADlgMoreRadioDlg", "CAADlgMoreButtonDlg", "CAADlgDemoWindow", "CAADlgDialogDemonstrator", "CAADlgDemoApplication", "CATInteractiveApplication", "CAADialog", "CAADlgTabulation", "CAADlgFrameReplaceDlg"]
-source_file: "Doc/online/CAADlgUseCases/CAADlgSampleTabulation.htm"
+source_file: "Doc/online/CAADlgUseCases/CAADlgSampleTabulation.htmmd"
 converted: "2026-05-11T17:17:56.018174"
 ```
 
@@ -181,10 +181,10 @@ When the `CAADlgDialogDemonstrator` application is launched:
 The CAADlgTabulation use case is made of several classes located in the CAADlgDialogDemonstrator.m module of the CAADialog.edu framework:
 
 The CAADlgTabulation use case is made of several classes located in the CAADlgDialogDemonstrator.m module of the CAADialog.edu framework:
-Windows | `InstallRootDirectory\CAADialog.edu\CAADlgDialogDemonstrator.m\`
+Windows | `InstallRootDirectory/CAADialog.edu/CAADlgDialogDemonstrator.m/`
 
 The CAADlgTabulation use case is made of several classes located in the CAADlgDialogDemonstrator.m module of the CAADialog.edu framework:
-Windows | `InstallRootDirectory\CAADialog.edu\CAADlgDialogDemonstrator.m\`
+Windows | `InstallRootDirectory/CAADialog.edu/CAADlgDialogDemonstrator.m/`
 Unix | `InstallRootDirectory/CAADialog.edu/CAADlgDialogDemonstrator.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -243,11 +243,11 @@ The contents of this section depends on the Dialog box.
 
   1. The "**More/Less Push Button Demonstrato** r" Dialog box
 
-    void CAADlgMoreButtonDlg::Build()
+    void CAADlgMoreButtonDlg::Build(#)
 
     {
 1. The "**More/Less Push Button Demonstrato** r" Dialog box
-void CAADlgMoreButtonDlg::Build()
+void CAADlgMoreButtonDlg::Build(#)
        a/ Creating Dialog Objects
 
        b/ Arranging Dialog Objects
@@ -355,7 +355,7 @@ Inside the "Left More Frame" there are always a frame entitled "Base Options Fra
 
     ...
        **AddAnalyseNotificationCB**  (pPushButtonMore,
-                                  pPushButtonMore->**GetPushBActivateNotification**(),
+                                  pPushButtonMore->**GetPushBActivateNotification**(#),
          (CATCommandMethod)&CAADlgMoreButtonDlg::OnPushButtonMorePushBActivateNotification,
                        NULL);
 
@@ -373,11 +373,11 @@ To be advised that the end user has clicked on the More button you set a callbac
 
     ...
 2. The "**More & Radio Button Demonstrator**" Dialog box
-    void CAADlgMoreRadioDlg::Build()
+    void CAADlgMoreRadioDlg::Build(#)
 
     {
 2. The "**More & Radio Button Demonstrator**" Dialog box
-void CAADlgMoreRadioDlg::Build()
+void CAADlgMoreRadioDlg::Build(#)
       a/ Creating Dialog Objects
 
       b/ Arranging Dialog Objects
@@ -441,16 +441,16 @@ The three frames, `pFrameMain, _pFrameDetailA ` and ` _pFrameDetailB` are create
 
     ...
        AddAnalyseNotificationCB (**pRadioButtonND** ,
-                                   pRadioButtonND->**GetRadBModifyNotification**(),
+                                   pRadioButtonND->**GetRadBModifyNotification**(#),
          (CATCommandMethod)&CAADlgMoreRadioDlg::OnRadioButtonNDRadBModifyNotification,
                                    NULL);
        AddAnalyseNotificationCB (**pRadioButtonDB** ,
-                                   pRadioButtonDB->**GetRadBModifyNotification**(),
+                                   pRadioButtonDB->**GetRadBModifyNotification**(#),
          (CATCommandMethod)&CAADlgMoreRadioDlg::OnRadioButtonDBRadBModifyNotification,
                                    NULL);
 
        AddAnalyseNotificationCB (**pRadioButtonDA** ,
-                                   pRadioButtonDA->**GetRadBModifyNotification**(),
+                                   pRadioButtonDA->**GetRadBModifyNotification**(#),
          (CATCommandMethod)&CAADlgMoreRadioDlg::OnRadioButtonDARadBModifyNotification,
                                    NULL);
 
@@ -471,11 +471,11 @@ Same thing for the two other radio buttons.
     ...
 Same thing for the two other radio buttons.
 3. The "**Frame Replacement Demonstrator** " Dialog box
-    void CAADlgFrameReplaceDlg::Build()
+    void CAADlgFrameReplaceDlg::Build(#)
 
     {
 3. The "**Frame Replacement Demonstrator** " Dialog box
-void CAADlgFrameReplaceDlg::Build()
+void CAADlgFrameReplaceDlg::Build(#)
        a/ Creating Dialog objects
 
        b/ Arranging the Dialog Objects
@@ -527,7 +527,7 @@ The four `pFrameCombo, pFrameCoord, pFrameCircleCenter` and `pFrameBetween` fram
 
 `_pListFrame` is an array of _CATDlgFrame_ instances declared as data member of the _CAADlgFrameReplaceDlg_ class. It keeps the list of frames to switch. See its usage in the "Defining the Callback Method" section
 
-**Arranging Dialog Objects** \- Fig. 6
+**Arranging Dialog Objects** /- Fig. 6
 
     ...
        **SetHorizontalAttachment**(0,CATDlgTopOrLeft,pFrameCombo,NULL);
@@ -570,7 +570,7 @@ The "FrameCombo"` frame, pointed by `pFrameCombo`, is visible and attached to th
 
              ...
                 AddAnalyseNotificationCB (**_pComboPointType** ,
-                              _pComboPointType->**GetComboSelectNotification**(),
+                              _pComboPointType->**GetComboSelectNotification**(#),
                        (CATCommandMethod)&CAADlgFrameReplaceDlg::**OnComboSelectNotification** ,
                                             NULL);
 
@@ -689,7 +689,7 @@ CATDlgRadioButton * pRadioButton = (CATDlgRadioButton *) cmd ;
 if ( (NULL != _pFrameDetailA) && ( NULL != pRadioButton) )
 ```vbscript
 ```vbscript
-         if (pRadioButton->GetState() == **CATDlgCheck**)
+         if (pRadioButton->GetState(#) == **CATDlgCheck**)
 
 ```
 
@@ -699,7 +699,7 @@ if ( (NULL != _pFrameDetailA) && ( NULL != pRadioButton) )
 CATDlgRadioButton * pRadioButton = (CATDlgRadioButton *) cmd ;
 if ( (NULL != _pFrameDetailA) && ( NULL != pRadioButton) )
 ```vbscript
-if (pRadioButton->GetState() == **CATDlgCheck**)
+if (pRadioButton->GetState(#) == **CATDlgCheck**)
 ```
 
             S**etVerticalAttachment(10,** CATDlgTopOrLeft, _pFrameDetailA, NULL);
@@ -707,7 +707,7 @@ if (pRadioButton->GetState() == **CATDlgCheck**)
 
          }
 ```vbscript
-if (pRadioButton->GetState() == **CATDlgCheck**)
+if (pRadioButton->GetState(#) == **CATDlgCheck**)
 S**etVerticalAttachment(10,** CATDlgTopOrLeft, _pFrameDetailA, NULL);
 _pFrameDetailA->SetVisibility(**CATDlgShow**);
          else
@@ -759,12 +759,12 @@ void CAADlgFrameReplaceDlg::OnComboSelectNotification(CATCommand* cmd, CATNotifi
 if ( NULL != _pComboPointType )
           _pListFrame[_CurrentSelection]->SetVisibility(**CATDlgHide**);
 
-          int NewCurrentSelection = _pComboPointType->GetSelect() ;
+          int NewCurrentSelection = _pComboPointType->GetSelect(#) ;
 
           **SetHorizontalAttachment**(**5** , CATDlgTopOrLeft
                                          , _pListFrame[NewCurrentSelection], NULL);
 _pListFrame[_CurrentSelection]->SetVisibility(**CATDlgHide**);
-int NewCurrentSelection = _pComboPointType->GetSelect() ;
+int NewCurrentSelection = _pComboPointType->GetSelect(#) ;
           _pListFrame[NewCurrentSelection]->SetVisibility(**CATDlgShow**);
 
           _CurrentSelection = NewCurrentSelection ;

@@ -4,7 +4,7 @@ title: "Creating Symmetry Mesh Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniMeshSymmetry", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSymmetry.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSymmetry.htmmd"
 converted: "2026-05-11T17:31:51.719108"
 ```
 
@@ -38,20 +38,26 @@ This use case shows how to create a symmetry mesh part. Symmetry transformation 
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
+```vbscript
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
+```
 
+```vbscript
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
         End If
 ```
 
@@ -62,8 +68,10 @@ This use case shows how to create a symmetry mesh part. Symmetry transformation 
 ```vbscript
     ' -----------------------------------------------------------
     ' Open the Analysis document
-    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Surface.CATAnalysis")
+```vbscript
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Surface.CATAnalysis")
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+```
 ```
 
 ```
@@ -84,9 +92,13 @@ Open the Analysis document. The Analysis document is retrieved in the documentat
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisManagar = oAnalysisDocument.Analysis
 ```vbscript
+```
+```vbscript
     Set oAnalysisSet = oAnalysisManagar.AnalysisSets
+```
 ```
 
 ```
@@ -95,18 +107,26 @@ Open the Analysis document. The Analysis document is retrieved in the documentat
 ```vbscript
 ```vbscript
     ' Retrieve the part document and product
+```vbscript
     Set oAnalysisLinkedDocuments = oAnalysisManagar.LinkedDocuments
     Set partDocument = oAnalysisLinkedDocuments.Item(1)
     Set product = partDocument.Product
     ' Retrieve the analysis model
+```
+```vbscript
     Set oAnalysisModels = oAnalysisManagar.AnalysisModels
     Set oAnalysisModel = oAnalysisModels.Item(1)
     'Retrieve the mesh manager and list of mesh parts
+```
+```vbscript
     Set oAnalysisMeshManager = oAnalysisModel.MeshManager
     Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
     Set surfMesh = oAnalysisMeshParts.Item("Surface Mesh.1")
     'Create the reference of the surface mesh
+```
+```vbscript
     Set reference = oAnalysisManagar.CreateReferenceFromObject(surfMesh)
+```
 ```
 
 ```
@@ -117,11 +137,11 @@ Open the Analysis document. The Analysis document is retrieved in the documentat
 
 ---
 
-According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. The extraction of pre-defined geometric elements is done by using the Reference interface. This is equivalent to the selection of B-Rep elements inside the interactive application. In this macro the reference is created from the surface mesh part.
+According to the general [ Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. The extraction of pre-defined geometric elements is done by using the Reference interface. This is equivalent to the selection of B-Rep elements inside the interactive application. In this macro the reference is created from the surface mesh part.
 #### Creating the Mesh Part and Assigning Values to its Attributes.
 
     ...
-According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. The extraction of pre-defined geometric elements is done by using the Reference interface. This is equivalent to the selection of B-Rep elements inside the interactive application. In this macro the reference is created from the surface mesh part.
+According to the general [ Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. The extraction of pre-defined geometric elements is done by using the Reference interface. This is equivalent to the selection of B-Rep elements inside the interactive application. In this macro the reference is created from the surface mesh part.
 ```vbscript
 ```vbscript
     'Add the mesh part to list of mesh parts
@@ -131,8 +151,10 @@ According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniToc
 ```
 
 ```vbscript
+```vbscript
     Set meshTrans = oAnalysisMeshParts.Add("MSHPartSymmetry")
 ```vbscript
+```
     'Assign the reference to the mesh part
 ```
 
@@ -150,7 +172,9 @@ meshTrans.AddSupportFromReference NOTHING, reference
     meshTrans.SetGlobalSpecification "Tolerance", "1.0 mm"
     meshTrans.SetGlobalSpecification "NbCopies", 2
 ```vbscript
+```vbscript
     'Set the specification; the plane of symmetry
+```
 ```
 
     meshTrans.SetSpecificationFromPublication "Direction", product, pubPlane, 0
@@ -168,14 +192,16 @@ meshTrans.AddSupportFromReference NOTHING, reference
 #### Epilog
 
     ...
+```vbscript
      End Sub
     ...
+```
 
 ---
 
 To run the macro interactively CATDocView and ADL_ODT_SLASH environment variables must be defined.
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

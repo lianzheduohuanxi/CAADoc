@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating an Add-in"
-category: "use case"
+category: use-case case"
 module: "CAAAfrUseCases"
 tags: ["CAAAfrFilletHdr", "CAAAfrGeoCreationWkbAddin", "CAAGeometry", "CAAAfrOperationToolsMnu", "CAAAfrUnionHdr", "CAAAfrTFilletStr", "CAAAfrGeoOperationAdnHeader", "CAAAfrSubstractHdr", "CAAAfrGeoOperationAdn", "CAAAfrMFilletStr", "CAAAfrOperationMbr", "CAAAfrMSubstractStr", "CAAApplicationFrame", "CAAAfrTSubstractStr", "CAAAfrOperationTlb", "CAAAfrGeoOperationAddin", "CAAAfrOperationToolsSep", "CAAAfrTUnionStr", "CAAIAfrGeoCreationWkbAddin"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleAddin.htm"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleAddin.htmmd"
 converted: "2026-05-11T17:17:55.625620"
 ```
 
@@ -81,10 +81,10 @@ Do not type the module name on the command line, but type CNEXT instead. When th
 The CAAAfrGeoOperationAdn use case is made of a single class named _CAAAfrGeoOperationAdn_ located in the CAAAfrGeoCreationWkbAddin.m module of the CAAApplicationFrame.edu framework:
 
 The CAAAfrGeoOperationAdn use case is made of a single class named _CAAAfrGeoOperationAdn_ located in the CAAAfrGeoCreationWkbAddin.m module of the CAAApplicationFrame.edu framework:
-Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeoCreationWkbAddin.m\`
+Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeoCreationWkbAddin.m/`
 
 The CAAAfrGeoOperationAdn use case is made of a single class named _CAAAfrGeoOperationAdn_ located in the CAAAfrGeoCreationWkbAddin.m module of the CAAApplicationFrame.edu framework:
-Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeoCreationWkbAddin.m\`
+Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeoCreationWkbAddin.m/`
 Unix | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeoCreationWkbAddin.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -95,17 +95,17 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 To create the add-in, you should create the module directory to store the add-in code along with its two subdirectories LocalInterfaces and src. For this example, this directory is named CAAAfrGeoOperationAdn.m and can be found in the CAAApplicationFrame.edu framework. Then you will need to create the following files.
 
-In the CAAAfrGeoOperationAdn.m\LocalInterfaces directory:
+In the CAAAfrGeoOperationAdn.m/LocalInterfaces directory:
 
 ---
 To create the add-in, you should create the module directory to store the add-in code along with its two subdirectories LocalInterfaces and src. For this example, this directory is named CAAAfrGeoOperationAdn.m and can be found in the CAAApplicationFrame.edu framework. Then you will need to create the following files.
-In the CAAAfrGeoOperationAdn.m\LocalInterfaces directory:
+In the CAAAfrGeoOperationAdn.m/LocalInterfaces directory:
 CAAAfrGeoOperationAdn.h | The header file of the add-in description class
-In the CAAAfrGeoOperationAdn.m\src directory:
+In the CAAAfrGeoOperationAdn.m/src directory:
 CAAAfrGeoOperationAdn.cpp | The header file of the add-in description class
-In the dictionary, that is the CNext\code\dictionary directory, referenced at run time using the CATDictionaryPath environment variable, create or update:
+In the dictionary, that is the CNext/code/dictionary directory, referenced at run time using the CATDictionaryPath environment variable, create or update:
 CAAApplicationFrame.edu.dico | The interface dictionary
-In the CNext\resources\msgcatalog directory, referenced at run time using the CATMsgCatalogPath environment variable:
+In the CNext/resources/msgcatalog directory, referenced at run time using the CATMsgCatalogPath environment variable:
 CAAAfrGeoOperationAdn.CATNls | The add-in message file
 CAAAfrGeoOperationAdnHeader.CATNls and
 CAAAfrGeoOperationAdnHeader.CATRsc | The command header resource files
@@ -137,17 +137,17 @@ class CATCmdContainer;       // Needed by CreateToolbars
 class CAAAfrGeoOperationAdn : public CATBaseUnknown
            CATDeclareClass;
            public:
-              CAAAfrGeoOperationAdn();
-              virtual ~CAAAfrGeoOperationAdn();
+              CAAAfrGeoOperationAdn(#);
+              virtual ~CAAAfrGeoOperationAdn(#);
 
-              void CreateCommands();
-              CATCmdContainer * CreateToolbars();
+              void CreateCommands(#);
+              CATCmdContainer * CreateToolbars(#);
 
          };
 
 ---
-void CreateCommands();
-CATCmdContainer * CreateToolbars();
+void CreateCommands(#);
+CATCmdContainer * CreateToolbars(#);
   2. Create the CAAAfrGeoOperationAdn.cpp file
 
          // Local Framework
@@ -179,25 +179,25 @@ CATImplementClass(CAAAfrGeoOperationAdn, DataExtension,
 CATBaseUnknown, CAAAfrGeoOperationAddin);
          TIE_CAAIAfrGeoCreationWkbAddin(CAAAfrGeoOperationAdn);
 
-         CAAAfrGeoOperationAdn::CAAAfrGeoOperationAdn()
+         CAAAfrGeoOperationAdn::CAAAfrGeoOperationAdn(#)
 ```
 
          {}
 
 ```vbscript
 TIE_CAAIAfrGeoCreationWkbAddin(CAAAfrGeoOperationAdn);
-CAAAfrGeoOperationAdn::CAAAfrGeoOperationAdn()
-         CAAAfrGeoOperationAdn::~CAAAfrGeoOperationAdn()
+CAAAfrGeoOperationAdn::CAAAfrGeoOperationAdn(#)
+         CAAAfrGeoOperationAdn::~CAAAfrGeoOperationAdn(#)
 ```
 
          {}
 
-         void CAAAfrGeoOperationAdn::CreateCommands()
+         void CAAAfrGeoOperationAdn::CreateCommands(#)
          {
            ... // See Creating the Command Headers
          }
 
-         CATCmdContainer * CAAAfrGeoOperationAdn::CreateToolbars()
+         CATCmdContainer * CAAAfrGeoOperationAdn::CreateToolbars(#)
          {
            ... // See Creating the Toolbar and Arranging the Commands
          }
@@ -240,13 +240,13 @@ The `MacDeclareHeader` macro creates the header file and the source file for the
 
   2. Create the command headers in the empty `CreateCommands` method. This method should contain one instantiation statement of the command header class per command header. Each statement has the following form, for example for the Union command.
 
-         void CAAAfrGeoOperationAdn::CreateCommands()
+         void CAAAfrGeoOperationAdn::CreateCommands(#)
 ```
 
          {
            ...
 2. Create the command headers in the empty `CreateCommands` method. This method should contain one instantiation statement of the command header class per command header. Each statement has the following form, for example for the Union command.
-void CAAAfrGeoOperationAdn::CreateCommands()
+void CAAAfrGeoOperationAdn::CreateCommands(#)
            new CAAAfrGeoOperationAdnHeader("Union", "CommandLib",
 
                                            "UnionCmd", (void *)NULL):
@@ -271,10 +271,10 @@ Finally, we'll create the toolbar and arrange the commands. This is the job of t
   * Creating the toolbar
 
 Finally, we'll create the toolbar and arrange the commands. This is the job of the `CreateToolbars` method.
-        CATCmdContainer * CAAAfrGeoOperationAdn::CreateToolbars()
+        CATCmdContainer * CAAAfrGeoOperationAdn::CreateToolbars(#)
 
         {
-CATCmdContainer * CAAAfrGeoOperationAdn::CreateToolbars()
+CATCmdContainer * CAAAfrGeoOperationAdn::CreateToolbars(#)
           NewAccess(CATCmdContainer,pCAAAfrOperationTlb,CAAAfrOperationTlb);
 
               NewAccess(CATCmdStarter,pCAAAfrTUnionStr,CAAAfrTUnionStr);
@@ -311,12 +311,12 @@ Proceed in the same way for the other commands, except that they are set as next
 
   * Creating the menu items
 
-        CATCmdContainer * CAAAfrGeoOperationAdn::CreateToolbars()
+        CATCmdContainer * CAAAfrGeoOperationAdn::CreateToolbars(#)
         {
           ...
           **NewAccess**(CATCmdContainer,pCAAAfrOperationMbr,CAAAfrOperationMbr);
 
-CATCmdContainer * CAAAfrGeoOperationAdn::CreateToolbars()
+CATCmdContainer * CAAAfrGeoOperationAdn::CreateToolbars(#)
                NewAccess(CATCmdContainer,pCAAAfrOperationToolsMnu,**CATAfrToolsMnu**);
 ```vbscript
                SetAccessChild(pCAAAfrOperationMbr,pCAAAfrOperationToolsMnu);
@@ -360,7 +360,7 @@ Proceed in the same way for the other commands, except that they are set as next
 
   * Returning the toolbar
 
-        CATCmdContainer * CAAAfrGeoOperationAdn::CreateToolbars()
+        CATCmdContainer * CAAAfrGeoOperationAdn::CreateToolbars(#)
         {
           ...
 

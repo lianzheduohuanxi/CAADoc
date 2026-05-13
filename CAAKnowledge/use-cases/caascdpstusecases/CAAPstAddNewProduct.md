@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdPstUseCases"
 tags: ["CAAScrBase", "CAAPstPad1_1", "CAAPstPad1_2", "CATIA", "CAAScrJavaScript", "CAAScdPstUseCases", "CAAScdInfUseCases", "CAAPstAddNewProduct", "CAAPstAddNewProductSource", "CAAInfLauchMacro"]
-source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddNewProduct.htm"
+source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddNewProduct.htmmd"
 converted: "2026-05-11T11:27:02.578575"
 ---
 
@@ -15,7 +15,7 @@ converted: "2026-05-11T11:27:02.578575"
     
   
   
-    ![](../CAAScrBase/images/ainfo.gif)
+    ![image](../../assets/images/ainfo.gif)
     
       
 
@@ -24,7 +24,7 @@ CAAPstAddNewProduct is launched in CATIA [1].
       
 
 [CAAPstAddNewProduct.CATScript
-      ](CAAPstAddNewProductSource.htm)is located in the CAAScdPstUseCases module. [Execute
+      ](CAAPstAddNewProductSource.md)is located in the CAAScdPstUseCases module. [Execute
       macro](macros/CAAPstAddNewProduct.CATScript) (Windows only).
       
 
@@ -32,7 +32,7 @@ CAAPstAddNewProduct is launched in CATIA [1].
     
   
   
-    ![](../CAAScrBase/images/ascenari.gif)
+    ![image](../../assets/images/ascenari.gif)
     
       
 
@@ -111,7 +111,7 @@ Using the `AddMasterShapeRepresentation` method of the *Product
     
   
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 
@@ -148,35 +148,43 @@ two parts. Specifically, it has illustrated using:
 
 *Copyright  2001, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 ...
       'Create a new product document by adding a document with the Product type
       'to the document collection of the CATIA application. 
+```vbscript
       Dim oProductDoc As Document
       Set oProductDoc = CATIA.Documents.Add(&quot;Product&quot;)
 
       'Retrieve the root product.
+```
+```vbscript
       Dim oRootProduct As Product
       Set oRootProduct = oProductDoc.Product
+
+```
 
       'Declare the root product's part number and name.
       oRootProduct.PartNumber = &quot;Root&quot;
       oRootProduct.Name = &quot;The_Root_Product&quot;
 
       'Retrieve the product's collection under the root product.
+```vbscript
       Dim oRootChildren As Products
       Set oRootChildren = oRootProduct.Products 
   ...
+```
 ```
 
 ```vbscript
 ...
       'Add a new product to the collection. This adds both a product reference
       'and a product component.
+```vbscript
       Dim oChildProduct1 As Product
       Set oChildProduct1 = oRootChildren.AddNewProduct(&quot;Child_1_Type&quot;)
+
+```
 
       'Declare the part number and name for this product.
       oChildProduct1.PartNumber = &quot;Child_001&quot;
@@ -189,17 +197,21 @@ two parts. Specifically, it has illustrated using:
     'Add a representation to this product using an existing part and reframe
     'the viewer to display the part completely.
     oChildProduct1.AddMasterShapeRepresentation sDocPath &amp; &quot;CAAPstPad1_1.CATPart&quot;
+```vbscript
     CATIA.ActiveWindow.ActiveViewer.Reframe
   ...
+```
 ```
 
 ```vbscript
 ...
       'Add another product to the root product's collection.  This adds both
       'a product reference and a product component.
+```vbscript
       Dim oChildProduct2 As Product
       Set oChildProduct2 = oRootChildren.AddNewProduct(&quot;Child_2_Type&quot;)
 
+```
 
       'Declare the part number and name for this product.
       oChildProduct2.PartNumber = &quot;Child_002&quot;
@@ -212,6 +224,8 @@ two parts. Specifically, it has illustrated using:
     'Add a representation to this product using an existing part and reframe
     'the viewer to display the part completely.
     oChildProduct2.AddMasterShapeRepresentation sDocPath &amp; &quot;CAAPstPad1_2.CATPart&quot;
-    CATIA.ActiveWindow.ActiveViewer.Reframe()
+```vbscript
+    CATIA.ActiveWindow.ActiveViewer.Reframe(#)
   ...
+```
 ```

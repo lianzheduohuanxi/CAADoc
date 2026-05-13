@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Overview of the Topological Operators"
-category: "use case"
+category: use-case case"
 module: "CAATopUseCases"
 tags: ["CAAGemBrowser", "CATICGMObject", "CAATopJournal", "CAATopSpline", "CAATopOverview", "CATIA", "CATIntersectionCrvCrv", "CAATopologicalOperators", "CATICGMContainer"]
-source_file: "Doc/online/CAATopUseCases/CAATopOverview.htm"
+source_file: "Doc/online/CAATopUseCases/CAATopOverview.htmmd"
 converted: "2026-05-11T17:31:50.750855"
 ```
 
@@ -129,10 +129,10 @@ This NCGM file can be displayed using the CAAGemBrowser use case.
 The CAATopOverview use case is made of a main named CAATopOverview.cpp located in the CAATopOverview.m module of the CAATopologicalOperators.edu framework:
 
 The CAATopOverview use case is made of a main named CAATopOverview.cpp located in the CAATopOverview.m module of the CAATopologicalOperators.edu framework:
-Windows | `InstallRootDirectory\CAATopologicalOperators.edu\CAATopOverview.m\`
+Windows | `InstallRootDirectory/CAATopologicalOperators.edu/CAATopOverview.m/`
 
 The CAATopOverview use case is made of a main named CAATopOverview.cpp located in the CAATopOverview.m module of the CAATopologicalOperators.edu framework:
-Windows | `InstallRootDirectory\CAATopologicalOperators.edu\CAATopOverview.m\`
+Windows | `InstallRootDirectory/CAATopologicalOperators.edu/CAATopOverview.m/`
 Unix | `InstallRootDirectory/CAATopologicalOperators.edu/CAATopOverview.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -163,7 +163,7 @@ The CATGeoFactory creation itself is done by the global function `::CATCreateCGM
 
 Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
 
-    CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**() ;
+    CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**(#) ;
 ```vbscript
     if (NULL==piGeomFactory) return (1);
 
@@ -409,7 +409,7 @@ The geometry being created, the `CATTopSkin` can now be invoked according to the
 
     _// Creates the operator_
     _//_ _first defines an open configuration for the operator_
-    CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration();
+    CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration(#);
     _// defines the data of the operator: configuration + journal_
     CATTopData topdata(pConfig,NULL);
     _// now creates the operator_
@@ -444,10 +444,10 @@ if (NULL==pSkinOp)
 
 return (1);
     _// Runs_
-    pSkinOp->**Run**();
+    pSkinOp->**Run**(#);
 
     _// Gets the resulting body_
-    CATBody * piSkinBody = pSkinOp->**GetResult**();
+    CATBody * piSkinBody = pSkinOp->**GetResult**(#);
 ```vbscript
     if (NULL==piSkinBody)
 
@@ -456,7 +456,7 @@ return (1);
     {
           ::CATCloseCGMContainer(piGeomFactory);
 _// Gets the resulting body_
-CATBody * piSkinBody = pSkinOp->**GetResult**();
+CATBody * piSkinBody = pSkinOp->**GetResult**(#);
 if (NULL==piSkinBody)
 ```vbscript
           return (1);
@@ -526,12 +526,12 @@ if (NULL==pPrismOp)
     }
 
     // Runs
-    pPrismOp->**Run**();
+    pPrismOp->**Run**(#);
 
     // Gets the resulting body
-pPrismOp->**Run**();
+pPrismOp->**Run**(#);
     CATBody * piMainBody1=NULL;
-    piMainBody1 = pPrismOp->**GetResult**();
+    piMainBody1 = pPrismOp->**GetResult**(#);
 ```vbscript
 ```vbscript
     if (NULL==piMainBody1)
@@ -543,7 +543,7 @@ pPrismOp->**Run**();
     {
           ::CATCloseCGMContainer(piGeomFactory);
 CATBody * piMainBody1=NULL;
-piMainBody1 = pPrismOp->**GetResult**();
+piMainBody1 = pPrismOp->**GetResult**(#);
 ```vbscript
 if (NULL==piMainBody1)
           return (1);
@@ -597,7 +597,7 @@ if (NULL==pCuboidOp)
 return (1);
     _// Gets the result (the operator is run at is creation)_
     CATBody *piCuboidBody=NULL;
-    piCuboidBody = pCuboidOp->**GetResult**();
+    piCuboidBody = pCuboidOp->**GetResult**(#);
 ```vbscript
 ```vbscript
     if (NULL==piCuboidBody)
@@ -609,7 +609,7 @@ return (1);
     {
           ::CATCloseCGMContainer(piGeomFactory);
 CATBody *piCuboidBody=NULL;
-piCuboidBody = pCuboidOp->**GetResult**();
+piCuboidBody = pCuboidOp->**GetResult**(#);
 ```vbscript
 if (NULL==piCuboidBody)
           return (1);
@@ -667,7 +667,7 @@ if (NULL==pCylinderOp)
 return (1);
     _// Gets the resulting body (the operator is run at its creation)_
     CATBody *piCylinderBody = NULL;
-    piCylinderBody = pCylinderOp->**GetResult**();
+    piCylinderBody = pCylinderOp->**GetResult**(#);
 ```vbscript
 ```vbscript
     if (NULL==piCylinderBody)
@@ -679,7 +679,7 @@ return (1);
     {
           ::CATCloseCGMContainer(piGeomFactory);
 CATBody *piCylinderBody = NULL;
-piCylinderBody = pCylinderOp->**GetResult**();
+piCylinderBody = pCylinderOp->**GetResult**(#);
 ```vbscript
 if (NULL==piCylinderBody)
           return (1);
@@ -737,11 +737,11 @@ if (NULL==pBoolOp)
 
 return (1);
     _// Runs_
-    pBoolOp->Run();
+    pBoolOp->Run(#);
 
     _// Gets the resulting body_
     CATBody * piMainBody2 = NULL;
-    piMainBody2 = pBoolOp->**GetResult**();
+    piMainBody2 = pBoolOp->**GetResult**(#);
 ```vbscript
 ```vbscript
     if (NULL==piMainBody2)
@@ -753,7 +753,7 @@ return (1);
     {
           ::CATCloseCGMContainer(piGeomFactory);
 CATBody * piMainBody2 = NULL;
-piMainBody2 = pBoolOp->**GetResult**();
+piMainBody2 = pBoolOp->**GetResult**(#);
 ```vbscript
 if (NULL==piMainBody2)
           return (1);
@@ -811,11 +811,11 @@ if (NULL==pBoolOp)
 
 return (1);
     _// Runs_
-    pBoolOp->**Run**();
+    pBoolOp->**Run**(#);
 
     _// Gets the resulting body_
     CATBody * piMainBody3 = NULL;
-    piMainBody3 = pBoolOp->**GetResult**();
+    piMainBody3 = pBoolOp->**GetResult**(#);
 ```vbscript
 ```vbscript
     if (NULL==piMainBody3)
@@ -827,7 +827,7 @@ return (1);
     {
           ::CATCloseCGMContainer(piGeomFactory);
 CATBody * piMainBody3 = NULL;
-piMainBody3 = pBoolOp->**GetResult**();
+piMainBody3 = pBoolOp->**GetResult**(#);
 ```vbscript
 if (NULL==piMainBody3)
           return (1);
@@ -877,7 +877,7 @@ CATLISTP(CATCell) listFaces;
 ```
 
 piMainBody3 ->**GetAllCells**(listFaces,  _// the output list of cells_
-    int nbFaces=listFaces.Size();
+    int nbFaces=listFaces.Size(#);
     CATCell * piFace = NULL;
 
     _// ----------Recovers the only face with 2 internal loops_
@@ -890,7 +890,7 @@ _// ----------Recovers the only face with 2 internal loops_
 for ( i=1;i<=nbFaces;i++)
 ```vbscript
 ```vbscript
-    	if ( 3== (listFaces[i]->**GetNbDomains**()) ) piFace = listFaces[i];
+    	if ( 3== (listFaces[i]->**GetNbDomains**(#)) ) piFace = listFaces[i];
 
 ```
 
@@ -901,7 +901,7 @@ for ( i=1;i<=nbFaces;i++)
 ```vbscript
 for ( i=1;i<=nbFaces;i++)
 ```vbscript
-if ( 3== (listFaces[i]->**GetNbDomains**()) ) piFace = listFaces[i];
+if ( 3== (listFaces[i]->**GetNbDomains**(#)) ) piFace = listFaces[i];
 ```
 
     _// ---------- and the loop with 5 edges_
@@ -935,9 +935,9 @@ for (i=1;i<=3;i++)
 ```
 
             piLoop->**GetAllCells**(listC, 1);
-    	numberOfEdges = listC.Size();
+    	numberOfEdges = listC.Size(#);
 ```vbscript
-    	if (5==listC.Size())
+    	if (5==listC.Size(#))
 ```
 
 ```
@@ -945,10 +945,10 @@ for (i=1;i<=3;i++)
     	{
 piLoop = piFace->**GetDomain**(i);
 piLoop->**GetAllCells**(listC, 1);
-numberOfEdges = listC.Size();
+numberOfEdges = listC.Size(#);
 ```vbscript
 ```vbscript
-if (5==listC.Size())
+if (5==listC.Size(#))
               for (int j=1;j<=numberOfEdges;j++)
 
 ```
@@ -1062,13 +1062,13 @@ if (NULL==pFilletOp)
     pFilletOp ->**Append**(pRibbon);
 
     // Runs
-    pFilletOp ->**Run**();
+    pFilletOp ->**Run**(#);
 
     // Gets the resulting body
-pFilletOp ->**Run**();
+pFilletOp ->**Run**(#);
     CATBody * piMainBody4 = NULL;
 ```vbscript
-    piMainBody4 = pFilletOp->**GetResult**();
+    piMainBody4 = pFilletOp->**GetResult**(#);
 
     if (NULL==piMainBody4)
 
@@ -1076,7 +1076,7 @@ pFilletOp ->**Run**();
 
     {
       ::CATCloseCGMContainer(piGeomFactory);
-piMainBody4 = pFilletOp->**GetResult**();
+piMainBody4 = pFilletOp->**GetResult**(#);
 ```vbscript
 if (NULL==piMainBody4)
       return (1);
@@ -1106,7 +1106,7 @@ return (1);
 Take two offset bodies of one initial body. The shelling operation digs a volume by removing one offset body (internal) from the other one (external). Some faces can also be not offset: these faces are called openings. In the use case, the opening face is the bottom face of the prism: it is the unique face with five edges and one domain. The way to retrieve it is similar to the way used in the section Fillets. First void the list (`RemoveAll`), and remember that the list begins at 1!
 
 Take two offset bodies of one initial body. The shelling operation digs a volume by removing one offset body (internal) from the other one (external). Some faces can also be not offset: these faces are called openings. In the use case, the opening face is the bottom face of the prism: it is the unique face with five edges and one domain. The way to retrieve it is similar to the way used in the section Fillets. First void the list (`RemoveAll`), and remember that the list begins at 1!
-    listEdges.**RemoveAll**();
+    listEdges.**RemoveAll**(#);
     piFace = NULL;
 ```vbscript
     for (i=1;i<=nbFaces;i++)
@@ -1114,12 +1114,12 @@ Take two offset bodies of one initial body. The shelling operation digs a volume
 ```
 
     {
-listEdges.**RemoveAll**();
+listEdges.**RemoveAll**(#);
 piFace = NULL;
 for (i=1;i<=nbFaces;i++)
 ```vbscript
 ```vbscript
-     if ( 1== (listFaces[i]->**GetNbDomains**()) )
+     if ( 1== (listFaces[i]->**GetNbDomains**(#)) )
 
 ```
 
@@ -1130,17 +1130,17 @@ piFace = NULL;
 for (i=1;i<=nbFaces;i++)
 ```vbscript
 ```vbscript
-if ( 1== (listFaces[i]->**GetNbDomains**()) )
+if ( 1== (listFaces[i]->**GetNbDomains**(#)) )
        piLoop = listFaces[i]->**GetDomain**(1);
 ```
 
 ```
 
        piLoop ->**GetAllCells**(listC, 1);
-       numberOfEdges = listC.**Size**();
+       numberOfEdges = listC.**Size**(#);
 ```vbscript
 ```vbscript
-       if (5==listC.Size())
+       if (5==listC.Size(#))
 
 ```
 
@@ -1149,9 +1149,9 @@ if ( 1== (listFaces[i]->**GetNbDomains**()) )
        {
 piLoop = listFaces[i]->**GetDomain**(1);
 piLoop ->**GetAllCells**(listC, 1);
-numberOfEdges = listC.**Size**();
+numberOfEdges = listC.**Size**(#);
 ```vbscript
-if (5==listC.Size())
+if (5==listC.Size(#))
 ```
 
          piFace=listFaces[i];
@@ -1216,11 +1216,11 @@ return (1);
     pShellOp-> **Append**(openings);
 
     _// Runs_
-    pShellOp->**Run**();
+    pShellOp->**Run**(#);
 
     _// Gets the resulting body_
     CATBody * piMainBody5 = NULL;
-    piMainBody5 = pShellOp->**GetResult**();
+    piMainBody5 = pShellOp->**GetResult**(#);
 ```vbscript
     if (NULL==piMainBody5)
 ```
@@ -1230,7 +1230,7 @@ return (1);
     {
       ::CATCloseCGMContainer(piGeomFactory);
 CATBody * piMainBody5 = NULL;
-piMainBody5 = pShellOp->**GetResult**();
+piMainBody5 = pShellOp->**GetResult**(#);
 ```vbscript
 if (NULL==piMainBody5)
       return (1);
@@ -1271,12 +1271,12 @@ CATDynMassProperties3D *pPropOp = **CATDynCreateMassProperties3D** (piMainBody5)
     {
 CATDynMassProperties3D *pPropOp = **CATDynCreateMassProperties3D** (piMainBody5);
 if (NULL != pPropOp)
-       cout << "Volume of the final object" << pPropOp->**GetVolume**() << endl;
+       cout << "Volume of the final object" << pPropOp->**GetVolume**(#) << endl;
 
        **delete** pPropOp;
 CATDynMassProperties3D *pPropOp = **CATDynCreateMassProperties3D** (piMainBody5);
 if (NULL != pPropOp)
-cout << "Volume of the final object" << pPropOp->**GetVolume**() << endl;
+cout << "Volume of the final object" << pPropOp->**GetVolume**(#) << endl;
        pPropOp = NULL;
 
     }
@@ -1290,7 +1290,7 @@ Before ending, we must first release the software configuration.
 
 Before ending, we must first release the software configuration.
     _// Releases the configuration_
-        pConfig->Release();
+        pConfig->Release(#);
 
 ---
 
@@ -1319,7 +1319,7 @@ ofstream filetowrite(pfileName, ios::binary ) ;
     #endif
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
-       filetowrite.close();
+       filetowrite.close(#);
      }
 
      _//

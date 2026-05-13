@@ -4,7 +4,7 @@ title: "Saving an Existing CATIA Document"
 category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CAAInfSaveAsDocument", "CAAScdInfUseCases", "CAAInfReadDocument", "CAAInfOpenDocument", "CAAInfCloseDocument", "CATIA", "CAAInfSaveDocument"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfSaveDocument.htm"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfSaveDocument.htmmd"
 converted: "2026-05-11T17:31:52.395470"
 ```
 
@@ -41,7 +41,10 @@ This macro shows you how to save an existing CATIA document that is currently in
 ```
 
 ```vbscript
+```vbscript
            Dim sDocPath  As String
+```vbscript
+```
 ```vbscript
 ```vbscript
            sDocPath=CATIA.SystemService.Environ("CATDocView")
@@ -49,6 +52,7 @@ This macro shows you how to save an existing CATIA document that is currently in
            If (Not CATIA.FileSystem.FolderExists(sDocPath))  Then
               Err.Raise 9999,,"No Doc Path Defined"
            End If
+```
 
 ```
 
@@ -57,7 +61,9 @@ This macro shows you how to save an existing CATIA document that is currently in
 ```
 
 ```vbscript
+```vbscript
 Err.Raise 9999,,"No Doc Path Defined"
+```
 ```
 
 End If
@@ -81,20 +87,28 @@ End If
 ```
 
 ```vbscript
+```vbscript
           Dim iPartDoc As Document
+```vbscript
+```
 ```vbscript
           Set iPartDoc = CATIA.Documents.**Open**(sDocPath & _
 ```
+```
 
 ```
 
-            "\online\CAAScdInfUseCases\samples\CAAInfReadDocument.CATPart")
+            "/online/CAAScdInfUseCases/samples/CAAInfReadDocument.CATPart")
+```vbscript
 ```vbscript
 Dim iPartDoc As Document
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set iPartDoc = CATIA.Documents.**Open**(sDocPath & _
          'The document just opened is the active document.
+```
          'Save the active document and then close it.
 ```
 
@@ -102,10 +116,12 @@ Set iPartDoc = CATIA.Documents.**Open**(sDocPath & _
 
 ```
 
-          **CATIA.ActiveDocument.Save()**
-          **CATIA.ActiveDocument.Close()**
+```vbscript
+          **CATIA.ActiveDocument.Save(#)**
+          **CATIA.ActiveDocument.Close(#)**
 
      ...
+```
 
  ---
 
@@ -124,16 +140,20 @@ Set iPartDoc = CATIA.Documents.**Open**(sDocPath & _
 ```
 
 ```vbscript
+```vbscript
           Set iPartDoc = CATIA.Documents.**Open**(sDocPath & _
 ```
+```
 
-            "\online\CAAScdInfUseCases\samples\CAAInfReadDocument.CATPart")
+            "/online/CAAScdInfUseCases/samples/CAAInfReadDocument.CATPart")
 ```vbscript
 ```vbscript
 ```vbscript
 'Open the same document again.
+```vbscript
 Set iPartDoc = CATIA.Documents.**Open**(sDocPath & _
          'Save the document just opened using the variable name defined for it.
+```
          'Then, close the document in the same way.
 ```
 
@@ -141,8 +161,8 @@ Set iPartDoc = CATIA.Documents.**Open**(sDocPath & _
 
 ```
 
-          **iPartDoc.Save()
-          iPartDoc.Close()**
+          **iPartDoc.Save(#)
+          iPartDoc.Close(#)**
 
        ...
 
@@ -163,27 +183,35 @@ Set iPartDoc = CATIA.Documents.**Open**(sDocPath & _
 ```
 
 ```vbscript
+```vbscript
           Set iPartDoc = CATIA.Documents.**Open**(sDocPath & _
 ```
+```
 
-            "\online\CAAScdInfUseCases\samples\CAAInfReadDocument.CATPart")
+            "/online/CAAScdInfUseCases/samples/CAAInfReadDocument.CATPart")
 ```vbscript
 ```vbscript
 ```vbscript
 'Open the same document a third time.
+```vbscript
 Set iPartDoc = CATIA.Documents.**Open**(sDocPath & _
          'Save the document by specifying its name and then close it in the same way.
 ```
-
 ```
 
 ```
 
-          **CATIA.Documents.Item( "CAAInfReadDocument.CATPart").Save()
-```vbscript
-```vbscript
-          CATIA.Documents.Item("CAAInfReadDocument.CATPart").Close()**
+```
 
+```vbscript
+          **CATIA.Documents.Item( "CAAInfReadDocument.CATPart").Save(#)
+```vbscript
+```
+```vbscript
+```vbscript
+          CATIA.Documents.Item("CAAInfReadDocument.CATPart").Close(#)**
+
+```
 ```
 
 ```

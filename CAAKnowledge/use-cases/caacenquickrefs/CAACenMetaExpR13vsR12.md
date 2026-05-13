@@ -4,13 +4,13 @@ title: "Changes to ENOVIA LCA Metadata in V5R13 Compared with V5R12"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: []
-source_file: "Doc/online/CAACenQuickRefs/CAACenMetaExpR13vsR12.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenMetaExpR13vsR12.htmmd"
 converted: "2026-05-11T17:33:46.738859"
 ```
 
 ---
 tags: []
-source_file: "Doc/online/CAACenQuickRefs/CAACenMetaExpR13vsR12.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenMetaExpR13vsR12.htmmd"
 converted: "2026-05-11T17:33:46.738859"
 CAA V5 Encyclopedia |  Changes to ENOVIA LCA Metadata in V5R13 Compared with V5R12
 
@@ -47,8 +47,10 @@ Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Obj
 3 | 3 | 1 | New attribute | PRODUCT | TEMPLAT | VPMProductRootClass | Class |   | V513_VAR | List of Oid |   | V513_VAR | The list of children assembly relation objects that are physically under the current part version |
 3 | 3 | 0 | New attribute | PRODUCT | TEMPLAT | VPMProductSpecification | Class |   | V_project | Simple of String |   | V_project | The product specification creation owner organization |
 3 | 3 | 0 | New attribute | PRODUCT | TEMPLAT | VPMProductComponent | Class |   | V_project | Simple of String |   | V_project | The product component owner organization |
+```vbscript
 3 | 3 | 0 | New attribute | PRODUCT | TEMPLAT | VPMProductFunction | Class |   | V_project | Simple of String |   | V_project |   |
 3 | 3 | 0 | New attribute | PRODUCT | TEMPLAT | VPMItemInstance | Class |   | V_project | Simple of String |   | V_project | The item instance owner organization |
+```
 3 | 3 | 0 | New attribute | PRODUCT | TEMPLAT | VPMSubstituteRelation | Class |   | V_project | Simple of String |   | V_project |   |
 3 | 3 | 0 | New attribute | PRODUCT | TEMPLAT | VPMTransformRelation | Class |   | V_project | Simple of String |   | V_project |   |
 3 | 3 | 0 | New attribute | PRODUCT | TEMPLAT | VPMTechRelation | Class | VPMTPHistoricalConnexion | V_project | Simple of String | Inherited | V_project |   |
@@ -136,12 +138,14 @@ Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Obj
 3 | 2 | 0 | New object | ACTION |   | AFLProjectTask | Class | AFLAction | C_created | Simple of Timestamp | Inherited | C_created |   |
 3 | 2 | 0 | New object | ACTION |   | AFLProjectTask | Class | AFLAction | C_modified | Simple of Timestamp | Inherited | C_modified |   |
 3 | 2 | 0 | New object | ACTION |   | AFLProjectTask | Class | AFLAction | C508_isCompleted | Simple of Boolean | Inherited | C508_isCompleted |   |
+```vbscript
 3 | 2 | 0 | New object | ACTION |   | AFLProjectTask | Class | AFLAction | C_datas | Set of Oid | Inherited | C_datas |   |
 3 | 2 | 0 | New object | ACTION |   | AFLProjectTask | Class | AFLAction | C_histories | Set of Oid | Inherited | C_histories |   |
 3 | 2 | 0 | New object | ACTION |   | AFLProjectTask | Class | AFLAction | C_objects | Set of Oid | Inherited | C_objects |   |
 3 | 2 | 0 | New object | ACTION |   | AFLProjectTask | Class | AFLAction | C_attachements | Set of Oid | Inherited | C_attachements |   |
 3 | 2 | 0 | New object | ACTION |   | AFLProjectTask | Class | AFLAction | C506_resps | Set of Oid | Inherited | C506_resps |   |
 3 | 2 | 0 | New object | ACTION |   | AFLProjectTask | Class | AFLAction | C_Linked1 | Inverse of AFLLink.C_action1 (Set) | Inherited | C_Linked1 |   |
+```
 3 | 2 | 0 | New object | ACTION |   | AFLProjectTask | Class | AFLAction | C_Linked2 | Inverse of AFLLink.C_action2 (Set) | Inherited | C_Linked2 |   |
 2 | 2 | 1 | New object | ACTION |   | AFLProjectTaskLink | Class | AFLLink |   |   |   | AFLProjectTaskLink |   |
 3 | 2 | 1 | New object | ACTION |   | AFLProjectTaskLink | Class | AFLLink | V_relationType | Simple of String |   | V_relationType |   |
@@ -164,8 +168,10 @@ Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Obj
 3 | 3 | 0 | New attribute | APLAFL | ACTION | Action_Documentation | Class | AFLBaseAction | V_project | Simple of String | Inherited | V_project |   |
 3 | 3 | 0 | New attribute | APLAFL | ACTION | Action_SignOff | Class | AFLBaseAction | V_project | Simple of String | Inherited | V_project |   |
 2 | 2 | 1 | New object | APLAFL | ACTION | Action_ImpactAnalysis | Class | AFLBaseAction |   |   |   | Action_ImpactAnalysis |   |
+```vbscript
 3 | 2 | 0 | New object | APLAFL | ACTION | Action_ImpactAnalysis | Class | AFLBaseAction | C_products | Set of Oid | Inherited | C_products |   |
 3 | 2 | 0 | New object | APLAFL | ACTION | Action_ImpactAnalysis | Class | AFLBaseAction | V_name | Simple of String | Inherited | V_name |   |
+```
 3 | 2 | 0 | New object | APLAFL | ACTION | Action_ImpactAnalysis | Class | AFLBaseAction | V_description | Simple of String | Inherited | V_description |   |
 3 | 2 | 0 | New object | APLAFL | ACTION | Action_ImpactAnalysis | Class | AFLBaseAction | V_abstract | Simple of String | Inherited | V_abstract |   |
 3 | 2 | 0 | New object | APLAFL | ACTION | Action_ImpactAnalysis | Class | AFLBaseAction | V_creator | Simple of String | Inherited | V_creator |   |
@@ -190,12 +196,14 @@ Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Obj
 3 | 2 | 0 | New object | APLAFL | ACTION | Action_ImpactAnalysis | Class | AFLBaseAction | C_created | Simple of Timestamp | Inherited | C_created |   |
 3 | 2 | 0 | New object | APLAFL | ACTION | Action_ImpactAnalysis | Class | AFLBaseAction | C_modified | Simple of Timestamp | Inherited | C_modified |   |
 3 | 2 | 0 | New object | APLAFL | ACTION | Action_ImpactAnalysis | Class | AFLBaseAction | C508_isCompleted | Simple of Boolean | Inherited | C508_isCompleted |   |
+```vbscript
 3 | 2 | 0 | New object | APLAFL | ACTION | Action_ImpactAnalysis | Class | AFLBaseAction | C_datas | Set of Oid | Inherited | C_datas |   |
 3 | 2 | 0 | New object | APLAFL | ACTION | Action_ImpactAnalysis | Class | AFLBaseAction | C_histories | Set of Oid | Inherited | C_histories |   |
 3 | 2 | 0 | New object | APLAFL | ACTION | Action_ImpactAnalysis | Class | AFLBaseAction | C_objects | Set of Oid | Inherited | C_objects |   |
 3 | 2 | 0 | New object | APLAFL | ACTION | Action_ImpactAnalysis | Class | AFLBaseAction | C_attachements | Set of Oid | Inherited | C_attachements |   |
 3 | 2 | 0 | New object | APLAFL | ACTION | Action_ImpactAnalysis | Class | AFLBaseAction | C506_resps | Set of Oid | Inherited | C506_resps |   |
 3 | 2 | 0 | New object | APLAFL | ACTION | Action_ImpactAnalysis | Class | AFLBaseAction | C_Linked1 | Inverse of AFLLink.C_action1 (Set) | Inherited | C_Linked1 |   |
+```
 3 | 2 | 0 | New object | APLAFL | ACTION | Action_ImpactAnalysis | Class | AFLBaseAction | C_Linked2 | Inverse of AFLLink.C_action2 (Set) | Inherited | C_Linked2 |   |
 3 | 3 | 0 | New attribute | APLAFL | ACTION | Action_PenetrationRequest | Class | AFLBaseAction | V_project | Simple of String | Inherited | V_project |   |
 3 | 3 | 0 | New attribute | APLAFL | ACTION | Action_DSG_custo | Class | Action_Design | V_project | Simple of String | Inherited | V_project |   |
@@ -255,12 +263,14 @@ Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Obj
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFProceduralSubflow | Class | WFSubflowActivity | C_icon | Simple of String | Inherited | C_icon |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFProceduralSubflow | Class | WFSubflowActivity | C_expectedCFT | Simple of Integer | Inherited | C_expectedCFT |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFProceduralSubflow | Class | WFSubflowActivity | C_receivedCFT | Simple of Integer | Inherited | C_receivedCFT |   |
+```vbscript
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFProceduralSubflow | Class | WFSubflowActivity | C_CFTSourceNames | Set of String | Inherited | C_CFTSourceNames |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFProceduralSubflow | Class | WFSubflowActivity | C_expectedInputs | Set of String | Inherited | C_expectedInputs |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFProceduralSubflow | Class | WFSubflowActivity | C_expectedOutputs | Set of String | Inherited | C_expectedOutputs |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFProceduralSubflow | Class | WFSubflowActivity | C_inputs | Set of Oid | Inherited | C_inputs |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFProceduralSubflow | Class | WFSubflowActivity | C_outputs | Set of Oid | Inherited | C_outputs |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFProceduralSubflow | Class | WFSubflowActivity | C_TransRestriction | Simple of Oid | Inherited | C_TransRestriction |   |
+```
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFProceduralSubflow | Class | WFSubflowActivity | V_documentation | Simple of String | Inherited | V_documentation |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFProceduralSubflow | Class | WFSubflowActivity | V_entryCondition | Simple of String | Inherited | V_entryCondition |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFProceduralSubflow | Class | WFSubflowActivity | V_exitCondition | Simple of String | Inherited | V_exitCondition |   |
@@ -269,9 +279,11 @@ Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Obj
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFProceduralSubflow | Class | WFSubflowActivity | V_workingStatus | Simple of String | Inherited | V_workingStatus |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFProceduralSubflow | Class | WFSubflowActivity | V_workingLCycleName | Simple of String | Inherited | V_workingLCycleName |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFProceduralSubflow | Class | WFSubflowActivity | C_isVisited | Simple of Boolean | Inherited | C_isVisited |   |
+```vbscript
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFProceduralSubflow | Class | WFSubflowActivity | C_inTransitions | Set of Oid | Inherited | C_inTransitions |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFProceduralSubflow | Class | WFSubflowActivity | C_outTransitions | Set of Oid | Inherited | C_outTransitions |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFProceduralSubflow | Class | WFSubflowActivity | V_name | Simple of String | Inherited | V_name |   |
+```
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFProceduralSubflow | Class | WFSubflowActivity | V_description | Simple of String | Inherited | V_description |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFProceduralSubflow | Class | WFSubflowActivity | V_abstract | Simple of String | Inherited | V_abstract |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFProceduralSubflow | Class | WFSubflowActivity | V_creator | Simple of String | Inherited | V_creator |   |
@@ -296,23 +308,29 @@ Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Obj
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFProceduralSubflow | Class | WFSubflowActivity | C_created | Simple of Timestamp | Inherited | C_created |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFProceduralSubflow | Class | WFSubflowActivity | C_modified | Simple of Timestamp | Inherited | C_modified |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFProceduralSubflow | Class | WFSubflowActivity | C508_isCompleted | Simple of Boolean | Inherited | C508_isCompleted |   |
+```vbscript
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFProceduralSubflow | Class | WFSubflowActivity | C_datas | Set of Oid | Inherited | C_datas |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFProceduralSubflow | Class | WFSubflowActivity | C_histories | Set of Oid | Inherited | C_histories |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFProceduralSubflow | Class | WFSubflowActivity | C_objects | Set of Oid | Inherited | C_objects |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFProceduralSubflow | Class | WFSubflowActivity | C_attachements | Set of Oid | Inherited | C_attachements |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFProceduralSubflow | Class | WFSubflowActivity | C506_resps | Set of Oid | Inherited | C506_resps |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFProceduralSubflow | Class | WFSubflowActivity | C_process | Inverse of WFProcess.C_activities (Simple) | Inherited | C_process |   |
+```
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFProceduralSubflow | Class | WFSubflowActivity | C_Linked1 | Inverse of AFLLink.C_action1 (Set) | Inherited | C_Linked1 |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFProceduralSubflow | Class | WFSubflowActivity | C_Linked2 | Inverse of AFLLink.C_action2 (Set) | Inherited | C_Linked2 |   |
 2 | 2 | 1 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow |   |   |   | WFApprovalSubflow |   |
 3 | 2 | 1 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | V_mode | Simple of String |   | V_mode | The approval mode | The approval mode used for multiple users (Dynamic) approval. Its value may be Any, Majority, or Unanimous
 3 | 2 | 1 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | V_response | Simple of String |   | V_response | The approval response given by the user |
+```vbscript
 3 | 2 | 1 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | V_allowedResps | Set of String |   | V_allowedResps | The authorized values for the approval responses |
 3 | 2 | 1 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | V_defaultResponse | Simple of String |   | V_defaultResponse | The default value for the approval response |
+```
 3 | 2 | 1 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | V_soughtResponse | Simple of String |   | V_soughtResponse | The response sought for the approval activity |
 3 | 2 | 1 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | V_reasonCode | Simple of String |   | V_reasonCode | The reason code |
+```vbscript
 3 | 2 | 1 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | V_allowedRCodes | Set of String |   | V_allowedRCodes | The authorized values for the reason code |
 3 | 2 | 1 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | V_defaultRCode | Simple of String |   | V_defaultRCode | The default value for the reason code |
+```
 3 | 2 | 1 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | V_approvalCriteria | Simple of String |   | V_approvalCriteria | The criteria for the approval |
 3 | 2 | 1 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | V_performerType | Simple of String |   | V_performerType | The performer type to be considered for the approval activity |
 3 | 2 | 1 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | V_specificNumber | Simple of Integer |   | V_specificNumber | The performer type to be considered for the approval activity |
@@ -331,12 +349,14 @@ Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Obj
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | C_icon | Simple of String | Inherited | C_icon |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | C_expectedCFT | Simple of Integer | Inherited | C_expectedCFT |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | C_receivedCFT | Simple of Integer | Inherited | C_receivedCFT |   |
+```vbscript
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | C_CFTSourceNames | Set of String | Inherited | C_CFTSourceNames |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | C_expectedInputs | Set of String | Inherited | C_expectedInputs |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | C_expectedOutputs | Set of String | Inherited | C_expectedOutputs |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | C_inputs | Set of Oid | Inherited | C_inputs |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | C_outputs | Set of Oid | Inherited | C_outputs |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | C_TransRestriction | Simple of Oid | Inherited | C_TransRestriction |   |
+```
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | V_documentation | Simple of String | Inherited | V_documentation |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | V_entryCondition | Simple of String | Inherited | V_entryCondition |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | V_exitCondition | Simple of String | Inherited | V_exitCondition |   |
@@ -345,9 +365,11 @@ Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Obj
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | V_workingStatus | Simple of String | Inherited | V_workingStatus |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | V_workingLCycleName | Simple of String | Inherited | V_workingLCycleName |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | C_isVisited | Simple of Boolean | Inherited | C_isVisited |   |
+```vbscript
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | C_inTransitions | Set of Oid | Inherited | C_inTransitions |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | C_outTransitions | Set of Oid | Inherited | C_outTransitions |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | V_name | Simple of String | Inherited | V_name |   |
+```
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | V_description | Simple of String | Inherited | V_description |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | V_abstract | Simple of String | Inherited | V_abstract |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | V_creator | Simple of String | Inherited | V_creator |   |
@@ -372,12 +394,14 @@ Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Obj
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | C_created | Simple of Timestamp | Inherited | C_created |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | C_modified | Simple of Timestamp | Inherited | C_modified |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | C508_isCompleted | Simple of Boolean | Inherited | C508_isCompleted |   |
+```vbscript
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | C_datas | Set of Oid | Inherited | C_datas |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | C_histories | Set of Oid | Inherited | C_histories |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | C_objects | Set of Oid | Inherited | C_objects |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | C_attachements | Set of Oid | Inherited | C_attachements |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | C506_resps | Set of Oid | Inherited | C506_resps |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | C_process | Inverse of WFProcess.C_activities (Simple) | Inherited | C_process |   |
+```
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | C_Linked1 | Inverse of AFLLink.C_action1 (Set) | Inherited | C_Linked1 |   |
 3 | 2 | 0 | New object | VPMWFL | ACTION | WFApprovalSubflow | Class | WFProceduralSubflow | C_Linked2 | Inverse of AFLLink.C_action2 (Set) | Inherited | C_Linked2 |   |
 

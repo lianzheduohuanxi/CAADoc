@@ -4,13 +4,13 @@ title: "Remove Faces from a Body"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CATICGMAdvancedRemoveFaceOpe", "CAAAdvRemoveFace", "CAAGMOperatorsAdvancedRemoveFace", "CAAGMOperatorsDoc"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcAdvRemoveFace.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcAdvRemoveFace.htmmd"
 converted: "2026-05-11T17:33:48.878453"
 ```
 
 ---
 tags: ["CAAGMOperatorsInterfaces", "CATICGMAdvancedRemoveFaceOpe", "CAAAdvRemoveFace", "CAAGMOperatorsAdvancedRemoveFace", "CAAGMOperatorsDoc"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcAdvRemoveFace.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcAdvRemoveFace.htmmd"
 converted: "2026-05-11T17:33:48.878453"
 Removing Faces from a Body
 
@@ -43,19 +43,19 @@ CATLISTP(CATFace) iFacesToRemove;
 CATLISTP(CATFace) iFacesToRemove;
 CATICGMAdvancedRemoveFaceOpe * pOp = ::CATCGMCreateAdvancedRemoveFaceOpe(piGeomFactory, &topdata;, piInputBody);
     pOp->Append(iFacesToRemove);
-    pOp->Run();
-    CATBody * piResultBody = pOp->GetResult();
+    pOp->Run(#);
+    CATBody * piResultBody = pOp->GetResult(#);
 
 ```
 
 ---
 pOp->Append(iFacesToRemove);
-pOp->Run();
-CATBody * piResultBody = pOp->GetResult();
+pOp->Run(#);
+CATBody * piResultBody = pOp->GetResult(#);
 you get this result: Fig.2 Remove Face Output Body  ![Remove Face Input data](images/CGM_advRemoveFace_1.png)
 
 ---
-CATBody * piResultBody = pOp->GetResult();
+CATBody * piResultBody = pOp->GetResult(#);
 you get this result: Fig.2 Remove Face Output Body  ![Remove Face Input data](images/CGM_advRemoveFace_1.png)
 References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)
 

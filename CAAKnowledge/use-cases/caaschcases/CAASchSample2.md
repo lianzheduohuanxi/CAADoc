@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating Features in an Applicative Container"
-category: "use case"
+category: use-case case"
 module: "CAASchUseCases"
 tags: ["CAASchAppSample2", "CATISchAppObjectFactory", "CAASchAppSample1", "CATISchSession", "CAASCHEDU_SamplePID", "CATISchGRRComp", "CAASchApp", "CAASchEduOut2", "CAASchEduIn2", "CATISchBaseFactory", "CAASchAppSample2Main", "CAASchPlatformModeler", "CATISchCompGraphic", "CATIView", "CAASchAppUtilities", "CATISpecObject", "CATISchComponent", "CATInit", "CAASchAppBase", "CAASchAppBaseEnv"]
-source_file: "Doc/online/CAASchUseCases/CAASchSample2.htm"
+source_file: "Doc/online/CAASchUseCases/CAASchSample2.htmmd"
 converted: "2026-05-11T17:31:51.518765"
 ```
 
@@ -57,8 +57,8 @@ The sample demonstrates the use of multiple Graphical Representations (GRRs) of 
 
 To launch CAASchAppSample2, you will need to set up the build time environment, then compile CAASchAppSample2 along with its prerequisites, set up the run time environment, and then execute the sample. This is fully described in the referenced article [1]. When launching the use case, you must pass the following arguments:
 
-  * **CAASchEduIn2.CATProduct** \- the entire pathname, name and extension (.CATProduct) of the input drawing. Normally, it should be stored in the CNext/resources/graphic file directory.
-  * **CAASchEduOut2.CATProduct** \- the entire pathname, name and extension (.CATProduct) under which the new document is to be stored
+  * **CAASchEduIn2.CATProduct** /- the entire pathname, name and extension (.CATProduct) of the input drawing. Normally, it should be stored in the CNext/resources/graphic file directory.
+  * **CAASchEduOut2.CATProduct** /- the entire pathname, name and extension (.CATProduct) under which the new document is to be stored
 
 [Top]
 #### Where to Find the CAASchAppSample2 Code
@@ -66,10 +66,10 @@ To launch CAASchAppSample2, you will need to set up the build time environment, 
 CAASchAppSample2 code is located in the CAASchAppSample2.m use case module of the CAASchPlatformModeler.edu framework:
 
 CAASchAppSample2 code is located in the CAASchAppSample2.m use case module of the CAASchPlatformModeler.edu framework:
-Windows | `InstallRootDirectory\CAASchPlatformModeler.edu\CAASchAppSample2.m`
+Windows | `InstallRootDirectory/CAASchPlatformModeler.edu/CAASchAppSample2.m`
 
 CAASchAppSample2 code is located in the CAASchAppSample2.m use case module of the CAASchPlatformModeler.edu framework:
-Windows | `InstallRootDirectory\CAASchPlatformModeler.edu\CAASchAppSample2.m`
+Windows | `InstallRootDirectory/CAASchPlatformModeler.edu/CAASchAppSample2.m`
 Unix | `InstallRootDirectory/CAASchPlatformModeler.edu/CAASchAppSample2.m`
 
 where `InstallRootDirectory` is the root directory of your CAA V5 installation. It is made of a two unique source files named CAASchAppSample2Main.cpp and CAASchAppSample2.cpp.
@@ -204,7 +204,7 @@ if (SUCCEEDED (pLIGRRs->Item(0,&piUK)))
 ```vbscript
 ```vbscript
 if ( SUCCEEDED (piUK->QueryInterface (IID_CATIView,(void **) &piViewGRR1)))
-                       spDtlSheet = piViewGRR1->GetSheet();
+                       spDtlSheet = piViewGRR1->GetSheet(#);
                        if (!!spDtlSheet)
 
 ```
@@ -216,7 +216,7 @@ if ( SUCCEEDED (piUK->QueryInterface (IID_CATIView,(void **) &piViewGRR1)))
 if ( SUCCEEDED (piUK->QueryInterface (IID_CATIView,(void **) &piViewGRR1)))
 ```vbscript
 ```vbscript
-spDtlSheet = piViewGRR1->GetSheet();
+spDtlSheet = piViewGRR1->GetSheet(#);
 if (!!spDtlSheet)
 ```
 

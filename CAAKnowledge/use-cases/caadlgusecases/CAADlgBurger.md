@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAADlgUseCases"
 tags: ["CAADlgBurger", "CAADlgBurgerObjects", "CAABurgerDialogBox", "CATInteractiveApplication", "CATIA", "CAABurgerApplication_h", "CAABurgerApplication", "CAADocStyleSheets", "CAABurgerDialogBox_h", "CAADocRunSample", "CAADlgGridLayout", "CAADlgBurgerFrame", "CAADocUseCases", "CAADialog", "CAADlgTechArticles"]
-source_file: "Doc/online/CAADlgUseCases/CAADlgBurger.htm"
+source_file: "Doc/online/CAADlgUseCases/CAADlgBurger.htmmd"
 converted: "2026-05-11T11:27:02.788911"
 ---
 
@@ -91,7 +91,7 @@ is installed.
 The CATDlgBurger.m module includes four files:
 
 The resource file CAABurgerDialogBox.CATNls is located in the
-CNext\resources\msgcatalog directory.
+CNext/resources/msgcatalog directory.
 
 [Top]
 
@@ -280,7 +280,7 @@ the resource file and customizign it with the two parameters.
 #### Internationalizing the Texts and Messages
 
 The file that contains texts and messages is named CAADlgBurger.CATNls and is
-stored in CNext\resources\msgcatalog directory.
+stored in CNext/resources/msgcatalog directory.
 
 Each resource that is automatically extracted and assigned is referred to
 using a key built thanks a concatenation of the identifiers set when
@@ -320,8 +320,6 @@ customize the standard message.
 
 *Copyright  2000, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 #ifndef CAABurgerApplication_h
 #define CAABurgerApplication_h  // To prevent from multiple inclusion
@@ -333,9 +331,9 @@ class CAABurgerApplication : public CATInteractiveApplication
 {
   public:
                  CAABurgerApplication(const CATString &amp; iApplicationId);
-    virtual     ~CAABurgerApplication();
-    virtual void BeginApplication();
-    virtual int  EndApplication();  
+    virtual     ~CAABurgerApplication(#);
+    virtual void BeginApplication(#);
+    virtual int  EndApplication(#);  
   private:
     CAABurgerDialogBox * _pBurgerDialogBox; // The dialog box
 };
@@ -344,16 +342,16 @@ class CAABurgerApplication : public CATInteractiveApplication
 
 ```vbscript
 ...
-void CAABurgerApplication::BeginApplication()
+void CAABurgerApplication::BeginApplication(#)
 {
   _pBurgerDialogBox = new CAABurgerDialogBox(this,              // Parent
                                              &quot;BurgerId&quot;,        // Identifier
                                              CATDlgGridLayout); // Style
-  _pBurgerDialogBox-&gt;Build();
+  _pBurgerDialogBox-&gt;Build(#);
   _pBurgerDialogBox-&gt;SetVisibility(CATDlgShow);
 }
 
-int CAABurgerApplication::EndApplication()
+int CAABurgerApplication::EndApplication(#)
 {              
   return 0;
 }
@@ -382,8 +380,8 @@ class CAABurgerDialogBox : public CATDlgDocument
     CAABurgerDialogBox(CATInteractiveApplication * iParentCommand,
                        const CATString           &amp; iDialogBoxId,
                        CATDlgStyle                 iDialogBoxStyle);
-    virtual ~CAABurgerDialogBox();
-    void     Build();
+    virtual ~CAABurgerDialogBox(#);
+    void     Build(#);
 
   private:
     CATDlgFrame           * _pHamburgerFrame, * _pFriesFrame, * _pDrinkFrame;
@@ -443,10 +441,10 @@ CAABurgerDialogBox::CAABurgerDialogBox(CATInteractiveApplication * iParentComman
   cout &lt;&lt; &quot;-------  to allocate only  -------&quot; &lt;&lt; endl;
 }
 
-void CAPBurger::Build()
+void CAPBurger::Build(#)
 {
   CATString BurgerMsgCatalogName(&quot;CAABurgerDialogBox&quot;);
-  _pMsgCat = new CATMsgCatalog();
+  _pMsgCat = new CATMsgCatalog(#);
   int rc = _pMsgCat-&gt;LoadMsgCatalog(BurgerMsgCatalogName);
   if(!rc) cout &lt;&lt; &quot;The message catalog is not found&quot; &lt;&lt; endl;
   ...
@@ -535,11 +533,11 @@ void CAPBurger::Build()
 
 ```vbscript
 ...
-  AddAnalyseNotificationCB(_pRare, _pRare-&gt;GetRadBModifyNotification(),
+  AddAnalyseNotificationCB(_pRare, _pRare-&gt;GetRadBModifyNotification(#),
                            (CATCommandMethod)&amp;CAABurgerDialogBox::WellDone, NULL);
-  AddAnalyseNotificationCB(_pMedium, _pMedium-&gt;GetRadBModifyNotification(),
+  AddAnalyseNotificationCB(_pMedium, _pMedium-&gt;GetRadBModifyNotification(#),
                            (CATCommandMethod)&amp;CAABurgerDialogBox::Medium, NULL);
-  AddAnalyseNotificationCB(_pRare, _pRare-&gt;GetRadBModifyNotification(),
+  AddAnalyseNotificationCB(_pRare, _pRare-&gt;GetRadBModifyNotification(#),
                            (CATCommandMethod)&amp;CAABurgerDialogBox::WellDone, NULL);
 ...
 ```
@@ -550,8 +548,8 @@ void CAABurgerDialogBox::Rare(CATCommand           * pSendingCommand,
                               CATCommandClientData   UsefulData)
 {
   CATUnicodeString usParam[2];
-  usParam[0] = ((CATDlgRadioButton *)pSendingCommand)-&gt;GetTitle();
-  if (((CATDlgRadioButton *)pSendingCommand)-&gt;GetState()==CATDlgCheck)
+  usParam[0] = ((CATDlgRadioButton *)pSendingCommand)-&gt;GetTitle(#);
+  if (((CATDlgRadioButton *)pSendingCommand)-&gt;GetState(#)==CATDlgCheck)
     usParam[1] = &quot;checked&quot;;
   else
     usParam[1] = &quot;unchecked&quot;;

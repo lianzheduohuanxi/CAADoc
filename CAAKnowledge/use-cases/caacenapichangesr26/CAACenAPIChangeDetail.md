@@ -5,7 +5,7 @@ category: "api-changes"
 module: "CAACenAPIChangesR26"
 version: "V5R26"
 tags: ["CAA2Usage", "CATIDftDatumFeature", "CAA2Level"]
-source_file: "Doc/online/CAACenAPIChangesR26/CAACenAPIChangeDetail.htm"
+source_file: "Doc/online/CAACenAPIChangesR26/CAACenAPIChangeDetail.htmmd"
 converted: "2026-05-11T17:33:51.846182"
 ```
 
@@ -39,8 +39,10 @@ Framework | Header | Class | Method | Signature | Modification | To Do
 Framework | Header | Class | Method | Signature | Modification | To Do
 DraftingInterfaces | CATIDftDatumFeature.h | CATIDftDatumFeature | GetText | virtual HRESULT SetText(const wchar_t*iText)= 0 | INDM | Use the signature with a CATUnicodeString.
 SetText | virtual HRESULT SetText(const wchar_t*iText)= 0 | INDM | Use the signature with a CATUnicodeString.
+```vbscript
 Mathematics | CATMathCircle2D.h | CATMathCircle2D | Set | HRESULT Set(const CATMathPoint2D& iLimit,const CATMathPoint2D& iMiddle,const CATMathPoint2D& iOtherLimit) | INDM | Use the signature that allows to specify a CATTolerance.
 CATMathCircle.h | CATMathCircle | GetParam | int GetParam(const CATMathPoint& iPoint,double*oParam,const double iTol,const double iStartParam,const double iEndParam)const | INDM | Use the signature that allows to specify a CATTolerance.
+```
 Intersect | int Intersect(const CATMathLine& iLine,double iStartParamOnLine,double iEndParamOnLine,double iStartParamOnThisCircle,double iEndParamOnThisCircle,double iTol,double ioParamOnLine[2],double ioParamOnThisCircle[2])const | INDM | Use the signature that allows to specify a CATTolerance.
 References
 

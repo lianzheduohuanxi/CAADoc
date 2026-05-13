@@ -9,10 +9,10 @@ title: "
 ```vbscript
 title: "
 Consuming the ENOPosApplicationBinderImpl CAA Web Service
-category: "use case"
+category: use-case case"
 module: "CAAPLMSecUseCases"
 tags: ["CAAENOPosApplicationBinderImplClient", "CAAWebServices", "CAAJAXRPCHTTPSessionHandler", "CAAENOPosApplicationBinderImplUseCase", "CAAENOPosApplicationBinderImplWrapper", "CAAPLMSecurity", "CAAENOPosAppBinderImplAxis1_3Client"]
-source_file: "Doc/online/CAAPLMSecUseCases/CAAENOPosAppBinderAxisClient.htm"
+source_file: "Doc/online/CAAPLMSecUseCases/CAAENOPosAppBinderAxisClient.htmmd"
 converted: "2026-05-11T17:33:45.558180"
 ```
 
@@ -75,7 +75,7 @@ The sample usage scenario delivered with this use case contains the following st
 
 The CAAENOPosAppBinderImplAxis1_3Client use case is made of several classes located in the **CAAENOPosAppBinderImplAxis1_3Client.mj** module of the **CAAPLMSecurity.edu** framework:
 
-**Windows** : `_< Install>_\CAAPLMSecurity.edu\CAAENOPosAppBinderImplAxis1_3Client.mj\src`
+**Windows** : `_< Install>_/CAAPLMSecurity.edu/CAAENOPosAppBinderImplAxis1_3Client.mj/src`
 **Unix** : `_< Install>_/CAAPLMSecurity.edu/CAAENOPosAppBinderImplAxis1_3Client.mj/src`
 ---
 
@@ -83,35 +83,35 @@ The CAAENOPosAppBinderImplAxis1_3Client use case is made of several classes loca
 
 The sample Java resources generated using the Axis WSDL2Java emitter are delivered in the following directory (**Windows**):
 
-`_< Source>_\_< Output-package>_\CATServiceExceptionType.java
+`_< Source>_/_< Output-package>_/CATServiceExceptionType.java
 The sample Java resources generated using the Axis WSDL2Java emitter are delivered in the following directory (**Windows**):
-_< Source>_\_< Output-package>_\ENOPosApplicationBinderImpl.java
-_< Source>_\_< Output-package>_\ENOPosApplicationBinderImplLocator.java
-_< Source>_\_< Output-package>_\IApplicationBinder.java
-_< Source>_\_< Output-package>_\IApplicationBinderBindingStub.java
-_< Source>_\_< Output-package>_\Identifier.java
-_< Source>_\_< Output-package>_\SessionToken.java
-_< Source>_\_< Output-package>_\Status.java
-_< Source>_\_< Output-package>_\holders\SessionTokenHolder.java
-_< Source>_\_< Output-package>_\holders\StringArrayTypeHolder.java`
+_< Source>_/_< Output-package>_/ENOPosApplicationBinderImpl.java
+_< Source>_/_< Output-package>_/ENOPosApplicationBinderImplLocator.java
+_< Source>_/_< Output-package>_/IApplicationBinder.java
+_< Source>_/_< Output-package>_/IApplicationBinderBindingStub.java
+_< Source>_/_< Output-package>_/Identifier.java
+_< Source>_/_< Output-package>_/SessionToken.java
+_< Source>_/_< Output-package>_/Status.java
+_< Source>_/_< Output-package>_/holders/SessionTokenHolder.java
+_< Source>_/_< Output-package>_/holders/StringArrayTypeHolder.java`
 
 ---
 
-  * `_< Source>_`: `_< Install>_\CAAPLMSecurity.edu\CAAENOPosAppBinderImplAxis1_3Client.mj\src`,
+  * `_< Source>_`: `_< Install>_/CAAPLMSecurity.edu/CAAENOPosAppBinderImplAxis1_3Client.mj/src`,
   * `_< Install>_`: same as above,
-  * `_< Output-package>_`: com\dassault_systemes\caaplmsecurity\caaenoposappbinderaxis1_3client\generated (based on the output package value specified when using the WSDL2Java emitter).
+  * `_< Output-package>_`: com/dassault_systemes/caaplmsecurity/caaenoposappbinderaxis1_3client/generated (based on the output package value specified when using the WSDL2Java emitter).
 
 The CAAENOPosAppBinderImplAxis1_3Client module contains the other following resources:
 
-`_< Source>_\_< Root-package>_\CAAENOPosApplicationBinderImplClient.java
+`_< Source>_/_< Root-package>_/CAAENOPosApplicationBinderImplClient.java
 The CAAENOPosAppBinderImplAxis1_3Client module contains the other following resources:
-_< Source>_\_< Root-package>_\CAAENOPosApplicationBinderImplUseCase.java
-_< Source>_\_< Root-package>_\CAAENOPosApplicationBinderImplWrapper.java`
+_< Source>_/_< Root-package>_/CAAENOPosApplicationBinderImplUseCase.java
+_< Source>_/_< Root-package>_/CAAENOPosApplicationBinderImplWrapper.java`
 
 ---
 
   * `_< Source>_`: same as above,
-  * `_< Root-package>_`: com\dassault_systemes\caaplmsecurity\caaenoposappbinderaxis1_3client.
+  * `_< Root-package>_`: com/dassault_systemes/caaplmsecurity/caaenoposappbinderaxis1_3client.
 
 The **CAAENOPosApplicationBinderImplWrapper** class describes how to configure the generated proxy and how to invoke its methods. The **CAAENOPosApplicationBinderImplUseCase** class demonstrates a sample use case scenario of the ENOPosApplicationBinderImpl CAA Web service. The **CAAENOPosApplicationBinderImplClient** class contains the main program. It parses the command line inputs and starts up the use case.
 
@@ -158,7 +158,7 @@ Please refer to [3] for details on how to generate the Java client binding using
 
 Here follows a sample command in order to generate the Java client binding for the ENOPosApplicationBinderImpl CAA Web service:
 
-`%JDK_HOME%\bin\java org.apache.axis.wsdl.WSDL2Java -o C/CAAPLMSecurity\src -p com.dassault_systemes.caaplmsecurity.caaenoposappbinderaxis1_3client.generated http://karindsy.dsy.ds:9080/B17/wsdl?service=urn:com:dassault_systemes:ENOPosWS:ENOPosAppliBinder:ENOPosApplicationBinderImpl`
+`%JDK_HOME%/bin/java org.apache.axis.wsdl.WSDL2Java -o C/CAAPLMSecurity/src -p com.dassault_systemes.caaplmsecurity.caaenoposappbinderaxis1_3client.generated http://karindsy.dsy.ds:9080/B17/wsdl?service=urn:com:dassault_systemes:ENOPosWS:ENOPosAppliBinder:ENOPosApplicationBinderImpl`
 ---
 
 The server name, port, and context root URI information must be updated to match the server where the CAA Web service has been deployed. The list of generated resources is available from the above section: "Where To Find the CAAENOPosAppBinderImplAxis1_3Client Code".
@@ -191,7 +191,7 @@ String credPwd,
 
     // Retrieve proxy instance
 String endpoint = uri + "servicerouter?service=" + SERVICE_ID;
-    ENOPosApplicationBinderImplLocator locator = **new** ENOPosApplicationBinderImplLocator();
+    ENOPosApplicationBinderImplLocator locator = **new** ENOPosApplicationBinderImplLocator(#);
     try {
 ```vbscript
       proxy = locator.getENOPosApplicationBinderImplPort(**new** URL(endpoint));
@@ -209,14 +209,14 @@ String endpoint = uri + "servicerouter?service=" + SERVICE_ID;
     **if** (clientId != **null**) {
 
       // Required to maintain HTTP session state accross services **(2)**
-      HandlerInfo info = **new** HandlerInfo();
+      HandlerInfo info = **new** HandlerInfo(#);
       info.setHandlerClass(CustomSessionHandler.**class**);
-      Map handlerConfig = **new** HashMap();
+      Map handlerConfig = **new** HashMap(#);
       handlerConfig.put(CustomSessionHandler.CLIENT_ID, clientId);
       info.setHandlerConfig(handlerConfig);
 
-      HandlerRegistry registry = locator.getHandlerRegistry();
-      String portName = locator.getENOPosApplicationBinderImplPortWSDDServiceName();
+      HandlerRegistry registry = locator.getHandlerRegistry(#);
+      String portName = locator.getENOPosApplicationBinderImplPortWSDDServiceName(#);
       QName name = **new** QName(portName);
       List chain = registry.getHandlerChain(name);
       chain.add(info);
@@ -261,15 +261,15 @@ The following code demonstrates the use of the `getUserContexts` method:
   **public** String[] getUserContexts(String username) **throws** Exception {
     ...
     // Holder instance used as in/out parameter
-    StringArrayTypeHolder contextsHolder = new StringArrayTypeHolder();
+    StringArrayTypeHolder contextsHolder = new StringArrayTypeHolder(#);
     **try** {
       **Status status = proxy.getUserContexts(username, contextsHolder);**
-StringArrayTypeHolder contextsHolder = new StringArrayTypeHolder();
-      System.out.println("Status: " + status.getStatus());
+StringArrayTypeHolder contextsHolder = new StringArrayTypeHolder(#);
+      System.out.println("Status: " + status.getStatus(#));
 
     } **catch** (CATServiceExceptionType e) {
-StringArrayTypeHolder contextsHolder = new StringArrayTypeHolder();
-System.out.println("Status: " + status.getStatus());
+StringArrayTypeHolder contextsHolder = new StringArrayTypeHolder(#);
+System.out.println("Status: " + status.getStatus(#));
       throw e;
 
     } **catch** (Throwable t) {
@@ -307,10 +307,10 @@ The following code demonstrates the use of the `bindToApplication` method:
   **public** SessionToken login(String context) **throws** Exception {
     ...
     // Holder instance used as in/out parameter
-    SessionTokenHolder sessionTokenHolder = **new** SessionTokenHolder();
+    SessionTokenHolder sessionTokenHolder = **new** SessionTokenHolder(#);
     **try** {
       **Status status = proxy.bindToApplication(context, sessionTokenHolder);**
-      System.out.println("Status: " + status.getStatus());
+      System.out.println("Status: " + status.getStatus(#));
     } **catch** (CATServiceExceptionType e) {
       **throw** e;
     } **catch** (Throwable t) {
@@ -348,7 +348,7 @@ The following code demonstrates the use of the `releaseFromApplication` method:
   **public void** logout(SessionToken sessionToken) **throws** Exception {
   **try** {
     **Status status = proxy.releaseFromApplication(sessionToken);**
-    System.out.println("Status: " + status.getStatus());
+    System.out.println("Status: " + status.getStatus(#));
   } **catch** (CATServiceExceptionType e) {
     throw e;
   } **catch** (Throwable t) {
@@ -389,7 +389,7 @@ The following code depends on the CAAENOPosApplicationBinderImplWrapper class de
       // Step 1 - Instantiate and configure the proxy
       // ------------------------------------------------------------
 
-      String clientId = **new** Long(System.currentTimeMillis()).toString();
+      String clientId = **new** Long(System.currentTimeMillis(#)).toString(#);
 
       // Instantiate the wrapper client class
       **CAAENOPosApplicationBinderImplWrapper wrapper =**new** CAAENOPosApplicationBinderImplWrapper(
@@ -418,21 +418,21 @@ The following code depends on the CAAENOPosApplicationBinderImplWrapper class de
       ...
     } **catch** (CATServiceExceptionType c) {
       ...
-      System.out.println("\tError code: " + c.getCode());
-System.out.println("\tError code: " + c.getCode());
-      System.out.println("\tError message: " + c.getMessage());
+      System.out.println("/tError code: " + c.getCode(#));
+System.out.println("/tError code: " + c.getCode(#));
+      System.out.println("/tError message: " + c.getMessage(#));
 
-      **if** (c.getErrorArguments() != **null**) {
-System.out.println("\tError code: " + c.getCode());
-System.out.println("\tError message: " + c.getMessage());
-        String[] errorArguments = c.getErrorArguments();
-        System.out.println("\tError arguments: " + errorArguments.length);
+      **if** (c.getErrorArguments(#) != **null**) {
+System.out.println("/tError code: " + c.getCode(#));
+System.out.println("/tError message: " + c.getMessage(#));
+        String[] errorArguments = c.getErrorArguments(#);
+        System.out.println("/tError arguments: " + errorArguments.length);
 
         **for** (**int** i = 0; i < errorArguments.length; i++) {
-System.out.println("\tError message: " + c.getMessage());
-String[] errorArguments = c.getErrorArguments();
-System.out.println("\tError arguments: " + errorArguments.length);
-          System.out.println("\t\tArgument[" + i + "]: " + errorArguments[i]);
+System.out.println("/tError message: " + c.getMessage(#));
+String[] errorArguments = c.getErrorArguments(#);
+System.out.println("/tError arguments: " + errorArguments.length);
+          System.out.println("/t/tArgument[" + i + "]: " + errorArguments[i]);
 
         }
       }

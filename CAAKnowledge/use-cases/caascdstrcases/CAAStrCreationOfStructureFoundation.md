@@ -4,7 +4,7 @@ title: "Creating Structure Foundations"
 category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CATIA", "CAAStrCreationOfStructureFoundation", "CAAScdStrUseCases"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfStructureFoundation.htm"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfStructureFoundation.htmmd"
 converted: "2026-05-11T17:31:50.877607"
 ```
 
@@ -38,11 +38,14 @@ CAAStrCreationOfStructureFoundation includes five steps:
       ...
 ```vbscript
 ```vbscript
+```vbscript
         Dim doc As Document
 
         Dim StrWorkbench As StrWorkbench
 ```
+```
 
+```vbscript
 ```vbscript
 ```vbscript
         Dim strFactory As StrObjectFactory
@@ -60,6 +63,7 @@ CAAStrCreationOfStructureFoundation includes five steps:
         Set strFactory = component.GetTechnologicalObject("StructureObjectFactory")
 
 ```
+```
 
 ```
 
@@ -74,9 +78,13 @@ This step describes how to get the structure object factory.
 
       ...
 ```vbscript
+```vbscript
         Dim foundation As StrFoundation
 ```vbscript
+```
+```vbscript
         Set foundation = strFactory.ExtendProductAsFoundation("")
+```
 ```
 
 ```
@@ -91,13 +99,17 @@ The foundation is created by extending the product with structure data.
 
       ...
 ```vbscript
+```vbscript
         Dim foundations As StrFoundations
+```vbscript
+```
 ```vbscript
 ```vbscript
         Set foundations = rootProduct.GetTechnologicalObject("StructureFoundations")
 
         Set foundation = foundations.Item(1)
 
+```
 ```
 
 ```
@@ -110,7 +122,7 @@ The foundation is created by extending the product with structure data.
 
 The foundation is retreived thanks to the collection of foundations.
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

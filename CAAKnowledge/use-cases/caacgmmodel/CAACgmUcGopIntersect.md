@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Intersecting a Curve with a Surface"
-category: "use case"
+category: use-case case"
 module: "CAACgmModel"
 tags: ["CAAGopIntersect", "CATICGMIntersectionCrvSur", "CAAGMModelGemBrowser", "CAAGMModelInterfaces", "CAAGMModelIntersect"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGopIntersect.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGopIntersect.htmmd"
 converted: "2026-05-11T17:33:48.435496"
 ```
 
@@ -58,7 +58,7 @@ CAAGMModelIntersect `e/Intersection.NCGM`
 This NCGM file can be displayed using the CAAGMModelGemBrowser use case [3].
 The CAAGMModelIntersect use case is made of a main named CAAGopIntersect.cpp located in the CAAGMModelIntersect .m module of the CAAGMModelInterfaces.edu framework:
 
-`InstallRootDirectory\CAAGMModelInterfaces.edu\CAAGMModelIntersect.m\`
+`InstallRootDirectory/CAAGMModelInterfaces.edu/CAAGMModelIntersect.m/`
 
 where `InstallRootFolder` [4] is the folder where the API CD-ROM is installed.
 ## Step-by-Step
@@ -161,14 +161,14 @@ In this mode, you must use the operator only once with the input parameters. The
 piLine,          // geometric line
 piCylinder,      // geometric cylinder
     if (NULL == pIntOp) return (3);
-    long nbPoints = pIntOp->**GetNumberOfPoints**();
+    long nbPoints = pIntOp->**GetNumberOfPoints**(#);
 
     cout << "Basic case: Number of intersection points: "<< nbPoints
 
          << endl;
 ```vbscript
 if (NULL == pIntOp) return (3);
-long nbPoints = pIntOp->**GetNumberOfPoints**();
+long nbPoints = pIntOp->**GetNumberOfPoints**(#);
 cout << "Basic case: Number of intersection points: "<< nbPoints
     if (0 != nbPoints)
 ```
@@ -177,14 +177,14 @@ cout << "Basic case: Number of intersection points: "<< nbPoints
       // iterator on the resulting points
 cout << "Basic case: Number of intersection points: "<< nbPoints
 if (0 != nbPoints)
-      pIntOp->**BeginningPoint**();	         // initialization
-      while(TRUE== (pIntOp->**NextPoint**()) )   // loop on the resulting points
+      pIntOp->**BeginningPoint**(#);	         // initialization
+      while(TRUE== (pIntOp->**NextPoint**(#)) )   // loop on the resulting points
 
       {
         // create the geometric point
-pIntOp->**BeginningPoint**();	         // initialization
-while(TRUE== (pIntOp->**NextPoint**()) )   // loop on the resulting points
-        CATCartesianPoint* piPoint=pIntOp->**GetCartesianPoint**();
+pIntOp->**BeginningPoint**(#);	         // initialization
+while(TRUE== (pIntOp->**NextPoint**(#)) )   // loop on the resulting points
+        CATCartesianPoint* piPoint=pIntOp->**GetCartesianPoint**(#);
         double x,y,z;
 ```vbscript
         if (NULL != piPoint)
@@ -192,7 +192,7 @@ while(TRUE== (pIntOp->**NextPoint**()) )   // loop on the resulting points
 ```
 
         {
-CATCartesianPoint* piPoint=pIntOp->**GetCartesianPoint**();
+CATCartesianPoint* piPoint=pIntOp->**GetCartesianPoint**(#);
 double x,y,z;
 if (NULL != piPoint)
           piPoint->GetCoord(x,y,z);
@@ -210,7 +210,7 @@ cout << " X= "<< x << " Y= "<< y << " Z= "<< z <<endl;
       }
     }
     // delete the operator
-    **pIntOp- >Release();
+    **pIntOp- >Release(#);
     pIntOp = NULL;**
 ### Using the ADVANCED Mode
 
@@ -241,7 +241,7 @@ if (NULL==pIntOp) return (3);
     pIntOp->**SetLimits**(crvLimits);
 
     // run
-    pIntOp->**Run**();
+    pIntOp->**Run**(#);
 
     // get the results
     // ... same way as in BASIC mode ..., but not same result!
@@ -255,18 +255,18 @@ if (NULL==pIntOp) return (3);
     // run again
 pIntOp->**SetCurve**(piNewLine);     // piNewLine was previously created
 pIntOp->SetLimits(newCrvLimits); // newCrvLimits was previously defined
-    pIntOp->**Run**();
+    pIntOp->**Run**(#);
 
     // get the results
-pIntOp->**Run**();
-    nbPoints = pIntOp->GetNumberOfPoints();
+pIntOp->**Run**(#);
+    nbPoints = pIntOp->GetNumberOfPoints(#);
     cout << " Number of intersection points: "<< nbPoints << endl;
-    long nbCurves= pIntOp->GetNumberOfCurves();
+    long nbCurves= pIntOp->GetNumberOfCurves(#);
     cout << "Number of intersection curves: "<< nbCurves << endl;
 
     // delete
-    **pIntOp- >Release();
-long nbCurves= pIntOp->GetNumberOfCurves();
+    **pIntOp- >Release(#);
+long nbCurves= pIntOp->GetNumberOfCurves(#);
 cout << "Number of intersection curves: "<< nbCurves << endl;
     pIntOp=NULL;**
 

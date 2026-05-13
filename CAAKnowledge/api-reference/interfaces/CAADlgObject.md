@@ -2,9 +2,7 @@
 title: "CAADlgObject"
 type: "interface"
 module: "CAADialog"
-category: "framework"
-base: "CATBaseUnknown"
-inheritance_chain: "CAADlgObject → CATBaseUnknown"
+category: api-reference
 method_count: 0
 visibility: "local"
 has_tie_binding: false
@@ -12,8 +10,6 @@ verified: true
 ---
 # CAADlgObject
 
-**基类**: CATBaseUnknown  
-**继承链**: CAADlgObject → CATBaseUnknown  
 **模块**: CAADialog  
 **分类**: framework  
 **可见性**: local  
@@ -27,5 +23,35 @@ verified: true
 
 ## 依赖
 
-- `CATBaseUnknown.h`
+---
 
+## Interface Overview
+
+**Inherited Methods**: Please refer to the base interface documentation above.
+
+---
+
+## Interface Overview
+
+This interface inherits from **from**. 
+
+**Inherited Methods**: Please refer to the base interface documentation above.
+
+---
+
+## Related Use Cases
+
+- [3D PLM Enterprise Architecture](../../use-cases/caaafrcases/CAAAfrSampleCustomWindow2.md)
+- [3D PLM Enterprise Architecture](../../use-cases/caadlgtecharticles/CAADlgGridLayout.md)
+- [3D PLM Enterprise Architecture](../../use-cases/caadlgtecharticles/CAADlgObjectLayout.md)
+- [3D PLM Enterprise Architecture](../../use-cases/caadlgtecharticles/CAADlgOverview.md)
+
+## Interface Notes
+
+This interface is part of the **CAA** module.
+
+**Status**: This interface document is a template. Please refer to the official API documentation for more information.
+
+**Related Resources**:
+- [Quick References](../..//quick-refs/)
+- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)

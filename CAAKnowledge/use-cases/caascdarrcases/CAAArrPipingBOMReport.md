@@ -4,7 +4,7 @@ title: "CATIAV5ArrWorkbench, CATIAArrBOMReport Interfaces Use Case"
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CAAArrPipingBOMReport", "CATIAArrBOMReport", "CATIA", "CATIAV5ArrWorkbench", "CATIAArrWorkbench"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrPipingBOMReport.htm"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrPipingBOMReport.htmmd"
 converted: "2026-05-11T17:31:51.574542"
 ```
 
@@ -20,7 +20,7 @@ converted: "2026-05-11T17:31:51.574542"
  This example shows how to extract a report of Arrangement objects within a document. Help is taken of a macro. This macro has a reference to CATIAArrBOMReport, CATIAV5ArrWorkbench Interfaces (referred to as ArrBOMReport, Workbench in the reference Visual Basic document).This macro opens an existing Product document and retrieves the CATIAArrWorkbench selection. Then it finds the interface CATIAArrBOMReport. It then generates the BOM report and saves the report.
 ---|---
 This example shows how to extract a report of Arrangement objects within a document. Help is taken of a macro. This macro has a reference to CATIAArrBOMReport, CATIAV5ArrWorkbench Interfaces (referred to as ArrBOMReport, Workbench in the reference Visual Basic document).This macro opens an existing Product document and retrieves the CATIAArrWorkbench selection. Then it finds the interface CATIAArrBOMReport. It then generates the BOM report and saves the report.
- CATArrPipingBOMReport is launched after CATIA is up and the reference document is opened.CATArrPipingBOMReport.CATScript is located in the runtime directory Operating System (say intel_a)\code\command
+ CATArrPipingBOMReport is launched after CATIA is up and the reference document is opened.CATArrPipingBOMReport.CATScript is located in the runtime directory Operating System (say intel_a)/code/command
  CAAArrPipingBOMReport includes the following steps:
 
   1. Prolog
@@ -44,11 +44,15 @@ Once the Product has been loaded, the macro is designed to read the relevant obj
 
     ...
 ```vbscript
+```vbscript
        Dim objCATIAV5Document As Document
+```vbscript
+```
 ```vbscript
 ```vbscript
        Dim objCATIAV5ArrWorkbench As Workbench
        Dim objCATIAV5ArrBOMReport As ArrBOMReport
+```
 ```
 
 ```
@@ -62,17 +66,23 @@ Once the Product has been loaded, the macro is designed to read the relevant obj
 
     ...
 ```vbscript
+```vbscript
        Set objCATIAV5Document = CATIA.ActiveDocument
+```
 ```
 
 ```vbscript
 ```vbscript
 ```vbscript
        '//---------- Get ArrWorkbench from current document
+```vbscript
        Set objCATIAV5ArrWorkbench = objCATIAV5Document.GetWorkbench("ArrWorkbench")
        '//---------- Get CATIAArrBOMReport from ArrWorkbench
+```
+```vbscript
        Set objCATIAV5ArrBOMReport = objCATIAV5ArrWorkbench.FindInterface ("CATIAArrBOMReport",objCATIAV5Document)
        '//---------- Generate the report
+```
 ```
 
 ```
@@ -83,8 +93,10 @@ Once the Product has been loaded, the macro is designed to read the relevant obj
 ```vbscript
 ```vbscript
 '//---------- Get CATIAArrBOMReport from ArrWorkbench
+```vbscript
 Set objCATIAV5ArrBOMReport = objCATIAV5ArrWorkbench.FindInterface ("CATIAArrBOMReport",objCATIAV5Document)
 '//---------- Generate the report
+```
 ```
 
 ```
@@ -105,14 +117,17 @@ Thus we saw how to read a CATProduct document, retrieve the interface  we are i
 
     ...
 ```vbscript
+```vbscript
      End Sub
+
+```
 
 ```
 
 ---
 [Top]
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

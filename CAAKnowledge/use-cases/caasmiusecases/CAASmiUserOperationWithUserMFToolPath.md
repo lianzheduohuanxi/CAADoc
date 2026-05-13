@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAASmiUseCases"
 tags: ["CATIMfgActivityParameters", "CAADocStyleSheets", "CAASmiOperationWithuserMFTP2", "CAAISmiUserMachFeature", "CAASurfaceMachiningItf", "CAAESmiUserOperationTPComputation", "CAASmiOperationSampleOverview", "CAASmiOperationWithuserMFTP1", "CAASmiUserOperationToolPathReplay", "CAAGuide", "CAAToolAngle", "CAADocUseCases", "CAASmgOperation", "CATIMfgToolPathFactory", "CATIMfgToolPathComponents", "CATIMfgComputeToolPathCustom", "CATISmgNcGeometryManager", "CAASmiUserOperationWithUserMF", "CAASmgGuide", "CAASmiTechArticles"]
-source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationWithUserMFToolPath.htm"
+source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationWithUserMFToolPath.htmmd"
 converted: "2026-05-11T11:27:02.773459"
 ---
 
@@ -171,8 +171,6 @@ of the *Surface Machining Operation Sample.*
 
 *Copyright  2002, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 ...
 // Tie the implementation to its interface
@@ -200,7 +198,7 @@ TIE_CATIMfgComputeToolPathCustom( CAAESmiUserOperationTPComputation);
     // Approach distance
     pActivityParameters-&gt;GetValue (&quot;CAAApproachDistance&quot;, ApproachDistance);
 
-    pActivityParameters-&gt;Release();
+    pActivityParameters-&gt;Release(#);
     pActivityParameters = NULL;
   }
   ...
@@ -209,7 +207,7 @@ TIE_CATIMfgComputeToolPathCustom( CAAESmiUserOperationTPComputation);
 ```vbscript
 ...
   // Retrieves Machining Feature from Activity
-  CATBaseUnknown_var spBaseFeature = pActivity-&gt;GetFeature();
+  CATBaseUnknown_var spBaseFeature = pActivity-&gt;GetFeature(#);
 
   // Retrieves Geometry from Machining Feature
   CATLISTP(CATGeometry) ListOfGeometry;
@@ -218,7 +216,7 @@ TIE_CATIMfgComputeToolPathCustom( CAAESmiUserOperationTPComputation);
   if (SUCCEEDED(RC))
   {
     pUserMachFeature-&gt;GetGuides(ListOfGeometry);
-    pUserMachFeature-&gt;Release();
+    pUserMachFeature-&gt;Release(#);
     pUserMachFeature = NULL;
   }
   ...
@@ -236,7 +234,7 @@ TIE_CATIMfgComputeToolPathCustom( CAAESmiUserOperationTPComputation);
     if (SUCCEEDED(RC))
     {
       pSmgParameter-&gt;GetGeometricElements(oGeometries);
-      pSmgParameter-&gt;Release();
+      pSmgParameter-&gt;Release(#);
       pSmgParameter = NULL;
     }
   }			

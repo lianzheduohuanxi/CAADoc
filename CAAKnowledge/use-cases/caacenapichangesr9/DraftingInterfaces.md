@@ -5,13 +5,13 @@ category: "use-case"
 module: "CAACenAPIChangesR9"
 version: "V5R9"
 tags: ["CATIDrwDimValue", "CATIDftArrow", "CATIGenerSpec", "CATIDrwDimDimension", "CATIDrwSubText", "CATIDrwAnnotationFactory", "CATIDftGenGeom", "CATIDrwAreaFill"]
-source_file: "Doc/online/CAACenAPIChangesR9/DraftingInterfaces.htm"
+source_file: "Doc/online/CAACenAPIChangesR9/DraftingInterfaces.htmmd"
 converted: "2026-05-11T17:33:52.880439"
 ```
 
 ---
 tags: ["CATIDrwDimValue", "CATIDftArrow", "CATIGenerSpec", "CATIDrwDimDimension", "CATIDrwSubText", "CATIDrwAnnotationFactory", "CATIDftGenGeom", "CATIDrwAreaFill"]
-source_file: "Doc/online/CAACenAPIChangesR9/DraftingInterfaces.htm"
+source_file: "Doc/online/CAACenAPIChangesR9/DraftingInterfaces.htmmd"
 converted: "2026-05-11T17:33:52.880439"
 CAA C++ API Modifications|  DraftingInterfaces  |
 

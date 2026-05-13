@@ -4,13 +4,13 @@ title: "CAAArrCreatePathway.CATScript"
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CATIA", "CAAArrCreatePathway"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreatePathwaySource.htm"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreatePathwaySource.htmmd"
 converted: "2026-05-11T17:31:51.565051"
 ```
 
 ---
 tags: ["CATIA", "CAAArrCreatePathway"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreatePathwaySource.htm"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreatePathwaySource.htmmd"
 converted: "2026-05-11T17:31:51.565051"
     Option Explicit
 
@@ -36,15 +36,20 @@ converted: "2026-05-11T17:31:51.565051"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
+
+```
 
 ```
 
 ```vbscript
 ```vbscript
 ```vbscript
+```vbscript
        ' On Error Resume Next
        '----------------------------------------------
+```
        'Create a new product document
 ```
 
@@ -53,12 +58,16 @@ converted: "2026-05-11T17:31:51.565051"
 ```
 
 ```vbscript
+```vbscript
        Dim objProdDoc        As ProductDocument
+```vbscript
+```
 ```vbscript
 ```vbscript
        Dim objRootProd       As Product
        Set objProdDoc      = CATIA.Documents.Add("Product")
        Set objRootProd     = objProdDoc.Product
+```
 ```
 
 ```
@@ -70,12 +79,16 @@ converted: "2026-05-11T17:31:51.565051"
 ```vbscript
        '----------------------------------------------
        'Retrieving Root Product's Relative Axis and Position Information
+```vbscript
        Dim objMove           As Move
        Set objMove      = objRootProd.Move
        '----------------------------------------------
+```
        ' Get ArrangementProduct
+```vbscript
        Dim objArrProd        As ArrangementProduct
        Set objArrProd   = objRootProd.GetTechnologicalObject("ArrangementProduct")
+```
 ```
 
 ```
@@ -98,23 +111,31 @@ converted: "2026-05-11T17:31:51.565051"
 ```
 
 ```vbscript
+```vbscript
        Dim dblPathwayPoints(75)      As Double
+```vbscript
+```
 ```vbscript
 ```vbscript
        Dim dblMathDirection(3)       As Double
        Dim objArrPathway             As ArrangementPathway
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Dim dblMathDirection(3)       As Double
 ```vbscript
+```
+```vbscript
 Dim objArrPathway             As ArrangementPathway
        dblPathwayPoints(0)   =  300.0
+```
        dblPathwayPoints(1)   =  100.0
        dblPathwayPoints(2)   =  0.0
 
@@ -226,8 +247,10 @@ Dim objArrPathway             As ArrangementPathway
 ```
 
 ```vbscript
+```vbscript
        Set objArrPathway             = objArrProd.ArrangementPathways.AddPathway(objMove,dblPathwayPoints, dblMathDirection)
 ```vbscript
+```
 ```vbscript
        '----------------------------------------------
        ' Change Properties of ArrangementPathway
@@ -245,8 +268,10 @@ Dim objArrPathway             As ArrangementPathway
 ```vbscript
        '----------------------------------------------
        ' Define Bend Radius of Nodes
+```vbscript
        Dim intK As Integer
        For intK = 1 To objArrPathway.ArrangementNodes.Count
+```
 ```
 
 ```
@@ -257,7 +282,9 @@ Dim objArrPathway             As ArrangementPathway
 ```vbscript
 ```vbscript
 ' Define Bend Radius of Nodes
+```vbscript
 Dim intK As Integer
+```
 ```
 
 ```
@@ -269,6 +296,8 @@ For intK = 1 To objArrPathway.ArrangementNodes.Count
 ```vbscript
        Next
 
+```vbscript
     End Sub
 
+```
 ```

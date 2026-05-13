@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating a Command that Consists in a Dialog Window"
-category: "use case"
+category: use-case case"
 module: "CAAAfrUseCases"
 tags: ["CAAAfrBoundingEltHdr", "CAAAfrBoundingElementId", "CAAAfrGeoCommands", "CAAGeometry", "CAAAfrGeoAnalysisWkbHeader", "CATISO", "CAAAfrBoundingElementCmd", "CAAAfrBoundingElement", "CAAApplicationFrame"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleDialogOnly.htm"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleDialogOnly.htmmd"
 converted: "2026-05-11T17:17:55.713101"
 ```
 
@@ -96,10 +96,10 @@ Do not type the module name on the command line, but type CNEXT instead. When th
 The CAAAfrBoundingElementCmd use case is made of a single class named _CAAAfrBoundingElementCmd_ located in the CAAAfrGeoCommands.m module of the CAAApplicationFrame.edu framework:
 
 The CAAAfrBoundingElementCmd use case is made of a single class named _CAAAfrBoundingElementCmd_ located in the CAAAfrGeoCommands.m module of the CAAApplicationFrame.edu framework:
-Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeoCommands.m\`
+Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeoCommands.m/`
 
 The CAAAfrBoundingElementCmd use case is made of a single class named _CAAAfrBoundingElementCmd_ located in the CAAAfrGeoCommands.m module of the CAAApplicationFrame.edu framework:
-Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeoCommands.m\`
+Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeoCommands.m/`
 Unix | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeoCommands.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -133,8 +133,8 @@ class CAAAfrBoundingElementCmd : public CATDlgDialog
 
 ```
 
-        CAAAfrBoundingElementCmd();
-        virtual ~CAAAfrBoundingElementCmd();
+        CAAAfrBoundingElementCmd(#);
+        virtual ~CAAAfrBoundingElementCmd(#);
 
 ```vbscript
       private :
@@ -143,8 +143,8 @@ class CAAAfrBoundingElementCmd : public CATDlgDialog
 
         ...
 ```vbscript
-CAAAfrBoundingElementCmd();
-virtual ~CAAAfrBoundingElementCmd();
+CAAAfrBoundingElementCmd(#);
+virtual ~CAAAfrBoundingElementCmd(#);
 private :
         void **ClickClose**(CATCommand           * iSendingCommand,
                         CATNotification      * iSentNotification,
@@ -205,8 +205,8 @@ So, to be able to create an instance of the command by its name you should have 
 The CAAAfrBoundingElementCmd command is not seen by the command selector. Its starting mode is undefined: it is the default mode of a _CATDlgDialog_ class. For such commands, and contrary to the common usage with dialog boxes that use a `Build` method to instantiate the dialog objects contained in the dialog box, the constructor should perform this instantiation because the command header calls only this constructor. So the contents of the constructor is as a `Build` method [6] :
 
     ...
-    CAAAfrBoundingElementCmd::CAAAfrBoundingElementCmd()
-              :CATDlgDialog ((CATApplicationFrame::GetFrame())->GetMainWindow(),
+    CAAAfrBoundingElementCmd::CAAAfrBoundingElementCmd(#)
+              :CATDlgDialog ((CATApplicationFrame::GetFrame(#))->GetMainWindow(#),
                               "CAAAfrBoundingElementId",
                               CATDlgGridLayout | **CATDlgWndBtnClose** )
     {
@@ -216,7 +216,7 @@ The CAAAfrBoundingElementCmd command is not seen by the command selector. Its st
        // 3- Declaring the callbacks associated with the dialog objects
        // 4- Declaring the callback for a document's closure
        ...
-       _pEditor = **CATFrmEditor::GetCurrentEditor**();
+       _pEditor = **CATFrmEditor::GetCurrentEditor**(#);
     }
     ...
 
@@ -265,10 +265,10 @@ SetVisibility(CATDlgShow);
          ...
 
 3. Declaring the callbacks associated with the dialog object
-           AddAnalyseNotificationCB(this, this->**GetWindCloseNotification**(),
+           AddAnalyseNotificationCB(this, this->**GetWindCloseNotification**(#),
                          (CATCommandMethod)&CAAAfrBoundingElementCmd::ClickClose,
                                      NULL);
-           AddAnalyseNotificationCB(this, this->**GetDiaCLOSENotification**(),
+           AddAnalyseNotificationCB(this, this->**GetDiaCLOSENotification**(#),
                          (CATCommandMethod)&CAAAfrBoundingElementCmd::ClickClose,
                                      NULL);
 
@@ -287,21 +287,21 @@ This step is mandatory. If the end user closes the current document and the comm
 4. Declaring the callback for a document's closure
 This step is mandatory. If the end user closes the current document and the command is alive: it will not be automatically deleted once it is not seen by the command selector. So your command must set a callback when the document will send the "close" event.
 ```vbscript
-     if ( (NULL != _pEditor) && (NULL != **CATFrmLayout::GetCurrentLayout**()) )
+     if ( (NULL != _pEditor) && (NULL != **CATFrmLayout::GetCurrentLayout**(#)) )
 
 ```
 
       {
          ::AddCallback(this,
 ```vbscript
-if ( (NULL != _pEditor) && (NULL != **CATFrmLayout::GetCurrentLayout**()) )
-                        CATFrmLayout::GetCurrentLayout(),
+if ( (NULL != _pEditor) && (NULL != **CATFrmLayout::GetCurrentLayout**(#)) )
+                        CATFrmLayout::GetCurrentLayout(#),
 ```
 
-    		  **CATFrmEditor::EDITOR_CLOSE_ENDED**(),
+    		  **CATFrmEditor::EDITOR_CLOSE_ENDED**(#),
 ```vbscript
-if ( (NULL != _pEditor) && (NULL != **CATFrmLayout::GetCurrentLayout**()) )
-CATFrmLayout::GetCurrentLayout(),
+if ( (NULL != _pEditor) && (NULL != **CATFrmLayout::GetCurrentLayout**(#)) )
+CATFrmLayout::GetCurrentLayout(#),
     		  (CATSubscriberMethod)&CAAAfrBoundingElementCmd::EditorClose,
     		  NULL);
 ```
@@ -330,7 +330,7 @@ The command can be deleted for two reasons:
 
       ...
 
-      **RequestDelayedDestruction**();
+      **RequestDelayedDestruction**(#);
 
     }
 
@@ -357,7 +357,7 @@ CATCallback       iCallBack )
 ```
 
        {
-          **RequestDelayedDestruction**();
+          **RequestDelayedDestruction**(#);
        }
     }
 
@@ -369,14 +369,14 @@ The destructor, as usual, releases the data members and set NULL the data member
 
 The unique _CATFrmLayout_ class instance sends a "`EDITOR_CLOSE_ENDED"` notification when anything document is closed. So the `EditorClose`**** method is called.  It is necessary to check that it is the "good" editor before closing the window. `iFrom` is the editor associated with the document which is closing. If `iFrom` is the good document the dialog box deletion is requested.
 The destructor, as usual, releases the data members and set NULL the data member pointers. In addition, the current destructor must delete the callback on the _CATFrmLayout_ :
-    CAAAfrBoundingElementCmd::~CAAAfrBoundingElementCmd()
+    CAAAfrBoundingElementCmd::~CAAAfrBoundingElementCmd(#)
 
     {
       // releases the data members and set NULL the data member pointers
       ...
-       if ( (NULL != _pEditor) && ( NULL != CATFrmLayout::GetCurrentLayout()) )
+       if ( (NULL != _pEditor) && ( NULL != CATFrmLayout::GetCurrentLayout(#)) )
        {
-          ::**RemoveSubscriberCallbacks**(this,CATFrmLayout::GetCurrentLayout());
+          ::**RemoveSubscriberCallbacks**(this,CATFrmLayout::GetCurrentLayout(#));
        }
 
        _pEditor = NULL ;

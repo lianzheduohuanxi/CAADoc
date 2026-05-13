@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdPriUseCases"
 tags: ["CAAScrBase", "CATIA", "CAAScrJavaScript", "CAAScdInfUseCases", "CAAScdPriUseCases", "CAAPriPadSource", "CAAInfLauchMacro", "CAAPriPad", "CAAlink"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriPad.htm"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriPad.htmmd"
 converted: "2026-05-11T11:27:02.726351"
 ---
 
@@ -54,7 +54,7 @@ The `IsSymmetric` property of the *Pad* object is set
     
   
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 
@@ -74,28 +74,34 @@ This use case has shown how to create and modify a pad using macros.
 
 *Copyright  2001, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 ...
 ' ------------
 ' Get the part
 ' ------------
+```vbscript
 Dim oPart As Part
 Set oPart = CATIA.ActiveDocument.Part
+
+```
 
 ' ------------
 ' Get the part body in the part
 ' ------------
+```vbscript
 Dim oBody As Body
 Set oBody = oPart.Bodies.Item  ( &quot;PartBody&quot; ) 
+
+```
 
 ' ------------
 ' Get the sketch in the body
 ' ------------
+```vbscript
 Dim oSketch As Sketch
 Set oSketch = oBody.Sketches.Item  ( &quot;Sketch.1&quot; ) 
    ...
+```
 ```
 
 ```vbscript
@@ -103,9 +109,12 @@ Set oSketch = oBody.Sketches.Item  ( &quot;Sketch.1&quot; )
 ' ------------
 ' Create the pad with a default first limit
 ' ------------
+```vbscript
 MsgBox &quot;Click OK to create the pad.&quot;
 Dim oPad As Pad
 Set oPad = oPart.ShapeFactory.AddNewPad  ( oSketch, 20.000000 ) 
+
+```
 
 ' ------------
 ' Update the part
@@ -119,8 +128,10 @@ oPart.Update
 ' ------------
 ' Define the pad first limit
 ' ------------
+```vbscript
 MsgBox &quot;Click OK to set the pad first limit to 40mm.&quot;
 oPad.FirstLimit.Dimension.Value = 40.000000
+```
 
 ' ------------
 ' Update the part
@@ -134,8 +145,10 @@ oPart.Update
 ' ------------
 ' Define the pad to be symmetric relative to the sketch plane
 ' ------------
+```vbscript
 MsgBox &quot;Click OK to mirror the extrusion offset.&quot;
 oPad.IsSymmetric = True
+```
 
 ' ------------
 ' Update the part

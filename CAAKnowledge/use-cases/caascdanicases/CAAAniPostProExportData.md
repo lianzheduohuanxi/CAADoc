@@ -4,7 +4,7 @@ title: "Exporting Data on Images"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniPostProExportData", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPostProExportData.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPostProExportData.htmmd"
 converted: "2026-05-11T17:31:51.747550"
 ```
 
@@ -43,22 +43,28 @@ This use case shows you how to export data on images using VB. The macro opens a
 ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
 
+```vbscript
       sDocPath=CATIA.SystemService.Environ("CATDocView")
       sOut = CATIA.SystemService.Environ("CATTemp")
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
+```
 
+```vbscript
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
         End If
 ```
 
@@ -69,8 +75,10 @@ This use case shows you how to export data on images using VB. The macro opens a
 ```vbscript
     ' -----------------------------------------------------------
     ' Open the Analysis document
-    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis")
+```vbscript
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Cube_R13_Freq.CATAnalysis")
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+```
 ```
 
 ```
@@ -81,7 +89,7 @@ This use case shows you how to export data on images using VB. The macro opens a
 
 ---
 
-Open the Analysis document. The Analysis document is fetched in the documentation installation path, this path has already been stored in the `sDocPath` variable. In the collection of documents, two documents can be retrieved; the Analysis document and the Part document. The CATTemp environment variable stores temporary data. On windows it points to  C/Documents and Settings\user\Local Settings\Application Data\DassaultSystemes\CATTemp and on unix it points to /CATSettings/CATTemp.
+Open the Analysis document. The Analysis document is fetched in the documentation installation path, this path has already been stored in the `sDocPath` variable. In the collection of documents, two documents can be retrieved; the Analysis document and the Part document. The CATTemp environment variable stores temporary data. On windows it points to  C/Documents and Settings/user/Local Settings/Application Data/DassaultSystemes/CATTemp and on unix it points to /CATSettings/CATTemp.
 #### **Retrieve Analysis Cases and Analysis Sets from Analysis Document**
 
     ...
@@ -91,35 +99,45 @@ Open the Analysis document. The Analysis document is fetched in the documentatio
 ```
 
 ```vbscript
+```vbscript
     Set fileSystem1 = CATIA.FileSystem
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set folder1 = fileSystem1.GetFolder(sOut)
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Set folder1 = fileSystem1.GetFolder(sOut)
 ```vbscript
+```
     ' Retrieve the Analysis Manager
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisManager = oAnalysisDocument.Analysis
+```
 ```
 
 ```vbscript
 ```vbscript
 ```vbscript
     ' Retrieve the analysis model from the list of models
+```vbscript
     Set oAnalysisModels = oAnalysisManager.AnalysisModels
     Set oAnalysisModel = oAnalysisModels.Item(1)
+```
 ```
 
 ```
@@ -131,37 +149,49 @@ Set folder1 = fileSystem1.GetFolder(sOut)
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisCases = oAnalysisModel.AnalysisCases
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oAnalysisCase = oAnalysisCases.Item(1)
 
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Set oAnalysisCases = oAnalysisModel.AnalysisCases
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set oAnalysisCase = oAnalysisCases.Item(1)
     ' Retrieve the analysis cases and the Frequency case solution
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisSets = oAnalysisCase.AnalysisSets
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oAnalysisSet = oAnalysisSets.ItemByType("PropertySet")
 
     Set oAnalysisImages = oAnalysisSet.AnalysisImages
     Set oAnalysisImage = oAnalysisImages.Add("Material_Fringe", False, False, True)
+```
 ```
 
 ```
@@ -172,7 +202,7 @@ Set oAnalysisCase = oAnalysisCases.Item(1)
 
 ---
 
-According to the general [Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , and the **Analysis Model**.
+According to the general [Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , and the **Analysis Model**.
 
 Property set is retrieved from the list of analysis sets. From the property set list of images is retrieved and material fringe image is added to it.
 #### Generate the Report
@@ -184,20 +214,26 @@ Property set is retrieved from the list of analysis sets. From the property set 
 ```
 
 ```vbscript
+```vbscript
     Set fileSystem1 = CATIA.FileSystem
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set folder1 = fileSystem1.GetFolder(sout)
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Set folder1 = fileSystem1.GetFolder(sout)
 ```vbscript
+```
     'export data in exportfile1.txt (format txt)
 ```
 
@@ -231,14 +267,16 @@ The sOut variable stores the path of the folder in which the repots is generated
 #### Epilog
 
     ...
+```vbscript
     End Sub
     ...
+```
 
 ---
 
 To run the macro interactively CATDocView environment variable must be defined.
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

@@ -4,13 +4,13 @@ title: "Projecting a Curve onto a Surface"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CATICGMProjectionCrvSur", "CAAGMModelInterfaces", "CAAGMModelProjectionOpe"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcProjCrvSur.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcProjCrvSur.htmmd"
 converted: "2026-05-11T17:33:48.489649"
 ```
 
 ---
 tags: ["CATICGMProjectionCrvSur", "CAAGMModelInterfaces", "CAAGMModelProjectionOpe"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcProjCrvSur.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcProjCrvSur.htmmd"
 converted: "2026-05-11T17:33:48.489649"
 Projecting a Curve onto a Surface
 
@@ -42,18 +42,18 @@ pConfig,
 piNurbsCurve, &crvLim1;,
 piNurbsSurface, &surLim1;);
 ```vbscript
-    if (!pCrvSurOpe->GetNumberOfPoints() && !pCrvSurOpe->GetNumberOfCurves())
+    if (!pCrvSurOpe->GetNumberOfPoints(#) && !pCrvSurOpe->GetNumberOfCurves(#))
 
 ```
 
        {
 piNurbsSurface, &surLim1;);
-if (!pCrvSurOpe->GetNumberOfPoints() && !pCrvSurOpe->GetNumberOfCurves())
+if (!pCrvSurOpe->GetNumberOfPoints(#) && !pCrvSurOpe->GetNumberOfCurves(#))
            cout << "Projection of curve onto surface has failed"  << endl;
 
     		::CATCloseCGMContainer(piGeomFactory);
 ```vbscript
-if (!pCrvSurOpe->GetNumberOfPoints() && !pCrvSurOpe->GetNumberOfCurves())
+if (!pCrvSurOpe->GetNumberOfPoints(#) && !pCrvSurOpe->GetNumberOfCurves(#))
 cout << "Projection of curve onto surface has failed"  << endl;
     		return (1);
 ```
@@ -64,7 +64,7 @@ cout << "Projection of curve onto surface has failed"  << endl;
 return (1);
 ```vbscript
 ```vbscript
-    while (pCrvSurOpe->NextCurve())
+    while (pCrvSurOpe->NextCurve(#))
 
 ```
 
@@ -74,9 +74,9 @@ return (1);
 return (1);
 ```vbscript
 ```vbscript
-while (pCrvSurOpe->NextCurve())
-           pPcurve = pCrvSurOpe->GetPCurve();
-           maxDist   = pCrvSurOpe->GetDistance();
+while (pCrvSurOpe->NextCurve(#))
+           pPcurve = pCrvSurOpe->GetPCurve(#);
+           maxDist   = pCrvSurOpe->GetDistance(#);
 
 ```
 

@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CAAScrBase", "CAAInfWriteDocument3", "CATIA", "CAAScrJavaScript", "CAAInfSaveAsDocumentSource", "CAAInfSaveAsDocument", "CAAInfReadDocument", "CAAScdInfUseCases", "CAAInfCloseDocument", "CAAInfWriteDocument1", "CAAInfCreateDocument", "CAAInfWriteDocument2", "CAAInfLauchMacro", "CAAInfSaveDocument"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfSaveAsDocument.htm"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfSaveAsDocument.htmmd"
 converted: "2026-05-11T11:27:02.698963"
 ---
 
@@ -122,26 +122,28 @@ where the new document will be stored.
 
 *Copyright  2001, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 ' Optional: allows to find the sample wherever it may be installed
 
+```vbscript
     Dim sDocPath  As String
     DocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
             Err.Raise 9999,,&quot;No Doc Path Defined&quot;
     End If
 ```
+```
 
 ```vbscript
 ' Optional: allows to specify where document should be saved
 
+```vbscript
     Dim sTmpPath  As String
     sTmpPath=CATIA.SystemService.Environ(&quot;CATTemp&quot;)
     If (Not CATIA.FileSystem.FolderExists(sTmpPath)) Then
         Err.Raise 9999,,&quot;No Tmp Path Defined&quot;
     End If
+```
 ```
 
 ```vbscript
@@ -150,38 +152,49 @@ where the new document will be stored.
     'Add the new document to the end of the collection of documents.
     'Create and display a new window for the new document.
     'Activate the new document and the window.
+```vbscript
      Dim oFirstNewPartDoc As Document
      Set oFirstNewPartDoc = CATIA.Documents.Add(&quot;Part&quot;)
 
     'The document just created is the active one.
+```
     'Save the new document.
+```vbscript
      CATIA.ActiveDocument.SaveAs(sTmpPath &amp; _
-       &quot;\CAAInfWriteDocument1.CATPart&quot;)
+       &quot;/CAAInfWriteDocument1.CATPart&quot;)
+```
  ...
 ```
 
 ```vbscript
 ...
    'Create a second new part document.
+```vbscript
      Dim oSecondNewPartDoc As Document
      Set oSecondNewPartDoc = CATIA.Documents.Add(&quot;Part&quot;)
 
+```
+
     'Save the new document using the variable name defined for it.
      oSecondNewPartDoc.SaveAs(sTmpPath &amp; _
-       &quot;\CAAInfWriteDocument2.CATPart&quot;)
+       &quot;/CAAInfWriteDocument2.CATPart&quot;)
   ...
 ```
 
 ```vbscript
 ...
      'Open an existing document.
+```vbscript
       Dim iThirdPartDoc As Document
       Set iThirdPartDoc = CATIA.Documents.Open(sDocPath &amp; _
-        &quot;\online\CAAScdInfUseCases\samples\CAAInfReadDocument.CATPart&quot;)
+        &quot;/online/CAAScdInfUseCases/samples/CAAInfReadDocument.CATPart&quot;)
+```
 
      'Save the new document by specifying its name.
+```vbscript
       CATIA.Documents.Item(&quot;CAAInfReadDocument.CATPart&quot;).SaveAs(sTmpPath &amp; _
-        &quot;\CAAInfWriteDocument3.CATPart&quot;)
+        &quot;/CAAInfWriteDocument3.CATPart&quot;)
+```
 
   ...
 ```

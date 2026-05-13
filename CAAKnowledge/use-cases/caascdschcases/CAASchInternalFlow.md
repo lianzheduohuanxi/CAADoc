@@ -4,7 +4,7 @@ title: "Managing Internal Flow in a Schematic Reference Component"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CATIASchCompFlow", "CAADoc", "CAASchInternalFlow", "CATIASchComponent", "CAAScdSchUseCases", "CATIA", "CAASchAppBase", "CAASCHEDUApp", "CAASchPlatformModeler", "CATIASchAppConnector", "CAASCH_Detail02", "CAASchAppUtilities"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchInternalFlow.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchInternalFlow.htmmd"
 converted: "2026-05-11T17:31:51.390076"
 ```
 
@@ -39,9 +39,9 @@ In order for the instance of a Schematic reference component to be capable of be
   * Setup:
 
 >   1. Build CAASchAppBase.m and CAASchAppUtilities.m, located in CAASchPlatformModeler.edu (RADE is required).
->   2. Copy generated DLLs, CAASchAppBase.dll and CAASchAppUtilities.m, respectively, to the run-time environment folder "intel_a\code\bin."
->   3. Copy CAASCHEDUApp.CATfct, located CAASchPlatformModeler.edu\CNext\resources\graphic, to the run-time environment folder "intel_a\resources\graphic."
->   4. Copy CAASchPlatformModeler.edu\CNext\code\dictionary\CAASchPlatformModeler.edu.dico to the run-time environment folder "intel_a\code\dictionary."
+>   2. Copy generated DLLs, CAASchAppBase.dll and CAASchAppUtilities.m, respectively, to the run-time environment folder "intel_a/code/bin."
+>   3. Copy CAASCHEDUApp.CATfct, located CAASchPlatformModeler.edu/CNext/resources/graphic, to the run-time environment folder "intel_a/resources/graphic."
+>   4. Copy CAASchPlatformModeler.edu/CNext/code/dictionary/CAASchPlatformModeler.edu.dico to the run-time environment folder "intel_a/code/dictionary."
 >
 
 [ CAASchInternalFlow.CATScript ](CAASchInternalFlowSource.md)is located in the CAAScdSchUseCases module. [Execute macro](macros/CAASchInternalFlow.CATScript) (Windows only).
@@ -67,22 +67,30 @@ The macro first loads CAASCH_Detail02.CATProduct. |     ...
 ```
 
 ```vbscript
+```vbscript
     Dim sFilePath
+```vbscript
+```
 ```vbscript
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
+```
 
 ```
 
-            "online\CAAScdSchUseCases\samples\CAASCH_Detail02.CATProduct")
+            "online/CAAScdSchUseCases/samples/CAASCH_Detail02.CATProduct")
 
 ```vbscript
+```vbscript
 Dim sFilePath
+```vbscript
+```
 ```vbscript
 ```vbscript
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
+```
 ```
 
 ```
@@ -106,15 +114,23 @@ Next, the macro acquires the schematic root object from the document. The schema
 ```
 
 ```vbscript
+```vbscript
     Dim objPrdRoot As Product
+```vbscript
+```
 ```vbscript
 ```vbscript
     Dim objSchRoot As SchematicRoot
     If ( Not ( objSchDoc Is Nothing ) ) Then
+```
+```vbscript
       Set objPrdRoot = objSchDoc.Product
       If ( Not ( objPrdRoot Is Nothing ) ) Then
+```
+```vbscript
         Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
       End If
+```
     End If
 ```
 
@@ -143,8 +159,10 @@ The SchematicRoot interface provides the GetRefComponents method to find a list 
 
 ```vbscript
 ```vbscript
+```vbscript
        Set objLCompRefs = objSchRoot.GetRefComponents
 
+```
 ```
 
 ```
@@ -153,7 +171,9 @@ The SchematicRoot interface provides the GetRefComponents method to find a list 
 ```vbscript
        If ( Not ( objLCompRefs Is Nothing ) ) Then
 
+```vbscript
           Set objCompRef = objLCompRefs.Item (1,"CATIASchComponent")
+```
 ```
 
 ```
@@ -166,7 +186,9 @@ The SchematicRoot interface provides the GetRefComponents method to find a list 
 The macro calls the GetInterface method to get a handle on the reference component for the SchCompFlow interface.
 
 ```vbscript
+```vbscript
               Set objCompFlow = objSchRoot.GetInterface ( _
+```
 ```
 
                 "CATIASchCompFlow",objCompRef)
@@ -189,7 +211,9 @@ Next, the macro get a list of all connectors of the Schematic Component.
 
     ...
 ```vbscript
+```vbscript
              Set objLCntr = objCntbl.AppListConnectors (objLFilter)
+```
 ```
 
     ...
@@ -216,7 +240,10 @@ Method CreateListOfObject is called to create a list of connectors containing th
 
    ...
 ```vbscript
+```vbscript
              Dim objFlow1 As SchInternalFlow
+```vbscript
+```
 ```vbscript
 ```vbscript
              Dim objFlow2 As SchInternalFlow
@@ -228,22 +255,30 @@ Method CreateListOfObject is called to create a list of connectors containing th
              Dim objLFlow As SchListOfObjects
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Dim objLCntr2 As SchListOfObjects
 ```vbscript
+```
+```vbscript
 Dim objLFlow As SchListOfObjects
+```
 ```
 
              intNbCntr = objLCntr.Count
 ```
 
 ```vbscript
+```vbscript
              Set objLCntr1 = objSchTempListFact.CreateListOfObjects
+```vbscript
+```
 ```vbscript
 ```vbscript
              Set objLCntr2 = objSchTempListFact.CreateListOfObjects
@@ -253,13 +288,17 @@ Dim objLFlow As SchListOfObjects
              Set objCntr3 = Nothing
 
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
              If ( intNbCntr > 0 ) Then Set objCntr1 = objLCntr.Item(1,"CATIASchAppConnector")
+```vbscript
+```
 ```vbscript
 ```vbscript
              If ( intNbCntr > 1 ) Then Set objCntr2 = objLCntr.Item(2,"CATIASchAppConnector")
@@ -267,6 +306,7 @@ Dim objLFlow As SchListOfObjects
 
              Set objFlow1 = Nothing
              If ( Not objLCntr1 Is Nothing ) Then
+```
                 If ( Not ( objCntr1 Is Nothing ) And _
 ```
 
@@ -275,7 +315,9 @@ Dim objLFlow As SchListOfObjects
 
                    objLCntr1.Append (objCntr1)
                    objLCntr1.Append (objCntr2)
+```vbscript
                    Set objFlow1 = objCompFlow.AddInternalFlow (objLCntr1)
+```
 ```
 
     ...
@@ -286,8 +328,10 @@ Similarly, the macro creates a second list of connectors containing the first an
 
     ...
 ```vbscript
+```vbscript
              Set objFlow2 = Nothing
 ```vbscript
+```
 ```vbscript
              If ( Not objLCntr2 Is Nothing ) Then
                 If ( Not ( objCntr1 Is Nothing ) And _
@@ -298,7 +342,9 @@ Similarly, the macro creates a second list of connectors containing the first an
 
                    objLCntr2.Append (objCntr1)
                    objLCntr2.Append (objCntr3)
+```vbscript
                    Set objFlow2 = objCompFlow.AddInternalFlow (objLCntr2)
+```
 ```
 
     ...
@@ -321,7 +367,9 @@ Similarly, the macro creates a second list of connectors containing the first an
 ```
 
 ```vbscript
+```vbscript
                   Set objLFlow = objCompFlow.ListInternalFlows
+```
 ```
 
     ...

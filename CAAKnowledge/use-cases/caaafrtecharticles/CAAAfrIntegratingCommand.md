@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Making Your Commands Available"
-category: "use-case"
+category: tech-article
 module: "CAAAfrTechArticles"
 tags: []
-source_file: "Doc/online/CAAAfrTechArticles/CAAAfrIntegratingCommand.htm"
+source_file: "Doc/online/CAAAfrTechArticles/CAAAfrIntegratingCommand.htmmd"
 converted: "2026-05-11T17:17:55.901724"
 ```
 
@@ -94,15 +94,15 @@ You can easily customize your toolbars by adding icons to trigger your favorite 
 
 You can easily customize your toolbars by adding icons to trigger your favorite macros. This reduces the macro access time for the macros you often run.
 This task explains how to add a macro as a command in a toolbar.
- 1\. On the **Tools** menu, point to **Macro** , and then click **Macros**. Click **Select** to select the macro you want to add to make sure that the directory path of the file containing the requested macro is concatenated with those recognized by the application. Then click **Cancel**.
+ 1/. On the **Tools** menu, point to **Macro** , and then click **Macros**. Click **Select** to select the macro you want to add to make sure that the directory path of the file containing the requested macro is concatenated with those recognized by the application. Then click **Cancel**.
 
- 2\. On the **Tools** menu, click **Customize** , and then click the **Commands** tab. In the **Categories** list, click **Macros.** Drag the macro name and drop it onto the toolbar you wish. The default icon ![](images/CAAAfrCmdInt22.jpg) is used
+ 2/. On the **Tools** menu, click **Customize** , and then click the **Commands** tab. In the **Categories** list, click **Macros.** Drag the macro name and drop it onto the toolbar you wish. The default icon ![](images/CAAAfrCmdInt22.jpg) is used
 
- 3\. To select another icon than the default one, click **Show Properties** , and click ![](images/CAAAfrCmdInt25.jpg) to display the Icons Browser  box.
+ 3/. To select another icon than the default one, click **Show Properties** , and click ![](images/CAAAfrCmdInt25.jpg) to display the Icons Browser  box.
 
- 4\. Click the appropriate icon. The default icon changes to the one clicked.
+ 4/. Click the appropriate icon. The default icon changes to the one clicked.
 
-![aendtask.gif \(2990 bytes\)](images/aendtask.gif)
+![aendtask.gif /(2990 bytes/)](images/aendtask.gif)
 
 The macro is now ready to use from the toolbar.
 

@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "The Physical Types for Structural Analysis"
-category: "use-case"
+category: tech-article
 module: "CAAScdAniTechArticles"
 tags: ["CATIAConstraints"]
-source_file: "Doc/online/CAAScdAniTechArticles/CAAAniPreprocessingFeatures.htm"
+source_file: "Doc/online/CAAScdAniTechArticles/CAAAniPreprocessingFeatures.htmmd"
 converted: "2026-05-11T17:31:51.963872"
 ```
 
@@ -74,11 +74,15 @@ basicComponent2.SetValue "", 1, 1, 1, 5000.0
 ```
 
 ```vbscript
+```vbscript
     Dim analysisEntities As AnalysisEntities
+```vbscript
+```
 ```vbscript
 ```vbscript
     Dim ThisAnalysisEntity As AnalysisEntity
     Set ThisAnalysisEntity = analysisEntities.Add("Analysis Entity Type")
+```
 ```
 
 ```
@@ -89,11 +93,13 @@ basicComponent2.SetValue "", 1, 1, 1, 5000.0
 ```vbscript
 ```vbscript
     ' To retrieve the parameter "Param": First Retrieve the collection on the Entity
+```vbscript
     Dim BasicComponents1 As BasicComponents
     Set BasicComponents1 = ThisAnalysisEntity.BasicComponents
 
     Dim BasicComponent1 As BasicComponent
     Set BasicComponent1 = BasicComponents1.Item("Param")
+```
 ```
 
 ```
@@ -123,13 +129,17 @@ To valuate a support on an analysis entity and for some Basic components, the fo
 ```
 
 ```vbscript
+```vbscript
     Dim part1 As Part
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set part1 = PartDocument.Part
 
     Dim product1 As Product
     Set product1 = PartDocument.Product
+```
 ```
 
 ```
@@ -140,9 +150,12 @@ To valuate a support on an analysis entity and for some Basic components, the fo
 ```vbscript
 ```vbscript
     ' Retrieve the References for Brep's
+```vbscript
     Dim referenceBound As Reference
     Set referenceBound = part1.CreateReferenceFromName("Selection_RSur:(Face:(Brp:(GSMxxx))") // **Brep Case**
     ' Retrieve the References for Mechanical Features
+```
+```vbscript
     Dim bodies1 As Bodies
     Set bodies1 = part1.Bodies
     Dim body1 As Body
@@ -153,6 +166,7 @@ To valuate a support on an analysis entity and for some Basic components, the fo
     Set split1 = shapes1.Item("Split.1")
     Dim reference1 As Reference
     Set reference1 = part1.CreateReferenceFromObject(split1)               // Create the reference thanks to the part
+```
 ```
 
 ```
@@ -176,7 +190,10 @@ To valuate a support on an analysis entity and for some Basic components, the fo
 ```
 
 ```vbscript
+```vbscript
     Dim product1 As Product
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set product1 = TheProductDoc.Product
@@ -186,15 +203,20 @@ To valuate a support on an analysis entity and for some Basic components, the fo
     Set publication1 = publications1.Item("ClampFace")
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Dim publication1 As Publication
 ```vbscript
+```
+```vbscript
 Set publication1 = publications1.Item("ClampFace")
+```
 ```
 
     ThisAnalysisEntity.AddSupportFromPublication product1, publication1 // product1 is the publisher object.
@@ -211,7 +233,10 @@ Set publication1 = publications1.Item("ClampFace")
 ```
 
 ```vbscript
+```vbscript
     Dim product1 As Product
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set product1 = TheProductDoc.Product
@@ -221,15 +246,20 @@ Set publication1 = publications1.Item("ClampFace")
     Set constraint1 = constraints1.Item("Surface contact.2")
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Dim constraint1 As Constraint
 ```vbscript
+```
+```vbscript
 Set constraint1 = constraints1.Item("Surface contact.2")
+```
 ```
 
     ThisAnalysisEntity.AddSupportFromConstraint product1, constraint1
@@ -244,14 +274,19 @@ Set constraint1 = constraints1.Item("Surface contact.2")
 ```vbscript
 ```vbscript
     ' To valuate a support from another analysis feature:
+```vbscript
     ' Consider analysisSets2 is the Collection of AnalysisSet returned by AnalysisModel
 
+```
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Dim analysisSet4  As AnalysisSet
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set analysisSet4 = analysisSets2.ItemByType("PropertySet") // Extract the property set
@@ -261,6 +296,7 @@ Set constraint1 = constraints1.Item("Surface contact.2")
     Set analysisEntity1= analysisEntities1.Item("MyRigidVirPart")  // Extract the entity to consider as a support
 
     Set reference2 = analysisManager1.CreateReferenceFromObject(analysisEntity1) // Create the Reference Object
+```
 ```
 
 ```

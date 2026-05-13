@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Assigning Resources to a Dialog Box"
-category: "use-case"
+category: tech-article
 module: "CAADlgTechArticles"
 tags: ["CATIconPath", "CAADegPointErrorBox", "CAADlgMoreButtonDlg", "CATIA"]
-source_file: "Doc/online/CAADlgTechArticles/CAADlgResources.htm"
+source_file: "Doc/online/CAADlgTechArticles/CAADlgResources.htmmd"
 converted: "2026-05-11T17:17:56.085439"
 ```
 
@@ -234,7 +234,7 @@ When the application requests a resource for an object in a dialog window, the r
 
 The example below deals with a class CATDlgDocument, but could be applicable to any class declaring external resources, and for any kind of resources. Suppose the class MyDocument to instantiate is defined by the following diagram:
 
-![CATDlgI18NConcat1.gif \(23127 bytes\)](images/CATDlgI18NConcat1.gif)
+![CATDlgI18NConcat1.gif /(23127 bytes/)](images/CATDlgI18NConcat1.gif)
 
 The Rare radio button is part of a frame class named BaseFrame that is used as base class by a specialized frame class named DerivedFrame. This specialized class is aggregated by reference in a dialog window class named DerivedWindow that itself features a frame provided by a window base class named BaseClass. Each class provides the resources for its own controls. The resources are then searched for in the following order::
 
@@ -245,11 +245,11 @@ The Rare radio button is part of a frame class named BaseFrame that is used as b
 
 Suppose now that the DerivedFrame.CATNls resource file redefines the Rare radio button title. This redefined title is taken into account because the aggregated DerivedFrame resource file is searched for before its base class resource file. The dialog box looks like this:
 
-![CATDlgI18NConcat2.gif \(24974 bytes\)](images/CATDlgI18NConcat2.gif)
+![CATDlgI18NConcat2.gif /(24974 bytes/)](images/CATDlgI18NConcat2.gif)
 
 Suppose now that the DerivedWindow.CATNls resource file itself redefines the Rare radio button title. This redefined title is taken into account because the DerivedWindow resource file is searched for before all the other resource files. The dialog box looks like this:
 
-![CATDlgI18NConcat3.gif \(25687 bytes\)](images/CATDlgI18NConcat3.gif)
+![CATDlgI18NConcat3.gif /(25687 bytes/)](images/CATDlgI18NConcat3.gif)
 
 [Top]
 #### Retrieving Character Strings External Resources

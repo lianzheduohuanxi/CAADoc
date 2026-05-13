@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAAScrBase", "CATIASchGRR", "CATIA", "CAASchCompRefGraphic_02", "CAAScrJavaScript", "CAASchCompRefGraphic", "CAAScdSchUseCases", "CAASchCompRefGraphic_01", "CAAScdInfUseCases", "CAASCH_Detail03", "CATIASchCompGraphic", "CAAInfLauchMacro", "CAASchCompRefGraphicSource"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchCompRefGraphic.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchCompRefGraphic.htmmd"
 converted: "2026-05-11T11:27:02.648576"
 ---
 

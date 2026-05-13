@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CAAScrBase", "CATIA", "CAAScdAniUseCases", "CAAAniPostProBasicReport"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPostProBasicReportSource.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPostProBasicReportSource.htmmd"
 converted: "2026-05-11T11:27:02.503663"
 ---
 
@@ -18,21 +18,26 @@ converted: "2026-05-11T11:27:02.503663"
 '   CATIA Level:  V5R16
 ' ***********************************************************************
 
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
 
 ' ----------------------------------------------------------- 
+```
 ' Optional: allows to find the sample wherever it's installed
 
+```vbscript
   sDocPath=CATIA.SystemService.Environ("CATDocView")
   sOut = CATIA.SystemService.Environ("CATTemp")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,"No Doc Path Defined"
     End If
+```
 ' ----------------------------------------------------------- 
 
 ' Open the CATAnalysis Document
-sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis")
+```vbscript
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Cube_R13_Freq.CATAnalysis")
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 Set fileSystem1 = CATIA.FileSystem
@@ -46,6 +51,8 @@ Set oAnalysisPostManager = oAnalysisModel.PostManager
 
 Set oAnalysisCases = oAnalysisModel.AnalysisCases
 Set oAnalysisCase = oAnalysisCases.Item(1)
+
+```
 
 oAnalysisPostManager.AddExistingCaseForReport oAnalysisCase
 
@@ -61,8 +68,10 @@ oAnalysisPostManager.BuildReport folder1, "test2", True
 '======================================================
 oAnalysisPostManager.ExtractHTMLReport folder1, "test3"
 
+```vbscript
 End Sub
 
+```
 
 ```vbscript
 ' COPYRIGHT DASSAULT SYSTEMES 2000
@@ -76,29 +85,34 @@ End Sub
 '   CATIA Level:  V5R16
 ' ***********************************************************************
 
-
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
 
 ' ----------------------------------------------------------- 
+```
 ' Optional: allows to find the sample wherever it's installed
 
+```vbscript
   sDocPath=CATIA.SystemService.Environ("CATDocView")
   sOut = CATIA.SystemService.Environ(&quot;CATTemp&quot;)
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,"No Doc Path Defined"
     End If
+```
 ' ----------------------------------------------------------- 
 
-
 ' Open the CATAnalysis Document
-sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis&quot;)
+```vbscript
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online/CAAScdAniUseCases/samples/Cube_R13_Freq.CATAnalysis&quot;)
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 Set fileSystem1 = CATIA.FileSystem
 Set folder1 = fileSystem1.GetFolder(sOut)
 ```
+```
 
+```vbscript
 ```vbscript
 Set oAnalysisManager = oAnalysisDocument.Analysis
 
@@ -108,6 +122,8 @@ Set oAnalysisPostManager = oAnalysisModel.PostManager
 
 Set oAnalysisCases = oAnalysisModel.AnalysisCases
 Set oAnalysisCase = oAnalysisCases.Item(1)
+
+```
 
 oAnalysisPostManager.AddExistingCaseForReport oAnalysisCase
 ```
@@ -129,5 +145,7 @@ oAnalysisPostManager.BuildReport folder1, "test2", True
 '======================================================
 oAnalysisPostManager.ExtractHTMLReport folder1, "test3"
 
+```vbscript
 End Sub
+```
 ```

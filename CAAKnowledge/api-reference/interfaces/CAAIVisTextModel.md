@@ -2,9 +2,7 @@
 title: "CAAIVisTextModel"
 type: "interface"
 module: "CAAVisualization"
-category: "framework"
-base: "CATBaseUnknown"
-inheritance_chain: "CAAIVisTextModel → CATBaseUnknown"
+category: api-reference
 method_count: 1
 visibility: "public"
 has_tie_binding: true
@@ -14,8 +12,6 @@ verified: true
 
 # CAAIVisTextModel
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAIVisTextModel → CATBaseUnknown  
 **模块**: CAAVisualization  
 **分类**: framework  
 **可见性**: public  
@@ -25,7 +21,6 @@ verified: true
 
 ## 依赖
 
-- `CATBaseUnknown.h`
 - `CAAVisModelForRep.h`
 
 ## TIE实现
@@ -35,3 +30,35 @@ verified: true
 - `CAAIVisTextModel.cpp`
 - `CAAVisTextModel.cpp`
 
+---
+
+## Interface Overview
+
+**Inherited Methods**: Please refer to the base interface documentation above.
+
+---
+
+## Interface Overview
+
+This interface inherits from **from**. 
+
+**Inherited Methods**: Please refer to the base interface documentation above.
+
+---
+
+## Related Use Cases
+
+This interface is used in the following use cases:
+
+- [CAAVisSampleISO](../../use-cases/caaviscases/CAAVisSampleISO.md)
+- [CAAVisSampleTempObject](../../use-cases/caaviscases/CAAVisSampleTempObject.md)
+
+## Interface Notes
+
+This interface is part of the **CAA** module.
+
+**Status**: This interface document is a template. Please refer to the official API documentation for more information.
+
+**Related Resources**:
+- [Quick References](../..//quick-refs/)
+- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)

@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Modifying Object Graphical Properties"
-category: "use case"
+category: use-case case"
 module: "CAAVisUseCases"
 tags: ["CATIDescendants", "CAAPropertyWithNewProperties", "CATIPrtContainer", "CATIPartRequest", "CATIVisProperties", "CATIA", "CATIProperty", "CAAGeometryVisualization", "CAAProperty", "CATISpecObject_var", "CAAGviApplyProperties"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleUseCATIVisProperties.htm"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleUseCATIVisProperties.htmmd"
 converted: "2026-05-11T17:31:52.198094"
 ```
 
@@ -131,7 +131,7 @@ where:
   1. **InputPath** : The path of the `CAAProperty.CATPart` document included in the directory `CAAGeometryVisualization.edu/InputData`
 
      * Unix : `InstallRootDirectory/CAAGeometryVisualization.edu/InputData`
-     * Windows : `InstallRootDirectory\CAAGeometryVisualization.edu\InputData`
+     * Windows : `InstallRootDirectory/CAAGeometryVisualization.edu/InputData`
 where:
 1. **InputPath** : The path of the `CAAProperty.CATPart` document included in the directory `CAAGeometryVisualization.edu/InputData`
   2. **OutputPath** : The path where the output file `CAAPropertyWithNewProperties.CATPart `will be stored. If this path is empty, the output file is created in the current directory.
@@ -142,10 +142,10 @@ where:
 2. **OutputPath** : The path where the output file `CAAPropertyWithNewProperties.CATPart `will be stored. If this path is empty, the output file is created in the current directory.
 The CAAGviApplyProperties use case is made of a main program located in the CAAGviApplyProperties.m module of the CAAGeometryVisualization.edu framework:
 
-Windows | `InstallRootDirectory\CAAGeometryVisualization.edu\CAAGviApplyProperties.m\`
+Windows | `InstallRootDirectory/CAAGeometryVisualization.edu/CAAGviApplyProperties.m/`
 
 The CAAGviApplyProperties use case is made of a main program located in the CAAGviApplyProperties.m module of the CAAGeometryVisualization.edu framework:
-Windows | `InstallRootDirectory\CAAGeometryVisualization.edu\CAAGviApplyProperties.m\`
+Windows | `InstallRootDirectory/CAAGeometryVisualization.edu/CAAGviApplyProperties.m/`
 Unix | `InstallRootDirectory/CAAGeometryVisualization.edu/CAAGviApplyProperties.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -206,20 +206,20 @@ if ( SUCCEEDED(rc) )
          pPartAsRequest->**GetSurfBodies**(stdContext, surfBodies);
 
 ```vbscript
-         if ( (**1**!= surfBodies.Size()) && ( NULL_var != surfBodies[1]) )
+         if ( (**1**!= surfBodies.Size(#)) && ( NULL_var != surfBodies[1]) )
 
 ```
 
          {
             ...
 pPartAsRequest->**GetSurfBodies**(stdContext, surfBodies);
-if ( (**1**!= surfBodies.Size()) && ( NULL_var != surfBodies[1]) )
+if ( (**1**!= surfBodies.Size(#)) && ( NULL_var != surfBodies[1]) )
             return 1 ;
 
          }
 
 return 1 ;
-         pPartAsRequest->Release();
+         pPartAsRequest->Release(#);
          pPartAsRequest = NULL ;
 
       }
@@ -259,7 +259,7 @@ rc = surfBodies[1]->QueryInterface(IID_CATIDescendants, (void**)&pIDescendantOnO
 CATISpecObject_var **TheSweep2Surface** = pIDescendantOnOpenBody1->GetChildAtPosition(10);
 _// The hidden surface - Extrude.2_
 CATISpecObject_var **TheExtrude2Surface** = pIDescendantOnOpenBody1->GetChildAtPosition(20);
-      pIDescendantOnOpenBody1->Release();
+      pIDescendantOnOpenBody1->Release(#);
       pIDescendantOnOpenBody1 = NULL ;
 
     ...
@@ -388,7 +388,7 @@ MyPropertyOnPoint.**SetSymbolType**(CROSS);
 rc = pIPropertiesOnPoint->**SetPropertiesAtt**(MyPropertyOnPoint,
 PropTypeOnPoint,
 GeomTypeOnPoint);
-      pIPropertiesOnPoint->Release();
+      pIPropertiesOnPoint->Release(#);
       pIPropertiesOnPoint = NULL;
 
     ...
@@ -486,7 +486,7 @@ PropTypeOnLine = **CATVPPick** ;
 rc = pIPropertiesOnLine->SetPropertiesAtt(MyPropertyOnLine,
 PropTypeOnLine,
 GeomTypeOnLine);
-      pIPropertiesOnLine->Release();
+      pIPropertiesOnLine->Release(#);
       pIPropertiesOnLine = NULL;
 
     ...
@@ -566,7 +566,7 @@ GeomTypeOnSurface2);
 
 To change the color and the width, the `SetPropertiesAtt` method can be called twice: once with the `CATVPColor` property type and once with `CATVPWidth`. In the two calls, the type of the geometry is always `CATVPEdge`. But the feature can also be modified with one call in using the `CATVPAllPropertyType` property type. In this case, all the properties set on the _CATVisPropertiesValues_ instance, `MyPropertyOnSurface2`, will be used by the `SetPropertiesAtt` method to modify the feature. So, it is really important to initialize `MyPropertyOnSurface2 `with the `GetPropertiesAtt` method, before modifying it.
 
-`MyPropertyOnSurface2 `is modified by two methods: `SetColor` to associate a red color and `SetWidth` to set a new line width number. The width of a line**** is an integer whose range is between 1 and 55\. The width corresponding to each integer value is customizable through the Tools/Options/General/Display/Thickness & Font page.
+`MyPropertyOnSurface2 `is modified by two methods: `SetColor` to associate a red color and `SetWidth` to set a new line width number. The width of a line**** is an integer whose range is between 1 and 55/. The width corresponding to each integer value is customizable through the Tools/Options/General/Display/Thickness & Font page.
 
 Now, let's change the surfacic properties of the surface:
 
@@ -589,7 +589,7 @@ Now, let's change the surfacic properties of the surface:
 
 PropTypeOnSurface2,
 GeomTypeOnSurface2);
-      pIPropertiesOnSurface2->Release();
+      pIPropertiesOnSurface2->Release(#);
       pIPropertiesOnSurface2 = NULL;
 
     ...
@@ -629,7 +629,7 @@ rc = TheExtrude1Surface->QueryInterface(IID_CATIVisProperties, (void**)&pIProper
 CATVisPropertyType PropTypeOnSurface1 = **CATVPAllPropertyType** ;
 CATVisGeomType GeomTypeOnSurface1     = **CATVPMesh** ;
 rc = pIPropertiesOnSurface1->**ResetPropertiesAtt**(PropTypeOnSurface1,GeomTypeOnSurface1);
-      pIPropertiesOnSurface1->Release();
+      pIPropertiesOnSurface1->Release(#);
       pIPropertiesOnSurface1 = NULL;
 
     ...
@@ -675,7 +675,7 @@ rc = TheExtrude2Surface->QueryInterface(IID_CATIVisProperties, (void**)&pIProper
 rc = pIPropertiesOnSurface3->**SetPropertiesAtt**(MyPropertyOnSurface3,
 PropTypeOnSurface3,
 GeomTypeOnSurface3);
-      pIPropertiesOnSurface3->Release();
+      pIPropertiesOnSurface3->Release(#);
       pIPropertiesOnSurface3 = NULL;
 
     }

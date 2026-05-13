@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating a Document's Window - Part 1"
-category: "use case"
+category: use-case case"
 module: "CAAAfrUseCases"
 tags: ["CATIDocumentEdit", "CAAGeometry", "CAAxx", "CATISO", "CAAIVisHistogramChartVisu", "CAADegGeoCommands", "CAAxxx", "CAADialogEngine", "CAAyyy", "CAADegHistogramChartWindowCmd", "CATIEditor", "CAAAfrHistogramChartWindow", "CAASysGeoModelInf", "CAAVisualization", "CAAISysDocumentChartWindow", "CAAVisGeoModelInt", "CATI3DGeoVisu", "CAASystem", "CAAApplicationFrame"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleCustomWindow1.htm"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleCustomWindow1.htmmd"
 converted: "2026-05-11T17:17:55.693605"
 ```
 
@@ -109,10 +109,10 @@ The CAAAfrHistogramChartWindow use case is made up of several classes and interf
 There are respectively located in the CAAAfrGeoWindows.m, CAASysGeoModelInf.m, CAAVisGeoModelInt.m and CAADegGeoCommands.m modules of the CAAApplicationFrame.edu, CAASystem.edu, CAAVisualization.edu and CAADialogEngine.edu frameworks:
 
 There are respectively located in the CAAAfrGeoWindows.m, CAASysGeoModelInf.m, CAAVisGeoModelInt.m and CAADegGeoCommands.m modules of the CAAApplicationFrame.edu, CAASystem.edu, CAAVisualization.edu and CAADialogEngine.edu frameworks:
-Windows | `InstallRootDirectory\CAAxxx.edu\CAAyyy.m\`
+Windows | `InstallRootDirectory/CAAxxx.edu/CAAyyy.m/`
 
 There are respectively located in the CAAAfrGeoWindows.m, CAASysGeoModelInf.m, CAAVisGeoModelInt.m and CAADegGeoCommands.m modules of the CAAApplicationFrame.edu, CAASystem.edu, CAAVisualization.edu and CAADialogEngine.edu frameworks:
-Windows | `InstallRootDirectory\CAAxxx.edu\CAAyyy.m\`
+Windows | `InstallRootDirectory/CAAxxx.edu/CAAyyy.m/`
 Unix | `InstallRootDirectory/CAAxx.edu/CAAyyy.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -156,16 +156,16 @@ This document window includes one viewer. The class for this window is _CAAAfrHi
 class ExportedByCAAAfrGeoWindows CAAAfrHistogramChartWindow: public CATFrmWindow
       public:
         CAAAfrHistogramChartWindow(const CATString & iName, CATFrmEditor * iEditor=NULL);
-        virtual ~CAAAfrHistogramChartWindow();
-        void **Build**();
+        virtual ~CAAAfrHistogramChartWindow(#);
+        void **Build**(#);
 
-        virtual CATFrmWindow * **DuplicateWindow**();
+        virtual CATFrmWindow * **DuplicateWindow**(#);
 
-        virtual void **DeleteWindow**();
+        virtual void **DeleteWindow**(#);
 
         ...
-virtual CATFrmWindow * **DuplicateWindow**();
-virtual void **DeleteWindow**();
+virtual CATFrmWindow * **DuplicateWindow**(#);
+virtual void **DeleteWindow**(#);
       private:
 
         CATNavigation2DViewer * _pViewer ;
@@ -211,12 +211,12 @@ The `Build` method creates the viewer, arranges it in the window and sets it the
 The `Build` method creates the viewer, arranges it in the window and sets it the current viewer.
   1. Instantiating the viewer to display
 
-         void CAAAfrHistogramChartWindow :: Build()
+         void CAAAfrHistogramChartWindow :: Build(#)
 
          {
 1. Instantiating the viewer to display
-void CAAAfrHistogramChartWindow :: Build()
-            CATDlgFrame * pFrameWindow = **GetViewerFrame**() ;
+void CAAAfrHistogramChartWindow :: Build(#)
+            CATDlgFrame * pFrameWindow = **GetViewerFrame**(#) ;
 
             CATString ViewerName = "HistogramChar2DViewer" ;
             int width  = 200 ;
@@ -278,8 +278,8 @@ Still in the `Build` method, let's now the unique visualization manager be aware
          ...
 1. Retrieving the visualization manager and the document root object
 Still in the `Build` method, let's now the unique visualization manager be aware of the document to display, under which viewpoints, and with which tools, that is, which interfaces should be queried onto the document objects to make them display.
-           CATFrmEditor * pEditor = **GetEditor**();
-           CATVisManager * pVisuManager = CATVisManager::**GetVisManager**();
+           CATFrmEditor * pEditor = **GetEditor**(#);
+           CATVisManager * pVisuManager = CATVisManager::**GetVisManager**(#);
 
 ```vbscript
            if ( (NULL != pEditor ) && ( NULL != pVisuManager) )
@@ -287,10 +287,10 @@ Still in the `Build` method, let's now the unique visualization manager be aware
 ```
 
             {
-CATFrmEditor * pEditor = **GetEditor**();
-CATVisManager * pVisuManager = CATVisManager::**GetVisManager**();
+CATFrmEditor * pEditor = **GetEditor**(#);
+CATVisManager * pVisuManager = CATVisManager::**GetVisManager**(#);
 if ( (NULL != pEditor ) && ( NULL != pVisuManager) )
-               CATDocument    * pDocument   =  pEditor ->**GetDocument**();
+               CATDocument    * pDocument   =  pEditor ->**GetDocument**(#);
 
                CATBaseUnknown * pRootObject = NULL ;
 ```vbscript
@@ -299,10 +299,10 @@ if ( (NULL != pEditor ) && ( NULL != pVisuManager) )
 ```
 
                {
-CATDocument    * pDocument   =  pEditor ->**GetDocument**();
+CATDocument    * pDocument   =  pEditor ->**GetDocument**(#);
 CATBaseUnknown * pRootObject = NULL ;
 if ( NULL != pDocument )
-                  CATPathElement path = pEditor ->**GetUIActiveObject**();
+                  CATPathElement path = pEditor ->**GetUIActiveObject**(#);
 ```vbscript
                  _pRootObjectPath = new CATPathElement(path);
 
@@ -327,7 +327,7 @@ if ( NULL != pDocument )
              {
 2. Requesting the document to create its graphics representation and attaching them to the visualization manager
 if ( NULL != _pRootObjectPath )
-                  CATCommand * pCommandSelector = (CATCommand*) pEditor->**GetCommandSelector**();
+                  CATCommand * pCommandSelector = (CATCommand*) pEditor->**GetCommandSelector**(#);
 
                   list<IID> ListIVisu;
                   IID visu = IID_**CAAIVisHistogramChartVisu** ;
@@ -335,7 +335,7 @@ if ( NULL != _pRootObjectPath )
 
                   CATViewpoint  * pViewPoint = NULL ;
 ```vbscript
-                  pViewPoint = (CATViewpoint*) &(_pViewer->**GetMain2DViewpoint**());
+                  pViewPoint = (CATViewpoint*) &(_pViewer->**GetMain2DViewpoint**(#));
 
 ```
 
@@ -357,13 +357,13 @@ The main 2D viewpoint of the viewer is retrieved and attached to the visualizati
          ...
 The main 2D viewpoint of the viewer is retrieved and attached to the visualization manager along with the document's root object, the list of interfaces to use, and the command selector.
 3. Managing the links between these objects and all the other objects enabling interactivity
-                  CATPSO * pPSO = pEditor->**GetPSO**() ;
+                  CATPSO * pPSO = pEditor->**GetPSO**(#) ;
                   pVisuManager->**AttachPSOTo**( pPSO,pViewPoint);
 
-                  CATHSO * pHSO = pEditor->**GetHSO**() ;
+                  CATHSO * pHSO = pEditor->**GetHSO**(#) ;
                   pVisuManager->**AttachHSOTo**( pHSO,pViewPoint);
 
-                  CATISO * pISO = pEditor->**GetISO**()  ;
+                  CATISO * pISO = pEditor->**GetISO**(#)  ;
                   pISO->**AddViewer**(_pViewer);
 
          ...
@@ -371,9 +371,12 @@ The main 2D viewpoint of the viewer is retrieved and attached to the visualizati
 ---
 
 pISO->**AddViewer**(_pViewer);
+```vbscript
 This piece of code retrieves the Preselected Set of Objects (PSO) and the Highlighted Set of Objects (HSO) from the editor, and requests the visualization controller to attach the  viewpoint to the PSO and to the HSO. Now, when the end user moves the mouse above a representation in a viewer, the path element corresponding to this representation is put in the PSO, is highlighted and put in the HSO.
 
 The Interactive Set of Objects (ISO) is also retrieved. These objects are those which don't belong to the document, but that are so handy to manipulate representations in viewers, such as handles to move or deform them. The ISO now knows the viewer.
+
+```
 
 The document window `Build` method is now complete.
 
@@ -384,15 +387,15 @@ This is done thanks to the `Duplicate` method.
 
     ...
 This is done thanks to the `Duplicate` method.
-    CATFrmWindow * CAAAfrHistogramChartWindow :: DuplicateWindow()
+    CATFrmWindow * CAAAfrHistogramChartWindow :: DuplicateWindow(#)
 
     {
-CATFrmWindow * CAAAfrHistogramChartWindow :: DuplicateWindow()
-       CATString NameOfThis = **GetBaseName**().CastToCharPtr() ;
+CATFrmWindow * CAAAfrHistogramChartWindow :: DuplicateWindow(#)
+       CATString NameOfThis = **GetBaseName**(#).CastToCharPtr(#) ;
        CAAAfrHistogramChartWindow * pWindowToReturn = NULL ;
-       pWindowToReturn  = new **CAAAfrHistogramChartWindow**(NameOfThis,GetEditor() )  ;
-       pWindowToReturn ->**Build**();
-       pWindowToReturn->**SetBaseName**(GetBaseName());
+       pWindowToReturn  = new **CAAAfrHistogramChartWindow**(NameOfThis,GetEditor(#) )  ;
+       pWindowToReturn ->**Build**(#);
+       pWindowToReturn->**SetBaseName**(GetBaseName(#));
 
        return  pWindowToReturn ;
 
@@ -419,20 +422,20 @@ The title of the first window becomes "Model Histogram Chart:1" and the title of
 #### Deleting the Window
 
     ...
-    void CAAAfrHistogramChartWindow :: DeleteWindow()
+    void CAAAfrHistogramChartWindow :: DeleteWindow(#)
     {
-void CAAAfrHistogramChartWindow :: DeleteWindow()
+void CAAAfrHistogramChartWindow :: DeleteWindow(#)
 ```vbscript
-       if ((NULL != GetEditor() ) && (NULL != _pViewer) )
+       if ((NULL != GetEditor(#) ) && (NULL != _pViewer) )
 
 ```
 
        {
-void CAAAfrHistogramChartWindow :: DeleteWindow()
-if ((NULL != GetEditor() ) && (NULL != _pViewer) )
+void CAAAfrHistogramChartWindow :: DeleteWindow(#)
+if ((NULL != GetEditor(#) ) && (NULL != _pViewer) )
           CATISO * pISO = NULL ;
 ```vbscript
-          pISO = GetEditor()->**GetISO**();
+          pISO = GetEditor(#)->**GetISO**(#);
 
           if  (NULL != pISO)   pISO->**RemoveViewer**(_pViewer);
 
@@ -440,11 +443,11 @@ if ((NULL != GetEditor() ) && (NULL != _pViewer) )
 
           CATViewpoint  * pViewPoint = NULL ;
 ```vbscript
-          pViewPoint = (CATViewpoint*) &(_pViewer->**GetMain2DViewpoint**());
+          pViewPoint = (CATViewpoint*) &(_pViewer->**GetMain2DViewpoint**(#));
 
 ```
 
-          CATVisManager * pVisuManager = CATVisManager::**GetVisManager**();
+          CATVisManager * pVisuManager = CATVisManager::**GetVisManager**(#);
 
 ```vbscript
           if ( (NULL != pViewPoint) &&  ( NULL != pVisuManager) )
@@ -452,7 +455,7 @@ if ((NULL != GetEditor() ) && (NULL != _pViewer) )
 ```
 
           {
-CATVisManager * pVisuManager = CATVisManager::**GetVisManager**();
+CATVisManager * pVisuManager = CATVisManager::**GetVisManager**(#);
 if ( (NULL != pViewPoint) &&  ( NULL != pVisuManager) )
              pVisuManager->**DetachPSOFrom**(pViewPoint) ;
              pVisuManager->**DetachHSOFrom**(pViewPoint);
@@ -463,7 +466,7 @@ if ( (NULL != pViewPoint) &&  ( NULL != pVisuManager) )
        }
 pVisuManager->**DetachHSOFrom**(pViewPoint);
 pVisuManager->**DetachFrom**(_pRootObjectPath,pViewPoint);
-       CATFrmWindow::**DeleteWindow**();
+       CATFrmWindow::**DeleteWindow**(#);
 
     }
     ...
@@ -476,11 +479,11 @@ The destructor simply deletes the path to the root object. No need to delete the
 
     ...
 The destructor simply deletes the path to the root object. No need to delete the viewer, since as any dialog object, they will be automatically deleted when the window itself will be deleted.
-    CAAAfrHistogramChartWindow :: ~CAAAfrHistogramChartWindow ()
+    CAAAfrHistogramChartWindow :: ~CAAAfrHistogramChartWindow (#)
 
     {
-CAAAfrHistogramChartWindow :: ~CAAAfrHistogramChartWindow ()
-       if ( NULL != _pRootObjectPath) _pRootObjectPath->Release() ;
+CAAAfrHistogramChartWindow :: ~CAAAfrHistogramChartWindow (#)
+       if ( NULL != _pRootObjectPath) _pRootObjectPath->Release(#) ;
        _pRootObjectPath = NULL ;
 
     }
@@ -502,7 +505,7 @@ class ExportedByCAASysGeoModelInf CAAISysDocumentChartWindow : public CATBaseUnk
       CATDeclareInterface;
 
       public :
-      virtual HRESULT **CreateHistogramWindow**() = 0;
+      virtual HRESULT **CreateHistogramWindow**(#) = 0;
 
     };
     ...
@@ -527,9 +530,9 @@ The constructor and the destructor are empty.
 
     ...
 The constructor and the destructor are empty.
-    CAAEAfrDocumentChartWindow::CAAEAfrDocumentChartWindow(){}
+    CAAEAfrDocumentChartWindow::CAAEAfrDocumentChartWindow(#){}
 
-    CAAEAfrDocumentChartWindow::~CAAEAfrDocumentChartWindow(){}
+    CAAEAfrDocumentChartWindow::~CAAEAfrDocumentChartWindow(#){}
 
     ...
 
@@ -538,16 +541,16 @@ The constructor and the destructor are empty.
 The `CreateHistogramWindow` method is similar to the Duplicate method of the _CAAAfrHistogramChartWindow_ class.
 
     ...
-    HRESULT CAAEAfrDocumentChartWindow::CreateHistogramWindow()
+    HRESULT CAAEAfrDocumentChartWindow::CreateHistogramWindow(#)
     {
        // 1- Creating the new instance
-HRESULT CAAEAfrDocumentChartWindow::CreateHistogramWindow()
+HRESULT CAAEAfrDocumentChartWindow::CreateHistogramWindow(#)
        CATUnicodeString **WindowName** = CATMsgCatalog::BuildMessage("CAAAfrHistogramChartWindow",
 
                                             "BaseName",NULL,0,"Histogram Chart");
-HRESULT CAAEAfrDocumentChartWindow::CreateHistogramWindow()
+HRESULT CAAEAfrDocumentChartWindow::CreateHistogramWindow(#)
 CATUnicodeString **WindowName** = CATMsgCatalog::BuildMessage("CAAAfrHistogramChartWindow",
-       CATString WindowBaseName = WindowName.ConvertToChar();
+       CATString WindowBaseName = WindowName.ConvertToChar(#);
 
        CATIEditor * pIEditor = NULL ;
        HRESULT rc = QueryInterface(IID_CATIEditor, (void**)&pIEditor);
@@ -560,29 +563,29 @@ CATUnicodeString **WindowName** = CATMsgCatalog::BuildMessage("CAAAfrHistogramCh
 CATIEditor * pIEditor = NULL ;
 HRESULT rc = QueryInterface(IID_CATIEditor, (void**)&pIEditor);
 if (SUCCEEDED(rc))
-          CATFrmEditor * pEditor = pIEditor->**GetEditor**();
+          CATFrmEditor * pEditor = pIEditor->**GetEditor**(#);
           CAAAfrHistogramChartWindow * pWindow = new **CAAAfrHistogramChartWindow**(WindowBaseName,pEditor);
-          pWindow->**Build**();
+          pWindow->**Build**(#);
 
           //2- Managing the Window's Title
-CATFrmEditor * pEditor = pIEditor->**GetEditor**();
+CATFrmEditor * pEditor = pIEditor->**GetEditor**(#);
 CAAAfrHistogramChartWindow * pWindow = new **CAAAfrHistogramChartWindow**(WindowBaseName,pEditor);
-pWindow->**Build**();
-          CATUnicodeString BaseName = pWindow->**GetBaseName**();
+pWindow->**Build**(#);
+          CATUnicodeString BaseName = pWindow->**GetBaseName**(#);
           pWindow->**SetBaseName**(BaseName);
 
           //3- Managing the current window
-CATUnicodeString BaseName = pWindow->**GetBaseName**();
+CATUnicodeString BaseName = pWindow->**GetBaseName**(#);
 pWindow->**SetBaseName**(BaseName);
-          CATFrmLayout *currentLayout = CATFrmLayout::**GetCurrentLayout**();
+          CATFrmLayout *currentLayout = CATFrmLayout::**GetCurrentLayout**(#);
           currentLayout->**SetCurrentWindow**(pWindow);
 
-          pIEditor->Release();
+          pIEditor->Release(#);
           pIEditor = NULL ;
 
        }
 currentLayout->**SetCurrentWindow**(pWindow);
-pIEditor->Release();
+pIEditor->Release(#);
 pIEditor = NULL ;
        return rc ;
 
@@ -597,7 +600,7 @@ This method is divided in three parts:
 
     * The first identifier is a default name extracted from the CAAAfrHistogramChartWindow.CATNls file. In most cases, this identifier is the complete path of the document. ( the editor knows its document by the `GetDocument` method).
 
-In the CNext\Resources\msgcatalog directory of the CAAApplicationFrame.edu framework you will find the CAAAfrHistogramChartWindow.CATNls file which contains the following line:
+In the CNext/Resources/msgcatalog directory of the CAAApplicationFrame.edu framework you will find the CAAAfrHistogramChartWindow.CATNls file which contains the following line:
 
     ...
     BaseName = "Model Histogram Chart ";
@@ -606,9 +609,11 @@ In the CNext\Resources\msgcatalog directory of the CAAApplicationFrame.edu frame
 ---
   * The `GetBaseName` method retrieves the name of the document without its complete path. The `SetBaseName` method enables to modify the title of the already existing windows. Refer to the Duplicate method.
 
+```vbscript
   * Set the current window has current in the V5 application. In other words, the new window has the focus. The windows management is the role of the unique _CATFrmLayout_ class instance [2].
 
 #### Using the _CAAISysDocumentChartWindow_ interface
+```
 
 In the _CAADegHistogramChartWindowCmd_ state command [3], there is a transition with the `CreateHistogramChartWindow` action method:
 
@@ -618,15 +623,15 @@ In the _CAADegHistogramChartWindowCmd_ state command [3], there is a transition 
 
     {
 CATBoolean CAADegHistogramChartWindowCmd::CreateHistogramChartWindow(void *iDummy)
-      CATFrmEditor * pEditor = **GetEditor**();
+      CATFrmEditor * pEditor = **GetEditor**(#);
 ```vbscript
       if ( NULL != pEditor )
 
 ```
 
       {
-         **CATDocument** * pDocument = pEditor->**GetDocument**();
-CATFrmEditor * pEditor = **GetEditor**();
+         **CATDocument** * pDocument = pEditor->**GetDocument**(#);
+CATFrmEditor * pEditor = **GetEditor**(#);
 if ( NULL != pEditor )
 ```vbscript
 ```vbscript
@@ -649,7 +654,7 @@ if ( NULL != pDocument )
 HRESULT rc = pDocument->QueryInterface(IID_CAAISysDocumentChartWindow,
 (void**)&pIDocumentChartWnd);
 if ( SUCCEEDED(rc) )
-               pIDocumentChartWnd->**CreateHistogramWindow**();
+               pIDocumentChartWnd->**CreateHistogramWindow**(#);
 
               ...
     }

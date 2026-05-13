@@ -4,13 +4,13 @@ title: "GeometricOperators Changed Classes or Interfaces"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATICGMDynMassProperties1D", "CATICGMProjectionCrvSur", "CATICGMConvertCurveToCanonic", "CATICGMConfusionPtOnSurPtOnSur", "CATICGMProjectionPtSur", "CATICGMDistanceMinPtSur", "CATICGMGeoOperator", "CATICGMIntersectionSurSur", "CATICGMDistanceMinPtCrv", "CATICGMProjectionPtCrv", "CATICGMCurveUserParameterization", "CATICGMIntersectionCrvCrv", "CATICGMInclusionPtCrv", "CATIntersectionCrvCrv", "CATICGMCurveCurvilinearParameterization", "CATICGMDistanceTool", "CATICGMNurbsCurveTools", "CATICGMDistanceMinCrvCrv", "CATICGMLocalAnalysis1D", "CATICGMNurbsSurfaceTools"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenBUGeometricOperators.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenBUGeometricOperators.htmmd"
 converted: "2026-05-11T17:33:46.392224"
 ```
 
 ---
 tags: ["CATICGMDynMassProperties1D", "CATICGMProjectionCrvSur", "CATICGMConvertCurveToCanonic", "CATICGMConfusionPtOnSurPtOnSur", "CATICGMProjectionPtSur", "CATICGMDistanceMinPtSur", "CATICGMGeoOperator", "CATICGMIntersectionSurSur", "CATICGMDistanceMinPtCrv", "CATICGMProjectionPtCrv", "CATICGMCurveUserParameterization", "CATICGMIntersectionCrvCrv", "CATICGMInclusionPtCrv", "CATIntersectionCrvCrv", "CATICGMCurveCurvilinearParameterization", "CATICGMDistanceTool", "CATICGMNurbsCurveTools", "CATICGMDistanceMinCrvCrv", "CATICGMLocalAnalysis1D", "CATICGMNurbsSurfaceTools"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenBUGeometricOperators.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenBUGeometricOperators.htmmd"
 converted: "2026-05-11T17:33:46.392224"
 GeometricOperators Changed Classes or Interfaces
 

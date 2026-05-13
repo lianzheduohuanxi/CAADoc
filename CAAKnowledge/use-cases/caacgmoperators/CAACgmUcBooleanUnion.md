@@ -4,13 +4,13 @@ title: "Boolean Union"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CATICGMTopCompatible", "CAAGMOperatorsCompatible", "CATICGMDynBoolean"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcBooleanUnion.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcBooleanUnion.htmmd"
 converted: "2026-05-11T17:33:48.886943"
 ```
 
 ---
 tags: ["CAAGMOperatorsInterfaces", "CATICGMTopCompatible", "CAAGMOperatorsCompatible", "CATICGMDynBoolean"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcBooleanUnion.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcBooleanUnion.htmmd"
 converted: "2026-05-11T17:33:48.886943"
 Boolean Union
 
@@ -45,7 +45,7 @@ and the code below:
 CATICGMTopCompatible * pBoolOpe =::CATCGMCreateCompatibleForCGM(piGeomFactory, &topdata;,
 piCuboidBody1,
 piCuboidBody2);
-    pBoolOpe->Run();
+    pBoolOpe->Run(#);
     CATBody *piBoolBody=NULL;
 ```vbscript
     piBoolBody = pBoolOpe->GetResult(NULL);
@@ -53,7 +53,7 @@ piCuboidBody2);
 ```
 
     ...
-pBoolOpe->Run();
+pBoolOpe->Run(#);
 CATBody *piBoolBody=NULL;
 piBoolBody = pBoolOpe->GetResult(NULL);
     int nbVertices = 0;

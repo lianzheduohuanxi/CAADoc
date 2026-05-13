@@ -4,13 +4,13 @@ title: "BasicTopologicalOpe Changed Classes or Interfaces"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATICGMTopLineTangentCrvCrvOperator", "CATICGMTopPolarExtremumOperator", "CATICGMTopSurToNurbsSurOperator", "CATICGMTopCrvToNurbsCrvOperator", "CATICGMTopPointOperator", "CATICGMTopCurveOperator", "CATICGMTopSplineOperator", "CATICGMTopHelixOperator", "CATICGMTopLineOperator", "CATICGMTopEdgePropagation", "CATICGMTopGeodesicLineOperator", "CATICGMComputePointOnWire", "CATICGMTopLineTangentPtCrvOperator", "CATICGMLengthFromBodyOnWire"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenBUBasicTopologicalOpe.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenBUBasicTopologicalOpe.htmmd"
 converted: "2026-05-11T17:33:46.253424"
 ```
 
 ---
 tags: ["CATICGMTopLineTangentCrvCrvOperator", "CATICGMTopPolarExtremumOperator", "CATICGMTopSurToNurbsSurOperator", "CATICGMTopCrvToNurbsCrvOperator", "CATICGMTopPointOperator", "CATICGMTopCurveOperator", "CATICGMTopSplineOperator", "CATICGMTopHelixOperator", "CATICGMTopLineOperator", "CATICGMTopEdgePropagation", "CATICGMTopGeodesicLineOperator", "CATICGMComputePointOnWire", "CATICGMTopLineTangentPtCrvOperator", "CATICGMLengthFromBodyOnWire"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenBUBasicTopologicalOpe.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenBUBasicTopologicalOpe.htmmd"
 converted: "2026-05-11T17:33:46.253424"
 BasicTopologicalOpe Changed Classes or Interfaces
 

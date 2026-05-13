@@ -3,7 +3,7 @@ title: "Creating Sweep 3D Mesh Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CAAScrBase", "CATIA", "CAAScdAniUseCases", "CAAScrJavaScript", "CAAAniTocAnalysisDocument", "CAAScdInfUseCases", "CAAScdAniTechArticles", "CAAAniMeshSweep3D", "CAAAniMeshSweep3DSource", "CAAInfLauchMacro"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSweep3D.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSweep3D.htmmd"
 converted: "2026-05-11T11:27:02.488040"
 ---
 
@@ -24,7 +24,7 @@ Open the Analysis document. The Analysis document is retrieved in the
 
 According to the general
 		[
-		Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.htm) structure, this macro uses some standard procedures 
+		Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures 
 		to navigate or retrieve the required objects. First, from the **Document**, 
 		we find the **Analysis Manager Object**, the **Analysis Models** and 
 		the **Mesh Manager Objects**. 
@@ -48,7 +48,7 @@ To run the macro interactively CATDocView
 		environment variable must be defined.
 	
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 
@@ -77,8 +77,6 @@ parts as supports.
 
  
 
-
-
 ```vbscript
 ...
 ```
@@ -86,15 +84,19 @@ parts as supports.
 ```vbscript
 ' ----------------------------------------------------------- 
 ' Optional: allows to find the sample wherever it's installed
+```vbscript
   sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,"No Doc Path Defined"
     End If
+```
 ' ----------------------------------------------------------- 
 ' Open the Analysis document 
-sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\WeldConnections.CATAnalysis&quot;)
+```vbscript
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online/CAAScdAniUseCases/samples/WeldConnections.CATAnalysis&quot;)
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+```
 ```
 
 ```vbscript
@@ -107,25 +109,36 @@ Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ```vbscript
 ' Retrieve the analysis Manager 
+```vbscript
 Set oAnalysisManagar = oAnalysisDocument.Analysis
 Set oAnalysisSet = oAnalysisManagar.AnalysisSets
 
 ' Retrieve the part document and product
+```
+```vbscript
 Set oAnalysisLinkedDocuments = oAnalysisManagar.LinkedDocuments
 Set partDocument = oAnalysisLinkedDocuments.Item(1)
 Set product = partDocument.Product
 
 'Retrieve the publications
+```
+```vbscript
 Set publications = product.Publications
 Set pubBody = publications.Item("PartBody")
 
 ' Retrieve the analysis model
+```
+```vbscript
 Set oAnalysisModels = oAnalysisManagar.AnalysisModels
 Set oAnalysisModel = oAnalysisModels.Item(1)
 
 'Retrieve the mesh manager and list of mesh parts
+```
+```vbscript
 Set oAnalysisMeshManager = oAnalysisModel.MeshManager 
 Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
+
+```
 
 ...
 ```
@@ -136,7 +149,10 @@ Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
 
 ```vbscript
 'Add Sweep 3D mesh part to the list of mesh parts
+```vbscript
 Set sweep3D = oAnalysisMeshParts.Add ("MSHPartSweep3D") 
+
+```
 
 'Add support from the published body
 sweep3D.AddSupportFromPublication product, pubBody
@@ -146,8 +162,10 @@ sweep3D.AddSupportFromPublication product, pubBody
 sweep3D.SetSpecificationFromPublication "Top", product, pubTopFace, 0
 sweep3D.SetSpecificationFromPublication "Bottom", product, pubBotFace, 0
 
+```vbscript
 'Set the global specification
 sweep3D.SetGlobalSpecification "ElementOrder", "Linear"
+```
 sweep3D.SetGlobalSpecification "GuideAngle", &quot;60 deg&quot;
 sweep3D.SetGlobalSpecification "NbElements", 10
 sweep3D.SetGlobalSpecification "DistributionType", "Arithmetic"

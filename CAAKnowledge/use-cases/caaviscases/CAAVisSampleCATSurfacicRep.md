@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Using the CATSurfacicRep class"
-category: "use case"
+category: use-case case"
 module: "CAAVisUseCases"
 tags: ["CAAVisBaseView", "CAAVisBaseDocument", "CAAVisBasics", "CATInternalSharpeEdge", "CATInternalSharpePoint", "CAAVisBaseApplication", "CAAVisBaseVisuObjectDocument", "CATInternalSmoothPoint", "CAAVisualization", "CATInternalSmoothEdge"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleCATSurfacicRep.htm"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleCATSurfacicRep.htmmd"
 converted: "2026-05-11T17:31:52.081159"
 ```
 
@@ -79,10 +79,10 @@ A torus is displayed in a 3D navigation viewer as soon as the application is lau
 Select in menu bar: VisuObject->CATSurfacicRep,  the cylinder is displayed.
 The CAAVisBasics use case is made of several classes located in the CAAVisBasics.m module of the CAAVisualization.edu framework:
 
-Windows | `InstallRootDirectory\CAAVisualization.edu\CAAVisBasics.m\`
+Windows | `InstallRootDirectory/CAAVisualization.edu/CAAVisBasics.m/`
 
 The CAAVisBasics use case is made of several classes located in the CAAVisBasics.m module of the CAAVisualization.edu framework:
-Windows | `InstallRootDirectory\CAAVisualization.edu\CAAVisBasics.m\`
+Windows | `InstallRootDirectory/CAAVisualization.edu/CAAVisBasics.m/`
 Unix | `InstallRootDirectory/CAAVisualization.edu/CAAVisBasics.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -108,8 +108,10 @@ This article does not focus on the details of tesselating a cylinder. A good sam
 ---|---|---
 1 | Create the graphic primitive and its associated bounding box | `CreateSurfacicRep` method of _CAAVisBaseVisuObjectDocument_
 2 | Associate topological information to the graphic primitives | `CreateSurfacicRep` method of _CAAVisBaseVisuObjectDocument_
+```vbscript
 3 | Set graphic attributes to the graphic primitive | `CreateSurfacicRep` method of _CAAVisBaseVisuObjectDocument_
 4 | Creating the CATSurfacicRep representation | `CreateSurfacicRep` method of _CAAVisBaseVisuObjectDocument_
+```
 5 | Associate the representation with the graphic primitive | `CreateSurfacicRep` method of _CAAVisBaseVisuObjectDocument_
 5 | Compute the representation bounding box | `CreateSurfacicRep` method of _CAAVisBaseVisuObjectDocument_
 6 | Display the created 3D representation | `AddRepToViewer` method of _CATVisBaseView_
@@ -121,12 +123,12 @@ The cylinder is displayed when the _CATSurfacicRep_ menu item contained in the _
 
 The graphic primitive is created using the arrays computed in the code. Feel free to have a look at this part of the code that describes how to tesselate a cylinder.
 
-    void CAAVisBaseVisuObjectDocument::CreateSurfacicRep()
+    void CAAVisBaseVisuObjectDocument::CreateSurfacicRep(#)
     {
        // ...
 
        // We create the top face
-void CAAVisBaseVisuObjectDocument::CreateSurfacicRep()
+void CAAVisBaseVisuObjectDocument::CreateSurfacicRep(#)
        CAT3DPlanarFaceGP * topFace = new CAT3DPlanarFaceGP(  topVertices, nbFaceVertices*3,
                                                              normal,
                                                              triangleIndices,
@@ -178,12 +180,12 @@ The `CAT3DLineGP` graphic primitive used for the lines that bounds the top, bott
 
 The bounding box and bounding sphere are generated automatically when a _CAT3DFaceGP_ or _CAT3DPlanarFaceGP_ is instancianted based on it's input set of vertices. Both classes inherit _CAT3DBoundingGP_ which provides the following methods to retrieve the bounding element on such classes:
 
-`float * CAT3DBoundingGP::GetSphereCenter()` | Returns a 3 fields array containing the sphere center coordinates
+`float * CAT3DBoundingGP::GetSphereCenter(#)` | Returns a 3 fields array containing the sphere center coordinates
 ---|---
-`float CAT3DBoundingGP::GetSphereRadius()` | Gets the bounding sphere radius
-`float * CAT3DBoundingGP::GetBoxCenter()` | Returns a 3 fields array containing the box center coordinates
-`float * CAT3DBoundingGP::GetBoxDimensions()` | Returns a 3 fields array containing the half box spans coordinates.
-`void CAT3DBoundingGP::ComputeBox()` | Forces the recomputation of the bounding sphere / box.
+`float CAT3DBoundingGP::GetSphereRadius(#)` | Gets the bounding sphere radius
+`float * CAT3DBoundingGP::GetBoxCenter(#)` | Returns a 3 fields array containing the box center coordinates
+`float * CAT3DBoundingGP::GetBoxDimensions(#)` | Returns a 3 fields array containing the half box spans coordinates.
+`void CAT3DBoundingGP::ComputeBox(#)` | Forces the recomputation of the bounding sphere / box.
 
 [Top]
 #### Associate topological information to the graphic primitives
@@ -269,8 +271,8 @@ The _CATVisMeasurableGP_ can be used in order to store topological informations 
 
        // ...
        // We create the surfacic rep
-       CATSurfacicRep * sRep = new CATSurfacicRep();
-       sRep->GetGraphicAttributeSet().SetType(3); // Specifies that this surfacic rep is a volume
+       CATSurfacicRep * sRep = new CATSurfacicRep(#);
+       sRep->GetGraphicAttributeSet(#).SetType(3); // Specifies that this surfacic rep is a volume
        // ...
 
 ---
@@ -300,11 +302,15 @@ sRep->AddGeomFace(bodyFace,	 new CATGraphicAttributeSet(tmpAtt));
 
 The main methods used for adding/retrieving graphic primitives to a CATSurfacicRep are the following (Please see the CAA documentation for the full list of methods available) :
 
+```vbscript
 `HRESULT AddGeomFace(CAT3DFaceGP *face,CATGraphicAttributeSet *att)` | Adds a CAT3DFaceGP / CAT3DPlanarFaceGP and it corresponding graphic attribute to the surfacic rep.
 ---|---
-`int GeomNumberOfFaces()` | Retrieves the number of faces owned by the surfacic rep.
+```
+`int GeomNumberOfFaces(#)` | Retrieves the number of faces owned by the surfacic rep.
+```vbscript
 `HRESULT AddGeomElt(const CATGeomType iType, CATGraphicPrimitive *iGP, CATGraphicAttributeSet *iAtt)` | Adds a graphic primitive iGP of type iType and it corresponding graphic attribute to the surfacic rep.
 `CATGraphicPrimitive * GeomElt(const CATGeomType iType, const int i)` | Retrieves the graphic primitive of type iType
+```
 
 The type of elements (input of the method AddGeomElt) a CATSurfacicRep can handle are the following:
 
@@ -328,9 +334,9 @@ The representation needs a bounding sphere in order to be visualized.
        // We compute the bounding sphere of the resulting surfacic rep;
 The representation needs a bounding sphere in order to be visualized.
        CAT3DBoundingSphere globalSphere;
-       globalSphere += CAT3DBoundingSphere(bottomFace->GetSphereCenter(), bottomFace->GetSphereRadius());
-       globalSphere += CAT3DBoundingSphere(topFace->GetSphereCenter(),    topFace->GetSphereRadius());
-       globalSphere += CAT3DBoundingSphere(bodyFace->GetSphereCenter(),   bodyFace->GetSphereRadius());
+       globalSphere += CAT3DBoundingSphere(bottomFace->GetSphereCenter(#), bottomFace->GetSphereRadius(#));
+       globalSphere += CAT3DBoundingSphere(topFace->GetSphereCenter(#),    topFace->GetSphereRadius(#));
+       globalSphere += CAT3DBoundingSphere(bodyFace->GetSphereCenter(#),   bodyFace->GetSphereRadius(#));
        sRep->SetBoundingElement(globalSphere);
 
        // ...
@@ -346,11 +352,11 @@ Here, the global bounding sphere is computed using the bounding sphere of all th
 The `AddRepToViewer` method displays the created representation.
 
 The `AddRepToViewer` method displays the created representation.
-    void CAAVisBaseDocument::AddRepToViewer()
+    void CAAVisBaseDocument::AddRepToViewer(#)
 
     {
 The `AddRepToViewer` method displays the created representation.
-void CAAVisBaseDocument::AddRepToViewer()
+void CAAVisBaseDocument::AddRepToViewer(#)
       _pView->Add3DRep(_pRootContainer);
 
     }

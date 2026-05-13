@@ -1,11 +1,11 @@
 ---
 ```vbscript
 title: "VisualizationBase Framework Modifications in V5R18"
-category: "use-case"
+category: use-case
 module: "CAACenAPIChangesR19"
 version: "V5R19"
 tags: []
-source_file: "Doc/online/CAACenAPIChangesR19/VisualizationBase.htm"
+source_file: "Doc/online/CAACenAPIChangesR19/VisualizationBase.htmmd"
 converted: "2026-05-11T17:33:51.602759"
 ```
 

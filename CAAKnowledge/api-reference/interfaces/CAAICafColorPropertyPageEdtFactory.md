@@ -2,7 +2,7 @@
 title: "CAAICafColorPropertyPageEdtFactory"
 type: "interface"
 module: "CAACATIAApplicationFrm"
-category: "framework"
+category: api-reference
 base: "CATIGenericFactory"
 inheritance_chain: "CAAICafColorPropertyPageEdtFactory → CATIGenericFactory"
 method_count: 0
@@ -37,3 +37,28 @@ verified: true
 - `CAACafColorPropertyPageEdtFactory.cpp`
 - `CAAICafColorPropertyPageEdtFactory.cpp`
 
+---
+
+## Interface Overview
+
+This interface inherits from **CATIGenericFactory**. 
+
+**Inherited Methods**: Please refer to the base interface documentation above.
+
+---
+
+## Interface Overview
+
+This interface inherits from **from**. 
+
+**Inherited Methods**: Please refer to the base interface documentation above.
+
+## Interface Notes
+
+This interface is part of the **CAA** module.
+
+**Status**: This interface document is a template. Please refer to the official API documentation for more information.
+
+**Related Resources**:
+- [Quick References](../..//quick-refs/)
+- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)

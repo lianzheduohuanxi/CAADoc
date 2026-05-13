@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CAAScrBase", "CATIA", "CAAInfOpenDocument", "CAAScrJavaScript", "CAAInfSaveAsDocument", "CAAInfReadDocument", "CAAInfSaveDocumentSource", "CAAScdInfUseCases", "CAAInfCloseDocument", "CAAInfLauchMacro", "CAAInfSaveDocument"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfSaveDocument.htm"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfSaveDocument.htmmd"
 converted: "2026-05-11T11:27:02.696903"
 ---
 
@@ -97,11 +97,10 @@ name.
 
 *Copyright  2001, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 'Optional: allows to find the sample wherever it's installed
 
+```vbscript
       Dim sDocPath  As String
       sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
 
@@ -109,20 +108,25 @@ name.
          Err.Raise 9999,,&quot;No Doc Path Defined&quot;
       End If
 ```
+```
 
 ```vbscript
 ...
     'Open the document and add it as the last item of the collection of documents.
     'Create and display a new window for the document.
     'Activate the document and its window.
+```vbscript
      Dim iPartDoc As Document
      Set iPartDoc = CATIA.Documents.Open(sDocPath &amp; _
-       &quot;\online\CAAScdInfUseCases\samples\CAAInfReadDocument.CATPart&quot;)
+       &quot;/online/CAAScdInfUseCases/samples/CAAInfReadDocument.CATPart&quot;)
+```
 
     'The document just opened is the active document.
     'Save the active document and then close it.
-     CATIA.ActiveDocument.Save()
-     CATIA.ActiveDocument.Close()
+```vbscript
+     CATIA.ActiveDocument.Save(#)
+     CATIA.ActiveDocument.Close(#)
+```
 ```
 
 ```vbscript
@@ -135,13 +139,15 @@ name.
 
 ```vbscript
 'Open the same document again.
+```vbscript
      Set iPartDoc = CATIA.Documents.Open(sDocPath &amp; _
-       &quot;\online\CAAScdInfUseCases\samples\CAAInfReadDocument.CATPart&quot;)
+       &quot;/online/CAAScdInfUseCases/samples/CAAInfReadDocument.CATPart&quot;)
+```
 
     'Save the document just opened using the variable name defined for it. 
     'Then, close the document in the same way.
-     iPartDoc.Save()
-     iPartDoc.Close()
+     iPartDoc.Save(#)
+     iPartDoc.Close(#)
 
   ...
 ```
@@ -152,12 +158,16 @@ name.
 
 ```vbscript
 'Open the same document a third time.
+```vbscript
      Set iPartDoc = CATIA.Documents.Open(sDocPath &amp; _
-       &quot;\online\CAAScdInfUseCases\samples\CAAInfReadDocument.CATPart&quot;)
+       &quot;/online/CAAScdInfUseCases/samples/CAAInfReadDocument.CATPart&quot;)
+```
 
     'Save the document by specifying its name and then close it in the same way.
-     CATIA.Documents.Item(&quot;CAAInfReadDocument.CATPart&quot;).Save()
-     CATIA.Documents.Item(&quot;CAAInfReadDocument.CATPart&quot;).Close()
+```vbscript
+     CATIA.Documents.Item(&quot;CAAInfReadDocument.CATPart&quot;).Save(#)
+     CATIA.Documents.Item(&quot;CAAInfReadDocument.CATPart&quot;).Close(#)
 
   ...
+```
 ```

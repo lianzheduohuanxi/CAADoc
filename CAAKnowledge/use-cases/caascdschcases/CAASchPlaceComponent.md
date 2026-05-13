@@ -4,7 +4,7 @@ title: "Creating a Schematic Component Instance (Placement)"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAADoc", "CAASCH_Sample", "CAASCH_RouteForPlacement2", "CAAScdSchUseCases", "CATIA", "CAASchAppBase", "CAASCHEDUApp", "CAASchPlaceComponent", "CAASchPlatformModeler", "CATIASchComponent2", "CAASchAppUtilities"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchPlaceComponent.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchPlaceComponent.htmmd"
 converted: "2026-05-11T17:31:51.433971"
 ```
 
@@ -29,9 +29,9 @@ converted: "2026-05-11T17:31:51.433971"
   * Setup:
 
 >   1. Build CAASchAppBase.m and CAASchAppUtilities.m, located in CAASchPlatformModeler.edu (RADE is required).
->   2. Copy generated DLLs, CAASchAppBase.dll and CAASchAppUtilities.m, respectively, to the run-time environment folder "intel_a\code\bin."
->   3. Copy CAASCHEDUApp.CATfct, located CAASchPlatformModeler.edu\CNext\resources\graphic, to the run-time environment folder "intel_a\resources\graphic."
->   4. Copy CAASchPlatformModeler.edu\CNext\code\dictionary\CAASchPlatformModeler.edu.dico to the run-time environment folder "intel_a\code\dictionary."
+>   2. Copy generated DLLs, CAASchAppBase.dll and CAASchAppUtilities.m, respectively, to the run-time environment folder "intel_a/code/bin."
+>   3. Copy CAASCHEDUApp.CATfct, located CAASchPlatformModeler.edu/CNext/resources/graphic, to the run-time environment folder "intel_a/resources/graphic."
+>   4. Copy CAASchPlatformModeler.edu/CNext/code/dictionary/CAASchPlatformModeler.edu.dico to the run-time environment folder "intel_a/code/dictionary."
 >
 
 [CAASchPlaceComponent.CATScript ](CAASchPlaceComponentSource.md) is located in the CAAScdSchUseCases module. [Execute macro](macros/CAASchPlaceComponent.CATScript) (windows only).
@@ -60,17 +60,24 @@ The macro first loads two documents: CAASCH_Sample.catalog and CAASCH_RouteForPl
 ```
 
 ```vbscript
+```vbscript
         Dim sCtlgFilePath
+```vbscript
+```
 ```vbscript
         sCtlgFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
+```
 
 ```
 
-                "online\CAAScdSchUseCases\samples\CAASCH_Sample.catalog")
+                "online/CAAScdSchUseCases/samples/CAASCH_Sample.catalog")
 
 ```vbscript
+```vbscript
 Dim sCtlgFilePath
+```vbscript
+```
 ```vbscript
 ```vbscript
 sCtlgFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
@@ -78,40 +85,53 @@ sCtlgFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
         Set objSchCtlgDoc = CATIA.Documents.Open(sCtlgFilePath)
 
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Dim objSchCtlgDoc As Document
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set objSchCtlgDoc = CATIA.Documents.Open(sCtlgFilePath)
         ' Open main schematic P&ID design document (for new component instances created here)
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
         Dim sFilePath
 ```vbscript
+```
+```vbscript
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
+```
 
 ```
 
-                "online\CAAScdSchUseCases\samples\CAASCH_RouteForPlacement2.CATProduct")
+                "online/CAAScdSchUseCases/samples/CAASCH_RouteForPlacement2.CATProduct")
 
 ```vbscript
+```vbscript
 Dim sFilePath
+```vbscript
+```
 ```vbscript
 ```vbscript
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
         Dim objSchDoc As Document
         Set objSchDoc = CATIA.Documents.Open(sFilePath)
+```
 ```
 
 ```
@@ -135,15 +155,23 @@ Next, the macro acquires the schematic root object from the document. The schema
 ```
 
 ```vbscript
+```vbscript
     Dim objPrdRoot As Product
+```vbscript
+```
 ```vbscript
 ```vbscript
     Dim objSchRoot As SchematicRoot
     If ( Not ( objSchDoc Is Nothing ) ) Then
+```
+```vbscript
       Set objPrdRoot = objSchDoc.Product
       If ( Not ( objPrdRoot Is Nothing ) ) Then
+```
+```vbscript
         Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
       End If
+```
     End If
 ```
 
@@ -172,7 +200,9 @@ The SchematicRoot interface provides the GetCompSymbolFromCatalog method to retr
 ```
 
 ```vbscript
+```vbscript
        Set objSchGRRCtlg = objSchRoot.GetCompSymbolFromCatalog ("Blocking Valve",objSchCtlgDoc)
+```
 ```
 
     ...
@@ -183,7 +213,9 @@ The SchematicRoot interface provides the GetCompSymbolFromCatalog method to retr
          ' Get the owner of the first symbol. That is a reference component
          ' in the catalog.
          '---------------------------------------------------------------------
+```vbscript
          Set objSchCntblRef = objSchGRRCtlg.GetSchObjOwner
+```
 ```
 
 ```
@@ -211,8 +243,10 @@ Method PlaceInSpace is then called to create a new instance of the "Blocking Val
 ```
 
 ```vbscript
+```vbscript
     Dim db6Array(6) As CATSafeArrayVariant
 ```vbscript
+```
     db6Array(0)=1.0
     db6Array(1)=0.0
     db6Array(2)=0.0
@@ -231,8 +265,10 @@ Method PlaceInSpace is then called to create a new instance of the "Blocking Val
            ' the design document
            ' Note that the target document is an input to PlaceInSpace
            '-------------------------------------------------------------------
+```vbscript
            Set objSchComp2Ref = objSchRoot.GetInterface ("CATIASchComponent2",objSchCntblRef)
            If ( Not ( objSchComp2Ref Is Nothing ) ) Then
+```
 ```
 
 ```
@@ -241,7 +277,9 @@ Method PlaceInSpace is then called to create a new instance of the "Blocking Val
 
     ...
 ```vbscript
+```vbscript
 Set objSchComp2Ref = objSchRoot.GetInterface ("CATIASchComponent2",objSchCntblRef)
+```
 ```
 
 If ( Not ( objSchComp2Ref Is Nothing ) ) Then
@@ -270,7 +308,9 @@ As in previous step, the macro find the reference component from the catalog by 
 
     ...
 ```vbscript
+```vbscript
        Set objSchGRRCVCtlg = objSchRoot.GetCompSymbolFromCatalog ("Control Valve",objSchCtlgDoc)
+```
 ```
 
     ...
@@ -281,7 +321,9 @@ As in previous step, the macro find the reference component from the catalog by 
          ' Get the owner of the second symbol. That is a reference component
          ' in the catalog.
          '---------------------------------------------------------------------
+```vbscript
          Set objSchCntblCVRef = objSchGRRCVCtlg.GetSchObjOwner
+```
 ```
 
 ```
@@ -332,8 +374,10 @@ In the comment section of the following code segments, instance A refers to "Blo
 ```
 
 ```vbscript
+```vbscript
               Set objCompRefPlaceInfo = objSchCompCVRef.QueryConnectAbility _
                 (objSchGRRCVCtlg)
+```
 ```vbscript
               ' -- step 2
 ```
@@ -341,8 +385,10 @@ In the comment section of the following code segments, instance A refers to "Blo
               objSchCompatInstA.IsTargetOKForPlace objSchGRRCompInstA, _
                 objCompRefPlaceInfo, objCompatInfo, bYesCompat
 
+```vbscript
               Dim db2Pt(2) As CATSafeArrayVariant
 ```vbscript
+```
 ```vbscript
               '-- 6.50 is the relative x coordinate of the right connector
               '-- from the symbol origin of the "Blocking Valve" instance.
@@ -377,7 +423,9 @@ If ( bYesCompat ) Then
 ```vbscript
 ```vbscript
                     ' -- step 4
+```vbscript
                     Set objSchCompInstB = objSchCompCVRef.PlaceOnComponentWithInfo _
+```
 ```
 
 ```

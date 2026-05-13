@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CATIAArrSystemLineProduct", "CAAScrBase", "CATIA", "CAAScrJavaScript", "CATIArrBendableString", "CATIArrSystemLineProduct", "CATIAArrBendableString", "CAAPslTubingExtract"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAPslTubingExtract.htm"
+source_file: "Doc/online/CAAScdArrUseCases/CAAPslTubingExtract.htmmd"
 converted: "2026-05-11T11:27:02.679919"
 ---
 
@@ -42,7 +42,7 @@ Thus we saw how to read a CATProduct document, retrieve the objects we
  
  
 
- ![](../CAAScrBase/images/aendtask.gif)
+ ![image](../../assets/images/aendtask.gif)
  
 
 [Top]
@@ -89,25 +89,37 @@ Thus we saw how to read a CATProduct document, retrieve the objects we are
 
 ```vbscript
 ... 
+```vbscript
    Set objCATIAV5Document0 = CATIA.ActiveDocument
 
    '//---------- Get Arrworkbench from current document
+```
+```vbscript
    Set objCATIAV5ArrWorkbench0 = objCATIAV5Document0.GetWorkbench(&quot;ArrWorkbench&quot;) 
 
    '//---------- Get current selection
+```
+```vbscript
    Set objCATIAV5Selection = objCATIAV5Document0.Selection
    Dim objSysLineProduct As ArrSystemLineProduct
    Dim objBendableString As ArrBendableString
 
    ' Find from the selection list, objects that conform to the CATIAArrSystemLineProduct interface.
+```
+```vbscript
    Set objSysLineProduct = objCATIAV5Selection.FindObject(&quot;CATIAArrSystemLineProduct&quot;)
 
    ' Get the count of subproducts, actual subproduct (methods of CATIArrSystemLineProduct interface)
+```
+```vbscript
    Dim intNumOfSubProducts As integer
    intNumOfSubProducts = objSysLineProduct.GetSubProductsCount(&quot;CATIAArrBendableString&quot;) 
+```
    For intSubProdIndex =1 to intNumOfSubProducts
+```vbscript
      Set objBendableString = objSysLineProduct.GetSubItem(intSubProdIndex)
 ...
+```
 ```
 
 ```vbscript
@@ -117,8 +129,10 @@ Thus we saw how to read a CATProduct document, retrieve the objects we are
   ' Get number of Segments 
   int NumOfSegments = objBendableString.GetNumOfSegments 
   ' Loop through the segments and get bending data of each segment 
+```vbscript
   Dim dblSegmentData(14) As Double 
   objBendableString.GetSegmentData intForLooping, dblSegmentData 
+```
   ' The data can be interpreted as follows  
   dblStrXCoord        = dblSegmentData(0)
   dblStrYCoord        = dblSegmentData(1)
@@ -149,5 +163,7 @@ Thus we saw how to read a CATProduct document, retrieve the objects we are
 
 ```vbscript
 ...
+```vbscript
 End Sub
+```
 ```

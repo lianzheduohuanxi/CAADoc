@@ -4,7 +4,7 @@ title: "CAAAniPostProAcDesact.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CAAAniPostProAcDesact", "CATIA", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPostProActDeactSource.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPostProActDeactSource.htmmd"
 converted: "2026-05-11T17:31:51.738069"
 ```
 
@@ -28,7 +28,10 @@ converted: "2026-05-11T17:31:51.738069"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
+
+```
 
 ```
 
@@ -37,18 +40,22 @@ converted: "2026-05-11T17:31:51.738069"
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
+```vbscript
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
 ```vbscript
         End If
     ' -----------------------------------------------------------
@@ -65,51 +72,67 @@ End If
 ```vbscript
 ' -----------------------------------------------------------
     ' Open the CATAnalysis Document
-    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis")
+```vbscript
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Cube_R13_Freq.CATAnalysis")
+```
 ```
 
 ```
 
 ```
 
+```vbscript
 ```vbscript
 ```vbscript
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ```
+```
 
 ```
 
 ```vbscript
+```vbscript
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```vbscript
+```
     ' Retrieve the Analysis Manager
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisManager = oAnalysisDocument.Analysis
+```
 ```
 
 ```vbscript
 ```vbscript
 ```vbscript
     ' Retrieve the analysis model from the list of models
+```vbscript
     Set oAnalysisModels = oAnalysisManager.AnalysisModels
     Set oAnalysisModel = oAnalysisModels.Item(1)
     ' Retrieve the analysis cases and the first analysis case
+```
+```vbscript
     Set oAnalysisCases = oAnalysisModel.AnalysisCases
     Set oAnalysisCase = oAnalysisCases.Item(1)
     ' Retrieve the analysis cases and the first analysis case
+```
+```vbscript
     Set oAnalysisSets = oAnalysisCase.AnalysisSets
     Set oAnalysisSet = oAnalysisSets.Item("Frequency Case Solution.1", catAnalysisSetSearchAll)
     Set analysisImages1 = oAnalysisSet.AnalysisImages
     'activation of an  image
+```
     '==============
     'we search image Disp_Symbol
+```vbscript
     Set oAnalysisImage = analysisImages1.Item("Disp_Symbol")
     'we Activate the image
+```
 ```
 
 ```
@@ -120,8 +143,10 @@ Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```vbscript
 ```vbscript
 'we search image Disp_Symbol
+```vbscript
 Set oAnalysisImage = analysisImages1.Item("Disp_Symbol")
 'we Activate the image
+```
 ```
 
 ```
@@ -166,6 +191,8 @@ Set oAnalysisImage = analysisImages1.Item("Disp_Symbol")
 ```
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

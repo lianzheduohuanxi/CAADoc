@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CAAScrBase", "CATIA", "CAAScdAniUseCases", "CAAScrJavaScript", "CAAAniPreproOnVirtualSource", "CAAAniTocAnalysisDocument", "CAAScdInfUseCases", "CAAAniPreproOnVirtual", "CAAScdAniTechArticles", "CAAAniPreprocessingFeatures", "CATISamImportDefine", "CAAInfLauchMacro"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproOnVirtual.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproOnVirtual.htmmd"
 converted: "2026-05-11T11:27:02.574330"
 ---
 
@@ -44,7 +44,7 @@ The Part document is fetched in the documentation installation path,
       
 
 According to the general [Analysis
-      Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.htm) structure, this macro uses some standard procedures to
+      Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to
       navigate or retrieve the required objects. First, from the **document**,
       we find the **Analysis manager Object**, the **Analysis models** and
       the **Analysis cases Objects**. From both last object (Analysis Model
@@ -134,7 +134,7 @@ This method will launch the mesher, generate the finite element model
     
   
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 
@@ -155,20 +155,24 @@ with a generative way.
 
 *Copyright  2001, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 ...
 ' ----------------------------------------------------------- 
 ' Get the collection of documents in session 
 ' Create the CATAnalysis Document 
+```vbscript
    Set TheAnalysisDocument = documents1.Add(&quot;Analysis&quot;) 
    
 ' if WB name already is &quot;GPSCfg&quot;, not to use StartWorkbench 
+```
+```vbscript
    WBName = CATIA.GetWorkbenchId 
    if (WBName &lt;&gt; &quot;GPSCfg&quot;) Then 
+```
+```vbscript
       CATIA.StartWorkbench(&quot;GPSCfg&quot;)
    End If
+```
  ...
 ```
 
@@ -176,46 +180,59 @@ with a generative way.
 ...
 '_____________________________________________________________________________________ 
 ' Start to scan the existing structure of analysis document: Retrieve the AnalysisManager 
+```vbscript
    Set analysisManager1 = TheAnalysisDocument.Analysis
+```
 ```
 
 ```vbscript
+```vbscript
 Dim arrayOfVariantOfShort1(0)
-   analysisManager1.ImportDefineFile (sDocPath &amp; &quot;\online\CAAScdAniUseCases\samples\AnalysisMechfeat.CATPart&quot;),
+   analysisManager1.ImportDefineFile (sDocPath &amp; &quot;/online/CAAScdAniUseCases/samples/AnalysisMechfeat.CATPart&quot;),
+```
 ```
 
 ```vbscript
 &quot;CATAnalysisImport&quot;, arrayOfVariantOfShort1 
 ' _____________________________________________________________________________________ 
 ' Reframe All. 
+```vbscript
    Set specsAndGeomWindow1 = CATIA.ActiveWindow 
    Set viewer3D1 = specsAndGeomWindow1.ActiveViewer 
    viewer3D1.Reframe 
+```
 ' _____________________________________________________________________________________ 
 ' Scan the analysis document: Retrieve the Pointed documents to extract the reference for preprocessing 
+```vbscript
    Set analysisLinkedDocuments1 = analysisManager1.LinkedDocuments 
    CATIA.SystemService.Print analysisLinkedDocuments1.Name 
    If (analysisLinkedDocuments1.Count &lt;&gt; 1 ) Then 
+```
+```vbscript
       Err.Raise 9999,,&quot;NbDoc Li NE 1&quot; 
    End If 
+```
 ' _____________________________________________________________________________________ 
 ' Retrieve the CATPart Document and associated publications for preprocessing. 
+```vbscript
    Set TheDoc = analysisLinkedDocuments1.Item(1) 
    CATIA.SystemService.Print TheDoc.FullName 
    Set product1 = TheDoc.Product 
    Set publications1 = product1.Publications 
 ...
 ```
+```
 
 ```vbscript
 ...
 ' _____________________________________________________________________________________ 
 ' Create a Case for frequency computation in the current analysis model. 
+```vbscript
    Set analysisModels1 = analysisManager1.AnalysisModels
    Set analysisModel1 = analysisModels1.Item(1)
 
    Set analysisCases1 = analysisModel1.AnalysisCases
-   Set analysisCase1 = analysisCases1.Add()
+   Set analysisCase1 = analysisCases1.Add(#)
    Set analysisSets1 = analysisCase1.AnalysisSets
 
    Set analysisSet1 = analysisSets1.Add(&quot;RestraintSet&quot;, catAnalysisSetIn)
@@ -224,15 +241,18 @@ Dim arrayOfVariantOfShort1(0)
    Set analysisSet6 = analysisSets1.Add(&quot;SensorSet&quot;,catAnalysisSetOut)
   ...
 ```
+```
 
 ```vbscript
 ...
+```vbscript
 Set analysisSet4 = analysisSets2.ItemByType(&quot;PropertySet&quot;)
 
 Set analysisEntities1 = analysisSet4.AnalysisEntities
 Set analysisEntity1 = analysisEntities1.Add(&quot;SAMVirPartRigid&quot;)
 Set publication1 = publications1.Item(&quot;SmallHole&quot;)
 analysisEntity1.AddSupportFromPublication product1, publication1
+```
 
 ...
 ```
@@ -242,10 +262,12 @@ analysisEntity1.AddSupportFromPublication product1, publication1
 ' _____________________________________________________________________________________
 ' Clamp the Rigid Virtal Parts
 
+```vbscript
    Set analysisEntities2 = analysisSet1.AnalysisEntities
    Set analysisEntity5 = analysisEntities2.Add(&quot;SAMClamp&quot;)
    Set reference1 = analysisManager1.CreateReferenceFromObject(analysisEntity4)
    analysisEntity5.AddSupportFromReference reference1, reference1
+```
 ...
 ```
 
@@ -254,19 +276,25 @@ analysisEntity1.AddSupportFromPublication product1, publication1
 ' _____________________________________________________________________________________
 ' Distribute some Masses on top of the Part
 
+```vbscript
    Set analysisEntities3 = analysisSet2.AnalysisEntities
    Set analysisEntity9 = analysisEntities3.Add(&quot;SAMDistributedMass&quot;)
    Set publication5 = publications1.Item(&quot;TopFace&quot;)
    analysisEntity9.AddSupportFromPublication product1, publication5
+```
 
+```vbscript
    Set basicComponents1 = analysisEntity9.BasicComponents
    Set basicComponent1 = basicComponents1.GetItem(&quot;SAMMassMag&quot;)
    basicComponent1.SetValue &quot;&quot;, 0, 0, 0, 25.000000
-
+```
 
 ' _____________________________________________________________________________________
 ' Read the Value of the Mass
+```vbscript
   CATIA.SystemService.Print &quot; Mass Applied of the Part: &quot; &amp; basicComponent1.GetValue (&quot;&quot;,0,0,0)
+
+```
 
 ...
 ```
@@ -280,5 +308,7 @@ analysisEntity1.AddSupportFromPublication product1, publication1
 
 ```vbscript
 ...
+```vbscript
  End Sub
+```
 ```

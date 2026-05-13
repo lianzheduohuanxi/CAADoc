@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CATIAV5ArrWorkbench", "CATIAArrBOMReport", "CAAScrBase", "CATIA", "CAAScrJavaScript", "CATIAArrWorkbench", "CAAArrPipingBOMReport"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrPipingBOMReport.htm"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrPipingBOMReport.htmmd"
 converted: "2026-05-11T11:27:02.681913"
 ---
 
@@ -42,7 +42,7 @@ Thus we saw how to read a CATProduct document, retrieve the interface
  
  
 
- ![](../CAAScrBase/images/aendtask.gif)
+ ![image](../../assets/images/aendtask.gif)
  
 
 [Top]
@@ -91,21 +91,29 @@ Thus we saw how to read a Product document, retrieve the interface we are
 
 ```vbscript
 ...
+```vbscript
    Dim objCATIAV5Document As Document
    Dim objCATIAV5ArrWorkbench As Workbench
    Dim objCATIAV5ArrBOMReport As ArrBOMReport
 ...
 ```
+```
 
 ```vbscript
 ...
+```vbscript
    Set objCATIAV5Document = CATIA.ActiveDocument
 
    '//---------- Get ArrWorkbench from current document
+```
+```vbscript
    Set objCATIAV5ArrWorkbench = objCATIAV5Document.GetWorkbench(&quot;ArrWorkbench&quot;)
    '//---------- Get CATIAArrBOMReport from ArrWorkbench
+```
+```vbscript
    Set objCATIAV5ArrBOMReport = objCATIAV5ArrWorkbench.FindInterface (&quot;CATIAArrBOMReport&quot;,objCATIAV5Document)
    '//---------- Generate the report
+```
    objCATIAV5ArrBOMReport.GenerateBOMReport objCATIAV5Document, strGReportOutputPath
    ' Store this reported data.
   ...
@@ -113,5 +121,7 @@ Thus we saw how to read a Product document, retrieve the interface we are
 
 ```vbscript
 ...
+```vbscript
  End Sub
+```
 ```

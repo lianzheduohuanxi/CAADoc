@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAADlgUseCases"
 tags: ["CATInteractiveApplication", "CAADlgHelloWindowId", "CATIA", "CAADlgBurger", "CAADocStyleSheets", "CAADlgInteractiveApplication", "CAADocRunSample", "CAADlgHelloApplication", "CAADlgOverview", "CAADocUseCases", "CAADialog", "CAADlgTechArticles", "CAADlgHelloWindow"]
-source_file: "Doc/online/CAADlgUseCases/CAADlgSampleGettingStarted.htm"
+source_file: "Doc/online/CAADlgUseCases/CAADlgSampleGettingStarted.htmmd"
 converted: "2026-05-11T11:27:02.797370"
 ---
 
@@ -80,7 +80,7 @@ is installed.
 
 The CAADlgHelloApplication.m module includes four files:
 
-The resource file CAADlgHelloWindow.CATNls is located in the CNext\resources\msgcatalog
+The resource file CAADlgHelloWindow.CATNls is located in the CNext/resources/msgcatalog
 directory.
 
 [Top]
@@ -186,8 +186,6 @@ test the Dialog objects [4]
 
 *Copyright  2003, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 #include &quot;CATInteractiveApplication.h&quot;
 
@@ -197,9 +195,9 @@ class CAADlgHelloApplication: public CATInteractiveApplication {
 
     CAADlgHelloApplication(const CATString &amp;iIdentifier);
 
-    virtual ~CAADlgHelloApplication();
-    void BeginApplication();
-    int EndApplication();
+    virtual ~CAADlgHelloApplication(#);
+    void BeginApplication(#);
+    int EndApplication(#);
 
 };
 ```
@@ -211,19 +209,19 @@ class CAADlgHelloApplication: public CATInteractiveApplication {
 CAADlgHelloApplication::CAADlgHelloApplication(const CATString&amp; iIdentifier):
                         CATInteractiveApplication(NULL, iIdentifier) {}
                         
-CAADlgHelloApplication::~CAADlgHelloApplication() {}
+CAADlgHelloApplication::~CAADlgHelloApplication(#) {}
 
-void CAADlgHelloApplication::BeginApplication() 
+void CAADlgHelloApplication::BeginApplication(#) 
 {
  
   CAADlgHelloWindow * pMainWindow = new CAADlgHelloWindow(this);
 
-  pMainWindow-&gt;Build();
+  pMainWindow-&gt;Build(#);
 
   pMainWindow-&gt;SetVisibility(CATDlgShow);
 }
 
-int CAADlgHelloApplication::EndApplication() 
+int CAADlgHelloApplication::EndApplication(#) 
 {
   return(0);
 }
@@ -245,9 +243,9 @@ class CAADlgHelloWindow : public CATDlgDocument
  
     CAADlgHelloWindow(CATInteractiveApplication * iParentCommand);
 
-    virtual ~CAADlgHelloWindow();
+    virtual ~CAADlgHelloWindow(#);
 
-    void     Build();
+    void     Build(#);
 
   private:
 
@@ -274,19 +272,19 @@ CAADlgHelloWindow::CAADlgHelloWindow(CATInteractiveApplication * iParentCommand)
 {
 }
 
-CAADlgHelloWindow::~CAADlgHelloWindow()
+CAADlgHelloWindow::~CAADlgHelloWindow(#)
 { 
   _pHelloApplication = NULL ;
 }
 
-void CAADlgHelloWindow::Build()
+void CAADlgHelloWindow::Build(#)
 {
  
   CATDlgLabel * pLabel = new CATDlgLabel(this,&quot;MessageId&quot;);
 
   
   AddAnalyseNotificationCB(this,
-                            GetWindCloseNotification(),
+                            GetWindCloseNotification(#),
                            (CATCommandMethod)&amp;CAADlgHelloWindow::Exit, NULL);
 
 }
@@ -295,7 +293,7 @@ void CAADlgHelloWindow::Exit(CATCommand         * iSendingCommand,
                            CATNotification    * iSentNotification, 
                            CATCommandClientData iUsefulData)
 {
-   _pHelloApplication-&gt;Destroy();
+   _pHelloApplication-&gt;Destroy(#);
    _pHelloApplication = NULL ;
 }
 ```

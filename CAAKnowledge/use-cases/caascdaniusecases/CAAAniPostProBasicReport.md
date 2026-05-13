@@ -3,7 +3,7 @@ title: "Creating Basic Report"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CAAScrBase", "CATIA", "CAAScdAniUseCases", "CAAScrJavaScript", "CAAAniTocAnalysisDocument", "CAAScdInfUseCases", "CAAScdAniTechArticles", "CAAAniPostProBasicReportSource", "CAAInfLauchMacro", "CAAAniPostProBasicReport"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPostProBasicReport.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPostProBasicReport.htmmd"
 converted: "2026-05-11T11:27:02.526362"
 ---
 
@@ -16,7 +16,7 @@ Open the Analysis document. The Analysis document is retrieved in the documentat
 		variable. In the collection of documents, two documents can be retrieved: 
 		the Analysis document and the Part document. The CATTemp 
 		environment variable stores temporary data. On windows it points to
-		C:\Documents and Settings\user\Local Settings\Application Data\DassaultSystemes\CATTemp and on unix it points 
+		C:/Documents and Settings/user/Local Settings/Application Data/DassaultSystemes/CATTemp and on unix it points 
 		to /CATSettings/CATTemp.
 		
 
@@ -31,7 +31,7 @@ The sOut variable stores the path of the folder in which the report is
 
 According to the general
 		[
-		Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.htm) structure, this macro uses some standard procedures 
+		Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures 
 		to navigate or retrieve the required objects. First, from the **Document**, 
 		we find the **Analysis Manager Object**, the **Analysis Model**.
 		
@@ -54,7 +54,7 @@ The Analysis case is retrieved from list of cases by its index. The model
 To run the macro interactively CATDocView 
 		environment variable must be defined.
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 
@@ -89,16 +89,20 @@ This use case has shown how to generate the report with different options.
 ```vbscript
 ' ----------------------------------------------------------- 
 ' Optional: allows to find the sample wherever it's installed
+```vbscript
   sDocPath=CATIA.SystemService.Environ("CATDocView")
   sOut = CATIA.SystemService.Environ(&quot;CATTemp&quot;)
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,"No Doc Path Defined"
     End If
+```
 ' ----------------------------------------------------------- 
 ' Open the Analysis document 
-sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis&quot;)
+```vbscript
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online/CAAScdAniUseCases/samples/Cube_R13_Freq.CATAnalysis&quot;)
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+```
 ```
 
 ```vbscript
@@ -111,30 +115,40 @@ Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ```vbscript
 ' Retrieve the folder stored in sOut
+```vbscript
 Set fileSystem1 = CATIA.FileSystem
 Set folder1 = fileSystem1.GetFolder(sOut)
+```
 ```
 
 ```vbscript
 ' Retrieve the Analysis Manager
+```vbscript
 Set oAnalysisManager = oAnalysisDocument.Analysis
 			
 ' Retrieve the analysis model from the list of models
+```
+```vbscript
 Set oAnalysisModels = oAnalysisManager.AnalysisModels
 Set oAnalysisModel = oAnalysisModels.Item(1)
 Set oAnalysisPostManager = oAnalysisModel.PostManager
 ```
+```
 
 ```vbscript
 ' Retrieve the analysis cases and the first analysis case
+```vbscript
 Set oAnalysisCases = oAnalysisModel.AnalysisCases
 Set oAnalysisCase = oAnalysisCases.Item(1)
+```
 ```
 
 ```vbscript
 ' Retrieve the analysis cases and the Frequency case solution
+```vbscript
 Set oAnalysisSets = oAnalysisCase.AnalysisSets
 Set oAnalysisSet = oAnalysisSets.Item(&quot;Frequency Case Solution.1&quot;, catAnalysisSetSearchAll)
+```
 ```
 
 ```vbscript
@@ -170,6 +184,8 @@ oAnalysisPostManager.ExtractHTMLReport folder1, "test3"
 
 ```vbscript
 ...
+```vbscript
 End Sub
 ...
+```
 ```

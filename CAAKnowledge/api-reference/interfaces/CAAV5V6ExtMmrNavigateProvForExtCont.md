@@ -2,7 +2,7 @@
 title: "CAAV5V6ExtMmrNavigateProvForExtCont"
 type: "interface"
 module: "CAAV5V6MechanicalModeler"
-category: "framework"
+category: api-reference
 base: "CATINavigateProvider"
 inheritance_chain: "CAAV5V6ExtMmrNavigateProvForExtCont → CATINavigateProvider"
 method_count: 0
@@ -29,3 +29,20 @@ verified: true
 
 - `CATINavigateProvider.h`
 
+---
+
+## Interface Overview
+
+This interface inherits from **CATINavigateProvider**. 
+
+**Inherited Methods**: Please refer to the base interface documentation above.
+
+## Interface Notes
+
+This interface is part of the **CAA** module.
+
+**Status**: This interface document is a template. Please refer to the official API documentation for more information.
+
+**Related Resources**:
+- [Quick References](../..//quick-refs/)
+- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)

@@ -4,13 +4,13 @@ title: "New C++ Authorized APIs in CAA V5R15 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATISchAppToolsOptionsData", "CATIMfgPrismaticReworkArea", "CATIBlock", "CATIMfResultManagement", "CATIDegreesOfFreedom", "CATIEwrRouteSegment", "CATISPMProcessAccess", "CATISchAppCmdInfo", "CATICATALOGWorkshopAddin", "CATIMfgMachinableGeomMngt", "CATIMfgToolAxis", "CATIMfgTPEExtraVisu", "CATIMfgMultiAxisFlankContouring", "CATIMfgUserReverseMachiningConditions", "CATIPspLightPart", "CATIPrtProceduralView", "CATIMmiTemporaryVisProperties", "CATIMfExtremity", "CATIDimCst2", "CATICfgSpecExpression"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R15GANewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R15GANewCPPAPI.htmmd"
 converted: "2026-05-11T17:33:47.243440"
 ```
 
 ---
 tags: ["CATISchAppToolsOptionsData", "CATIMfgPrismaticReworkArea", "CATIBlock", "CATIMfResultManagement", "CATIDegreesOfFreedom", "CATIEwrRouteSegment", "CATISPMProcessAccess", "CATISchAppCmdInfo", "CATICATALOGWorkshopAddin", "CATIMfgMachinableGeomMngt", "CATIMfgToolAxis", "CATIMfgTPEExtraVisu", "CATIMfgMultiAxisFlankContouring", "CATIMfgUserReverseMachiningConditions", "CATIPspLightPart", "CATIPrtProceduralView", "CATIMmiTemporaryVisProperties", "CATIMfExtremity", "CATIDimCst2", "CATICfgSpecExpression"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R15GANewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R15GANewCPPAPI.htmmd"
 converted: "2026-05-11T17:33:47.243440"
 CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R15 GA
 
@@ -27,15 +27,18 @@ The following are the new CAA V5R15 GA C++ Authorized APIs, compared with CAA V5
     * Class  CATTopMostContinuousGeoInWireOperator
     * Class  CATTopSimilarCurve
     * Enumeration  CATTopBlendCouplingMode
+```vbscript
     * Global Function  CATCreateGeodesicPointDir
     * Global Function  CATCreateTopMostContinuousGeoInWireOperator
     * Global Function  CATCreateTopSimilarCurve
   * AnalysisMeshingModel framework
+```
     * Class  CATMSHSelectionTrap
     * Enumeration  CATMSHExternalReferenceStatus
     * Enumeration  CATMSHTrapMode
     * Interface  CATIMSHTrapSelector
   * ApplicationFrame framework
+```vbscript
     * Global Function  CATAfrEmptyUndoRedoStacks
     * Global Function  CATAfrGetWorkbenchIdentifierFromNLSName
     * Global Function  CATAfrLockUndoRedoTransactions
@@ -46,13 +49,16 @@ The following are the new CAA V5R15 GA C++ Authorized APIs, compared with CAA V5
     * Global Function  CATCreateCameraFromViewer
     * Global Function  CATCreateCameraFromViewpoint
     * Interface  CATIAfrUIActivation
+```
   * BasicTopologicalOpe framework
     * Class  CATTopGeodesicLineOperator
+```vbscript
     * Global Function  CATCreateGeodesicLinePtPt
     * Global Function  CATCreateTopGeodesicLineOperatorFromDirection
     * Global Function  CATCreateTopStableSpline
     * Global Function  CATCreateTopStableSplineOperator
   * CATAnalysisBase framework
+```
     * Class  CATAnalysisAssemblyManager
     * Class  CATAnalysisExplicitVirtualElement
     * Class  CATAnalysisExplicitVirtualNode
@@ -115,9 +121,11 @@ The following are the new CAA V5R15 GA C++ Authorized APIs, compared with CAA V5
   * CATAssemblyInterfaces framework
     * Class  CATAsmConstraintServices
     * Class  CATAsmConstraintSetServices
+```vbscript
     * Global Function  GetCATAsmConstraintSettingCtrl
     * Global Function  GetCATAsmGeneralSettingCtrl
     * Interface  CATIAsmConstraintSettingAtt
+```
     * Interface  CATIAsmGeneralSettingAtt
     * Interface  CATIProdDraftingProperties
   * CATCommonLayoutInterfaces framework
@@ -127,8 +135,10 @@ The following are the new CAA V5R15 GA C++ Authorized APIs, compared with CAA V5
     * Interface  CATICloPartSelection
   * CATDataExchControlAlgo framework
     * Class  CATDECProductToPartConvertor
+```vbscript
     * Global Function  CATCreateProductToPartConvertor
   * CATHullConceptualInterfaces framework
+```
     * Interface  CATISPLDesignTabSettingAtt
   * CATPlantShipInterfaces framework
     * Class  CATPspKweUserAttrAdapter
@@ -225,8 +235,10 @@ The following are the new CAA V5R15 GA C++ Authorized APIs, compared with CAA V5
     * Interface  CATSweepSurface
   * GeometricOperators framework
     * Class  CATCurveCurvilinearParameterization
+```vbscript
     * Global Function  CATCreateCurveCurvilinearParameterization
   * InteractiveInterfaces framework
+```
     * Class  CATLISTP(CATIIniLayer)
     * Class  CATLISTP(CATIIniLayersFilter)
     * Class  CATLISTP(CATISelectionSetElement_var)
@@ -325,15 +337,19 @@ The following are the new CAA V5R15 GA C++ Authorized APIs, compared with CAA V5
     * Class  CATMmrAlgoConfigServices
     * Class  CATMmrBRepScanServices
     * Class  CATMmrInterPartCopy
+```vbscript
     * Global Function  CATMmrGetCanonicBRepFromGeometricalElement
   * NewTopologicalObjects framework
+```
     * Class  CATLISTP(CATWire)
     * Class  CATTopCAACompliantJournalChecker
     * Class  CATTopPropagationEdge
     * Enumeration  CAATopCheckForPartType
+```vbscript
     * Global Function  operator<
     * Global Function  <
   * ObjectModelerBase framework
+```
     * Class  CATLISTP(CATIReporterInfo)
     * Class  CATOmbDocIdFinder
     * Interface  CATIGraphLink
@@ -420,9 +436,11 @@ The following are the new CAA V5R15 GA C++ Authorized APIs, compared with CAA V5
     * Interface  ENOVIExDataServices
   * Visualization framework
     * Macro or #define  NB_VISU_LINETHICKNESS
+```vbscript
     * Global Function  sCATGetMMThicknessFromViewer
     * Global Function  sCATGetPixelThicknessFromViewer
     * Interface  CATIVisVrmlSettingAtt
+```
   * VisualizationBase framework
     * Class  CATVisMeasurableGP
     * Enumeration  CATGeomType

@@ -1,11 +1,11 @@
 ---
 ```vbscript
 title: "Detail Of API Changes"
-category: "api-changes"
+category: use-case
 module: "CAACenAPIChangesR23"
 version: "V5R23"
 tags: []
-source_file: "Doc/online/CAACenAPIChangesR23/CAACenAPIChangeDetail_Java.htm"
+source_file: "Doc/online/CAACenAPIChangesR23/CAACenAPIChangeDetail_Java.htmmd"
 converted: "2026-05-11T17:33:51.755183"
 ```
 

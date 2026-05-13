@@ -4,13 +4,13 @@ title: "Managing Selection"
 category: "use case"
 module: "CAADegUseCases"
 tags: ["CAADegCreatePlaneCmd", "CAAISysPoint", "CAADialogEngine", "CAAGeometry", "CAADegGeoCommands"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleSelection.htm"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleSelection.htmmd"
 converted: "2026-05-11T17:33:49.741834"
 ```
 
 ---
 tags: ["CAADegCreatePlaneCmd", "CAAISysPoint", "CAADialogEngine", "CAAGeometry", "CAADegGeoCommands"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleSelection.htm"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleSelection.htmmd"
 converted: "2026-05-11T17:33:49.741834"
 3D PLM Enterprise Architecture |  User Interface - Commands |  Managing Selection _Retrieving an existing object from a mouse click_
 
@@ -33,9 +33,9 @@ Abstract This article shows how to retrieve, in a state dialog command, an exist
 
 * * *
 
-What You Will Learn With This Use Case This use case is intended to show how to retrieve, in a state dialog command, an object that exists in a document displayed in a viewer onto which the end user left clicks. This object can be used afterwards as input for any tasks, such as creating a plane from three successive existing point selections in this example. This example shows also how a dialog agent can be reused in several states. [Top] The Plane Command Use Case The Plane command is a use case of the CAADialogEngine.edu framework that illustrates the DialogEngine framework capabilities. [Top] What Does the Plane Command Do CAADegCreatePlaneCmd is a state dialog command that creates a plane in the 3D space according to the following UML statechart diagram [1]. ![CAACreatePlaneStatechart.jpg \(17020 bytes\)](images/CAACreatePlaneStatechart.jpg) The dialog is as follows: ![CAACreatePlane1.jpg \(16513 bytes\)](images/CAACreatePlane1.jpg) | Select the plane command. Three points must exist in the document. The active state becomes GetFirstPoint.
+What You Will Learn With This Use Case This use case is intended to show how to retrieve, in a state dialog command, an object that exists in a document displayed in a viewer onto which the end user left clicks. This object can be used afterwards as input for any tasks, such as creating a plane from three successive existing point selections in this example. This example shows also how a dialog agent can be reused in several states. [Top] The Plane Command Use Case The Plane command is a use case of the CAADialogEngine.edu framework that illustrates the DialogEngine framework capabilities. [Top] What Does the Plane Command Do CAADegCreatePlaneCmd is a state dialog command that creates a plane in the 3D space according to the following UML statechart diagram [1]. ![CAACreatePlaneStatechart.jpg /(17020 bytes/)](images/CAACreatePlaneStatechart.jpg) The dialog is as follows: ![CAACreatePlane1.jpg /(16513 bytes/)](images/CAACreatePlane1.jpg) | Select the plane command. Three points must exist in the document. The active state becomes GetFirstPoint.
 ---|---
-What You Will Learn With This Use Case This use case is intended to show how to retrieve, in a state dialog command, an object that exists in a document displayed in a viewer onto which the end user left clicks. This object can be used afterwards as input for any tasks, such as creating a plane from three successive existing point selections in this example. This example shows also how a dialog agent can be reused in several states. [Top] The Plane Command Use Case The Plane command is a use case of the CAADialogEngine.edu framework that illustrates the DialogEngine framework capabilities. [Top] What Does the Plane Command Do CAADegCreatePlaneCmd is a state dialog command that creates a plane in the 3D space according to the following UML statechart diagram [1]. ![CAACreatePlaneStatechart.jpg \(17020 bytes\)](images/CAACreatePlaneStatechart.jpg) The dialog is as follows: ![CAACreatePlane1.jpg \(16513 bytes\)](images/CAACreatePlane1.jpg) | Select the plane command. Three points must exist in the document. The active state becomes GetFirstPoint.
+What You Will Learn With This Use Case This use case is intended to show how to retrieve, in a state dialog command, an object that exists in a document displayed in a viewer onto which the end user left clicks. This object can be used afterwards as input for any tasks, such as creating a plane from three successive existing point selections in this example. This example shows also how a dialog agent can be reused in several states. [Top] The Plane Command Use Case The Plane command is a use case of the CAADialogEngine.edu framework that illustrates the DialogEngine framework capabilities. [Top] What Does the Plane Command Do CAADegCreatePlaneCmd is a state dialog command that creates a plane in the 3D space according to the following UML statechart diagram [1]. ![CAACreatePlaneStatechart.jpg /(17020 bytes/)](images/CAACreatePlaneStatechart.jpg) The dialog is as follows: ![CAACreatePlane1.jpg /(16513 bytes/)](images/CAACreatePlane1.jpg) | Select the plane command. Three points must exist in the document. The active state becomes GetFirstPoint.
  The first point is selected. The active state becomes GetSecondPoint.
  The second point is selected. The active state becomes GetThirdPoint.
  The third point is selected. The plane created passes by these three points. The plane symbol is located around the first selected point. The command is complete.
@@ -47,7 +47,7 @@ The CreatePoint command is a straightforward state dialog command with three seq
     * Click to create three points
     * Select Insert->Plane
     * Click the three points to create a plane.
-[Top] Where to Find the Plane Command Code The Plane command is made of a single class named _CAADegCreatePlaneCmd_ located in the CAADegGeoCommands.m module of the CAADialogEngine.edu framework: Windows | `InstallRootDirectory\CAADialogEngine.edu\CAADegGeoCommands.m\`
+[Top] Where to Find the Plane Command Code The Plane command is made of a single class named _CAADegCreatePlaneCmd_ located in the CAADegGeoCommands.m module of the CAADialogEngine.edu framework: Windows | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 ---|---
 Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
@@ -79,12 +79,12 @@ private :
 CATPathElementAgent * _daPathElement;
 A pointer to the selection agent is declared as a private data member. Selection agents are instances of the CATPathElement class. A single selection agent is enough for the three point selections. It will be recycled after each selection to be used as a brand new one. [Top] Instantiating the Selection Agent The selection agent is instantiated in the command `BuildGraph` method.
 
-    void CAADegCreatePlaneCmd::BuildGraph()
+    void CAADegCreatePlaneCmd::BuildGraph(#)
 
     {
       ...
 A pointer to the selection agent is declared as a private data member. Selection agents are instances of the CATPathElement class. A single selection agent is enough for the three point selections. It will be recycled after each selection to be used as a brand new one. [Top] Instantiating the Selection Agent The selection agent is instantiated in the command `BuildGraph` method.
-void CAADegCreatePlaneCmd::BuildGraph()
+void CAADegCreatePlaneCmd::BuildGraph(#)
       _daPathElement = **new** **CATPathElementAgent**("GetPoint");
       _daPathElement->**AddElementType**("CAAISysPoint");
 
@@ -142,18 +142,18 @@ CATBoolean CAADegCreatePlaneCmd::CreatePoint(void *iPointIndex)
       _// Gets x,y,z from the selected point_
       float x,y,z ;
 
-      CATPathElement * pModelPath = _daPathElement->**GetValue**();
+      CATPathElement * pModelPath = _daPathElement->**GetValue**(#);
       CATBaseUnknown * pExpectedPoint = NULL ;
 ```vbscript
-      if ( pModelPath && pModelPath->GetSize() )
+      if ( pModelPath && pModelPath->GetSize(#) )
 
 ```
 
       {
-CATPathElement * pModelPath = _daPathElement->**GetValue**();
+CATPathElement * pModelPath = _daPathElement->**GetValue**(#);
 CATBaseUnknown * pExpectedPoint = NULL ;
-if ( pModelPath && pModelPath->GetSize() )
-        int ElementCountInPath = pModelPath->GetSize() - 1;
+if ( pModelPath && pModelPath->GetSize(#) )
+        int ElementCountInPath = pModelPath->GetSize(#) - 1;
 ```vbscript
         pExpectedPoint = (*pModelPath)[ElementCountInPath];
 
@@ -192,7 +192,7 @@ if (SUCCEEDED(rc))
           _Point[indice].SetX(x);
           _Point[indice].SetY(y);
           _Point[indice].SetZ(z);
-          pExpectedPointAsISysPoint->**Release**();
+          pExpectedPointAsISysPoint->**Release**(#);
 
         }
       }
@@ -202,7 +202,7 @@ if (SUCCEEDED(rc))
 `QueryInterface` must succeed because the selected object can be selected if and only if it implements CAAISysPoint. This was stated in 1 when instantiating the dialog agent. Once the temporary point is assigned the selected point coordinates, the pointer to CAAISysPoint is released. Before leaving the method, the selection agent is reinitialized. This makes it possible to reuse it in a later step.
 
     ...
-      _daPathElement->**InitializeAcquisition**();
+      _daPathElement->**InitializeAcquisition**(#);
       return TRUE;
     }
     ...
@@ -210,11 +210,11 @@ if (SUCCEEDED(rc))
 ---
 [Top] Releasing the Selection Agent A pointer to the selection agent was created in the command `BuildGraph` method as a data member to be accessed and used in different methods. It should be released when it becomes useless. This can be done in the command destructor, as shown here. This could also be done in the `Cancel` method called just before the destructor.
 
-    CAADegCreatePlaneCmd::~CAADegCreatePlaneCmd()
+    CAADegCreatePlaneCmd::~CAADegCreatePlaneCmd(#)
     {
       ...
-CAADegCreatePlaneCmd::~CAADegCreatePlaneCmd()
-      if (_daPathElement) _daPathElement->RequestDelayedDestruction();
+CAADegCreatePlaneCmd::~CAADegCreatePlaneCmd(#)
+      if (_daPathElement) _daPathElement->RequestDelayedDestruction(#);
       _daPathElement = NULL ;
 
       ...

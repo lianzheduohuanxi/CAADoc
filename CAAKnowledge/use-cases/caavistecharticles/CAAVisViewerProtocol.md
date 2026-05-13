@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Conveying End User Intent from Mouse to Controller"
-category: "use-case"
+category: tech-article
 module: "CAAVisTechArticles"
 tags: ["CATIA"]
-source_file: "Doc/online/CAAVisTechArticles/CAAVisViewerProtocol.htm"
+source_file: "Doc/online/CAAVisTechArticles/CAAVisViewerProtocol.htmmd"
 converted: "2026-05-11T17:31:52.306819"
 ```
 
@@ -24,7 +24,10 @@ Technical Article
 * * *
 ### Abstract
 
+```vbscript
 The mouse is the main device used to interact with CATIA. The end user should be able to perform many kinds of actions with only three buttons and mouse moves. The mouse quickly delegates the end user intended actions to manipulators set onto the representations of the model objects. Here we present the notification protocol used to standardize the end user intents.
+
+```
 
   * **What Happens when the End User Plays with the Mouse?**
   * **The Manipulator States Reflecting the End User Interactions**
@@ -57,7 +60,7 @@ The state of a manipulator is composite and made of three parts:
 
 This figure shows the states of a manipulator (in boxes) and the notifications sent when shifting from one state to another (along the arrows) due to end-user interactions represented by the mouse, here with the first manipulator style used (left button pressed):
 
-![CAAVisViewerProtocol.gif \(11027 bytes\)](images/CAAVisViewerProtocol.gif)
+![CAAVisViewerProtocol.gif /(11027 bytes/)](images/CAAVisViewerProtocol.gif)
 
 [Top]
 ### The Manipulator States Reflecting the End User Interactions

@@ -4,13 +4,13 @@ title: "Boolean Intersection"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CATICGMDynBoolean", "CAAGMTopDumpJournal", "CAAGMOperatorsClashIntersect"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcIntersectClash.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcIntersectClash.htmmd"
 converted: "2026-05-11T17:33:48.954937"
 ```
 
 ---
 tags: ["CAAGMOperatorsInterfaces", "CATICGMDynBoolean", "CAAGMTopDumpJournal", "CAAGMOperatorsClashIntersect"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcIntersectClash.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcIntersectClash.htmmd"
 converted: "2026-05-11T17:33:48.954937"
 Boolean Intersection
 
@@ -39,24 +39,24 @@ and the code below:
 CATICGMDynBoolean * pBoolOpe = NULL;
 pBoolOpe =::CATCGMCreateDynBoolean(piGeomFactory,&topdata;,
 CATBoolIntersection, piBodyA, piBodyB);
-    pBoolOpe->Run();
-    CATBody * pBodyIntersect = pBoolOpe->GetResult();
+    pBoolOpe->Run(#);
+    CATBody * pBodyIntersect = pBoolOpe->GetResult(#);
 
     ...
 
 ---
-CATBody * pBodyIntersect = pBoolOpe->GetResult();
+CATBody * pBodyIntersect = pBoolOpe->GetResult(#);
 you get this result: Fig.2 Boolean Intersection: Result ![Boolean Intersection: Result](images/CGM_clash_journal_1.png)
 
 ---
 you get this result: Fig.2 Boolean Intersection: Result ![Boolean Intersection: Result](images/CGM_clash_journal_1.png)
 The code below:
 
-    pJournal->Tass();
+    pJournal->Tass(#);
     CAAGMTopDumpJournal(pJournal);
 
 ---
-pJournal->Tass();
+pJournal->Tass(#);
 CAAGMTopDumpJournal(pJournal);
 dumps the journal on the standard output. You get something like this:
 
@@ -73,7 +73,7 @@ Each face of the resulting body results from a modification or an absorption of 
     //
 Each face of the resulting body results from a modification or an absorption of the input body(ies) faces.  To determine which resulting face comes from which input body, the CATCGMJournalList::FindFirst method is used.  The parent cells of the resulting cells are retrieved and looked for ("located") in the list of cells of the two input bodies.  The code below scans the faces of the resulting body and creates the list of faces coming from either input bodies.
 ```vbscript
-    for (int k = 1; k < listOfFaces.Size()+1; k++)
+    for (int k = 1; k < listOfFaces.Size(#)+1; k++)
 
 ```
 
@@ -93,13 +93,13 @@ CATLISTP(CATGeometry) originObjects;
 CATCell * myptr =listOfFaces[k];
 pJournal->FindFirsts(myptr, originObjects, ThroughAllCreateAndModify);
 if (myptr != NULL )
-            cout << "Face :" << myptr->GetPersistentTag() << endl;
+            cout << "Face :" << myptr->GetPersistentTag(#) << endl;
 
           }
      ...
 ```vbscript
 if (myptr != NULL )
-cout << "Face :" << myptr->GetPersistentTag() << endl;
+cout << "Face :" << myptr->GetPersistentTag(#) << endl;
     if ( (isInBodyA==1) && (isInBodyB == 1) )
             absorbedFaces.Append(myptr);
     if ( (isInBodyA == 1) && (isInBodyB ==0) )

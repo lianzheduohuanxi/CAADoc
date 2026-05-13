@@ -4,7 +4,7 @@ title: "Creating a Sheet"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CAAScdPriUseCases", "CATIA", "CAADriSheet", "CAAPriPad"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriSheet.htm"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriSheet.htmmd"
 converted: "2026-05-11T17:31:51.105743"
 ```
 
@@ -49,9 +49,13 @@ The macro first loads CAADriSheet.CATDrawing that contains a sheet: Sheet.1 ![](
 ```
 
 ```vbscript
+```vbscript
     Dim oDrawingSheets As DrawingSheets
 ```vbscript
+```
+```vbscript
     Set oDrawingSheets = oDoc.Sheets
+```
 ```
 
 ```
@@ -86,13 +90,19 @@ Once the drawing document has been loaded, the `odrawingSheets` is declared to r
 
 ```
 
+```vbscript
     MsgBox "Click OK to create the new sheet."
+```
 ```
 
 ```vbscript
+```vbscript
     Dim oDrawingSheet As DrawingSheet
 ```vbscript
+```
+```vbscript
     Set oDrawingSheet = oDrawingSheets.Add("New Sheet")
+```
 ```
 
 ```
@@ -131,8 +141,10 @@ The _oDrawingSheet_ is then displayed with the following result but not activate
 
 ```
 
+```vbscript
     MsgBox "Click OK to activate the new sheet."
     oDrawingSheet.Activate
+```
 ```
 
     ...
@@ -143,7 +155,7 @@ The `Activate` property of the _DrawingSheet_ object is used to activate it.
 
 ![](images/img003.jpg)
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

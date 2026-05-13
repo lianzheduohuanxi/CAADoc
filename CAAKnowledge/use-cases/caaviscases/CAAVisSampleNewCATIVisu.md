@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Making a Component Displayable With Your Own Interface"
-category: "use case"
+category: use-case case"
 module: "CAAVisUseCases"
 tags: ["CAAVisManagerDefaultDocument", "CATI3DGeoVisu", "CAAVisManagerAppli", "CAAVisModelEventsForObject", "CAAIVis2DGraphVisu", "CAAEVis2DGraphVisuForObject", "CAAVisualization", "CATI2GeoVisu", "CAAVisManager", "CATIA", "CAAVisModelObject", "CAAEVisModelEventsuForObject", "CAAVisManagerImpl", "CAAVisManagerComp", "CATIVisu", "CATIModelEvents", "CAAVisManagerInt", "CAAVis2DGraphBoxRep"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleNewCATIVisu.htm"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleNewCATIVisu.htmmd"
 converted: "2026-05-11T17:31:52.156240"
 ```
 
@@ -66,10 +66,10 @@ To launch CAAVisManager, you will need to set up the build time environment, the
 To launch CAAVisManager, you will need to set up the build time environment, then compile the four CAAVisManager modules along with their prerequisites, set up the run time environment, and then execute the use case [4]. You cannot launch CAAVisManager itself. CAAVisManager is simply used by the CAAVisManagerAppli use case. Type CAAVisManagerAppli instead of CAAVisManager to display the interactive application along with a viewer that displays the CAAVisManagerDefaultDocument.
 CAAVisManager code is located in the CAAVisualization.edu framework:
 
-Windows | `InstallRootDirectory\CAAVisualization.edu\`
+Windows | `InstallRootDirectory/CAAVisualization.edu/`
 
 CAAVisManager code is located in the CAAVisualization.edu framework:
-Windows | `InstallRootDirectory\CAAVisualization.edu\`
+Windows | `InstallRootDirectory/CAAVisualization.edu/`
 Unix | `InstallRootDirectory/CAAVisualization.edu/`
 
 where `InstallRootDirectory` is the root directory of your CAA V5 installation.
@@ -145,8 +145,8 @@ extern  ExportedByCAAVisManagerInt IID IID_CAAIVis2DGraphVisu;
 class  ExportedByCAAVisManagerInt CAAIVis2DGraphVisu : public CATIVisu
            CATDeclareInterface;
            public:
-             virtual CAT3x3Matrix & GetPositioningMatrix()=0;
-             virtual void IncrementPositioningMatrix()=0;
+             virtual CAT3x3Matrix & GetPositioningMatrix(#)=0;
+             virtual void IncrementPositioningMatrix(#)=0;
 
          };
 
@@ -199,14 +199,14 @@ class CAAEVis2DGraphVisuForObject : public CAAVis2DGraphVisuAdapter
 
 ```
 
-        CAAEVis2DGraphVisuForObject();
-        virtual ~CAAEVis2DGraphVisuForObject();
+        CAAEVis2DGraphVisuForObject(#);
+        virtual ~CAAEVis2DGraphVisuForObject(#);
 
-        **CATRep * BuildRep();**
+        **CATRep * BuildRep(#);**
 
 ```vbscript
-CAAEVis2DGraphVisuForObject();
-virtual ~CAAEVis2DGraphVisuForObject();
+CAAEVis2DGraphVisuForObject(#);
+virtual ~CAAEVis2DGraphVisuForObject(#);
       private:
         CAAEVis2DGraphVisuForObject(const CAAEVis2DGraphVisuForObject &iObjectToCopy);
 
@@ -230,11 +230,11 @@ The _CAAEVis2DGraphVisuForObject_ source file is as follows.
                       **CAAVisModelObject**);
 
 CATBaseUnknown,
-    CAAEVis2DGraphVisuForObject::CAAEVis2DGraphVisuForObject() {}
+    CAAEVis2DGraphVisuForObject::CAAEVis2DGraphVisuForObject(#) {}
 
-    CAAEVis2DGraphVisuForObject::~CAAEVis2DGraphVisuForObject() {}
+    CAAEVis2DGraphVisuForObject::~CAAEVis2DGraphVisuForObject(#) {}
 
-    **CATRep *** CAAEVis2DGraphVisuForObject::**BuildRep**()
+    **CATRep *** CAAEVis2DGraphVisuForObject::**BuildRep**(#)
     {
       ...
     }
@@ -255,7 +255,7 @@ The `BuildRep` method is implemented using three sub steps.
 The `BuildRep` method is implemented using three sub steps.
   1. Declaring the representation to return
 
-         CATRep * CAAEVis2DGraphVisuForObject::**BuildRep**()
+         CATRep * CAAEVis2DGraphVisuForObject::**BuildRep**(#)
 
          {
            **CAT2DBagRep** * pCurrentObjectBagRep = NULL;
@@ -320,8 +320,8 @@ _CAAVisModelEventsForObject_ implements the _CATIModelEvents_ interface by deriv
            **CATDeclareClass** ;
 class CAAEVisModelEventsForObject : public **CATExtIModelEvents**
            public :
-             CAAEVisModelEventsForObject();
-             virtual ~CAAEVisModelEventsForObject();
+             CAAEVisModelEventsForObject(#);
+             virtual ~CAAEVisModelEventsForObject(#);
            private :
            CAAEVisModelEventsForObject(const CAAEVisModelEventsForObject &iObjectToCopy);
 
@@ -359,9 +359,9 @@ CATImplementClass(CAAEVisModelEventsForObject,
 ```vbscript
 CATImplementClass(CAAEVisModelEventsForObject,
 CATBaseUnknown,
-         CAAEVisModelEventsForObject::CAAEVisModelEventsForObject() {}
+         CAAEVisModelEventsForObject::CAAEVisModelEventsForObject(#) {}
 
-         CAAEVisModelEventsForObject::~CAAEVisModelEventsForObject() {}
+         CAAEVisModelEventsForObject::~CAAEVisModelEventsForObject(#) {}
 
 ```
 

@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Catching the Visualization Notifications"
-category: "use case"
+category: use-case case"
 module: "CAAVisUseCases"
 tags: ["CAAVisManager", "CAAVisManagerDefaultDocument", "CAAVisManagerAppli", "CATI3DGeoVisu", "CAAVisManagerInt", "CAAVisManagerCxtMenu", "CAAVisManagerCmdSelector", "CAAVisManagerComp", "CAAIVisManagerCmdSelector", "CAAVisManagerImp", "CAAVisualization"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleCatchNotifications.htm"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleCatchNotifications.htmmd"
 converted: "2026-05-11T17:31:52.051717"
 ```
 
@@ -63,10 +63,10 @@ To launch CAAVisManager, you will need to set up the build time environment, the
 To launch CAAVisManager, you will need to set up the build time environment, then compile the four CAAVisManager modules along with their prerequisites, set up the run time environment, and then execute the use case [5]. You cannot launch CAAVisManager itself. CAAVisManager is simply used by the CAAVisManagerAppli use case. Type CAAVisManagerAppli instead of CAAVisManager to display the interactive application along with a viewer that displays the CAAVisManagerDefaultDocument.
 CAAVisManager code is located in the CAAVisualization.edu framework:
 
-Windows | `InstallRootDirectory\CAAVisualization.edu\`
+Windows | `InstallRootDirectory/CAAVisualization.edu/`
 
 CAAVisManager code is located in the CAAVisualization.edu framework:
-Windows | `InstallRootDirectory\CAAVisualization.edu\`
+Windows | `InstallRootDirectory/CAAVisualization.edu/`
 Unix | `InstallRootDirectory/CAAVisualization.edu/`
 
 where `InstallRootDirectory` is the root directory of your CAA V5 installation.
@@ -113,29 +113,29 @@ CATNotification * iNotification)
       CATNotifPropagationMode propMode = **CATNotifTransmitToFather** ;
 
 ```vbscript
-      if ( iNotification->IsAKindOf(**CATManipulatorNotification::ClassName**()) )
+      if ( iNotification->IsAKindOf(**CATManipulatorNotification::ClassName**(#)) )
 
 ```
 
       {
         ...  // see coming steps
 CATNotifPropagationMode propMode = **CATNotifTransmitToFather** ;
-if ( iNotification->IsAKindOf(**CATManipulatorNotification::ClassName**()) )
+if ( iNotification->IsAKindOf(**CATManipulatorNotification::ClassName**(#)) )
         propMode = **CATNotifDontTransmitToFather** ;
 
       }
 ```vbscript
-if ( iNotification->IsAKindOf(**CATManipulatorNotification::ClassName**()) )
+if ( iNotification->IsAKindOf(**CATManipulatorNotification::ClassName**(#)) )
 propMode = **CATNotifDontTransmitToFather** ;
-      else  if ( iNotification->IsAKindOf(**CATMultiSel::ClassName**()) )
+      else  if ( iNotification->IsAKindOf(**CATMultiSel::ClassName**(#)) )
 ```
 
       {
 propMode = **CATNotifDontTransmitToFather** ;
-else  if ( iNotification->IsAKindOf(**CATMultiSel::ClassName**()) )
+else  if ( iNotification->IsAKindOf(**CATMultiSel::ClassName**(#)) )
         propMode = **CATNotifDontTransmitToFather** ;
         CATSO * pSetOfObjects = (CATSO *) iFromClient->**SendCommandSpecificObject**(
-                                             CATPathElement::ClassName(), iNotification);
+                                             CATPathElement::ClassName(#), iNotification);
 ```vbscript
         if  (NULL != pSetOfObjects)
 
@@ -144,7 +144,7 @@ else  if ( iNotification->IsAKindOf(**CATMultiSel::ClassName**()) )
         {
 propMode = **CATNotifDontTransmitToFather** ;
 CATSO * pSetOfObjects = (CATSO *) iFromClient->**SendCommandSpecificObject**(
-CATPathElement::ClassName(), iNotification);
+CATPathElement::ClassName(#), iNotification);
 if  (NULL != pSetOfObjects)
           CATBaseUnknown *pComp = NULL;
 ```vbscript
@@ -164,17 +164,17 @@ for (int ii=0; pComp=(*pSetOfObjects)[ii]; ii++)
 CATBaseUnknown *pComp = NULL;
 for (int ii=0; pComp=(*pSetOfObjects)[ii]; ii++)
 _Hso.**AddElements**(pComp);
-          _Hso.**EndAddElements**();
+          _Hso.**EndAddElements**(#);
 
         }
 _Hso.**AddElements**(pComp);
-_Hso.**EndAddElements**();
-        pSetOfObjects->Release();
+_Hso.**EndAddElements**(#);
+        pSetOfObjects->Release(#);
         pSetOfObjects = NULL;
 
       }
-_Hso.**EndAddElements**();
-pSetOfObjects->Release();
+_Hso.**EndAddElements**(#);
+pSetOfObjects->Release(#);
 pSetOfObjects = NULL;
       return propMode;
 
@@ -191,24 +191,24 @@ In this case, a multiselection occurred. Several components are selected, and ca
 #### Catching CATPreactivate Notifications
 
         ...
-        if  ( iNotification->IsAKindOf(CATManipulator::**GetCATPreactivate**()) )
+        if  ( iNotification->IsAKindOf(CATManipulator::**GetCATPreactivate**(#)) )
         {
 ```vbscript
-if  ( iNotification->IsAKindOf(CATManipulator::**GetCATPreactivate**()) )
+if  ( iNotification->IsAKindOf(CATManipulator::**GetCATPreactivate**(#)) )
           CATPathElement * pPath =
            (CATPathElement *)iFromClient->**SendCommandSpecificObject**(
-                                              CATPathElement::ClassName(),
+                                              CATPathElement::ClassName(#),
                                               iNotification);
           if ( NULL != pPath )
 ```
 
           {
 (CATPathElement *)iFromClient->**SendCommandSpecificObject**(
-CATPathElement::ClassName(),
+CATPathElement::ClassName(#),
 iNotification);
 if ( NULL != pPath )
             _Pso.**AddElement**(pPath);
-            pPath->Release();
+            pPath->Release(#);
 
           }
         }
@@ -222,12 +222,12 @@ A _CATPreactivate_ notification is sent whenever the mouse moves above a represe
 #### Catching CATEndPreactivate Notifications
 
         ...
-        else if ( iNotification->IsAKindOf(CATManipulator::GetCATEndPreactivate()) )
+        else if ( iNotification->IsAKindOf(CATManipulator::GetCATEndPreactivate(#)) )
         {
-else if ( iNotification->IsAKindOf(CATManipulator::GetCATEndPreactivate()) )
+else if ( iNotification->IsAKindOf(CATManipulator::GetCATEndPreactivate(#)) )
           CATPathElement * pPath =
            (CATPathElement *)iFromClient->**SendCommandSpecificObject**(
-                                              CATPathElement::ClassName(),
+                                              CATPathElement::ClassName(#),
                                               iNotification);
 ```vbscript
           if ( NULL != pPath )
@@ -236,11 +236,11 @@ else if ( iNotification->IsAKindOf(CATManipulator::GetCATEndPreactivate()) )
 
           {
 (CATPathElement *)iFromClient->**SendCommandSpecificObject**(
-CATPathElement::ClassName(),
+CATPathElement::ClassName(#),
 iNotification);
 if ( NULL != pPath )
             _Pso.**RemoveElement**(pPath);
-            pPath->Release();
+            pPath->Release(#);
 
           }
         }
@@ -254,14 +254,14 @@ A _CATEndPreactivate_ notification is sent whenever the mouse leaves a represent
 #### Catching CATActivate Notifications
 
         ...
-        else if ( iNotification->IsAKindOf(CATManipulator::**GetCATActivate**()) )
+        else if ( iNotification->IsAKindOf(CATManipulator::**GetCATActivate**(#)) )
         {
-else if ( iNotification->IsAKindOf(CATManipulator::**GetCATActivate**()) )
+else if ( iNotification->IsAKindOf(CATManipulator::**GetCATActivate**(#)) )
           CATPathElement * pPath =
            (CATPathElement *)iFromClient->**SendCommandSpecificObject**(
-                                              CATPathElement::ClassName(),
+                                              CATPathElement::ClassName(#),
                                               iNotification);
-          _Hso.**Empty**();
+          _Hso.**Empty**(#);
 
 ```vbscript
           if ( NULL != pPath )
@@ -270,24 +270,24 @@ else if ( iNotification->IsAKindOf(CATManipulator::**GetCATActivate**()) )
 
           {
 iNotification);
-_Hso.**Empty**();
+_Hso.**Empty**(#);
 if ( NULL != pPath )
             _Hso.**AddElement**(pPath);
-            pPath->Release();
+            pPath->Release(#);
 
           }
 ```vbscript
 if ( NULL != pPath )
 _Hso.**AddElement**(pPath);
-pPath->Release();
+pPath->Release(#);
           else
 ```
 
           {
 _Hso.**AddElement**(pPath);
-pPath->Release();
+pPath->Release(#);
 else
-            _Pso.**Empty**();
+            _Pso.**Empty**(#);
 
           }
         }
@@ -301,12 +301,12 @@ A _CATActivate_ notification is sent whenever the mouse left button is pressed a
 #### Catching CATEndActivate Notifications
 
         ...
-        else if ( iNotification->IsAKindOf(CATManipulator::**GetCATEndActivate**()) )
+        else if ( iNotification->IsAKindOf(CATManipulator::**GetCATEndActivate**(#)) )
         {
-else if ( iNotification->IsAKindOf(CATManipulator::**GetCATEndActivate**()) )
+else if ( iNotification->IsAKindOf(CATManipulator::**GetCATEndActivate**(#)) )
           CATPathElement * pPath =
            (CATPathElement *)iFromClient->**SendCommandSpecificObject**(
-                                              CATPathElement::ClassName(),
+                                              CATPathElement::ClassName(#),
                                               iNotification);
 
 ```vbscript
@@ -315,11 +315,11 @@ else if ( iNotification->IsAKindOf(CATManipulator::**GetCATEndActivate**()) )
 ```
 
           {
-CATPathElement::ClassName(),
+CATPathElement::ClassName(#),
 iNotification);
 if ( NULL != pPath )
             _Hso.**RemoveElement**(pPath);
-            pPath->Release();
+            pPath->Release(#);
 
           }
         }
@@ -333,13 +333,13 @@ A _CATEndActivate_ notification is sent whenever the mouse left button is presse
 #### Catching CATMove Notifications
 
         ...
-        else if ( iNotification->IsAKindOf(CATManipulator::**GetCATMove**()) )
+        else if ( iNotification->IsAKindOf(CATManipulator::**GetCATMove**(#)) )
         {
-else if ( iNotification->IsAKindOf(CATManipulator::**GetCATMove**()) )
-          _Pso.**Empty**();
+else if ( iNotification->IsAKindOf(CATManipulator::**GetCATMove**(#)) )
+          _Pso.**Empty**(#);
           CATPathElement * pPath =
            (CATPathElement *)iFromClient->**SendCommandSpecificObject**(
-                                              CATPathElement::ClassName(),
+                                              CATPathElement::ClassName(#),
                                               iNotification);
 ```vbscript
           if ( NULL != pPath )
@@ -348,11 +348,11 @@ else if ( iNotification->IsAKindOf(CATManipulator::**GetCATMove**()) )
 
           {
 (CATPathElement *)iFromClient->**SendCommandSpecificObject**(
-CATPathElement::ClassName(),
+CATPathElement::ClassName(#),
 iNotification);
 if ( NULL != pPath )
             _Pso.**AddElement**(pPath);
-            pPath->Release();
+            pPath->Release(#);
 
           }
         }
@@ -366,15 +366,15 @@ A _CATMove_ notification is sent whenever the mouse moves above a representation
 #### Catching CATBeginManipulate, CATManipulate, and CATEndManipulate Notifications
 
         ...
-        else if ( iNotification->IsAKindOf(CATManipulator::**GetCATBeginManipulate**()) )
+        else if ( iNotification->IsAKindOf(CATManipulator::**GetCATBeginManipulate**(#)) )
         {}
-else if ( iNotification->IsAKindOf(CATManipulator::**GetCATBeginManipulate**()) )
-        else if ( iNotification->IsAKindOf(CATManipulator::**GetCATManipulate**()) )
+else if ( iNotification->IsAKindOf(CATManipulator::**GetCATBeginManipulate**(#)) )
+        else if ( iNotification->IsAKindOf(CATManipulator::**GetCATManipulate**(#)) )
 
         {}
-else if ( iNotification->IsAKindOf(CATManipulator::**GetCATBeginManipulate**()) )
-else if ( iNotification->IsAKindOf(CATManipulator::**GetCATManipulate**()) )
-        else if ( iNotification->IsAKindOf(CATManipulator::**GetCATEndManipulate**()) )
+else if ( iNotification->IsAKindOf(CATManipulator::**GetCATBeginManipulate**(#)) )
+else if ( iNotification->IsAKindOf(CATManipulator::**GetCATManipulate**(#)) )
+        else if ( iNotification->IsAKindOf(CATManipulator::**GetCATEndManipulate**(#)) )
 
         {}
         ...
@@ -387,11 +387,11 @@ A _CATBeginManipulate_ notification is sent whenever the mouse begins to move ab
 #### Catching CATContext Notifications
 
         ...
-        else if ( iNotification->IsAKindOf(CATManipulator::**GetCATContext**()) )
+        else if ( iNotification->IsAKindOf(CATManipulator::**GetCATContext**(#)) )
         {
-else if ( iNotification->IsAKindOf(CATManipulator::**GetCATContext**()) )
+else if ( iNotification->IsAKindOf(CATManipulator::**GetCATContext**(#)) )
           CATPathElement *pPath = (CATPathElement *)
-            iFromClient->**SendCommandSpecificObject**(CATPathElement::ClassName(),iNotification);
+            iFromClient->**SendCommandSpecificObject**(CATPathElement::ClassName(#),iNotification);
 ```vbscript
           if (NULL != pPath)
 
@@ -399,9 +399,9 @@ else if ( iNotification->IsAKindOf(CATManipulator::**GetCATContext**()) )
 
           {
 CATPathElement *pPath = (CATPathElement *)
-iFromClient->**SendCommandSpecificObject**(CATPathElement::ClassName(),iNotification);
+iFromClient->**SendCommandSpecificObject**(CATPathElement::ClassName(#),iNotification);
 if (NULL != pPath)
-            CATBaseUnknown *lastobj_of_path = (*pPath)[pPath->GetSize()-1];
+            CATBaseUnknown *lastobj_of_path = (*pPath)[pPath->GetSize(#)-1];
 ```vbscript
             if (NULL != lastobj_of_path)
 
@@ -410,31 +410,31 @@ if (NULL != pPath)
             {
 ```vbscript
 if (NULL != pPath)
-CATBaseUnknown *lastobj_of_path = (*pPath)[pPath->GetSize()-1];
+CATBaseUnknown *lastobj_of_path = (*pPath)[pPath->GetSize(#)-1];
 if (NULL != lastobj_of_path)
               CATViewer * pViewer = (CATViewer *)
-                     iFromClient->**SendCommandSpecificObject**(CATViewer::ClassName(),
+                     iFromClient->**SendCommandSpecificObject**(CATViewer::ClassName(#),
                                                             iNotification);
               if ( NULL != pViewer)
 ```
 
               {
 CATViewer * pViewer = (CATViewer *)
-iFromClient->**SendCommandSpecificObject**(CATViewer::ClassName(),
+iFromClient->**SendCommandSpecificObject**(CATViewer::ClassName(#),
 iNotification);
 if ( NULL != pViewer)
-                _Pso.Empty();
-                _Hso.Empty();
+                _Pso.Empty(#);
+                _Hso.Empty(#);
                 _Hso.AddElement(pPath);
                 _pCxtMenu = new CAAVisManagerCxtMenu(this, "Context", pPath, pViewer);
-                _pCxtMenu->Build();
+                _pCxtMenu->Build(#);
 
-                pViewer->Release();
+                pViewer->Release(#);
                 pViewer = NULL ;
 
               }
             }
-pViewer->Release();
+pViewer->Release(#);
 pViewer = NULL ;
             else
 
@@ -446,7 +446,7 @@ else
             }
 else
 propMode = **CATNotifTransmitToFather** ;
-            pPath->Release();
+            pPath->Release(#);
             pPath = NULL;
 
           }
@@ -461,19 +461,19 @@ A _CATContext_ notification is sent whenever the mouse right button is pressed a
 #### Catching CATEndContext Notifications
 
         ...
-        else if ( iNotification->IsAKindOf(CATManipulator::**GetCATEndContext**()) )
+        else if ( iNotification->IsAKindOf(CATManipulator::**GetCATEndContext**(#)) )
         {
-else if ( iNotification->IsAKindOf(CATManipulator::**GetCATEndContext**()) )
+else if ( iNotification->IsAKindOf(CATManipulator::**GetCATEndContext**(#)) )
 ```vbscript
           if ( NULL != _pCxtMenu )
 
 ```
 
           {
-else if ( iNotification->IsAKindOf(CATManipulator::**GetCATEndContext**()) )
+else if ( iNotification->IsAKindOf(CATManipulator::**GetCATEndContext**(#)) )
 if ( NULL != _pCxtMenu )
-            _Hso.Empty();
-            _pCxtMenu->RequestDelayedDestruction();
+            _Hso.Empty(#);
+            _pCxtMenu->RequestDelayedDestruction(#);
             _pCxtMenu = NULL ;
 
           }

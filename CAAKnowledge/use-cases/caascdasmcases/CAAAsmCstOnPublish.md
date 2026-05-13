@@ -4,7 +4,7 @@ title: "Creating Constraints on Published Elements"
 category: "use-case"
 module: "CAAScdAsmUseCases"
 tags: ["CAAScdAsmUseCases", "CAAAsmCstOnPublish", "CATIA"]
-source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmCstOnPublish.htm"
+source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmCstOnPublish.htmmd"
 converted: "2026-05-11T17:31:50.852164"
 ```
 
@@ -47,7 +47,10 @@ The macro first loads CAAAsmCstOnPublish.CATProduct that contains two Part: Plat
 ```
 
 ```vbscript
+```vbscript
     Dim oRootProduct As Product
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oRootProduct=CATIA.ActiveDocument.Product
@@ -60,6 +63,7 @@ The macro first loads CAAAsmCstOnPublish.CATProduct that contains two Part: Plat
 
     Dim oScrew2 As Product
     Set oScrew2 = CATIA.ActiveDocument.Product.Products.Item  ( "Screw.2" )
+```
 ```
 
 ```
@@ -91,11 +95,14 @@ Other variables, `oPlatePub`, `PlateRef`, `oScrewPub` and `oScrewRef` are declar
 ```
 
 ```vbscript
+```vbscript
     Set oPlateRef = oPlatePub.Valuation
 ```vbscript
+```
 ```vbscript
     '  ---> Plate/Top Screw1/HeadBottom
 
+```vbscript
     Set oScrewPub = oScrew1.Publications.Item("HeadBottom")
     Set oScrewRef = oScrewPub.Valuation
 
@@ -103,15 +110,20 @@ Other variables, `oPlatePub`, `PlateRef`, `oScrewPub` and `oScrewRef` are declar
     Set oConstraint1 = oConstraints0.AddBiEltCst  ( catCstTypeDistance, oPlateRef, oScrewRef )
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Dim oConstraint1 As Constraint
 ```vbscript
+```
+```vbscript
 Set oConstraint1 = oConstraints0.AddBiEltCst  ( catCstTypeDistance, oPlateRef, oScrewRef )
+```
 ```
 
     oConstraint1.Dimension.Value = 2.000000
@@ -166,8 +178,10 @@ The Root _Product_ is then updated to move the parts in a position respecting th
 ![](images/CstOnPubAfter.jpg)
 
     ...
+```vbscript
     MsgBox "Click OK to replace the screw by another standard screw ..."
     ...
+```
 
 ---
 
@@ -189,9 +203,11 @@ A message box is displayed allowing to see the intermediary result before going 
 ```
 
 ```vbscript
+```vbscript
     Set oScrew1 = oRootProduct.Products.ReplaceComponent ( _
           oScrew1,                                                         _
-          sDocPath & "\online\CAAScdAsmUseCases\samples\NewScrew.CATPart", _
+```
+          sDocPath & "/online/CAAScdAsmUseCases/samples/NewScrew.CATPart", _
           True)
 ```
 
@@ -230,7 +246,7 @@ All constraints on published elements are automatically reconnected and updating
 
 ![](images/CstOnPubReplaced.jpg)
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

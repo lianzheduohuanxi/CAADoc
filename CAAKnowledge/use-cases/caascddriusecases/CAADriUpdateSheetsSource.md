@@ -3,14 +3,16 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CAADriUpdateSheets", "CAAScrBase", "CATIA", "CAAScdDriUseCases"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriUpdateSheetsSource.htm"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriUpdateSheetsSource.htmmd"
 converted: "2026-05-11T11:27:02.762075"
 ---
 
 Option Explicit
 ' COPYRIGHT DASSAULT SYSTEMES 2000
+```vbscript
 Dim Language as String
 Language="VBScript"
+```
 
 ' ***********************************************************************
 '   Purpose:      This macro allows you to update all the sheets contained
@@ -22,10 +24,13 @@ Language="VBScript"
 '   CATIA Level:  V5R6 
 ' ***********************************************************************
 
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
 
     ' Set the CATIA popup file alerts to False
     ' It prevents to stop the macro at each alert during its execution
+```
+```vbscript
     CATIA.DisplayFileAlerts = False
 
     ' Set the file system object containig the folder
@@ -33,41 +38,59 @@ Sub CATMain()
     Set oFileSys = CATIA.FileSystem 
 
     ' ----------------------------------------------------------- 
+```
     ' Optional: allows to find the sample wherever it's installed
+```vbscript
     Dim sDocPath As String 
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 '    If (Not oFileSys.FolderExists(sDocPath)) Then
+```
+```vbscript
 '      Err.Raise 9999,,"No Doc Path Defined"
 '    End If
+```
     ' ----------------------------------------------------------- 
 
     ' Define the path's folder where we are looking for Drawing documents
+```vbscript
     Dim sFolderPath As String
     sFolderPath = InputBox( "Enter a folder path:", "Update All Sheets Of a Folder", _
-                            sDocPath & "\online\CAAScdDriUseCases\samples")
+```
+                            sDocPath & "/online/CAAScdDriUseCases/samples")
     If (Not oFileSys.FolderExists(sFolderPath)) Then
+```vbscript
       Err.Raise 9999,,sFolderPath & ": This Folder does not exist"
     End If
+```
 
+```vbscript
     ' Set the folder object
     Dim oFolder As Folder 
     Set oFolder = oFileSys.GetFolder(sFolderPath) 
 
     ' Loop on the files collection of the folder
+```
     ' For Each File In Folder.Files
+```vbscript
     Dim iI, iJ
     For iI = 1 To oFolder.Files.Count
+```
+```vbscript
         Dim oFile As Object
         Set oFile = oFolder.Files.Item(iI)
     
         '  Retrieve in the files collection only the Drawing documents from its extension
+```
         If InStr(oFile.Name, ".CATDrawing") <> 0 Then
 
+```vbscript
             ' Set and open a Drawing document
             Dim oDoc As Document 
             Set oDoc = CATIA.Documents.Open(oFile.Path)
             MsgBox "Updating Document " & oFile.Path, 0  ' VBOKOnly
 
+```
+
             ' Loop on the sheets collection of the drawing document
             ' For Each sheet In oDoc.Sheets 
             For iJ = 1 To oDoc.Sheets.Count
@@ -83,14 +106,18 @@ Sub CATMain()
 
     Next
 
+```vbscript
 End Sub
 
+```
 
 ```vbscript
 Option Explicit
 ' COPYRIGHT DASSAULT SYSTEMES 2000
+```vbscript
 Dim Language as String
 Language=&quot;VBScript&quot;
+```
 
 ' ***********************************************************************
 '   Purpose:      This macro allows you to update all the sheets contained
@@ -102,10 +129,13 @@ Language=&quot;VBScript&quot;
 '   CATIA Level:  V5R6 
 ' ***********************************************************************
 
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
 
     ' Set the CATIA popup file alerts to False
     ' It prevents to stop the macro at each alert during its execution
+```
+```vbscript
     CATIA.DisplayFileAlerts = False
 
     ' Set the file system object containig the folder
@@ -113,40 +143,58 @@ Sub CATMain()
     Set oFileSys = CATIA.FileSystem 
 
     ' ----------------------------------------------------------- 
+```
     ' Optional: allows to find the sample wherever it's installed
+```vbscript
     Dim sDocPath As String 
     sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
 '    If (Not oFileSys.FolderExists(sDocPath)) Then
+```
+```vbscript
 '      Err.Raise 9999,,&quot;No Doc Path Defined&quot;
 '    End If
+```
     ' ----------------------------------------------------------- 
 
     ' Define the path's folder where we are looking for Drawing documents
+```vbscript
     Dim sFolderPath As String
     sFolderPath = InputBox( &quot;Enter a folder path:&quot;, &quot;Update All Sheets Of a Folder&quot;, _
-                            sDocPath &amp; &quot;\online\CAAScdDriUseCases\samples&quot;)
+```
+                            sDocPath &amp; &quot;/online/CAAScdDriUseCases/samples&quot;)
     If (Not oFileSys.FolderExists(sFolderPath)) Then
+```vbscript
       Err.Raise 9999,,sFolderPath &amp; &quot;: This Folder does not exist&quot;
     End If
+```
 
+```vbscript
     ' Set the folder object
     Dim oFolder As Folder 
     Set oFolder = oFileSys.GetFolder(sFolderPath) 
 
     ' Loop on the files collection of the folder
+```
     ' For Each File In Folder.Files
+```vbscript
     Dim iI, iJ
     For iI = 1 To oFolder.Files.Count
+```
+```vbscript
         Dim oFile As Object
         Set oFile = oFolder.Files.Item(iI)
     
         '  Retrieve in the files collection only the Drawing documents from its extension
+```
         If InStr(oFile.Name, &quot;.CATDrawing&quot;) &lt;&gt; 0 Then
 
+```vbscript
             ' Set and open a Drawing document
             Dim oDoc As Document 
             Set oDoc = CATIA.Documents.Open(oFile.Path)
             MsgBox &quot;Updating Document &quot; &amp; oFile.Path, 0  ' VBOKOnly
+
+```
 
             ' Loop on the sheets collection of the drawing document
             ' For Each sheet In oDoc.Sheets 
@@ -163,5 +211,7 @@ Sub CATMain()
 
     Next
 
+```vbscript
 End Sub
+```
 ```

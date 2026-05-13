@@ -4,13 +4,13 @@ title: "CAAKniOptimization.CATScript"
 category: "use-case"
 module: "CAAScdKniUseCases"
 tags: ["CATIA", "CAAKniOptimization"]
-source_file: "Doc/online/CAAScdKniUseCases/CAAKniOptimizationSource.htm"
+source_file: "Doc/online/CAAScdKniUseCases/CAAKniOptimizationSource.htmmd"
 converted: "2026-05-11T17:31:51.983820"
 ```
 
 ---
 tags: ["CATIA", "CAAKniOptimization"]
-source_file: "Doc/online/CAAScdKniUseCases/CAAKniOptimizationSource.htm"
+source_file: "Doc/online/CAAScdKniUseCases/CAAKniOptimizationSource.htmmd"
 converted: "2026-05-11T17:31:51.983820"
     Option Explicit
 ```vbscript
@@ -22,8 +22,10 @@ converted: "2026-05-11T17:31:51.983820"
 ```
 
 ```vbscript
+```vbscript
     Dim Language as String
     Language="VBScript"
+```
 ```
 
 ```vbscript
@@ -52,36 +54,51 @@ converted: "2026-05-11T17:31:51.983820"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
+
+```
 
 ```
 
 ```vbscript
 ```vbscript
 ```vbscript
+```vbscript
     ' Set the CATIA popup file alerts to False
     ' It prevents to stop the macro at each alert during its execution
+```
+```vbscript
     CATIA.DisplayFileAlerts = False
     ' Retrieve your active document - CATIA is your application
+```
     ' You get the active document by using the ActiveDocument property
     ' on your application object
+```vbscript
     Dim oActiveDoc As Document
     Set oActiveDoc = CATIA.ActiveDocument
     ' Check whether the document is a CATPart
+```
     If (InStr(oActiveDoc.Name,".CATPart")) <> 0  Then
             ' Retrieve the collection object which contains
             ' all the document relations.
             ' The statements below are only valid when the active
             ' document is a CATPart
+```vbscript
             Dim oRelations As Relations
             Set oRelations = oActiveDoc.Part.Relations
             ' Retrieve the collection object which contains
+```
             ' all the document parameters.
+```vbscript
             Dim oParameters As Parameters
             Set oParameters = oActiveDoc.Part.Parameters
             ' Create Real type parameter as objective to be optimized.
+```
+```vbscript
             Dim oFx As Parameter
             Set oFx = oParameters.CreateReal("Real1", 199 )
+```
 ```
 
 ```
@@ -92,8 +109,10 @@ converted: "2026-05-11T17:31:51.983820"
 ```vbscript
 ```vbscript
 ' Create Real type parameter as objective to be optimized.
+```vbscript
 Dim oFx As Parameter
 Set oFx = oParameters.CreateReal("Real1", 199 )
+```
 ```
 
 ```
@@ -105,8 +124,10 @@ Set oFx = oParameters.CreateReal("Real1", 199 )
 ```vbscript
 ```vbscript
             ' Create Real type parameter as free parameter.
+```vbscript
             Dim oX As Parameter
             Set oX = oParameters.CreateReal("Real2", 299 )
+```
 ```
 
 ```
@@ -117,8 +138,10 @@ Set oFx = oParameters.CreateReal("Real1", 199 )
 ```vbscript
 ```vbscript
 ' Create Real type parameter as free parameter.
+```vbscript
 Dim oX As Parameter
 Set oX = oParameters.CreateReal("Real2", 299 )
+```
 ```
 
 ```
@@ -130,8 +153,10 @@ Set oX = oParameters.CreateReal("Real2", 299 )
 ```vbscript
 ```vbscript
             ' Create a formula to be optimized.
+```vbscript
             Dim oFormula As Formula
             Set oFormula = oRelations.CreateFormula(                     _
+```
 ```
 
 ```
@@ -147,11 +172,15 @@ Set oX = oParameters.CreateReal("Real2", 299 )
 ```vbscript
             ' Retrieve the collection object which contains
             ' all the document optimizations.
+```vbscript
             Dim oOptimizations As Optimizations
             Set oOptimizations = oRelations.Optimizations
             ' Create the optimization feature.
+```
+```vbscript
             Dim oOptimization1 As Optimization
-            Set oOptimization1 = oOptimizations.CreateOptimization()
+            Set oOptimization1 = oOptimizations.CreateOptimization(#)
+```
 ```
 
 ```
@@ -162,9 +191,11 @@ Set oX = oParameters.CreateReal("Real2", 299 )
 ```vbscript
 ```vbscript
 ' Create the optimization feature.
+```vbscript
 Dim oOptimization1 As Optimization
-Set oOptimization1 = oOptimizations.CreateOptimization()
+Set oOptimization1 = oOptimizations.CreateOptimization(#)
             oOptimization1.OptimizationType = catMinimum
+```
             oOptimization1.AlgorithmType = catSimulatedAnnealing
 
 ```
@@ -177,8 +208,10 @@ oOptimization1.OptimizationType = catMinimum
 ```vbscript
 ```vbscript
 oOptimization1.AlgorithmType = catSimulatedAnnealing
+```vbscript
             'Set up the optimization feature attributes.
             oOptimization1.MaxEvalsNb = 300
+```
             oOptimization1.UseMaxTime = True
             oOptimization1.MaxTime = 2 '2 minutes.
             oOptimization1.UseMaxEvalsWoImprovement = True
@@ -191,8 +224,10 @@ oOptimization1.AlgorithmType = catSimulatedAnnealing
 ```vbscript
 ```vbscript
 ```vbscript
+```vbscript
             'Set up the free parameters of the optimization and their steps (this is optional).
     	'The step helps the algorithm to get an order of magnitude of the changes of values
+```
     	'acceptable for each free parameters.
 ```
 
@@ -201,9 +236,13 @@ oOptimization1.AlgorithmType = catSimulatedAnnealing
 ```
 
 ```vbscript
+```vbscript
             Dim oFreeParameters As FreeParameters
 ```vbscript
+```
+```vbscript
             Set oFreeParameters = oOptimization1.FreeParameters
+```
 ```
 
             oFreeParameters.AddFreeParameter(oX)
@@ -215,8 +254,10 @@ oOptimization1.AlgorithmType = catSimulatedAnnealing
             'The following is optional, but usually reducing the range of input parameters helps to
             'solve the problem faster. In this case there only is one free parameter but optimizations
             ' can be run with multiple free parameters.
+```vbscript
             Dim p As FreeParameter
             For Each p in oFreeParameters
+```
 ```
 
 ```
@@ -227,7 +268,9 @@ oOptimization1.AlgorithmType = catSimulatedAnnealing
 ```vbscript
 ```vbscript
 ' can be run with multiple free parameters.
+```vbscript
 Dim p As FreeParameter
+```
 ```
 
 ```
@@ -241,8 +284,10 @@ For Each p in oFreeParameters
                     p.InfRange = -1000
                     p.SupRange = 2000
             Next
+```vbscript
             'Set the parameter that must be optimized.
             oOptimization1.ObjectiveParameter = oFx
+```
 ```
 
 ```
@@ -269,19 +314,25 @@ oOptimization1.Run False
 
 ```vbscript
 ```vbscript
+```vbscript
             CATIA.ActiveDocument.Part.Update
 
+```
 ```
 
 ```
 
     else
+```vbscript
        MsgBox "The active document must be a CATPart"
 ```vbscript
+```
 ```vbscript
     End If
+```vbscript
     End Sub
 
+```
 ```
 
 ```

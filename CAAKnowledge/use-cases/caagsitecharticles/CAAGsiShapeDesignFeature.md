@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "About Generative Shape Design Features"
-category: "use-case"
+category: tech-article
 module: "CAAGsiTechArticles"
 tags: ["CATIA"]
-source_file: "Doc/online/CAAGsiTechArticles/CAAGsiShapeDesignFeature.htm"
+source_file: "Doc/online/CAAGsiTechArticles/CAAGsiShapeDesignFeature.htmmd"
 converted: "2026-05-11T17:31:50.673531"
 ```
 

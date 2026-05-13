@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating Resources for Workshops or Workbenches"
-category: "use-case"
+category: tech-article
 module: "CAAAfrTechArticles"
 tags: ["CAAAfrSubmenuId", "CAAAfrWorkbenchId", "CAAAfrIconBoxId", "CAAAfrWorkBenchPointer", "CAAAfrMenuId", "CAAAfrWorkbenchPointer", "CAAAfrToolbarId"]
-source_file: "Doc/online/CAAAfrTechArticles/CAAAfrI18NWorkshop.htm"
+source_file: "Doc/online/CAAAfrTechArticles/CAAAfrI18NWorkshop.htmmd"
 converted: "2026-05-11T17:17:55.896732"
 ```
 
@@ -56,7 +56,7 @@ There are two workbench resource files:
   1. The resource file containing the title and help messages in the English language, and that can be translated into other languages. It is suffixed using CATNls
   2. The resource file containing the icons and other resources that should not be translated. It suffixed by CATRsc. This file is required to make the workshop or the workbench appear in the Start menu. If a workshop has workbenches, these workbenches are displayed in place of the workshop in the **Start** menu, and this workshop resource file is unused and can be omitted.
 
-The two resource files for the CAAAfrWorkbenchId workshop or workbench are then: CAAAfrWorkbenchId.CATNls and CAAAfrWorkbenchId.CATRsc. These files are located in the CNext\resources\msgcatalog directory of the framework containing the workshop or workbench module. This directory includes subdirectories, one for each language into which the title and messages of the CAAAfrWorkbenchId.CATNls file can be translated.
+The two resource files for the CAAAfrWorkbenchId workshop or workbench are then: CAAAfrWorkbenchId.CATNls and CAAAfrWorkbenchId.CATRsc. These files are located in the CNext/resources/msgcatalog directory of the framework containing the workshop or workbench module. This directory includes subdirectories, one for each language into which the title and messages of the CAAAfrWorkbenchId.CATNls file can be translated.
 
 Each resource is provided using a key and a text, or a file name without suffix, separated by the equal sign. The key is built as a concatenation of the object identifier you defined as the third parameter of the `NewAccess` macro, a dot, and a keyword designating the appropriate resource. The message is enclosed using double quotes and ended using a semicolon. For example, the workshop or workbench title is defined as follows:
 
@@ -141,7 +141,10 @@ This file contains:
         ...
 
 ---
+```vbscript
   * An attribute to specify if the workbench should be displayed in the **Start** menu. Set to "True" to hide it, "False" to display it. The default value of this attribute is "False".
+
+```
 
         CAAAfrWorkbenchId.**Transient**    = "False" ;
         ...
@@ -187,7 +190,7 @@ CAAAfrWorkbenchId.**Icon.FocusedlRep** = "IF_RepGeometry";
 
 In this case, you have to create 2 resources files for the subcategory to specify the category it belongs to and its position under this category:
 
-    * MyInfrastructure.CATNls
+    tech-article MyInfrastructure.CATNls
 
           MyInfrastructure.**Title**    = "MyInfrastructure" ;
           ...
@@ -207,7 +210,7 @@ In this case, you have to create 2 resources files for the subcategory to specif
 This is valid if the workshop doesn't not include any workbench. Otherwise, those of the workbenches are used and the workshop does not appear in the **Start** menu, in the Welcome window, and has no toolbar.
 
 This is valid if the workshop doesn't not include any workbench. Otherwise, those of the workbenches are used and the workshop does not appear in the **Start** menu, in the Welcome window, and has no toolbar.
-The files containing the icon bit maps are named, for example, I_CtxGeometry.bmp for the icon to be displayed in the Start menu, usually located in the CNext\resources\graphic\icons\normal.
+The files containing the icon bit maps are named, for example, I_CtxGeometry.bmp for the icon to be displayed in the Start menu, usually located in the CNext/resources/graphic/icons/normal.
 
 Below is a reminder of the keywords used in the resource keys that can be found in the CATRsc resource file.
 
@@ -245,7 +248,7 @@ Icon.FocusedRep | Icon replacing the "NormalRep" icon when the end user moves th
 [Top]
 ### Providing the Icon Files
 
-The icons are bit map files, suffixed by bmp. They should have a size of 24 by 24 pixels. The icon files are contained in the CNext\resources\graphic\icons\normal directory of the framework containing the workshop module.
+The icons are bit map files, suffixed by bmp. They should have a size of 24 by 24 pixels. The icon files are contained in the CNext/resources/graphic/icons/normal directory of the framework containing the workshop module.
 
 * * *
 ### In Short

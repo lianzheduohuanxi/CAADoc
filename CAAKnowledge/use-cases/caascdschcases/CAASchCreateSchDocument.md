@@ -4,7 +4,7 @@ title: "Creating a Schematic Document from an Existing Document"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAAScdSchUseCases", "CATIA", "CAASchCreateSchDocument", "CAASchSCH_Detail01", "CAASCH_Detail01"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchCreateSchDocument.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchCreateSchDocument.htmmd"
 converted: "2026-05-11T17:31:51.340196"
 ```
 
@@ -25,13 +25,17 @@ This macro shows you how to create a new schematic document from an opened docum
   1. Prolog
   2. Get a the current CNEXT session
   3. Create a new schematic document
+```vbscript
   4. Set the drawing standard
 
 #### Prolog
+```
 
 3. Create a new schematic document
+```vbscript
 4. Set the drawing standard
 The macro first loads CAASCH_Detail01.CATProduct. |     ...
+```
 ```vbscript
 ```vbscript
     ' Open the schematic document
@@ -41,22 +45,30 @@ The macro first loads CAASCH_Detail01.CATProduct. |     ...
 ```
 
 ```vbscript
+```vbscript
     Dim sFilePath
+```vbscript
+```
 ```vbscript
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
+```
 
 ```
 
-            "online\CAAScdSchUseCases\samples\CAASCH_Detail01.CATProduct")
+            "online/CAAScdSchUseCases/samples/CAASCH_Detail01.CATProduct")
 
 ```vbscript
+```vbscript
 Dim sFilePath
+```vbscript
+```
 ```vbscript
 ```vbscript
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
+```
 ```
 
 ```
@@ -80,15 +92,23 @@ Next, the macro acquires the schematic root object from the document. The schema
 ```
 
 ```vbscript
+```vbscript
     Dim objPrdRoot As Product
+```vbscript
+```
 ```vbscript
 ```vbscript
     Dim objSchRoot As SchematicRoot
     If ( Not ( objSchDoc Is Nothing ) ) Then
+```
+```vbscript
       Set objPrdRoot = objSchDoc.Product
       If ( Not ( objPrdRoot Is Nothing ) ) Then
+```
+```vbscript
         Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
       End If
+```
     End If
 ```
 
@@ -117,7 +137,9 @@ Using the GeSchematicSession method, a handle on the SchSession interface can be
 ```
 
 ```vbscript
+```vbscript
        Set objSchSession = objSchRoot.GetSchematicSession
+```
 ```
 
     ...
@@ -155,7 +177,10 @@ bInteractive = false
 
     ...
 ---
+```vbscript
 #### Set the drawing standard of the drafting viewer in the schematic document
+
+```
 
 A schematic document has a drafting viewer embedded in it. The drawing standard of that drafting viewer can be set by calling the SetDrawingStandard method. This macro also illustrates how to use the GetDrawingStandard method to retrieve the drawing standard of a schematic document.
 
@@ -169,15 +194,21 @@ A schematic document has a drafting viewer embedded in it. The drawing standard 
 ```
 
 ```vbscript
+```vbscript
             Set objPrdRoot = Nothing
+```vbscript
+```
 ```vbscript
 ```vbscript
             Set objSchRoot = Nothing
 
             Set objPrdRoot = objSchDocNew.Product
             If ( Not ( objPrdRoot Is Nothing ) ) Then
+```
+```vbscript
                Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
             End If
+```
 
 ```
 
@@ -189,8 +220,10 @@ A schematic document has a drafting viewer embedded in it. The drawing standard 
             If ( Not ( objSchRoot Is Nothing ) ) Then
                objSchRoot.SetDrawingStandard catISO
                strMessage = strMessage & "drawing standard set to catISO" & vbCr
+```vbscript
                Dim std As CatDrawingStandard
                std = objSchRoot.GetDrawingStandard
+```
                strMessage = strMessage & "drawing standard = " & std & vbCr
             End If
 ```

@@ -1,11 +1,11 @@
 ---
 ```vbscript
 title: "VisualizationBase Framework Modifications in V5R21"
-category: "use-case"
+category: use-case
 module: "CAACenAPIChangesR21"
 version: "V5R21"
 tags: []
-source_file: "Doc/online/CAACenAPIChangesR21/VisualizationBase.htm"
+source_file: "Doc/online/CAACenAPIChangesR21/VisualizationBase.htmmd"
 converted: "2026-05-11T17:33:51.703010"
 ```
 
@@ -31,12 +31,12 @@ VisualizationBase/Public/CAT3DCurveRep.h/CAT3DCurveRep/CAT3DCurveRep
 VisualizationBase/Public/CAT3DPlanRep.h/CAT3DPlanRep/CAT3DPlanRep
 VisualizationBase/Public/CATSupport.h/CATSupport/GetLetter
 
-**Prototype:**`l_CATSupport&GetLetter() const;`| GA| [INDM](CAACenAPIChangeDetail.htm#Abstract)
+**Prototype:**`l_CATSupport&GetLetter(#) const;`| GA| [INDM](CAACenAPIChangeDetail.htm#Abstract)
 VisualizationBase/Public/CAT3DPlanRep.h/CAT3DPlanRep/CAT3DPlanRep
 VisualizationBase/Public/CATSupport.h/CATSupport/GetLetter
 VisualizationBase/Public/CATViewPoint.h/CATViewPoint/GetVizViewer
 
-**Prototype:**`CATVizViewer*GetVizViewer()const;`| GA| [INDM](CAACenAPIChangeDetail.htm#Abstract)
+**Prototype:**`CATVizViewer*GetVizViewer(#)const;`| GA| [INDM](CAACenAPIChangeDetail.htm#Abstract)
 VisualizationBase/Public/CATSupport.h/CATSupport/GetLetter
 VisualizationBase/Public/CATViewPoint.h/CATViewPoint/GetVizViewer
 VisualizationBase/Public/CATViewPoint.h/SetViewer/CATFont

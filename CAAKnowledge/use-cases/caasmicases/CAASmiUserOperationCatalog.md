@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating a Surface Machining Operation StartUp"
-category: "use case"
+category: use-case case"
 module: "CAASmiUseCases"
 tags: ["CATIM3xFeature", "CAAUserOperationCatalog", "CAASmgOperation", "CAASmgMachiningFeature", "CAAApproachDistance", "CAASmgOperationWithMASU", "CATIMfgMachiningFeature", "CAAStep", "CAASurfaceMachiningItf", "CAASmiUserOperationCatalog", "CAASmgOperationSU", "CAAISmiUserMachFeature", "CAAOffset", "CAAToolAngle", "CAASmgOperationWithMA"]
-source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationCatalog.htm"
+source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationCatalog.htmmd"
 converted: "2026-05-11T17:31:51.254402"
 ```
 
@@ -162,19 +162,19 @@ This is done with the following lines in CAAUserOperationCatalog.osm:
     		feature CAASmgOperationSU MfgUserDefinedMO@`ManufacturingActivities.feat` #startup #isa(CAASmgOperation) {
     			AuthorizedItems=["CATIMfgMachiningFeature","CAAISmiUserMachFeature"]
     			Representation="I_CAASmgOperation"
-    			synchronize()
+    			synchronize(#)
 
     		}
 
     		// Second user Startup deriving from MfgUserDefinedMO
     		// --------------------------------------------------
 ```vbscript
-synchronize()
+synchronize(#)
     		feature CAASmgOperationWithMASU MfgUserDefinedMO@`ManufacturingActivities.feat` #startup #isa(CAASmgOperationWithMA) {
     			AuthorizedItems=["CATIMfgMachiningFeature","CATIM3xFeature"]
     			Representation="I_CAASmgOperationWithMA"
 
-    			synchronize()
+    			synchronize(#)
 ```
 
     		}
@@ -197,12 +197,12 @@ Then we add four new strategy parameters "CAAStep", "CAAToolAngle", "CAAApproach
     		feature CAASmgOperationSU MfgUserDefinedMO@`ManufacturingActivities.feat` #startup #isa(CAASmgOperation) {
     			AuthorizedItems=["CATIMfgMachiningFeature","CAAISmiUserMachFeature"]
     			Representation="I_CAASmgOperation"
-    			synchronize()
+    			synchronize(#)
 
     			// Use behavior defined on MfgParameter to create new Strategy parameters on new user startup
 AuthorizedItems=["CATIMfgMachiningFeature","CAAISmiUserMachFeature"]
 Representation="I_CAASmgOperation"
-synchronize()
+synchronize(#)
     			this->StrategyParameters->AddStrategyParameter(CAAStep,LENGTH,10.)
     			this->StrategyParameters->AddStrategyParameter(CAAToolAngle,ANGLE,2.0)
     			this->StrategyParameters->AddStrategyParameter(CAAApproachDistance,LENGTH,20.)
@@ -216,11 +216,11 @@ this->StrategyParameters->AddStrategyParameter(CAAApproachDistance,LENGTH,20.)
     			AuthorizedItems=["CATIMfgMachiningFeature","CATIM3xFeature"]
     			Representation="I_CAASmgOperationWithMA"
 
-    			synchronize()
+    			synchronize(#)
 
     			// Use behavior defined on MfgParameter to create new Strategy parameters on new user startup
 Representation="I_CAASmgOperationWithMA"
-synchronize()
+synchronize(#)
     			this->StrategyParameters->AddStrategyParameter(`Box Offset`,LENGTH,0.0)
 
     		}

@@ -4,7 +4,7 @@ title: "Changing the Pattern Parameters"
 category: "use-case"
 module: "CAAScdPriUseCases"
 tags: ["CATIA", "CAAPriChangePattern", "CAAPriPatternDescription"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangePattern.htm"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangePattern.htmmd"
 converted: "2026-05-11T17:31:51.211500"
 ```
 
@@ -27,7 +27,7 @@ It modifies the _ CircPattern_ object from its methods and properties, and updat
 ---|---
 
   * Open the [CAAPriChangePattern.CATPart](samples/CAAPriChangePattern.CATPart) document.
-  * Reference in the application the catscript file:  [CAAPriChangePattern.htm](CAAPriChangePatternSource.md).
+  * Reference in the application the catscript file:  [CAAPriChangePattern.md](CAAPriChangePatternSource.md).
   * Run the macro.
   * Select CircPattern.1 in the specification tree or in the the geometry.
 
@@ -58,7 +58,9 @@ Load the CAAPriPatternDescription.CATPart that contains two circular patterns. !
 ```
 
 ```vbscript
+```vbscript
     Set oPartDocument = CATIA.ActiveDocument
+```
 ```
 
 ```vbscript
@@ -67,7 +69,9 @@ Load the CAAPriPatternDescription.CATPart that contains two circular patterns. !
     ' ------------
     ' Get the part
     ' ------------
+```vbscript
     Set oPart = oPartDocument.Part
+```
 ```
 
 ```
@@ -95,16 +99,20 @@ Once the macro has been started, the `oPartDocument `and ` oPart `variables are 
 ```
 
 ```vbscript
+```vbscript
     Set oSelection = oPartDocument.Selection
+```
 ```
 
 ```vbscript
 ```vbscript
 ```vbscript
     ' ------------
+```vbscript
     ' Set the selection type
     ' ------------
 ```
+```
 
 ```
 
@@ -114,8 +122,10 @@ Once the macro has been started, the `oPartDocument `and ` oPart `variables are 
 ```vbscript
 ```vbscript
 ' ------------
+```vbscript
 ' Set the selection type
 ' ------------
+```
 ```
 
     InputObjectType(0) = "CircPattern"
@@ -133,7 +143,9 @@ Once the macro has been started, the `oPartDocument `and ` oPart `variables are 
     ' ------------
     ' Get the object in the selection
     ' ------------
+```vbscript
     Set oCircularPattern = oSelection.Item(1).Value...
+```
 ```
 
 ```
@@ -157,9 +169,11 @@ Take care, this allows you to select one object only in both cases!
 ```vbscript
 ```vbscript
     ' ------------
+```vbscript
     ' Set the circular pattern instance number
     ' ------------
 ```
+```
 
 ```
 
@@ -169,8 +183,10 @@ Take care, this allows you to select one object only in both cases!
 ```vbscript
 ```vbscript
 ' ------------
+```vbscript
 ' Set the circular pattern instance number
 ' ------------
+```
 ```
 
 ```
@@ -189,9 +205,11 @@ The circular pattern number of instances is set to 6.
 ```vbscript
 ```vbscript
     ' ------------
+```vbscript
     ' Set the circular pattern instance as Unequal Angular Spacing mode
     ' ------------
 ```
+```
 
 ```
 
@@ -201,8 +219,10 @@ The circular pattern number of instances is set to 6.
 ```vbscript
 ```vbscript
 ' ------------
+```vbscript
 ' Set the circular pattern instance as Unequal Angular Spacing mode
 ' ------------
+```
     oCircularPattern.CircularPatternParameters = catUnequalAngularSpacing
 ```
 
@@ -222,9 +242,11 @@ The circular pattern parameter is set to Unequal Angular Spacing.
 ```vbscript
 ```vbscript
     ' ------------
+```vbscript
     ' Set the circular pattern Unequal Angular Spacing
     ' ------------
 ```
+```
 
 ```
 
@@ -234,8 +256,10 @@ The circular pattern parameter is set to Unequal Angular Spacing.
 ```vbscript
 ```vbscript
 ' ------------
+```vbscript
 ' Set the circular pattern Unequal Angular Spacing
 ' ------------
+```
 ```
 
 ```
@@ -293,7 +317,7 @@ The part document is updated, the circular pattern is modified.
 
 ![](images/CAAPriChangePattern02.gif)
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

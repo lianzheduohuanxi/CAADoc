@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating a Check Button"
-category: "use case"
+category: use-case case"
 module: "CAAAfrUseCases"
 tags: ["CAACafViewerFeedbackCmd", "CAACafViewerFeedback", "CAAAfrGeneralWksAddinHeader", "CAAAfrViewerFeedbackHdr", "CAAViewerFeedback", "CATIWorkbenchAddin", "CAACafViewerFeedbackManager", "CATIAfrGeneralWksAddin", "CAACafViewerFeedbackCheckHdr", "CAACafViewerFeedbackUncheckHdr", "CAACafViewerFeedbackCmdId", "CAACafCATIAApplicationFrm", "CAAAfrGeneralWksAddin", "CAAAfrGeneralWksAdn", "CATIAApplicationFrm", "CAACATIAApplicationFrm", "CAAApplicationFrame"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrCheckHeader.htm"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrCheckHeader.htmmd"
 converted: "2026-05-11T17:17:55.585103"
 ```
 
@@ -74,10 +74,10 @@ To launch CAAAfrViewerFeedbackHdr, you will need to set up the build time enviro
 To launch CAAAfrViewerFeedbackHdr, you will need to set up the build time environment, then compile CAAAfrViewerFeedbackHdr along with its prerequisites, set up the run time environment, and then execute the use case [5].
 But just before launching the execution, edit the CAAApplicationFrame.edu.dico interface dictionary file located in the dictionary directory of the CAAApplicationFrame.edu framework:
 
-Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CNext\code\dictionary\`
+Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CNext/code/dictionary/`
 
 But just before launching the execution, edit the CAAApplicationFrame.edu.dico interface dictionary file located in the dictionary directory of the CAAApplicationFrame.edu framework:
-Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CNext\code\dictionary\`
+Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CNext/code/dictionary/`
 UNIX | `InstallRootDirectory/CAAApplicationFrame.edu/CNext/code/dictionary/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -99,9 +99,9 @@ The CAAAfrViewerFeedbackHdr use case is made of several classes located :
   * In the CAAAfrGeneralWksAddin.m module of the CAAApplicationFrame.edu framework
 
 The CAAAfrViewerFeedbackHdr use case is made of several classes located :
-Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeneralWksAddin.m\`
+Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeneralWksAddin.m/`
 
-Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeneralWksAddin.m\`
+Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeneralWksAddin.m/`
 Unix | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeneralWksAddin.m/`
 
 There is a single class, the _CAAAfrGeneralWksAdn_ class, which is an implementation of the _CATIAfrGeneralWksAddin_ interface [3]. If the "Making Your Document Independent Command Available in All Workbenches" use case explains the implementation of this interface, this article only details the check header instance creation and its integration in menu bar and tool bar.
@@ -109,9 +109,9 @@ There is a single class, the _CAAAfrGeneralWksAdn_ class, which is an implementa
   * In the CAACafViewerFeedback.m module of the CAACATIAApplicationFrm.edu framework
 
 There is a single class, the _CAAAfrGeneralWksAdn_ class, which is an implementation of the _CATIAfrGeneralWksAddin_ interface [3]. If the "Making Your Document Independent Command Available in All Workbenches" use case explains the implementation of this interface, this article only details the check header instance creation and its integration in menu bar and tool bar.
-Windows | `InstallRootDirectory\CAACafCATIAApplicationFrm.edu\CAACafViewerFeedback.m\`
+Windows | `InstallRootDirectory/CAACafCATIAApplicationFrm.edu/CAACafViewerFeedback.m/`
 
-Windows | `InstallRootDirectory\CAACafCATIAApplicationFrm.edu\CAACafViewerFeedback.m\`
+Windows | `InstallRootDirectory/CAACafCATIAApplicationFrm.edu/CAACafViewerFeedback.m/`
 Unix | `InstallRootDirectory/CAACafCATIAApplicationFrm.edu/CAACafViewerFeedback.m/`
 
 There are the _CAACafViewerFeedbackCmd_ and the _CAACafViewerFeedbackManager_ classes. The first is a command which is described in this article. The second is an object to manage the viewer feedback which is only detailed in the Visualization use case [4].
@@ -141,10 +141,10 @@ The  _CAAAfrGeneralWksAdn_ class is an implementation of the _CATIAfrGeneralWks
 Extract of the `CreateCommands` method
 
     ...
-    void CAAAfrGeneralWksAdn::CreateCommands()
+    void CAAAfrGeneralWksAdn::CreateCommands(#)
     {
       ...
-void CAAAfrGeneralWksAdn::CreateCommands()
+void CAAAfrGeneralWksAdn::CreateCommands(#)
       CATAfrCheckHeaderAccessor **ViewerFeedbackHdrAccessor** ("CAAAfrViewerFeedbackHdr");
       ViewerFeedbackHdrAccessor.**SetResourceFile**("CAAAfrGeneralWksAddinHeader");
 
@@ -226,14 +226,14 @@ class CAACafViewerFeedbackCmd : public **CATCommand**
 
        CAACafViewerFeedbackCmd(void * iArgument);
 
-       virtual ~CAACafViewerFeedbackCmd();
+       virtual ~CAACafViewerFeedbackCmd(#);
 
 ```vbscript
       private :
 
 ```
 
-       CAACafViewerFeedbackCmd ();
+       CAACafViewerFeedbackCmd (#);
 ```vbscript
        CAACafViewerFeedbackCmd(const CAACafViewerFeedbackCmd &iObjectToCopy);
 ```
@@ -277,20 +277,20 @@ if ( NULL != pCAACafViewerFeedbackManager )
          {
 int state = (int) **iArgument** ;
 if ( 1 == state )
-            pCAACafViewerFeedbackManager->SetViewerFeedbackOn();
+            pCAACafViewerFeedbackManager->SetViewerFeedbackOn(#);
 
          }else
          {
 ```vbscript
 if ( 1 == state )
-pCAACafViewerFeedbackManager->SetViewerFeedbackOn();
-            pCAACafViewerFeedbackManager->SetViewerFeedbackOff();
+pCAACafViewerFeedbackManager->SetViewerFeedbackOn(#);
+            pCAACafViewerFeedbackManager->SetViewerFeedbackOff(#);
 ```
 
          }
          ...
       }
-      **RequestDelayedDestruction**();
+      **RequestDelayedDestruction**(#);
     }
 
 ---
@@ -333,7 +333,7 @@ CATNotification  * notification,
 CATSubscriberData  data,
 CATCallback        callback)
         CATAfrCheckHeaderAccessor ViewerFeedbackHdrAcc("CAAAfrViewerFeedbackHdr") ;
-        if( 1 == ViewerFeedbackHdrAcc.**IsChecked**() )
+        if( 1 == ViewerFeedbackHdrAcc.**IsChecked**(#) )
 
         {
           ...

@@ -3,14 +3,16 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdKniUseCases"
 tags: ["CAAScrBase", "CAAKniSubListFilter", "CATIA", "CAAKniSamplePartR13", "CAAScdKniUseCases"]
-source_file: "Doc/online/CAAScdKniUseCases/CAAKniSubListFilterSource.htm"
+source_file: "Doc/online/CAAScdKniUseCases/CAAKniSubListFilterSource.htmmd"
 converted: "2026-05-11T11:27:02.706162"
 ---
 
 Option Explicit
 ' COPYRIGHT DASSAULT SYSTEMES 2001
+```vbscript
 Dim Language as String
 Language="VBScript"
+```
 
 ' ***********************************************************************
 '   Purpose:      You can add user parameters to a given feature by using the
@@ -28,11 +30,16 @@ Language="VBScript"
 '   revision V5R13
 ' ***********************************************************************
 
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
 
  ' Set the CATIA popup file alerts to False
  ' It prevents to stop the macro at each alert during its execution
+```
+```vbscript
  CATIA.DisplayFileAlerts = False
+
+```
 
  ' Retrieve your active document - CATIA is your application 
  ' You get the active document by using the ActiveDocument property
@@ -41,37 +48,50 @@ Sub CATMain()
     ' ----------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
+```vbscript
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,"No Doc Path Defined"
     End If
+```
     ' ----------------------------------------------------------- 
 
+```vbscript
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
-		"online\CAAScdKniUseCases\samples\CAAKniSamplePartR13.CATPart")
+		"online/CAAScdKniUseCases/samples/CAAKniSamplePartR13.CATPart")
+```
+```vbscript
     Dim oDoc As Document
     set oDoc = CATIA.Documents.Open(sFilePath)
 
  
  ' Retrieve your active document
+```
+```vbscript
  Dim oActiveDoc As Document 
  Set oActiveDoc = CATIA.ActiveDocument 
+ 
+```
  
  ' Check whether the document is a CATPart
  If (InStr(oActiveDoc.Name,".CATPart")) <> 0  Then 
 
     ' Retrieve the collection object which contains
     ' all the document parameters
+```vbscript
     Dim oParamList As Paraneters
     Set oParamList = oActiveDoc.Part.Parameters
     
     ' Scans the collection of Bodies in a part
+```
+```vbscript
     Dim oBodies As Bodies
     Set oBodies = oActiveDoc.Part.Bodies
     Dim i, j, k As Integer
     For j = 1 to oActiveDoc.Part.Bodies.Count
+```
          ' For each item of the Bodies collection,
          ' search for a Pad.1 feature
          For i = 1 to oBodies.item(j).Shapes.Count
@@ -86,9 +106,11 @@ Sub CATMain()
            ' to its children (for example, the parameters of the sketch from which 
            ' the pad was extruded from)          
            
+```vbscript
            Dim oPad1SubList As Parameters
            Set oPad1SubList = oParamList.SubList(oBodies.item(j).Shapes.item(i), False)
              for k = 1 to oPad1SubList.Count
+```
                 msgbox oPad1SubList.Item(k).name
              next
          End if 
@@ -96,17 +118,23 @@ Sub CATMain()
     Next       
 
  Else
+```vbscript
     MsgBox "The active document must be a CATPart"
 End If
+```
 
+```vbscript
 End Sub
 
+```
 
 ```vbscript
 Option Explicit
 ' COPYRIGHT DASSAULT SYSTEMES 2001
+```vbscript
 Dim Language as String
 Language="VBScript"
+```
 
 ' ***********************************************************************
 '   Purpose:      You can add user parameters to a given feature by using the
@@ -124,11 +152,16 @@ Language="VBScript"
 '   revision V5R13
 ' ***********************************************************************
 
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
 
  ' Set the CATIA popup file alerts to False
  ' It prevents to stop the macro at each alert during its execution
+```
+```vbscript
  CATIA.DisplayFileAlerts = False
+
+```
 
  ' Retrieve your active document - CATIA is your application 
  ' You get the active document by using the ActiveDocument property
@@ -137,39 +170,50 @@ Sub CATMain()
     ' ----------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
+```vbscript
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,"No Doc Path Defined"
     End If
+```
     ' ----------------------------------------------------------- 
 
-
+```vbscript
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
-		"online\CAAScdKniUseCases\samples\CAAKniSamplePartR13.CATPart")
+		"online/CAAScdKniUseCases/samples/CAAKniSamplePartR13.CATPart")
+```
+```vbscript
     Dim oDoc As Document
     set oDoc = CATIA.Documents.Open(sFilePath)
 
-
  
  ' Retrieve your active document
+```
+```vbscript
  Dim oActiveDoc As Document 
  Set oActiveDoc = CATIA.ActiveDocument 
+ 
+```
  
  ' Check whether the document is a CATPart
  If (InStr(oActiveDoc.Name,".CATPart")) &lt;&gt; 0  Then 
 
     ' Retrieve the collection object which contains
     ' all the document parameters
+```vbscript
     Dim oParamList As Paraneters
     Set oParamList = oActiveDoc.Part.Parameters
     
     ' Scans the collection of Bodies in a part
+```
+```vbscript
     Dim oBodies As Bodies
     Set oBodies = oActiveDoc.Part.Bodies
     Dim i, j, k As Integer
     For j = 1 to oActiveDoc.Part.Bodies.Count
+```
          ' For each item of the Bodies collection,
          ' search for a Pad.1 feature
          For i = 1 to oBodies.item(j).Shapes.Count
@@ -184,9 +228,11 @@ Sub CATMain()
            ' to its children (for example, the parameters of the sketch from which 
            ' the pad was extruded from)          
            
+```vbscript
            Dim oPad1SubList As Parameters
            Set oPad1SubList = oParamList.SubList(oBodies.item(j).Shapes.item(i), False)
              for k = 1 to oPad1SubList.Count
+```
                 msgbox oPad1SubList.Item(k).name
              next
          End if 
@@ -194,8 +240,12 @@ Sub CATMain()
     Next       
 
  Else
+```vbscript
     MsgBox "The active document must be a CATPart"
 End If
+```
 
+```vbscript
 End Sub
+```
 ```

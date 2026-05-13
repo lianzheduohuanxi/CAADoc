@@ -2,7 +2,7 @@
 title: "CAAV5V6ExtMmrCombCrvPanelStCmd"
 type: "interface"
 module: "CAAV5V6MechanicalModeler"
-category: "framework"
+category: api-reference
 base: "CATMmrPanelStateCmd"
 inheritance_chain: "CAAV5V6ExtMmrCombCrvPanelStCmd → CATMmrPanelStateCmd"
 method_count: 0
@@ -30,3 +30,20 @@ verified: true
 - `CATMmrPanelStateCmd.h`
 - `CATMMUIPanelStateCmd.h`
 
+---
+
+## Interface Overview
+
+This interface inherits from **CATMmrPanelStateCmd**. 
+
+**Inherited Methods**: Please refer to the base interface documentation above.
+
+## Interface Notes
+
+This interface is part of the **CAA** module.
+
+**Status**: This interface document is a template. Please refer to the official API documentation for more information.
+
+**Related Resources**:
+- [Quick References](../..//quick-refs/)
+- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)

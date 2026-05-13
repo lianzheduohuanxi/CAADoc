@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating and Transforming Geometry"
-category: "use case"
+category: use-case case"
 module: "CAACgmModel"
 tags: ["CAAGMModelForeignSurfaceData", "CATICGMContainer", "CAADoc", "CAAForeignSurfaceData", "CATICGMObject", "CATICGMProjectionPtSur", "CAAGMModelGemBrowser", "CAAGMModelCreation", "CAAGobCreation", "CAAGMModelInterfaces", "CAAGMModelForeign", "CATIA", "CATIForeignSurface"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGobCreation.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGobCreation.htmmd"
 converted: "2026-05-11T17:33:48.368669"
 ```
 
@@ -54,7 +54,7 @@ This NCGM file can be displayed using the CAAGMModelGemBrowser use case.
 
 The CAAGMModelCreation use case is made of a main named CAAGobCreation.cpp located in the CAAGMModelCreation.m module of the CAAGMModelInterfaces.edu framework:
 
-`InstallRootFolder\CAADoc\CAAGMModelInterfaces.edu\CAAGMModelCreation.m\`
+`InstallRootFolder/CAADoc/CAAGMModelInterfaces.edu/CAAGMModelCreation.m/`
 
 The CAAGMModelCreation use case is made of a main named CAAGobCreation.cpp located in the CAAGMModelCreation.m module of the CAAGMModelInterfaces.edu framework:
 where `InstallRootFolder` [6] is the folder where the API CD-ROM is installed.
@@ -79,7 +79,7 @@ The main program peforms the following steps:
 The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject (and the curves and surfaces in particular) [3]. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
 
 The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject (and the curves and surfaces in particular) [3]. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
-    CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**() ;
+    CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**(#) ;
 ```vbscript
     if (NULL==piGeomFactory) return (1);
 
@@ -87,7 +87,7 @@ The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject (
 
 ### Creating a CATIForeignSurface
 
-CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**() ;
+CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**(#) ;
 if (NULL==piGeomFactory) return (1);
 The data is an attribute of the new type `CAAGMModelForeignSurfaceData`. The attribute instance is allocated here, its deletion is directly managed by the CATIForeignSurface.
 
@@ -216,8 +216,10 @@ if (NULL==piPLine)
 This operation is done by the CATCloneManager [2], whose interest is in taking into account the links between the objects during the duplication. The clone manager is used as any CGM operator. To follow the general scheme:
 
     * Create it.
+```vbscript
     * Set the parameters: here, `Add` the objects to clone
     * `Run` it.
+```
     * Retrieve the duplicated object: `ReadImage`.
     * `delete` it.
 
@@ -257,10 +259,10 @@ if (NULL==pCloneManager)
     pCloneManager->**Add**(piPLine);
 
     // Runs the operator
-    pCloneManager->**Run**();
+    pCloneManager->**Run**(#);
 
     // Retrieves the object corresponding to the transformation of the PLine
-pCloneManager->**Run**();
+pCloneManager->**Run**(#);
     CATICGMObject* piClonedPLine=NULL;
     piClonedPLine = pCloneManager->**ReadImage**(piPLine);
 ```vbscript
@@ -287,9 +289,9 @@ if (NULL==piClonedPLine)
     // and duplicated Plines
     // as the duplication mode is single, the underlying surface must be the same
     unsigned long tagSurfCloned =
-         ( ((CATPLine *)piClonedPLine )->GetSurface())->GetPersistentTag();
+         ( ((CATPLine *)piClonedPLine )->GetSurface(#))->GetPersistentTag(#);
     unsigned long tagSurfPLine  =
-         (              piPLine        ->GetSurface())->GetPersistentTag();
+         (              piPLine        ->GetSurface(#))->GetPersistentTag(#);
 
 unsigned long tagSurfCloned =
 unsigned long tagSurfPLine  =
@@ -309,8 +311,10 @@ unsigned long tagSurfPLine  =
 This operation is done by the `CATTransfoManager` [2], whose interest is in taking into account the links between the objects during the transformation. The transfo manager is used as any CGM operator: To follow the general scheme:
 
     * Create it.
+```vbscript
     * Set the parameters: here, `Add` the objects to transform.
     * `Run` it.
+```
     * Retrieve the transformed object: `ReadImage`.
     * `delete` it ( this deletion is delayed at the end of the next step, because the manager is still used to retrieve other information).
 
@@ -353,10 +357,10 @@ if (NULL==pTransfoManager)
     pTransfoManager->**Add**(piPLine);
 
     // Runs the operator
-    pTransfoManager->**Run**();
+    pTransfoManager->**Run**(#);
 
     // Retrieves the object corresponding to the transformation of the PLine
-pTransfoManager->**Run**();
+pTransfoManager->**Run**(#);
     CATICGMObject* piTransfPLine=NULL;
     piTransfPLine = pTransfoManager->**ReadImage**(piPLine);
 ```vbscript
@@ -383,7 +387,7 @@ if (NULL==piTransfPLine)
 return (1);
     unsigned long tagSurfTransf =
 
-                ( ((CATPLine *)piTransfPLine )->GetSurface())->GetPersistentTag();
+                ( ((CATPLine *)piTransfPLine )->GetSurface(#))->GetPersistentTag(#);
     if (tagSurfTransf == tagSurfPLine)
     {
        ::CATCloseCGMContainer(piGeomFactory);
@@ -464,7 +468,7 @@ ofstream filetowrite(pfileName, ios::binary ) ;
     #endif
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
-       filetowrite.close();
+       filetowrite.close(#);
      }
 
      //

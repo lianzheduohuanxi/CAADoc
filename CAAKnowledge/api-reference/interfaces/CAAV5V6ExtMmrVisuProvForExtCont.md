@@ -2,7 +2,7 @@
 title: "CAAV5V6ExtMmrVisuProvForExtCont"
 type: "interface"
 module: "CAAV5V6MechanicalModeler"
-category: "framework"
+category: api-reference
 base: "CATI3DVisuProvider"
 inheritance_chain: "CAAV5V6ExtMmrVisuProvForExtCont → CATI3DVisuProvider"
 method_count: 0
@@ -29,3 +29,20 @@ verified: true
 
 - `CATI3DVisuProvider.h`
 
+---
+
+## Interface Overview
+
+This interface inherits from **CATI3DVisuProvider**. 
+
+**Inherited Methods**: Please refer to the base interface documentation above.
+
+## Interface Notes
+
+This interface is part of the **CAA** module.
+
+**Status**: This interface document is a template. Please refer to the official API documentation for more information.
+
+**Related Resources**:
+- [Quick References](../..//quick-refs/)
+- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)

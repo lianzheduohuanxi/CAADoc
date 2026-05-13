@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating a Point on a Wire"
-category: "use case"
+category: use-case case"
 module: "CAACgmModel"
 tags: ["CAADoc", "CAAGMModelGemBrowser", "CAAGMModelInterfaces", "CAAGMModelComputePointOnWire", "CATICGMTopWire", "CATIA", "CATICGMComputePointOnWire"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcBtoPointOnWire.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcBtoPointOnWire.htmmd"
 converted: "2026-05-11T17:33:48.162955"
 ```
 
@@ -51,7 +51,7 @@ Fig. 1: The Geometry of the CAAGMModelComputePointOnWire Use Case ![Use Case Geo
 Fig. 1: The Geometry of the CAAGMModelComputePointOnWire Use Case ![Use Case Geometry](images/CAACgmBtoComputePointOnWire.gif) | This use case creates a CATMathPoint at a ratio of 0.5 from the start extremity of the CATWire. To visualize this point a cartesian point is created at the CATMathPoint location.
 To launch CAAGMModelComputePointOnWire, you will need to set up the build time environment, then compile CAAGMModelComputePointOnWire.m along with its prerequisites, set up the run time environment, and then execute the use case [4].
 
-By default, this use case is to be run with the CircleBody.NCGM input file which is delivered in the CAAGMModelInterfaces.edu\FunctionTests\InputData folder.  To launch this use case type the command below, this command saves the result in the outpufile.NCGM file:
+By default, this use case is to be run with the CircleBody.NCGM input file which is delivered in the CAAGMModelInterfaces.edu/FunctionTests/InputData folder.  To launch this use case type the command below, this command saves the result in the outpufile.NCGM file:
 
 `CAAGMModelComputePointOnWire e/CircleBody.NCGM outputfile.NCGM`
 
@@ -60,7 +60,7 @@ This NCGM file can be displayed using the CAAGMModelGemBrowser use case [4].
 
 The CAAGMModelComputePointOnWire use case is made of a main named CAAGMModelComputePointOnWire.cpp located in the CAAGMModelComputePointOnWire.m module of the CAAGMModelInterfaces.edu framework:
 
-`InstallRootFolder\CAADoc\CAAGMModelInterfaces.edu\CAAGMModelComputePointOnWire.m\`
+`InstallRootFolder/CAADoc/CAAGMModelInterfaces.edu/CAAGMModelComputePointOnWire.m/`
 
 where `InstallRootFolder` [4] is the folder where the API CD-ROM is installed.
 ## Step-by-Step
@@ -92,7 +92,7 @@ CATICGMComputePointOnWire* pPointOnWire = ::CATCGMCreateComputePointOnWire(piGeo
 CATICGMComputePointOnWire* pPointOnWire = ::CATCGMCreateComputePointOnWire(piGeomFactory,
 pWireBody,  0.5);
     CATMathPoint oPointOnWire;
-    oPointOnWire->Run();
+    oPointOnWire->Run(#);
     pPointOnWire->GetMathPoint(oPointOnWire);
 
 To visualize the created CATMathPoint, a cartesian point is created.

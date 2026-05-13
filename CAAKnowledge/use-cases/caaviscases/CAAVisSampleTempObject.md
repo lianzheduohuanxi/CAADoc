@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating Temporary Components"
-category: "use case"
+category: use-case case"
 module: "CAAVisUseCases"
 tags: ["CATInstantiateComponent", "CATI3DGeoVisu", "CAAVisWireBoxComp", "CAAVisualization", "CAAVisTemporaryObjects", "CAADegGeoCommands", "CAAEVisCreateInstanceForWireBox", "CAAVisModelForRep", "CATIA", "CAAIVisTextModel", "CAAGeometry", "CAAIVisWireBox", "CAAEVisWireBox", "CAAEVisVisuWireBox", "CAAVisWireBox", "CAAVisTextModel", "CAADialogEngine", "CATICreateInstance", "CAADegClippingByBoxCmd"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleTempObject.htm"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleTempObject.htmmd"
 converted: "2026-05-11T17:31:52.178221"
 ```
 
@@ -24,7 +24,10 @@ Use Case
 * * *
 ### Abstract
 
+```vbscript
 A temporary component is a component which is not integrated into the data model of a V5 document. In most cases it is a simple component to help the understanding of an interactive command. This article shows how to create a such object depending on its usage. To take full advantage of this article, you can first read the technical article about the Interactive Set of Objects and the temporary components [1].
+
+```
 
   * **What You Will Learn With This Use Case**
   * **The CAAVisTemporaryObjects Use Case**
@@ -52,8 +55,10 @@ This use case is intended to show you how create temporary components depending 
 
 > The usage of the _CATModelForRep3D_ is not recommended for this last case. Refer you to the referenced article [1] for details about the reason. So, the component is a simple component which implements _CATI3DGeoVisu_ and an interface of type. A such interface sets  and gets the "intrinsic" data of the component, and enables us to build the graphic representation.
 
+```vbscript
 These temporary components are visualized thanks the Interactive Set of Objects. The "Visualizing Temporary Components" article [2] details how to insert, remove, update a component of the ISO.  [Top]
 ### The CAAVisTemporaryObjects Use Case
+```
 
 CAAVisTemporaryObjects is a use case of the CAADialogEngine.edu and CAAVisualization.edu frameworks that illustrates DialogEngine, ApplicationFrame, and Visualization frameworks capabilities. [Top]
 #### What Does CAAVisTemporaryObjects Do
@@ -112,7 +117,10 @@ At last, the CAAVisWireBox component implements the _CATICreateInstance_ interfa
 At last, the CAAVisWireBox component implements the _CATICreateInstance_ interface to avoid to export the component implementation class.
 See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)" use case for a detailed description of how this use case should be launched. For the specific scenario:
 
+```vbscript
 Launch CATIA. When the application is ready:
+
+```
 
   * On the **Start** menu, point to **Infrastructure** , and then click **CAA V5: Geometrical Creation**
   * Launch the **Point** (![](../CAAAfrUseCases/images/CAAAfrPointIconNormal.jpg))command to create some points
@@ -139,10 +147,10 @@ The CAAVisTemporaryObjects use case is made of several classes located:
 
   * In the CAADegGeoCommands.m module of the CAADialogEngine.edu framework:
 The CAAVisTemporaryObjects use case is made of several classes located:
-Windows | `InstallRootDirectory\CAADialogEngine.edu\CAADegGeoCommands.m\`
+Windows | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 
 The CAAVisTemporaryObjects use case is made of several classes located:
-Windows | `InstallRootDirectory\CAADialogEngine.edu\CAADegGeoCommands.m\`
+Windows | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 
 The _CAADegClippingByBoxCmd_ class contains the creation of the trihedral component.
@@ -150,10 +158,10 @@ The _CAADegClippingByBoxCmd_ class contains the creation of the trihedral compon
   * In the CAAVisModelForRep.m module of the CAAVisualization.edu framework:
 Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 The _CAADegClippingByBoxCmd_ class contains the creation of the trihedral component.
-Windows | `InstallRootDirectory\CAAVisualization.edu\CAAVisModelForRep.m\`
+Windows | `InstallRootDirectory/CAAVisualization.edu/CAAVisModelForRep.m/`
 
 The _CAADegClippingByBoxCmd_ class contains the creation of the trihedral component.
-Windows | `InstallRootDirectory\CAAVisualization.edu\CAAVisModelForRep.m\`
+Windows | `InstallRootDirectory/CAAVisualization.edu/CAAVisModelForRep.m/`
 Unix | `InstallRootDirectory/CAAVisualization.edu/CAAVisModelForRep.m/`
 
 This module contains the creation of the text component. The _CAADegClippingByBoxCmd_ class contains the code which creates its graphic representation.
@@ -161,10 +169,10 @@ This module contains the creation of the text component. The _CAADegClippingByB
   * In the CAAVisWireBoxComp.m module of the CAAVisualization.edu framework:
 Unix | `InstallRootDirectory/CAAVisualization.edu/CAAVisModelForRep.m/`
 This module contains the creation of the text component. The _CAADegClippingByBoxCmd_ class contains the code which creates its graphic representation.
-Windows | `InstallRootDirectory\CAAVisualization.edu\CAAVisWireBoxComp.m\`
+Windows | `InstallRootDirectory/CAAVisualization.edu/CAAVisWireBoxComp.m/`
 
 This module contains the creation of the text component. The _CAADegClippingByBoxCmd_ class contains the code which creates its graphic representation.
-Windows | `InstallRootDirectory\CAAVisualization.edu\CAAVisWireBoxComp.m\`
+Windows | `InstallRootDirectory/CAAVisualization.edu/CAAVisWireBoxComp.m/`
 Unix | `InstallRootDirectory/CAAVisualization.edu/CAAVisWireBoxComp.m/`
 
 This module contains the creation of the  "wire box" component.
@@ -187,29 +195,29 @@ There are three logical steps in CAAVisTemporaryObjects:
 The Trihedral component is a simple _CATModelForRep3D_ class instance. In the _CAADegClippingByBoxCmd_ class constructor you have the following instruction:
 
     ...
-    _pCenterBoxModel     = new CATModelForRep3D();
+    _pCenterBoxModel     = new CATModelForRep3D(#);
     ...
 
 ---
 
-_pCenterBoxModel     = new CATModelForRep3D();
+_pCenterBoxModel     = new CATModelForRep3D(#);
 Where `_pCenterBoxModel` is a data member of the _CAADegClippingByBoxCmd_ class.
 
 Once a Point is selected, the trihedral is set in the ISO. Its graphic representation must be first defined according to the position of the selected point. Here it is the code to build the graphic representation, and associate it with the trihedral component.
 
     ...
-    HRESULT CAADegClippingByBoxCmd::CreateRepForCenterBox()
+    HRESULT CAADegClippingByBoxCmd::CreateRepForCenterBox(#)
     {
     ...
-       CAT3DCustomRep * pRepForCenter = new **CAT3DCustomRep**();
+       CAT3DCustomRep * pRepForCenter = new **CAT3DCustomRep**(#);
 
        **CATGraphicAttributeSet**  CenterGa ;
 
-CAT3DCustomRep * pRepForCenter = new **CAT3DCustomRep**();
+CAT3DCustomRep * pRepForCenter = new **CAT3DCustomRep**(#);
        float coord[3] ;
-       coord[0] = _CenterBox.GetX() ;
-       coord[1] = _CenterBox.GetY() ;
-       coord[2] = _CenterBox.GetZ();
+       coord[0] = _CenterBox.GetX(#) ;
+       coord[1] = _CenterBox.GetY(#) ;
+       coord[2] = _CenterBox.GetZ(#);
 
        CATMathPointf StartPoint = _CenterBox ;
        CATMathDirectionf DirX (1.f,0.f,0.f);
@@ -302,8 +310,8 @@ class CAAVisTextModel : public **CATModelForRep3D**
              CATDeclareClass;
 
      public:
-             CAAVisTextModel() ;
-             virtual ~CAAVisTextModel();
+             CAAVisTextModel(#) ;
+             virtual ~CAAVisTextModel(#);
 
              virtual HRESULT **SetGraphicRepresentation**(CATRep *iRep) ;
 
@@ -329,13 +337,13 @@ Here it is now the source file, CAAVisTextModel.cpp
     **CATImplementClass**(CAAVisTextModel,Implementation ,**CATModelForRep3D** , CATNull);
 
 TIE_**CAAIVisTextModel**(CAAVisTextModel);
-    CAAVisTextModel::CAAVisTextModel():CATModelForRep3D()  {}
+    CAAVisTextModel::CAAVisTextModel(#):CATModelForRep3D(#)  {}
 
-    CAAVisTextModel::~CAAVisTextModel() {}
+    CAAVisTextModel::~CAAVisTextModel(#) {}
 
 ---
 
-CAAVisTextModel::~CAAVisTextModel() {}
+CAAVisTextModel::~CAAVisTextModel(#) {}
 The _CAAVisTextModel_ class states that it implements the _CAAIVisTextModel_ __ interface thanks to the `TIE_CAAIVisTextModel` macro.
 
 The `CATImplementClass` macro declares that the _CAAVisTextModel_ class is a component main class thanks the `Implementation` keyword, and OM-derives [5] from _CATModelForRep3D._ The third argument must always be set as _CATBaseUnknown_ or _CATNull_ for any kind of extension.
@@ -398,10 +406,10 @@ Here it is an extract of the _CAADegClippingByBoxCmd_   state command.
     ...
 Once an instance of the CAAVisTextModel component is created, to visualize it, its graphic representation must be created and associated with the component.
 Here it is an extract of the _CAADegClippingByBoxCmd_   state command.
-    HRESULT CAADegClippingByBoxCmd::**CreateRepForText**()
+    HRESULT CAADegClippingByBoxCmd::**CreateRepForText**(#)
 
     {
-       **CAT3DCustomRep** * pRepForText= new **CAT3DCustomRep**();
+       **CAT3DCustomRep** * pRepForText= new **CAT3DCustomRep**(#);
 
        **CATGraphicAttributeSet**   TextGa ;
 
@@ -452,8 +460,8 @@ class  **CAAVisWireBox** : public CATBaseUnknown
       CATDeclareClass;
 
       public :
-        CAAVisWireBox();
-        virtual ~CAAVisWireBox();
+        CAAVisWireBox(#);
+        virtual ~CAAVisWireBox(#);
 
       private:
         CAAVisWireBox(const CAAVisWireBox &iObjectToCopy);
@@ -471,13 +479,13 @@ Here it is the CAAVisWireBox.cpp file
     **CATImplementClass**(CAAVisWireBox,Implementation,CATBaseUnknown,CATNull);
 
 Here it is the CAAVisWireBox.cpp file
-    CAAVisWireBox::CAAVisWireBox(){}
+    CAAVisWireBox::CAAVisWireBox(#){}
 
-    CAAVisWireBox::~CAAVisWireBox(){}
+    CAAVisWireBox::~CAAVisWireBox(#){}
 
 ---
 
-CAAVisWireBox::~CAAVisWireBox(){}
+CAAVisWireBox::~CAAVisWireBox(#){}
 The `CATImplementClass` macro declares that the _CAAVisWireBox_ class is a component main class thanks the `Implementation` keyword, and OM-derives from _CATBaseUnknown._ The third argument must always be set as _CATBaseUnknown_ or _CATNull_ for any kind of extension.
 
   2. **Creating CAAIVisWireBox interface**
@@ -543,10 +551,10 @@ class CAAEVisVisuWireBox : public CATExtIVisu
       CATDeclareClass;
 
       public:
-        CAAEVisVisuWireBox();
-        virtual ~CAAEVisVisuWireBox();
+        CAAEVisVisuWireBox(#);
+        virtual ~CAAEVisVisuWireBox(#);
 
-        virtual  CATRep * **BuildRep**();
+        virtual  CATRep * **BuildRep**(#);
 
       private:
       CAAEVisVisuWireBox(const CAAEVisVisuWireBox &iObjectToCopy);
@@ -569,15 +577,15 @@ Here it is the CAAEVisVisuWireBox.cpp file:
 
 ```vbscript
 CATImplementClass(CAAEVisVisuWireBox, DataExtension, CATBaseUnknown, **CAAVisWireBox**);
-    CAAEVisVisuWireBox::CAAEVisVisuWireBox() {}
+    CAAEVisVisuWireBox::CAAEVisVisuWireBox(#) {}
 
-    CAAEVisVisuWireBox::~CAAEVisVisuWireBox() {}
+    CAAEVisVisuWireBox::~CAAEVisVisuWireBox(#) {}
 
 ```
 
 ---
 
-CAAEVisVisuWireBox::~CAAEVisVisuWireBox() {}
+CAAEVisVisuWireBox::~CAAEVisVisuWireBox(#) {}
 The _CAAEVisVisuWireBox_ class states that it implements the _CATI3DGeoVisu_ interface thanks to the `TIE_CATI3DGeoVisu` macro. This extension class is dedicated to this component, and the `CATImplementClass` macro declares that the _CAAEVisVisuWireBox_ class is data extension class, thanks to the `DataExtension` keyword, and that it extends the component whose main class is _CAAVis_ WireBox. The third parameter must always be set to _CATBaseUnknown_ , makes no sense, and is unused for extensions.
 
 The `BuildRep` method builds the graphic representation of the wire box depending on its size and its location.
@@ -585,15 +593,15 @@ The `BuildRep` method builds the graphic representation of the wire box dependin
     ...
 The _CAAEVisVisuWireBox_ class states that it implements the _CATI3DGeoVisu_ interface thanks to the `TIE_CATI3DGeoVisu` macro. This extension class is dedicated to this component, and the `CATImplementClass` macro declares that the _CAAEVisVisuWireBox_ class is data extension class, thanks to the `DataExtension` keyword, and that it extends the component whose main class is _CAAVis_ WireBox. The third parameter must always be set to _CATBaseUnknown_ , makes no sense, and is unused for extensions.
 The `BuildRep` method builds the graphic representation of the wire box depending on its size and its location.
-    CATRep * CAAEVisVisuWireBox::**BuildRep**()
+    CATRep * CAAEVisVisuWireBox::**BuildRep**(#)
 
     {
 The `BuildRep` method builds the graphic representation of the wire box depending on its size and its location.
-CATRep * CAAEVisVisuWireBox::**BuildRep**()
+CATRep * CAAEVisVisuWireBox::**BuildRep**(#)
        CAT3DCustomRep         * pWireBoxRep = NULL ;
 
        **CAAIVisWireBox** * piVisWireBox = NULL;
-CATRep * CAAEVisVisuWireBox::**BuildRep**()
+CATRep * CAAEVisVisuWireBox::**BuildRep**(#)
 CAT3DCustomRep         * pWireBoxRep = NULL ;
        HRESULT rc = QueryInterface(IID_CAAIVisWireBox, (void**)&piVisWireBox);
 ```vbscript
@@ -610,19 +618,22 @@ if (SUCCEEDED(rc))
            CATMathPoint CenterBox ;
            piVisWireBox->**GetCenterBox**(CenterBox) ;
 
-           piVisWireBox->Release();
+           piVisWireBox->Release(#);
            piVisWireBox = NULL ;
 
 ```vbscript
-           pWireBoxRep = new **CAT3DCustomRep**();
+           pWireBoxRep = new **CAT3DCustomRep**(#);
 
 ```
 
+```vbscript
            CATGraphicAttributeSet   BoxGa ;
 
-           float Cx = CenterBox.GetX() ;
-           float Cy = CenterBox.GetY() ;
-           float Cz = CenterBox.GetZ() ;
+```
+
+           float Cx = CenterBox.GetX(#) ;
+           float Cy = CenterBox.GetY(#) ;
+           float Cz = CenterBox.GetZ(#) ;
 
            float Tab1[12] ;
 
@@ -706,8 +717,10 @@ The use case has detailed how to create three kinds of temporary components depe
 * * *
 ### References
 
+```vbscript
 [1] | [Interactive Set of Objects](../CAAVisTechArticles/CAAVisISO.md)
 ---|---
+```
 [2] | [Visualizing Temporary Components](CAAVisSampleISO.md)
 [3] | [The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)
 [4] | [Implementing the Command Statechart Diagram](../CAADegTechArticles/CAADegGraph.md)

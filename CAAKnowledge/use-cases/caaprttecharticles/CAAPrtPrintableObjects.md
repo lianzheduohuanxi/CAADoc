@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Making Your Components Printable"
-category: "use-case"
+category: tech-article
 module: "CAAPrtTechArticles"
 tags: ["CAACmp", "CAAECmpPrintable", "CAACmpInstanceToPrint", "CATIPrintable", "CAACmpImage"]
-source_file: "Doc/online/CAAPrtTechArticles/CAAPrtPrintableObjects.htm"
+source_file: "Doc/online/CAAPrtTechArticles/CAAPrtPrintableObjects.htmmd"
 converted: "2026-05-11T17:17:56.147286"
 ```
 
@@ -81,8 +81,8 @@ The _CAAECmpPrintable_ header file is as follows:
 class CAAECmpPrintable : public CATBaseUnknown
       CATDeclareClass;
       public :
-        CAAECmpPrintable();
-        virtual ~CAAECmpPrintable();
+        CAAECmpPrintable(#);
+        virtual ~CAAECmpPrintable(#);
         virtual CATPrintImage * **CreatePrintableImage**(void);
 ```vbscript
       private :
@@ -91,8 +91,8 @@ class CAAECmpPrintable : public CATBaseUnknown
 
         **CAAECmpPrintable(const CAAECmpPrintable & printableObjectToCopy);
 ```vbscript
-CAAECmpPrintable();
-virtual ~CAAECmpPrintable();
+CAAECmpPrintable(#);
+virtual ~CAAECmpPrintable(#);
 virtual CATPrintImage * **CreatePrintableImage**(void);
 private :
         CAAECmpPrintable & operator = (const CAAECmpPrintable & printableObjectToCopy);
@@ -126,17 +126,17 @@ CATBaseUnknown,    // Always OM-derive extensions from CATBaseUnknown
 CAACmp);           // Main class of the extended component
     TIE_CATIPrintable(CAAECmpPrintable); // CATIPrintable
 
-    CAAECmpPrintable::CAAECmpPrintable() {}
-    CAAECmpPrintable::~CAAECmpPrintable() {}
+    CAAECmpPrintable::CAAECmpPrintable(#) {}
+    CAAECmpPrintable::~CAAECmpPrintable(#) {}
 
     CATPrintImage * CAAECmpPrintable::**CreatePrintableImage**(void)
 ```
 
     {
-CAAECmpPrintable::CAAECmpPrintable() {}
-CAAECmpPrintable::~CAAECmpPrintable() {}
+CAAECmpPrintable::CAAECmpPrintable(#) {}
+CAAECmpPrintable::~CAAECmpPrintable(#) {}
 CATPrintImage * CAAECmpPrintable::**CreatePrintableImage**(void)
-      return new CAACmpImage( (CAACmp*) **GetImpl**() );
+      return new CAACmpImage( (CAACmp*) **GetImpl**(#) );
 
     }
 
@@ -157,7 +157,7 @@ The _CAACmpImage_ printable image class should include a constructor, a destruct
 class CAACmpImage : public CATPrintImage
       public :
         CAACmpImage(CAACmp *pCAACmpInstanceToPrint);
-        virtual ~CAACmpImage();
+        virtual ~CAACmpImage(#);
         int **GetSize**(float &oWidth, float &oHeight);
         int **Decode**(CATPrintGenerator *pGenerator,
                    const CATPrintParameters &Parameters);
@@ -183,26 +183,26 @@ The constructor and the destructor of this class should be as follows:
 The constructor and the destructor of this class should be as follows:
 CAACmpImage::CAACmpImage(CAACmp *pCAACmpInstanceToPrint)
       _pCAACmpInstanceToPrint = pCAACmpInstanceToPrint;
-      _pCAACmpInstanceToPrint->**AddRef**();
+      _pCAACmpInstanceToPrint->**AddRef**(#);
 
     }
 
 _pCAACmpInstanceToPrint = pCAACmpInstanceToPrint;
-_pCAACmpInstanceToPrint->**AddRef**();
-    CAACmpImage::~CAACmpImage()
+_pCAACmpInstanceToPrint->**AddRef**(#);
+    CAACmpImage::~CAACmpImage(#)
 
     {
-_pCAACmpInstanceToPrint->**AddRef**();
-CAACmpImage::~CAACmpImage()
+_pCAACmpInstanceToPrint->**AddRef**(#);
+CAACmpImage::~CAACmpImage(#)
 ```vbscript
       if (NULL != _pCAACmpInstanceToPrint)
 
 ```
 
       {
-CAACmpImage::~CAACmpImage()
+CAACmpImage::~CAACmpImage(#)
 if (NULL != _pCAACmpInstanceToPrint)
-        _pCAACmpInstanceToPrint->**Release**();
+        _pCAACmpInstanceToPrint->**Release**(#);
         _pCAACmpInstanceToPrint = NULL;
 
       }

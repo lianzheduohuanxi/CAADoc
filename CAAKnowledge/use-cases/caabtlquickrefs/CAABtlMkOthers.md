@@ -4,13 +4,13 @@ title: "mkmk Commands"
 category: "use-case"
 module: "CAABtlQuickRefs"
 tags: ["CAA2", "CATIA"]
-source_file: "Doc/online/CAABtlQuickRefs/CAABtlMkOthers.htm"
+source_file: "Doc/online/CAABtlQuickRefs/CAABtlMkOthers.htmmd"
 converted: "2026-05-11T17:33:50.021658"
 ```
 
 ---
 tags: ["CAA2", "CATIA"]
-source_file: "Doc/online/CAABtlQuickRefs/CAABtlMkOthers.htm"
+source_file: "Doc/online/CAABtlQuickRefs/CAABtlMkOthers.htmmd"
 converted: "2026-05-11T17:33:50.021658"
 RADE |  Multi-Workspace Application Builder |  mkmk Commands _Quick Reference to mkmk commands_
 
@@ -194,7 +194,7 @@ Warning
 
 `[-p Path1[:Path2]]`
 
-> Concatenate workspaces where to search for the prerequisite frameworks. `Path1` and `Path2` represent workspace root folder paths, and must be separated using a ":" (colon) with Unix and a ";" (semi-colon) with Windows. Windows workspace paths can be mapped drive paths, such a e/WorkspaceToAdd, or UNC paths, such as \\mycomputer\home\WorkspaceToAdd.
+> Concatenate workspaces where to search for the prerequisite frameworks. `Path1` and `Path2` represent workspace root folder paths, and must be separated using a ":" (colon) with Unix and a ";" (semi-colon) with Windows. Windows workspace paths can be mapped drive paths, such a e/WorkspaceToAdd, or UNC paths, such as //mycomputer/home/WorkspaceToAdd.
 
 `[-e]`
 
@@ -254,15 +254,15 @@ E/MyWorkspace<>mkprintpreq -l Framework1
 
     ------------------------------------
 Required frameworks for: Framework1
-    Direct   : BSFBuildtimeData in C/Program Files\Dassault Systemes\B24\.\BSFBuildtimeData
-    Direct   : System           in C/Program Files\Dassault Systemes\B24\.\System
-    Indirect : LCCommon         in C/Program Files\Dassault Systemes\B24\.\LCCommon
-    Indirect : SpecialAPI       in C/Program Files\Dassault Systemes\B24\.\SpecialAPI
+    Direct   : BSFBuildtimeData in C/Program Files/Dassault Systemes/B24/./BSFBuildtimeData
+    Direct   : System           in C/Program Files/Dassault Systemes/B24/./System
+    Indirect : LCCommon         in C/Program Files/Dassault Systemes/B24/./LCCommon
+    Indirect : SpecialAPI       in C/Program Files/Dassault Systemes/B24/./SpecialAPI
 
  **mkCopyFW**
 ---
-Indirect : LCCommon         in C/Program Files\Dassault Systemes\B24\.\LCCommon
-Indirect : SpecialAPI       in C/Program Files\Dassault Systemes\B24\.\SpecialAPI
+Indirect : LCCommon         in C/Program Files/Dassault Systemes/B24/./LCCommon
+Indirect : SpecialAPI       in C/Program Files/Dassault Systemes/B24/./SpecialAPI
 Purpose **mkCopyFw** copies the build-time and run-time files of a framework from a workspace into another workspace. Please note that mkCopyFw replaces the existing frameworks only for a case where these frameworks were previously created by the mkCopyFw command. mkCopyFw can be used to copy frameworks from an Unix system into Windows system and vice versa. But this functionality can be involved only from a Windows platform. If one of the frameworks is already existing in the target workspace, an error message is displaying and the copy stops.
 
 * * *
@@ -508,7 +508,7 @@ Warning
 
 `[-keep]`
 
-> to keep the shell which starts the command. Default the shell is removed after the run. The shell name is deduced from the environment name (-e option). Its name is $HOME/mkrun_envir.sh on Unix and C/temp\mkrun_envir.bat on Windows This shell will use the concatenation as defined by the mkGetPreq command (Install_config file).
+> to keep the shell which starts the command. Default the shell is removed after the run. The shell name is deduced from the environment name (-e option). Its name is $HOME/mkrun_envir.sh on Unix and C/temp/mkrun_envir.bat on Windows This shell will use the concatenation as defined by the mkGetPreq command (Install_config file).
 
 `[-c command ...]`
 

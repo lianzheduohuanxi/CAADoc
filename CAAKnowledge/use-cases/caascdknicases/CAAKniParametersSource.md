@@ -4,13 +4,13 @@ title: "CAAKniParameters.CATScript"
 category: "use-case"
 module: "CAAScdKniUseCases"
 tags: ["CATIA", "CAAKniParameters", "CAAScdKniUseCases"]
-source_file: "Doc/online/CAAScdKniUseCases/CAAKniParametersSource.htm"
+source_file: "Doc/online/CAAScdKniUseCases/CAAKniParametersSource.htmmd"
 converted: "2026-05-11T17:31:51.987316"
 ```
 
 ---
 tags: ["CATIA", "CAAKniParameters", "CAAScdKniUseCases"]
-source_file: "Doc/online/CAAScdKniUseCases/CAAKniParametersSource.htm"
+source_file: "Doc/online/CAAScdKniUseCases/CAAKniParametersSource.htmmd"
 converted: "2026-05-11T17:31:51.987316"
     Option Explicit
 ```vbscript
@@ -22,8 +22,10 @@ converted: "2026-05-11T17:31:51.987316"
 ```
 
 ```vbscript
+```vbscript
     Dim Language as String
     Language="VBScript"
+```
 ```
 
 ```vbscript
@@ -67,7 +69,10 @@ converted: "2026-05-11T17:31:51.987316"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
+
+```
 
 ```
 
@@ -77,58 +82,76 @@ converted: "2026-05-11T17:31:51.987316"
         ' -----------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String
+```vbscript
         sDocPath=CATIA.SystemService.Environ("CATDocView")
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
           Err.Raise 9999,,"No Doc Path Defined"
         End If
+```
         ' -----------------------------------------------------------
         ' Open the Part document
+```vbscript
         Dim sFilePath
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
-
 ```
 
 ```
 
-    		"online\CAAScdKniUseCases\samples\KwrMacroHiddenParam.CATPart")
+```
+
+    		"online/CAAScdKniUseCases/samples/KwrMacroHiddenParam.CATPart")
+```vbscript
 ```vbscript
 Dim sFilePath
+```vbscript
+```
 ```vbscript
 ```vbscript
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
         Dim oDoc As Document
         set oDoc = CATIA.Documents.Open(sFilePath)
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 ```vbscript
 ```vbscript
      ' Set the CATIA popup file alerts to False
      ' It prevents to stop the macro at each alert during its execution
+```
+```vbscript
      CATIA.DisplayFileAlerts = False
      ' Retrieve your active document - CATIA is your application
+```
      ' You get the active document by using the ActiveDocument property
      ' on your application object
+```vbscript
      Dim oActiveDoc As Document
      Set oActiveDoc = CATIA.ActiveDocument
      ' Check whether the document is a CATPart
+```
      ' InStr is a standard VB function
      If (InStr(oActiveDoc.Name,".CATPart")) <> 0  Then
         ' Retrieve the collection object which contains
         ' all the document parameters
+```vbscript
         Dim oParams As Parameters
         Set oParams = oActiveDoc.Part.Parameters
         ' Declare the variables to be used in the message box
+```
         ' which displays the hidden parameters
+```vbscript
         Dim strRel0 As String
         Dim strRel1 As String
         Dim strRel2 As String
         Dim HiddenNumber As Integer
+```
 ```
 
 ```
@@ -145,8 +168,10 @@ sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
         ' Note about the BoolParam type test:
         ' The statement oParams.Item(i).Value = "true" raises an error
         ' whenever the parameter is not a boolean
+```vbscript
         Dim i As Integer
         For i = 1 To oParams.Count
+```
            if (oParams.Item(i).Hidden = "True") Then
              if TypeName(oParams.Item(i)) = "BoolParam" Then
              strRel1 = strRel1 & vbCrLf & oParams.Item(i).Name &_
@@ -212,23 +237,31 @@ end if
 
 ```vbscript
         If (HiddenNumber > 0) Then
+```vbscript
            MsgBox strRel1
            MsgBox strRel2
         Else
+```
+```vbscript
            MsgBox "There are no hidden parameters in this document"
 ```vbscript
+```
         End If
 
 ```
 
 ```
 
+```vbscript
 MsgBox "There are no hidden parameters in this document"
 ```vbscript
+```
 End If
     Else
+```vbscript
        MsgBox "The active document must be a CATPart"
 ```vbscript
+```
     End If
 
 ```
@@ -236,6 +269,8 @@ End If
 ```
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

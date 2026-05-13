@@ -4,13 +4,13 @@ title: "Creating a Circle Sweep with Two Guides and a Radius Law"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CAAGMOperatorsCircleSweepTwoGuidesRadius", "CAAGMModelGemBrowser", "CATICGMFrFTopologicalSweep", "CAAAdtCircleSweepTwoGuidesRadius"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtCircleSwTwoGuidesRadiusLaw.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtCircleSwTwoGuidesRadiusLaw.htmmd"
 converted: "2026-05-11T17:33:48.822965"
 ```
 
 ---
 tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CAAGMOperatorsCircleSweepTwoGuidesRadius", "CAAGMModelGemBrowser", "CATICGMFrFTopologicalSweep", "CAAAdtCircleSweepTwoGuidesRadius"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtCircleSwTwoGuidesRadiusLaw.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtCircleSwTwoGuidesRadiusLaw.htmmd"
 converted: "2026-05-11T17:33:48.822965"
 Creating a Circle Sweep with Two Guides and a Radius Law
 
@@ -41,7 +41,7 @@ What Does CAAGMOperatorsCircleSweepTwoGuidesRadius Do? The use case:
     * Creates the curves and radius law to be used as input data.
     * Creates a CATICGMFrFTopologicalSweep operator instance.
     * Runs the CATICGMFrFTopologicalSweep and retrieve the resulting body.
-**Note** : This article only focuses on the operations related to the CATICGMFrFTopologicalSweep operator. Refer to "Overview of the Topological Operators" [1] for more information on the operations which are not detailed in the article. How to Launch CAAGMOperatorsCircleSweepTwoGuidesRadius To launch CAAGMOperatorsCircleSweepTwoGuidesRadius, you will need to set up the build time environment, then compile CAAGMOperatorsCircleSweepTwoGuidesRadius.m, set up the run time environment, and then execute the use case [2]. If you simply type CAAGMOperatorsCircleSweepTwoGuidesRadius with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsCircleSweepTwoGuidesRadius e/sweep.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMOperatorsCircleSweepTwoGuidesRadius Code The CAAGMOperatorsCircleSweepTwoGuidesRadius use case is made of a main named CAAAdtCircleSweepTwoGuidesRadius.cpp located in the CAAGMOperatorsCircleSweepTwoGuidesRadius.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsCircleSweepTwoGuidesRadius.m\` where `InstallRootFolder` [2] is the folder where the API CD-ROM is installed. Step-by-Step The use case is divided into the following main steps:
+**Note** : This article only focuses on the operations related to the CATICGMFrFTopologicalSweep operator. Refer to "Overview of the Topological Operators" [1] for more information on the operations which are not detailed in the article. How to Launch CAAGMOperatorsCircleSweepTwoGuidesRadius To launch CAAGMOperatorsCircleSweepTwoGuidesRadius, you will need to set up the build time environment, then compile CAAGMOperatorsCircleSweepTwoGuidesRadius.m, set up the run time environment, and then execute the use case [2]. If you simply type CAAGMOperatorsCircleSweepTwoGuidesRadius with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsCircleSweepTwoGuidesRadius e/sweep.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMOperatorsCircleSweepTwoGuidesRadius Code The CAAGMOperatorsCircleSweepTwoGuidesRadius use case is made of a main named CAAAdtCircleSweepTwoGuidesRadius.cpp located in the CAAGMOperatorsCircleSweepTwoGuidesRadius.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder/CAADoc/CAAGMOperatorsInterfaces.edu/CAAGMOperatorsCircleSweepTwoGuidesRadius.m/` where `InstallRootFolder` [2] is the folder where the API CD-ROM is installed. Step-by-Step The use case is divided into the following main steps:
     * Creating the Two Guides
     * Creating a CATICGMFrFTopologicalSweep Operator Instance
     * Setting the Radius Law

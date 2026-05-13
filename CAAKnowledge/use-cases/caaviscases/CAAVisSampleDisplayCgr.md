@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Displaying cgr Files"
-category: "use case"
+category: use-case case"
 module: "CAAVisUseCases"
 tags: ["CAAVisBaseView", "CAAVisBaseCGRDocument", "CAAVisBaseDocument", "CAAVisBasics", "CAAVisBaseApplication", "CAAVisualization"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleDisplayCgr.htm"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleDisplayCgr.htmmd"
 converted: "2026-05-11T17:31:52.093625"
 ```
 
@@ -64,18 +64,18 @@ To launch CAAVisBasics, you will need to set up the build time environment, then
 
 ![](images/CAAVisSampleCGRFile1.jpg)
 
-Then point **File** , and click **Open**. In the **Select a CGR File** dialog box, select the resources\cgr directory in the run time view, and click the **CUBES.cgr** file that displays the cgr file with the cubes.
+Then point **File** , and click **Open**. In the **Select a CGR File** dialog box, select the resources/cgr directory in the run time view, and click the **CUBES.cgr** file that displays the cgr file with the cubes.
 
 [Top]
 #### Where to Find the CAAVisBasics Code
 
-Then point **File** , and click **Open**. In the **Select a CGR File** dialog box, select the resources\cgr directory in the run time view, and click the **CUBES.cgr** file that displays the cgr file with the cubes.
+Then point **File** , and click **Open**. In the **Select a CGR File** dialog box, select the resources/cgr directory in the run time view, and click the **CUBES.cgr** file that displays the cgr file with the cubes.
 CAAVisBasics code is located in the CAAVisBasics.m use case module of the CAAVisualization.edu framework:
 
-Windows | `InstallRootDirectory\CAAVisualization.edu\CAAVisBasics.m`
+Windows | `InstallRootDirectory/CAAVisualization.edu/CAAVisBasics.m`
 
 CAAVisBasics code is located in the CAAVisBasics.m use case module of the CAAVisualization.edu framework:
-Windows | `InstallRootDirectory\CAAVisualization.edu\CAAVisBasics.m`
+Windows | `InstallRootDirectory/CAAVisualization.edu/CAAVisBasics.m`
 Unix | `InstallRootDirectory/CAAVisualization.edu/CAAVisBasics.m`
 
 where `InstallRootDirectory` is the root directory of your CAA V5 installation.
@@ -119,11 +119,11 @@ The preliminary tasks that consist in creating the application and its main wind
 The 3D navigation viewer is an instance of the _CATNavigation3DViewer_ class. It is created in the `CreateViewer` method of the _CAAVisBaseView_ class that is called when the application is launched.
 
 The 3D navigation viewer is an instance of the _CATNavigation3DViewer_ class. It is created in the `CreateViewer` method of the _CAAVisBaseView_ class that is called when the application is launched.
-    void CAAVisBaseView::CreateViewer()
+    void CAAVisBaseView::CreateViewer(#)
 
     {
 The 3D navigation viewer is an instance of the _CATNavigation3DViewer_ class. It is created in the `CreateViewer` method of the _CAAVisBaseView_ class that is called when the application is launched.
-void CAAVisBaseView::CreateViewer()
+void CAAVisBaseView::CreateViewer(#)
       _pViewer = new CATNavigation3DViewer(this, "3DViewer",
                                           CATDlgFraNoTitle | CATDlgFraNoFrame,
                                           500, 500);
@@ -165,9 +165,9 @@ CATString  * iDocumentName)
       memset(_pFileToOpen, 0, strlen(fileName)+1);
       strcpy(_pFileToOpen, fileName);
 
-      CreateModel();
+      CreateModel(#);
 
-      AddRepToViewer();
+      AddRepToViewer(#);
 
 ```
 
@@ -178,16 +178,16 @@ CATString  * iDocumentName)
 The representation bag is created thanks to the `CreateModel` method.
 
 The representation bag is created thanks to the `CreateModel` method.
-    void CAAVisBaseCGRDocument::CreateModel()
+    void CAAVisBaseCGRDocument::CreateModel(#)
 
     {
 The representation bag is created thanks to the `CreateModel` method.
-void CAAVisBaseCGRDocument::CreateModel()
+void CAAVisBaseCGRDocument::CreateModel(#)
       _pRootContainer = new CAT3DBagRep;
 
       //Reading of the CGR file. The rep issued from this reading
       //is added as a children of _pRootContainer
-void CAAVisBaseCGRDocument::CreateModel()
+void CAAVisBaseCGRDocument::CreateModel(#)
 _pRootContainer = new CAT3DBagRep;
       CAT3DBagRep * cgr = (CAT3DBagRep *)::**CATReadCgr**((char *) _pFileToOpen,
                                                       USE_LODS_TEXTURE_EDGE);
@@ -212,11 +212,11 @@ This representation is created as a _CAT3DBagRep_ , since the cgr file may need 
 The `AddRepToViewer` method displays the created representation.
 
 The `AddRepToViewer` method displays the created representation.
-    void CAAVisBaseDocument::AddRepToViewer()
+    void CAAVisBaseDocument::AddRepToViewer(#)
 
     {
 The `AddRepToViewer` method displays the created representation.
-void CAAVisBaseDocument::AddRepToViewer()
+void CAAVisBaseDocument::AddRepToViewer(#)
       _pView->Add3DRep(_pRootContainer);
 
     }

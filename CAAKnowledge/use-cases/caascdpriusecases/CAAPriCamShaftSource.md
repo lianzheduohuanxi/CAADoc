@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdPriUseCases"
 tags: ["CAAScrBase", "CATIA", "CAAPriCamShaft"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriCamShaftSource.htm"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriCamShaftSource.htmmd"
 converted: "2026-05-11T11:27:02.734947"
 ---
 
@@ -20,50 +20,78 @@ Option Explicit
 
 'Number Of Cylinders
 ' ------------------
+```vbscript
    Dim iNumberOfCylinders As Integer
+      
+```
       
 ' Shaft data
 ' ----------
     ' -- Shaft origin
+```vbscript
     Dim iCenterX As Integer
     Dim iCenterY As Integer
 
     ' -- Distance between two cams of two different cylinders
+```
+```vbscript
     Dim iCylinderSpacing As Integer
 
     ' -- Bearing diameter
+```
+```vbscript
     Dim iBearingDiam As Integer
 
     ' -- Distance between the cylinders centers
+```
+```vbscript
     Dim iBearingLength As Integer
 
     ' -- Pin diameter between two cams
+```
+```vbscript
     Dim iPinDiam As Integer
 
     ' -- Distance between 2 cams of a single cylinder
+```
+```vbscript
     Dim iPinLength As Integer
+
+```
 
 ' Cam data
 ' --------
     ' -- Thickness
+```vbscript
     Dim iCamThickness As Integer
 
     ' -- Circle 1 diameter
+```
+```vbscript
     Dim iCircle1Rad As Integer
 
     ' -- Circle 2 diameter
+```
+```vbscript
     Dim iCircle2Rad As Integer
 
     ' -- Distance between the 2 circle centers
+```
+```vbscript
     Dim iCircleDist As Integer
 
 ' Pi definition
+```
 ' -------------
+```vbscript
     Dim dPi As Double
+
+```
 
 ' Global data to define the different elements of the camshaft
 ' ------------------------------------------------------------
     ' -- Cam Sketch and cam Sketch elements
+```vbscript
     Dim oCurrentSketch  As Sketch
     Dim oCurrentLine1   As AnyObject
     Dim oCurrentLine2   As AnyObject
@@ -71,25 +99,39 @@ Option Explicit
     Dim oCurrentCircle2 As AnyObject
     
     ' -- Current distance from shaft origin
+```
+```vbscript
     Dim iCurrentLevel As Integer
+
+```
 
 ' Part definition
 ' ---------------
      
     ' -- Part 
+```vbscript
     Dim oPart As Part
 
     ' -- Main tool of the part
+```
+```vbscript
     Dim oPartBody As Body
 
     ' -- Definition of YZ plane as work plane
+```
+```vbscript
     Dim oPlaneYZ As Reference
+
+```
 
 ' **************************************************************************
 ' Main program
 '
 ' **************************************************************************
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
+
+```
 
 	' -- Initialize global variables
     iNumberOfCylinders = 4
@@ -107,6 +149,7 @@ Sub CATMain()
     dPi                = 3.14159265358979323846
     iCurrentLevel      = 0
 
+```vbscript
     Dim oPartDocument As Document
     Set oPartDocument = CATIA.Documents.Add ( "Part" )
     Set oPart         = oPartDocument.Part
@@ -114,32 +157,55 @@ Sub CATMain()
     Set oPlaneYZ      = oPart.CreateReferenceFromGeometry( oPart.OriginElements.PlaneYZ )
     
     ' -- Shading view Mode
+```
+```vbscript
     CATIA.ActiveWindow.ActiveViewer.RenderingMode = 1
 
+```
+
     msgbox "Create Five Bearings"
-    Call CreatePatternBearing()
+    Call CreatePatternBearing(#)
     oPart.Update
+```vbscript
     CATIA.ActiveWindow.ActiveViewer.Reframe
 
     msgbox "Create First Cam Set"
+```
+```vbscript
     Call CreateCamSet (0) 
     oPart.Update 
+```
+```vbscript
     CATIA.ActiveWindow.ActiveViewer.Reframe
 
     msgbox "Create Second Cam Set"
+```
+```vbscript
     Call CreateCamSet (90)
     oPart.Update
+```
+```vbscript
     CATIA.ActiveWindow.ActiveViewer.Reframe
 
     msgbox "Create Third Cam Set"
+```
+```vbscript
     Call CreateCamSet (180)
     oPart.Update
+```
+```vbscript
     CATIA.ActiveWindow.ActiveViewer.Reframe
 
     msgbox "Create Fourth Cam Set"
+```
+```vbscript
     Call CreateCamSet (270)
     oPart.Update
+```
+```vbscript
     CATIA.ActiveWindow.ActiveViewer.Reframe
+
+```
 
     msgbox "Create Driving Wheel"
     Call CreateCylinder (iPinLength/2, iBearingDiam )
@@ -148,7 +214,10 @@ Sub CATMain()
 
     msgbox "This is the macro end"
 
+```vbscript
 End Sub
+
+```
 
 ' **************************************************************************
 ' Purpose:   Defines the cylinders between cylinders
@@ -156,27 +225,37 @@ End Sub
 ' Inputs :
 ' 
 ' **************************************************************************
-Sub CreatePatternBearing()
+```vbscript
+Sub CreatePatternBearing(#)
+
+```
 
   ' Cylinder definition: Pad from a circular sketch
   ' -----------------------------------------------
     
     ' -- The YZ plane is the sketch plane
+```vbscript
     Set oCurrentSketch = oPartBody.Sketches.Add ( oPlaneYZ )
         
     ' -- The sketch is a circle centered on shaft origin and of iBearingDiam diameter
+```
+```vbscript
     Dim oFactory2D as Factory2D
     Set oFactory2D = oCurrentSketch.OpenEdition 
     Set oCurrentCircle1 = oFactory2D.CreateClosedCircle ( iCenterX, iCenterY, iBearingDiam/2 ) 
     oCurrentSketch.CloseEdition 
+```
        
     ' Creation of the cylindrical pad
+```vbscript
     Dim oPad As Pad
     Set oPad = oPart.ShapeFactory.AddNewPad ( oCurrentSketch,  iBearingLength )
 
   ' Creating the pattern
+```
   ' --------------------
              
+```vbscript
     Dim originElements1 As OriginElements
     Set originElements1 = oPart.OriginElements
 
@@ -184,6 +263,8 @@ Sub CreatePatternBearing()
     Set oRefPlaneXY = oPart.CreateReferenceFromGeometry( oPart.OriginElements.PlaneXY )
 
     Dim rectPattern1 As RectPattern
+
+```
 
     ' Definition of the pattern: 
     '   --  Element to be duplicated
@@ -195,8 +276,10 @@ Sub CreatePatternBearing()
     '   --  Direction 2
     '   --  Angle
 
+```vbscript
     Set rectPattern1 = oPart.ShapeFactory.AddNewRectPattern(oPad,                 _
                                                             iNumberOfCylinders+1, _
+```
                                                             1,                    _
                                                             iCylinderSpacing,     _
                                                             0.0,                  _
@@ -211,7 +294,10 @@ Sub CreatePatternBearing()
     ' -- Update of the current level
     iCurrentLevel =  iBearingLength
 
+```vbscript
 End Sub
+
+```
 
 ' **************************************************************************
 ' Purpose:   Creation of a cam from an angle value
@@ -219,63 +305,92 @@ End Sub
 ' Inputs :   angle:   The angle
 ' 
 ' **************************************************************************
+```vbscript
 Sub CreateCam(angle)
     
     Dim dRad As Double
     dRad = angle*dPi/180
+```
   
+```vbscript
     Dim dDSin1 as Double
     dDSin1 = iCircle1Rad*sin(dRad)
+```
 
+```vbscript
     Dim dDCos1 as Double
     dDCos1 = iCircle1Rad*cos(dRad)
+```
     
+```vbscript
     Dim dDSin2 as Double
     dDSin2 = iCircle2Rad*sin(dRad)
+```
 
+```vbscript
     Dim dDCos2 as Double
     dDCos2 = iCircle2Rad*cos(dRad)
+```
     
+```vbscript
     Dim dCSin  as Double
     dCSin  = iCircleDist*sin(dRad)
+```
 
+```vbscript
     Dim dCCos  as Double
     dCCos  = iCircleDist*cos(dRad)
+```
     
   ' Create a sketch 
   ' ---------------
+```vbscript
     Set oCurrentSketch = oPartBody.Sketches.Add ( oPlaneYZ ) 
 
   ' Create base elements in the sketch
+```
   ' ----------------------------------
+```vbscript
     Dim oFactory2D As Factory2D
     Set oFactory2D = oCurrentSketch.OpenEdition
 
     Dim dRad1 As Double
     dRad1 = dRad - dPi/4
+```
 
+```vbscript
     Dim dRad2 As Double
     dRad2 = dRad + dPi/4
+```
 
+```vbscript
     Set oCurrentLine1   = oFactory2D.CreateLine   ( _
                            iCenterX - dDSin1,          iCenterY + dDCos1, _
+```
                            iCenterX + dCCos + dDSin2,  iCenterY - dCSin + dDCos2  )
 
+```vbscript
     Set oCurrentLine2   = oFactory2D.CreateLine   ( _
                            iCenterX + dDSin1,          iCenterY - dDCos1, _
+```
                            iCenterX + dCCos - dDSin2,  iCenterY - dCSin - dDCos2 )
 
+```vbscript
     Set oCurrentCircle1 = oFactory2D.CreateCircle ( _
                            iCenterX,                   iCenterY, _
+```
                            iCircle1Rad,   dRad2,    dRad1)
 
+```vbscript
     Set oCurrentCircle2 = oFactory2D.CreateCircle ( _
                            iCenterX + dCCos,           iCenterY + dCSin, _
+```
                            iCircle2Rad,   dRad1,    dRad2)
 
   ' Get references from elements to constraint
   ' ------------------------------------------
 
+```vbscript
     Dim oRefLine1 As Reference
     Set oRefLine1 = oPart.CreateReferenceFromObject(oCurrentLine1)
 
@@ -313,68 +428,96 @@ Sub CreateCam(angle)
     Set oRefCircle2EndPt = oPart.CreateReferenceFromObject(oCurrentCircle2.EndPoint)
 
   ' Create constraints
+```
   ' ------------------
+```vbscript
     Dim oConstraints As Constraints
     Set oConstraints = oCurrentSketch.Constraints
     Dim oConstraint As Constraint
 
     ' -- Fix Circle1
+```
+```vbscript
     Set oConstraint = oConstraints.AddMonoEltCst(catCstTypeReference, _
                                                  oRefCircle1)
+```
 
     ' -- Fix Circle2
+```vbscript
     Set oConstraint = oConstraints.AddMonoEltCst(catCstTypeReference, _
                                                  oRefCircle2)
+```
 
     ' -- Tangency Line1 Circle1
+```vbscript
     Set oConstraint = oConstraints.AddBiEltCst(catCstTypeTangency, _
                                                oRefLine1,          _
+```
                                                oRefCircle1)
 
     ' -- Tangency Line1 Circle2
+```vbscript
     Set oConstraint = oConstraints.AddBiEltCst(catCstTypeTangency, _
                                                oRefCircle2,        _
+```
                                                oRefLine1)
 
     ' -- Coincidence Circle1 Start Point Line1 Start Point
+```vbscript
     Set oConstraint = oConstraints.AddBiEltCst(catCstTypeOn,       _
                                                oRefCircle1StartPt, _
+```
                                                oRefLine1StartPt)
 
     ' -- Coincidence Circle2 End Point Line1 End Point
+```vbscript
     Set oConstraint = oConstraints.AddBiEltCst(catCstTypeOn,     _
                                                oRefCircle2EndPt, _
+```
                                                oRefLine1EndPt)
 
     ' -- Tangency Line2 Circle1
+```vbscript
     Set oConstraint = oConstraints.AddBiEltCst(catCstTypeTangency, _ 
                                                oRefLine2,          _
+```
                                                oRefCircle1)
 
     ' -- Tangency Line2 Circle2
+```vbscript
     Set oConstraint = oConstraints.AddBiEltCst(catCstTypeTangency, _
                                                oRefLine2,          _
+```
                                                oRefCircle2)
 
     ' -- Coincidence Circle1 End Point Line2 Start Point
+```vbscript
     Set oConstraint = oConstraints.AddBiEltCst(catCstTypeOn,     _
                                                oRefCircle1EndPt, _
+```
                                                oRefLine2StartPt)
 
     ' -- Coincidence Circle2 Start Point Line2 End Point
+```vbscript
     Set oConstraint = oConstraints.AddBiEltCst(catCstTypeOn,       _
                                                oRefCircle2StartPt, _
+```
                                                oRefLine2EndPt)
 
     oCurrentSketch.CloseEdition 
 
   ' Create the Pad from the sketch
   ' ------------------------------
+```vbscript
     Dim oPad As Pad
     Set oPad = oPart.ShapeFactory.AddNewPad ( oCurrentSketch,  iCamThickness + iCurrentLevel )
     oPad.SecondLimit.Dimension.Value = iCurrentLevel*-1
+```
     
+```vbscript
 End Sub
+
+```
 
 ' **************************************************************************
 ' Purpose:   Create a cylindric Pad
@@ -383,26 +526,37 @@ End Sub
 '            radius   :   radius of the cylinder
 ' 
 ' **************************************************************************
+```vbscript
 Sub CreateCylinder(thickness, radius)
     
     ' -- Create a sketch 
+```
+```vbscript
     Set oCurrentSketch = oPartBody.Sketches.Add ( oPlaneYZ )
 
     ' -- Create base circle in the sketch
+```
+```vbscript
     Dim oFactory2D As Factory2D
     Set oFactory2D = oCurrentSketch.OpenEdition 
     Set oCurrentCircle1 = oFactory2D.CreateClosedCircle (iCenterX, iCenterY, radius) 
     oCurrentSketch.CloseEdition 
+```
 
     ' -- Create the Pad from the sketch
+```vbscript
     Dim oPad As Pad
     Set oPad = oPart.ShapeFactory.AddNewPad ( oCurrentSketch,  thickness + iCurrentLevel )
     oPad.SecondLimit.Dimension.Value = iCurrentLevel*-1
+```
 
     ' -- Increase Level
     iCurrentLevel = iCurrentLevel + thickness
 
+```vbscript
 End Sub
+
+```
 
 ' **************************************************************************
 ' Purpose:   Creation of the set of cams for a cylinder
@@ -410,7 +564,10 @@ End Sub
 ' Inputs :   angle:   The angle between the set of cam and the Y Axis
 ' 
 ' **************************************************************************
+```vbscript
 Sub CreateCamSet(angle)
+
+```
 
     ' -- Create a cam
     CreateCam(angle)
@@ -425,9 +582,10 @@ Sub CreateCamSet(angle)
     ' -- Increase level
     iCurrentLevel = iCurrentLevel + iBearingLength + iCamThickness
 
+```vbscript
 End Sub
 
-
+```
 
 ```vbscript
 Option Explicit
@@ -443,50 +601,78 @@ Option Explicit
 
 'Number Of Cylinders
 ' ------------------
+```vbscript
    Dim iNumberOfCylinders As Integer
+      
+```
       
 ' Shaft data
 ' ----------
     ' -- Shaft origin
+```vbscript
     Dim iCenterX As Integer
     Dim iCenterY As Integer
 
     ' -- Distance between two cams of two different cylinders
+```
+```vbscript
     Dim iCylinderSpacing As Integer
 
     ' -- Bearing diameter
+```
+```vbscript
     Dim iBearingDiam As Integer
 
     ' -- Distance between the cylinders centers
+```
+```vbscript
     Dim iBearingLength As Integer
 
     ' -- Pin diameter between two cams
+```
+```vbscript
     Dim iPinDiam As Integer
 
     ' -- Distance between 2 cams of a single cylinder
+```
+```vbscript
     Dim iPinLength As Integer
+
+```
 
 ' Cam data
 ' --------
     ' -- Thickness
+```vbscript
     Dim iCamThickness As Integer
 
     ' -- Circle 1 diameter
+```
+```vbscript
     Dim iCircle1Rad As Integer
 
     ' -- Circle 2 diameter
+```
+```vbscript
     Dim iCircle2Rad As Integer
 
     ' -- Distance between the 2 circle centers
+```
+```vbscript
     Dim iCircleDist As Integer
 
 ' Pi definition
+```
 ' -------------
+```vbscript
     Dim dPi As Double
+
+```
 
 ' Global data to define the different elements of the camshaft
 ' ------------------------------------------------------------
     ' -- Cam Sketch and cam Sketch elements
+```vbscript
     Dim oCurrentSketch  As Sketch
     Dim oCurrentLine1   As AnyObject
     Dim oCurrentLine2   As AnyObject
@@ -494,25 +680,39 @@ Option Explicit
     Dim oCurrentCircle2 As AnyObject
     
     ' -- Current distance from shaft origin
+```
+```vbscript
     Dim iCurrentLevel As Integer
+
+```
 
 ' Part definition
 ' ---------------
      
     ' -- Part 
+```vbscript
     Dim oPart As Part
 
     ' -- Main tool of the part
+```
+```vbscript
     Dim oPartBody As Body
 
     ' -- Definition of YZ plane as work plane
+```
+```vbscript
     Dim oPlaneYZ As Reference
+
+```
 
 ' **************************************************************************
 ' Main program
 '
 ' **************************************************************************
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
+
+```
 
 	' -- Initialize global variables
     iNumberOfCylinders = 4
@@ -530,6 +730,7 @@ Sub CATMain()
     dPi                = 3.14159265358979323846
     iCurrentLevel      = 0
 
+```vbscript
     Dim oPartDocument As Document
     Set oPartDocument = CATIA.Documents.Add ( &quot;Part&quot; )
     Set oPart         = oPartDocument.Part
@@ -537,32 +738,55 @@ Sub CATMain()
     Set oPlaneYZ      = oPart.CreateReferenceFromGeometry( oPart.OriginElements.PlaneYZ )
     
     ' -- Shading view Mode
+```
+```vbscript
     CATIA.ActiveWindow.ActiveViewer.RenderingMode = 1
 
+```
+
     msgbox &quot;Create Five Bearings&quot;
-    Call CreatePatternBearing()
+    Call CreatePatternBearing(#)
     oPart.Update
+```vbscript
     CATIA.ActiveWindow.ActiveViewer.Reframe
 
     msgbox &quot;Create First Cam Set&quot;
+```
+```vbscript
     Call CreateCamSet (0) 
     oPart.Update 
+```
+```vbscript
     CATIA.ActiveWindow.ActiveViewer.Reframe
 
     msgbox &quot;Create Second Cam Set&quot;
+```
+```vbscript
     Call CreateCamSet (90)
     oPart.Update
+```
+```vbscript
     CATIA.ActiveWindow.ActiveViewer.Reframe
 
     msgbox &quot;Create Third Cam Set&quot;
+```
+```vbscript
     Call CreateCamSet (180)
     oPart.Update
+```
+```vbscript
     CATIA.ActiveWindow.ActiveViewer.Reframe
 
     msgbox &quot;Create Fourth Cam Set&quot;
+```
+```vbscript
     Call CreateCamSet (270)
     oPart.Update
+```
+```vbscript
     CATIA.ActiveWindow.ActiveViewer.Reframe
+
+```
 
     msgbox &quot;Create Driving Wheel&quot;
     Call CreateCylinder (iPinLength/2, iBearingDiam )
@@ -571,7 +795,10 @@ Sub CATMain()
 
     msgbox &quot;This is the macro end&quot;
 
+```vbscript
 End Sub
+
+```
 
 ' **************************************************************************
 ' Purpose:   Defines the cylinders between cylinders
@@ -579,27 +806,37 @@ End Sub
 ' Inputs :
 ' 
 ' **************************************************************************
-Sub CreatePatternBearing()
+```vbscript
+Sub CreatePatternBearing(#)
+
+```
 
   ' Cylinder definition: Pad from a circular sketch
   ' -----------------------------------------------
     
     ' -- The YZ plane is the sketch plane
+```vbscript
     Set oCurrentSketch = oPartBody.Sketches.Add ( oPlaneYZ )
         
     ' -- The sketch is a circle centered on shaft origin and of iBearingDiam diameter
+```
+```vbscript
     Dim oFactory2D as Factory2D
     Set oFactory2D = oCurrentSketch.OpenEdition 
     Set oCurrentCircle1 = oFactory2D.CreateClosedCircle ( iCenterX, iCenterY, iBearingDiam/2 ) 
     oCurrentSketch.CloseEdition 
+```
        
     ' Creation of the cylindrical pad
+```vbscript
     Dim oPad As Pad
     Set oPad = oPart.ShapeFactory.AddNewPad ( oCurrentSketch,  iBearingLength )
 
   ' Creating the pattern
+```
   ' --------------------
              
+```vbscript
     Dim originElements1 As OriginElements
     Set originElements1 = oPart.OriginElements
 
@@ -607,6 +844,8 @@ Sub CreatePatternBearing()
     Set oRefPlaneXY = oPart.CreateReferenceFromGeometry( oPart.OriginElements.PlaneXY )
 
     Dim rectPattern1 As RectPattern
+
+```
 
     ' Definition of the pattern: 
     '   --  Element to be duplicated
@@ -618,8 +857,10 @@ Sub CreatePatternBearing()
     '   --  Direction 2
     '   --  Angle
 
+```vbscript
     Set rectPattern1 = oPart.ShapeFactory.AddNewRectPattern(oPad,                 _
                                                             iNumberOfCylinders+1, _
+```
                                                             1,                    _
                                                             iCylinderSpacing,     _
                                                             0.0,                  _
@@ -631,11 +872,13 @@ Sub CreatePatternBearing()
                                                             True,                 _
                                                             0.0)
 
-
     ' -- Update of the current level
     iCurrentLevel =  iBearingLength
 
+```vbscript
 End Sub
+
+```
 
 ' **************************************************************************
 ' Purpose:   Creation of a cam from an angle value
@@ -643,63 +886,92 @@ End Sub
 ' Inputs :   angle:   The angle
 ' 
 ' **************************************************************************
+```vbscript
 Sub CreateCam(angle)
     
     Dim dRad As Double
     dRad = angle*dPi/180
+```
   
+```vbscript
     Dim dDSin1 as Double
     dDSin1 = iCircle1Rad*sin(dRad)
+```
 
+```vbscript
     Dim dDCos1 as Double
     dDCos1 = iCircle1Rad*cos(dRad)
+```
     
+```vbscript
     Dim dDSin2 as Double
     dDSin2 = iCircle2Rad*sin(dRad)
+```
 
+```vbscript
     Dim dDCos2 as Double
     dDCos2 = iCircle2Rad*cos(dRad)
+```
     
+```vbscript
     Dim dCSin  as Double
     dCSin  = iCircleDist*sin(dRad)
+```
 
+```vbscript
     Dim dCCos  as Double
     dCCos  = iCircleDist*cos(dRad)
+```
     
   ' Create a sketch 
   ' ---------------
+```vbscript
     Set oCurrentSketch = oPartBody.Sketches.Add ( oPlaneYZ ) 
 
   ' Create base elements in the sketch
+```
   ' ----------------------------------
+```vbscript
     Dim oFactory2D As Factory2D
     Set oFactory2D = oCurrentSketch.OpenEdition
 
     Dim dRad1 As Double
     dRad1 = dRad - dPi/4
+```
 
+```vbscript
     Dim dRad2 As Double
     dRad2 = dRad + dPi/4
+```
 
+```vbscript
     Set oCurrentLine1   = oFactory2D.CreateLine   ( _
                            iCenterX - dDSin1,          iCenterY + dDCos1, _
+```
                            iCenterX + dCCos + dDSin2,  iCenterY - dCSin + dDCos2  )
 
+```vbscript
     Set oCurrentLine2   = oFactory2D.CreateLine   ( _
                            iCenterX + dDSin1,          iCenterY - dDCos1, _
+```
                            iCenterX + dCCos - dDSin2,  iCenterY - dCSin - dDCos2 )
 
+```vbscript
     Set oCurrentCircle1 = oFactory2D.CreateCircle ( _
                            iCenterX,                   iCenterY, _
+```
                            iCircle1Rad,   dRad2,    dRad1)
 
+```vbscript
     Set oCurrentCircle2 = oFactory2D.CreateCircle ( _
                            iCenterX + dCCos,           iCenterY + dCSin, _
+```
                            iCircle2Rad,   dRad1,    dRad2)
 
   ' Get references from elements to constraint
   ' ------------------------------------------
 
+```vbscript
     Dim oRefLine1 As Reference
     Set oRefLine1 = oPart.CreateReferenceFromObject(oCurrentLine1)
 
@@ -736,70 +1008,97 @@ Sub CreateCam(angle)
     Dim oRefCircle2EndPt As Reference
     Set oRefCircle2EndPt = oPart.CreateReferenceFromObject(oCurrentCircle2.EndPoint)
 
-
   ' Create constraints
+```
   ' ------------------
+```vbscript
     Dim oConstraints As Constraints
     Set oConstraints = oCurrentSketch.Constraints
     Dim oConstraint As Constraint
 
     ' -- Fix Circle1
+```
+```vbscript
     Set oConstraint = oConstraints.AddMonoEltCst(catCstTypeReference, _
                                                  oRefCircle1)
+```
 
     ' -- Fix Circle2
+```vbscript
     Set oConstraint = oConstraints.AddMonoEltCst(catCstTypeReference, _
                                                  oRefCircle2)
+```
 
     ' -- Tangency Line1 Circle1
+```vbscript
     Set oConstraint = oConstraints.AddBiEltCst(catCstTypeTangency, _
                                                oRefLine1,          _
+```
                                                oRefCircle1)
 
     ' -- Tangency Line1 Circle2
+```vbscript
     Set oConstraint = oConstraints.AddBiEltCst(catCstTypeTangency, _
                                                oRefCircle2,        _
+```
                                                oRefLine1)
 
     ' -- Coincidence Circle1 Start Point Line1 Start Point
+```vbscript
     Set oConstraint = oConstraints.AddBiEltCst(catCstTypeOn,       _
                                                oRefCircle1StartPt, _
+```
                                                oRefLine1StartPt)
 
     ' -- Coincidence Circle2 End Point Line1 End Point
+```vbscript
     Set oConstraint = oConstraints.AddBiEltCst(catCstTypeOn,     _
                                                oRefCircle2EndPt, _
+```
                                                oRefLine1EndPt)
 
     ' -- Tangency Line2 Circle1
+```vbscript
     Set oConstraint = oConstraints.AddBiEltCst(catCstTypeTangency, _ 
                                                oRefLine2,          _
+```
                                                oRefCircle1)
 
     ' -- Tangency Line2 Circle2
+```vbscript
     Set oConstraint = oConstraints.AddBiEltCst(catCstTypeTangency, _
                                                oRefLine2,          _
+```
                                                oRefCircle2)
 
     ' -- Coincidence Circle1 End Point Line2 Start Point
+```vbscript
     Set oConstraint = oConstraints.AddBiEltCst(catCstTypeOn,     _
                                                oRefCircle1EndPt, _
+```
                                                oRefLine2StartPt)
 
     ' -- Coincidence Circle2 Start Point Line2 End Point
+```vbscript
     Set oConstraint = oConstraints.AddBiEltCst(catCstTypeOn,       _
                                                oRefCircle2StartPt, _
+```
                                                oRefLine2EndPt)
 
     oCurrentSketch.CloseEdition 
 
   ' Create the Pad from the sketch
   ' ------------------------------
+```vbscript
     Dim oPad As Pad
     Set oPad = oPart.ShapeFactory.AddNewPad ( oCurrentSketch,  iCamThickness + iCurrentLevel )
     oPad.SecondLimit.Dimension.Value = iCurrentLevel*-1
+```
     
+```vbscript
 End Sub
+
+```
 
 ' **************************************************************************
 ' Purpose:   Create a cylindric Pad
@@ -808,27 +1107,37 @@ End Sub
 '            radius   :   radius of the cylinder
 ' 
 ' **************************************************************************
+```vbscript
 Sub CreateCylinder(thickness, radius)
     
     ' -- Create a sketch 
+```
+```vbscript
     Set oCurrentSketch = oPartBody.Sketches.Add ( oPlaneYZ )
 
     ' -- Create base circle in the sketch
+```
+```vbscript
     Dim oFactory2D As Factory2D
     Set oFactory2D = oCurrentSketch.OpenEdition 
     Set oCurrentCircle1 = oFactory2D.CreateClosedCircle (iCenterX, iCenterY, radius) 
     oCurrentSketch.CloseEdition 
+```
 
     ' -- Create the Pad from the sketch
+```vbscript
     Dim oPad As Pad
     Set oPad = oPart.ShapeFactory.AddNewPad ( oCurrentSketch,  thickness + iCurrentLevel )
     oPad.SecondLimit.Dimension.Value = iCurrentLevel*-1
+```
 
     ' -- Increase Level
     iCurrentLevel = iCurrentLevel + thickness
 
+```vbscript
 End Sub
 
+```
 
 ' **************************************************************************
 ' Purpose:   Creation of the set of cams for a cylinder
@@ -836,7 +1145,10 @@ End Sub
 ' Inputs :   angle:   The angle between the set of cam and the Y Axis
 ' 
 ' **************************************************************************
+```vbscript
 Sub CreateCamSet(angle)
+
+```
 
     ' -- Create a cam
     CreateCam(angle)
@@ -851,5 +1163,7 @@ Sub CreateCamSet(angle)
     ' -- Increase level
     iCurrentLevel = iCurrentLevel + iBearingLength + iCamThickness
 
+```vbscript
 End Sub
+```
 ```

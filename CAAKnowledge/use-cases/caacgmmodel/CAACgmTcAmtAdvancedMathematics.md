@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Advanced Mathematics"
-category: "use-case"
+category: use-case
 module: "CAACgmModel"
 tags: []
-source_file: "Doc/online/CAACgmModel/CAACgmTcAmtAdvancedMathematics.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmTcAmtAdvancedMathematics.htmmd"
 converted: "2026-05-11T17:33:48.067272"
 ```
 

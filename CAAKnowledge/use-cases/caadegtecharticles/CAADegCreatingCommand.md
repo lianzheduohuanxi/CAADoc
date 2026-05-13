@@ -4,13 +4,13 @@ title: "Creating a State Dialog Command"
 category: "use-case"
 module: "CAADegTechArticles"
 tags: ["CAACommandCmd", "CATIndicationAgent"]
-source_file: "Doc/online/CAADegTechArticles/CAADegCreatingCommand.htm"
+source_file: "Doc/online/CAADegTechArticles/CAADegCreatingCommand.htmmd"
 converted: "2026-05-11T17:33:49.764355"
 ```
 
 ---
 tags: ["CAACommandCmd", "CATIndicationAgent"]
-source_file: "Doc/online/CAADegTechArticles/CAADegCreatingCommand.htm"
+source_file: "Doc/online/CAADegTechArticles/CAADegCreatingCommand.htmmd"
 converted: "2026-05-11T17:33:49.764355"
 3D PLM Enterprise Architecture |  User Interface - Commands |  Creating a State Dialog Command _How to create the dialog command class_
 
@@ -33,7 +33,7 @@ Creating the State Dialog Command Class Header This shows how to create the clas
           class CAACommandCmd : public CATStateCommand
 
 ---
-    * **Resources** : they are located in the CAACommandCmd.CATNls file you will store in your framework's CNext\resources\msgcatalog directory. Resources of a dialog state command are the prompts you can associate with each state, and the undo prompts. Declare the file using the `CmdDeclareResource` macro. The base class must be set as the second parameter.
+    * **Resources** : they are located in the CAACommandCmd.CATNls file you will store in your framework's CNext/resources/msgcatalog directory. Resources of a dialog state command are the prompts you can associate with each state, and the undo prompts. Declare the file using the `CmdDeclareResource` macro. The base class must be set as the second parameter.
 
           CmdDeclareResource(CAACommandCmd, CATStateCommand);
 
@@ -51,12 +51,12 @@ CmdDeclareResource(CAACommandCmd, CATStateCommand);
 ---
     * **Statechart** : the statechart is implemented by overriding the `BuildGraph` method. States, transitions, and dialog agents are created in this method, and guard conditions and action methods are declared as state and transition parameters.
 
-          virtual void BuildGraph();
+          virtual void BuildGraph(#);
 
 ---
     * **Dialog agents** : Dialog agents translate end user intents into end user input. They are instances of the classes CATDialogAgent, an unspecialized dialog agent that you can use, for example, to monitor end user input through a dialog box. More specialized dialog agents exist: the CATIndicationAgent to retrieve a 2D point when the end user left clicks in either a 2D or a 3D viewer, and the CATPathElementAgent to retrieve the object the end user has selected. A dialog agent should be declared as a data member to be created and used in the `BuildGraph` method, and used in condition and actions methods. Create as many dialog agents as you need.
 
-virtual void BuildGraph();
+virtual void BuildGraph(#);
           CATDialogAgent      * _daAgent;
           CATIndicationAgent  * _daIndicationAgent;
           CATPathElementAgent * _daSelectionAgent;
@@ -90,13 +90,13 @@ Once you have completed this step, the header file of your state dialog command 
 class CAACommandCmd : public CATStateCommand
       CmdDeclareResource(CAACommandCmd, CATStateCommand);
       public :
-        CAACommandCmd();
-        virtual ~CAACommandCmd();
+        CAACommandCmd(#);
+        virtual ~CAACommandCmd(#);
         CATStatusChangeRC Activate   (CATCommand * iCmd, CATNotification * iNotif);
         CATStatusChangeRC Desactivate(CATCommand * iCmd, CATNotification * iNotif);
         CATStatusChangeRC Cancel     (CATCommand * iCmd, CATNotification * iNotif);
 
-        virtual void BuildGraph();
+        virtual void BuildGraph(#);
         CATBoolean  GuardConditionMethod1(void * iUsefulData);
         CATBoolean  GuardConditionMethod2(void * iUsefulData);
         CATBoolean  ActionMethod1(void * iUsefulData);

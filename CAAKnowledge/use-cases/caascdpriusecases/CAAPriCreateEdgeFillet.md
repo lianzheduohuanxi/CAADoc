@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdPriUseCases"
 tags: ["CAAScrBase", "CAAPriCreateEdgeFillet", "CATIA", "CAAScrJavaScript", "CAAScdInfUseCases", "CAAScdPriUseCases", "CAAInfLauchMacro", "CAAPriCreateEdgeFilletSource", "CAAPriUseCases"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriCreateEdgeFillet.htm"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriCreateEdgeFillet.htmmd"
 converted: "2026-05-11T11:27:02.721619"
 ---
 
@@ -61,7 +61,7 @@ them to create another EdgeFillet.
     
       
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
     
   
 
@@ -85,8 +85,6 @@ features from a pad.
 ---
 
 *Copyright &#169; 2001, Dassault Syst&#232;mes. All rights reserved.*
-
-
 
 ```vbscript
 ...

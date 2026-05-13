@@ -2,7 +2,7 @@
 title: "CAADlgBBReceiverWindow"
 type: "interface"
 module: "CAADialog"
-category: "framework"
+category: api-reference
 base: "CATDlgDocument"
 inheritance_chain: "CAADlgBBReceiverWindow → CATDlgDocument"
 method_count: 0
@@ -30,3 +30,34 @@ verified: true
 - `CATDlgDocument.h`
 - `CATEventSubscriber.h`
 
+---
+
+## Interface Overview
+
+This interface inherits from **CATDlgDocument**. 
+
+**Inherited Methods**: Please refer to the base interface documentation above.
+
+---
+
+## Interface Overview
+
+This interface inherits from **from**. 
+
+**Inherited Methods**: Please refer to the base interface documentation above.
+
+---
+
+## Related Use Cases
+
+- [3D PLM Enterprise Architecture](../../use-cases/caadlgcases/CAADlgSampleBBMsg.md)
+
+## Interface Notes
+
+This interface is part of the **CAA** module.
+
+**Status**: This interface document is a template. Please refer to the official API documentation for more information.
+
+**Related Resources**:
+- [Quick References](../..//quick-refs/)
+- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)

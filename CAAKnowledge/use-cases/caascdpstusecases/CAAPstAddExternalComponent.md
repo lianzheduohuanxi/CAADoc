@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdPstUseCases"
 tags: ["CAAScrBase", "CAAPstAddExternalComponent", "CATIA", "CAAScrJavaScript", "CAAScdPstUseCases", "CAAScdInfUseCases", "CAAPstAddExternalComponentSource", "CAAPstHull", "CAAInfLauchMacro"]
-source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddExternalComponent.htm"
+source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddExternalComponent.htmmd"
 converted: "2026-05-11T11:27:02.579663"
 ---
 
@@ -15,7 +15,7 @@ converted: "2026-05-11T11:27:02.579663"
     
   
   
-    ![](../CAAScrBase/images/ainfo.gif)
+    ![image](../../assets/images/ainfo.gif)
     
       
 
@@ -24,12 +24,12 @@ CAAPstAddExternalComponent is launched in CATIA [1].
       
 
 [CAAPstAddExternalComponent.CATScript
-      ](CAAPstAddExternalComponentSource.htm)is located in the CAAScdPstUseCases module. [Execute
+      ](CAAPstAddExternalComponentSource.md)is located in the CAAScdPstUseCases module. [Execute
       macro](macros/CAAPstAddExternalComponent.CATScript) (Windows only).
     
   
   
-    ![](../CAAScrBase/images/ascenari.gif)
+    ![image](../../assets/images/ascenari.gif)
     
       
 
@@ -75,7 +75,7 @@ A new part is imported under the product collection using the `AddExternalCompon
     
   
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 
@@ -113,37 +113,45 @@ illustrated using:
 
 *Copyright  2001, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 ...
       'Create a new product document object by adding a document with the Product
       'type to the document collection of the CATIA application. 
+```vbscript
       Dim oProductDoc As Document
       Set oProductDoc = CATIA.Documents.Add(&quot;Product&quot;) 
 
       'Retrieve the root product.
+```
+```vbscript
       Dim oRoot As Product
       Set oRoot = oProductDoc.Product
 
       'Retrieve the root product collection of products.
+```
+```vbscript
       Dim oRootCol As Products
       Set oRootCol = oRoot.Products      
   ...
+```
 ```
 
 ```vbscript
 ...
       'Open the Part Document
+```vbscript
       Dim oPartDoc As Document
       Set oPartDoc = CATIA.Documents.Open(sDocPath &amp; &quot;CAAPstHull.CATPart&quot;)
   ...
+```
 ```
 
 ```vbscript
 ...
       'Add a new component from the already opened part document.
+```vbscript
       Dim oNewComponent As Product
       Set oNewComponent = oRootCol.AddExternalComponent(oPartDoc)
   ...
+```
 ```

@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "An Introduction to Geometric Modeler Use Cases"
-category: "use case"
+category: use-case case"
 module: "CAACgmModel"
 tags: ["CATICGMContainer", "CATICGMObject", "CAAGMModelGemBrowser"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelUseCaseOverw.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelUseCaseOverw.htmmd"
 converted: "2026-05-11T17:33:48.319640"
 ```
 
@@ -31,7 +31,7 @@ To create data directly, you must:
 To create data directly, you must:
     1. Create the CATGeoFactory. The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject (and the curves and surfaces in particular). This creation is done by using the global function `::CATCreateCGMContainer`.
 
-           CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**()
+           CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**(#)
 
     2. Create the geometric objects by using the geometry factory, for example:
 
@@ -86,7 +86,7 @@ To retrieve input data from an already existing container, you must:
 piCurG != NULL;
 piCurG = piGeomFactory->Next(piCurG))
 ```vbscript
-           curtag = piCurG->GetPersistentTag();
+           curtag = piCurG->GetPersistentTag(#);
 ```
 
            CATICGMObject * piCGMObj = piGeomFactory->FindObjectFromTag(curtag);
@@ -118,7 +118,7 @@ ofstream filetowrite(pfileName, ios::binary ) ;
     #endif
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
-       filetowrite.close();
+       filetowrite.close(#);
      }
 
      //

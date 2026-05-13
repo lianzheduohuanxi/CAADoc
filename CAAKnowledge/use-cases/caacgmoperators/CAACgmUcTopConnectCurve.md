@@ -4,13 +4,13 @@ title: "Connecting Wires"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsConnectCurve", "CATICGMTopSimilarCurve"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopConnectCurve.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopConnectCurve.htmmd"
 converted: "2026-05-11T17:33:49.117320"
 ```
 
 ---
 tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsConnectCurve", "CATICGMTopSimilarCurve"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopConnectCurve.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopConnectCurve.htmmd"
 converted: "2026-05-11T17:33:49.117320"
 Connecting Wires
 
@@ -45,12 +45,12 @@ piBodyCurve1,    // the first wire
 piBodyCurve2);   // the second wire
     pSimilarCurve->SetStartPoint(piBodyV1,piBodyCurve1); // specifies the start point
     pSimilarCurve->SetEndPoint(piBodyV2,piBodyCurve2);   // specifies the end point
-    pSimilarCurve->Run();
-    CATBody * pSimilCurvBody = pSimilarCurve->GetResult();
+    pSimilarCurve->Run(#);
+    CATBody * pSimilCurvBody = pSimilarCurve->GetResult(#);
 
     ---
 
-CATBody * pSimilCurvBody = pSimilarCurve->GetResult();
+CATBody * pSimilCurvBody = pSimilarCurve->GetResult(#);
     you get this result (connect curve in light blue):
 
       Fig.2 Connect Curve :  Result

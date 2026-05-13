@@ -4,13 +4,13 @@ title: "Topological Journal: Writing a Validation Tool "
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMCheckForPart", "CAAGMOperatorsInterfaces", "CAAGMOperatorsCheckGnOK", "CAAGMOperatorsJournalThreadOpMain", "CAAGMTopCheckForPart", "CAATopCheckNoCopy", "CAAAddInputBody", "CAAGMOperatorsCheckGnKO", "CAAGMOperatorsCheckForPart", "CAACheck"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcJournalChecking3.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcJournalChecking3.htmmd"
 converted: "2026-05-11T17:33:48.983062"
 ```
 
 ---
 tags: ["CAAGMCheckForPart", "CAAGMOperatorsInterfaces", "CAAGMOperatorsCheckGnOK", "CAAGMOperatorsJournalThreadOpMain", "CAAGMTopCheckForPart", "CAATopCheckNoCopy", "CAAAddInputBody", "CAAGMOperatorsCheckGnKO", "CAAGMOperatorsCheckForPart", "CAACheck"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcJournalChecking3.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcJournalChecking3.htmmd"
 converted: "2026-05-11T17:33:48.983062"
 Topological Journal: Writing a Validation Tool
 
@@ -53,7 +53,7 @@ TRUE);               // activates a verbose mode
     // Checks the journal - 0 is returned if valid
 reportCheck->CAAAddInputBody(pInputBody1, CAATopCheckNoCopy);
 reportCheck->CAAAddInputBody(pInputBody2, CAATopCheckNoCopy);
-    int checkReturn = reportCheck->CAACheck();
+    int checkReturn = reportCheck->CAACheck(#);
 
 ---
 References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)

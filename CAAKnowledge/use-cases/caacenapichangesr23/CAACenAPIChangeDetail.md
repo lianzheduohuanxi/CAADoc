@@ -1,11 +1,11 @@
 ---
 ```vbscript
 title: "Detail Of C++ API Changes"
-category: "api-changes"
+category: use-case
 module: "CAACenAPIChangesR23"
 version: "V5R23"
 tags: ["CAA2Usage", "CAA2Level"]
-source_file: "Doc/online/CAACenAPIChangesR23/CAACenAPIChangeDetail.htm"
+source_file: "Doc/online/CAACenAPIChangesR23/CAACenAPIChangeDetail.htmmd"
 converted: "2026-05-11T17:33:51.747195"
 ```
 

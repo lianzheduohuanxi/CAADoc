@@ -1,11 +1,11 @@
 ---
 ```vbscript
 title: "ElecHarnessItf Framework Modifications in V5R17"
-category: "use-case"
+category: use-case
 module: "CAACenAPIChangesR17"
 version: "V5R17"
 tags: ["CATIEhiFLEX"]
-source_file: "Doc/online/CAACenAPIChangesR17/ElecHarnessItf.htm"
+source_file: "Doc/online/CAACenAPIChangesR17/ElecHarnessItf.htmmd"
 converted: "2026-05-11T17:33:51.337240"
 ```
 

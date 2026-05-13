@@ -4,7 +4,7 @@ title: "Selecting a mesh entity (node, element)"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniMeshSelectFEEntity", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSelectFEEntity.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSelectFEEntity.htmmd"
 converted: "2026-05-11T17:31:51.695188"
 ```
 
@@ -38,20 +38,26 @@ This use case shows you how to select a mesh entity (node, element) using the **
 ```vbscript
     '-----------------------------------------------------------
     'Optional: allows to find the sample wherever it's installed
+```vbscript
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
+```
 
+```vbscript
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
 ```vbscript
         End If
     '-----------------------------------------------------------
@@ -68,24 +74,30 @@ End If
 ```vbscript
 '-----------------------------------------------------------
     'Open the Analysis document
-    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\AllElementsAndNode.CATAnalysis")
+```vbscript
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/AllElementsAndNode.CATAnalysis")
+```
 ```
 
 ```
 
 ```
 
+```vbscript
 ```vbscript
 ```vbscript
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ```
+```
 
 ```
 
 ```vbscript
+```vbscript
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```vbscript
+```
     'Get the Selection object
 ```
 
@@ -93,8 +105,10 @@ Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ```vbscript
 ```vbscript
+```vbscript
     Set oSelection = oAnalysisDocument.Selection
 
+```
 ```
 
 ```
@@ -109,13 +123,17 @@ Open the Analysis document. The Analysis document is retrieved in the documentat
     ...
 
 ```vbscript
+```vbscript
     'Set the selection type
+```
 ```
 
 ```vbscript
 ```vbscript
+```vbscript
 'Set the selection type
     InputObjectType(0) = "AnalysisMeshElement"
+```
 ```
 
 ```
@@ -134,8 +152,10 @@ Open the Analysis document. The Analysis document is retrieved in the documentat
 
 ```vbscript
 ```vbscript
+```vbscript
     Set oMeshElement = oSelection.Item(1).Value
 
+```
 ```
 
 ```
@@ -150,13 +170,17 @@ User is prompted to select a mesh element. The filter **AnalysisMeshElement** al
     ...
 
 ```vbscript
+```vbscript
     'Set the selection type
+```
 ```
 
 ```vbscript
 ```vbscript
+```vbscript
 'Set the selection type
     InputObjectType(0) = "AnalysisMeshNode"
+```
 ```
 
 ```
@@ -175,8 +199,10 @@ User is prompted to select a mesh element. The filter **AnalysisMeshElement** al
 
 ```vbscript
 ```vbscript
+```vbscript
     Set oMeshNode = oSelection.Item(1).Value
 
+```
 ```
 
 ```
@@ -188,14 +214,16 @@ User is prompted to select a mesh element. The filter **AnalysisMeshElement** al
 #### Epilog
 
     ...
+```vbscript
      End Sub
     ...
+```
 
 ---
 
 To run the macro interactively CATDocView environment variables must be defined.
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

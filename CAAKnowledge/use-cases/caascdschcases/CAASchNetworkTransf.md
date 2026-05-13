@@ -4,7 +4,7 @@ title: "Transforming a Schematic Network Object"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAADoc", "CAAScdSchUseCases", "CATIA", "CAASchAppBase", "CAASCHEDUApp", "CAASchPlatformModeler", "CATIASchMovable", "CAASCH_Network01", "CAASchNetworkTransf", "CAASchAppUtilities"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchNetworkTransf.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchNetworkTransf.htmmd"
 converted: "2026-05-11T17:31:51.417508"
 ```
 
@@ -33,9 +33,9 @@ This macro shows you how to transform a schematic network object.Given a list of
   * Setup:
 
 >   1. Build CAASchAppBase.m and CAASchAppUtilities.m, located in CAASchPlatformModeler.edu (RADE is required).
->   2. Copy generated DLLs, CAASchAppBase.dll and CAASchAppUtilities.m, respectively, to the run-time environment folder "intel_a\code\bin."
->   3. Copy CAASCHEDUApp.CATfct, located CAASchPlatformModeler.edu\CNext\resources\graphic, to the run-time environment folder "intel_a\resources\graphic."
->   4. Copy CAASchPlatformModeler.edu\CNext\code\dictionary\CAASchPlatformModeler.edu.dico to the run-time environment folder "intel_a\code\dictionary."
+>   2. Copy generated DLLs, CAASchAppBase.dll and CAASchAppUtilities.m, respectively, to the run-time environment folder "intel_a/code/bin."
+>   3. Copy CAASCHEDUApp.CATfct, located CAASchPlatformModeler.edu/CNext/resources/graphic, to the run-time environment folder "intel_a/resources/graphic."
+>   4. Copy CAASchPlatformModeler.edu/CNext/code/dictionary/CAASchPlatformModeler.edu.dico to the run-time environment folder "intel_a/code/dictionary."
 >
 
 [CAASchNetworkTransf.CATScript ](CAASchNetworkTransfSource.md) is located in the CAAScdSchUseCases module. [Execute macro](macros/CAASchNetworkTransf.CATScript) (Windows only).
@@ -61,22 +61,30 @@ The macro first loads CAASCH_Network01.CATProduct. |     ...
 ```
 
 ```vbscript
+```vbscript
     Dim sFilePath
+```vbscript
+```
 ```vbscript
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
+```
 
 ```
 
-            "online\CAAScdSchUseCases\samples\CAASCH_Network01.CATProduct")
+            "online/CAAScdSchUseCases/samples/CAASCH_Network01.CATProduct")
 
 ```vbscript
+```vbscript
 Dim sFilePath
+```vbscript
+```
 ```vbscript
 ```vbscript
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
+```
 ```
 
 ```
@@ -100,15 +108,23 @@ Next, the macro acquires the schematic root object from the document. The schema
 ```
 
 ```vbscript
+```vbscript
     Dim objPrdRoot As Product
+```vbscript
+```
 ```vbscript
 ```vbscript
     Dim objSchRoot As SchematicRoot
     If ( Not ( objSchDoc Is Nothing ) ) Then
+```
+```vbscript
       Set objPrdRoot = objSchDoc.Product
       If ( Not ( objPrdRoot Is Nothing ) ) Then
+```
+```vbscript
         Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
       End If
+```
     End If
 ```
 
@@ -152,8 +168,10 @@ This macro provides a private FindNetworkComponent subroutine which searches for
 ```
 
 ```vbscript
+```vbscript
              Set objLNetWork = objSchBaseFact.CreateNetwork (objLCntbl_g, _
                objLGRR_g)
+```
 ```
 
     ...
@@ -171,8 +189,10 @@ A network object member in the output list: objLNetwork implements the SchMovabl
 
 ```vbscript
 ```vbscript
+```vbscript
           Set objSchNet = objLNetWork.Item (1,"CATIASchMovable")
 
+```
 ```
 
 ```
@@ -231,8 +251,10 @@ The SchMovable interface provides the ScaledSelectedObjects method to scale a co
 ```
 
 ```vbscript
+```vbscript
              Dim intSelected As Integer
              intSelected = objLSelected_g.Count
+```
              If ( intSelected > 0 ) Then
                 objSchNet.ScaleSelectedObjects objLSelected_g, DbScaleFactor
 ```

@@ -4,13 +4,13 @@ title: "New C++ Authorized APIs in CAA V5R20 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATI2DLayoutClipping", "CATIEcvPercentFill", "CATIPDMUELoadProcess", "CATIPrintableDrafting", "CATISamImageAttributes", "CATICfgEffVal", "CATIMfgMultiAxisCurveMachining", "CATIMfgPPMachine", "CATICGMOperator", "CATIElbDeviceInstance", "CATIBRepAccess_var", "CATICGMVirtual", "CATISysFileAccessStatisticsSettingAtt", "CATITPSDimVisu", "CATISamImageFilters", "CATIAApplicationFrame", "CATIntersectionHVertexType", "CATIAV4Interfaces", "CATIA", "CATISamImageAxisSystem"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R20GANewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R20GANewCPPAPI.htmmd"
 converted: "2026-05-11T17:33:47.475080"
 ```
 
 ---
 tags: ["CATI2DLayoutClipping", "CATIEcvPercentFill", "CATIPDMUELoadProcess", "CATIPrintableDrafting", "CATISamImageAttributes", "CATICfgEffVal", "CATIMfgMultiAxisCurveMachining", "CATIMfgPPMachine", "CATICGMOperator", "CATIElbDeviceInstance", "CATIBRepAccess_var", "CATICGMVirtual", "CATISysFileAccessStatisticsSettingAtt", "CATITPSDimVisu", "CATISamImageFilters", "CATIAApplicationFrame", "CATIntersectionHVertexType", "CATIAV4Interfaces", "CATIA", "CATISamImageAxisSystem"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R20GANewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R20GANewCPPAPI.htmmd"
 converted: "2026-05-11T17:33:47.475080"
 CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R20 GA
 
@@ -21,8 +21,10 @@ The following are the new CAA V5R20 GA C++ Authorized APIs, compared with CAA V5
   * ABQConstants
     * Enumeration LocalAxisSystemTypeEnum
   * ApplicationFrame
+```vbscript
     * Global Function CATAfrIsUndoRedoLocked
   * CATAnalysisVisuInterfaces
+```
     * Enumeration CATSamAxisSystemType
     * Enumeration CATSamColorType
     * Enumeration CATSamComparisonOperator
@@ -41,12 +43,15 @@ The following are the new CAA V5R20 GA C++ Authorized APIs, compared with CAA V5
     * Interface CATIEcvPercentFill
   * CATIAApplicationFrame
     * Class CATCafSearchInformationAdapter
+```vbscript
     * Global Function CATCafSetApplyFilterMode
     * Interface CATISearchInformation
+```
   * CATIAV4Interfaces
     * Class CATListPtrCATV4iV4Attributes
     * Class CATV4iV4Attribute
     * Enumeration AttributeFormat
+```vbscript
     * Global Function CATV4iGetCombinedTub
     * Global Function CATV4iGetElbowTubeData
     * Global Function CATV4iGetModelComment
@@ -60,8 +65,11 @@ The following are the new CAA V5R20 GA C++ Authorized APIs, compared with CAA V5
     * Global Function CATV4iPibroc
     * Global Function CATV4iPibrte
   * CATPDMBase
+```
+```vbscript
     * Global Function SaveToPDM
   * CATPDMBaseInterfaces
+```
     * Interface CATIPDMUELoadProcess
   * CATPlantShipInterfaces
     * Macro or #define Validation_RootObject
@@ -95,18 +103,24 @@ The following are the new CAA V5R20 GA C++ Authorized APIs, compared with CAA V5
     * Macro or #define CATSubdivGridSurfaceType
     * Interface CATICGMOperator
   * GeometricOperators
+```vbscript
     * Global Function CATCreateDistanceMinLim
   * ManufacturingInterfaces
+```
     * Interface CATIMfgPPMachine
   * Mathematics
+```vbscript
     * Global Function CATCreateSoftwareConfiguration
     * Class CATCGMVirtualItf
+```
     * Class CATICGMVirtual
     * Class CATLISTP(CATCGMVirtualItf)
     * Enumeration CATCanonicalPlane
+```vbscript
     * Global Function CATCreateSoftwareConfiguration
     * Global Function CATSign
   * MecModInterfaces
+```
     * Class CATLISTV(CATIBRepAccess_var)
     * Interface CATIMmiInternalCopyWithLinkEdition
   * MechanicalModeler
@@ -114,9 +128,11 @@ The following are the new CAA V5R20 GA C++ Authorized APIs, compared with CAA V5
   * ObjectModelerNavigator
     * Enumeration CATNavigNodeState
   * PSNInteroperability
+```vbscript
     * Global Function CATAddCBToCurrentEditor
     * Global Function CATLoadFromVPM
   * PrintBase
+```
     * Interface CATIPrintableDrafting
   * SurfaceMachiningInterfaces
     * Interface CATIMfgMultiAxisCurveMachining
@@ -125,8 +141,10 @@ The following are the new CAA V5R20 GA C++ Authorized APIs, compared with CAA V5
     * Interface CATISysFileAccessStatisticsSettingAtt
     * Typedef CATSafeArray
   * TopologicalOperators
+```vbscript
     * Global Function CATCreateTopDevelop
   * VPMInterfaces
+```
     * Macro or #define EFFVALSIZE
     * Interface CATICfgEffVal
 
@@ -141,4 +159,7 @@ History Version: **1** [Oct 2009] | Document created
 * * *
 
 _Copyright © 1999-2009, Dassault Systèmes. All rights reserved._
+```vbscript
 Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.md) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.md) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.md)
+
+```

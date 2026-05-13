@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating a Most Recent Used Command Header"
-category: "use case"
+category: use-case case"
 module: "CAAAfrUseCases"
 tags: ["CAAAfrGeneralWksAddinHeader", "CAAAfrMRUHeader", "CAAAfrMRUAddElementCmd", "CAAAfrComboColorHeader", "CAAAfrMRURep", "CAAAfrMRUManager", "CAAAfrGetMRUManager", "CAAEAfrCommandHeaderRepForMRU", "CATIAfrCommandHeaderRep", "CAAAfrMRUHdr", "CATIniCleanerSettingCtrl", "CATINT32ToPtr", "CATIWorkbenchAddin", "CAAAfrMRUSelElementHdr", "CAAAfrMRUNotification", "CATImplementHeaderResources", "CAAAfrGeoCommands", "CAAAfrGeneralWksAddin", "CAAAfrMRUManagerNotification"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleMRUHdr.htm"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleMRUHdr.htmmd"
 converted: "2026-05-11T17:17:55.774532"
 ```
 
@@ -162,10 +162,10 @@ To launch CAAAfrMRUHeader, you will need to set up the build time environment, t
 
 But just before launching the execution, edit the CAAApplicationFrame.edu.dico interface dictionary file located in the dictionary directory of the CAAApplicationFrame.edu framework:
 
-Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CNext\code\dictionary\`
+Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CNext/code/dictionary/`
 
 But just before launching the execution, edit the CAAApplicationFrame.edu.dico interface dictionary file located in the dictionary directory of the CAAApplicationFrame.edu framework:
-Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CNext\code\dictionary\`
+Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CNext/code/dictionary/`
 UNIX | `InstallRootDirectory/CAAApplicationFrame.edu/CNext/code/dictionary/`
 
 In this file, remove the "**#** " character before the two following lines:
@@ -185,10 +185,10 @@ and then run mkCreateRuntimeView.
 and then run mkCreateRuntimeView.
 The CAAAfrMRUHeader use case is made of several classes located in four modules of the CAAApplicationFrame.edu framework:
 
-Windows | `InstallRootDirectory\CAAApplicationFrame.edu`
+Windows | `InstallRootDirectory/CAAApplicationFrame.edu`
 
 The CAAAfrMRUHeader use case is made of several classes located in four modules of the CAAApplicationFrame.edu framework:
-Windows | `InstallRootDirectory\CAAApplicationFrame.edu`
+Windows | `InstallRootDirectory/CAAApplicationFrame.edu`
 Unix | `InstallRootDirectory/CAAApplicationFrame.edu`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -257,8 +257,8 @@ class  CAAAfrMRUManager : public CATBaseUnknown
 
        public:
 
-       CAAAfrMRUManager();
-       virtual ~CAAAfrMRUManager();
+       CAAAfrMRUManager(#);
+       virtual ~CAAAfrMRUManager(#);
 
        static HRESULT **GetMRUManager**(CAAAfrMRUManager ** oManager);
 
@@ -298,8 +298,8 @@ The source file of the _CAAAfrMRUManager_ class is as follows:
     TIE_**CAAIAfrMRUManagement**(CAAAfrMRUManager);
 
 TIE_**CAAIAfrMRUManagement**(CAAAfrMRUManager);
-    CAAAfrMRUManager::CAAAfrMRUManager() {}
-    CAAAfrMRUManager::~CAAAfrMRUManager(){}
+    CAAAfrMRUManager::CAAAfrMRUManager(#) {}
+    CAAAfrMRUManager::~CAAAfrMRUManager(#){}
 
     ...
 
@@ -314,17 +314,17 @@ TIE_**CAAIAfrMRUManagement**(CAAAfrMRUManager);
     {
      ...
 HRESULT CAAAfrMRUManager::GetMRUManager(CAAAfrMRUManager ** oManager)
-          CATBaseUnknown * pManager = _Cleaner.**GetController**();
+          CATBaseUnknown * pManager = _Cleaner.**GetController**(#);
 ```vbscript
           if ( NULL == pManager )
 
 ```
 
           {
-CATBaseUnknown * pManager = _Cleaner.**GetController**();
+CATBaseUnknown * pManager = _Cleaner.**GetController**(#);
 if ( NULL == pManager )
               CAAAfrMRUManager * Obj = NULL;
-              Obj = new **CAAAfrMRUManager**();
+              Obj = new **CAAAfrMRUManager**(#);
 ```vbscript
 ```vbscript
               if ( NULL == Obj )
@@ -335,7 +335,7 @@ if ( NULL == pManager )
 
               {
 CAAAfrMRUManager * Obj = NULL;
-Obj = new **CAAAfrMRUManager**();
+Obj = new **CAAAfrMRUManager**(#);
 ```vbscript
 if ( NULL == Obj )
 ```
@@ -364,11 +364,11 @@ Now, lets us see the three methods of the _CAAIAfrMRUManagement_ __ interface.
     HRESULT CAAAfrMRUManager::AddElement(CATUnicodeString &iNewElement)
 
     {
-        if ( MRU_MAX_SIZE == _NameList.Size() )
+        if ( MRU_MAX_SIZE == _NameList.Size(#) )
         {
             // The list is full, the last element is removed
 HRESULT CAAAfrMRUManager::AddElement(CATUnicodeString &iNewElement)
-if ( MRU_MAX_SIZE == _NameList.Size() )
+if ( MRU_MAX_SIZE == _NameList.Size(#) )
            _NameList.**RemovePosition**(MRU_MAX_SIZE);
 
         }
@@ -386,15 +386,15 @@ _NameList.**RemovePosition**(MRU_MAX_SIZE);
 _NameList.**InsertBefore**(1,iNewElement);
 CATCallbackManager * pCBManager = ::**GetDefaultCallbackManager**(this) ;
 if ( NULL != pCBManager )
-             CAAAfrMRUManagerNotification * pNotification = new CAAAfrMRUManagerNotification();
+             CAAAfrMRUManagerNotification * pNotification = new CAAAfrMRUManagerNotification(#);
              pCBManager->**DispatchCallbacks**(pNotification,this);
-             pNotification->Release();
+             pNotification->Release(#);
 
         }
 
-CAAAfrMRUManagerNotification * pNotification = new CAAAfrMRUManagerNotification();
+CAAAfrMRUManagerNotification * pNotification = new CAAAfrMRUManagerNotification(#);
 pCBManager->**DispatchCallbacks**(pNotification,this);
-pNotification->Release();
+pNotification->Release(#);
         return S_OK ;
 
     }
@@ -416,19 +416,19 @@ The second part of the `AddElement` method consists in to send a notification th
     {
 HRESULT CAAAfrMRUManager::GetElementList(CATListOfCATUnicodeString & oElementList) const
 ```vbscript
-        for ( int i = 1 ; i <= _NameList.Size() ; i++)
+        for ( int i = 1 ; i <= _NameList.Size(#) ; i++)
 
 ```
 
         {
 HRESULT CAAAfrMRUManager::GetElementList(CATListOfCATUnicodeString & oElementList) const
-for ( int i = 1 ; i <= _NameList.Size() ; i++)
+for ( int i = 1 ; i <= _NameList.Size(#) ; i++)
            oElementList.**Append**(_NameList[i]);
 
         }
 
 ```vbscript
-for ( int i = 1 ; i <= _NameList.Size() ; i++)
+for ( int i = 1 ; i <= _NameList.Size(#) ; i++)
 oElementList.**Append**(_NameList[i]);
         return S_OK ;
 ```
@@ -467,11 +467,11 @@ if ( (iPosition >= 1) && (iPosition <= MRU_MAX_SIZE) )
            ...
 _NameList.**InsertBefore**(1,Sel);
 CATCallbackManager * pCBManager = ::**GetDefaultCallbackManager**(this) ;
-              CAAAfrMRUManagerNotification * pNotification = new CAAAfrMRUManagerNotification();
+              CAAAfrMRUManagerNotification * pNotification = new CAAAfrMRUManagerNotification(#);
 
               pCBManager->**DispatchCallbacks**(pNotification,this);
 
-              pNotification->Release();
+              pNotification->Release(#);
               pNotification = NULL ;
 
     ...
@@ -499,14 +499,14 @@ class ExportedByCAAAfrCustomizedCommandHeader CAAAfrMRUHeader: public **CATAfrDi
       public:
         CAAAfrMRUHeader(const CATString & iHeaderName);
 
-        virtual ~CAAAfrMRUHeader();
-        CATCommandHeader * **Clone**() ;
+        virtual ~CAAAfrMRUHeader(#);
+        CATCommandHeader * **Clone**(#) ;
 
       private:
 
         **CAAAfrMRUHeader(CATCommandHeader *iHeaderToCopy);**
-virtual ~CAAAfrMRUHeader();
-CATCommandHeader * **Clone**() ;
+virtual ~CAAAfrMRUHeader(#);
+CATCommandHeader * **Clone**(#) ;
 private:
         CAAAfrMRUHeader(const CAAAfrMRUHeader & iObjectToCopy);
         CAAAfrMRUHeader& operator = (const CAAAfrMRUHeader & iObjectToCopy);
@@ -544,18 +544,18 @@ Here the CAAAfrMRUHeader header file:
 
 CATNull);
 CAAAfrMRUHeader::CAAAfrMRUHeader(const CATString & iHeaderName) :
-    CAAAfrMRUHeader::CAAAfrMRUHeader(){}
+    CAAAfrMRUHeader::CAAAfrMRUHeader(#){}
 
-    CATCommandHeader * CAAAfrMRUHeader::**Clone** ()
+    CATCommandHeader * CAAAfrMRUHeader::**Clone** (#)
 
     {
-CAAAfrMRUHeader::CAAAfrMRUHeader(){}
-CATCommandHeader * CAAAfrMRUHeader::**Clone** ()
+CAAAfrMRUHeader::CAAAfrMRUHeader(#){}
+CATCommandHeader * CAAAfrMRUHeader::**Clone** (#)
         return new CAAAfrMRUHeader(this);
 
     }
 
-CATCommandHeader * CAAAfrMRUHeader::**Clone** ()
+CATCommandHeader * CAAAfrMRUHeader::**Clone** (#)
 return new CAAAfrMRUHeader(this);
     CAAAfrMRUHeader::CAAAfrMRUHeader(CATCommandHeader * iHeaderToCopy):
 
@@ -584,8 +584,8 @@ class CAAEAfrCommandHeaderRepForMRU : public CATBaseUnknown
       CATDeclareClass;
 
     public:
-      CAAEAfrCommandHeaderRepForMRU ();
-      virtual ~CAAEAfrCommandHeaderRepForMRU();
+      CAAEAfrCommandHeaderRepForMRU (#);
+      virtual ~CAAEAfrCommandHeaderRepForMRU(#);
 
       virtual HRESULT  **CreateToolbarRep** (const CATDialog * iParent,
                                                 CATAfrCommandHeaderRep ** oHdrRep) ;
@@ -623,7 +623,7 @@ DataExtension,
 CATBaseUnknown,
 CAAAfrMRUHeader);
     CAAEAfrCommandHeaderRepForMRU::
-               CAAEAfrCommandHeaderRepForMRU():CATBaseUnknown(){}
+               CAAEAfrCommandHeaderRepForMRU(#):CATBaseUnknown(#){}
 
     CAAEAfrCommandHeaderRepForMRU::~CAAEAfrCommandHeaderRepForMRU){}
 ```
@@ -698,8 +698,10 @@ The MRU header has no representation in the menu bar or in a contextual menu, so
 
 This class is the _CAAAfrMRURep_ class. Its main roles are:
 
+```vbscript
   * Set a callback to be informed when the contents or the order of the MRU list change
   * Create _CATDlgPushItem_ instances depending on the MRU list
+```
   * Launch a command to display in a Dialog box (see picture) the selected item.
 
 Here the CAAAfrMRURep header file:
@@ -713,9 +715,9 @@ Here the CAAAfrMRURep header file:
 class CAAAfrMRURep : public **CATAfrCommandHeaderRep**
     public:
       CAAAfrMRURep (const CATDialog * iParent, CATString & iCommandName);
-      virtual ~CAAAfrMRURep();
+      virtual ~CAAAfrMRURep(#);
 
-      HRESULT **Build**();
+      HRESULT **Build**(#);
 
     private:
       void **SelectCB**(CATCommand * iPublishingCommand,
@@ -728,7 +730,7 @@ class CAAAfrMRURep : public **CATAfrCommandHeaderRep**
                       CATCallbackEvent  iData,
     	         CATSubscriberData iCallBack);
 
-      HRESULT **ModifyListItem**() ;
+      HRESULT **ModifyListItem**(#) ;
 
       CAAAfrMRURep (const CAAAfrMRURep &iObjectToCopy);
       CAAAfrMRURep & operator = (const CAAAfrMRURep &iObjectToCopy);
@@ -837,19 +839,19 @@ _pIAfrMRUManagement,
   * The **destructor** class
 
         ...
-        CAAAfrMRURep::~CAAAfrMRURep()
+        CAAAfrMRURep::~CAAAfrMRURep(#)
         {
            if ( NULL != _pIAfrMRUManagement )
            {
                ::**RemoveSubscriberCallbacks**(this, _pIAfrMRUManagement);
-CAAAfrMRURep::~CAAAfrMRURep()
+CAAAfrMRURep::~CAAAfrMRURep(#)
 if ( NULL != _pIAfrMRUManagement )
-               _pIAfrMRUManagement->Release();
+               _pIAfrMRUManagement->Release(#);
                _pIAfrMRUManagement = NULL ;
 
            }
 
-_pIAfrMRUManagement->Release();
+_pIAfrMRUManagement->Release(#);
 _pIAfrMRUManagement = NULL ;
 ```vbscript
            for ( int i=0 ; i < MRU_MAX_SIZE ; i++)
@@ -874,7 +876,7 @@ for ( int i=0 ; i < MRU_MAX_SIZE ; i++)
 if ( NULL != _pItemList[i] )
 ```
 
-                   _pItemList[i]->**RequestDelayedDestruction**();
+                   _pItemList[i]->**RequestDelayedDestruction**(#);
                    _pItemList[i] = NULL ;
 ```
 
@@ -890,12 +892,12 @@ You must overwrite this method. The goal of this method is to create the graphic
 
     ...
 You must overwrite this method. The goal of this method is to create the graphic representation and to initialize it. The `ModifyListItem` method does the work.
-    HRESULT  CAAAfrMRUoRep::Build()
+    HRESULT  CAAAfrMRUoRep::Build(#)
 
     {
 You must overwrite this method. The goal of this method is to create the graphic representation and to initialize it. The `ModifyListItem` method does the work.
-HRESULT  CAAAfrMRUoRep::Build()
-     ModifyListItem() ;
+HRESULT  CAAAfrMRUoRep::Build(#)
+     ModifyListItem(#) ;
 
     }
     ...
@@ -918,7 +920,7 @@ void *,
 CATNotification * iNotification,
 CATCallbackEvent,
 CATSubscriberData)
-           ModifyListItem();
+           ModifyListItem(#);
 
         }
         ...
@@ -935,11 +937,11 @@ The first step consists in to retrieve the Dialog parent of the graphic represen
 
     ...
 The first step consists in to retrieve the Dialog parent of the graphic representation to create. This information is kept by the _CATAfrCommandHeaderRep_ class, and retrieved by its `GetDialogParent` method.
-    HRESULT CAAAfrMRURep::ModifyListItem()
+    HRESULT CAAAfrMRURep::ModifyListItem(#)
 
     {
 The first step consists in to retrieve the Dialog parent of the graphic representation to create. This information is kept by the _CATAfrCommandHeaderRep_ class, and retrieved by its `GetDialogParent` method.
-HRESULT CAAAfrMRURep::ModifyListItem()
+HRESULT CAAAfrMRURep::ModifyListItem(#)
       const CATDialog * pParent = NULL ;
 
       **GetDialogParent**(&pParent);
@@ -953,7 +955,7 @@ Then, the list of item to displayed is retrieved from the CAAAfrMRUManager thank
 Then, the list of item to displayed is retrieved from the CAAAfrMRUManager thanks to the `GetElementList` method  of the _CAAIAfrMRUManagement_ interface. `List` is this list, and `SizeList` is the count of element in this list.
           CATListOfCATUnicodeString List ;
           _pIAfrMRUManagement->**GetElementList**(List);
-          int SizeList = List.**Size**();
+          int SizeList = List.**Size**(#);
 
     ...
 
@@ -1004,14 +1006,14 @@ if ( _pItemList[i] == NULL )
 if ( _pItemList[i] == NULL )
 CATUnicodeString ItemName("**MRUItem_** ");
                 _pItemList[i] = new **CATDlgPushItem**((CATDialog *)pParent,
-                                                    ItemName.CastToCharPtr());
+                                                    ItemName.CastToCharPtr(#));
 
 ```
 
                 **AddAnalyseNotificationCB**(_pItemList[i],
 _pItemList[i] = new **CATDlgPushItem**((CATDialog *)pParent,
-ItemName.CastToCharPtr());
-                                         _pItemList[i]->**GetMenuIActivateNotification**(),
+ItemName.CastToCharPtr(#));
+                                         _pItemList[i]->**GetMenuIActivateNotification**(#),
                                         (CATCommandMethod)&CAAAfrMRURep::SelectCB,
                                         (CATCommandClientData) **CATINT32ToPtr**(i));
 
@@ -1079,10 +1081,10 @@ The MRU header is independent of the document, so this header is instantiated in
 
     ...
 The MRU header is independent of the document, so this header is instantiated in an Add-in of the General workshop [3]. Here is an extract of the _CAAAfrGeneralWksAdn_ class which is an implementation of the _CATIAfrGeneralWksAddin_ interface.
-    void CAAAfrGeneralWksAdn::CreateCommands()
+    void CAAAfrGeneralWksAdn::CreateCommands(#)
 
     {
-void CAAAfrGeneralWksAdn::CreateCommands()
+void CAAAfrGeneralWksAdn::CreateCommands(#)
       CATCommandHeader * pHdr = (CATCommandHeader*) new **CAAAfrMRUHeader**("CAAAfrMRUHdr");
       pHdr->**SetVisibility**(0);
 

@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "How to Use the Topological Journal"
-category: "use case"
+category: use-case case"
 module: "CAATopUseCases"
 tags: ["CAAErrorTopStif7", "CAATopJournal", "CAAErrorTopStif6", "CAAErrorTopStif2", "CAAErrorTopStif5", "CAATopOperator", "CATICGMObject", "CAATopOverview", "CATIntersectionCrvCrv", "CAAErrorTopStif3", "CAAErrorTopStifx", "CAATopStifferner", "CAATopologicalOperators", "CATICGMContainer", "CAAGemBrowser", "CAATopStiffener", "CAAErrorTopStif1", "CAATopStiffner", "CAATeopJournal"]
-source_file: "Doc/online/CAATopUseCases/CAATopJournal.htm"
+source_file: "Doc/online/CAATopUseCases/CAATopJournal.htmmd"
 converted: "2026-05-11T17:31:50.719384"
 ```
 
@@ -115,20 +115,20 @@ This NCGM file can be displayed using the CAAGemBrowser use case.
 The CAATopJournal use case is made of a main named CAATopJournal.cpp located in the CAATopJournal.m module of the CAATopologicalOperators.edu framework:
 
 The CAATopJournal use case is made of a main named CAATopJournal.cpp located in the CAATopJournal.m module of the CAATopologicalOperators.edu framework:
-Windows | `InstallRootDirectory\CAATopologicalOperators.edu\CAATopJournal.m\`
+Windows | `InstallRootDirectory/CAATopologicalOperators.edu/CAATopJournal.m/`
 
 The CAATopJournal use case is made of a main named CAATopJournal.cpp located in the CAATopJournal.m module of the CAATopologicalOperators.edu framework:
-Windows | `InstallRootDirectory\CAATopologicalOperators.edu\CAATopJournal.m\`
+Windows | `InstallRootDirectory/CAATopologicalOperators.edu/CAATopJournal.m/`
 Unix | `InstallRootDirectory/CAATopologicalOperators.edu/CAATopJournal.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 This main uses the new operator class CAATopStiffener, which header is located in the ProtectedInterfaces directory of the CAATopologicalOperators.edu framework, and which source is located in the CAATopOperator.m module of the CAATopologicalOperators.edu framework:
 
-Windows | `InstallRootDirectory\CAATopologicalOperators.edu\CAATopOperator.m\`
+Windows | `InstallRootDirectory/CAATopologicalOperators.edu/CAATopOperator.m/`
 
 This main uses the new operator class CAATopStiffener, which header is located in the ProtectedInterfaces directory of the CAATopologicalOperators.edu framework, and which source is located in the CAATopOperator.m module of the CAATopologicalOperators.edu framework:
-Windows | `InstallRootDirectory\CAATopologicalOperators.edu\CAATopOperator.m\`
+Windows | `InstallRootDirectory/CAATopologicalOperators.edu/CAATopOperator.m/`
 Unix | `InstallRootDirectory/CAATopologicalOperators.edu/CAATopOperator.m/`
 
 [Top]
@@ -171,11 +171,11 @@ class ExportedByCAATopOperator **CAATopStiffener**
     // deletes
 class ExportedByCAATopOperator **CAATopStiffener**
 public:
-       virtual ~CAATopStiffener();
+       virtual ~CAATopStiffener(#);
 
     // constructs
       **CAATopStiffener** (CATGeoFactory     * iFactory,
-virtual ~CAATopStiffener();
+virtual ~CAATopStiffener(#);
                        CATTopData        * iData,
                        CATBody           * iFirstLimitBody,
                        CATBody           * iSecondLimitBody,
@@ -187,13 +187,13 @@ virtual ~CAATopStiffener();
 CATBody           * iSkinBody,
 CATMathVector       iDirection,
 CATCGMJournalList * iJournal=NULL);
-      int **Run**();
+      int **Run**(#);
 
     // gets the result
-      CATBody * **GetResult**() ;
+      CATBody * **GetResult**(#) ;
 
     // data
-CATBody * **GetResult**() ;
+CATBody * **GetResult**(#) ;
     private :
       CATGeoFactory     * _piGeomFactory;        _// the factory_
       CATBody           * _piFirstLimitBody;     _// the first relimiting surface_
@@ -244,11 +244,11 @@ CATCGMJournalList * iJournal)
 The `GetResult` method returns the pointer to the created body.
 
 The `GetResult` method returns the pointer to the created body.
-    CATBody * CAATopStiffener::**GetResult**()
+    CATBody * CAATopStiffener::**GetResult**(#)
 
     {
 The `GetResult` method returns the pointer to the created body.
-CATBody * CAATopStiffener::**GetResult**()
+CATBody * CAATopStiffener::**GetResult**(#)
       CATBody * piReturned = _piResultingBody;
       _piResultingBody = NULL;    _// GetResult must only be called once_
       return (piReturned);
@@ -262,11 +262,11 @@ Notice that once read, the life cycle of the body is taken into account by the c
 
 The destructor removes the created body, if it is created and never retrieved:
 
-    CAATopStiffener::**~CAATopStiffener**()
+    CAATopStiffener::**~CAATopStiffener**(#)
 
     {
       // if the resulting body is created, and is never retrieved (GetResult), deletes it
-CAATopStiffener::**~CAATopStiffener**()
+CAATopStiffener::**~CAATopStiffener**(#)
       if(NULL != _piResultingBody) _piGeomFactory->**Remove**(_piResultingBody,
                                                           CATICGMContainer::RemoveDependancies);
       _piResultingBody  = NULL;
@@ -352,16 +352,16 @@ _// ---------- Tests whether theinput profile body has one domain, containing on
       CATBody * piSkinBody = _piSkinBody;
       if (NULL == piSkinBody ) return (1);
 ```vbscript
-      if (1!= (piSkinBody->**GetNbDomain****s()** ))  return (1) _//one domain in the body_
+      if (1!= (piSkinBody->**GetNbDomain****s(#)** ))  return (1) _//one domain in the body_
 ```
 
       CATDomain* piShell=piSkinBody->**GetDomain**(1);       _//returns the domain_
       if(NULL==piShell) return(1);
 ```vbscript
-      if (**2** != piShell->**GetLowDimension**()) return(4);    _//the domain is made of faces (dim=2)_
+      if (**2** != piShell->**GetLowDimension**(#)) return(4);    _//the domain is made of faces (dim=2)_
 ```
 
-      long nbCells = piShell->**GetNbCellUses**();           _//count of faces_
+      long nbCells = piShell->**GetNbCellUses**(#);           _//count of faces_
       if (1!=nbCells) { return(4);}
       CATFace * piFace = (CATFace *) (piShell->GetCell(1)); _// returns the face_
 ```vbscript
@@ -396,7 +396,7 @@ CATMathDirection direction (_direction);
 _// Journal and configuration_       _// Constructs a topdata from the input_
                 _// Gets the associated configuration_
 
-           **CATSoftwareConfiguration** * pConfig = internalTopdata.GetSoftwareConfiguration();
+           **CATSoftwareConfiguration** * pConfig = internalTopdata.GetSoftwareConfiguration(#);
 _// Journal and configuration_       _// Constructs a topdata from the input_
 _// Gets the associated configuration_
                 _// To use it to create a journal that will be embedded in the created internalTopdata_
@@ -479,19 +479,19 @@ The prism must be delimited on one of the limiting bodies (`SetTrim`), and there
            {
 The prism must be delimited on one of the limiting bodies (`SetTrim`), and there must be a Boolean union operation between the delimiting body and the computed prism (`SetOperation`). Moreover, we want to recover the result of this Boolean operation (`SetResultMode` set to `TRUE`). `SetLimit` must be called for each limit (`CatLimStart`, `CATLimEnd`), to ask an "until" limit (`CatLimUntil`) on each side. Notice that each limit can have a different behavior: one limit "until", the other defined by an offset from the profile. The prism operator can now be run.
 _// --------- Runs_
-             pPrismOp ->**Run**();
+             pPrismOp ->**Run**(#);
 
            }
            **CATCatch**(CATError,error)
            {
-pPrismOp ->**Run**();
-             cout << (error->GetNLSMessage()).ConvertToChar() << endl;
+pPrismOp ->**Run**(#);
+             cout << (error->GetNLSMessage(#)).ConvertToChar(#) << endl;
              rc = 20;
 
            }
            **CATEndTry**
 
-cout << (error->GetNLSMessage()).ConvertToChar() << endl;
+cout << (error->GetNLSMessage(#)).ConvertToChar(#) << endl;
 rc = 20;
 ```vbscript
            if (rc!=0) **CAAErrorTopStif1**(rc,pJournal)
@@ -506,22 +506,22 @@ if (rc!=0) **CAAErrorTopStif1**(rc,pJournal)
 _// --------- Gets the resulting body
            CATBody * piMainBody1=NULL;
 ```vbscript
-           piMainBody1 = pPrismOp->**GetBooleanResult**();
+           piMainBody1 = pPrismOp->**GetBooleanResult**(#);
 
 ```
 
            _// gets the prism before the union_
-           CATBody * piWithoutOperation = pPrismOp->**GetResult**();
+           CATBody * piWithoutOperation = pPrismOp->**GetResult**(#);
 
            _// gets the journal of the boolean operation_
-           CATCGMJournalList * pBooleanJournal = pPrismOp->**GetBooleanJournal**();
+           CATCGMJournalList * pBooleanJournal = pPrismOp->**GetBooleanJournal**(#);
 
            if (NULL==piMainBody1 || NULL==pBooleanJournal || NULL==piWithoutOperation)
 ```
 
            {
 _// gets the journal of the boolean operation_
-CATCGMJournalList * pBooleanJournal = pPrismOp->**GetBooleanJournal**();
+CATCGMJournalList * pBooleanJournal = pPrismOp->**GetBooleanJournal**(#);
 if (NULL==piMainBody1 || NULL==pBooleanJournal || NULL==piWithoutOperation)
              rc = 20;
 
@@ -542,7 +542,7 @@ The `GetResult` method returns the prism before its union with the limiting bodi
 In order to recover the faces on which circles have been drawn on Fig. 1, we first search the longest edge of the face of `SkinBody`.
 
          _// Creates the boundary iterator on the edge of the initial face (of the skin to extrude)_
-           CATBoundaryIterator  *  pBoundaryIt =  piFace->**CreateBoundaryIterator**();
+           CATBoundaryIterator  *  pBoundaryIt =  piFace->**CreateBoundaryIterator**(#);
 ```vbscript
            if (NULL==pBoundaryIt)
 
@@ -550,7 +550,7 @@ In order to recover the faces on which circles have been drawn on Fig. 1, we fir
 
            {
 _// Creates the boundary iterator on the edge of the initial face (of the skin to extrude)_
-CATBoundaryIterator  *  pBoundaryIt =  piFace->**CreateBoundaryIterator**();
+CATBoundaryIterator  *  pBoundaryIt =  piFace->**CreateBoundaryIterator**(#);
 if (NULL==pBoundaryIt)
          	rc =1;
              CAAErrorTopStif2(...)
@@ -579,7 +579,7 @@ if (NULL==piE1)
 if (NULL==piE1)
 rc =1;
 CAAErrorTopStif3(...)
-           double l1= ((CATEdge * )piE1 )->**CalcLength**();
+           double l1= ((CATEdge * )piE1 )->**CalcLength**(#);
 
            _// Computes the length of the next  edge_
            CATCell*  piE2 = pBoundaryIt->Next(&side,NULL);
@@ -598,7 +598,7 @@ if (NULL==piE2)
 if (NULL==piE2)
 rc =1;
 CAAErrorTopStif3(...)
-           double l2=((CATEdge * )piE2)->CalcLength();
+           double l2=((CATEdge * )piE2)->CalcLength(#);
 
           _// Defines the width and the height according to l1 and l2 values._
            double height=0;
@@ -704,7 +704,7 @@ _//  Retrieves all the objects created or modified from piHeight1
       pJournal->**FindLasts** (piHeight1,pFaces,**ThroughCreateAndModify**);
 
       CATFace * piFromHeight1=NULL;
-      int nbresult = pFaces.Size();
+      int nbresult = pFaces.Size(#);
 
       _// Retrieves the object that is a face._
 ```vbscript
@@ -713,7 +713,7 @@ _//  Retrieves all the objects created or modified from piHeight1
 ```
 
       {
-int nbresult = pFaces.Size();
+int nbresult = pFaces.Size(#);
 _// Retrieves the object that is a face._
 for (int i=1 ; (i <= nbresult) && (piFromHeight1 == NULL) ; i++)
 ```vbscript
@@ -733,11 +733,11 @@ if (pFaces[i]->IsATypeOf(CATFaceType)) { piFromHeight1=(CATFace *)pFaces[i];}
 ```
 
       _//  now, in pBooleanJournal_
-      pFaces.**RemoveAll**();                       // voids the list before a new use
+      pFaces.**RemoveAll**(#);                       // voids the list before a new use
       pBooleanJournal->**FindLasts** (piFromHeight1,pFaces,**ThroughModify**);
       CATFace * piBooleanFromHeight1=NULL;
 ```vbscript
-      nbresult = pFaces.Size();
+      nbresult = pFaces.Size(#);
 
 ```
 
@@ -747,7 +747,7 @@ if (pFaces[i]->IsATypeOf(CATFaceType)) { piFromHeight1=(CATFace *)pFaces[i];}
 
       {
 ```vbscript
-nbresult = pFaces.Size();
+nbresult = pFaces.Size(#);
 _// Retrieves the object that is a face._
 for (i=1 ; (i <= nbresult) && (piBooleanFromHeight1 == NULL) ; i++)
 ```vbscript
@@ -872,7 +872,7 @@ Now, the face of the wing is searched for: this face has been modified by the Bo
          __ CATLISTP(CATCell) listCells;
            piFirstLimitBody->GetAllCells(listCells,2);  _// gets all the faces of FirstlimitBody_
 ```vbscript
-           nbCells = listCells.Size();
+           nbCells = listCells.Size(#);
 
 ```
 
@@ -887,9 +887,9 @@ Now, the face of the wing is searched for: this face has been modified by the Bo
 CATFace * piFromBody1=NULL;
 int iok=0;
 for (i=1;(i <= nbCells)  ;i++)
-             pFaces.**RemoveAll**();                          _// voids the list_
+             pFaces.**RemoveAll**(#);                          _// voids the list_
              pBooleanJournal -> **FindLasts** (listCells[i],pFaces,ThroughModify);
-             nbresult = pFaces.Size();
+             nbresult = pFaces.Size(#);
 ```vbscript
 ```vbscript
              for (int j=1; (j <= nbresult) && (piFromBody1 == NULL) ; j++)
@@ -900,7 +900,7 @@ for (i=1;(i <= nbCells)  ;i++)
 
              {
 pBooleanJournal -> **FindLasts** (listCells[i],pFaces,ThroughModify);
-nbresult = pFaces.Size();
+nbresult = pFaces.Size(#);
 ```vbscript
 ```vbscript
 for (int j=1; (j <= nbresult) && (piFromBody1 == NULL) ; j++)
@@ -999,25 +999,25 @@ listRadius.Append(pRadius);
 Now, the ribbon is defined.
 
     _//----first edge to fillet
-    ___ listCells.RemoveAll();
+    ___ listCells.RemoveAll(#);
       piFromBody1->**GetCommonBorderCells**( piBooleanFromHeight1,     _// the other face_
                                          1,                        _// must be put to 1_
                                          listCells,                _// the common cells_
                                          1);                       _// edge (dimension 1)_
-      if (1!=listCells.Size() )
+      if (1!=listCells.Size(#) )
 ```
 
       {
 1,                        _// must be put to 1_
 listCells,                _// the common cells_
 1);                       _// edge (dimension 1)_
-if (1!=listCells.Size() )
+if (1!=listCells.Size(#) )
         rc=10;
         CAAErrorTopStif6(...)
 
       }
 ```vbscript
-if (1!=listCells.Size() )
+if (1!=listCells.Size(#) )
 rc=10;
 CAAErrorTopStif6(...)
 ```vbscript
@@ -1027,25 +1027,25 @@ CAAErrorTopStif6(...)
       listEdges.Append((CATEdge *)(listCells[1]));
 
       _//---- second edge to fillet_
-      listCells.RemoveAll();
+      listCells.RemoveAll(#);
       piFromBody1->GetCommonBorderCells( piBooleanFromHeight2,     _// the other face_
                                          1,                        _// must be put to 1_
                                          listCells,                _// the common cells_
                                          1);                       _// edge (dimension 1)_
-      if (1!=listCells.Size() )
+      if (1!=listCells.Size(#) )
 ```
 
       {
 1,                        _// must be put to 1_
 listCells,                _// the common cells_
 1);                       _// edge (dimension 1)_
-if (1!=listCells.Size() )
+if (1!=listCells.Size(#) )
         rc=10;
         CAAErrorTopStif6(...)
 
       }
 ```vbscript
-if (1!=listCells.Size() )
+if (1!=listCells.Size(#) )
 rc=10;
 CAAErrorTopStif6(...)
       listEdges.Append((CATEdge *)(listCells[1]));
@@ -1109,29 +1109,29 @@ CAAErrorTopStif7(...)
 pFilletOp ->**Append**(pRibbon);
 _//---- Runs_
 CATTry
-        pFilletOp ->**Run**();
+        pFilletOp ->**Run**(#);
 
       }
 _//---- Runs_
 CATTry
-pFilletOp ->**Run**();
+pFilletOp ->**Run**(#);
       CATCatch(CATError,error)
 
       {
-pFilletOp ->**Run**();
+pFilletOp ->**Run**(#);
 CATCatch(CATError,error)
-        cout << (error->GetNLSMessage()).ConvertToChar() << endl;
+        cout << (error->GetNLSMessage(#)).ConvertToChar(#) << endl;
         rc=20;
         CAAErrorTopStif7(...)
 
       }
-cout << (error->GetNLSMessage()).ConvertToChar() << endl;
+cout << (error->GetNLSMessage(#)).ConvertToChar(#) << endl;
 rc=20;
 CAAErrorTopStif7(...)
       CATEndTry
 
       _//---- Gets the resulting body_
-      CATBody * piMainBody2  = pFilletOp->**GetResult**();
+      CATBody * piMainBody2  = pFilletOp->**GetResult**(#);
 
 ```vbscript
       if (NULL==piMainBody2)
@@ -1140,7 +1140,7 @@ CAAErrorTopStif7(...)
 
       {
 _//---- Gets the resulting body_
-CATBody * piMainBody2  = pFilletOp->**GetResult**();
+CATBody * piMainBody2  = pFilletOp->**GetResult**(#);
 if (NULL==piMainBody2)
         rc=1;
         CAAErrorTopStif7(...)
@@ -1169,8 +1169,10 @@ _piResultingBody = piMainBody2;
 Notice the general scheme of the operator. To use it:
 
      * Create it
+```vbscript
      * Set the options: here, the ribbon to fillet
      * Run it
+```
      * Get the result
      * Delete it.
 
@@ -1183,7 +1185,7 @@ Notice the general scheme of the operator. To use it:
 8. _Returning the Journal of the Operator_
          _// Fills the output journal if needed_
            CATCGMJournalList * pDataJournal = NULL;
-           pDataJournal=_pData->GetJournal();
+           pDataJournal=_pData->GetJournal(#);
 ```vbscript
 ```vbscript
            if (NULL!= pDataJournal)
@@ -1195,7 +1197,7 @@ Notice the general scheme of the operator. To use it:
            {
 _// Fills the output journal if needed_
 CATCGMJournalList * pDataJournal = NULL;
-pDataJournal=_pData->GetJournal();
+pDataJournal=_pData->GetJournal(#);
 ```vbscript
 if (NULL!= pDataJournal)
 ```
@@ -1203,7 +1205,7 @@ if (NULL!= pDataJournal)
              pJournal->Duplicate(pDataJournal);  _// duplicates the internal journal inside the input journal_
 
            }
-pDataJournal=_pData->GetJournal();
+pDataJournal=_pData->GetJournal(#);
 ```vbscript
 if (NULL!= pDataJournal)
 ```
@@ -1237,7 +1239,7 @@ The `CATGeoFactory` creation itself is done by the global function `::CATCreateC
 
 Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
 
-         CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**() ;
+         CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**(#) ;
 ```vbscript
          if (NULL==piGeomFactory) return (1);
 
@@ -1294,7 +1296,7 @@ A geometric object as a cylinder is created by the `CATGeoFactory`. `axisStart` 
     //_ _first defines an open configuration for the operator_
 A geometric object as a cylinder is created by the `CATGeoFactory`. `axisStart` and `axisEnd` define the limitation of the surface along the cylinder axis, `angleStart` and `angleEnd` define the limitation around the axis cylinder. The angle are measured in radians, `CATPI` and other related values are defined in `CATMathConstant.h`.
 _// Creates a skin body
-    CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration();
+    CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration(#);
     _// defines the data of the operator: configuration + journal_
     CATTopData topdata(pConfig,NULL);  _// an open configuration and a NULL journal_
     _// defines the limits to take into account_
@@ -1321,10 +1323,10 @@ if (NULL==pSkinOp)
 
 return (1);
     _// Runs_
-    pSkinOp->**Run**();
+    pSkinOp->**Run**(#);
 
     _// Gets the resulting body_
-    CATBody * piFirstCylinderBody = pSkinOp->**GetResult**();
+    CATBody * piFirstCylinderBody = pSkinOp->**GetResult**(#);
 ```vbscript
     if (NULL==piFirstCylinderBody)
 
@@ -1333,7 +1335,7 @@ return (1);
     {
       ::CATCloseCGMContainer(piGeomFactory);
 _// Gets the resulting body_
-CATBody * piFirstCylinderBody = pSkinOp->**GetResult**();
+CATBody * piFirstCylinderBody = pSkinOp->**GetResult**(#);
 if (NULL==piFirstCylinderBody)
 ```vbscript
       return (1);
@@ -1396,8 +1398,8 @@ if (NULL==pPrismOp)
     }
 
 return (1);
-    pPrismOp->**Run**();
-    CATBody* piFirstLimitBody = pPrismOp->**GetResult**();
+    pPrismOp->**Run**(#);
+    CATBody* piFirstLimitBody = pPrismOp->**GetResult**(#);
 ```vbscript
     if (NULL==piFirstLimitBody)
 
@@ -1405,8 +1407,8 @@ return (1);
 
     {
       ::CATCloseCGMContainer(piGeomFactory);
-pPrismOp->**Run**();
-CATBody* piFirstLimitBody = pPrismOp->**GetResult**();
+pPrismOp->**Run**(#);
+CATBody* piFirstLimitBody = pPrismOp->**GetResult**(#);
 if (NULL==piFirstLimitBody)
 ```vbscript
       return (1);
@@ -1573,10 +1575,10 @@ if (NULL==pSkinOp)
 
 return (1);
     _// Runs_
-    pSkinOp->**Run**();
+    pSkinOp->**Run**(#);
 
     _// Gets the resulting body_
-    CATBody * piSkinBody = pSkinOp->**GetResult**();
+    CATBody * piSkinBody = pSkinOp->**GetResult**(#);
 ```vbscript
     if (NULL==piSkinBody)
 
@@ -1585,7 +1587,7 @@ return (1);
     {
       ::CATCloseCGMContainer(piGeomFactory);
 _// Gets the resulting body_
-CATBody * piSkinBody = pSkinOp->**GetResult**();
+CATBody * piSkinBody = pSkinOp->**GetResult**(#);
 if (NULL==piSkinBody)
 ```vbscript
       return (1);
@@ -1637,7 +1639,7 @@ if (NULL==pStiffOp)
 
 return (1);
          _//--- Runs_
-         rc = pStiffOp->**Run**();
+         rc = pStiffOp->**Run**(#);
 ```vbscript
 ```vbscript
          if (NUL!=rc)
@@ -1649,7 +1651,7 @@ return (1);
          {
            ::CATCloseCGMContainer(piGeomFactory);
 _//--- Runs_
-rc = pStiffOp->**Run**();
+rc = pStiffOp->**Run**(#);
 ```vbscript
 if (NUL!=rc)
            return (rc);
@@ -1661,7 +1663,7 @@ if (NUL!=rc)
 return (rc);
          _//--- Gets the resulting body_
          CATBody * piMainBody1=NULL;
-         piMainBody1 = pStiffOp->**GetResult**();
+         piMainBody1 = pStiffOp->**GetResult**(#);
 ```vbscript
 ```vbscript
          if (NULL==piMainBody1)
@@ -1673,7 +1675,7 @@ return (rc);
          {
            ::CATCloseCGMContainer(piGeomFactory);
 CATBody * piMainBody1=NULL;
-piMainBody1 = pStiffOp->**GetResult**();
+piMainBody1 = pStiffOp->**GetResult**(#);
 ```vbscript
 if (NULL==piMainBody1)
            return (1);
@@ -1691,12 +1693,12 @@ _//--- Deletes the operator_
          pStiffOp = NULL;
 
          _// Releases the configuration_
-             pConfig->**Release**();
+             pConfig->**Release**(#);
 
 ---
 
 _// Releases the configuration_
-pConfig->**Release**();
+pConfig->**Release**(#);
 The new operator is used as a CGM operator with the steps that creates, runs, gets the result, and deletes.
 
 The software configuration is also released, because it is no more used.
@@ -1729,7 +1731,7 @@ ofstream filetowrite(pfileName, ios::binary ) ;
 
             **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
 ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;
-            filetowrite.close();
+            filetowrite.close(#);
 
           }
           _//

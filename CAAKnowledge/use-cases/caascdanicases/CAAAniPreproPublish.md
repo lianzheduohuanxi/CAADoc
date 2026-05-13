@@ -4,7 +4,7 @@ title: "Creating Preprocessing Data from Publications"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CATISamImportDefine", "CAAAniPreproOnPublish", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproPublish.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproPublish.htmmd"
 converted: "2026-05-11T17:31:51.848332"
 ```
 
@@ -45,7 +45,9 @@ This macro shows you how to create an Analysis document for a generative structu
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
+```vbscript
         sDocPath=CATIA.SystemService.Environ("CATDocView")
+```
 ```
 
 ```
@@ -57,17 +59,23 @@ This macro shows you how to create an Analysis document for a generative structu
 ```vbscript
 ' -----------------------------------------------------------
 ' Optional: allows to find the sample wherever it's installed
+```vbscript
 sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
+```
 
+```vbscript
         If(Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
+```
 
 ```
 
+```vbscript
 ```vbscript
         Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
 ```vbscript
         End If
     ' -----------------------------------------------------------
@@ -91,7 +99,9 @@ End If
 ```
 
 ```vbscript
+```vbscript
         Set documents1 = CATIA.Documents
+```
 ```
 
 ```vbscript
@@ -100,11 +110,15 @@ End If
     ' -----------------------------------------------------------
     ' Get the collection of documents in session
     ' Create the CATAnalysis Document
+```vbscript
        Set TheAnalysisDocument = documents1.Add("Analysis")
     ' if WB name already is "GPSCfg", not to use StartWorkbench
+```
+```vbscript
        WBName = CATIA.GetWorkbenchId if (WBName <> "GPSCfg") Then
           CATIA.StartWorkbench("GPSCfg")
        End If
+```
 ```
 
 ```
@@ -133,15 +147,19 @@ In order to import the document you have to give the path of this document, the 
 
 ```vbscript
 ```vbscript
+```vbscript
        Set analysisManager1 = TheAnalysisDocument.Analysis
 
+```
 ```
 
 ```
 
 ```vbscript
+```vbscript
        Dim arrayOfVariantOfShort1(0)
        analysisManager1.ImportDefineFile (sDocPath & sSep & "online" & sSep & "CAAScdAniUseCases" & sSep & "samples" & sSep & "AnalysisMechfeat.CATPart"),
+```
 
 ```
 
@@ -163,9 +181,13 @@ In order to import the document you have to give the path of this document, the 
 ```
 
 ```vbscript
+```vbscript
        Set specsAndGeomWindow1 = CATIA.ActiveWindow
 ```vbscript
+```
+```vbscript
        Set viewer3D1 = specsAndGeomWindow1.ActiveViewer
+```
 ```
 
        viewer3D1.Reframe
@@ -176,13 +198,18 @@ In order to import the document you have to give the path of this document, the 
 ```vbscript
     ' _____________________________________________________________________________________
     ' Scan the analysis document: Retrieve the Pointed documents to extract the reference for preprocessing
+```vbscript
        Set analysisLinkedDocuments1 = analysisManager1.LinkedDocuments
        CATIA.SystemService.Print analysisLinkedDocuments1.Name
        If (analysisLinkedDocuments1.Count <> 1 ) Then
+```
+```vbscript
           Err.Raise 9999,,"NbDoc Li NE 1"
        End If
+```
     ' _____________________________________________________________________________________
     ' Retrieve the CATPart Document and associated publications for preprocessing.
+```vbscript
        Set TheDoc = analysisLinkedDocuments1.Item(1)
        CATIA.SystemService.Print TheDoc.FullName
        Set product1 = TheDoc.Product
@@ -191,6 +218,7 @@ In order to import the document you have to give the path of this document, the 
        Set publication2 = publications1.Item("Sliding1")
        Set publication3 = publications1.Item("Sliding2")
        Set publication4 = publications1.Item("ResizeBody")
+```
 ```
 
 ```
@@ -219,17 +247,21 @@ The part document is fetched in the documentation installation path, this path h
 ```
 
 ```vbscript
+```vbscript
        Set analysisModels1 = analysisManager1.AnalysisModels
+```vbscript
+```
 ```vbscript
 ```vbscript
        Set analysisModel1 = analysisModels1.Item(1)
        Set analysisCases1 = analysisModel1.AnalysisCases
 
-       Set analysisCase1 = analysisCases1.Add()
+       Set analysisCase1 = analysisCases1.Add(#)
        Set analysisSets1 = analysisCase1.AnalysisSets
        Set analysisSet1 = analysisSets1.Add("RestraintSet", catAnalysisSetIn)
        Set analysisSet2 = analysisSets1.Add("LoadSet", catAnalysisSetIn)
        Set analysisSet3 = analysisCase1.AddSolution("StaticSet")
+```
 ```
 
 ```
@@ -240,7 +272,10 @@ The part document is fetched in the documentation installation path, this path h
 
 ---
 
-According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **document** , we find the **Analysis manager Object** , the **Analysis models** and the **Analysis cases Objects**. From both last object (Analysis Model and Analysis case), you can get access to **Analysis Sets** and **Analysis entities** that defines the pre-processing actions. This step create a new case and create two input sets (Restraint Set and Load Set) and a solution set (StaticSet).
+```vbscript
+According to the general [ Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **document** , we find the **Analysis manager Object** , the **Analysis models** and the **Analysis cases Objects**. From both last object (Analysis Model and Analysis case), you can get access to **Analysis Sets** and **Analysis entities** that defines the pre-processing actions. This step create a new case and create two input sets (Restraint Set and Load Set) and a solution set (StaticSet).
+
+```
 
 [Top]
 #### Defining the Boundaries
@@ -258,9 +293,13 @@ According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniToc
 ```
 
 ```vbscript
+```vbscript
        Set analysisEntities1 = analysisSet1.AnalysisEntities
 ```vbscript
+```
+```vbscript
        Set analysisEntity1 = analysisEntities1.Add("SAMClamp")
+```
 ```
 
        analysisEntity1.AddSupportFromPublication product1, publication1
@@ -271,7 +310,9 @@ According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniToc
 ```vbscript
     ' _____________________________________________________________________________________
     ' Create Slider boundary.
+```vbscript
        Set analysisEntity2 = analysisEntities1.Add("SAMSurfaceSlider")
+```
 ```
 
 ```
@@ -283,7 +324,9 @@ According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniToc
 ```vbscript
 ' _____________________________________________________________________________________
 ' Create Slider boundary.
+```vbscript
 Set analysisEntity2 = analysisEntities1.Add("SAMSurfaceSlider")
+```
 ```
 
 ```
@@ -314,9 +357,13 @@ From the restraint set defined on the analysis case, we retrieve the collection 
 ```
 
 ```vbscript
+```vbscript
        Set analysisEntities2 = analysisSet2.AnalysisEntities
 ```vbscript
+```
+```vbscript
        Set analysisEntity3 = analysisEntities2.Add("SAMPressure")
+```
 ```
 
        analysisEntity3.AddSupportFromPublication product1, publication4
@@ -345,14 +392,18 @@ The load is defined as the boundaries. For more information about the physical t
 ```
 
 ```vbscript
+```vbscript
        Set dimension1 = analysisManager1.Parameters.CreateDimension("Maximum value of VonMises criterion", "PRESSURE", 0.000000)
+```vbscript
+```
 ```vbscript
        Set formula1 = analysisManager1.Relations.CreateFormula("Maximum value of VonMises criterion","",dimension1,
 ```
+```
 
 ```
 
-                                                     "misesmax(`Finite Element Model.1\Static Case Solution.1` ) ")
+                                                     "misesmax(`Finite Element Model.1/Static Case Solution.1` ) ")
     ...
 
 ---
@@ -374,7 +425,9 @@ The load is defined as the boundaries. For more information about the physical t
 ```
 
 ```vbscript
+```vbscript
        CATIA.SystemService.Print " Mises Max Computed " & dimension1.ValueAsString
+```
 ```
 
     ...
@@ -399,11 +452,15 @@ This method will launch the mesher, generate the finite element model for prepro
 ```
 
 ```vbscript
+```vbscript
        Set analysisImages1 = analysisSet3.AnalysisImages
+```vbscript
+```
 ```vbscript
 ```vbscript
        Set analysisImage1 = analysisImages1.Add("StressVonMises_Iso_Smooth", False, False, True)
      ' _____________________________________________________________________________________ '
+```
 ```
 
 ```
@@ -434,9 +491,13 @@ The image is created based on the solution of the case. For this use the Analysi
 ```
 
 ```vbscript
+```vbscript
        Set fileSystem1 = CATIA.FileSystem
 ```vbscript
+```
+```vbscript
        Set folder1 = fileSystem1.GetFolder(outputPath)
+```
 ```
 
        analysisImage1.ExportData folder1, "VonMises", "txt"
@@ -489,8 +550,10 @@ The image is deactivated.
     ...
 
 ```vbscript
+```vbscript
 End Sub
 
+```
 ```
 
     ...
@@ -499,7 +562,7 @@ End Sub
 
 To run the macro interactively CATDocView and ADL_ODT_SLASH environment variables must be defined.
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 
@@ -515,7 +578,7 @@ This use case has shown how to produce in VB a complete analysis document with a
 
 [1] | [Replaying a macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)
 ---|---
-[2] |  [ The Physical Types for Structural Analysis](../CAAScdAniTechArticles/CAAAniPreprocessingFeatures.md)
+[2] |  [ The Physical Types for Structural Analysis](../use-cases/caascdaniusecases/CAAAniPreprocessingFeatures.md)
 [Top]
 
 * * *

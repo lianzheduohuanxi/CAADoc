@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CATIA", "CAASchPlatformModeler", "CAASchInternalFlow", "CATIASchAppConnector", "CAAScrBase", "CAAScdInfUseCases", "CATIASchCompFlow", "CAASCHEDUApp", "CAASCH_Detail02", "CAAInfLauchMacro", "CAASchAppUtilities", "CAASchInternalFlow_02", "CAASchAppBase", "CATIASchComponent", "CAAScrJavaScript", "CAAScdSchUseCases", "CAASchInternalFlowSource", "CAASchInternalFlow_01", "CAADoc"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchInternalFlow.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchInternalFlow.htmmd"
 converted: "2026-05-11T11:27:02.610339"
 ---
 

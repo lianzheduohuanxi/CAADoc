@@ -4,7 +4,7 @@ title: "Testing the Position of a Point inside a Face or a Volume "
 category: "use case"
 module: "CAACgmModel"
 tags: ["CATICGMPositionPtFaceOperator", "CAAGMModelPositionOpe", "CAAGMModelInterfaces", "CATICGMPositionPtVolOperator"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcPtPosition.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcPtPosition.htmmd"
 converted: "2026-05-11T17:33:48.514152"
 ```
 
@@ -65,7 +65,7 @@ CATICGMPositionPtVolOperator * pPositionPtVolOpe1 =::CATCGMCreatePositionPtVolOp
     ...
 CATICGMPositionPtVolOperator * pPositionPtVolOpe1 =::CATCGMCreatePositionPtVolOperator(piGeomFactory, &topdata;,
 pOUT, pVolume);
-    CATLocation loc1 = pPositionPtVolOpe1->GetLocationResult();
+    CATLocation loc1 = pPositionPtVolOpe1->GetLocationResult(#);
     	if (loc1==CATLocationOuter)
     		cout << "math point(5., 5.,5.) is outside" << endl;
     	else
@@ -87,7 +87,7 @@ on the standard output. The code below (pointOnFace relies on a bordering face):
 on the standard output. The code below (pointOnFace relies on a bordering face):
 CATICGMPositionPtVolOperator * pPositionPtVolOpe2 =::CATCGMCreatePositionPtVolOperator(piGeomFactory, &topdata;,
 pointOnFace, pVolume);
-    CATLocation loc2 = pPositionPtVolOpe2->GetLocationResult();
+    CATLocation loc2 = pPositionPtVolOpe2->GetLocationResult(#);
 ```vbscript
     	if (loc2==CATLocationFull)
 
@@ -95,10 +95,10 @@ pointOnFace, pVolume);
 
     	{
 pointOnFace, pVolume);
-CATLocation loc2 = pPositionPtVolOpe2->GetLocationResult();
+CATLocation loc2 = pPositionPtVolOpe2->GetLocationResult(#);
 if (loc2==CATLocationFull)
     		cout << "math point with coordinates " << endl;
-    		cout << pointOnFace.GetX() << " " << pointOnFace.GetY() << " " << pointOnFace.GetZ() << endl;
+    		cout << pointOnFace.GetX(#) << " " << pointOnFace.GetY(#) << " " << pointOnFace.GetZ(#) << endl;
             cout << "is on the volume border " << endl;
 
     	}
@@ -122,17 +122,17 @@ The code below:
 CATICGMPositionPtFaceOperator *pPositionPtFaceOpe =::CATCGMCreatePositionPtFaceOperator(piGeomFactory, pConfig,
 surParam, theFaceOnWhichICreateAPoint);
 ```vbscript
-    if ( (pPositionPtFaceOpe->GetOneResult() )==CATLocationInner)
+    if ( (pPositionPtFaceOpe->GetOneResult(#) )==CATLocationInner)
 
 ```
 
     	{
 CATICGMPositionPtFaceOperator *pPositionPtFaceOpe =::CATCGMCreatePositionPtFaceOperator(piGeomFactory, pConfig,
 surParam, theFaceOnWhichICreateAPoint);
-if ( (pPositionPtFaceOpe->GetOneResult() )==CATLocationInner)
+if ( (pPositionPtFaceOpe->GetOneResult(#) )==CATLocationInner)
     		cout << "math point with coordinates " << endl;
-    		cout << pointOnFace.GetX()  << " " << pointOnFace.GetY() << " " << pointOnFace.GetZ() << endl;
-    		cout <<  "is INSIDE (not on the boundary of) the face  " <<  theFaceOnWhichICreateAPoint->GetPersistentTag() << endl;
+    		cout << pointOnFace.GetX(#)  << " " << pointOnFace.GetY(#) << " " << pointOnFace.GetZ(#) << endl;
+    		cout <<  "is INSIDE (not on the boundary of) the face  " <<  theFaceOnWhichICreateAPoint->GetPersistentTag(#) << endl;
 
     	}
     ...

@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Launching CAA V5 Batch"
-category: "use case"
+category: use-case case"
 module: "CAABatUseCases"
 tags: ["CATIBatchElementCAA", "CAABatBatchInfrastructure", "CATIBatchCAA", "CATIBatchElementsCAA", "CAABatchInfrastructure", "CAABatBatchLauncherSample"]
-source_file: "Doc/online/CAABatUseCases/CAABatBatchLauncherSample.htm"
+source_file: "Doc/online/CAABatUseCases/CAABatBatchLauncherSample.htmmd"
 converted: "2026-05-11T17:33:45.726629"
 ```
 
@@ -46,13 +46,13 @@ This use case is intended to show you how to launch CAA V5 Batch in a code sourc
 CAABatBatchLauncherSample is a use case of the CAABatBatchInfrastructure.edu framework that illustrates Batch infrastructure capabilities. [Top]
 #### What Does CAABatBatchLauncherSample Do
 
-The CAABatBatchLauncherSample 's purpose is to show how to launch and monitor a CAA V5 Batch. The example batch takes as input  a list of .model files and renames them to .CATPart files.  To do this, the use case will show how to :     \- generate a XML describing the input files.     \- use callback to be notified of the end of the batch replay     \- analyze the generated XML file describing the outputs.
+The CAABatBatchLauncherSample 's purpose is to show how to launch and monitor a CAA V5 Batch. The example batch takes as input  a list of .model files and renames them to .CATPart files.  To do this, the use case will show how to :     /- generate a XML describing the input files.     /- use callback to be notified of the end of the batch replay     /- analyze the generated XML file describing the outputs.
 **_Warning_** : this batch sample does not convert model files to CATPart files. It is only about renaming the files.
   [Top]
 #### How to Launch CAABatBatchLauncherSample
 
-The CAABatBatchLauncherSample 's purpose is to show how to launch and monitor a CAA V5 Batch. The example batch takes as input  a list of .model files and renames them to .CATPart files.  To do this, the use case will show how to :     \- generate a XML describing the input files.     \- use callback to be notified of the end of the batch replay     \- analyze the generated XML file describing the outputs.
-To launch CAABatBatchLauncherSample , you will need to set up the build time environment ,then compile CAABatBatchLauncherSample along with its prerequisites, set up the run time environment :            -     set ADL_ODT_IN variable to the directory where the input files to rename are located : | Windows |  InstallRootDirectory\CAABatchInfrastructure.edu\Data.d\
+The CAABatBatchLauncherSample 's purpose is to show how to launch and monitor a CAA V5 Batch. The example batch takes as input  a list of .model files and renames them to .CATPart files.  To do this, the use case will show how to :     /- generate a XML describing the input files.     /- use callback to be notified of the end of the batch replay     /- analyze the generated XML file describing the outputs.
+To launch CAABatBatchLauncherSample , you will need to set up the build time environment ,then compile CAABatBatchLauncherSample along with its prerequisites, set up the run time environment :            -     set ADL_ODT_IN variable to the directory where the input files to rename are located : | Windows |  InstallRootDirectory/CAABatchInfrastructure.edu/Data.d/
 
 Unix |  InstallRootDirectory/CAABatchInfrastructure.edu/Data.d/
 
@@ -68,10 +68,10 @@ Unix |  InstallRootDirectory/CAABatchInfrastructure.edu/Data.d/
 The CAABatBatchLauncherSample use case is made of a single function named batchmain located in the CAABatBatchLauncherSample.m module of the CAABatchInfrastructure.edu framework:
 
 The CAABatBatchLauncherSample use case is made of a single function named batchmain located in the CAABatBatchLauncherSample.m module of the CAABatchInfrastructure.edu framework:
-Windows |  InstallRootDirectory\CAABatchInfrastructure.edu\ CAABatBatchLauncherSample.m\
+Windows |  InstallRootDirectory/CAABatchInfrastructure.edu/ CAABatBatchLauncherSample.m/
 
 The CAABatBatchLauncherSample use case is made of a single function named batchmain located in the CAABatBatchLauncherSample.m module of the CAABatchInfrastructure.edu framework:
-Windows |  InstallRootDirectory\CAABatchInfrastructure.edu\ CAABatBatchLauncherSample.m\
+Windows |  InstallRootDirectory/CAABatchInfrastructure.edu/ CAABatBatchLauncherSample.m/
 Unix |  InstallRootDirectory/CAABatchInfrastructure.edu/ CAABatBatchLauncherSample.m/
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -98,20 +98,20 @@ There are seven logical steps in CAABatBatchLauncherSample:
 CATBatchParameters input_param;
     input_param.BeginBuffer("BatchSample", "ParamTest.xml");
 
-    input_param.BeginInput();
-    input_param.InsertFile("file1", "CAABatchInfrastructure.edu\\Data.d\\ATTRIBUTCXR1.model", "", COMM_FILE_BINARY);
-    input_param.InsertFile("file2", "CAABatchInfrastructure.edu\\Data.d\\BOBINE.model", "", COMM_FILE_BINARY);
-    input_param.InsertFile("file3", "CAABatchInfrastructure.edu\\Data.d\\CUBE.model", "", COMM_FILE_BINARY);
+    input_param.BeginInput(#);
+    input_param.InsertFile("file1", "CAABatchInfrastructure.edu//Data.d//ATTRIBUTCXR1.model", "", COMM_FILE_BINARY);
+    input_param.InsertFile("file2", "CAABatchInfrastructure.edu//Data.d//BOBINE.model", "", COMM_FILE_BINARY);
+    input_param.InsertFile("file3", "CAABatchInfrastructure.edu//Data.d//CUBE.model", "", COMM_FILE_BINARY);
 
     input_param.InsertSimpleArg("action", "1");
-    input_param.EndInput();
+    input_param.EndInput(#);
 
     const char* out_folder = "";
 
-    input_param.BeginOutput();
+    input_param.BeginOutput(#);
     input_param.InsertFolder("out_dir", out_folder, "" , COMM_FILE_BINARY, "CATPart");
-    input_param.EndOutput();
-    input_param.EndBuffer();
+    input_param.EndOutput(#);
+    input_param.EndBuffer(#);
 
     ...
 
@@ -123,10 +123,10 @@ This XML file contains :
 
     * _BatchSample_ is the name of the descriptor file.
     * _ParamTest.xml_ is the name of the parameter file .
-    * XXX\ATTRIBUTCXR1.model” is the full path of the input files.
+    * XXX/ATTRIBUTCXR1.model” is the full path of the input files.
     * _out_folder_  attribute is the full path for the output directory. If this attribute is set to “”, such as in the example, the directory defined with the BATCH_HOME variable is used.
-    * _BeginInput_() and _EndInput_() are used at the beginning and the end of the input data section.
-    * _BeginOutput_() and _EndOutput_() methods are used at the beginning and the end of output data section.
+    * _BeginInput_(#) and _EndInput_(#) are used at the beginning and the end of the input data section.
+    * _BeginOutput_(#) and _EndOutput_(#) methods are used at the beginning and the end of output data section.
 
 The Parameters.dtd file used to check the xml files syntax is provided by the Batch Infrastructure and is used for all batches.
 
@@ -136,7 +136,7 @@ More details about the parameter file can be found in the use case "Creating a C
 #### Retrieving the CATBatClientMonitorCAA interface
 
     ...
-    	CATBatClientMonitorCAA* cliMonitor = CATBatClientMonitorCAA::GetTheClientMonitorCAA();
+    	CATBatClientMonitorCAA* cliMonitor = CATBatClientMonitorCAA::GetTheClientMonitorCAA(#);
 
     ...
 
@@ -147,7 +147,7 @@ The method  _GetTheClientMonitorCAA_ returns a pointer to the interface CATBatC
 #### Initialization of the CATBatClientMonitorCAA
 
     ...
-    	HRESULT hr = cliMonitor->InitializeV5Monitoring();
+    	HRESULT hr = cliMonitor->InitializeV5Monitoring(#);
     ...
 
 ---
@@ -254,7 +254,7 @@ for ( int ii = 0; ii<fileCount; ii++ )
 
     			elem->get_Path(path);
 
-    			printf("Found output <%s>\n", path.CastToCharPtr());
+    			printf("Found output <%s>/n", path.CastToCharPtr(#));
 
     		}
 
@@ -276,7 +276,7 @@ ATTRIBUTCXR1.CATPart, CUBE.CATPart and BOBINE.CATPart.
 
 To check if the sample has done its work correctly, open the $BATCH_HOME directory and check there are the 3 renamed files :
 ATTRIBUTCXR1.CATPart, CUBE.CATPart and BOBINE.CATPart.
-    CATDeleteFile(path_param.CastToCharPtr());
+    CATDeleteFile(path_param.CastToCharPtr(#));
 
     CATBatchLogCAA::DeleteLogs(uuid);
 

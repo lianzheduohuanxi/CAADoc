@@ -4,13 +4,13 @@ title: "Managing the State Dialog Command Lifecycle"
 category: "use-case"
 module: "CAADegTechArticles"
 tags: ["CAACmdWithArg", "CAACommandCmd"]
-source_file: "Doc/online/CAADegTechArticles/CAADegLifecycle.htm"
+source_file: "Doc/online/CAADegTechArticles/CAADegLifecycle.htmmd"
 converted: "2026-05-11T17:33:49.851891"
 ```
 
 ---
 tags: ["CAACmdWithArg", "CAACommandCmd"]
-source_file: "Doc/online/CAADegTechArticles/CAADegLifecycle.htm"
+source_file: "Doc/online/CAADegTechArticles/CAADegLifecycle.htmmd"
 converted: "2026-05-11T17:33:49.851891"
 3D PLM Enterprise Architecture |  User Interface - Commands |  Managing the State Dialog Command Lifecycle _Coding the command class constructor and destructor, and the methods Activate, Desactivate, and Cancel_
 
@@ -36,10 +36,10 @@ Managing the State Dialog Command Lifecycle The command lifecycle is managed usi
     * The command running (or start) mode, that can be set as the second argument of the _CATStateCommand_ constructor, as:
       * **Exclusive** : an exclusive command is known by the command selector. It requests the command selector to clean the command stack before beginning to run and taking the focus, including the active command. All commands present in the stack are deleted. Use `CATCommandModeExclusive` to set a command as exclusive
       * **Shared** : a shared command is known by the command selector. It coexists with other commands already present in the stack, and requests the command selector to deactivate the active command before it takes the focus. Use `CATCommandModeShared` to set a command as shared.
-![warning.gif \(206 bytes\)](../CAAIcons/images/warning.gif) A state dialog command cannot be set as an undefined command. ![information.gif \(174 bytes\)](../CAAIcons/images/information.gif) A command that creates, modifies, or updates data in the document should always be declared as an **exclusive** command. A shared command, that is, a command that may interrupt another command, should never modify the document, because if it does so, when the previous command resumes after the shared command completion, this command may not found what it has left when interrupted. Any command should properly manage its interruptions using the `Desactivate` method called when a shared command takes the focus. The interrupted command should make the assumption that the interrupting command doesn't modify the document. Any command should also properly manage its deletion using the `Cancel` method called when an exclusive command takes the focus. For example, the _CAACommandCmd_ command is set as exclusive, as shown below.
+![warning.gif /(206 bytes/)](../CAAIcons/images/warning.gif) A state dialog command cannot be set as an undefined command. ![information.gif /(174 bytes/)](../CAAIcons/images/information.gif) A command that creates, modifies, or updates data in the document should always be declared as an **exclusive** command. A shared command, that is, a command that may interrupt another command, should never modify the document, because if it does so, when the previous command resumes after the shared command completion, this command may not found what it has left when interrupted. Any command should properly manage its interruptions using the `Desactivate` method called when a shared command takes the focus. The interrupted command should make the assumption that the interrupting command doesn't modify the document. Any command should also properly manage its deletion using the `Cancel` method called when an exclusive command takes the focus. For example, the _CAACommandCmd_ command is set as exclusive, as shown below.
 
     ...
-    CAACommandCmd::CAACommandCmd()
+    CAACommandCmd::CAACommandCmd(#)
                  : CATStateCommand("CommandId", **CATCommandModeExclusive**), ...
     {
     ...

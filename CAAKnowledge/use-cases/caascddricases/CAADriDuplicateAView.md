@@ -4,7 +4,7 @@ title: "Duplicating a Drawing View"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CAADriDuplicateAView", "CATIA", "CAADriUseCases", "CAAScdDriUseCases"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriDuplicateAView.htm"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriDuplicateAView.htmmd"
 converted: "2026-05-11T17:31:51.071818"
 ```
 
@@ -37,22 +37,28 @@ This macro shows you how to copy a view in drawing document and paste it into an
 
       ...
 ```vbscript
+```vbscript
         ' Set the CATIA popup file alerts to False
 ```
+```
 
+```vbscript
 ```vbscript
 ```vbscript
 ```vbscript
 ' Set the CATIA popup file alerts to False
         ' It prevents to stop the macro at each alert during its execution
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
         CATIA.DisplayFileAlerts = False
+```
 ```
 
       ...
@@ -73,22 +79,30 @@ The CATIA prompts are disabled thanks to the `DisplayFileAlerts` property of the
 ```
 
 ```vbscript
+```vbscript
         Dim oDrawingSource As DrawingDocument
+```vbscript
+```
 ```vbscript
         Set oDrawingSource = CATIA.Documents.Open(sDocPath & _
 ```
+```
 
 ```
 
-                 "\online\CAAScdDriUseCases\samples\CAADriDuplicateAView.CATDrawing")
+                 "/online/CAAScdDriUseCases/samples/CAADriDuplicateAView.CATDrawing")
 ```vbscript
 ```vbscript
 ```vbscript
 ' Open the Drawing document
+```vbscript
 Dim oDrawingSource As DrawingDocument
 Set oDrawingSource = CATIA.Documents.Open(sDocPath & _
         ' Fit in window the opened document
+```
+```vbscript
         CATIA.ActiveWindow.ActiveViewer.Reframe
+```
 ```
 
 ```
@@ -113,9 +127,13 @@ A drawing document is opened, its window is reframed according to the size of th
 ```
 
 ```vbscript
+```vbscript
         Dim oSheetSource As DrawingSheet
 ```vbscript
+```
+```vbscript
         Set oSheetSource = oDrawingSource.Sheets.Item("Sheet.1")
+```
 ```
 
 ```
@@ -139,9 +157,13 @@ The sheet object is retrieved from the collection using the `Item` method from i
 ```
 
 ```vbscript
+```vbscript
         Dim oViewSource As DrawingView
 ```vbscript
+```
+```vbscript
         Set oViewSource = oSheetSource.Views.Item("Front view")
+```
 ```
 
 ```
@@ -165,11 +187,15 @@ The view object is retrieved from the collection using the `Item` method from it
 ```
 
 ```vbscript
+```vbscript
         Dim oSelectionSource As Selection
+```vbscript
+```
 ```vbscript
 ```vbscript
         Set oSelectionSource = oDrawingSource.Selection
         ' Clear the selection
+```
 ```
 
 ```
@@ -215,9 +241,13 @@ The selection object is cleared using the `Clear` method another time.
 ```
 
 ```vbscript
+```vbscript
         Dim oDrawingTarget As DrawingDocument
 ```vbscript
+```
+```vbscript
         Set oDrawingTarget = CATIA.Documents.Add("Drawing")
+```
 ```
 
 ```
@@ -226,9 +256,11 @@ The selection object is cleared using the `Clear` method another time.
 ```vbscript
 ```vbscript
         ' Retrieve the where the view will be pasted
+```vbscript
         Dim oSheetTarget As DrawingSheet
         Set oSheetTarget = oDrawingTarget.Sheets.Item("Sheet.1")
         ' Set the sheet paper size
+```
 ```
 
 ```
@@ -236,12 +268,16 @@ The selection object is cleared using the `Clear` method another time.
 ```
 
 ```vbscript
+```vbscript
 Dim oSheetTarget As DrawingSheet
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set oSheetTarget = oDrawingTarget.Sheets.Item("Sheet.1")
 ' Set the sheet paper size
         oSheetTarget.PaperSize = catPaperA0
+```
 ```
 
 ```
@@ -266,11 +302,15 @@ A new drawing document is created and the sheet object is retrieved, the size of
 ```
 
 ```vbscript
+```vbscript
         Dim oSelectionTarget As Selection
+```vbscript
+```
 ```vbscript
 ```vbscript
         Set oSelectionTarget = oDrawingTarget.Selection
         ' Clear the selection
+```
 ```
 
 ```
@@ -303,7 +343,7 @@ The sheet object is added to the selection object using the `Add` method.
 The view is pasted from the clipboard into the sheet from the selection object using the `Paste` method.
 The selection object is cleared using the `Clear` method another time.
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

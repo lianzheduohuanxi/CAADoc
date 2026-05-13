@@ -4,13 +4,13 @@ title: "The Imakefile.mk Special File"
 category: "use-case"
 module: "CAABtlTechArticles"
 tags: []
-source_file: "Doc/online/CAABtlTechArticles/CAABtlMANimakefile.htm"
+source_file: "Doc/online/CAABtlTechArticles/CAABtlMANimakefile.htmmd"
 converted: "2026-05-11T17:33:46.091758"
 ```
 
 ---
 tags: []
-source_file: "Doc/online/CAABtlTechArticles/CAABtlMANimakefile.htm"
+source_file: "Doc/online/CAABtlTechArticles/CAABtlMANimakefile.htmmd"
 converted: "2026-05-11T17:33:46.091758"
 RADE |  Multi-Workspace Application Builder |  The Imakefile.mk Special File _How to control the compilation of programs_
 
@@ -87,7 +87,7 @@ Syntax and variables Syntax rules
 ```
 
   3. Lines beginning by the '#' character are comments or pragma.
-  4. Lines ending with a backslash '\' character continue on the next line.
+  4. Lines ending with a backslash '/' character continue on the next line.
   5. space characters are ignored on both sides of a equal '=' character.
   6. except if specified, the space character can be used as separator if a variable is set with several parameters
 

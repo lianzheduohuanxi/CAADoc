@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating a Command with Options in the "Tools Palette" Toolbar"
-category: "use case"
+category: use-case case"
 module: "CAAAfrUseCases"
 tags: ["CAADegTwoPointsBoxUncheckHdr", "CAADegGeoCommands", "CAADegOriginBoxHdr", "CAADegTwoPointsBoxCheckHdr", "CAADialogEngine", "CATIAfrPaletteOptions", "CAAAfrViewerFeedbackHdr", "CAASysCuboid", "CAADegBoxCreationChoiceNotification", "CAADegFourPointsBoxHdr", "CAAGeometry", "CAADegBoxPaletteChoiceCmd", "CAADegCreateBoxPaletteHeader", "CAADegTwoPointsBoxHdr", "CAADegThreePointsBoxHdr", "CAADegCreateBoxCmd", "CATIAfrCmdPaletteOptions"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrCmdPalette.htm"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrCmdPalette.htmmd"
 converted: "2026-05-11T17:17:55.606549"
 ```
 
@@ -157,10 +157,10 @@ The three icons (![](images/CAACreateBoxSwitchAgentCube.jpg),![](images/CAACreat
 The three icons (![](images/CAACreateBoxSwitchAgentCube.jpg),![](images/CAACreateBoxSwitchAgentCuboidWidthDepth.jpg),![](images/CAACreateBoxSwitchAgentCuboidWidthDepthHeight.jpg)) are the representation of three check headers. A check header launches a command header for the check state and another one for the uncheck state. These two command headers start the _CAADegBoxPaletteChoiceCmd_ command.
 It is a notification sent by the previous _CATCommand_ to inform the _CAADegCreateBoxCmd_   class that a check button has been pushed. The notification contains the number of the selected check button.
 
-Windows | `InstallRootDirectory\CAADialogEngine.edu\CAADegGeoCommands.m\`
+Windows | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 
 It is a notification sent by the previous _CATCommand_ to inform the _CAADegCreateBoxCmd_   class that a check button has been pushed. The notification contains the number of the selected check button.
-Windows | `InstallRootDirectory\CAADialogEngine.edu\CAADegGeoCommands.m\`
+Windows | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -197,15 +197,15 @@ The CAADegCreateBoxCmd class is a state command.
       **CATDeclareClass** ;
 
       public :
-        CAADegCreateBoxCmd();
-        virtual ~CAADegCreateBoxCmd();
+        CAADegCreateBoxCmd(#);
+        virtual ~CAADegCreateBoxCmd(#);
 
         ...
 public :
-CAADegCreateBoxCmd();
-virtual ~CAADegCreateBoxCmd();
-        virtual CATLISTP(CATCommandHeader) **GetPaletteStateOptions**() ;
-        virtual CATLISTP(CATCommandHeader) **GetPaletteOptions**() ;
+CAADegCreateBoxCmd(#);
+virtual ~CAADegCreateBoxCmd(#);
+        virtual CATLISTP(CATCommandHeader) **GetPaletteStateOptions**(#) ;
+        virtual CATLISTP(CATCommandHeader) **GetPaletteOptions**(#) ;
 
 ```vbscript
       private :
@@ -213,15 +213,15 @@ virtual ~CAADegCreateBoxCmd();
 ```
 
         ...
-virtual CATLISTP(CATCommandHeader) **GetPaletteStateOptions**() ;
-virtual CATLISTP(CATCommandHeader) **GetPaletteOptions**() ;
+virtual CATLISTP(CATCommandHeader) **GetPaletteStateOptions**(#) ;
+virtual CATLISTP(CATCommandHeader) **GetPaletteOptions**(#) ;
 private :
-        virtual void **BuildGraph**() ;
+        virtual void **BuildGraph**(#) ;
         CATBoolean  **CheckChoice**(void * iChoice);
         CATBoolean  **CreateBox**(void * iDummy);
 
         ...
-virtual void **BuildGraph**() ;
+virtual void **BuildGraph**(#) ;
 CATBoolean  **CheckChoice**(void * iChoice);
 CATBoolean  **CreateBox**(void * iDummy);
         void **BoxCreationChoiceChange** (CATCommand        * iPublisher,
@@ -438,16 +438,16 @@ CATCommand(**NULL** ,"CAADegBoxPaletteChoiceCmd")
        int value = ( int) iArgument ;
 
        CAADegBoxCreationChoiceNotification * pNotification = NULL ;
-       pNotification = new **CAADegBoxCreationChoiceNotification**();
+       pNotification = new **CAADegBoxCreationChoiceNotification**(#);
        pNotification->**SetChoice**(value);
 
-       **SendNotification**(GetFather(),pNotification);
+       **SendNotification**(GetFather(#),pNotification);
 
-pNotification = new **CAADegBoxCreationChoiceNotification**();
+pNotification = new **CAADegBoxCreationChoiceNotification**(#);
 pNotification->**SetChoice**(value);
        pNotification = NULL ;
 
-       **RequestDelayedDestruction**();
+       **RequestDelayedDestruction**(#);
     }
     ...
 
@@ -580,11 +580,11 @@ In the use case, the option to add in the Palette is the command header represen
     ...
 This method is called when the command is activated. It is the reason why the command must be an exclusive or shared command [9].
 In the use case, the option to add in the Palette is the command header represented by this icon: ![](images/CAACreateBoxSwitchOrigin.jpg).
-    CATLISTP(CATCommandHeader) CAADegCreateBoxCmd::GetPaletteOptions()
+    CATLISTP(CATCommandHeader) CAADegCreateBoxCmd::GetPaletteOptions(#)
 
     {
 In the use case, the option to add in the Palette is the command header represented by this icon: ![](images/CAACreateBoxSwitchOrigin.jpg).
-CATLISTP(CATCommandHeader) CAADegCreateBoxCmd::GetPaletteOptions()
+CATLISTP(CATCommandHeader) CAADegCreateBoxCmd::GetPaletteOptions(#)
 ```vbscript
        CATLISTP(CATCommandHeader) PaletteOptions;
 
@@ -631,17 +631,17 @@ This method is called each time the state command enters in a state. In most cas
     ...
 2. GetPaletteStateOptions
 This method is called each time the state command enters in a state. In most cases, the goal of this method is to retrieve the name of the current state, and whether the state's name, add the specific command header instance pointers in the returned list.
-    CATLISTP(CATCommandHeader) CAADegCreateBoxCmd::GetPaletteStateOptions()
+    CATLISTP(CATCommandHeader) CAADegCreateBoxCmd::GetPaletteStateOptions(#)
 
     {
 This method is called each time the state command enters in a state. In most cases, the goal of this method is to retrieve the name of the current state, and whether the state's name, add the specific command header instance pointers in the returned list.
-CATLISTP(CATCommandHeader) CAADegCreateBoxCmd::GetPaletteStateOptions()
+CATLISTP(CATCommandHeader) CAADegCreateBoxCmd::GetPaletteStateOptions(#)
 ```vbscript
        CATLISTP(CATCommandHeader) PaletteStateOptions;
 
 ```
 
-       CATDialogState * pCurrentState = **GetCurrentState**();
+       CATDialogState * pCurrentState = **GetCurrentState**(#);
 ```vbscript
        if ( NULL != pCurrentState )
 
@@ -650,15 +650,15 @@ CATLISTP(CATCommandHeader) CAADegCreateBoxCmd::GetPaletteStateOptions()
        {
 ```vbscript
 CATLISTP(CATCommandHeader) PaletteStateOptions;
-CATDialogState * pCurrentState = **GetCurrentState**();
+CATDialogState * pCurrentState = **GetCurrentState**(#);
 if ( NULL != pCurrentState )
-          CATString StateName = pCurrentState->**GetResourceID**();
+          CATString StateName = pCurrentState->**GetResourceID**(#);
 
           if ( ! strcmp("**stWidthPointId** ",StateName) )
 ```
 
           {
-CATString StateName = pCurrentState->**GetResourceID**();
+CATString StateName = pCurrentState->**GetResourceID**(#);
 ```vbscript
 if ( ! strcmp("**stWidthPointId** ",StateName) )
              Case stWidthPointId State
@@ -798,7 +798,7 @@ CATMathPoint BoxOrigin ;
 
           {
               BoxOrigin = CornerPoint ;
-          } else if (  FALSE == _pOriginCheckHdr->**IsChecked**() )
+          } else if (  FALSE == _pOriginCheckHdr->**IsChecked**(#) )
           {
 ```vbscript
 if ( NULL == _pOriginCheckHdr )
@@ -817,12 +817,12 @@ The `FindBoxCornerPoint` method is a local method which retrieves the coordinate
 
   * **Define the way to create a box  **
 
-This option is used in the `CheckChoice` condition method. The asterisked transitions on the state chart - Fig 3 \- use this method to accept of not the transition.
+This option is used in the `CheckChoice` condition method. The asterisked transitions on the state chart - Fig 3 /- use this method to accept of not the transition.
 
 Here are the transition using the `CheckChoice` condition method:
 
     ...
-This option is used in the `CheckChoice` condition method. The asterisked transitions on the state chart - Fig 3 \- use this method to accept of not the transition.
+This option is used in the `CheckChoice` condition method. The asterisked transitions on the state chart - Fig 3 /- use this method to accept of not the transition.
 Here are the transition using the `CheckChoice` condition method:
     CATDialogTransition * **pState2Transition1** = AddTransition
 
@@ -924,10 +924,10 @@ CATDialogTransition * **pState3Transition3** = AddTransition
     ...
 
 ---
-    * `pState2Transition1` is triggered if P2 is selected- Refer Fig.1 \- and either ![](images/CAACreateBoxSwitchAgentCuboidWidthDepth.jpg)or ![](images/CAACreateBoxSwitchAgentCuboidWidthDepthHeight.jpg) is highlighted
-    * `pState2Transition3` is triggered if P2 is selected- Refer Fig.1 \- and ![](images/CAACreateBoxSwitchAgentCube.jpg) is highlighted.
-    * `pState3Transition1` is triggered if P3 is indicated- Refer Fig.1 \- and ![](images/CAACreateBoxSwitchAgentCuboidWidthDepthHeight.jpg) is highlighted
-    * `pState3Transition3` is triggered if  P3 is indicated- Refer Fig.1 \- and ![](images/CAACreateBoxSwitchAgentCuboidWidthDepth.jpg) is highlighted
+    * `pState2Transition1` is triggered if P2 is selected- Refer Fig.1 /- and either ![](images/CAACreateBoxSwitchAgentCuboidWidthDepth.jpg)or ![](images/CAACreateBoxSwitchAgentCuboidWidthDepthHeight.jpg) is highlighted
+    * `pState2Transition3` is triggered if P2 is selected- Refer Fig.1 /- and ![](images/CAACreateBoxSwitchAgentCube.jpg) is highlighted.
+    * `pState3Transition1` is triggered if P3 is indicated- Refer Fig.1 /- and ![](images/CAACreateBoxSwitchAgentCuboidWidthDepthHeight.jpg) is highlighted
+    * `pState3Transition3` is triggered if  P3 is indicated- Refer Fig.1 /- and ![](images/CAACreateBoxSwitchAgentCuboidWidthDepth.jpg) is highlighted
 
 The `CheckChoice` method takes into the current state account, it is the last argument of the `AddTransition` method, and the current activated check button.
 

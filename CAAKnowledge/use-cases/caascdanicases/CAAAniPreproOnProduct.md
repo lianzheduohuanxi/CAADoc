@@ -4,7 +4,7 @@ title: "Creating Connection Properties on a Product"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATISamImportDefine", "CATIAParameter", "CATIAConstraints", "CAAScdAniUseCases", "CATIA", "CAAAniPreproOnProduct"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproOnProduct.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproOnProduct.htmmd"
 converted: "2026-05-11T17:31:51.820883"
 ```
 
@@ -18,7 +18,7 @@ converted: "2026-05-11T17:31:51.820883"
 This macro shows you how to create an Analysis document for a generative structural analysis. With this scenario, you will cover all the steps of a generative analysis application. This scenario will require a "CATIA - GENERATIVE ASSEMBLY STRUCTURAL ANALYSIS 2 Product" license. It creates an Analysis document, imports a Product document provided with the sample. An Analysis Case is created as for static linear analysis. Some preprocessing data are defined by using the publication defined on the product. We will focus on the creation of connection properties based on assembly constraints and creation of loading conditions based on rigid virtual part.
 
 This macro shows you how to create an Analysis document for a generative structural analysis. With this scenario, you will cover all the steps of a generative analysis application. This scenario will require a "CATIA - GENERATIVE ASSEMBLY STRUCTURAL ANALYSIS 2 Product" license. It creates an Analysis document, imports a Product document provided with the sample. An Analysis Case is created as for static linear analysis. Some preprocessing data are defined by using the publication defined on the product. We will focus on the creation of connection properties based on assembly constraints and creation of loading conditions based on rigid virtual part.
-CAAAniPreproOnProduct is launched in CATIA [1]. No open document is needed. [CAAAniPreproOnProduct.catvbs](CAAAniPreproOnProductSource.htm) is located in the CAAScdAniUseCases module. [Execute macro](macros/CAAAniPreproOnProduct.catvbs) (Windows only).
+CAAAniPreproOnProduct is launched in CATIA [1]. No open document is needed. [CAAAniPreproOnProduct.catvbs](CAAAniPreproOnProductSource.md) is located in the CAAScdAniUseCases module. [Execute macro](macros/CAAAniPreproOnProduct.catvbs) (Windows only).
 
 CAAAniPreproOnProduct includes the following steps:
 
@@ -38,12 +38,14 @@ CAAAniPreproOnProduct includes the following steps:
 ```vbscript
 ```vbscript
 ' Optional: allows to find the sample wherever it's installed
+```vbscript
 sDocPath=CATIA.SystemService.Environ("CATDocView")
 sSep=CATIA.SystemService.Environ("ADL_ODT_SLASH")
 
 If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
   Err.Raise 9999,,"No Doc Path Defined"
 ```
+```
 
 ```
 
@@ -59,25 +61,34 @@ End If
 ```
 
 ```vbscript
+```vbscript
 Set documents1 = CATIA.Documents
 ```vbscript
+```
 ```vbscript
 ' -----------------------------------------------------------
 ' Get the collection of documents in session
 ' Create the CATAnalysis Document
+```vbscript
 Set TheAnalysisDocument = documents1.Add("Analysis")
+
+```
 
 ' if WB name already is "GPSCfg", not to use StartWorkbench
 ```
 
 ```
 
+```vbscript
 WBName = CATIA.GetWorkbenchId
+```
 ```
 
 If (WBName <> "GPSCfg") Then
 ```vbscript
+```vbscript
   CATIA.StartWorkbench("GPSCfg")
+```
 ```
 
 ```vbscript
@@ -88,7 +99,9 @@ End If
 ```vbscript
 If (WBName <> "GPSCfg") Then
 ```vbscript
+```vbscript
 CATIA.StartWorkbench("GPSCfg")
+```
 ```
 
 ```
@@ -104,9 +117,11 @@ In order to import the document you have to give the path of this document, the 
 ```vbscript
 ```vbscript
 ' Start to scan the existing structure of analysis document
+```vbscript
 Set analysisManager1 = TheAnalysisDoc.Analysis
 
 Dim arrayOfVariantOfShort1(0)
+```
 ```
 
 ```
@@ -120,9 +135,13 @@ analysisManager1.ImportDefineFile sDocPath & sSep & "online" & sSep & "CAAScdAni
 ```
 
 ```vbscript
+```vbscript
 Set specsAndGeomWindow2 = CATIA.ActiveWindow
 ```vbscript
+```
+```vbscript
 Set viewer3D1 = specsAndGeomWindow2.ActiveViewer
+```
 ```
 
 ```
@@ -134,16 +153,22 @@ viewer3D1.Reframe
 ```
 
 ```vbscript
+```vbscript
 Set analysisLinkedDocuments1 = analysisManager1.LinkedDocuments
 ```vbscript
+```
+```vbscript
 CATIA.SystemService.Print analysisLinkedDocuments1.Name
+```
 ```
 
 ```
 
 If (analysisLinkedDocuments1.Count <> 1) Then
 ```vbscript
+```vbscript
   Err.Raise 9999,,"NbDoc Li NE 1"
+```
 ```
 
 ```vbscript
@@ -156,7 +181,10 @@ End If
 ```
 
 ```vbscript
+```vbscript
 Set productDocument1 = analysisLinkedDocuments1.Item(1)
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set product1 = productDocument1.Product
@@ -164,17 +192,22 @@ Set products1 = product1.Products
 Set publications1 = product1.Publications
 Set constraints1 = product1.Connections("CATIAConstraints")
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Set products1 = product1.Products
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set publications1 = product1.Publications
 Set constraints1 = product1.Connections("CATIAConstraints")
+```
 ```
 
 ```
@@ -193,12 +226,14 @@ The product document is fetched in the documentation installation path, this pat
 ```vbscript
 ```vbscript
 ' Create a Virtual Part in the analysis model to transmit the load.
+```vbscript
 Set analysisSets1 = analysisModel1.AnalysisSets
 Set analysisSet1 = analysisSets1.ItemByType("PropertySet")
 
 Set analysisEntities1 = analysisSet1.AnalysisEntities
 Set analysisEntity1 = analysisEntities1.Add("SAMVirPartRigid")
 Set publication1 = publications1.Item("FaceCylinderTop")
+```
 ```
 
 ```
@@ -207,11 +242,15 @@ Set publication1 = publications1.Item("FaceCylinderTop")
 
 analysisEntity1.AddSupportFromPublication product1, publication1
 ```vbscript
+```vbscript
 Set basicComponents1 = analysisEntity1.BasicComponents
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set basicComponent1 = basicComponents1.GetItem("SAMRigSlavePoint.1")
 Set publication4 = publications1.Item("ForceHandler")
+```
 ```
 
 ```
@@ -227,8 +266,10 @@ basicComponent1.AddSupportFromPublication product1, publication4
 ```vbscript
 ' Create a Fastened connection in the analysis model to complete the constraints
 ' definition
+```vbscript
 Set analysisEntity2 = analysisEntities1.Add("SAMFaceFaceFastened")
 Set constraint1 = constraints1.Item("Surface contact.2")
+```
 ```
 
 ```
@@ -245,36 +286,44 @@ analysisEntity2.AddSupportFromConstraint product1, constraint1
 ```vbscript
 ```vbscript
 ' Create a Static Case in the current analysis model.
+```vbscript
 Set analysisModels1 = analysisManager1.AnalysisModels
 Set analysisModel1 = analysisModels1.Item(1)
 Set analysisCases1 = analysisModel1.AnalysisCases
 
-Set analysisCase1 = analysisCases1.Add()
+Set analysisCase1 = analysisCases1.Add(#)
 Set analysisSets1 = analysisCase1.AnalysisSets
 Set analysisSet1 = analysisSets1.Add("RestraintSet", catAnalysisSetIn)
 Set analysisSet2 = analysisSets1.Add("LoadSet", catAnalysisSetIn)
 Set analysisSet3 = analysisCase1.AddSolution("StaticSet")
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Set analysisSet1 = analysisSets1.Add("RestraintSet", catAnalysisSetIn)
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set analysisSet2 = analysisSets1.Add("LoadSet", catAnalysisSetIn)
 Set analysisSet3 = analysisCase1.AddSolution("StaticSet")
 ```
-
 ```
 
 ```
 
-According to the general [Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.htm) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **document**, we find the **Analysis manager Object**, the **Analysis models** and the **Analysis cases Objects**. From both last object (Analysis Model and Analysis case), you can get access to **Analysis Sets** and **Analysis entities** that defines the preprocessing actions. This step create a new case and create two input sets (Restraint Set and Load Set) and a solution set (StaticSet).
+```
+
+```vbscript
+According to the general [Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **document**, we find the **Analysis manager Object**, the **Analysis models** and the **Analysis cases Objects**. From both last object (Analysis Model and Analysis case), you can get access to **Analysis Sets** and **Analysis entities** that defines the preprocessing actions. This step create a new case and create two input sets (Restraint Set and Load Set) and a solution set (StaticSet).
 
 [Top]
+```
 
 #### Defining the Boundaries
 
@@ -282,9 +331,11 @@ According to the general [Analysis Document](../CAAScdAniTechArticles/CAAAniTocA
 ```vbscript
 ```vbscript
 ' Create clamp boundary. Associated to a publication
+```vbscript
 Set analysisEntities2 = analysisSet2.AnalysisEntities
 Set analysisEntity3 = analysisEntities2.Add("SAMClamp")
 Set publication2 = publications1.Item("FaceToClamp")
+```
 ```
 
 ```
@@ -294,9 +345,13 @@ Set publication2 = publications1.Item("FaceToClamp")
 analysisEntity3.AddSupportFromPublication product1, publication2
 
 ```vbscript
+```vbscript
 Set analysisEntity3 = analysisEntities2.Add("SAMClamp")
 ```vbscript
+```
+```vbscript
 Set publication2 = publications1.Item("FaceToClamp")
+```
 ```
 
 ```
@@ -312,10 +367,12 @@ From the restraint set defined on the analysis case, we retrieve the collection 
 ```vbscript
 ```vbscript
 ' Create load boundary. Associated to the virtual part
+```vbscript
 Set analysisEntities3 = analysisSet3.AnalysisEntities
 
 Set analysisEntity4 = analysisEntities3.Add("SAMDistributedForce")
 Set reference2 = analysisManager1.CreateReferenceFromObject(analysisEntity1)
+```
 ```
 
 ```
@@ -325,16 +382,22 @@ Set reference2 = analysisManager1.CreateReferenceFromObject(analysisEntity1)
 analysisEntity4.AddSupportFromReference reference2, reference2
 
 ```vbscript
+```vbscript
 Set basicComponents2 = analysisEntity4.BasicComponents
 ```vbscript
+```
+```vbscript
 Set basicComponent2 = basicComponents2.GetItem("SAMForceAxis.1")
+```
 ```
 
 ```
 
 basicComponent2.SetValue "Values", 0, 0, 0, 1
 ```vbscript
+```vbscript
 Set basicComponent3 = basicComponents2.GetItem("SAMForceVector.1")
+```
 ```
 
 basicComponent3.SetDimensions 3, 1, 1
@@ -356,6 +419,7 @@ The load is defined as the boundaries. In this case the support is the virtual p
 ```vbscript
 ' Some examples to read the data on the basic component
 ' In this case, direct read
+```vbscript
 CATIA.SystemService.Print " ForceVector " & basicComponent3.GetValue("", 1, 1, 1)
 CATIA.SystemService.Print " ForceVector " & basicComponent3.GetValue("", 2, 1, 1)
 
@@ -365,9 +429,12 @@ CATIA.SystemService.Print " ForceVector Dimension " & basicComponent3.GetColumns
 CATIA.SystemService.Print " ForceVector Dimension " & basicComponent3.GetLayersNumber("")
 
 ' In this case, use the Kwe CATIAParameter interface.
+```
+```vbscript
 Set ParametersList = analysisManager1.Parameters
 Set SubList = ParametersList.SubList(basicComponent3, FALSE)
 
+```
 ```
 
 ```
@@ -378,9 +445,11 @@ Set SubList = ParametersList.SubList(basicComponent3, FALSE)
 For i = 1 to SubList.Count
 ```vbscript
 ```vbscript
+```vbscript
   Set Parameter = SubList.Item(i)
   CATIA.SystemService.Print Parameter.Name
   CATIA.SystemService.Print Parameter.ValueAsString
+```
 ```
 
 ```
@@ -422,8 +491,10 @@ This method will launch the mesher, generate the finite element model for prepro
 ```vbscript
 ```vbscript
 ' Clean up (optional)
+```vbscript
 Set analysisManager1 = Nothing
 Set TheAnalysisDocument = Nothing
+```
 ```
 
 ```
@@ -434,8 +505,10 @@ Set TheAnalysisDocument = Nothing
 ```vbscript
 ```vbscript
 ' Clean up (optional)
+```vbscript
 Set analysisManager1 = Nothing
 Set TheAnalysisDocument = Nothing
+```
 ```
 
 ```
@@ -458,8 +531,8 @@ This use case has shown how to produce in VB a complete analysis document with a
 
 #### References
 
-[1] | [Replaying a macro](../CAAScdInfUseCases/CAAInfLauchMacro.htm)
-[2] | [The Physical Types for Structural Analysis](../CAAScdAniTechArticles/CAAAniPreprocessingFeatures.htm)
+[1] | [Replaying a macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)
+[2] | [The Physical Types for Structural Analysis](../use-cases/caascdaniusecases/CAAAniPreprocessingFeatures.md)
 
 [Top]
 

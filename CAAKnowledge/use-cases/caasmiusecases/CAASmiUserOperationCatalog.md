@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAASmiUseCases"
 tags: ["CAADocStyleSheets", "CAASmgOperationSU", "CAASmiUserOperationCatalog", "CAAISmiUserMachFeature", "CATIMfgMachiningFeature", "CAASurfaceMachiningItf", "CAASmiOperationSampleOverview", "CATIM3xFeature", "CAASmiUserOperationUI", "CAAToolAngle", "CAADocUseCases", "CAASmgOperation", "CAASmgOperationWithMA", "CAASmiTechArticles", "CAASmgOperationWithMASU", "CAASmiUserOperation", "CAASmgMachiningFeature", "CAAUserOperationCatalog", "CAADocRunSample", "CAAOffset"]
-source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationCatalog.htm"
+source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationCatalog.htmmd"
 converted: "2026-05-11T11:27:02.777035"
 ---
 
@@ -320,7 +320,6 @@ converted: "2026-05-11T11:27:02.777035"
 
          
 
-
 ```vbscript
 $ mkrun -c sh
 $ cd your_workspace_root
@@ -370,7 +369,7 @@ document `CAAUserOperationCatalog.CATfct` {
 		feature CAASmgOperationSU MfgUserDefinedMO@`ManufacturingActivities.feat` #startup #isa(CAASmgOperation) {
 			AuthorizedItems=["CATIMfgMachiningFeature","CAAISmiUserMachFeature"]
 			Representation="I_CAASmgOperation"		
-			synchronize()
+			synchronize(#)
 		}
 		
 		// Second user Startup deriving from MfgUserDefinedMO
@@ -379,7 +378,7 @@ document `CAAUserOperationCatalog.CATfct` {
 			AuthorizedItems=["CATIMfgMachiningFeature","CATIM3xFeature"]
 			Representation="I_CAASmgOperationWithMA"		
 				
-			synchronize()
+			synchronize(#)
 		}
         ...
 ```
@@ -391,7 +390,7 @@ document `CAAUserOperationCatalog.CATfct` {
 		feature CAASmgOperationSU MfgUserDefinedMO@`ManufacturingActivities.feat` #startup #isa(CAASmgOperation) {
 			AuthorizedItems=["CATIMfgMachiningFeature","CAAISmiUserMachFeature"]
 			Representation="I_CAASmgOperation"		
-			synchronize()
+			synchronize(#)
 		    
 			// Use behavior defined on MfgParameter to create new Strategy parameters on new user startup
 			this->StrategyParameters->AddStrategyParameter(CAAStep,LENGTH,10.)
@@ -405,7 +404,7 @@ document `CAAUserOperationCatalog.CATfct` {
 			AuthorizedItems=["CATIMfgMachiningFeature","CATIM3xFeature"]
 			Representation="I_CAASmgOperationWithMA"		
 				
-			synchronize()
+			synchronize(#)
 		    
 			// Use behavior defined on MfgParameter to create new Strategy parameters on new user startup
 			this->StrategyParameters->AddStrategyParameter(`Box Offset`,LENGTH,0.0)	

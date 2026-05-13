@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Checking the Confusion of Points on a Surface"
-category: "use case"
+category: use-case case"
 module: "CAACgmModel"
 tags: ["CAADoc", "CAAGMModelConfusionOpe", "CATICGMConfusionPtOnSurPtOnSur", "CAAGMModelGemBrowser", "CAAGMModelInterfaces", "CATICGMLocalAnalysis1D", "CATICGMTopSkin"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelConfusionPtSurOpe.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelConfusionPtSurOpe.htmmd"
 converted: "2026-05-11T17:33:48.280142"
 ```
 
@@ -58,7 +58,7 @@ CAAGMModelConfusionOpe `e/confusion.NCGM`
 This NCGM file can be displayed using the CAAGMModelGemBrowser use case [3].
 The CAAGMModelConfusionOpe use case is made of a main named CAAGMModelConfusionOpe.cpp located in the CAAGMModelConfusionOpe.m module of the CAAGMModelInterfaces.edu framework:
 
-`InstallRootFolder\CAADoc\CAAGMModelInterfaces.edu\CAAGMModelConfusionOpe.m\`
+`InstallRootFolder/CAADoc/CAAGMModelInterfaces.edu/CAAGMModelConfusionOpe.m/`
 
 where `InstallRootFolder` [4] is the folder where the API CD-ROM is installed.
 ## Step-by-Step
@@ -79,12 +79,12 @@ The initial step which consists in creating the geometry factory as well as the 
     CATMathAxis IJK;
     double Radius = 2., h = 2.;
     CATSurface * pSurf = piGeomFactory->CreateCylinder(IJK, Radius, -h, h, -CATPI, CATPI);
-    CATSurLimits limits2 = pSurf->GetLimits();
+    CATSurLimits limits2 = pSurf->GetLimits(#);
 
     // b - Create two points on this cylinder
 double Radius = 2., h = 2.;
 CATSurface * pSurf = piGeomFactory->CreateCylinder(IJK, Radius, -h, h, -CATPI, CATPI);
-CATSurLimits limits2 = pSurf->GetLimits();
+CATSurLimits limits2 = pSurf->GetLimits(#);
     const double alpha = 0.37;
     double vparam = 0.5;
     CATSurParam param3(alpha, vparam, limits2);
@@ -119,7 +119,7 @@ CATICGMConfusionPtOnSurPtOnSur * pConfusionOpe1 =::CATCGMCreateConfusion(piGeomF
     // d - Check the confusion
 CATICGMConfusionPtOnSurPtOnSur * pConfusionOpe1 =::CATCGMCreateConfusion(piGeomFactory, pConfig, Pt1, Pt2, Resolution*0.1);
 cout << "Tolerance " << Resolution*0.1 << endl;
-    if (pConfusionOpe1->GetConfusion())
+    if (pConfusionOpe1->GetConfusion(#))
       cout << "Confusion is achieved " << endl;
     else
       cout << "Confusion is not achieved " << endl;

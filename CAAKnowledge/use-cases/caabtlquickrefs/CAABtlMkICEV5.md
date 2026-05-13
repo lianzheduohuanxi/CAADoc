@@ -4,13 +4,13 @@ title: "mkICE"
 category: "use-case"
 module: "CAABtlQuickRefs"
 tags: ["CAADialog"]
-source_file: "Doc/online/CAABtlQuickRefs/CAABtlMkICEV5.htm"
+source_file: "Doc/online/CAABtlQuickRefs/CAABtlMkICEV5.htmmd"
 converted: "2026-05-11T17:33:49.991364"
 ```
 
 ---
 tags: ["CAADialog"]
-source_file: "Doc/online/CAABtlQuickRefs/CAABtlMkICEV5.htm"
+source_file: "Doc/online/CAABtlQuickRefs/CAABtlMkICEV5.htmmd"
 converted: "2026-05-11T17:33:49.991364"
 RADE |  Multi-Workspace Application Builder |  mkICE Edit XML ID cards
 
@@ -121,7 +121,7 @@ Open mkICE with a framework Identity Card already in XML.
 Open mkICE with an explicitly designated IdentityCard XML file.
 
     >cd MyWorkspace
-    >mkICE -f CAADialog.edu\IdentityCard\IdentityCard.xml
+    >mkICE -f CAADialog.edu/IdentityCard/IdentityCard.xml
 
 [Top] In Short This article gives you mkICE usage instructions. History Version: **1** [Jun 2011] | Document created
 ---|---

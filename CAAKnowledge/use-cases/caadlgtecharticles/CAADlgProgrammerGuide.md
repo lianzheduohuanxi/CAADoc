@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Dialog Programmer's Guide"
-category: "use-case"
+category: tech-article
 module: "CAADlgTechArticles"
 tags: ["CATIA"]
-source_file: "Doc/online/CAADlgTechArticles/CAADlgProgrammerGuide.htm"
+source_file: "Doc/online/CAADlgTechArticles/CAADlgProgrammerGuide.htmmd"
 converted: "2026-05-11T17:17:56.072469"
 ```
 
@@ -58,8 +58,10 @@ Once you have determined the type of dialog window you need, try to figure out w
 Most of the time, you create your own dialog class by deriving the _CATDlgDialog_ class.
 
   * You can set the style explicitly, or let the caller set it.
+```vbscript
   * Set a pointer to each control, or more generally to each object that can send notifications, as a data member. You may need to use this pointer in one or several methods. Nevertheless, the pointer to an object that sends a notification is passed as an argument of the callback method.
   * Declare as local variables other objects that you use only when building the window or box, such as frames, labels, and separators. They don't sent any notification, and are not used in other methods
+```
 
 [Top]
 ### Coding the Dialog Class Main Methods
@@ -112,7 +114,7 @@ DialogWindow::DialogWindow(pParent, pIdentifier)
 
 Let's take the example of the CATIA Macro dialog box to go on with a concrete example.
 
-![CATDlgProgramming0.jpg \(22048 bytes\)](images/CATDlgProgramming0.jpg)
+![CATDlgProgramming0.jpg /(22048 bytes/)](images/CATDlgProgramming0.jpg)
 
 This dialog box is non resizable, and features the Help button in the title bar. Its constructor is as follows.
 
@@ -135,12 +137,14 @@ MacroBox::MacroBox(pParent, pIdentifier)
 
 The ` Build` method instantiates the objects making up the dialog box, manages their layout, and sets the callbacks to the control notification you want to react to.
 
-    void MacroBox::Build()
+    void MacroBox::Build(#)
     {
       // 1. Instantiate boxes, indicators, and controls
       // 2. Arrange the dialog objects
+```vbscript
       // 3. Set callbacks
     }
+```
 
 ---
 
@@ -153,7 +157,7 @@ To make sure that the parent/child relations between the objects you create are 
 All the dialog objects instances making up the dialog box are declared as pointers to the appropriate classes. These pointers are stored as data members of the dialog box class. The containment parent/child structure is shown beside. It is used to set the parent of each object as the first argument of the constructors.
 The specifications of the dialog box are shown below.
 
-![CATDlgProgramming.jpg \(30550 bytes\)](images/CATDlgProgramming.jpg)
+![CATDlgProgramming.jpg /(30550 bytes/)](images/CATDlgProgramming.jpg)
 
 [Top]
 ##### Instantiate boxes, indicators, and controls
@@ -234,7 +238,7 @@ To arrange boxes, indicators, and controls, use the grid layout [2]. You can man
 
   * Main window
 
-![CATDlgProgramming2.jpg \(24684 bytes\)](images/CATDlgProgramming2.jpg)
+![CATDlgProgramming2.jpg /(24684 bytes/)](images/CATDlgProgramming2.jpg)
 
         ...
           _pMacroNameFrame->SetGridConstraints(0, 0, 1, 1, CATGRID_4SIDES);
@@ -261,7 +265,7 @@ To arrange boxes, indicators, and controls, use the grid layout [2]. You can man
 ---
   * Macro Name frame
 
-![CATDlgProgramming3.jpg \(23791 bytes\)](images/CATDlgProgramming3.jpg)
+![CATDlgProgramming3.jpg /(23791 bytes/)](images/CATDlgProgramming3.jpg)
 
         ...
         _pMacroNameCombo->SetGridConstraints(0, 0, 1, 1, CATGRID_4SIDES);
@@ -270,7 +274,7 @@ To arrange boxes, indicators, and controls, use the grid layout [2]. You can man
 ---
   * Macro in frame
 
-![CATDlgProgramming4.jpg \(24233 bytes\)](images/CATDlgProgramming4.jpg)
+![CATDlgProgramming4.jpg /(24233 bytes/)](images/CATDlgProgramming4.jpg)
 
         ...
         _pMacroInLabel->SetGridConstraints(0, 0, 1, 1, CATGRID_4SIDES);
@@ -280,7 +284,7 @@ To arrange boxes, indicators, and controls, use the grid layout [2]. You can man
 ---
   * Description frame
 
-![CATDlgProgramming5.jpg \(24164 bytes\)](images/CATDlgProgramming5.jpg)
+![CATDlgProgramming5.jpg /(24164 bytes/)](images/CATDlgProgramming5.jpg)
 
         ...
         _pDescriptionLabel->SetGridConstraints(0, 0, 1, 1, CATGRID_4SIDES);
@@ -289,7 +293,7 @@ To arrange boxes, indicators, and controls, use the grid layout [2]. You can man
 ---
   * Push button frame
 
-![CATDlgProgramming6.jpg \(25229 bytes\)](images/CATDlgProgramming6.jpg)
+![CATDlgProgramming6.jpg /(25229 bytes/)](images/CATDlgProgramming6.jpg)
 
         ...
         _pRunButton   ->SetGridConstraints(0, 0, 1, 1, CATGRID_4SIDES);
@@ -303,14 +307,17 @@ To arrange boxes, indicators, and controls, use the grid layout [2]. You can man
 
 ---
 
+```vbscript
 ##### Set Callbacks
+
+```
 
 The callbacks are set for the controls to specify the appropriate method to call when a given control is activated, that is, send a given notification. For example, this is the callback set for the Run push button:
 
     ...
 The callbacks are set for the controls to specify the appropriate method to call when a given control is activated, that is, send a given notification. For example, this is the callback set for the Run push button:
     AddAnalyseNotificationCB(_pRunButton,
-                             _pRunButton->**GetPushBActivateNotification**(),
+                             _pRunButton->**GetPushBActivateNotification**(#),
                              (CATCommandMethod)&MacroBox::RunButton
                               NULL);
 
@@ -344,11 +351,11 @@ You can retrieve the activated control from the first parameter, and the notific
 As a C++ rule, the destructor should delete the pointed data members. For pointed dialog objects that are descendants of the dialog window class,  you shouldn't deal with it, since the children are recursively retrieved form the dialog window instance, and are automatically deleted. You have only to set a NULL pointer to each dialog object member. Usually, a dialog window destructor looks like this:
 
 As a C++ rule, the destructor should delete the pointed data members. For pointed dialog objects that are descendants of the dialog window class,  you shouldn't deal with it, since the children are recursively retrieved form the dialog window instance, and are automatically deleted. You have only to set a NULL pointer to each dialog object member. Usually, a dialog window destructor looks like this:
-    MacroBox::~MacroBox()
+    MacroBox::~MacroBox(#)
 
     {
 As a C++ rule, the destructor should delete the pointed data members. For pointed dialog objects that are descendants of the dialog window class,  you shouldn't deal with it, since the children are recursively retrieved form the dialog window instance, and are automatically deleted. You have only to set a NULL pointer to each dialog object member. Usually, a dialog window destructor looks like this:
-MacroBox::~MacroBox()
+MacroBox::~MacroBox(#)
       _pFirstDataMember = NULL ;
 
       ...
@@ -373,15 +380,19 @@ I use a grid layout, and the grid rows, columns, and span numbers I assigned see
  The grid layout parameters aren't set for this control.
 
 ```vbscript
+```vbscript
  Set the grid layout parameters using the SetGridConstraints method for this control.
+```
 ```
 
 #### The Titles or Icons of My Controls Are not Taken into Account
 
 The grid layout parameters aren't set for this control.
 ```vbscript
+```vbscript
 Set the grid layout parameters using the SetGridConstraints method for this control.
  I have created the resources for my controls in the appropriate files, but they don't display.
+```
 
 ```
 

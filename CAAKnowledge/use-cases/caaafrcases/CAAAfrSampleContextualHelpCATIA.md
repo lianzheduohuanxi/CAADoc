@@ -1,11 +1,13 @@
 ---
 ```vbscript
 title: "Contextual Help for an Add-on"
-category: "use case"
+category: use-case case"
 module: "CAAAfrUseCases"
 tags: ["CAAAfrDumpCommandHeader", "CAAAfrExploreHdr", "CAAAfrCuboidHdr", "CAAAfrBoundingEltHdr", "CAAGeometry", "CAAAfrGeoAnalysisWkbHeader", "CATIA", "CAAAfrCylinder2Hdr", "CATIAfr_C2", "CAADialogEngine", "CAACATIAApplicationFrame", "CAAAfrGeoChartWindowAdnHeader", "CATIAfrs", "CATIAApplicationFrame", "CAADoc", "CAAVisualization", "CAAAfrGeoCreationWkbHeader", "CAAAfrCylinder1Hdr", "CATIAtoc", "CAAAfrHistogramChartWindowHdr"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleContextualHelpCATIA.htm"
+```vbscript
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleContextualHelpCATIA.htmmd"
 converted: "2026-05-11T17:17:55.660612"
+```
 ```
 
 ---
@@ -145,10 +147,10 @@ Then, in the window where you run the mkrun command, do not type the module name
 Then, in the window where you run the mkrun command, do not type the module name on the command line, but type CNEXT instead. When the application is ready make the scenario given in the above section.
 The CAADoc use case is made of several files located in the CAADoc module of the CAAApplicationFrame.edu framework:
 
-Windows | `<InstallRootDirectory>\CAADoc\CAAApplicationFrame.edu\CAADoc\`
+Windows | `<InstallRootDirectory>/CAADoc/CAAApplicationFrame.edu/CAADoc/`
 
 The CAADoc use case is made of several files located in the CAADoc module of the CAAApplicationFrame.edu framework:
-Windows | `<InstallRootDirectory>\CAADoc\CAAApplicationFrame.edu\CAADoc\`
+Windows | `<InstallRootDirectory>/CAADoc/CAAApplicationFrame.edu/CAADoc/`
 Unix | `<InstallRootDirectory>/CAADoc/CAAApplicationFrame.edu/CAADoc/`
 
 where `<InstallRootDirectory>` is the directory where the CAA CD-ROM is installed.

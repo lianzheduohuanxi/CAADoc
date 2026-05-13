@@ -4,13 +4,13 @@ title: "Adding Business Rules to a Command"
 category: "use case"
 module: "CAADkoUseCases"
 tags: ["CATIAVPMVDAAddChild", "CAADkoCommandExtenstion", "CAAVPMDesktopObjects", "CATIAVPMAddChild", "CATIAVPMVDACommandExtension", "CATIAVPMVDACommand", "CATIAVPMVDAAddChild_var", "CAADkoCommandExtension", "CATIAVPMVDACommandFactory_var", "CATIAVPMVDACopy", "CATIAVPMVDAExists"]
-source_file: "Doc/online/CAADkoUseCases/CAADkoCommandExtension.htm"
+source_file: "Doc/online/CAADkoUseCases/CAADkoCommandExtension.htmmd"
 converted: "2026-05-11T17:33:45.967445"
 ```
 
 ---
 tags: ["CATIAVPMVDAAddChild", "CAADkoCommandExtenstion", "CAAVPMDesktopObjects", "CATIAVPMAddChild", "CATIAVPMVDACommandExtension", "CATIAVPMVDACommand", "CATIAVPMVDAAddChild_var", "CAADkoCommandExtension", "CATIAVPMVDACommandFactory_var", "CATIAVPMVDACopy", "CATIAVPMVDAExists"]
-source_file: "Doc/online/CAADkoUseCases/CAADkoCommandExtension.htm"
+source_file: "Doc/online/CAADkoUseCases/CAADkoCommandExtension.htmmd"
 converted: "2026-05-11T17:33:45.967445"
 Lifecycle Applications |  EBOM Part & Assembly Detailing |  Adding Business Rules to a Command _Customizing a command with a pre- and post-process_
 
@@ -44,7 +44,7 @@ If Prepare returns successfully, and the command is executed, it then calls the 
   1. In this use case, we implement two simple rules before and after executing the command: Before the execution, we check that a Context object (of type ENOVIA_VPMContext) already exists, and that its identifier is composed of the name of the object to create to which the string " for context" is appended. If this context object does not exist, we send back an error code to prevent the command from creating the object.
   2. After the execution, the business object is created, we retrieve it and copy it in the clipboard.
 
-[Top] How to Launch CAADkoCommandExtension To launch CAADkoCommandExtension , you will need to set up the build time environment, then compile CAADkoCommandExtension along with its prerequisites, set up the run time environment, and then execute the use case [1]. [Top] Where to Find the CAADkoCommandExtension Code The CAADkoCommandExtension use case is made of a single file located in the CAADkoCommandExtension.m module of the CAAVPMDesktopObjects.edu framework: | Windows | `InstallRootDirectory\CAAVPMDesktopObjects.edu\CAADkoCommandExtension.m\`
+[Top] How to Launch CAADkoCommandExtension To launch CAADkoCommandExtension , you will need to set up the build time environment, then compile CAADkoCommandExtension along with its prerequisites, set up the run time environment, and then execute the use case [1]. [Top] Where to Find the CAADkoCommandExtension Code The CAADkoCommandExtension use case is made of a single file located in the CAADkoCommandExtension.m module of the CAAVPMDesktopObjects.edu framework: | Windows | `InstallRootDirectory/CAAVPMDesktopObjects.edu/CAADkoCommandExtension.m/`
 ---|---
 1. In this use case, we implement two simple rules before and after executing the command: Before the execution, we check that a Context object (of type ENOVIA_VPMContext) already exists, and that its identifier is composed of the name of the object to create to which the string " for context" is appended. If this context object does not exist, we send back an error code to prevent the command from creating the object.
 2. After the execution, the business object is created, we retrieve it and copy it in the clipboard.
@@ -77,12 +77,12 @@ class ExportedByCAADkoCommandExtension CAADkoCommandExtension : public CATBaseUn
             /** Default Constructor.
              */
 
-            CAADkoCommandExtension();
+            CAADkoCommandExtension(#);
 
             /** Destructor.
              */
 
-            virtual ~CAADkoCommandExtension();
+            virtual ~CAADkoCommandExtension(#);
 
             /** Called just before the execution of the command.
               * The execution of a command is made of three steps : preparation with parameters,
@@ -91,14 +91,14 @@ class ExportedByCAADkoCommandExtension CAADkoCommandExtension : public CATBaseUn
               * can be cancelled if this method returns an error code.
              */
 
-            HRESULT Prepare();
+            HRESULT Prepare(#);
 
             /** Called just after the execution of the command.
               * This method is called just after the execution, so that further work can be done
               * on the results of the command.
              */
 
-            HRESULT Cleanup();
+            HRESULT Cleanup(#);
 
 ```vbscript
         private :
@@ -130,13 +130,13 @@ In the header file of the class, make it derive from CATBaseUnknown, and use the
     /** Constructor.
      */
 
-    CAADkoCommandExtension::CAADkoCommandExtension()
+    CAADkoCommandExtension::CAADkoCommandExtension(#)
     {}
 
     /** Destructor.
      */
 
-    CAADkoCommandExtension::~CAADkoCommandExtension()
+    CAADkoCommandExtension::~CAADkoCommandExtension(#)
     {}
 
     /** Called just before the execution of the command.
@@ -146,9 +146,9 @@ In the header file of the class, make it derive from CATBaseUnknown, and use the
       * can be cancelled if this method returns an error code.
      */
 
-    HRESULT CAADkoCommandExtension::Prepare()
+    HRESULT CAADkoCommandExtension::Prepare(#)
     {
-HRESULT CAADkoCommandExtension::Prepare()
+HRESULT CAADkoCommandExtension::Prepare(#)
         HRESULT RC = S_OK;
         return RC;
 
@@ -159,9 +159,9 @@ HRESULT CAADkoCommandExtension::Prepare()
       * on the results of the command.
      */
 
-    HRESULT CAADkoCommandExtension::Cleanup()
+    HRESULT CAADkoCommandExtension::Cleanup(#)
     {
-HRESULT CAADkoCommandExtension::Cleanup()
+HRESULT CAADkoCommandExtension::Cleanup(#)
         HRESULT RC = S_OK;
         return RC;
 
@@ -189,7 +189,7 @@ Those parameters are the type of the business object to create, its identifier, 
 
     	// Construct and get an Exists Command, to search for objects.
 Those parameters are the type of the business object to create, its identifier, its name, its description, and the reference of the object if needed (when creating a Part Instance, the command needs the Part Reference to instanciate).
-    	CATIAVPMVDACommandFactory_var spCommandFactory = GetCommandFactory();
+    	CATIAVPMVDACommandFactory_var spCommandFactory = GetCommandFactory(#);
     	CATIAVPMVDACommand * piCommand = NULL;
 
     	CATUnicodeString ExistsString( "Exists" );
@@ -203,10 +203,10 @@ CATUnicodeString ExistsString( "Exists" );
 ```
 
 ---
-We get the factory of command by calling the global function GetCommandFactory() located in VPMCommandServices. We can then create a command dedicated for searching objects, called Exists command. We have a generic pointer on this command, a CATIAVPMVDACommand pointer. To use it properly, we must get the CATIAVPMVDAExists interface.
+We get the factory of command by calling the global function GetCommandFactory(#) located in VPMCommandServices. We can then create a command dedicated for searching objects, called Exists command. We have a generic pointer on this command, a CATIAVPMVDACommand pointer. To use it properly, we must get the CATIAVPMVDAExists interface.
 
     	// Retrieve the interface of this Exists command.
-We get the factory of command by calling the global function GetCommandFactory() located in VPMCommandServices. We can then create a command dedicated for searching objects, called Exists command. We have a generic pointer on this command, a CATIAVPMVDACommand pointer. To use it properly, we must get the CATIAVPMVDAExists interface.
+We get the factory of command by calling the global function GetCommandFactory(#) located in VPMCommandServices. We can then create a command dedicated for searching objects, called Exists command. We have a generic pointer on this command, a CATIAVPMVDACommand pointer. To use it properly, we must get the CATIAVPMVDAExists interface.
     	CATIAVPMVDAExists * piExistsCommand = NULL;
 ```vbscript
     	RC = piCommand->QueryInterface( IID_CATIAVPMVDAExists, (void **) & piExistsCommand );
@@ -225,11 +225,11 @@ This is achieved by doing a QueryInterface. We have now the proper interface to 
 CATUnicodeString ObjectType( "ENOVIA_VPMContext" );
     	piExistsCommand->put_Type( ObjectType );
     	piExistsCommand->put_ID( ContextName );
-    	piExistsCommand->Exec();
+    	piExistsCommand->Exec(#);
 
 ---
 piExistsCommand->put_ID( ContextName );
-piExistsCommand->Exec();
+piExistsCommand->Exec(#);
 We prepare the parameters for the search, the type of objects to search for, ENOVIA_VPMContext, and the identifier of the object. We pass those parameters to the Exists command and execute it.
 
     	// Get the result object, if any.
@@ -246,11 +246,11 @@ We prepare the parameters for the search, the type of objects to search for, ENO
     	    // The Context object exists, the check is good.
 piExistsCommand->get_BObject( piObjectResult );
 if ( piObjectResult != NULL )
-    	    piObjectResult->Release();
+    	    piObjectResult->Release(#);
     	    piObjectResult = NULL;
 
     	}
-piObjectResult->Release();
+piObjectResult->Release(#);
 piObjectResult = NULL;
     	else
 
@@ -283,7 +283,7 @@ The AddChild command has been executed, so we can retrieve the created object wh
 
     	    // Construct and get a Copy Command.
 The AddChild command has been executed, so we can retrieve the created object which is an output parameter of this command.
-    	    CATIAVPMVDACommandFactory_var spCommandFactory = GetCommandFactory();
+    	    CATIAVPMVDACommandFactory_var spCommandFactory = GetCommandFactory(#);
     	    CATIAVPMVDACommand * piCommand = NULL;
 
     	    CATUnicodeString CopyString( "Copy" );
@@ -312,11 +312,11 @@ We want to copy the new created object, so we have to create a CATIAVPMVDACopy c
     	    // Execute the Copy Command.
 We want to copy the new created object, so we have to create a CATIAVPMVDACopy command. For this, we get the command factory by calling the global function, we ask for the creation of a Copy command and we perform a QueryInterface to get the CATIAVPMVDACopy interface to use it properly.
     	    piCopyCommand->put_BObject( piCreatedObject );
-    	    piCopyCommand->Exec();
+    	    piCopyCommand->Exec(#);
 
 ---
 piCopyCommand->put_BObject( piCreatedObject );
-piCopyCommand->Exec();
+piCopyCommand->Exec(#);
 The only task remaining there is to put the new created object as the input parameter of the Copy command, and execute it. This object is now in the clipboard for a later use. [Top] Updating the dictionary
 
     CATVpmVDAAddChild   CATIAVPMVDACommandExtension   libCAADkoCommandExtension

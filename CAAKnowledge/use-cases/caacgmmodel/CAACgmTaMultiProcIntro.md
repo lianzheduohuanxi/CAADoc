@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Introduction to Multiprocessing"
-category: "concept"
+category: use-case
 module: "CAACgmModel"
 tags: ["CAAGMModelInterfaces", "CAAGMModelTesMProcImpl", "CAAGMModelTesMProcMain"]
-source_file: "Doc/online/CAACgmModel/CAACgmTaMultiProcIntro.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmTaMultiProcIntro.htmmd"
 converted: "2026-05-11T17:33:48.005017"
 ```
 
@@ -53,13 +53,13 @@ An example of MProc implementation is located in the CAAGMModelTesMProcImpl.m an
 In the typical case, multiprocessing is used to compute particular operations as quickly as possible. Consider for instance the classic example of tessellating a multi-body model (aka assembly). In the sequential workflow, the bodies are tessellated one after the other. One can easily envision a loop, iterating over a list of bodies, tessellating and rendering each one in turn.
 
 ```vbscript
-    for (int i = 1; i <= BodyList.Size(); ++i)
+    for (int i = 1; i <= BodyList.Size(#); ++i)
 
 ```
 
     {
 In the typical case, multiprocessing is used to compute particular operations as quickly as possible. Consider for instance the classic example of tessellating a multi-body model (aka assembly). In the sequential workflow, the bodies are tessellated one after the other. One can easily envision a loop, iterating over a list of bodies, tessellating and rendering each one in turn.
-for (int i = 1; i <= BodyList.Size(); ++i)
+for (int i = 1; i <= BodyList.Size(#); ++i)
         CATBody* Body = BodyList[i];
         TessData* Data = Tessellate(Body);
         Render(Data);
@@ -73,14 +73,14 @@ Render(Data);
 In the parallel case, the loop will be replaced with a custom CATMProcTaskManagerCGM implementation, containing the list of bodies. This task manager is responsible for distributing the bodies, and for rendering them as each operation completes.
 
     CustomTessellator MyTessellator(BodyList);
-    MyTessellator.Run();
+    MyTessellator.Run(#);
 
 ```
 
 ---
 
 CustomTessellator MyTessellator(BodyList);
-MyTessellator.Run();
+MyTessellator.Run(#);
 The base class Run method initiates the parallel transaction and hands control over to the process manager. When additional processes are not available, the Run method retains control and runs the tasks sequentially on the master process. In either case, the custom task manager is queried for tasks in the Virtual NextTask method and is presented with completed task in the virtual EndTask method until none remain.
 
 The NextTask method receives a pointer to a CATMProcProcessDataCGM class object. This class is used to attach process specific data to slave processes. Once attached, the objects remain associated with the particular slave processes until the end of the parallel region. Custom implementations can use this to attach custom data to specific processes.
@@ -103,7 +103,7 @@ class CustomTessellator : public CATMProcTaskManagerCGM
         {
 public:
 virtual CATMProcTaskContainerCGM* NextTask(CATMProcProcessDataCGM*& ioProcessData)
-            if (Scheduled < BodyList.Size())
+            if (Scheduled < BodyList.Size(#))
               return new CustomTask(BodyList[++Scheduled]);
             else
               return NULL;
@@ -119,12 +119,12 @@ return NULL;
 return NULL;
 virtual HRESULT EndTask(CATMProcTaskContainerCGM* iTask, CATMProcProcessDataCGM* iProcessData)
             CustomTask* Task = (CustomTask*)iTask;
-            Render( Task->GetTessData());
+            Render( Task->GetTessData(#));
             delete Task;
 
             ++Completed; // Increment our counter of completed tasks.
 CustomTask* Task = (CustomTask*)iTask;
-Render( Task->GetTessData());
+Render( Task->GetTessData(#));
 delete Task;
             return S_OK;
 
@@ -150,11 +150,11 @@ class CustomTask : public CATMProcTaskContainerCGM
 
     public:
 
-        virtual HRESULT Run()
+        virtual HRESULT Run(#)
 
         {
 public:
-virtual HRESULT Run()
+virtual HRESULT Run(#)
             Data = Tessellate(Body);
             return S_OK;
 
@@ -290,42 +290,42 @@ In some cases it may be beneficial to compute operations in the background, givi
 The behavior of these methods is not as straightforward as the Run method. The StartAsyncTasks method will continue to call NextTask until no more tasks exist (until it returns NULL). During this scheduling phase, EndTask may be called to complete tasks. It will also block when all processors are busy and more tasks remain. In blocking, it waits for processes to complete tasks so that more can be scheduled. The EndAsyncTasks method will block until all tasks are complete. This default use is best suited for scenarios with few tasks, to avoid excessive blocking.
 
     CustomTessellator MyTessellator(BodyList);
-    MyTessellator.StartAsyncTasks();
+    MyTessellator.StartAsyncTasks(#);
 
     // Do something else ...
 The behavior of these methods is not as straightforward as the Run method. The StartAsyncTasks method will continue to call NextTask until no more tasks exist (until it returns NULL). During this scheduling phase, EndTask may be called to complete tasks. It will also block when all processors are busy and more tasks remain. In blocking, it waits for processes to complete tasks so that more can be scheduled. The EndAsyncTasks method will block until all tasks are complete. This default use is best suited for scenarios with few tasks, to avoid excessive blocking.
 CustomTessellator MyTessellator(BodyList);
-MyTessellator.StartAsyncTasks();
-    MyTessellator.EndAsyncTasks();
+MyTessellator.StartAsyncTasks(#);
+    MyTessellator.EndAsyncTasks(#);
 
 ---
 
-MyTessellator.EndAsyncTasks();
+MyTessellator.EndAsyncTasks(#);
 With a slightly more complex implementation it is possible to avoid blocking. Both StartAsyncTasks and EndAsyncTasks take an optional “no block” argument. When set, StartAsyncTasks returns when no slave processes are available to accept tasks. In this mode, StartAsyncTasks may have to be called more than once to get all tasks scheduled. Similarly, EndAsyncTasks returns when no completed tasks are available to be received, also leaving it to be called more than once in some cases. Note, calling StartAsyncTasks after calling EndAsyncTasks is not supported, since the parallel transaction is automatically terminated once EndAsyncTasks has been called and all scheduled tasks complete.
 
     CustomTessellator MyTessellator(BodyList);
 ```vbscript
-    while (MyTessellator.HasTasks()) /* Scheduled < BodyList.Size() */
+    while (MyTessellator.HasTasks(#)) /* Scheduled < BodyList.Size(#) */
 
 ```
 
     {
 With a slightly more complex implementation it is possible to avoid blocking. Both StartAsyncTasks and EndAsyncTasks take an optional “no block” argument. When set, StartAsyncTasks returns when no slave processes are available to accept tasks. In this mode, StartAsyncTasks may have to be called more than once to get all tasks scheduled. Similarly, EndAsyncTasks returns when no completed tasks are available to be received, also leaving it to be called more than once in some cases. Note, calling StartAsyncTasks after calling EndAsyncTasks is not supported, since the parallel transaction is automatically terminated once EndAsyncTasks has been called and all scheduled tasks complete.
 CustomTessellator MyTessellator(BodyList);
-while (MyTessellator.HasTasks()) /* Scheduled < BodyList.Size() */
-        MyTessellator.StartAsyncTasks();
+while (MyTessellator.HasTasks(#)) /* Scheduled < BodyList.Size(#) */
+        MyTessellator.StartAsyncTasks(#);
 
         // Do something else ...
     }
     ...
-MyTessellator.StartAsyncTasks();
+MyTessellator.StartAsyncTasks(#);
 ```vbscript
-    while (MyTessellator.NotComplete()) /* Completed < BodyList.Size() */
+    while (MyTessellator.NotComplete(#)) /* Completed < BodyList.Size(#) */
 
 ```
 
     {
-        MyTessellator.EndAsyncTasks();
+        MyTessellator.EndAsyncTasks(#);
         // Do something else ...
     }
 
@@ -362,14 +362,14 @@ CATMProcProcessDataCGM* iSequentialProcessData,
 CATBoolean&             oIsSequential,
 CATBoolean&             oNextTaskExists)
 ```vbscript
-            if (Scheduled < BodyList.Size())
+            if (Scheduled < BodyList.Size(#))
 
 ```
 
             {
 CATBoolean&             oIsSequential,
 CATBoolean&             oNextTaskExists)
-if (Scheduled < BodyList.Size())
+if (Scheduled < BodyList.Size(#))
                 oNextTaskExists = TRUE;
                 CATBody* Body = BodyList[Scheduled];
                 if ( IsSimple(Body) )
@@ -386,7 +386,7 @@ oIsSequential = TRUE;
 
         {
 virtual CATMProcTaskContainerCGM* NextTask(CATMProcProcessDataCGM*& ioProcessData)
-            if (Scheduled < BodyList.Size())
+            if (Scheduled < BodyList.Size(#))
                 return new CustomTask(BodyList[Scheduled++]);
             else
                 return NULL;
@@ -402,12 +402,12 @@ return NULL;
 return NULL;
 virtual HRESULT EndTask(CATMProcTaskContainerCGM* iTask, CATMProcProcessDataCGM* iProcessData)
             CustomTask* Task = (CustomTask*)iTask;
-            Render( Task->GetTessData());
+            Render( Task->GetTessData(#));
             delete Task;
 
             ++Completed; // Increment our counter of completed tasks.
 CustomTask* Task = (CustomTask*)iTask;
-Render( Task->GetTessData());
+Render( Task->GetTessData(#));
 delete Task;
             return S_OK;
 
@@ -472,7 +472,7 @@ To show this in an example, we can update our tessellator case to use a minimum 
     CustomTessellator MyTessellator(“CATMProcRelationCGMTessellator”,”MyDll”, Factory, BodyList);
     MyTessellator.SetMinNbProcessesToUse(2); // Use at least two
     MyTessellator.SetMaxNbProcessesToUse(4); //  at most four.
-    MyTessellator.Run();
+    MyTessellator.Run(#);
 
 ---
 ### Debugging Techniques

@@ -4,13 +4,13 @@ title: "Extrema of a Solid"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CATICGMTopBodyExtremum", "CAAGMOperatorsBodyExtremum"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopExtrema.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopExtrema.htmmd"
 converted: "2026-05-11T17:33:49.178885"
 ```
 
 ---
 tags: ["CAAGMOperatorsInterfaces", "CATICGMTopBodyExtremum", "CAAGMOperatorsBodyExtremum"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopExtrema.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopExtrema.htmmd"
 converted: "2026-05-11T17:33:49.178885"
 Extrema of a Solid
 
@@ -55,9 +55,9 @@ CATICGMTopBodyExtremum  *pOpXMin  =  CATCGMCreateDirBodyExtremum(piGeomFactory,
       {
 CATICGMTopBodyExtremum  *pOpXMin  =  CATCGMCreateDirBodyExtremum(piGeomFactory,
 if  (pOpXMin)
-        pOpXMin->Run();
-        pBodyXMin =  pOpXMin->GetResult();
-        pOpXMin->Release();
+        pOpXMin->Run(#);
+        pBodyXMin =  pOpXMin->GetResult(#);
+        pOpXMin->Release(#);
         pOpXMin  =  NULL;
 
       }
@@ -77,9 +77,9 @@ CATICGMTopBodyExtremum  *pOpZMax  =  CATCGMCreateDirBodyExtremum(piGeomFactory,
       {
 CATICGMTopBodyExtremum  *pOpZMax  =  CATCGMCreateDirBodyExtremum(piGeomFactory,
 if  (pOpZMax)
-        pOpZMax->Run();
-        pBodyZMax =  pOpZMax->GetResult();
-        pOpZMax->Release();
+        pOpZMax->Run(#);
+        pBodyZMax =  pOpZMax->GetResult(#);
+        pOpZMax->Release(#);
         pOpZMax  =  NULL;
 
       }

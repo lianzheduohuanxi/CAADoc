@@ -4,13 +4,13 @@ title: "CAAPstAddExternalComponent.CATScript"
 category: "use-case"
 module: "CAAScdPstUseCases"
 tags: ["CAAPstHull", "CATIA", "CAAPstAddExternalComponent"]
-source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddExternalComponentSource.htm"
+source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddExternalComponentSource.htmmd"
 converted: "2026-05-11T17:31:52.321783"
 ```
 
 ---
 tags: ["CAAPstHull", "CATIA", "CAAPstAddExternalComponent"]
-source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddExternalComponentSource.htm"
+source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddExternalComponentSource.htmmd"
 converted: "2026-05-11T17:31:52.321783"
     Option Explicit
 
@@ -34,8 +34,10 @@ converted: "2026-05-11T17:31:52.321783"
 
 ```
 
-    Sub CATMain()
 ```vbscript
+    Sub CATMain(#)
+```vbscript
+```
 ```vbscript
         ' -----------------------------------------------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
@@ -45,13 +47,17 @@ converted: "2026-05-11T17:31:52.321783"
 ```
 
 ```vbscript
+```vbscript
          Dim sDocPath As String
+```vbscript
+```
 ```vbscript
 ```vbscript
          sDocPath=CATIA.SystemService.Environ("CATDocView")
          If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
            Err.Raise 9999,,"No Doc Path Defined"
          End If
+```
 ```
 
 ```
@@ -64,20 +70,30 @@ converted: "2026-05-11T17:31:52.321783"
         ' ------------------------------------------------------------------------------------------------
         'Create a new product document object by adding a document with the Product
         'type to the document collection of the CATIA application.
+```vbscript
         Dim oProductDoc As Document
         Set oProductDoc = CATIA.Documents.Add("Product")
         'Retrieve the root product.
+```
+```vbscript
         Dim oRoot As Product
         Set oRoot = oProductDoc.Product
         'Retrieve the root product collection of products.
+```
+```vbscript
         Dim oRootCol As Products
         Set oRootCol = oRoot.Products
         'Open the Part Document
+```
+```vbscript
         Dim oPartDoc As Document
         Set oPartDoc = CATIA.Documents.Open(sDocPath & "CAAPstHull.CATPart")
         'Add a new component from the already opened part document.
+```
+```vbscript
         Dim oNewComponent As Product
         Set oNewComponent = oRootCol.AddExternalComponent(oPartDoc)
+```
 ```
 
 ```
@@ -85,6 +101,8 @@ converted: "2026-05-11T17:31:52.321783"
 ```
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

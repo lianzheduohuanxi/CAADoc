@@ -4,7 +4,7 @@ title: "About Numbers, Literals, and Units"
 category: "use-case"
 module: "CAAScdInfTechArticles"
 tags: []
-source_file: "Doc/online/CAAScdInfTechArticles/CAAInfLiteralUnits.htm"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfLiteralUnits.htmmd"
 converted: "2026-05-11T17:31:52.422043"
 ```
 
@@ -36,7 +36,7 @@ Except when explicitly documented, numerical values stored and internally handle
 
      MyHole.Diameter.ValuateFromString("2in")
 
-> ![](../CAAScrBase/images/ainfo.gif) | ** ** To be compatible with formulas syntax, if you don't specify a Unit for the argument of **ValuateFromString** , the MKSA units are used:  length are expressed in meters and angles in radians.
+> ![image](../../assets/images/ainfo.gif) | ** ** To be compatible with formulas syntax, if you don't specify a Unit for the argument of **ValuateFromString** , the MKSA units are used:  length are expressed in meters and angles in radians.
 The character string is interpreted as a value of 5.08 expressed in mm. You can enter a decimal value since the **Dimension** object derives from the **RealParam** object which allows for real values to be set. You may want to enter inches instead. Simply write:
 MyHole.Diameter.ValuateFromString("2in")
 As a thumb rule, always specify the unit when using **ValuateFromString** or formulas.

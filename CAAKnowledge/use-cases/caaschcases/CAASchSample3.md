@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating Features in an Applicative Container"
-category: "use case"
+category: use-case case"
 module: "CAASchUseCases"
 tags: ["CAASchEduIn", "CAASchAppSample2", "CATISchAppObjectFactory", "CAASchAppSample3Main", "CAASchAppSample3", "CAASchSample1", "CATISchSession", "CAASCHEDU_SamplePID", "CAASchApp", "CATISchRoute", "CAASchEduOut3", "CATISchBaseFactory", "CAASchPlatformModeler", "CAASchAppUtilities", "CATInit", "CAAESchAppObjectFactory", "CAASchAppBase", "CAASchAppBaseEnv", "CAASchAppDeleteBaseUnknown"]
-source_file: "Doc/online/CAASchUseCases/CAASchSample3.htm"
+source_file: "Doc/online/CAASchUseCases/CAASchSample3.htmmd"
 converted: "2026-05-11T17:31:51.529141"
 ```
 
@@ -57,8 +57,8 @@ The sample demonstrates how to create a route two different ways; by points, and
 
 To launch CAASchAppSample3, you will need to set up the build time environment, then compile CAASchAppSample3 along with its prerequisites, set up the run time environment, and then execute the sample. This is fully described in the referenced article [1]. When launching the use case, you must pass the following arguments:
 
-  * **CAASchEduIn.CATProduct** \- the entire pathname, name and extension (.CATProduct) of the input drawing. Normally, it should be stored in the CNext/resources/graphic directory.
-  * **CAASchEduOut3.CATProduct** \- the entire pathname, name and extension (.CATProduct) under which the new document is to be stored
+  * **CAASchEduIn.CATProduct** /- the entire pathname, name and extension (.CATProduct) of the input drawing. Normally, it should be stored in the CNext/resources/graphic directory.
+  * **CAASchEduOut3.CATProduct** /- the entire pathname, name and extension (.CATProduct) under which the new document is to be stored
 
 [Top]
 #### Where to Find the CAASchAppSample3 Code
@@ -66,10 +66,10 @@ To launch CAASchAppSample3, you will need to set up the build time environment, 
 CAASchAppSample3 code is located in the CAASchAppSample3.m use case module of the CAASchPlatformModeler.edu framework:
 
 CAASchAppSample3 code is located in the CAASchAppSample3.m use case module of the CAASchPlatformModeler.edu framework:
-Windows | `InstallRootDirectory\CAASchPlatformModeler.edu\CAASchAppSample3.m`
+Windows | `InstallRootDirectory/CAASchPlatformModeler.edu/CAASchAppSample3.m`
 
 CAASchAppSample3 code is located in the CAASchAppSample3.m use case module of the CAASchPlatformModeler.edu framework:
-Windows | `InstallRootDirectory\CAASchPlatformModeler.edu\CAASchAppSample3.m`
+Windows | `InstallRootDirectory/CAASchPlatformModeler.edu/CAASchAppSample3.m`
 Unix | `InstallRootDirectory/CAASchPlatformModeler.edu/CAASchAppSample3.m`
 
 where `InstallRootDirectory` is the root directory of your CAA V5 installation. It is made of a two unique source files named CAASchAppSample3Main.cpp and CAASchAppSample3.cpp.
@@ -134,16 +134,16 @@ if ( SUCCEEDED( pSession->QueryInterface (IID_CATISchSession,(void**)&piSchSessi
           piSchSession->GetSchObjInterface(SCHEDUApplication_Name,
             IID_CATISchAppObjectFactory, (void**)&_piSchAppObjFact);
 
-          piSchSession->Release(); piSchSession = NULL;
+          piSchSession->Release(#); piSchSession = NULL;
 
         }
 piSchSession->GetSchObjInterface(SCHEDUApplication_Name,
 IID_CATISchAppObjectFactory, (void**)&_piSchAppObjFact);
-piSchSession->Release(); piSchSession = NULL;
+piSchSession->Release(#); piSchSession = NULL;
         else
 
         {
-piSchSession->Release(); piSchSession = NULL;
+piSchSession->Release(#); piSchSession = NULL;
 else
           cout << "Cannot get schematic session" << endl;
           return E_FAIL;

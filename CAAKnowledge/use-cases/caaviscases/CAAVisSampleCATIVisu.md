@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Making a Component Displayable With CATI3DGeoVisu"
-category: "use case"
+category: use-case case"
 module: "CAAVisUseCases"
 tags: ["CATI3DGeoVisu", "CAASysLine", "CAASysPolyline", "CAAEVisVisuCircle", "CAAVisualization", "CAAVisGeoModel", "CAASysEllipse", "CATIA", "CAAEVisModelEvents", "CAAIModelEvents", "CAAGeometry", "CAAISysCircle", "CAAVisModelEvents", "CAASysPoint", "CAASysCircle", "CAASysSampRootObj", "CATIModelEvents", "CAASysPlane", "CAASysGeomRootObj"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleCATIVisu.htm"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleCATIVisu.htmmd"
 converted: "2026-05-11T17:31:52.066701"
 ```
 
@@ -58,7 +58,10 @@ CAAVisGeoModel contains a series of C++ classes, each of them being an extension
 CAAVisGeoModel contains a series of C++ classes, each of them being an extension of a component representing a geometric component, such as a point, a line, a circle, or an ellipse. Each extension implements the _CATI3DGeoVisu_ interface to make the corresponding component displayable in a 3D viewer. This article focuses on the way the circle component implements _CATI3DGeoVisu_. In addition, a single extension class implements the _CATIModelEvents_ interface for all the geometric components. It is also described.
 See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)" use case for a detailed description of how this use case should be launched. For the specific scenario :
 
+```vbscript
 Launch CATIA. When the application is ready, follow scenarios described below:
+
+```
 
   * In the **Start** menu choose **Infrastructure** and click **CAA V5: Geometrical Creation**.
   * In the **Insert** menu choose **Point**.
@@ -74,10 +77,10 @@ Launch CATIA. When the application is ready, follow scenarios described below:
 CAAVisGeoModel code is located in the CAAVisGeoModel.m use case module of the CAAVisualization.edu framework:
 
 CAAVisGeoModel code is located in the CAAVisGeoModel.m use case module of the CAAVisualization.edu framework:
-Windows | `InstallRootDirectory\CAAVisualization.edu\CAAVisGeoModel.m`
+Windows | `InstallRootDirectory/CAAVisualization.edu/CAAVisGeoModel.m`
 
 CAAVisGeoModel code is located in the CAAVisGeoModel.m use case module of the CAAVisualization.edu framework:
-Windows | `InstallRootDirectory\CAAVisualization.edu\CAAVisGeoModel.m`
+Windows | `InstallRootDirectory/CAAVisualization.edu/CAAVisGeoModel.m`
 Unix | `InstallRootDirectory/CAAVisualization.edu/CAAVisGeoModel.m`
 
 where `InstallRootDirectory` is the root directory of your CAA V5 installation.
@@ -119,13 +122,13 @@ The _CAAEVisVisuCircle_ header file is as follows.
       **CATDeclareClass** ;
 class CAAEVisVisuCircle : public **CATExtIVisu**
       public:
-        CAAEVisVisuCircle();
-        virtual ~CAAEVisVisuCircle();
+        CAAEVisVisuCircle(#);
+        virtual ~CAAEVisVisuCircle(#);
 
-        **virtual  CATRep * BuildRep();**
+        **virtual  CATRep * BuildRep(#);**
 public:
-CAAEVisVisuCircle();
-virtual ~CAAEVisVisuCircle();
+CAAEVisVisuCircle(#);
+virtual ~CAAEVisVisuCircle(#);
       private :
       CAAEVisVisuCircle(const CAAEVisVisuCircle &iObjectToCopy);
 
@@ -149,11 +152,11 @@ The _CAAEVisVisuCircle_ source file is as follows.
 
     **CATImplementClass**(CAAEVisVisuCircle, **DataExtension** , CATBaseUnknown, **CAASysCircle**);
 
-    CAAEVisVisuCircle::CAAEVisVisuCircle() {}
+    CAAEVisVisuCircle::CAAEVisVisuCircle(#) {}
 
-    CAAEVisVisuCircle::~CAAEVisVisuCircle() {}
+    CAAEVisVisuCircle::~CAAEVisVisuCircle(#) {}
 
-    **CATRep *** CAAEVisVisuCircle::**BuildRep**()
+    **CATRep *** CAAEVisVisuCircle::**BuildRep**(#)
     {
       ...
     }
@@ -174,7 +177,7 @@ There are two possibilities for creating the representation of a circle, that is
 There are two possibilities for creating the representation of a circle, that is, using the _CAT3DArcCircleRep_ class, or using a custom representation. This latter is detailed here.
   1. Declaring the representation to return
 
-         CATRep * CAAEVisVisuCircle::**BuildRep**()
+         CATRep * CAAEVisVisuCircle::**BuildRep**(#)
 
          {
            **CAT3DCustomRep** *pCircleRep = NULL;
@@ -208,7 +211,7 @@ if (SUCCEEDED(rc))
              piSysCircle->GetRadius(radius);
              piSysCircle->GetPlane(normal, axis);
 
-             piSysCircle->**Release**();
+             piSysCircle->**Release**(#);
 
              ...
 
@@ -236,13 +239,13 @@ The circle graphic primitive is an instance of _CAT3DArcCircleGP_. Its construct
 The circle graphic primitive is an instance of _CAT3DArcCircleGP_. Its constructor needs the four parameters retrieved from the circle component.
 4. Creating and filling in the representation
 ```vbscript
-             pCircleRep = new **CAT3DCustomRep**();
+             pCircleRep = new **CAT3DCustomRep**(#);
 
 ```
 
              **CATGraphicAttributeSet** circleGa;
 4. Creating and filling in the representation
-pCircleRep = new **CAT3DCustomRep**();
+pCircleRep = new **CAT3DCustomRep**(#);
              pCircleRep->**AddGP**(pCircleGp,circleGa);
 
              ...
@@ -293,8 +296,8 @@ _CAAVisModelEvents_ implements the _CATIModelEvents_ interface by deriving from 
            **CATDeclareClass** ;
 class CAAEVisModelEvents : public **CATExtIModelEvents**
            public :
-             CAAEVisModelEvents();
-             virtual ~CAAEVisModelEvents();
+             CAAEVisModelEvents(#);
+             virtual ~CAAEVisModelEvents(#);
            private :
            CAAEVisModelEvents(const CAAEVisModelEvents &iObjectToCopy);
 
@@ -345,9 +348,9 @@ CATAddClassExtension(CAASysPlane);
 CATAddClassExtension(CAASysPolyline);
 ```
 
-         CAAEVisModelEvents::CAAEVisModelEvents() {}
+         CAAEVisModelEvents::CAAEVisModelEvents(#) {}
 
-         CAAEVisModelEvents::~CAAEVisModelEvents() {}
+         CAAEVisModelEvents::~CAAEVisModelEvents(#) {}
 
 ```
 

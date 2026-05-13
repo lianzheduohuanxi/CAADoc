@@ -4,7 +4,7 @@ title: "Export/Import of Displacements"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CAAAniPreProExportImportDisp", "CATIA", "CAAScdAniUseCases", "CATIAAnalysisManager"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProExportImportDisp.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProExportImportDisp.htmmd"
 converted: "2026-05-11T17:31:51.793943"
 ```
 
@@ -38,21 +38,27 @@ This use case shows you how to export displacements from analysis assembly to th
 ```vbscript
 ```vbscript
     ' Optional: allows to find the sample wherever it's installed
+```vbscript
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     sOut = CATIA.SystemService.Environ("CATTemp")
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
+```
 
+```vbscript
 ```vbscript
     Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
     End If
 ```
 
@@ -63,8 +69,10 @@ This use case shows you how to export displacements from analysis assembly to th
 ```vbscript
     ' -----------------------------------------------------------
     ' Open the Analysis document
-    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Assembled_Loads_Solutions.CATAnalysis")
+```vbscript
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Assembled_Loads_Solutions.CATAnalysis")
     Set analysisDocument1 = CATIA.Documents.Open(sFilePath)
+```
 ```
 
 ```
@@ -75,7 +83,7 @@ This use case shows you how to export displacements from analysis assembly to th
 
 ---
 
-Open the Analysis document. The Analysis document is retrieved from the documentation installation path, this path is stored in the `sDocPath` variable. In the collection of documents, two documents can be retrieved; the Analysis document and the Part document. The CATTemp environment variable stores temporary data. On windows it points to C/Documents and Settings\user\Local Settings\Application Data\DassaultSystemes\CATTemp and on unix it points to /CATSettings/CATTemp.
+Open the Analysis document. The Analysis document is retrieved from the documentation installation path, this path is stored in the `sDocPath` variable. In the collection of documents, two documents can be retrieved; the Analysis document and the Part document. The CATTemp environment variable stores temporary data. On windows it points to C/Documents and Settings/user/Local Settings/Application Data/DassaultSystemes/CATTemp and on unix it points to /CATSettings/CATTemp.
 #### **Extracting the analysis documents and analysis models and cases**
 
     ...
@@ -85,19 +93,25 @@ Open the Analysis document. The Analysis document is retrieved from the document
 ```
 
 ```vbscript
+```vbscript
     Set analysisManager1 = analysisDocument1.Analysis
+```
 ```
 
 ```vbscript
 ```vbscript
 ```vbscript
     'Retrieve the analysis models and the first model
+```vbscript
     Set analysisModels1 = analysisManager1.AnalysisModels
     Set analysisModel1 = analysisModels1.Item(1)
     'Retrieve the list of analysis cases from analysis model and the first case
+```
     'from the list of cases
+```vbscript
     Set analysisCases1 = analysisModel1.AnalysisCases
     Set analysisCase1 = analysisCases1.Item(1)
+```
 ```
 
 ```
@@ -109,11 +123,15 @@ Open the Analysis document. The Analysis document is retrieved from the document
 ```
 
 ```vbscript
+```vbscript
     Set analysisSets1 = analysisCase1.AnalysisSets
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set analysisSet1 = analysisSets1.Item("Static Case Solution.1", catAnalysisSetSearchAll)
 
+```
 ```
 
 ```
@@ -124,7 +142,7 @@ Open the Analysis document. The Analysis document is retrieved from the document
 
 ---
 
-According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md) structure, this macro uses standard procedures to navigate/retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , and then **Analysis Models** , from analysis models we retrieve the analysis cases.
+According to the general [ Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses standard procedures to navigate/retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , and then **Analysis Models** , from analysis models we retrieve the analysis cases.
 #### Selecting using edit search
 
     ...
@@ -134,8 +152,10 @@ According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniToc
 ```
 
 ```vbscript
+```vbscript
     Set selection1 = analysisDocument1.Selection
     selection1.Search "Name=*Analysis Manager*,all"
+```
 ```vbscript
 ```vbscript
     'Remove the first Analysis Manager that is the manager of
@@ -148,7 +168,9 @@ According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniToc
 ```vbscript
 ```vbscript
     'Get the AnalysisExport interface from analysis set
+```vbscript
     Set analysisExport =  analysisSet1.GetItem("AnalysisExport")
+```
 ```
 
 ```
@@ -182,8 +204,10 @@ According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniToc
 ```
 
 ```vbscript
+```vbscript
               Set manager = selection1.FindObject("CATIAAnalysisManager")
 ```vbscript
+```
 ```vbscript
               'Export the displacements
               fullPath = sOut + sSep +"Displacements" +CStr(i) + ".CATAnalysisExport"
@@ -193,9 +217,13 @@ According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniToc
 
               analysisExport.Export  fullPath, "Displacements", array, manager
 
+```vbscript
               Set analysisModel = manager.AnalysisModels.Item(1)
 ```vbscript
+```
+```vbscript
               Set analysisCases = analysisModel.AnalysisCases
+```
 ```
 
 ```
@@ -204,8 +232,10 @@ According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniToc
 ```vbscript
 ```vbscript
               'Import Displacements
+```vbscript
               Set solCase = analysisCases.NewCase("AnalysisSolutionCase")
               Set importCase =  solCase.GetItem("AnalysisImport")
+```
 ```
 
 ```
@@ -216,8 +246,10 @@ According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniToc
 ```vbscript
 ```vbscript
 'Import Displacements
+```vbscript
 Set solCase = analysisCases.NewCase("AnalysisSolutionCase")
 Set importCase =  solCase.GetItem("AnalysisImport")
+```
 ```
 
 ```
@@ -239,8 +271,10 @@ Set importCase =  solCase.GetItem("AnalysisImport")
     ...
 
 ```vbscript
+```vbscript
 End Sub
 
+```
 ```
 
     ...
@@ -249,7 +283,7 @@ End Sub
 
 To run the macro interactively CATDocView environment variable must be defined.
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

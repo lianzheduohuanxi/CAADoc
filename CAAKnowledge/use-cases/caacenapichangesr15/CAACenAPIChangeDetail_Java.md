@@ -1,11 +1,11 @@
 ---
 ```vbscript
 title: "Detail Of API Changes"
-category: "api-changes"
+category: use-case
 module: "CAACenAPIChangesR15"
 version: "V5R15"
 tags: []
-source_file: "Doc/online/CAACenAPIChangesR15/CAACenAPIChangeDetail_Java.htm"
+source_file: "Doc/online/CAACenAPIChangesR15/CAACenAPIChangeDetail_Java.htmmd"
 converted: "2026-05-11T17:33:51.035437"
 ```
 
@@ -32,7 +32,7 @@ This article presents by frameworks the detail of CAA Java resources modified in
 * * *
 ## com.dassault_systemes.catjdialog.CATViewer
 
-| Methods **saveState()** , **restoreState(java.lang.Object)** and ._internalRecordState(com.dassault_systemes.catjdialog.CATRecord, boolean) have been removed. None of them was meant to be used by CAA applications. The two first ones were used by the JVM to manage persistency, the last one was used by test tools | Check that you don't use them.
+| Methods **saveState(#)** , **restoreState(java.lang.Object)** and ._internalRecordState(com.dassault_systemes.catjdialog.CATRecord, boolean) have been removed. None of them was meant to be used by CAA applications. The two first ones were used by the JVM to manage persistency, the last one was used by test tools | Check that you don't use them.
 ---|---
 
 * * *

@@ -4,7 +4,7 @@ title: "Creating a Schematic Route between two Schematic Equipments"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAASCH_RouteBetween2Equip", "CAADoc", "CAASchRouteBetween2Equip", "CATIAProduct", "CAAScdSchUseCases", "CATIASchGRRComp", "CATIA", "CAASchAppBase", "CAASCHEDUApp", "CAASCHEDUConnector", "CATIASchGRR", "CAASCHEDUFuncString", "CATIASchCompatible", "CAASchPlatformModeler", "CATIASchCompGraphic", "CAASchAppUtilities"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchRouteBetween2Equip.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchRouteBetween2Equip.htmmd"
 converted: "2026-05-11T17:31:51.486843"
 ```
 
@@ -29,9 +29,9 @@ converted: "2026-05-11T17:31:51.486843"
   * Setup:
 
 >   1. Build CAASchAppBase.m and CAASchAppUtilities.m, located in CAASchPlatformModeler.edu (RADE is required).
->   2. Copy generated DLLs, CAASchAppBase.dll and CAASchAppUtilities.m, respectively, to the run-time environment folder "intel_a\code\bin."
->   3. Copy CAASCHEDUApp.CATfct, located CAASchPlatformModeler.edu\CNext\resources\graphic, to the run-time environment folder "intel_a\resources\graphic."
->   4. Copy CAASchPlatformModeler.edu\CNext\code\dictionary\CAASchPlatformModeler.edu.dico to the run-time environment folder "intel_a\code\dictionary."
+>   2. Copy generated DLLs, CAASchAppBase.dll and CAASchAppUtilities.m, respectively, to the run-time environment folder "intel_a/code/bin."
+>   3. Copy CAASCHEDUApp.CATfct, located CAASchPlatformModeler.edu/CNext/resources/graphic, to the run-time environment folder "intel_a/resources/graphic."
+>   4. Copy CAASchPlatformModeler.edu/CNext/code/dictionary/CAASchPlatformModeler.edu.dico to the run-time environment folder "intel_a/code/dictionary."
 >
 
 [ CAASchRouteBetween2Equip.CATScript ](CAASchRouteBetween2EquipSource.md)is located in the CAAScdSchUseCases module. [Execute macro](macros/CAASchRouteBetween2Equip.CATScript) (Windows only).
@@ -56,22 +56,30 @@ The macro first loads the CAASCH_RouteBetween2Equip.CATProduct document. |   �
 ```
 
 ```vbscript
+```vbscript
     Dim sFilePath
+```vbscript
+```
 ```vbscript
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
+```
 
 ```
 
-            "online\CAAScdSchUseCases\samples\CAASCH_RouteBetween2Equip.CATProduct")
+            "online/CAAScdSchUseCases/samples/CAASCH_RouteBetween2Equip.CATProduct")
 
 ```vbscript
+```vbscript
 Dim sFilePath
+```vbscript
+```
 ```vbscript
 ```vbscript
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
+```
 ```
 
 ```
@@ -95,15 +103,23 @@ Next, the macro acquires the schematic root object from the document. The schema
 ```
 
 ```vbscript
+```vbscript
     Dim objPrdRoot As Product
+```vbscript
+```
 ```vbscript
 ```vbscript
     Dim objSchRoot As SchematicRoot
     If ( Not ( objSchDoc Is Nothing ) ) Then
+```
+```vbscript
       Set objPrdRoot = objSchDoc.Product
       If ( Not ( objPrdRoot Is Nothing ) ) Then
+```
+```vbscript
         Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
       End If
+```
     End If
 ```
 
@@ -138,12 +154,16 @@ Find2ComponentInst uses the GetComponents method to obtain a list of all the Sch
 
 ```
 
+```vbscript
 Private Sub Find2ComponentInst (objSchRootArg As SchematicRoot)
+```
 ```
 
     ...
 ```vbscript
+```vbscript
       Set objLCompInst = objSchRootArg.GetComponents
+```
 ```
 
     ...
@@ -174,8 +194,10 @@ For intIndex = 1 To intNbComp
 
 ```vbscript
 ```vbscript
+```vbscript
         Set objCompCompat = objLCompInst.Item (intIndex,"CATIASchCompatible")
 
+```
 ```
 
 ```
@@ -184,7 +206,9 @@ For intIndex = 1 To intNbComp
 ```vbscript
         If ( Not ( objCompCompat Is Nothing ) ) Then
 
+```vbscript
            Set objPrd = objSchRootArg.GetInterface ( _
+```
 ```
 
 ```
@@ -234,21 +258,29 @@ The loop exists when intNbFound is two.
 ```
 
 ```vbscript
+```vbscript
              Dim ObjSchCompGraph As SchCompGraphic
 ```vbscript
+```
+```vbscript
              Set objSchCompGraph = objSchRootArg.GetInterface ( _
+```
 ```
 
 ```
 
                "CATIASchCompGraphic",objCompCompat)
 ```vbscript
+```vbscript
 Dim ObjSchCompGraph As SchCompGraphic
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set objSchCompGraph = objSchRootArg.GetInterface ( _
              Set objGRRComp = GetComponentImage (objSchCompGraph)
 
+```
 ```
 
 ```
@@ -260,18 +292,24 @@ Set objSchCompGraph = objSchRootArg.GetInterface ( _
 ```vbscript
 ```vbscript
                 If ( intStoreIndex = 1 ) Then
+```vbscript
                   Set objCompCompatFrom = objCompCompat
                   Set objGRRCompFrom = objGRRComp
+```
 ```
 
 ```
 
                 Else
+```vbscript
                   Set objCompCompatTo = objCompCompat
+```vbscript
+```
 ```vbscript
 ```vbscript
                   Set objGRRCompTo = objGRRComp
                 End If
+```
 ```
 
 ```
@@ -383,11 +421,15 @@ This macro provides the internal RouteLineBetween2Component subroutine to create
 ```
 
 ```vbscript
+```vbscript
       Set objCompCompat = objLCompat_g.Item (intIndex,"CATIASchCompatible")
+```vbscript
+```
 ```vbscript
 ```vbscript
       Set objGRRComp = objLGRRComp_g.Item (intIndex,"CATIASchGRRComp")
 
+```
 ```
 
 ```
@@ -432,8 +474,10 @@ This macro provides the internal RouteLineBetween2Component subroutine to create
            objGRRComp, objLCntrs, bCompatible
 
 ```vbscript
+```vbscript
          Set objSchGRR = objSchRootArg.GetInterface ("CATIASchGRR",objGRRComp)
 
+```
 ```
 
 ```
@@ -512,8 +556,10 @@ objSchGRR, objLCntrs, objLDbOut, objAppCntrBest
                  db2CntrPt1(0) =  db2CntrPt(0)
                  db2CntrPt1(1) =  db2CntrPt(1)
 ```vbscript
+```vbscript
                  Set objAppCntrCompBest1 = objAppCntrBest
 
+```
 ```
 
 ```
@@ -522,8 +568,10 @@ objSchGRR, objLCntrs, objLDbOut, objAppCntrBest
 
     ...
 ```vbscript
+```vbscript
 Set objAppCntrCompBest1 = objAppCntrBest
               Else
+```
                  db2CntrPt2(0) =  db2CntrPt(0)
 ```vbscript
                  db2CntrPt2(1) =  db2CntrPt(1)
@@ -533,8 +581,10 @@ Set objAppCntrCompBest1 = objAppCntrBest
 
     ...
 ```vbscript
+```vbscript
                  Set objAppCntrCompBest2 = objAppCntrBest
 ```vbscript
+```
 ```vbscript
               End If
             End If '--- If (IntNbCoord > 1) Then
@@ -632,12 +682,16 @@ The macro provides the internal FindConnectorAtPosition function to return an in
 ```
 
 ```vbscript
+```vbscript
        Set objAppCntrRouteBest1 = FindConnectorAtPosition ( _
 ```vbscript
+```
          db2CntrPt1(0), db2CntrPt1(1), objRouteCntbl, objSchRootArg)
 
+```vbscript
        Set objAppCntrRouteBest2 = FindConnectorAtPosition ( _
          db2CntrPt2(0), db2CntrPt2(1), objRouteCntbl, objSchRootArg)
+```
 ```
 
 ```
@@ -650,8 +704,10 @@ Finally, the macro uses the AppConnect method to connect the newly created route
 
     ...
 ```vbscript
+```vbscript
           Set objAppConnection = objAppCntrCompBest1.AppConnect _
             (objAppCntrRouteBest1)
+```
 ```
 
     ...

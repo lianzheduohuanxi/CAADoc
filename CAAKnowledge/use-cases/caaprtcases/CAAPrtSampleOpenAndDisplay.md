@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Opening and Displaying an Image File"
-category: "use case"
+category: use-case case"
 module: "CAAPrtUseCases"
 tags: ["CAAPrtApplication", "CAAPrtWheatField", "CAAPrtDialog", "CAAPrint"]
-source_file: "Doc/online/CAAPrtUseCases/CAAPrtSampleOpenAndDisplay.htm"
+source_file: "Doc/online/CAAPrtUseCases/CAAPrtSampleOpenAndDisplay.htmmd"
 converted: "2026-05-11T17:17:56.117863"
 ```
 
@@ -81,7 +81,7 @@ You can launch CAAPrtApplication using a TIFF file as argument.
 
   * With Windows
 
-        E:>CAAPrtApplication InstallRootDirectory\CAAPrint.edu\CNext\resources\graphic\images\CAAPrtWheatField.tif
+        E:>CAAPrtApplication InstallRootDirectory/CAAPrint.edu/CNext/resources/graphic/images/CAAPrtWheatField.tif
 
 ---
   * With UNIX
@@ -101,10 +101,10 @@ where:
 The CAAPrtApplication use case is made of an application class and of a window class whose header and source files are located in the CAAPrtApplication.m module of the CAAPrint.edu framework:
 
 The CAAPrtApplication use case is made of an application class and of a window class whose header and source files are located in the CAAPrtApplication.m module of the CAAPrint.edu framework:
-Windows | `InstallRootDirectory\CAAPrint.edu\CAAPrtApplication.m`
+Windows | `InstallRootDirectory/CAAPrint.edu/CAAPrtApplication.m`
 
 The CAAPrtApplication use case is made of an application class and of a window class whose header and source files are located in the CAAPrtApplication.m module of the CAAPrint.edu framework:
-Windows | `InstallRootDirectory\CAAPrint.edu\CAAPrtApplication.m`
+Windows | `InstallRootDirectory/CAAPrint.edu/CAAPrtApplication.m`
 Unix | `InstallRootDirectory/CAAPrint.edu/CAAPrtApplication.m`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -178,7 +178,7 @@ The file conversion to a 2D representation can now take place.
 
 ```
 
-      pImage->**Release**();
+      pImage->**Release**(#);
 
       ...
 
@@ -208,15 +208,15 @@ if (_pRep)                    _// If there is a previous representation displaye
 ```
 
           _pViewer->**RemoveRep**(_pRep); _// Removes it from the viewer_
-          _pRep->**Destroy**();           _// Releases it_
+          _pRep->**Destroy**(#);           _// Releases it_
 ```
 
         }
 
 _pViewer->**RemoveRep**(_pRep); _// Removes it from the viewer_
-_pRep->**Destroy**();           _// Releases it_
+_pRep->**Destroy**(#);           _// Releases it_
         _pViewer->**AddRep**(pRep);       _// Adds the representation to the viewer_
-        _pViewer->**Reframe**();          _// Redraws the viewer contents_
+        _pViewer->**Reframe**(#);          _// Redraws the viewer contents_
 
 ```vbscript
         _pRep = pRep;      _// Keeps the new representation for future use (printing, etc.)_

@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CAAScrBase", "CAAScdDriUseCases", "CATIA", "CAADriUseCases", "CAAScrJavaScript", "CAADriDuplicateAViewSource", "CAAScdDriTechArticles", "CAADriObjDrawingSheets", "CAAScdInfUseCases", "CAADriObjDrawingView", "CAADriObjDrawingSheet", "CAADriObjDrawingDocument", "CAAInfLauchMacro", "CAADriDuplicateAView"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriDuplicateAView.htm"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriDuplicateAView.htmmd"
 converted: "2026-05-11T11:27:02.748721"
 ---
 
@@ -96,7 +96,7 @@ The selection object is retrieved from the `oDrawingTarget`
     
   
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 
@@ -117,49 +117,62 @@ Paste* methods of the *Selection* object.
 
 *Copyright  2003, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 ...
+```vbscript
     ' Set the CATIA popup file alerts to False
     ' It prevents to stop the macro at each alert during its execution
+```
+```vbscript
     CATIA.DisplayFileAlerts = False
   ...
+```
 ```
 
 ```vbscript
 ...
     ' Open the Drawing document
+```vbscript
     Dim oDrawingSource As DrawingDocument
     Set oDrawingSource = CATIA.Documents.Open(sDocPath &amp; _
-             &quot;\online\CAAScdDriUseCases\samples\CAADriDuplicateAView.CATDrawing&quot;)
+             &quot;/online/CAAScdDriUseCases/samples/CAADriDuplicateAView.CATDrawing&quot;)
+```
     
     ' Fit in window the opened document
+```vbscript
     CATIA.ActiveWindow.ActiveViewer.Reframe
   ...
+```
 ```
 
 ```vbscript
 ...
     ' Retrieve the sheet containing the view to be duplicated
+```vbscript
     Dim oSheetSource As DrawingSheet
     Set oSheetSource = oDrawingSource.Sheets.Item(&quot;Sheet.1&quot;)
   ...
+```
 ```
 
 ```vbscript
 ...
     ' Retrieve the view to be duplicated
+```vbscript
     Dim oViewSource As DrawingView
     Set oViewSource = oSheetSource.Views.Item(&quot;Front view&quot;)
   ...
+```
 ```
 
 ```vbscript
 ...
     ' Create an object of selection for the source document
+```vbscript
     Dim oSelectionSource As Selection
     Set oSelectionSource = oDrawingSource.Selection
+    
+```
     
     ' Clear the selection
     oSelectionSource.Clear
@@ -175,23 +188,30 @@ Paste* methods of the *Selection* object.
 ```vbscript
 ...
     ' Create the Drawing document where the view will be pasted
+```vbscript
     Dim oDrawingTarget As DrawingDocument
     Set oDrawingTarget = CATIA.Documents.Add(&quot;Drawing&quot;)
     
     ' Retrieve the where the view will be pasted
+```
+```vbscript
     Dim oSheetTarget As DrawingSheet
     Set oSheetTarget = oDrawingTarget.Sheets.Item(&quot;Sheet.1&quot;)
     
     ' Set the sheet paper size
     oSheetTarget.PaperSize = catPaperA0
+```
   ...
 ```
 
 ```vbscript
 ...
     ' Create an object of selection for the source document
+```vbscript
     Dim oSelectionTarget As Selection
     Set oSelectionTarget = oDrawingTarget.Selection
+    
+```
     
     ' Clear the selection
     oSelectionTarget.Clear

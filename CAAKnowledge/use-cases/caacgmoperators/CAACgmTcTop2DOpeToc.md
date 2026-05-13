@@ -4,13 +4,13 @@ title: "2D Operations"
 category: "use-case"
 module: "CAACgmOperators"
 tags: []
-source_file: "Doc/online/CAACgmOperators/CAACgmTcTop2DOpeToc.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmTcTop2DOpeToc.htmmd"
 converted: "2026-05-11T17:33:48.747779"
 ```
 
 ---
 ---
-source_file: "Doc/online/CAACgmOperators/CAACgmTcTop2DOpeToc.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmTcTop2DOpeToc.htmmd"
 converted: "2026-05-11T17:33:48.747779"
 This section explains how to perform operations on surfaces and shells.
 

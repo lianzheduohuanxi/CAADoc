@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating a Multi Patch NURBS Surface"
-category: "use case"
+category: use-case case"
 module: "CAATopUseCases"
 tags: ["CATICGMObject", "CAATopBopdyChecker", "CAATopBodyChecker", "CAATopologicalOperators", "CATICGMContainer"]
-source_file: "Doc/online/CAATopUseCases/CAATopBodyChecker.htm"
+source_file: "Doc/online/CAATopUseCases/CAATopBodyChecker.htmmd"
 converted: "2026-05-11T17:31:50.690774"
 ```
 
@@ -74,10 +74,10 @@ where bodyChecker1.NCGM is the input file delivered in the CAATopologicalOperato
 where bodyChecker1.NCGM is the input file delivered in the CAATopologicalOperators.edu/FunctionTests/InputData file.
 The CAATopBodyChecker use case is made of a main named CAATopBodyChecker .cpp located in the CAATopBodyChecker .m module of the CAATopologicalOperators.edu framework:
 
-Windows | `InstallRootDirectory\CAATopologicalOperators.edu\`CAATopBodyChecker `.m\`
+Windows | `InstallRootDirectory/CAATopologicalOperators.edu/`CAATopBodyChecker `.m/`
 
 The CAATopBodyChecker use case is made of a main named CAATopBodyChecker .cpp located in the CAATopBodyChecker .m module of the CAATopologicalOperators.edu framework:
-Windows | `InstallRootDirectory\CAATopologicalOperators.edu\`CAATopBodyChecker `.m\`
+Windows | `InstallRootDirectory/CAATopologicalOperators.edu/`CAATopBodyChecker `.m/`
 Unix | `InstallRootDirectory/CAATopologicalOperators.edu/`CAATopBodyChecker `.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -134,7 +134,7 @@ CATBodyChecker::CheckMode eChkMode = CATBodyChecker::BodyChkModeFull;
 pBodyChecker->SetCheckMode(eChkMode);
     CATBoolean bRet = FALSE;
 ```vbscript
-    bRet = pBodyChecker->Run();
+    bRet = pBodyChecker->Run(#);
 
 ```
 
@@ -148,22 +148,22 @@ pBodyChecker->SetCheckMode(eChkMode);
 All the errors found in the body to be checked are displayed if you have specified the Full Mode. If the light mode is specified, several errors of the same type can be diagnosed.
 
 All the errors found in the body to be checked are displayed if you have specified the Full Mode. If the light mode is specified, several errors of the same type can be diagnosed.
-    pBodyChecker->BeginningDiagnosis();
-    while( pBodyChecker->NextDiagnosis() )
+    pBodyChecker->BeginningDiagnosis(#);
+    while( pBodyChecker->NextDiagnosis(#) )
 
     {
-pBodyChecker->BeginningDiagnosis();
-while( pBodyChecker->NextDiagnosis() )
+pBodyChecker->BeginningDiagnosis(#);
+while( pBodyChecker->NextDiagnosis(#) )
     CATUnicodeString strDiagnosis;
     pBodyChecker->GetDiagnosis(strDiagnosis);
 
-    cout << strDiagnosis.ConvertToChar() << endl;
+    cout << strDiagnosis.ConvertToChar(#) << endl;
 
     }
 
 ---
 
-cout << strDiagnosis.ConvertToChar() << endl;
+cout << strDiagnosis.ConvertToChar(#) << endl;
 This is the message which is displayed on the standard output at execution:
 
 CATTabulatedCylinder[2353360] : Surface has invalid curvature

@@ -4,13 +4,13 @@ title: "Geometric Modeler"
 category: "use case"
 module: "CAATobUseCases"
 tags: ["CAATobReverseEdgeOrientation", "CATICGMObject", "CAATopologicalObjects", "CATICGMContainer"]
-source_file: "Doc/online/CAATobUseCases/CAATopReverseEdgeOrientation.htm"
+source_file: "Doc/online/CAATobUseCases/CAATopReverseEdgeOrientation.htmmd"
 converted: "2026-05-11T17:33:45.870486"
 ```
 
 ---
 tags: ["CAATobReverseEdgeOrientation", "CATICGMObject", "CAATopologicalObjects", "CATICGMContainer"]
-source_file: "Doc/online/CAATobUseCases/CAATopReverseEdgeOrientation.htm"
+source_file: "Doc/online/CAATobUseCases/CAATopReverseEdgeOrientation.htmmd"
 converted: "2026-05-11T17:33:45.870486"
 Geometric Modeler |  Topology |  Reversing the Orientation of an Edge _How to Modify the Topology_
 
@@ -40,7 +40,7 @@ What You Will Learn With This Use Case This use case is intended to make you und
   * reverses the edge orientation
   * writes the model and closes the factory. Note that, in this use case the output model is the same as the input model.
 
-[Top] How to Launch CAATobReverseEdgeOrientation To launch CAATobReverseEdgeOrientation , you will need to set up the build time environment, then compile CAATobReverseEdgeOrientation.m along with its prerequisites, set up the run time environment, and then execute the use case [1]. With Windows CAATobReverseEdgeOrientation `e:/tobereversed.NCGM" e/outputFile.NCGM` With UNIX CAATobReverseEdgeOrientation `/u/`tobereversed`.NCGM e/outputFile.NCGM` where tobereversed.NCGM is an input file delivered in the CAATopologicalObjects.edu/FunctionTests/InputData file and outputFile.NCGM the file where you want to store the created data. [Top] WWhere to Find the CAATobReverseEdgeOrientation Code The CAATobReverseEdgeOrientation use case is made of a main named ReverseEdgeOrientationOpe.cpp located in the CAATobReverseEdgeOrientation .m module of the CAATopologicalObjects.edu framework: Windows | `InstallRootDirectory\CAATopologicalObjects.edu\CAATobReverseEdgeOrientation .m\`
+[Top] How to Launch CAATobReverseEdgeOrientation To launch CAATobReverseEdgeOrientation , you will need to set up the build time environment, then compile CAATobReverseEdgeOrientation.m along with its prerequisites, set up the run time environment, and then execute the use case [1]. With Windows CAATobReverseEdgeOrientation `e:/tobereversed.NCGM" e/outputFile.NCGM` With UNIX CAATobReverseEdgeOrientation `/u/`tobereversed`.NCGM e/outputFile.NCGM` where tobereversed.NCGM is an input file delivered in the CAATopologicalObjects.edu/FunctionTests/InputData file and outputFile.NCGM the file where you want to store the created data. [Top] WWhere to Find the CAATobReverseEdgeOrientation Code The CAATobReverseEdgeOrientation use case is made of a main named ReverseEdgeOrientationOpe.cpp located in the CAATobReverseEdgeOrientation .m module of the CAATopologicalObjects.edu framework: Windows | `InstallRootDirectory/CAATopologicalObjects.edu/CAATobReverseEdgeOrientation .m/`
 ---|---
 Unix | `InstallRootDirectory/CAATopologicalObjects.edu/CAATobReverseEdgeOrientation .m/`
 Unix | `InstallRootDirectory/CAATopologicalObjects.edu/CAATobReverseEdgeOrientation .m/`
@@ -64,23 +64,23 @@ Here is the input model. The edge to be reversed is highlighted. ![](images/reve
 
   1. Touch the edge to be reversed, "smart duplicate" the initial body and retrieve the duplicated edge, face and loop. You can turn to [Using the Smart Duplicator](CAATobSmartDuplicator.md) for more information on how to use the CATSmartBodyDuplicator operator.
 
-         CATBody * copBody = piGeomFactory->CreateBody();
+         CATBody * copBody = piGeomFactory->CreateBody(#);
          CATSmartBodyDuplicator * smartDuplicator =
          copBody->CreateSmartDuplicator(piBody, topdata);
          if (smartDuplicator == NULL) return (1);
          smartDuplicator->SetFullDuplication(1);  // you duplicate the link
-         smartDuplicator->Run();
+         smartDuplicator->Run(#);
 
          // Retrieve the duplicated edge
 copBody->CreateSmartDuplicator(piBody, topdata);
 if (smartDuplicator == NULL) return (1);
 smartDuplicator->SetFullDuplication(1);  // you duplicate the link
-smartDuplicator->Run();
+smartDuplicator->Run(#);
          CATEdge * duplicatedEdge= (CATEdge *)smartDuplicator->GetDuplicatedCell(piEdge);
 
          ...
 smartDuplicator->SetFullDuplication(1);  // you duplicate the link
-smartDuplicator->Run();
+smartDuplicator->Run(#);
 CATEdge * duplicatedEdge= (CATEdge *)smartDuplicator->GetDuplicatedCell(piEdge);
          CATFace * duplicatedFace= (CATFace *)smartDuplicator->GetDuplicatedCell(piFace);
 
@@ -96,15 +96,15 @@ CATFace * duplicatedFace= (CATFace *)smartDuplicator->GetDuplicatedCell(piFace);
 
          // Create a new edge
 2. Create a new edge with an opposite direction (for more information on how to create edges and associate geometry with topology, refer to [Using the TopologicalObjects](CAATobTetra.md)).
-         CATEdge * ReplEdg = copBody -> CreateEdge();
+         CATEdge * ReplEdg = copBody -> CreateEdge(#);
 
          // Associate the new edge with a geometry and reversed curve orientation
 2. Create a new edge with an opposite direction (for more information on how to create edges and associate geometry with topology, refer to [Using the TopologicalObjects](CAATobTetra.md)).
-CATEdge * ReplEdg = copBody -> CreateEdge();
+CATEdge * ReplEdg = copBody -> CreateEdge(#);
          ReplEdg -> SetCurve(ecrv, -EdgVsECrv); // Associate the new edge with a geometry and reversed orientation
 
          ...
-CATEdge * ReplEdg = copBody -> CreateEdge();
+CATEdge * ReplEdg = copBody -> CreateEdge(#);
 ReplEdg -> SetCurve(ecrv, -EdgVsECrv); // Associate the new edge with a geometry and reversed orientation
          for ( k=0; k<2; k++) {
          	ReplEdg -> AddBoundingCell(EndVtx[1-k], NaturalSide[k], 0, OldEndPoec[1-k]);
@@ -159,14 +159,14 @@ else if (curside  ==  CATSideLeft)
          CATEdgeCurveIterator EdgeCurveIterator(ecrv);
          CATCurve * CurCurve = NULL;
          CATPCurve  * CurPCurve = NULL;
-         while ( ( CurCurve = EdgeCurveIterator.Next() )  )
+         while ( ( CurCurve = EdgeCurveIterator.Next(#) )  )
 ```
 
          	{
          	...
 CATCurve * CurCurve = NULL;
 CATPCurve  * CurPCurve = NULL;
-while ( ( CurCurve = EdgeCurveIterator.Next() )  )
+while ( ( CurCurve = EdgeCurveIterator.Next(#) )  )
          	ReplEdg -> SetGeometryOnFace(duplicatedFace,
          		newside,
          		CurPCurve);
@@ -193,7 +193,7 @@ ofstream filetowrite(pFileName1, ios::binary ) ;
     #endif
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
-       filetowrite.close();
+       filetowrite.close(#);
      }
 
      _//

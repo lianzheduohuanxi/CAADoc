@@ -1,8 +1,10 @@
 ---
+category: quick-ref
 title: "QueryInterface 路径索引"
 type: "quick-reference"
 verified: true
 ---
+category: quick-ref
 
 # QueryInterface 路径索引
 
@@ -11,7 +13,6 @@ verified: true
 ## CAAAnalysisInterfaces
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `piAnalysisModel` | CATISamAnalysisModel | `IID_CATISamAnalysisModel` |
 | `piBaseMesh` | CATIMSHMeshManager | `IID_CATIMSHMeshManager` |
 | `pDoc` | CATISamAccess | `IID_CATISamAccess` |
@@ -20,7 +21,6 @@ verified: true
 ## CAAApplicationFrame
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `pUIActiveObject` | CAAISysAccess | `IID_CAAISysAccess` |
 | `pContainer` | CAAISysCollection | `IID_CAAISysCollection` |
 | `pUIActiveObject` | CAAISysAccess | `IID_CAAISysAccess` |
@@ -58,7 +58,6 @@ verified: true
 ## CAAArrangmentInterfaces
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `pDoc` | CATIDocRoots | `IID_CATIDocRoots` |
 | `spSpec1` | CATIProduct | `IID_CATIProduct` |
 | `spSpec1` | CATISpecObject | `IID_CATISpecObject` |
@@ -96,7 +95,6 @@ verified: true
 ## CAAAssemblyUI
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `pDoc` | CATIDocRoots | `IID_CATIDocRoots` |
 | `hBU` | CATIProduct | `IID_CATIProduct` |
 | `pPartDoc1` | CATIDocRoots | `IID_CATIDocRoots` |
@@ -115,7 +113,6 @@ verified: true
 ## CAACATIAApplicationFrm
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `pleaf` | CAAISysColorProperties | `IID_CAAISysColorProperties` |
 | `currentp` | CAAISysColorProperties | `IID_CAAISysColorProperties` |
 | `currentp` | CAAISysColorProperties | `IID_CAAISysColorProperties` |
@@ -142,7 +139,6 @@ verified: true
 ## CAACATIAV4Interfaces
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `bodyTmp` | CATIAlias | `IID_CATIAlias` |
 | `ipDoc` | CATInit | `IID_CATInit` |
 | `bodyTmp` | CATIBodyRequest | `IID_CATIBodyRequest` |
@@ -151,7 +147,6 @@ verified: true
 ## CAACATMatInterfaces
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `spMySU` | CATISpecObject | `IID_CATISpecObject` |
 | `pNewStartup` | CATISpecObject | `IID_CATISpecObject` |
 | `pAppliContainer` | CATIContainer | `IID_CATIContainer` |
@@ -160,7 +155,6 @@ verified: true
 ## CAACommonLayoutItf
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `piToProduct` | CATICloTransferElements | `IID_CATICloTransferElements` |
 | `piAppObject` | CATIPspDefinePhysicalPart | `IID_CATIPspDefinePhysicalPart` |
 | `piAppObject` | CATIPspPlacePartOnRun | `IID_CATIPspPlacePartOnRun` |
@@ -215,14 +209,12 @@ verified: true
 ## CAAComponentsCatalogs
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `pReferencedObject` | CATInit | `IID_CATInit` |
 | `pReferencedObject` | CATICatalogDescription | `IID_CATICatalogDescription` |
 
 ## CAADMAPSInterfaces
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `pSession` | CATISPPConfig | `IID_CATISPPConfig` |
 | `pNewDoc` | CATInit | `IID_CATInit` |
 | `spActivityRoot` | CATISPPChildManagement | `IID_CATISPPChildManagement` |
@@ -248,7 +240,6 @@ verified: true
 ## CAADialog
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `pIDataRequest` | CATICommMsg | `IID_CATICommMsg` |
 | `_pIMessageReceiver` | CATBaseUnknown | `IID_CATBaseUnknown` |
 | `iMessage` | CAAIDlgDataRequest | `IID_CAAIDlgDataRequest` |
@@ -256,7 +247,6 @@ verified: true
 ## CAADialogEngine
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `_pUIActiveObject` | CAAISysAccess | `IID_CAAISysAccess` |
 | `_pContainer` | CAAISysGeomFactory | `IID_CAAISysGeomFactory` |
 | `_pContainer` | CAAISysCollection | `IID_CAAISysCollection` |
@@ -311,7 +301,6 @@ verified: true
 ## CAADrafting2DLInterfaces
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `sp2DLCont` | CATIDftStandardManager | `IID_CATIDftStandardManager` |
 | `spDrwCont` | CATIDftStandardManager | `IID_CATIDftStandardManager` |
 | `ipDocDraw` | CATIDftDocumentServices | `IID_CATIDftDocumentServices` |
@@ -319,7 +308,6 @@ verified: true
 ## CAADraftingInterfaces
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `appFrame` | CATIAApplication | `IID_CATIAApplication` |
 | `ptDoc` | CATIADrawingDocument | `IID_CATIADrawingDocument` |
 | `spDrwCont` | CATIDftStandardManager | `IID_CATIDftStandardManager` |
@@ -338,7 +326,6 @@ verified: true
 ## CAAElecDeviceItf
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `pDoc` | CATIDocRoots | `IID_CATIDocRoots` |
 | `spCBU` | CATIProduct | `IID_CATIProduct` |
 | `pDoc` | CATIEleDocServices | `IID_CATIEleDocServices` |
@@ -393,7 +380,6 @@ verified: true
 ## CAAElecFlatteningItf
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `pDoc` | CATIEleDocServices | `IID_CATIEleDocServices` |
 | `pIRootProduct` | CATIEhfEnvironment | `IID_CATIEhfEnvironment` |
 | `pDoc` | CATIEleDocServices | `IID_CATIEleDocServices` |
@@ -413,7 +399,6 @@ verified: true
 ## CAAElecHarnessItf
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `pDoc` | CATIDocRoots | `IID_CATIDocRoots` |
 | `spItem1` | CATIProduct | `IID_CATIProduct` |
 | `pDoc` | CATIEleDocServices | `IID_CATIEleDocServices` |
@@ -468,7 +453,6 @@ verified: true
 ## CAAElecRoutingItf
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `pDoc` | CATIDocRoots | `IID_CATIDocRoots` |
 | `hUnk` | CATIProduct | `IID_CATIProduct` |
 | `pDoc` | CATIEleDocServices | `IID_CATIEleDocServices` |
@@ -482,7 +466,6 @@ verified: true
 ## CAAElecSchematicItf
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `piEdiRefCable` | CATIEdiCableReference | `IID_CATIEdiCableReference` |
 | `piEdiRefCable` | CATISchAppConnectable | `IID_CATISchAppConnectable` |
 | `piFromToWidePin` | CATISpecObject | `IID_CATISpecObject` |
@@ -491,7 +474,6 @@ verified: true
 ## CAAFmoFuncModInterfaces
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `hMechPart` | CATIFmoBody | `IID_CATIFmoBody` |
 | `piShellableFunctionalSet` | CATIAlias | `IID_CATIAlias` |
 | `piInternalFunctionalSet` | CATIAlias | `IID_CATIAlias` |
@@ -508,7 +490,6 @@ verified: true
 ## CAAGSMInterfaces
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `spCont` | CATIGSMFactory | `IID_CATIGSMFactory` |
 | `spFather` | CATIGSMTool | `IID_CATIGSMTool` |
 | `pDoc` | CATInit | `IID_CATInit` |
@@ -563,7 +544,6 @@ verified: true
 ## CAAGeometryVisualization
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `spPart` | CATIPartRequest | `IID_CATIPartRequest` |
 | `spSurfBody` | CATIDescendants | `IID_CATIDescendants` |
 | `ThePoint` | CATIVisProperties | `IID_CATIVisProperties` |
@@ -575,7 +555,6 @@ verified: true
 ## CAAKinematicsInterfaces
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `pDocument` | CATIDocRoots | `IID_CATIDocRoots` |
 | `spProd_i_bu` | CATIProduct | `IID_CATIProduct` |
 | `spProduct_bu` | CATIProduct | `IID_CATIProduct` |
@@ -595,7 +574,6 @@ verified: true
 ## CAAKnowHow
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `container` | CATICkeParmFactory | `IID_CATICkeParmFactory` |
 | `container` | CATICkeParmFactory | `IID_CATICkeParmFactory` |
 | `iopDoc` | CATIDocRoots | `IID_CATIDocRoots` |
@@ -603,7 +581,6 @@ verified: true
 ## CAALiteralFeatures
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `piContainer` | CATICkeParmFactory | `IID_CATICkeParmFactory` |
 | `piContainer` | CATICkeParmFactory | `IID_CATICkeParmFactory` |
 | `pDocument` | CATInit | `IID_CATInit` |
@@ -647,14 +624,12 @@ verified: true
 ## CAAManufacturingItf
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `spContainer` | CATIMfgToolPathFactory | `IID_CATIMfgToolPathFactory` |
 | `spContainer` | CATIMfgToolPathFactory | `IID_CATIMfgToolPathFactory` |
 
 ## CAAMechanicalCommands
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `pFatherCC` | CATIGSMTool | `IID_CATIGSMTool` |
 | `this` | CATIBuildPath | `IID_CATIBuildPath` |
 | `ispModelPart` | CATIPartRequest | `IID_CATIPartRequest` |
@@ -663,7 +638,6 @@ verified: true
 ## CAAMechanicalModeler
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `spPart` | CATIMmiPartModelEventManagement | `IID_CATIMmiPartModelEventManagement` |
 | `iInputPad` | CATISpecObject | `IID_CATISpecObject` |
 | `pFatherPad` | CATIBodyRequest | `IID_CATIBodyRequest` |
@@ -694,9 +668,11 @@ verified: true
 | `piSpecOnGeomElem` | CATIBuildPath | `IID_CATIBuildPath` |
 | `pSelection` | CATISpecObject | `IID_CATISpecObject` |
 | `piSpecOnCombinedCurve` | CAAIMmrCombinedCurve | `IID_CAAIMmrCombinedCurve` |
+```vbscript
 | `CurrentTool` | CATIMmiNonOrderedGeometricalSet | `IID_CATIMmiNonOrderedGeometricalSet` |
 | `CurrentTool` | CATIMmiGeometricalSet | `IID_CATIMmiGeometricalSet` |
 | `CurrentTool` | CATIGSMTool | `IID_CATIGSMTool` |
+```
 | `pIPrtPart` | CATISpecObject | `IID_CATISpecObject` |
 | `_piCombinedCurve` | CATISpecObject | `IID_CATISpecObject` |
 | `_piCombinedCurve` | CATISpecObject | `IID_CATISpecObject` |
@@ -718,7 +694,6 @@ verified: true
 ## CAAOBMInterfaces
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `hValueParmReal` | CATIValue | `IID_CATIValue` |
 | `pDoc` | CATIDocRoots | `IID_CATIDocRoots` |
 | `pDoc` | CATIDocRoots | `IID_CATIDocRoots` |
@@ -727,7 +702,6 @@ verified: true
 ## CAAOLE4MecMod
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `piSpecOnPoint1` | CATPoint | `IID_CATPoint` |
 | `piSpecOnPoint2` | CATPoint | `IID_CATPoint` |
 | `piSpecOnPoint1` | CATIGeometricalElement | `IID_CATIGeometricalElement` |
@@ -738,14 +712,12 @@ verified: true
 ## CAAObjectModelerBase
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `pDoc` | CATInit | `IID_CATInit` |
 | `pContainer` | CAAISysCollection | `IID_CAAISysCollection` |
 
 ## CAAObjectSpecsModeler
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `pDoc` | CATInit | `IID_CATInit` |
 | `spPublisherSU` | CATISpecAttrAccess | `IID_CATISpecAttrAccess` |
 | `spPublisherInst1` | CATISpecAttrAccess | `IID_CATISpecAttrAccess` |
@@ -793,14 +765,12 @@ verified: true
 ## CAAOptimizationInterfaces
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `_pDoc` | CATInit | `IID_CATInit` |
 | `_pDoc` | CATInit | `IID_CATInit` |
 
 ## CAAPartInterfaces
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `spUserPad` | CATIBuildShape | `IID_CATIBuildShape` |
 | `pISpecObjectOnProfile` | CATIBuildPath | `IID_CATIBuildPath` |
 | `spPart` | CATIDescendants | `IID_CATIDescendants` |
@@ -813,7 +783,6 @@ verified: true
 ## CAAPlantShipInterfaces
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `this` | CATISpecObject | `IID_CATISpecObject` |
 | `this` | CATISpecObject | `IID_CATISpecObject` |
 | `piPhysical` | CATIPspObject | `IID_CATIPspObject` |
@@ -846,7 +815,6 @@ verified: true
 ## CAAProductStructure
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `pDoc` | CATIDocRoots | `IID_CATIDocRoots` |
 | `spRootProduct` | CATIProduct | `IID_CATIProduct` |
 | `pObj` | CATISpecObject | `IID_CATISpecObject` |
@@ -901,7 +869,6 @@ verified: true
 ## CAASPAInterfaces
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `pDocument` | CATISpaEnvironment | `IID_CATISpaEnvironment` |
 | `pDocument` | CATIDocRoots | `IID_CATIDocRoots` |
 | `this` | CATIProduct | `IID_CATIProduct` |
@@ -919,7 +886,6 @@ verified: true
 ## CAASchPlatformModeler
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `piGRRComp` | CATISchGRR | `IID_CATISchGRR` |
 | `piGRRComp2` | CATISchGRR | `IID_CATISchGRR` |
 | `_pObj` | CATISchDocFrmXml | `IID_CATISchDocFrmXml` |
@@ -940,7 +906,6 @@ verified: true
 ## CAASimulationInterfaces
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `pDocument` | CATIDocRoots | `IID_CATIDocRoots` |
 | `pBUTmp` | CATIProduct | `IID_CATIProduct` |
 | `pDocument` | CATIReplayFactory | `IID_CATIReplayFactory` |
@@ -953,7 +918,6 @@ verified: true
 ## CAAStructureInterfaces
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `pDoc` | CATIDocRoots | `IID_CATIDocRoots` |
 | `spRootProduct` | CATIProduct | `IID_CATIProduct` |
 | `spChild` | CATIStructurePlate | `IID_CATIStructurePlate` |
@@ -975,7 +939,6 @@ verified: true
 ## CAASurfaceMachiningItf
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `ispMachFeature` | CAAISmiUserMachFeature | `IID_CAAISmiUserMachFeature` |
 | `_spGuide` | CATIModelEvents | `IID_CATIModelEvents` |
 | `_spGuide` | CATIEdit | `IID_CATIEdit` |
@@ -1013,7 +976,6 @@ verified: true
 ## CAASystem
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `pIRequest` | CATICommMsg | `IID_CATICommMsg` |
 | `pHandler` | CATIMessageReceiver | `IID_CATIMessageReceiver` |
 | `pHandler` | CATIMessageReceiver | `IID_CATIMessageReceiver` |
@@ -1042,7 +1004,6 @@ verified: true
 ## CAATPSInterfaces
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `spBaseComp` | CATITTRS | `IID_CATITTRS` |
 | `ipiRGE` | CATIBuildPath | `IID_CATIBuildPath` |
 | `pTPS` | CATITPSTextContent | `IID_CATITPSTextContent` |
@@ -1051,8 +1012,10 @@ verified: true
 | `pBaseEdit` | CATILinkableObject | `IID_CATILinkableObject` |
 | `pDoc` | CATIDocRoots | `IID_CATIDocRoots` |
 | `pDocChild` | CATITPSDocument | `IID_CATITPSDocument` |
+```vbscript
 | `piTPSComp` | CATITPSSet | `IID_CATITPSSet` |
 | `pDocChild` | CATInit | `IID_CATInit` |
+```
 | `piBase` | CATIPrtContainer | `IID_CATIPrtContainer` |
 | `spSpecPart` | CATIPrtPart | `IID_CATIPrtPart` |
 | `piFTASet` | CATITPSSetGlobalCopy | `IID_CATITPSSetGlobalCopy` |
@@ -1066,8 +1029,10 @@ verified: true
 | `pDoc` | CATIDocRoots | `IID_CATIDocRoots` |
 | `spThirdInstance` | CATIMovable | `IID_CATIMovable` |
 | `pDocChild` | CATITPSDocument | `IID_CATITPSDocument` |
+```vbscript
 | `piTPSComp` | CATITPSSet | `IID_CATITPSSet` |
 | `pDocChild` | CATInit | `IID_CATInit` |
+```
 | `piBase` | CATIPrtContainer | `IID_CATIPrtContainer` |
 | `spSpecPart` | CATIPrtPart | `IID_CATIPrtPart` |
 | `piFTASet` | CATITPSSetGlobalCopy | `IID_CATITPSSetGlobalCopy` |
@@ -1075,7 +1040,6 @@ verified: true
 ## CAAV5V6FeatureModelerExt
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `pDoc` | CATInit | `IID_CATInit` |
 | `pDoc` | CATInit | `IID_CATInit` |
 | `pDoc` | CATInit | `IID_CATInit` |
@@ -1097,16 +1061,17 @@ verified: true
 ## CAAV5V6MechanicalModeler
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `_piCombinedCurve` | CATBaseUnknown | `IID_CATBaseUnknown` |
 | `GeomElem` | CATIBuildPath | `IID_CATIBuildPath` |
 | `pSelection` | CATBaseUnknown | `IID_CATBaseUnknown` |
 | `pSelection` | CATBaseUnknown | `IID_CATBaseUnknown` |
 | `pSelection` | CATBaseUnknown | `IID_CATBaseUnknown` |
 | `pSelection` | CATBaseUnknown | `IID_CATBaseUnknown` |
+```vbscript
 | `CurrentTool` | CATIMmiNonOrderedGeometricalSet | `IID_CATIMmiNonOrderedGeometricalSet` |
 | `CurrentTool` | CATIMmiGeometricalSet | `IID_CATIMmiGeometricalSet` |
 | `CurrentTool` | CATIGSMTool | `IID_CATIGSMTool` |
+```
 | `_piCombinedCurve` | CATIMmiMechanicalFeature | `IID_CATIMmiMechanicalFeature` |
 | `_piCombinedCurve` | CATISpecObject | `IID_CATISpecObject` |
 | `_piCombinedCurve` | CATIMmiMechanicalFeature | `IID_CATIMmiMechanicalFeature` |
@@ -1152,7 +1117,6 @@ verified: true
 ## CAAV5V6ObjectSpecsModeler
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `pDoc` | CATInit | `IID_CATInit` |
 | `pDoc` | CATInit | `IID_CATInit` |
 | `pDoc` | CATInit | `IID_CATInit` |
@@ -1162,7 +1126,6 @@ verified: true
 ## CAAVisualization
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `piBuknContainer` | CAAISysCollection | `IID_CAAISysCollection` |
 | `piBuknContainer` | CAAISysCollection | `IID_CAAISysCollection` |
 | `pBuknObject` | CAAISysPoint | `IID_CAAISysPoint` |
@@ -1176,7 +1139,6 @@ verified: true
 ## CAAxPDMInterfaces
 
 | 源对象 | 目标接口 | IID |
-|--------|----------|-----|
 | `pDoc` | CATIDocRoots | `IID_CATIDocRoots` |
 | `spRootProduct` | CATIProduct | `IID_CATIProduct` |
 | `link` | CATIProduct | `IID_CATIProduct` |

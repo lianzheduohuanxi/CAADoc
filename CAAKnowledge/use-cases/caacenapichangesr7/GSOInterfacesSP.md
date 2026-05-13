@@ -5,13 +5,13 @@ category: "use-case"
 module: "CAACenAPIChangesR7"
 version: "V5R7"
 tags: ["CATIGSOFactory"]
-source_file: "Doc/online/CAACenAPIChangesR7/GSOInterfacesSP.htm"
+source_file: "Doc/online/CAACenAPIChangesR7/GSOInterfacesSP.htmmd"
 converted: "2026-05-11T17:33:52.101712"
 ```
 
 ---
 tags: ["CATIGSOFactory"]
-source_file: "Doc/online/CAACenAPIChangesR7/GSOInterfacesSP.htm"
+source_file: "Doc/online/CAACenAPIChangesR7/GSOInterfacesSP.htmmd"
 converted: "2026-05-11T17:33:52.101712"
 CAA API Modifications|  GSOInterfaces  |
 

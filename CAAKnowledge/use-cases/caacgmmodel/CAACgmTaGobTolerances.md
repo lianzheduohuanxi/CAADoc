@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "The Management of Tolerances"
-category: "use-case"
+category: use-case
 module: "CAACgmModel"
 tags: ["CATIA"]
-source_file: "Doc/online/CAACgmModel/CAACgmTaGobTolerances.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmTaGobTolerances.htmmd"
 converted: "2026-05-11T17:33:47.977985"
 ```
 

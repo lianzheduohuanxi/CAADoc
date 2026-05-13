@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CAAScrBase", "CATIA", "CAADriDuplicateAView", "CAAScdDriUseCases"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriDuplicateAViewSource.htm"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriDuplicateAViewSource.htmmd"
 converted: "2026-05-11T11:27:02.740718"
 ---
 
@@ -20,38 +20,55 @@ Option Explicit
 '   CATIA Level: V5R11
 ' ***********************************************************************
 
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
 
     ' Set the CATIA popup file alerts to False
     ' It prevents to stop the macro at each alert during its execution
+```
+```vbscript
     CATIA.DisplayFileAlerts = False
 
     ' Optional: allows to find the sample wherever it's installed
+```
     dim sDocPath As String 
+```vbscript
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,"No Doc Path Defined"
     End If
+```
 
     ' Open the Drawing document
+```vbscript
     Dim oDrawingSource As DrawingDocument
     Set oDrawingSource = CATIA.Documents.Open(sDocPath & _
-             "\online\CAAScdDriUseCases\samples\CAADriDuplicateAView.CATDrawing")
+             "/online/CAAScdDriUseCases/samples/CAADriDuplicateAView.CATDrawing")
+```
     
     ' Fit in window the opened document
+```vbscript
     CATIA.ActiveWindow.ActiveViewer.Reframe
     
     ' Retrieve the sheet containing the view to be duplicated
+```
+```vbscript
     Dim oSheetSource As DrawingSheet
     Set oSheetSource = oDrawingSource.Sheets.Item("Sheet.1")
     
     ' Retrieve the view to be duplicated
+```
+```vbscript
     Dim oViewSource As DrawingView
     Set oViewSource = oSheetSource.Views.Item("Front view")
     
     ' Create an object of selection for the source document
+```
+```vbscript
     Dim oSelectionSource As Selection
     Set oSelectionSource = oDrawingSource.Selection
+    
+```
     
     ' Clear the selection
     oSelectionSource.Clear
@@ -63,19 +80,26 @@ Sub CATMain()
     oSelectionSource.Clear
     
     ' Create the Drawing document where the view will be pasted
+```vbscript
     Dim oDrawingTarget As DrawingDocument
     Set oDrawingTarget = CATIA.Documents.Add("Drawing")
     
     ' Retrieve the where the view will be pasted
+```
+```vbscript
     Dim oSheetTarget As DrawingSheet
     Set oSheetTarget = oDrawingTarget.Sheets.Item("Sheet.1")
     
     ' Set the sheet paper size
     oSheetTarget.PaperSize = catPaperA0
+```
     
     ' Create an object of selection for the source document
+```vbscript
     Dim oSelectionTarget As Selection
     Set oSelectionTarget = oDrawingTarget.Selection
+    
+```
     
     ' Clear the selection
     oSelectionTarget.Clear
@@ -87,9 +111,12 @@ Sub CATMain()
     oSelectionTarget.Clear
 
     ' Fit in window the active document    
+```vbscript
     CATIA.ActiveWindow.ActiveViewer.Reframe
     
     ' Clear the variables
+```
+```vbscript
     Set oSelectionTarget = Nothing
     Set oSheetTarget = Nothing
     Set oDrawingTarget = Nothing
@@ -100,6 +127,7 @@ Sub CATMain()
     
 End Sub
 
+```
 
 ```vbscript
 Option Explicit
@@ -115,38 +143,55 @@ Option Explicit
 '   CATIA Level: V5R11
 ' ***********************************************************************
 
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
 
     ' Set the CATIA popup file alerts to False
     ' It prevents to stop the macro at each alert during its execution
+```
+```vbscript
     CATIA.DisplayFileAlerts = False
 
     ' Optional: allows to find the sample wherever it's installed
+```
     dim sDocPath As String 
+```vbscript
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,"No Doc Path Defined"
     End If
+```
 
     ' Open the Drawing document
+```vbscript
     Dim oDrawingSource As DrawingDocument
     Set oDrawingSource = CATIA.Documents.Open(sDocPath & _
-             "\online\CAAScdDriUseCases\samples\CAADriDuplicateAView.CATDrawing")
+             "/online/CAAScdDriUseCases/samples/CAADriDuplicateAView.CATDrawing")
+```
     
     ' Fit in window the opened document
+```vbscript
     CATIA.ActiveWindow.ActiveViewer.Reframe
     
     ' Retrieve the sheet containing the view to be duplicated
+```
+```vbscript
     Dim oSheetSource As DrawingSheet
     Set oSheetSource = oDrawingSource.Sheets.Item("Sheet.1")
     
     ' Retrieve the view to be duplicated
+```
+```vbscript
     Dim oViewSource As DrawingView
     Set oViewSource = oSheetSource.Views.Item("Front view")
     
     ' Create an object of selection for the source document
+```
+```vbscript
     Dim oSelectionSource As Selection
     Set oSelectionSource = oDrawingSource.Selection
+    
+```
     
     ' Clear the selection
     oSelectionSource.Clear
@@ -158,19 +203,26 @@ Sub CATMain()
     oSelectionSource.Clear
     
     ' Create the Drawing document where the view will be pasted
+```vbscript
     Dim oDrawingTarget As DrawingDocument
     Set oDrawingTarget = CATIA.Documents.Add("Drawing")
     
     ' Retrieve the where the view will be pasted
+```
+```vbscript
     Dim oSheetTarget As DrawingSheet
     Set oSheetTarget = oDrawingTarget.Sheets.Item("Sheet.1")
     
     ' Set the sheet paper size
     oSheetTarget.PaperSize = catPaperA0
+```
     
     ' Create an object of selection for the source document
+```vbscript
     Dim oSelectionTarget As Selection
     Set oSelectionTarget = oDrawingTarget.Selection
+    
+```
     
     ' Clear the selection
     oSelectionTarget.Clear
@@ -182,9 +234,12 @@ Sub CATMain()
     oSelectionTarget.Clear
 
     ' Fit in window the active document    
+```vbscript
     CATIA.ActiveWindow.ActiveViewer.Reframe
     
     ' Clear the variables
+```
+```vbscript
     Set oSelectionTarget = Nothing
     Set oSheetTarget = Nothing
     Set oDrawingTarget = Nothing
@@ -194,4 +249,5 @@ Sub CATMain()
     Set oDrawingSource = Nothing
     
 End Sub
+```
 ```

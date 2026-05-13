@@ -4,13 +4,13 @@ title: "CAAInfCreateDocument.CATScript"
 category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CATIA", "CAAInfCreateDocument"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfCreateDocumentSource.htm"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfCreateDocumentSource.htmmd"
 converted: "2026-05-11T17:31:52.356061"
 ```
 
 ---
 tags: ["CATIA", "CAAInfCreateDocument"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfCreateDocumentSource.htm"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfCreateDocumentSource.htmmd"
 converted: "2026-05-11T17:31:52.356061"
     Option Explicit
 
@@ -34,7 +34,10 @@ converted: "2026-05-11T17:31:52.356061"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
+
+```
 
 ```
 
@@ -52,18 +55,24 @@ converted: "2026-05-11T17:31:52.356061"
 ```
 
 ```vbscript
+```vbscript
         Dim oNewPartDoc As Document
+```vbscript
+```
 ```vbscript
 ```vbscript
         Set oNewPartDoc = CATIA.Documents.Add("Part")
 
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

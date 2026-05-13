@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Using NURBS"
-category: "use case"
+category: use-case case"
 module: "CAACgmModel"
 tags: ["CATICGMContainer", "CAADoc", "CAAGMModelNurbs", "CATICGMObject", "CAAGMModelGemBrowser", "CAAGMModelInterfaces", "CATIA"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGobNurbs.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGobNurbs.htmmd"
 converted: "2026-05-11T17:33:48.422980"
 ```
 
@@ -73,7 +73,7 @@ This NCGM file can be displayed using the CAAGMModelGemBrowser use case.
 
 The CAAGMModelNurbs use case is made of a main named CAAGMModelNurbs.cpp located in the CAAGMModelNurbs.m module of the CAAGMModelInterfaces.edu framework:
 
-`InstallRootFolder\CAADoc\CAAGMModelInterfaces.edu\CAAGMModelNurbs.m\`
+`InstallRootFolder/CAADoc/CAAGMModelInterfaces.edu/CAAGMModelNurbs.m/`
 
 where `InstallRootFolder` [4] is the folder where the API CD-ROM is installed.
 ## Step-by-Step
@@ -96,7 +96,7 @@ The main program is divided into the following steps:
 7. Writing the Model And Closing the Container
 The geometry factory (`CATGeoFactory`) creates and manages all the CATICGMObject (and the curves and surfaces in particular) [3]. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
 
-    CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**() ;
+    CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**(#) ;
 ```vbscript
     if (NULL==piGeomFactory) return (1);
 
@@ -104,7 +104,7 @@ The geometry factory (`CATGeoFactory`) creates and manages all the CATICGMObject
 
 ### Creating a Bzier Curve
 
-CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**() ;
+CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**(#) ;
 if (NULL==piGeomFactory) return (1);
 The Bzier curve is a special type of NURBS curve: the multiplicities of the knots is equal to the degree.
 
@@ -326,7 +326,7 @@ Hence, if you asked for the knot vector of `ThirdCurve` (`GetKnotVector`), that 
 CATCrvParam param;
 CATCrvEvalLocal result;
 CATMathPoint mathPoint;
-    const CATKnotVector * pNewKnotVector=piThirdCurve->**GetKnotVector**();
+    const CATKnotVector * pNewKnotVector=piThirdCurve->**GetKnotVector**(#);
 ```vbscript
     if (NULL==pNewKnotVector)
 
@@ -334,7 +334,7 @@ CATMathPoint mathPoint;
 
     {
        ::CATCloseCGMContainer(piGeomFactory);
-const CATKnotVector * pNewKnotVector=piThirdCurve->**GetKnotVector**();
+const CATKnotVector * pNewKnotVector=piThirdCurve->**GetKnotVector**(#);
 if (NULL==pNewKnotVector)
 ```vbscript
        return (1);
@@ -463,7 +463,7 @@ ofstream filetowrite(pfileName, ios::binary ) ;
     #endif
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
-       filetowrite.close();
+       filetowrite.close(#);
      }
 
      //

@@ -4,13 +4,13 @@ title: "Fill"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CATICGMPowerFill", "CAAGMOperatorsPowerFill"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopPowerFill.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopPowerFill.htmmd"
 converted: "2026-05-11T17:33:49.275425"
 ```
 
 ---
 tags: ["CAAGMOperatorsInterfaces", "CATICGMPowerFill", "CAAGMOperatorsPowerFill"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopPowerFill.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopPowerFill.htmmd"
 converted: "2026-05-11T17:33:49.275425"
 Fill
 
@@ -43,13 +43,13 @@ CATCGMCreatePowerFill(piGeomFactory, &topdata;, wires, supports);
     CATLONG32 whichWire = 1;
     CATLONG32 transitionContinuity = 1;
     pPowerFillOp->SetTransitionContinuity(whichWire, transitionContinuity);
-    pPowerFillOp->Run();
-    CATBody* pResultBody = pPowerFillOp->GetResult();
-    pPowerFillOp->Release();
+    pPowerFillOp->Run(#);
+    CATBody* pResultBody = pPowerFillOp->GetResult(#);
+    pPowerFillOp->Release(#);
     pPowerFillOp = NULL;
 
 ---
-pPowerFillOp->Release();
+pPowerFillOp->Release(#);
 pPowerFillOp = NULL;
 you get this result: Fig.2 Fill Operation: Output Data ![Fill output](images/CGM_fill_1.png)
 

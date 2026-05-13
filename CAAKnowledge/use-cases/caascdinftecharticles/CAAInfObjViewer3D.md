@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Viewers Object"
-category: "use-case"
+category: tech-article
 module: "CAAScdInfTechArticles"
 tags: ["CATIA"]
-source_file: "Doc/online/CAAScdInfTechArticles/CAAInfObjViewer3D.htm"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfObjViewer3D.htmmd"
 converted: "2026-05-11T17:31:52.429128"
 ```
 

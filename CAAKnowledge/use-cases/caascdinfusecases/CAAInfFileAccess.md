@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CAAScrBase", "CAAInfFileAccess", "CATIA", "CAAScrJavaScript", "CAAScdInfUseCases", "CAAInfFileAccessSource", "CAAInfLauchMacro", "CAAlink"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfFileAccess.htm"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfFileAccess.htmmd"
 converted: "2026-05-11T11:27:02.690095"
 ---
 
@@ -84,15 +84,17 @@ Using the `GetFile` method, a File object is obtained for
       
 
 The `sMessage` variable now contains the whole content of
+```vbscript
       the output file. The `MsgBox` function is used to display this
       content in a message box.
+```
       
 
 ![](images/filac2.gif)
     
   
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 
@@ -113,28 +115,36 @@ This use case has shown how to access files and folder using CAA V5 *FileSystem*
 
 *Copyright  2001, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 ...
+```vbscript
     Dim sLF as String
     sLF = Chr(10) 
+```
 
+```vbscript
     Dim sMessage as String
     sMessage = InputBox (&quot;Enter a message&quot;, &quot;Message&quot;, &quot;Hello World&quot;)
+```
 
     ' ------------------------------------------
     ' Get the file system object
+```vbscript
     Dim oFileSys as FileSystem
     Set oFileSys = CATIA.FileSystem
 
     ' ------------------------------------------
+```
     ' Retrieve a folder for temporary files
+```vbscript
     Dim sTmpPath as String 
     sTmpPath=CATIA.SystemService.Environ(&quot;CATTemp&quot;)
     If (Not oFileSys.FolderExists(sTmpPath)) Then
+```
+```vbscript
       Err.Raise 9999,,&quot;No Tmp Path Defined&quot;
     End If
+```
   ...
 ```
 
@@ -142,8 +152,10 @@ This use case has shown how to access files and folder using CAA V5 *FileSystem*
 ...
     ' ------------------------------------------
     ' Delete possibly existing input and output files
+```vbscript
     Dim sFilOu As String ' Output file full path
     sFilOu = sTmpPath &amp; &quot;/caatmpfilou.txt&quot;
+```
     If (oFileSys.FileExists(sFilou)) Then 
         oFileSys.DeleteFile sFilOu
     End If
@@ -154,11 +166,13 @@ This use case has shown how to access files and folder using CAA V5 *FileSystem*
 ...
      ' ---------------------------------------
     ' Create file FilIn  
+```vbscript
     Dim oFilIn As File    
     Set oFilIn = oFileSys.CreateFile(sFilIn, FALSE)
     Dim oStream As TextStream
     Set oStream = oFilIn.OpenAsTextStream(&quot;ForWriting&quot;)
     oStream.Write &quot;&lt;MESSAGE&gt;&quot;  &amp; sLF
+```
     oStream.Write &quot;&lt;VALUE&gt;&quot;
     oStream.Write sMessage 
     oStream.Write &quot;&lt;/VALUE&gt;&quot;   &amp; sLF
@@ -179,12 +193,14 @@ This use case has shown how to access files and folder using CAA V5 *FileSystem*
 ...
     ' ---------------------------------------
     ' Get the result from the output file  
+```vbscript
     Dim oFilOu As File
     Set oFilOu = oFileSys.GetFile(sFilOu)
     Set oStream = oFilOu.OpenAsTextStream(&quot;ForReading&quot;)
 
     Dim sBuffer As String
     sMessage = &quot;&quot;
+```
     sBuffer = oStream.ReadLine
     Do  Until oStream.AtEndOfStream
         sMessage = sMessage &amp; sBuffer

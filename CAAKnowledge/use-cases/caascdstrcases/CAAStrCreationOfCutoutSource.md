@@ -4,23 +4,29 @@ title: "CAAStrCreateCutout.CATScript"
 category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CATIA", "CATIAStrFeatureFactory", "CAAStrCreateCutout"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfCutoutSource.htm"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfCutoutSource.htmmd"
 converted: "2026-05-11T17:31:50.874115"
 ```
 
 ---
 ```vbscript
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 ```vbscript
     Dim doc As Document
 
       Dim StrWorkbench As StrWorkbench
 ```
+```
 
+```vbscript
 ```vbscript
 ```vbscript
       Dim strFactory As StrObjectFactory
@@ -37,18 +43,24 @@ Sub CATMain()
       Dim sketch As Reference
       Set sketch1 = rootProduct.CreateReferenceFromName("Product1/Grid/!Sketch.1")
       '*************************First Cutout**************************************************
+```
+```vbscript
       Dim PlateToCut1 As StrPlate
       Set PlateToCut1 = strPlates.Item("Plate_052")
 
       Dim Selection1 As Selection
       Set Selection1 = CATIA.ActiveDocument.Selection
 ```
+```
 
 ```
 
       Selection1.Add PlateToCut1
 
+```vbscript
       Dim Factory1 As StrFeatureFactory
+```vbscript
+```
 ```vbscript
 ```vbscript
       Set Factory1 = Selection1.FindObject("CATIAStrFeatureFactory")
@@ -59,18 +71,24 @@ Sub CATMain()
       Dim Cutout1 As StrCutoutFeature
       Set Cutout1 = Factory1.AddCutoutWithAfterFormingMode(sketch1, dir1)
       '*************************Second  Cutout**************************************************
+```
+```vbscript
       Dim PlateToCut2 As StrPlate
       Set PlateToCut2 = strPlates.Item("Plate_053")
 
       Dim Selection2 As Selection
       Set Selection2 = CATIA.ActiveDocument.Selection
 ```
+```
 
 ```
 
       Selection2.Add PlateToCut2
 
+```vbscript
       Dim Factory2 As StrFeatureFactory
+```vbscript
+```
 ```vbscript
 ```vbscript
       Set Factory2 = Selection2.FindObject("CATIAStrFeatureFactory")
@@ -82,12 +100,15 @@ Sub CATMain()
       Set Cutout2 = Factory2.AddCutoutWithBeforeFormingMode(sketch1, Sur1)
 
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

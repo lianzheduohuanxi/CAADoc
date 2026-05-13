@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Boundary Automation Objects"
-category: "use-case"
+category: tech-article
 module: "CAAScdMmrTechArticles"
 tags: []
-source_file: "Doc/online/CAAScdMmrTechArticles/CAAMmrTocBoundary.htm"
+source_file: "Doc/online/CAAScdMmrTechArticles/CAAMmrTocBoundary.htmmd"
 converted: "2026-05-11T17:31:51.145153"
 ```
 

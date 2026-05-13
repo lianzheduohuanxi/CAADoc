@@ -1,15 +1,20 @@
 ---
 ```vbscript
+```vbscript
 title: "Analysis Set Automation Objects"
-category: "use-case"
+category: tech-article
+```
 module: "CAAScdAniTechArticles"
 tags: []
-source_file: "Doc/online/CAAScdAniTechArticles/CAAAniTocAnalysisSet.htm"
+source_file: "Doc/online/CAAScdAniTechArticles/CAAAniTocAnalysisSet.htmmd"
 converted: "2026-05-11T17:31:51.975342"
 ```
 
 ---
+```vbscript
 # Analysis Set Automation Objects
+
+```
 
 ![](../CAAScrAutomationImages/images/anasets.gif)[![Application Object Diagram](../CAAScrAutomationImages/images/uparrow.gif)](CAAAniTocAnalysisDocument.md)
 ![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/anaset.gif)
@@ -66,27 +71,37 @@ The **AnalysisSet** object aggregates five collections:
 The **AnalysisImport** and **AnalysisExport** objects can be retrieved from the **AnalysisSet** object thanks to the `GetItem` method. Here is an example with **AnalysisImport**.
 
 ```vbscript
+```vbscript
     Dim set As AnalysisSet
+```
 ```
 
     ...
 ```vbscript
+```vbscript
 Dim set As AnalysisSet
+```vbscript
+```
 ```vbscript
 ```vbscript
     Dim anImport As AnalysisImport
     Set anImport = set.GetItem("AnalysisImport")
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Dim anImport As AnalysisImport
 ```vbscript
+```
+```vbscript
 Set anImport = set.GetItem("AnalysisImport")
+```
 ```
 
 ```

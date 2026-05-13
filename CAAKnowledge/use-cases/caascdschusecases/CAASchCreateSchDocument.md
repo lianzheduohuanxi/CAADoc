@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAAScrBase", "CATIA", "CAAScrJavaScript", "CAASchCreateSchDocumentSource", "CAAScdSchUseCases", "CAAScdInfUseCases", "CAASchSCH_Detail01", "CAASCH_Detail01", "CAASchCreateSchDocument", "CAAInfLauchMacro"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchCreateSchDocument.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchCreateSchDocument.htmmd"
 converted: "2026-05-11T11:27:02.627785"
 ---
 
@@ -32,8 +32,10 @@ Using the GeSchematicSession method, a handle on the SchSession
      
      
 
+```vbscript
 #### Set the drawing standard of the 
      drafting viewer in the schematic document
+```
      
 
 A schematic document has a drafting viewer embedded in it. The drawing 

@@ -1,11 +1,11 @@
 ---
 ```vbscript
 title: "CATAnalysisBase Framework Modifications in V5R15"
-category: "use-case"
+category: use-case
 module: "CAACenAPIChangesR15"
 version: "V5R15"
 tags: ["CATICharacCollector", "CATISPMProcess", "CATISamGroup", "CATISPMProcessAccess"]
-source_file: "Doc/online/CAACenAPIChangesR15/CATAnalysisBase.htm"
+source_file: "Doc/online/CAACenAPIChangesR15/CATAnalysisBase.htmmd"
 converted: "2026-05-11T17:33:51.043914"
 ```
 
@@ -18,7 +18,7 @@ converted: "2026-05-11T17:33:51.043914"
 * * *
 
 **Entity|  SP| Modification| To Do** | CATAnalysisBase/Public/CATAnalysisCollectorArchiver.h/CATAnalysisCollectorArchiver/CATAnalysisCollectorArchiver
-**Prototype:**`CATAnalysisCollectorArchiver();`| GA| [MHBDM](CAACenAPIChangeDetail.htm#Abstract)| Argument has been added.See reference documentation.
+**Prototype:**`CATAnalysisCollectorArchiver(#);`| GA| [MHBDM](CAACenAPIChangeDetail.htm#Abstract)| Argument has been added.See reference documentation.
 ---|---|---|---
 CATAnalysisBase/Public/CATAnalysisCollectorArchiver.h/CATAnalysisCollectorArchiver/UnStream
 **Prototype:**`HRESULT UnStream(const CATAnalysisCharacCollector* oCollector);`| GA| [MHBDM](CAACenAPIChangeDetail.htm#Abstract)| Arguments have been added.See reference documentation.

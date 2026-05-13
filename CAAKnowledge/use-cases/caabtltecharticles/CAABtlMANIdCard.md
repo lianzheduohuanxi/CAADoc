@@ -4,13 +4,13 @@ title: "The IdentityCard.h Special File"
 category: "use-case"
 module: "CAABtlTechArticles"
 tags: []
-source_file: "Doc/online/CAABtlTechArticles/CAABtlMANIdCard.htm"
+source_file: "Doc/online/CAABtlTechArticles/CAABtlMANIdCard.htmmd"
 converted: "2026-05-11T17:33:46.051073"
 ```
 
 ---
 tags: []
-source_file: "Doc/online/CAABtlTechArticles/CAABtlMANIdCard.htm"
+source_file: "Doc/online/CAABtlTechArticles/CAABtlMANIdCard.htmmd"
 converted: "2026-05-11T17:33:46.051073"
 RADE |  Multi-Workspace Application Builder |  The IdentityCard.h Special File _Purpose and use_
 

@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CAAScrBase", "CAAInfWriteDocument3", "CATIA", "CAAInfSaveAsDocument", "CAAScdInfUseCases", "CAAInfReadDocument", "CAAInfWriteDocument1", "CAAInfWriteDocument2"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfSaveAsDocumentSource.htm"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfSaveAsDocumentSource.htmmd"
 converted: "2026-05-11T11:27:02.703557"
 ---
 
@@ -19,63 +19,86 @@ Option Explicit
 '   CATIA Level:  V5R7 
 ' *****************************************************************************
 
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
 
     ' -----------------------------------------------------------------------------------------------
+```
     ' Optional: allows to find the sample wherever it may be installed
+```vbscript
     Dim sDocPath As String
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,"No Doc Path Defined"
     End If
+```
     ' ------------------------------------------------------------------------------------------------ 
 
     ' -----------------------------------------------------------------------------------------------
     ' Optional: allows to specify where document should be saved
+```vbscript
     Dim sTmpPath As String
     sTmpPath=CATIA.SystemService.Environ("CATTemp")
     If (Not CATIA.FileSystem.FolderExists(sTmpPath)) Then
       Err.Raise 9999,,"No Tmp Path Defined"
     End If
+```
     ' ------------------------------------------------------------------------------------------------ 
    
     'Create a new part document.
     'Add the new document to the end of the collection of documents.
     'Create and display a new window for the new document.
     'Activate the new document and the window.
+```vbscript
     Dim oFirstNewPartDoc As Document
     Set oFirstNewPartDoc = CATIA.Documents.Add("Part")
 
     'The document just created is the active one.
+```
     'Save the new document.
+```vbscript
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sTmpPath, _
        "CAAInfWriteDocument1.CATPart")
+```
+```vbscript
      CATIA.ActiveDocument.SaveAs(sFilePath)
 
     'Create a second new part document.
+```
+```vbscript
      Dim oSecondNewPartDoc As Document
      Set oSecondNewPartDoc = CATIA.Documents.Add("Part")
 
     'Save the new document using the variable name defined for it.
+```
+```vbscript
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sTmpPath, _
        "CAAInfWriteDocument2.CATPart")
+```
      oSecondNewPartDoc.SaveAs(sFilePath)
 
     'Open an existing document.
+```vbscript
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
-       "online\CAAScdInfUseCases\samples\CAAInfReadDocument.CATPart")
+       "online/CAAScdInfUseCases/samples/CAAInfReadDocument.CATPart")
+```
+```vbscript
      Dim iThirdPartDoc As Document
      Set iThirdPartDoc = CATIA.Documents.Open(sFilePath)
 
     'Save the new document by specifying its name.
+```
+```vbscript
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sTmpPath, _
          "CAAInfWriteDocument3.CATPart")
+```
+```vbscript
     CATIA.Documents.Item("CAAInfReadDocument.CATPart").SaveAs(sFilePath)
   
 End Sub
 
-
+```
 
 ```vbscript
 Option Explicit
@@ -90,60 +113,83 @@ Option Explicit
 '   CATIA Level:  V5R7 
 ' *****************************************************************************
 
-
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
 
     ' -----------------------------------------------------------------------------------------------
+```
     ' Optional: allows to find the sample wherever it may be installed
+```vbscript
     Dim sDocPath As String
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,"No Doc Path Defined"
     End If
+```
     ' ------------------------------------------------------------------------------------------------ 
 
     ' -----------------------------------------------------------------------------------------------
     ' Optional: allows to specify where document should be saved
+```vbscript
     Dim sTmpPath As String
     sTmpPath=CATIA.SystemService.Environ("CATTemp")
     If (Not CATIA.FileSystem.FolderExists(sTmpPath)) Then
       Err.Raise 9999,,"No Tmp Path Defined"
     End If
+```
     ' ------------------------------------------------------------------------------------------------ 
    
     'Create a new part document.
     'Add the new document to the end of the collection of documents.
     'Create and display a new window for the new document.
     'Activate the new document and the window.
+```vbscript
     Dim oFirstNewPartDoc As Document
     Set oFirstNewPartDoc = CATIA.Documents.Add("Part")
 
     'The document just created is the active one.
+```
     'Save the new document.
+```vbscript
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sTmpPath, _
        "CAAInfWriteDocument1.CATPart")
+```
+```vbscript
      CATIA.ActiveDocument.SaveAs(sFilePath)
 
     'Create a second new part document.
+```
+```vbscript
      Dim oSecondNewPartDoc As Document
      Set oSecondNewPartDoc = CATIA.Documents.Add("Part")
 
     'Save the new document using the variable name defined for it.
+```
+```vbscript
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sTmpPath, _
        "CAAInfWriteDocument2.CATPart")
+```
      oSecondNewPartDoc.SaveAs(sFilePath)
 
     'Open an existing document.
+```vbscript
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
-       "online\CAAScdInfUseCases\samples\CAAInfReadDocument.CATPart")
+       "online/CAAScdInfUseCases/samples/CAAInfReadDocument.CATPart")
+```
+```vbscript
      Dim iThirdPartDoc As Document
      Set iThirdPartDoc = CATIA.Documents.Open(sFilePath)
 
     'Save the new document by specifying its name.
+```
+```vbscript
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sTmpPath, _
          "CAAInfWriteDocument3.CATPart")
+```
+```vbscript
     CATIA.Documents.Item("CAAInfReadDocument.CATPart").SaveAs(sFilePath)
   
 End Sub
+```
 ```

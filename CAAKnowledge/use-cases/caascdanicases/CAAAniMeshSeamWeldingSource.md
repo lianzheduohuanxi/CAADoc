@@ -4,7 +4,7 @@ title: "CAAAniMeshSeamWelding.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniMeshSeamWelding", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSeamWeldingSource.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSeamWeldingSource.htmmd"
 converted: "2026-05-11T17:31:51.690703"
 ```
 
@@ -32,7 +32,10 @@ converted: "2026-05-11T17:31:51.690703"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
+
+```
 
 ```
 
@@ -41,18 +44,22 @@ converted: "2026-05-11T17:31:51.690703"
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
+```vbscript
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
 ```vbscript
         End If
     ' -----------------------------------------------------------
@@ -69,33 +76,43 @@ End If
 ```vbscript
 ' -----------------------------------------------------------
     ' Open the Analysis document
-    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\WeldConnections.CATAnalysis")
+```vbscript
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/WeldConnections.CATAnalysis")
+```
 ```
 
 ```
 
 ```
 
+```vbscript
 ```vbscript
 ```vbscript
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ```
+```
 
 ```
 
 ```vbscript
+```vbscript
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```vbscript
+```
     ' Retrieve the analysis Manager
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisManagar = oAnalysisDocument.Analysis
 ```vbscript
+```
+```vbscript
     Set oAnalysisSet = oAnalysisManagar.AnalysisSets
+```
 ```
 
 ```
@@ -104,15 +121,21 @@ Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```vbscript
 ```vbscript
     ' Retrieve the part document and product
+```vbscript
     Set oAnalysisLinkedDocuments = oAnalysisManagar.LinkedDocuments
     Set partDocument = oAnalysisLinkedDocuments.Item(1)
     Set product = partDocument.Product
     ' Retrieve the analysis model
+```
+```vbscript
     Set oAnalysisModels = oAnalysisManagar.AnalysisModels
     Set oAnalysisModel = oAnalysisModels.Item(1)
     'Retrieve the mesh manager and list of mesh parts
+```
+```vbscript
     Set oAnalysisMeshManager = oAnalysisModel.MeshManager
     Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
+```
 ```
 
 ```
@@ -124,7 +147,10 @@ Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```
 
 ```vbscript
+```vbscript
     Set connection = oAnalysisSet.ItemByType("ConnectionDesignManager")
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set connSet = connection.AnalysisSets
@@ -132,6 +158,7 @@ Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
     Set entity = conn.AnalysisEntities
     Set surfConn  = entity.Item(2)
     Set reference1 = oAnalysisManagar.CreateReferenceFromObject(surfConn)
+```
 ```
 
 ```
@@ -142,8 +169,10 @@ Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```vbscript
 ```vbscript
     'Add new Seam welding connection mesh part to the list of mesh parts
+```vbscript
     Set seamWeld = oAnalysisMeshParts.Add ("MSHPartConnWeldSeam")
     'Add previously created  reference line analysis connection as support
+```
 ```
 
 ```
@@ -154,8 +183,10 @@ Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```vbscript
 ```vbscript
 'Add new Seam welding connection mesh part to the list of mesh parts
+```vbscript
 Set seamWeld = oAnalysisMeshParts.Add ("MSHPartConnWeldSeam")
 'Add previously created  reference line analysis connection as support
+```
 ```
 
 ```
@@ -179,6 +210,8 @@ Set seamWeld = oAnalysisMeshParts.Add ("MSHPartConnWeldSeam")
 ```
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

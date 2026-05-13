@@ -4,7 +4,7 @@ title: "Creating an ArrangementRun Object"
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CATIA", "CAAArrCreateRun", "CAAScdArrUseCases"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateRun.htm"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateRun.htmmd"
 converted: "2026-05-11T17:31:51.569560"
 ```
 
@@ -50,12 +50,16 @@ This macro shows you how to create an _ArrangementRun_ under a product. This mac
 ```
 
 ```vbscript
+```vbscript
        Dim objProdDoc        As ProductDocument
+```vbscript
+```
 ```vbscript
 ```vbscript
        Dim objRootProd       As Product
        Set objProdDoc      = CATIA.Documents.Add("Product")
        Set objRootProd     = objProdDoc.Product
+```
 ```
 
 ```
@@ -81,9 +85,13 @@ Once the new product document has been created, fetch the _ArrangementProduct_ a
 ```
 
 ```vbscript
+```vbscript
        Dim objMove           As Move
 ```vbscript
+```
+```vbscript
        Set objMove      = objRootProd.Move
+```
 ```
 
 ```
@@ -93,8 +101,10 @@ Once the new product document has been created, fetch the _ArrangementProduct_ a
 ```vbscript
        '----------------------------------------------
        ' Get ArrangementProduct
+```vbscript
        Dim objArrProd        As ArrangementProduct
        Set objArrProd   = objRootProd.GetTechnologicalObject("ArrangementProduct")
+```
 ```
 
 ```
@@ -119,21 +129,27 @@ The _ArrangementRuns_ object is a collection object that manages _ArrangementRun
 ```
 
 ```vbscript
+```vbscript
        Dim dblRunPoints(75)      As Double
+```vbscript
+```
 ```vbscript
 ```vbscript
        Dim dblMathDirection(3)        As Double
        Dim objArrRun             As ArrangementRun
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Dim objArrRun             As ArrangementRun
 ```vbscript
+```
        dblRunPoints(0)   =  300.0
        dblRunPoints(1)   =  100.0
        dblRunPoints(2)   =  0.0
@@ -168,7 +184,9 @@ dblRunPoints(5)   =  1.25
 ```
 
 ```vbscript
+```vbscript
        Set objArrRun             = objArrProd.ArrangementRuns.AddRun(objMove,dblRunPoints, dblMathDirection)
+```
 ```
 
       ...
@@ -193,8 +211,10 @@ The newly created _ArrangementRun_ object is visualized as a curve and does not 
 ```
 
 ```vbscript
+```vbscript
        Dim intK As Integer
 ```vbscript
+```
 ```vbscript
        For intK = 1 To objArrRun.Nodes.Count
 
@@ -205,7 +225,9 @@ The newly created _ArrangementRun_ object is visualized as a curve and does not 
 ```
 
 ```vbscript
+```vbscript
 Dim intK As Integer
+```
 ```
 
 For intK = 1 To objArrRun.Nodes.Count
@@ -225,8 +247,10 @@ For intK = 1 To objArrRun.Nodes.Count
 ```
 
 ```vbscript
+```vbscript
        Dim intK As Integer
 ```vbscript
+```
        For intK = 1 To objArrRun.Nodes.Count
 ```
 
@@ -243,13 +267,15 @@ Here we define a round section and change the visualization mode to `CatArrangem
 
     ...
 ```vbscript
+```vbscript
      End Sub
 
+```
 ```
 
 ---
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

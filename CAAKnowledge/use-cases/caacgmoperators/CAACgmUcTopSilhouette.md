@@ -4,13 +4,13 @@ title: "Creating a Silhouette"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsSilhouette", "CATICGMTopSilhouette", "CAAGMOperatorsInterfaces"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopSilhouette.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopSilhouette.htmmd"
 converted: "2026-05-11T17:33:49.314941"
 ```
 
 ---
 tags: ["CAAGMOperatorsSilhouette", "CATICGMTopSilhouette", "CAAGMOperatorsInterfaces"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopSilhouette.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopSilhouette.htmmd"
 converted: "2026-05-11T17:33:49.314941"
 Creating a Silhouette
 
@@ -41,15 +41,15 @@ and the code below:
 CATICGMTopSilhouette* pSilhouetteOp = CATCGMCreateTopSilhouette(pGeomFactory, &topdata;, pSolidBody);
     CATBoolean lightSourceInFront = TRUE;
     pSilhouetteOp->SetProjectionScreenForShadows(pProjectionScreen, lightSourceInFront);
-    pSilhouetteOp->Run();
-    CATBody * pShadowBody = pSilhouetteOp->GetResult();
-    pSilhouetteOp->Release();
+    pSilhouetteOp->Run(#);
+    CATBody * pShadowBody = pSilhouetteOp->GetResult(#);
+    pSilhouetteOp->Release(#);
     pSilhouetteOp = NULL;
 
     ...
 
 ---
-pSilhouetteOp->Release();
+pSilhouetteOp->Release(#);
 pSilhouetteOp = NULL;
 you get this result: Fig.2 Result of Silhouette Operation ![Silhouette Operation: Output data](images/CGM_silhouette_1.png)
 

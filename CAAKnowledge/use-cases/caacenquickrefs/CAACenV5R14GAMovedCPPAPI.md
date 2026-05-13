@@ -4,13 +4,13 @@ title: "Moved C++ Authorized APIs in CAA V5R14 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: []
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R14GAMovedCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R14GAMovedCPPAPI.htmmd"
 converted: "2026-05-11T17:33:47.155397"
 ```
 
 ---
 tags: []
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R14GAMovedCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R14GAMovedCPPAPI.htmmd"
 converted: "2026-05-11T17:33:47.155397"
 CAA V5 Encyclopedia |  Moved C++ Authorized APIs in CAA V5R14 GA
 
@@ -26,9 +26,11 @@ The following Authorized APIs are moved from VPMInterfaces to ENOVInterfaces in 
     * Class  CATListOfVPMIWflProcess
     * Class  CATListOfVPMIWflRegularActivity
     * Class  CATListOfVPMIWflTransition
+```vbscript
     * Global Function  GetWflApplicationHandler
     * Global Function  GetWflCreationMgr
     * Interface  VPMIWflActivity
+```
     * Interface  VPMIWflActivityListener
     * Interface  VPMIWflApplication
     * Interface  VPMIWflApplicationHandler

@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAASmiUseCases"
 tags: ["CAASmiOperationWithMATP1", "CAASmiConnectUserOperationWithMA", "CAADocStyleSheets", "CAASurfaceMachiningItf", "CAASmiOperationSampleOverview", "CATISmgMachiningAreaParts", "CATISmgMachiningAreaGuidingCurves", "CAADocUseCases", "CATIMfgToolPathComponents", "CATIMfgToolPathFactory", "CAASmgOperationWithMA", "CATISmgMachiningAreaChecks", "CATIMfgComputeToolPathCustom", "CATISmgMachiningAreaxxx", "CAASmiTechArticles", "CAASmiUserOperationWithMAToolPath", "CATIMfgCompoundTraject", "CAADocRunSample", "CAASmiUserOperationWithMA", "CAAESmiUserOperationWithMATPComputation"]
-source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationWithMAToolPath.htm"
+source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationWithMAToolPath.htmmd"
 converted: "2026-05-11T11:27:02.774982"
 ---
 
@@ -148,8 +148,6 @@ interfaces.
 
 *Copyright  2002, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 ...
 // Tie the implementation to its interface
@@ -161,7 +159,7 @@ TIE_CATIMfgComputeToolPathCustom( CAAESmiUserOperationWithMATPComputation);
 ```vbscript
 ...
   // Gets Machining Area
-  CATBaseUnknown_var spBaseFeature = pActivity-&gt;GetFeature();	
+  CATBaseUnknown_var spBaseFeature = pActivity-&gt;GetFeature(#);	
   if (!!spBaseFeature)
   {
     // Gets geometry from PART of the machining area
@@ -176,7 +174,7 @@ TIE_CATIMfgComputeToolPathCustom( CAAESmiUserOperationWithMATPComputation);
       // Gets the bounding box of the geometry of the part body
       GetBoundingBox(ListOfGeometries,PartsBBox);
 
-      pParts-&gt;Release();
+      pParts-&gt;Release(#);
       pParts = NULL;
     }
 
@@ -192,7 +190,7 @@ TIE_CATIMfgComputeToolPathCustom( CAAESmiUserOperationWithMATPComputation);
       // Gets the bounding box of the geometry of the checks
       GetBoundingBox(ListOfGeometries,ChecksBBox);
 
-      pChecks-&gt;Release();
+      pChecks-&gt;Release(#);
       pChecks = NULL;
     }
 
@@ -207,7 +205,7 @@ TIE_CATIMfgComputeToolPathCustom( CAAESmiUserOperationWithMATPComputation);
 
       // Fill a list of CATGeometry from CATCurve
       CATLISTP(CATGeometry) ListOfGeometries;
-      int NbCurves = ListOfCurves.Size();
+      int NbCurves = ListOfCurves.Size(#);
       for (int ic=1;ic&lt;=NbCurves;ic++)
       {
         ListOfGeometries.Append(ListOfCurves[ic]);
@@ -216,7 +214,7 @@ TIE_CATIMfgComputeToolPathCustom( CAAESmiUserOperationWithMATPComputation);
       // Gets the bounding box of the geometry of the Limiting Curve 
       GetBoundingBox(ListOfGeometries,GuidingCurvesBBox);
 
-      pGuidingCurves-&gt;Release();
+      pGuidingCurves-&gt;Release(#);
       pGuidingCurves = NULL;
     }
   }	

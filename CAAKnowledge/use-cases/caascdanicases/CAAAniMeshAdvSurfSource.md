@@ -4,7 +4,7 @@ title: "CAAAniMeshAdvSurf.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniMeshAdvSurf", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshAdvSurfSource.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshAdvSurfSource.htmmd"
 converted: "2026-05-11T17:31:51.610526"
 ```
 
@@ -33,7 +33,10 @@ converted: "2026-05-11T17:31:51.610526"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
+
+```
 
 ```
 
@@ -42,18 +45,22 @@ converted: "2026-05-11T17:31:51.610526"
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
+```vbscript
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 
       If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
 ```vbscript
         End If
     ' -----------------------------------------------------------
@@ -70,40 +77,50 @@ End If
 ```vbscript
 ' -----------------------------------------------------------
     ' Open the Analysis document
-    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Surface.CATAnalysis")
+```vbscript
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Surface.CATAnalysis")
+```
 ```
 
 ```
 
 ```
 
+```vbscript
 ```vbscript
 ```vbscript
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ```
+```
 
 ```
 
 ```vbscript
+```vbscript
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```vbscript
+```
     ' Retrieve the Analysis Manager and Analysis Model
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisManager = oAnalysisDocument.Analysis
+```
 ```
 
 ```vbscript
 ```vbscript
 ```vbscript
     ' Retreive the part document from Analysis manager
+```vbscript
     Set oAnalysisLinkedDocuments = oAnalysisManager.LinkedDocuments
     Set partDocument = oAnalysisLinkedDocuments.Item(1)
     Set product = partDocument.Product
+```
 ```
 
 ```
@@ -115,9 +132,13 @@ Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisModels = oAnalysisManager.AnalysisModels
 ```vbscript
+```
+```vbscript
     Set oAnalysisModel = oAnalysisModels.Item(1)
+```
 ```
 
 ```
@@ -126,8 +147,10 @@ Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```vbscript
 ```vbscript
     ' Retrieve mesh manager and mesh part
+```vbscript
     Set meshManager = oAnalysisModel.MeshManager
     Set meshParts = meshManager.AnalysisMeshParts
+```
 ```
 
 ```
@@ -139,33 +162,43 @@ Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```
 
 ```vbscript
+```vbscript
     Set publications1 = product.Publications
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set pubEdge = publications1.Item("Edge")
     Set pubSurf = publications1.Item("Round Hole.1")
 
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Set pubEdge = publications1.Item("Edge")
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set pubSurf = publications1.Item("Round Hole.1")
     ' Add the new Advanced surface mesh part to the list of mesh parts
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
     Set surfPart = meshParts.Add ("MSHPartSmartSurf")
 ```vbscript
+```
     ' Add reference previously created
 ```
 
@@ -180,7 +213,9 @@ Set pubSurf = publications1.Item("Round Hole.1")
 
 surfPart.AddSupportFromPublication product, pubSurf
 ```vbscript
+```vbscript
     ' Set the global Specifications
+```
 ```
 
     surfPart.SetGlobalSpecification "GlobalMethod", "Frontal triangle"
@@ -214,9 +249,13 @@ surfPart.AddSupportFromPublication product, pubSurf
 ```
 
 ```vbscript
+```vbscript
     Set meshSpecs = surfPart.AnalysisMeshLocalSpecifications
 ```vbscript
+```
+```vbscript
     Set spec = meshSpecs.Add("MSHDistributionElement")
+```
 ```
 
     spec.SetAttribute "NbElements", 50
@@ -231,6 +270,8 @@ surfPart.AddSupportFromPublication product, pubSurf
 ```
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

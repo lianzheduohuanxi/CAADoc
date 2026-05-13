@@ -4,7 +4,7 @@ title: "Opening an Existing CATIA Document"
 category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CAAScdInfUseCases", "CAAInfReadDocument", "CAAInfOpenDocument", "CAAInfCloseDocument", "CATIA", "CAAInfSaveDocument"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfOpenDocument.htm"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfOpenDocument.htmmd"
 converted: "2026-05-11T17:31:52.383001"
 ```
 
@@ -38,7 +38,10 @@ CAAInfOpenDocument includes two steps:
 ```
 
 ```vbscript
+```vbscript
           Dim sDocPath As String
+```vbscript
+```
 ```vbscript
 ```vbscript
           sDocPath=CATIA.SystemService.Environ("CATDocView")
@@ -46,6 +49,7 @@ CAAInfOpenDocument includes two steps:
           If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
              Err.Raise 9999,,"No Doc Path Defined"
           End If
+```
 
 ```
 
@@ -54,7 +58,9 @@ CAAInfOpenDocument includes two steps:
 ```
 
 ```vbscript
+```vbscript
 Err.Raise 9999,,"No Doc Path Defined"
+```
 ```
 
 End If
@@ -66,14 +72,18 @@ End If
 
      ...
 ```vbscript
+```vbscript
          Dim iPartDoc As Document
+```vbscript
+```
 ```vbscript
          Set iPartDoc = CATIA.Documents.**Open**(sDocPath & _
 ```
+```
 
 ```
 
-            "\online\CAAScdInfUseCases\samples\CAAInfReadDocument.CATPart")
+            "/online/CAAScdInfUseCases/samples/CAAInfReadDocument.CATPart")
        ...
 
  ---

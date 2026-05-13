@@ -4,7 +4,7 @@ title: "Changing the Hole Parameters"
 category: "use-case"
 module: "CAAScdPriUseCases"
 tags: ["CAAScdPriUseCases", "CATIA", "CATIAHole", "CAAPriChangeHole"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangeHole.htm"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangeHole.htmmd"
 converted: "2026-05-11T17:31:51.189551"
 ```
 
@@ -58,7 +58,7 @@ Load the CAAPriChangeHole.CATPart document that contains three holes. ![](images
 
 ```
 
-    iDelimiter = "\\"
+    iDelimiter = "//"
 ```vbscript
 ```vbscript
     ' ------------
@@ -71,7 +71,9 @@ Load the CAAPriChangeHole.CATPart document that contains three holes. ![](images
 ```
 
 ```vbscript
+```vbscript
     Set oCATIAFileSys = CATIA.FileSystem
+```
 ```
 
 ```vbscript
@@ -80,15 +82,21 @@ Load the CAAPriChangeHole.CATPart document that contains three holes. ![](images
     ' ------------
     ' Get the file containing the hole parameters
     ' ------------
-    Set oFile = oCATIAFileSys.GetFile(sDocPath & "\online\CAAScdPriUseCases\macros\CAAPriChangeHole.txt")
+```vbscript
+    Set oFile = oCATIAFileSys.GetFile(sDocPath & "/online/CAAScdPriUseCases/macros/CAAPriChangeHole.txt")
     ' ------------
+```
     ' Get the text stream
     ' ------------
+```vbscript
     Set oTextSteam = oFile.OpenAsTextStream("ForReading")
     ' ------------
+```
     ' Get the part document
     ' ------------
+```vbscript
     Set oPartDocument = CATIA.ActiveDocument
+```
 ```
 
 ```
@@ -131,7 +139,9 @@ Once the macro has been started, the `oCATIAFileSys`, ` oFile`, `oTextSteam` and
 
 ```
 
+```vbscript
         MsgBox "Select the holes you wish to transform before running the macro.", vbOKOnly, "Warning"
+```
 ```
 
     ...
@@ -441,15 +451,19 @@ The hole diameter and its tolerances are applied.
 
     ...
 ```vbscript
+```vbscript
                     Set oParameters = oPartDocument.Part.Parameters.SubList(oHole, True)
+```
 ```
 
 ```vbscript
 ```vbscript
 ```vbscript
                     ' ------------
+```vbscript
                     ' Set the hole parameter
                     ' ------------
+```
                     If ParameterExists("Hole_Description", oParameters) = True Then
 ```
 
@@ -460,8 +474,10 @@ The hole diameter and its tolerances are applied.
 ```vbscript
 ```vbscript
 ```vbscript
+```vbscript
 ' Set the hole parameter
 ' ------------
+```
 If ParameterExists("Hole_Description", oParameters) = True Then
 ```
 
@@ -636,7 +652,7 @@ The part is updated, the parameter is displayed.
 
 ![](images/CAAPriChangeHole04.gif)
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

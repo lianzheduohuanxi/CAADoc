@@ -3,7 +3,7 @@ title: "CAAAniMesh1D.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CAAAniMesh1D", "CAAScrBase", "CATIA", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMesh1DSource.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMesh1DSource.htmmd"
 converted: "2026-05-11T11:27:02.511341"
 ---
 
@@ -20,42 +20,61 @@ converted: "2026-05-11T11:27:02.511341"
 '  CATIA Level:  V5R16
 '***********************************************************************
 
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
 
 '----------------------------------------------------------- 
+```
 'Optional: allows to find the sample wherever it's installed
+```vbscript
 sDocPath=CATIA.SystemService.Environ("CATDocView")
 If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 Err.Raise 9999,,"No Doc Path Defined"
 End If
+```
 '----------------------------------------------------------- 
 
 'Open the CATAnalysis Document
-sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Beam.CATAnalysis")
+```vbscript
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Beam.CATAnalysis")
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 'Retrieve the Analysis Managar and Analysis Model
+```
+```vbscript
 Set oAnalysisManager = oAnalysisDocument.Analysis
 
 'Retrieve the part document and product
+```
+```vbscript
 Set oAnalysisLinkedDocuments = oAnalysisManager.LinkedDocuments
 Set partDocument = oAnalysisLinkedDocuments.Item(1)
 Set product = partDocument.Product
 
 'Retrieve the analysis model from list of models
+```
+```vbscript
 Set oAnalysisModels = oAnalysisManager.AnalysisModels
 Set oAnalysisModel = oAnalysisModels.Item(1)
 
 'Retrieve mesh manager and mesh part 
+```
+```vbscript
 Set oAnalysisMeshManager = oAnalysisModel.MeshManager
 Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
 
 'Retrieve publications from product and retrieve the published face.
+```
+```vbscript
 Set publications = product.Publications
 Set pubLine = publications.Item("Line.3")
 
 'Add the new beam mesh part to the list of mesh parts
+```
+```vbscript
 Set beamPart = oAnalysisMeshParts.Add("MSHPart1D")
+
+```
 
 beamPart.AddSupportFromPublication product, pubLine
 beamPart.SetGlobalSpecification "SizeValue", "10.0 mm"
@@ -70,9 +89,10 @@ beamPart.SetGlobalSpecification "CurveAngle", "40 deg"
 'Update the mesh part
 beamPart.Update 
 
+```vbscript
 End Sub
 
-
+```
 
 ```vbscript
 'COPYRIGHT DASSAULT SYSTEMES 2000
@@ -88,46 +108,61 @@ End Sub
 '  CATIA Level:  V5R16
 '***********************************************************************
 
-
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
 
 '----------------------------------------------------------- 
+```
 'Optional: allows to find the sample wherever it&#39;s installed
+```vbscript
 sDocPath=CATIA.SystemService.Environ("CATDocView")
 If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 Err.Raise 9999,,"No Doc Path Defined"
 End If
+```
 '----------------------------------------------------------- 
 
-
 'Open the CATAnalysis Document
-sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\Beam.CATAnalysis&quot;)
+```vbscript
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online/CAAScdAniUseCases/samples/Beam.CATAnalysis&quot;)
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
-
 &#39;Retrieve the Analysis Managar and Analysis Model
+```
+```vbscript
 Set oAnalysisManager = oAnalysisDocument.Analysis
 
 &#39;Retrieve the part document and product
+```
+```vbscript
 Set oAnalysisLinkedDocuments = oAnalysisManager.LinkedDocuments
 Set partDocument = oAnalysisLinkedDocuments.Item(1)
 Set product = partDocument.Product
 
 &#39;Retrieve the analysis model from list of models
+```
+```vbscript
 Set oAnalysisModels = oAnalysisManager.AnalysisModels
 Set oAnalysisModel = oAnalysisModels.Item(1)
 
 'Retrieve mesh manager and mesh part 
+```
+```vbscript
 Set oAnalysisMeshManager = oAnalysisModel.MeshManager
 Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
 
-
 'Retrieve publications from product and retrieve the published face.
+```
+```vbscript
 Set publications = product.Publications
 Set pubLine = publications.Item("Line.3")
 
 'Add the new beam mesh part to the list of mesh parts
+```
+```vbscript
 Set beamPart = oAnalysisMeshParts.Add("MSHPart1D")
+
+```
 
 beamPart.AddSupportFromPublication product, pubLine
 beamPart.SetGlobalSpecification "SizeValue", "10.0 mm"
@@ -144,5 +179,7 @@ beamPart.SetGlobalSpecification "CurveAngle", "40 deg"
 &#39;Update the mesh part
 beamPart.Update 
 
+```vbscript
 End Sub
+```
 ```

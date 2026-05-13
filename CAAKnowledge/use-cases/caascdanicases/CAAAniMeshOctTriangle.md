@@ -4,7 +4,7 @@ title: "Creating Octree Triangle Mesh Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniMeshOctTriangle", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshOctTriangle.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshOctTriangle.htmmd"
 converted: "2026-05-11T17:31:51.677727"
 ```
 
@@ -43,21 +43,27 @@ This use case shows how to create octree triangle mesh part in an existing analy
 ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
 
+```vbscript
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
+```
 
+```vbscript
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
         End If
 ```
 
@@ -68,8 +74,10 @@ This use case shows how to create octree triangle mesh part in an existing analy
 ```vbscript
     ' -----------------------------------------------------------
     ' Open the Analysis document
-    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Surface.CATAnalysis")
+```vbscript
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Surface.CATAnalysis")
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+```
 ```
 
 ```
@@ -91,96 +99,126 @@ Open the Analysis document. The Analysis document is retrieved in the documentat
 
 ```vbscript
 ```vbscript
+```vbscript
     Set oAnalysisManager = oAnalysisDocument.Analysis
 
 ```
+```
 
 ```
 
 ```vbscript
+```vbscript
 Set oAnalysisManager = oAnalysisDocument.Analysis
 ```vbscript
+```
     ' Retreive the part document from Analysis manager
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisLinkedDocument = oAnalysisManager.LinkedDocuments
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set partDocument = oAnalysisLinkedDocuments.Item(1)
     Set product = partDocument.Product
 
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Set partDocument = oAnalysisLinkedDocuments.Item(1)
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set product = partDocument.Product
     ' Retrieve the analysis model from the list of models
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisModels = oAnalysisManager.AnalysisModels
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oAnalysisModel = oAnalysisManager.Item(1)
 
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Set oAnalysisModels = oAnalysisManager.AnalysisModels
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set oAnalysisModel = oAnalysisManager.Item(1)
     ' Retrieve mesh manager and mesh part
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisMeshManager = oAnalysisModel.MeshManager
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
 ```vbscript
+```
     ' Retrieve publications from product and retrieve the published surface and edge
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set publications1 = product.Publications
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set pubEdge = publications1.Item("Edge")
     Set pubSurf = publications1.Item("Round Hole.1")
 
+```
 ```
 
 ```
@@ -191,11 +229,11 @@ Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
 
 ---
 
-According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. The extraction of pre-defined geometric elements is done by using the Reference interface. This is equivalent to the selection of a B-Rep elements inside the interactive application. In this macro the reference is created from the published edge and published face.
+According to the general [ Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. The extraction of pre-defined geometric elements is done by using the Reference interface. This is equivalent to the selection of a B-Rep elements inside the interactive application. In this macro the reference is created from the published edge and published face.
 #### Creating the Mesh Part and Assigning Values to its Attributes.
 
     ...
-According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. The extraction of pre-defined geometric elements is done by using the Reference interface. This is equivalent to the selection of a B-Rep elements inside the interactive application. In this macro the reference is created from the published edge and published face.
+According to the general [ Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. The extraction of pre-defined geometric elements is done by using the Reference interface. This is equivalent to the selection of a B-Rep elements inside the interactive application. In this macro the reference is created from the published edge and published face.
 ```vbscript
 ```vbscript
     ' Add the new Octree Triangle mesh part to the list of mesh parts
@@ -206,22 +244,28 @@ According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniToc
 
 ```vbscript
 ```vbscript
+```vbscript
     Set  octreePart = meshPart.Add ("MSHPartOctree2D")
 
 ```
+```
 
 ```
 
 ```vbscript
+```vbscript
 Set  octreePart = meshPart.Add ("MSHPartOctree2D")
 ```vbscript
+```
     ' Add support from the published surface
 ```
 
     octreePart.AddSupportFromPublication product, pubSurf
 
 ```vbscript
+```vbscript
     ' Set the global Specifications
+```
 ```
 
     octreePart.SetGlobalSpecification "SizeValue", "10.0 mm"
@@ -247,9 +291,13 @@ Set  octreePart = meshPart.Add ("MSHPartOctree2D")
 ```
 
 ```vbscript
+```vbscript
     Set meshspecs1 = octreePart.AnalysisMeshLocalSpecifications
 ```vbscript
+```
+```vbscript
     Set spec1 = meshspecs1.Add("MSHLocalMeshSize")
+```
 ```
 
     spec1.SetAttribute "MSHMeshSizeMag", "1.0 mm"
@@ -269,14 +317,16 @@ The association with the geometry of octree mesh part is established with the us
 #### Epilog
 
     ...
+```vbscript
     End Sub
     ...
+```
 
 ---
 
 To run the macro interactively CATDocView environment variable must be defined.
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

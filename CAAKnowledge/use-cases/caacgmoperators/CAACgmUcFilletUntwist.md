@@ -4,13 +4,13 @@ title: "Fillet: Untwist"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CATICGMDynAdvancedFillet", "CATICGMDynFillet", "CAATopAdvancedFillets", "CAAGMOperatorsAllFillets"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcFilletUntwist.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcFilletUntwist.htmmd"
 converted: "2026-05-11T17:33:48.922069"
 ```
 
 ---
 tags: ["CAAGMOperatorsInterfaces", "CATICGMDynAdvancedFillet", "CATICGMDynFillet", "CAATopAdvancedFillets", "CAAGMOperatorsAllFillets"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcFilletUntwist.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcFilletUntwist.htmmd"
 converted: "2026-05-11T17:33:48.922069"
 Fillet: Untwist
 
@@ -69,10 +69,10 @@ listRadius.Append(pRadius);
 CATDynEdgeFilletRibbon * pRibbon = new 	CATDynEdgeFilletRibbon(listEdges, listRadius);
     CATICGMDynAdvancedFillet * pFilletOp1 = CATCGMCreateDynAdvancedFillet(iFactory,iTopData,pBody2);
     pFilletOp1 ->Append(pRibbon);
-    pFilletOp1->Run();
+    pFilletOp1->Run(#);
     CATBody * pResultBody = NULL;
-    pResultBody = pFilletOp1->GetResult();
-    pFilletOp1->Release();
+    pResultBody = pFilletOp1->GetResult(#);
+    pFilletOp1->Release(#);
     pFilletOp1 = NULL;
 ```
 

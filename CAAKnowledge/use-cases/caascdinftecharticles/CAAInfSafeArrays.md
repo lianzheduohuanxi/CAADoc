@@ -4,7 +4,7 @@ title: "About CATSafeArrayVariant"
 category: "use-case"
 module: "CAAScdInfTechArticles"
 tags: ["CATIA"]
-source_file: "Doc/online/CAAScdInfTechArticles/CAAInfSafeArrays.htm"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfSafeArrays.htmmd"
 converted: "2026-05-11T17:31:52.433114"
 ```
 
@@ -23,20 +23,26 @@ Many methods which return a value do not return a single value, but an array of 
 
  You can retrieve in the **MyVPOrigin** variable the origin of the 3D viewpoint of the active viewer in the active window as follows:
 
+```vbscript
      ReDim MyVPOrigin(2)
 
+```vbscript
+```
 ```vbscript
 ```vbscript
      CATIA.ActiveWindow.ActiveViewer.Viewpoint3D.GetOrigin MyVPOrigin
 
 ```
+```
 
 ```
 
 ```vbscript
+```vbscript
 CATIA.ActiveWindow.ActiveViewer.Viewpoint3D.GetOrigin MyVPOrigin
  You should directly use the ReDim statement to assign a size to the array while declaring it as a variable size array, and then call the GetOrigin method. Assigning a size of 2 allocates an array containing three values.
 
+```
 ```
 
  To access each coordinate, you need to go deeper:
@@ -55,8 +61,10 @@ Contrary to collections, a CATSafeArrayVariant's index begins at 0. To set a new
 
 ```vbscript
 ```vbscript
+```vbscript
      CATIA.ActiveWindow.ActiveViewer.Viewpoint3D.PutOrigin MyVPOrigin
 
+```
 ```
 
 ```
@@ -65,15 +73,19 @@ Contrary to collections, a CATSafeArrayVariant's index begins at 0. To set a new
 
 ```vbscript
 ```vbscript
+```vbscript
      CATIA.ActiveWindow.ActiveViewer.Viewpoint3D.PutOrigin Array(150, 200, 50)
 
+```
 ```
 
 ```
 
 ```vbscript
+```vbscript
 CATIA.ActiveWindow.ActiveViewer.Viewpoint3D.PutOrigin Array(150, 200, 50)
  But to modify the y coordinate only, write:
+```
 
 ```
 
@@ -81,15 +93,19 @@ CATIA.ActiveWindow.ActiveViewer.Viewpoint3D.PutOrigin Array(150, 200, 50)
 
 ```vbscript
 ```vbscript
+```vbscript
  CATIA.ActiveWindow.ActiveViewer.Viewpoint3D.PutOrigin MyVPOrigin
 
+```
 ```
 
 ```
 
 ```vbscript
+```vbscript
 CATIA.ActiveWindow.ActiveViewer.Viewpoint3D.PutOrigin MyVPOrigin
  When you don't know the size of an array, use the UBound function. It returns the rank of the highest element in the array. For example the following example returns 2 in Highestrank:
+```
 
 ```
 

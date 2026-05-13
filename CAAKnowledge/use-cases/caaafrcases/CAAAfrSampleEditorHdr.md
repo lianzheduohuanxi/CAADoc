@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating Editors in Toolbar"
-category: "use case"
+category: use-case case"
 module: "CAAAfrUseCases"
 tags: ["CAAAfrEltCountRep", "CAAAfrEltCountRepId", "CAAAfrMRUHeader", "CAAGeometry", "CAAAfrComboColorHeader", "CAAAfrGeoModel", "CAAAfrEdtLine", "CAAISysPoint", "CAAAfrPaletteOptions", "CATIAfrCommandHeaderRep", "CAASysCollectionModifNotif", "CAAAfrEltCountHeader", "CAAAfrEdtPoint", "CAAISysLine", "CAASysGeoModelInf", "CAAEAfrCommandHeaderRepForEltCount", "CAASysSampCont", "CATImplementHeaderResources", "CAASysGeomCont"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleEditorHdr.htm"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleEditorHdr.htmmd"
 converted: "2026-05-11T17:17:55.729034"
 ```
 
@@ -93,10 +93,10 @@ CAAAfrEltCountHeader is a component which must implement the _CATIAfrCommandHead
   * `CreateMenuRep`: it returns nothing
   * `CreateToolbarRep`: it instantiates an instance of the _CAAAfrEltCountRep_ class. This class is described by the following UML diagram:
 
-Fig.4 Class Instantiating the Graphic Representation \- UML Diagram ![](images/CAAAfrEltCountHdrUMLRep.jpg)
+Fig.4 Class Instantiating the Graphic Representation /- UML Diagram ![](images/CAAAfrEltCountHdrUMLRep.jpg)
 ---
 
-Fig.4 Class Instantiating the Graphic Representation \- UML Diagram ![](images/CAAAfrEltCountHdrUMLRep.jpg)
+Fig.4 Class Instantiating the Graphic Representation /- UML Diagram ![](images/CAAAfrEltCountHdrUMLRep.jpg)
 The _CAAAfrEltCountRep_ class creates _CATDlgEditor_ [6] class instances and sets a callback to be inform when lines or points are created or deleted.
 
 The EltCount header is instantiated in the Tools Palette for a workbench of the CAAGeometry document [4].
@@ -112,10 +112,10 @@ See the section entitled "How to Launch CAAAfrPaletteOptions" in the use case [4
 See the section entitled "How to Launch CAAAfrPaletteOptions" in the use case [4] for a detailed description of how this use case should be launched.
 The CAAAfrEltCountHeader use case is made of several classes mainly located in modules of the CAAApplicationFrame.edu framework:
 
-Windows | `InstallRootDirectory\CAAApplicationFrame.edu\`
+Windows | `InstallRootDirectory/CAAApplicationFrame.edu/`
 
 The CAAAfrEltCountHeader use case is made of several classes mainly located in modules of the CAAApplicationFrame.edu framework:
-Windows | `InstallRootDirectory\CAAApplicationFrame.edu\`
+Windows | `InstallRootDirectory/CAAApplicationFrame.edu/`
 Unix | `InstallRootDirectory/CAAApplicationFrame.edu/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -158,11 +158,13 @@ class ExportedByCAASysGeoModelInf CAAISysCollection : public CATBaseUnknown
 
       public:
         virtual HRESULT GetNumberOfObjects(int * oCount) = 0;
+```vbscript
         virtual HRESULT GetObject    (int iRank,
                                       CATBaseUnknown ** oObject) = 0;
+```
         virtual HRESULT **AddObject**    (CATBaseUnknown * iObject) = 0;
         virtual HRESULT RemoveObject (CATBaseUnknown * iObject) = 0;
-        virtual HRESULT Empty  () =0 ;
+        virtual HRESULT Empty  (#) =0 ;
 
     };
     ...
@@ -207,12 +209,12 @@ The `AddObject` adds an element in the CAAGeometry document. `_pListe` is a dat
 and sends a notification:
 
     ...
-        CAASysCollectionModifNotif * pNotifModif = new **CAASysCollectionModifNotif**();
+        CAASysCollectionModifNotif * pNotifModif = new **CAASysCollectionModifNotif**(#);
 
         ::GetDefaultCallbackManager(this)->DispatchCallbacks(pNotifModif,this);
 
-CAASysCollectionModifNotif * pNotifModif = new **CAASysCollectionModifNotif**();
-        pNotifModif->Release() ;
+CAASysCollectionModifNotif * pNotifModif = new **CAASysCollectionModifNotif**(#);
+        pNotifModif->Release(#) ;
         pNotifModif = NULL ;
 
     ...
@@ -255,14 +257,14 @@ public **CATAfrDialogCommandHeader**
       public:
         CAAAfrEltCountHeader(const CATString & iHeaderName);
 
-        virtual ~CAAAfrEltCountHeader();
-        CATCommandHeader * **Clone**() ;
+        virtual ~CAAAfrEltCountHeader(#);
+        CATCommandHeader * **Clone**(#) ;
 
       private:
 
         **CAAAfrEltCountHeader****(CATCommandHeader *iHeaderToCopy);**
-virtual ~CAAAfrEltCountHeader();
-CATCommandHeader * **Clone**() ;
+virtual ~CAAAfrEltCountHeader(#);
+CATCommandHeader * **Clone**(#) ;
 private:
         CAAAfrEltCountHeader(const CAAAfrEltCountHeader &iObjectToCopy);
         CAAAfrEltCountHeader & operator = (const CAAAfrEltCountHeader &iObjectToCopy);
@@ -310,18 +312,18 @@ Implementation,
 
 CAAAfrEltCountHeader);
 CAAAfrEltCountHeader::CAAAfrEltCountHeader(const CATString & iHeaderName) :
-    CAAAfrEltCountHeader::~CAAAfrEltCountHeader(){}
+    CAAAfrEltCountHeader::~CAAAfrEltCountHeader(#){}
 
-    CATCommandHeader * CAAAfrEltCountHeader::**Clone** ()
+    CATCommandHeader * CAAAfrEltCountHeader::**Clone** (#)
 
     {
-CAAAfrEltCountHeader::~CAAAfrEltCountHeader(){}
-CATCommandHeader * CAAAfrEltCountHeader::**Clone** ()
+CAAAfrEltCountHeader::~CAAAfrEltCountHeader(#){}
+CATCommandHeader * CAAAfrEltCountHeader::**Clone** (#)
         return new **CAAAfrEltCountHeader**(this);
 
     }
 
-CATCommandHeader * CAAAfrEltCountHeader::**Clone** ()
+CATCommandHeader * CAAAfrEltCountHeader::**Clone** (#)
 return new **CAAAfrEltCountHeader**(this);
     CAAAfrEltCountHeader::CAAAfrEltCountHeader(CATCommandHeader * iHeaderToCopy):
 
@@ -349,8 +351,8 @@ class CAAEAfrCommandHeaderRepForEltCount: public CATBaseUnknown
       CATDeclareClass;
     public:
 
-      CAAEAfrCommandHeaderRepForEltCount();
-      virtual CAAEAfrCommandHeaderRepForEltCount();
+      CAAEAfrCommandHeaderRepForEltCount(#);
+      virtual CAAEAfrCommandHeaderRepForEltCount(#);
 
       virtual HRESULT  **CreateToolbarRep** (const CATDialog * iParent,
                                                 CATAfrCommandHeaderRep ** oHdrRep) ;
@@ -388,9 +390,9 @@ CATImplementClass(CAAEAfrCommandHeaderRepForEltCount,
 DataExtension,
 CATBaseUnknown,
     CAAEAfrCommandHeaderRepForEltCount::
-               CAAEAfrCommandHeaderRepForEltCount():CATBaseUnknown(){}
+               CAAEAfrCommandHeaderRepForEltCount(#):CATBaseUnknown(#){}
 
-    CAAEAfrCommandHeaderRepForEltCount::~CAAEAfrCommandHeaderRepForEltCount(){}
+    CAAEAfrCommandHeaderRepForEltCount::~CAAEAfrCommandHeaderRepForEltCount(#){}
 ```
 
     ...
@@ -463,8 +465,10 @@ The EltCount header has no representation in the menu bar or in a contextual men
 
 This class is the _CAAAfrEltCountRep_ class. Its main roles are:
 
+```vbscript
   * Set a callback to be informed when a modification occurs in the list of elements controlled by the CAASysGeomCont component
   * Create two _CATDlgEditor_ instances
+```
   * Change the contents of  the _CATDlgEditor_ instances when a notification is sent by the CAASysGeomCont component
 
 Here the CAAAfrEltCountRep header file:
@@ -477,9 +481,9 @@ Here the CAAAfrEltCountRep header file:
 class CAAAfrEltCountRep : public CATAfrCommandHeaderRep
     public:
       CAAAfrEltCountRep(const CATDialog * iParent, CATString & iCommandName);
-      virtual ~CAAAfrEltCountRep();
+      virtual ~CAAAfrEltCountRep(#);
 
-      HRESULT **Build**();
+      HRESULT **Build**(#);
 
     private:
       void **ModifiedCB**(CATCallback       iEvent,
@@ -487,7 +491,7 @@ class CAAAfrEltCountRep : public CATAfrCommandHeaderRep
                       CATNotification * iNotification,
                       CATCallbackEvent  iData,
     		          CATSubscriberData iCallBack);
-      HRESULT **ValuateEditors**() ;
+      HRESULT **ValuateEditors**(#) ;
 
       CAAAfrEltCountRep(const CAAAfrEltCountRep &iObjectToCopy);
       CAAAfrEltCountRep & operator = (const CAAAfrEltCountRep &iObjectToCopy);
@@ -578,7 +582,7 @@ _piSysCollection,
   * The **Destructor** class
 
     ...
-    CAAAfrEltCountRep::~CAAAfrEltCountRep()
+    CAAAfrEltCountRep::~CAAAfrEltCountRep(#)
     {
         if ( NULL != _piSysCollection )
         {
@@ -586,12 +590,12 @@ _piSysCollection,
 
 ```vbscript
 if ( NULL != _piSysCollection )
-            _piSysCollection->Release();
+            _piSysCollection->Release(#);
             _piSysCollection = NULL ;
 ```
 
         }
-_piSysCollection->Release();
+_piSysCollection->Release(#);
 _piSysCollection = NULL ;
 ```vbscript
         if ( NULL != _pEdtPoint )
@@ -599,25 +603,25 @@ _piSysCollection = NULL ;
 ```
 
         {
-_piSysCollection->Release();
+_piSysCollection->Release(#);
 _piSysCollection = NULL ;
 if ( NULL != _pEdtPoint )
-           _pEdtPoint->**RequestDelayedDestruction**();
+           _pEdtPoint->**RequestDelayedDestruction**(#);
            _pEdtPoint = NULL ;
 
         }
 ```vbscript
 if ( NULL != _pEdtPoint )
-_pEdtPoint->**RequestDelayedDestruction**();
+_pEdtPoint->**RequestDelayedDestruction**(#);
 _pEdtPoint = NULL ;
         if ( NULL != _pEdtLine )
 ```
 
         {
-_pEdtPoint->**RequestDelayedDestruction**();
+_pEdtPoint->**RequestDelayedDestruction**(#);
 _pEdtPoint = NULL ;
 if ( NULL != _pEdtLine )
-           _pEdtLine->**RequestDelayedDestruction**();
+           _pEdtLine->**RequestDelayedDestruction**(#);
            _pEdtLine = NULL ;
 
         }
@@ -633,7 +637,7 @@ At the end, the callback set in the constructor must be removed from the callbac
 You must overwrite this method. The goal of this method is to create the graphic representation and to initialize it.
 
     ...
-    HRESULT  CAAAfrEltCountRep::Build()
+    HRESULT  CAAAfrEltCountRep::Build(#)
     {
        // Creation of the dialog object
        const CATDialog * pParent = NULL ;
@@ -649,7 +653,7 @@ const CATDialog * pParent = NULL ;
 CATDlgEdtReadOnly);
 _pEdtLine  = new CATDlgEditor((CATDialog *)pParent, "CAAAfrEdtLine",
 CATDlgEdtReadOnly);
-       ValuateEditors();
+       ValuateEditors(#);
 
        return S_OK ;
 
@@ -677,7 +681,7 @@ void *,
 CATNotification * iNotification,
 CATCallbackEvent,
 CATSubscriberData)
-       ValuateEditors();
+       ValuateEditors(#);
 
     }
     ...
@@ -688,10 +692,10 @@ CATSubscriberData)
 This method consists in to retrieve the list of elements into the CAAGeometry document, and modify, thanks to the `SetText` method, the current value on `_pEdtPoint` and `_pEdtLine`, the two data members of the _CAAAfrEltCountRep_ class.
 
     ...
-    HRESULT CAAAfrEltCountRep::ValuateEditors()
+    HRESULT CAAAfrEltCountRep::ValuateEditors(#)
     {
      ...
-HRESULT CAAAfrEltCountRep::ValuateEditors()
+HRESULT CAAAfrEltCountRep::ValuateEditors(#)
            int nbeltcont = 0 ;
            _piSysCollection->**GetNumberOfObjects**(&nbeltcont);
 
@@ -708,8 +712,10 @@ int NbPoint = 0 ;
 int NbLine  = 0 ;
 for (int i=1 ; i <=  nbeltcont ; i++)
               CATBaseUnknown * pObject = NULL ;
+```vbscript
               rc = _piSysCollection->**GetObject**(i,&pObject);
 ```vbscript
+```
 ```vbscript
               if (SUCCEEDED(rc))
 
@@ -720,8 +726,10 @@ for (int i=1 ; i <=  nbeltcont ; i++)
               {
                   **CAAISysPoint** * piSysPoint  = NULL;
 CATBaseUnknown * pObject = NULL ;
+```vbscript
 rc = _piSysCollection->**GetObject**(i,&pObject);
 ```vbscript
+```
 ```vbscript
 if (SUCCEEDED(rc))
                   rc = pObject ->QueryInterface(IID_CAAISysPoint, (void**)&piSysPoint);
@@ -739,13 +747,13 @@ if (SUCCEEDED(rc))
 ```
 
                      NbPoint ++ ;
-                     piSysPoint -> Release();
+                     piSysPoint -> Release(#);
                      piSysPoint = NULL ;
 
                   }
                   **CAAISysLine** * piSysLine  = NULL;
 NbPoint ++ ;
-piSysPoint -> Release();
+piSysPoint -> Release(#);
 piSysPoint = NULL ;
                   rc = pObject ->QueryInterface(IID_CAAISysLine, (void**)&piSysLine);
 ```vbscript

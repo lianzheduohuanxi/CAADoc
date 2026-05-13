@@ -4,13 +4,13 @@ title: "Getting Started with State Dialog Commands"
 category: "use-case"
 module: "CAADegTechArticles"
 tags: ["CAAISysPoint", "CATISO", "CAAGeometryHeader", "CAADialogEngine", "CAADegCreateLineCmd", "CATIndicationAgent", "CAADegGeoCommands"]
-source_file: "Doc/online/CAADegTechArticles/CAADegGettingStarted.htm"
+source_file: "Doc/online/CAADegTechArticles/CAADegGettingStarted.htmmd"
 converted: "2026-05-11T17:33:49.801485"
 ```
 
 ---
 tags: ["CAAISysPoint", "CATISO", "CAAGeometryHeader", "CAADialogEngine", "CAADegCreateLineCmd", "CATIndicationAgent", "CAADegGeoCommands"]
-source_file: "Doc/online/CAADegTechArticles/CAADegGettingStarted.htm"
+source_file: "Doc/online/CAADegTechArticles/CAADegGettingStarted.htmmd"
 converted: "2026-05-11T17:33:49.801485"
 3D PLM Enterprise Architecture |  User Interface - Commands |  Getting Started with State Dialog Commands _A first simple but complete example of a state dialog command_
 
@@ -48,7 +48,7 @@ Once the state dialog command is designed, you can create a class and the method
     * End user (indicating point coordinates with the mouse): "This is the start point".
     * Line command: "Now indicate the end point".
     * End user (indicating point coordinates with the mouse): "This is the end point".
-And the Line command creates the line using the two points input using the mouse indication. [Top] Dialog Description _Statechart diagrams_ allow you to describe a state dialog command as a state machine in a graphical format. The Unified Modeling Language (UML) is used for such diagrams. ![GettingStartedStateChart.gif \(9621 bytes\)](images/GettingStartedStateChart.gif) The dialog flow starts with the initial state, which is a pseudo state that has no incoming transition. The command is never in the initial state that automatically skips to the first state. This first state is dedicated to the start point input and is shown in the box using its state identifier. A prompt linked to the first state can invite the end user to indicate this start point. The transition between the first state and the second state is triggered as soon as the end user indicates a valid point. This happens when the expected event is detected (the mouse left key is pressed), and when the guard condition is satisfied. The transition action, that is create a temporary point, is executed. A prompt linked to the second state can then invite the end user to indicate the end point. The transition to the final state is triggered as soon as the end user indicates a valid point. This creates the line. [Top] Creating the Line Command The Line command creation is described as a step-by-step process to follow the statechart diagram. Some parts of the code are not shown, such as the line creation in the document. The complete code can be found in the CAADegGeoCommands.m module of the CAADialogEngine.edu framework. The Line command is created as the CAADegCreateLineCmd class deriving from the CATStateCommand class that is provided as a template for all state dialog commands. The CAADegCreateLineCmd class creation follows the following steps:
+And the Line command creates the line using the two points input using the mouse indication. [Top] Dialog Description _Statechart diagrams_ allow you to describe a state dialog command as a state machine in a graphical format. The Unified Modeling Language (UML) is used for such diagrams. ![GettingStartedStateChart.gif /(9621 bytes/)](images/GettingStartedStateChart.gif) The dialog flow starts with the initial state, which is a pseudo state that has no incoming transition. The command is never in the initial state that automatically skips to the first state. This first state is dedicated to the start point input and is shown in the box using its state identifier. A prompt linked to the first state can invite the end user to indicate this start point. The transition between the first state and the second state is triggered as soon as the end user indicates a valid point. This happens when the expected event is detected (the mouse left key is pressed), and when the guard condition is satisfied. The transition action, that is create a temporary point, is executed. A prompt linked to the second state can then invite the end user to indicate the end point. The transition to the final state is triggered as soon as the end user indicates a valid point. This creates the line. [Top] Creating the Line Command The Line command creation is described as a step-by-step process to follow the statechart diagram. Some parts of the code are not shown, such as the line creation in the document. The complete code can be found in the CAADegGeoCommands.m module of the CAADialogEngine.edu framework. The Line command is created as the CAADegCreateLineCmd class deriving from the CATStateCommand class that is provided as a template for all state dialog commands. The CAADegCreateLineCmd class creation follows the following steps:
     * Declaring the State Dialog Command Class: This step includes the declaration of the objects and methods needed by the Line command
     * Managing the Command Lifecycle: This is necessary to decide what should happen when the command completes, and when another command is selected while the Line command is not completed
     * Defining End User Input: The dialog receives the point coordinates by means of CATIndicationAgent class instances created and associated with the states in the overridden CATStateCommand `BuildGraph` method
@@ -60,7 +60,7 @@ And the Line command creates the line using the two points input using the mouse
           class CAADegCreateLineCmd : public CATStateCommand
 
 ---
-    * **Resources** : they are located in the file CAADegCreateLineCmd.CATNls you will store in your framework's CNext\resources\msgcatalog directory. Resources of a state dialog command are the prompts you can associate with each state, and the undo prompts. The base class must be set as the second parameter.
+    * **Resources** : they are located in the file CAADegCreateLineCmd.CATNls you will store in your framework's CNext/resources/msgcatalog directory. Resources of a state dialog command are the prompts you can associate with each state, and the undo prompts. The base class must be set as the second parameter.
 
           CmdDeclareResource(CAADegCreateLineCmd,CATStateCommand);
 
@@ -78,7 +78,7 @@ CmdDeclareResource(CAADegCreateLineCmd,CATStateCommand);
 ---
     * **Statechart** : the statechart is implemented by overriding the `BuildGraph` method.
 
-          virtual void BuildGraph();
+          virtual void BuildGraph(#);
 
 ---
     * **Dialog agent** : a single dialog agent to both detect the end user click and return the location of the point clicked is enough, since it is valued in the first state, and then can be recycled during the first transition to be reused as a new one for the second state. The CATIndicationAgent class is appropriate for such a dialog agent. It is declared as a data member to be used in different methods.
@@ -121,14 +121,14 @@ class CAADegCreateLineCmd : public CATStateCommand
       CATDeclareClass;
       CmdDeclareResource(CAADegCreateLineCmd,CATStateCommand);
       public :
-        CAADegCreateLineCmd();
-        virtual ~CAADegCreateLineCmd();
+        CAADegCreateLineCmd(#);
+        virtual ~CAADegCreateLineCmd(#);
 
         CATStatusChangeRC Activate   (CATCommand * iCmd, CATNotification * iNotif);
         CATStatusChangeRC Desactivate(CATCommand * iCmd, CATNotification * iNotif);
         CATStatusChangeRC Cancel     (CATCommand * iCmd, CATNotification * iNotif);
 
-        virtual void BuildGraph();
+        virtual void BuildGraph(#);
 
         CATBoolean  CheckStartPoint(void * iUsefulData);
         CATBoolean  CheckEndPoint(void * iUsefulData);
@@ -156,7 +156,7 @@ The methods and data members that are not mentioned above are used by the dialog
 
           ...
 The methods and data members that are not mentioned above are used by the dialog agent, or used to show the temporary point created, or finally to actually create the line and update the document with the new line. [Top] Managing the Command Lifecycle The command lifecycle is managed using the constructor and the destructor, and using the three methods `Activate`, `Desactivate`, and `Cancel`.
-          CAADegCreateLineCmd::CAADegCreateLineCmd()
+          CAADegCreateLineCmd::CAADegCreateLineCmd(#)
 
                           : CATStateCommand("CreateLineCmdId", CATCommandModeExclusive),
                             _daIndication(NULL), _FirstPoint(NULL)
@@ -167,18 +167,18 @@ The methods and data members that are not mentioned above are used by the dialog
     * **Destructor** : it requests the destruction of the dialog agent created in the `BuildGraph` method, and deletes or releases data members created or retrieved in the constructor.
 
           ...
-          CAADegCreateLineCmd::~CAADegCreateLineCmd()
+          CAADegCreateLineCmd::~CAADegCreateLineCmd(#)
           {
-CAADegCreateLineCmd::~CAADegCreateLineCmd()
+CAADegCreateLineCmd::~CAADegCreateLineCmd(#)
 ```vbscript
             if ( NULL != _daIndication )
 
 ```
 
             {
-CAADegCreateLineCmd::~CAADegCreateLineCmd()
+CAADegCreateLineCmd::~CAADegCreateLineCmd(#)
 if ( NULL != _daIndication )
-              _daIndication->**RequestDelayedDestruction**();
+              _daIndication->**RequestDelayedDestruction**(#);
               _daIndication = NULL;
 
             }
@@ -207,12 +207,12 @@ CATStatusChangeRC CAADegCreateLineCmd::Cancel(CATCommand * iCmd, CATNotification
 CATStatusChangeRC CAADegCreateLineCmd::Cancel(CATCommand * iCmd, CATNotification * iNotif)
 if ( _FirstPoint )
               _ISO->RemoveElement(_FirstPoint);
-              _FirstPoint->Release();
+              _FirstPoint->Release(#);
               _FirstPoint = NULL ;
 
             }
 _ISO->RemoveElement(_FirstPoint);
-_FirstPoint->Release();
+_FirstPoint->Release(#);
 _FirstPoint = NULL ;
             return (CATStatusChangeRCCompleted);
 
@@ -256,11 +256,11 @@ stStartState->AddDialogAgent(_daIndication);
 stEndState->AddDialogAgent(_daIndication);
 The `BuildGraph` method is as follows:
 
-           void CAADegCreateLineCmd::BuildGraph()
+           void CAADegCreateLineCmd::BuildGraph(#)
 
            {
 The `BuildGraph` method is as follows:
-void CAADegCreateLineCmd::BuildGraph()
+void CAADegCreateLineCmd::BuildGraph(#)
              CATDialogState * stStartState = GetInitialState("stStartPointId");
              CATDialogState * stEndState = AddDialogState("stEndPointId");
 
@@ -320,9 +320,9 @@ CATDialogTransition * pSecondTransition = AddTransition(stEndState, NULL,
 ---
     * **Defining actions**. An action is defined using the address of the method to execute to perform the action passed to the `Action` method. The action is then added to a transition by using it as the last argument of the `AddTransition` method. The complete source code of the `BuildGraph` method is as follows:
 
-          void CAADegCreateLineCmd::BuildGraph()
+          void CAADegCreateLineCmd::BuildGraph(#)
           {
-void CAADegCreateLineCmd::BuildGraph()
+void CAADegCreateLineCmd::BuildGraph(#)
             CATDialogState * stStartState = GetInitialState("stStartPointId");
             CATDialogState * stEndState = AddDialogState("stEndPointId");
 
@@ -394,10 +394,10 @@ CATBoolean CAADegCreateLineCmd::CheckEndPoint(void * iDummy)
 CATBoolean CAADegCreateLineCmd::CheckEndPoint(void * iDummy)
 CATBoolean ret = TRUE;
 if ( _FirstPoint )
-               CATMathPoint2D point2D = _daIndication->**GetValue**();
+               CATMathPoint2D point2D = _daIndication->**GetValue**(#);
                CATMathPoint EndPoint;
-               CATMathPlane ProjPlane = _daIndication->**GetMathPlane**();
-               ProjPlane .**EvalPoint**(point2D.GetX(),point2D.GetY(), EndPoint);
+               CATMathPlane ProjPlane = _daIndication->**GetMathPlane**(#);
+               ProjPlane .**EvalPoint**(point2D.GetX(#),point2D.GetY(#), EndPoint);
 
                float x,y,z ;
                _FirstPoint->GetCoord(x,y,z);
@@ -413,12 +413,12 @@ _FirstPoint->GetCoord(x,y,z);
 CATMathPoint StartPoint(x,y,z);
 if ( EndPoint.DistanceTo(StartPoint) < EPSILON )
                  ret = FALSE;
-                 _daIndication->**InitializeAcquisition**(); // Recycle dialog agent
+                 _daIndication->**InitializeAcquisition**(#); // Recycle dialog agent
 
                }
              }
 ret = FALSE;
-_daIndication->**InitializeAcquisition**(); // Recycle dialog agent
+_daIndication->**InitializeAcquisition**(#); // Recycle dialog agent
              else ret = FALSE;
              return ret;
 
@@ -428,21 +428,26 @@ _daIndication->**InitializeAcquisition**(); // Recycle dialog agent
 else ret = FALSE;
 return ret;
 The two action methods are as follows:
+```vbscript
     1. The `CreatePoint` method is called when the first transition is triggered. It creates the start point as a temporary point and puts it in the Interactive Set of Objects (this is not described here). It then recycles the dialog agent that can be reused for the second state.
+
+```
 
            CATBoolean CAADegCreateLineCmd::CreatePoint(void * iDummy)
 
            {
              ... // Include here the code to create the first 3D point
+```vbscript
 1. The `CreatePoint` method is called when the first transition is triggered. It creates the start point as a temporary point and puts it in the Interactive Set of Objects (this is not described here). It then recycles the dialog agent that can be reused for the second state.
 CATBoolean CAADegCreateLineCmd::CreatePoint(void * iDummy)
-             _daIndication->InitializeAcquisition(); // Recycle dialog agent
+```
+             _daIndication->InitializeAcquisition(#); // Recycle dialog agent
              return TRUE;
 
            }
 
 ---
-_daIndication->InitializeAcquisition(); // Recycle dialog agent
+_daIndication->InitializeAcquisition(#); // Recycle dialog agent
 return TRUE;
     2. The `CreateLine` method creates the line. It takes the start point as argument and retrieves the end point from the dialog agent.
 
@@ -454,7 +459,7 @@ return TRUE;
            ...
 
 ---
-[Top] Providing the Command Resources The command resources are the prompts displayed in the status bar for each state. They are stored in the CAADegCreateLineCmd.CATNls file located in your framework's CNext\resources\msgcatalog directory. This file contains the following prompts, associated with the identifiers set for each states in Defining End User Input:
+[Top] Providing the Command Resources The command resources are the prompts displayed in the status bar for each state. They are stored in the CAADegCreateLineCmd.CATNls file located in your framework's CNext/resources/msgcatalog directory. This file contains the following prompts, associated with the identifiers set for each states in Defining End User Input:
 
     CAADegCreateLineCmd.stStartPointId.Message = "Click to indicate the first point";
     CAADegCreateLineCmd.stEndPointId.Message   =
@@ -465,7 +470,10 @@ return TRUE;
     * Create the Line command creation function in the CAADegCreateLineCmd.cpp file
     * Create a command header for the Line command and put it in a workshop, a workbench, or an add-in to the appropriate workshop or workbench. You will find information in The Command Headers and in Creating a Workshop for Your Document, Creating Workbenches, and Adding Commands to Existing Workshops and Workbenches
     * Provide the command header resources.
+```vbscript
 [Top] Creating the Line Command Creation Function The `CATCreateClass` macro inserted in the command class CAADegCreateLineCmd.cpp file creates a creation function for the Line command. This enables the command class to be instantiated by the application using a command header. This macro is provided by the CATCreateExternalObject.h header file.
+
+```
 
     ...
     #include "CATCreateExternalObject.h"
@@ -477,12 +485,12 @@ return TRUE;
     #include "CATCommandHeader.h"
     MacDeclareHeader(CAAGeometryHeader);
     ...
-    void Geometry::CreateCommands()
+    void Geometry::CreateCommands(#)
     {
       ...
 ```vbscript
 MacDeclareHeader(CAAGeometryHeader);
-void Geometry::CreateCommands()
+void Geometry::CreateCommands(#)
       new CAAGeometryHeader("Line",                  // Command header identifier
 ```
 
@@ -492,10 +500,10 @@ void Geometry::CreateCommands()
       ...
     }
     ...
-    CATCmdWorkshop * Geometry::CreateWorkshop()
+    CATCmdWorkshop * Geometry::CreateWorkshop(#)
     {
       ...
-CATCmdWorkshop * Geometry::CreateWorkshop()
+CATCmdWorkshop * Geometry::CreateWorkshop(#)
       NewAccess(CATCmdStarter,pLineInsert,LineInsert);
 ```vbscript
       SetAccessCommand(pLineInsert,"Line");
@@ -507,7 +515,7 @@ CATCmdWorkshop * Geometry::CreateWorkshop()
     }
 
 ---
-[Top] Providing the Line Command Header Resources You should now provide the resources for the command header. They are stored in files located in your framework's CNext\resources\msgcatalog directory. The resource keys are built using the command header class name concatenated to the command header identifier using a dot, that is, `CAAGeometryHeader.Line`, concatenated to other keywords depending on the resources. These resources include:
+[Top] Providing the Line Command Header Resources You should now provide the resources for the command header. They are stored in files located in your framework's CNext/resources/msgcatalog directory. The resource keys are built using the command header class name concatenated to the command header identifier using a dot, that is, `CAAGeometryHeader.Line`, concatenated to other keywords depending on the resources. These resources include:
     * The command name, tooltip, help displayed in the status bar, and long help displayed in a box using the keywords `Title`, `ShortHelp`, `Help`, and `LongHelp` respectively. They are stored in the CAAGeometryHeader.CATNls file.
 
           ...
@@ -524,7 +532,7 @@ CATCmdWorkshop * Geometry::CreateWorkshop()
           ...
 
 ---
-    * The command icon to be used in toolbars or in front of the command name in menus. This is the first icon set with the `Icon.Normal` keyword. This is stored in the CAAGeometryHeader.CATRsc file, and the icon files are stored in the CNext\resources\graphic\icons directory as bmp files.
+    * The command icon to be used in toolbars or in front of the command name in menus. This is the first icon set with the `Icon.Normal` keyword. This is stored in the CAAGeometryHeader.CATRsc file, and the icon files are stored in the CNext/resources/graphic/icons directory as bmp files.
 
           ...
           CAAGeometryHeader.Line.Icon.Normal    = "I_EduLine";

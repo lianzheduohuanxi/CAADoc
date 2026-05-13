@@ -2,7 +2,7 @@
 title: "CAAxPDMPropertyCmd"
 type: "interface"
 module: "CAAxPDMInterfaces"
-category: "framework"
+category: api-reference
 base: "CATStateCommand"
 inheritance_chain: "CAAxPDMPropertyCmd → CATStateCommand"
 method_count: 0
@@ -30,3 +30,20 @@ verified: true
 - `CATStateCommand.h`
 - `CATIxPDMItem.h`
 
+---
+
+## Interface Overview
+
+This interface inherits from **CATStateCommand**. 
+
+**Inherited Methods**: Please refer to the base interface documentation above.
+
+## Interface Notes
+
+This interface is part of the **CAA** module.
+
+**Status**: This interface document is a template. Please refer to the official API documentation for more information.
+
+**Related Resources**:
+- [Quick References](../..//quick-refs/)
+- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)

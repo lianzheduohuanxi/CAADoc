@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Topology Concepts"
-category: "use-case"
+category: use-case
 module: "CAACgmModel"
 tags: ["CATIA"]
-source_file: "Doc/online/CAACgmModel/CAACgmTaTobTopoConcepts.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmTaTobTopoConcepts.htmmd"
 converted: "2026-05-11T17:33:48.021377"
 ```
 

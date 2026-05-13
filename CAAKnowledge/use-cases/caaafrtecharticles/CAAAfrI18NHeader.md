@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating Resources for Command Headers"
-category: "use-case"
+category: tech-article
 module: "CAAAfrTechArticles"
 tags: ["CAAAfrPointHdr", "CAAGeometryWksHeader", "CAAAfrGeometryWksHeader", "CAAAfrCircleHdr", "CAAPoint", "CATImplementHeaderResources", "CAAAfrQueryExploreHdr", "CAACircle"]
-source_file: "Doc/online/CAAAfrTechArticles/CAAAfrI18NHeader.htm"
+source_file: "Doc/online/CAAAfrTechArticles/CAAAfrI18NHeader.htmmd"
 converted: "2026-05-11T17:17:55.887253"
 ```
 
@@ -88,12 +88,12 @@ There are two command header resource files:
   1. The resource file containing the title and help messages in the English language, and that can be translated into other languages. It is suffixed using CATNls
   2. The resource file containing the icons and other resources that should not be translated. It suffixed by CATRsc
 
-The two resource files for the CAAGeometryWksHeader command header are then: CAAGeometryWksHeader .CATNls and CAAGeometryWksHeader .CATRsc. These files are located in the CNext\resources\msgcatalog directory of the framework containing the module where the command header source files are located. This directory includes subdirectories, one for each language into which the title and messages of the CAAGeometryWksHeader .CATNls file can be translated.
+The two resource files for the CAAGeometryWksHeader command header are then: CAAGeometryWksHeader .CATNls and CAAGeometryWksHeader .CATRsc. These files are located in the CNext/resources/msgcatalog directory of the framework containing the module where the command header source files are located. This directory includes subdirectories, one for each language into which the title and messages of the CAAGeometryWksHeader .CATNls file can be translated.
 
 [Top]
 ### Filling in the Command Header CATNls File
 
-The two resource files for the CAAGeometryWksHeader command header are then: CAAGeometryWksHeader .CATNls and CAAGeometryWksHeader .CATRsc. These files are located in the CNext\resources\msgcatalog directory of the framework containing the module where the command header source files are located. This directory includes subdirectories, one for each language into which the title and messages of the CAAGeometryWksHeader .CATNls file can be translated.
+The two resource files for the CAAGeometryWksHeader command header are then: CAAGeometryWksHeader .CATNls and CAAGeometryWksHeader .CATRsc. These files are located in the CNext/resources/msgcatalog directory of the framework containing the module where the command header source files are located. This directory includes subdirectories, one for each language into which the title and messages of the CAAGeometryWksHeader .CATNls file can be translated.
 This file contains the resources for each of the command header instances: title and help messages, and category.
 
 Each resource is provided using a key and a text separated by the equal sign. The key is built as a concatenation of the command header resource file name, a dot, the command header identifier you defined as the first parameter of the `New` operator, a dot, and a keyword designating the appropriate resource. The message is enclosed using double quotes and ended using a semicolon. For example, the Query command of the Explore menu defined for the Geometry workshop in [2] has its title defined as follows:
@@ -218,7 +218,7 @@ LongHelpId | Identifier to associate a URL to the command. The URL is stored in 
 [Top]
 ### Providing the Icon Files
 
-The icons are bit map files, suffixed by bmp. They must be provided in "normal" and "small" sizes. "Normal" size and "small" size icon files are respectively contained in the CNext\resources\graphic\icons\normal and CNext\resources\graphic\icons\small directories of the framework containing the module where the command headers are created. "Normal" icons, that is corresponding to default button state, must respectively have a size of 22 by 22 pixels and 16 by 16 pixels for "normal" and "small" sizes. When specified, the Pressed and Focused icons must respectively have a size of 24 by 24 pixels and 18 by 18 pixels for "normal" and "small" sizes.
+The icons are bit map files, suffixed by bmp. They must be provided in "normal" and "small" sizes. "Normal" size and "small" size icon files are respectively contained in the CNext/resources/graphic/icons/normal and CNext/resources/graphic/icons/small directories of the framework containing the module where the command headers are created. "Normal" icons, that is corresponding to default button state, must respectively have a size of 22 by 22 pixels and 16 by 16 pixels for "normal" and "small" sizes. When specified, the Pressed and Focused icons must respectively have a size of 24 by 24 pixels and 18 by 18 pixels for "normal" and "small" sizes.
 
 [Top]
 

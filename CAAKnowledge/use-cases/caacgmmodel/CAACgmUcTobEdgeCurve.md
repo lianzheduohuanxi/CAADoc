@@ -4,13 +4,13 @@ title: "Scanning an Edge Curve"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAATopEdgeCurve", "CATICGMContainer", "CAADoc", "CAAGMModelScanEdgeCurve", "CATICGMObject", "CAAGMModelInterfaces", "CAACGMModelScanEdgeCurve", "CATIntCurve", "CAAScanEdgeCurve"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcTobEdgeCurve.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcTobEdgeCurve.htmmd"
 converted: "2026-05-11T17:33:48.549132"
 ```
 
 ---
 tags: ["CAATopEdgeCurve", "CATICGMContainer", "CAADoc", "CAAGMModelScanEdgeCurve", "CATICGMObject", "CAAGMModelInterfaces", "CAACGMModelScanEdgeCurve", "CATIntCurve", "CAAScanEdgeCurve"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcTobEdgeCurve.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcTobEdgeCurve.htmmd"
 converted: "2026-05-11T17:33:48.549132"
 Scanning an Edge Curve
 
@@ -47,7 +47,7 @@ The CAACGMModelScanEdgeCurve Use Case CAACGMModelScanEdgeCurve is a use case of 
     * Retrieves the edge curve from to edge to be analyzed and scans this edge curve.
     * Writes the model and closes the factory. Note that, in this use case the output model is the same as the input model.
 The CAACGMModelScanEdgeCurve Use Case CAACGMModelScanEdgeCurve is a use case of the CAAGMModelInterfaces.edu framework that illustrates how to use the CATEdgeCurveIterator which is delivered in GeometricObjects.  What Does CAACGMModelScanEdgeCurve Do? The CAACGMModelScanEdgeCurve use case:
-How to Launch CAACGMModelScanEdgeCurve  To launch CAACGMModelScanEdgeCurve, you will need to set up the build time environment, then compile CAACGMModelScanEdgeCurve .m along with its prerequisites, set up the run time environment, and then execute the use case [1]. CAACGMModelScanEdgeCurve `e:/edgeCurve1.NCGM" e:/output file.NCGM` where `edgeCurve1.NCGM` is an input file delivered in the CAAGMModelInterfaces.edu/FunctionTests/InputData file. Where to Find the CAACGMModelScanEdgeCurve Code The CAACGMModelScanEdgeCurve use case is made of a main named CAAScanEdgeCurve.cpp located in the CAACGMModelScanEdgeCurve .m module of the CAAGMModelInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMModelInterfaces.edu\CAACGMModelScanEdgeCurve.m\` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. Step-by-Step There are three main steps in CAATopEdgeCurve.cpp:
+How to Launch CAACGMModelScanEdgeCurve  To launch CAACGMModelScanEdgeCurve, you will need to set up the build time environment, then compile CAACGMModelScanEdgeCurve .m along with its prerequisites, set up the run time environment, and then execute the use case [1]. CAACGMModelScanEdgeCurve `e:/edgeCurve1.NCGM" e:/output file.NCGM` where `edgeCurve1.NCGM` is an input file delivered in the CAAGMModelInterfaces.edu/FunctionTests/InputData file. Where to Find the CAACGMModelScanEdgeCurve Code The CAACGMModelScanEdgeCurve use case is made of a main named CAAScanEdgeCurve.cpp located in the CAACGMModelScanEdgeCurve .m module of the CAAGMModelInterfaces.edu framework: `InstallRootFolder/CAADoc/CAAGMModelInterfaces.edu/CAACGMModelScanEdgeCurve.m/` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. Step-by-Step There are three main steps in CAATopEdgeCurve.cpp:
     1. Loading the Container and Retrieving the Edge to Be Scanned
     2. Analyzing the Edge Contents
     3. Writing the Model and Closing the Factory
@@ -75,7 +75,7 @@ Here is the input model. The edge to be analyzed is highlighted. ![Edge Curve](i
     //
     // (b) - retrieve the "ref curve"
     //
-    CATCurve * RefCurve = pEdgeCurve->GetRefCurve();
+    CATCurve * RefCurve = pEdgeCurve->GetRefCurve(#);
     ...
     //
     // (c) - scans the edge curve
@@ -130,7 +130,7 @@ ofstream filetowrite(pfileName, ios::binary ) ;
     #endif
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
-       filetowrite.close();
+       filetowrite.close(#);
      }
 
     //

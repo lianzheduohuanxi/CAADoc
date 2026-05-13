@@ -4,7 +4,7 @@ title: "Dimensions Checking"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CATIA", "CAADriUseCases", "CAADriDimension"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriDimension.htm"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriDimension.htmmd"
 converted: "2026-05-11T17:31:51.055354"
 ```
 
@@ -39,22 +39,28 @@ This macro shows you how to find dimensions pointed by text leader in Drawing do
 
       ...
 ```vbscript
+```vbscript
         ' Set the CATIA popup file alerts to False
 ```
+```
 
+```vbscript
 ```vbscript
 ```vbscript
 ```vbscript
 ' Set the CATIA popup file alerts to False
         ' It prevents to stop the macro at each alert during its execution
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
         CATIA.DisplayFileAlerts = False
+```
 ```
 
       ...
@@ -75,7 +81,9 @@ The CATIA prompts are disabled thanks to the `DisplayFileAlerts` property of the
 ```
 
 ```vbscript
+```vbscript
         Set DrwDoc= CATIA.ActiveDocument
+```
 ```
 
       ...
@@ -97,28 +105,36 @@ Here is the Drawing document.
 ```
 
 ```vbscript
+```vbscript
         Set DrwSheet = DrwDoc.Sheets
+```
 ```
 
 ```vbscript
 ```vbscript
 ```vbscript
         ' Retrieve the active sheet to restore it at the end of the macro
+```vbscript
         Set SheetToRestore = oDrwSheets.ActiveSheet
         ' Scan all the sheet of the Drawing document
+```
         For numsheet = 1 To DrwSheets.Count
 
+```vbscript
           Set CurrentSheet = DrwSheets.Item(numsheet)
           ' Active Currentsheet
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Set CurrentSheet = DrwSheets.Item(numsheet)
 ```vbscript
+```
 ' Active Currentsheet
 ```
 
@@ -139,12 +155,16 @@ The Sheets collection is retrieved from the `DrwDoc` object using the `Sheets` m
 ```
 
 ```vbscript
+```vbscript
        Set DrwViews = CurrentSheet.Views
 ```vbscript
+```
 ```vbscript
        'Read the current view to restore it at the end of the macro
+```vbscript
        Set ViewToRestore = DrwViews.ActiveView
 
+```
 ```
 
 ```
@@ -155,8 +175,10 @@ The Sheets collection is retrieved from the `DrwDoc` object using the `Sheets` m
 ```vbscript
 ```vbscript
 'Read the current view to restore it at the end of the macro
+```vbscript
 Set ViewToRestore = DrwViews.ActiveView
        'Scan all the view of the current Sheet
+```
 
 ```
 
@@ -168,7 +190,9 @@ Set ViewToRestore = DrwViews.ActiveView
 ```vbscript
        For numview = 1 To DrwViews.Count
 
+```vbscript
           Set CurrentView = DrwViews.Item(numview)
+```
 ```
 
 ```vbscript
@@ -197,8 +221,10 @@ The Views collection is retrieved from Sheet object using the Views method.
 
 ```vbscript
 ```vbscript
+```vbscript
        Set DrwTexts = CurrentView.Texts
 
+```
 ```
 
 ```
@@ -215,7 +241,9 @@ The Views collection is retrieved from Sheet object using the Views method.
 ```vbscript
        For numtxt = 1 To DrwTexts.Count
 
+```vbscript
           Set CurrentText = DrwTexts.Item(numtxt)
+```
 ```
 
 ```
@@ -238,8 +266,10 @@ the Texts collection is retrieved from View object using the Texts method.
 ```
 
 ```vbscript
+```vbscript
        Set DrwLeaders = CurrentText.Leaders
 ```vbscript
+```
 ```vbscript
        'Scan all the Leader of the current Text
 
@@ -253,15 +283,19 @@ the Texts collection is retrieved from View object using the Texts method.
 ```vbscript
        For numlead = 1 To DrwLeaders.Count
 
+```vbscript
          Set CurrentLeader = DrwLeaders.Item(numlead)
 
 ```
+```
 
 ```
 
 ```vbscript
+```vbscript
 Set CurrentLeader = DrwLeaders.Item(numlead)
 ```vbscript
+```
 ```vbscript
          ' Manage error on HeadTarget method when
          ' no element is pointed by the text leader.
@@ -269,19 +303,25 @@ Set CurrentLeader = DrwLeaders.Item(numlead)
 
 ```
 
+```vbscript
          On Error Resume Next
 ```vbscript
+```
          ' Get object pointed on the leader
 ```
 
 ```
 
 ```vbscript
+```vbscript
          Set ElemDispatch = Nothing
+```vbscript
+```
 ```vbscript
 ```vbscript
          Set ElemDispatch = CurrentLeader.HeadTarget
          NomObj = TypeName(ElemDispatch)
+```
 ```
 
 ```
@@ -310,11 +350,15 @@ If no element is pointed by the leader  the method returns fail.
 ```
 
 ```vbscript
+```vbscript
            Dim PointedDim As DrawingDimension
+```vbscript
+```
 ```vbscript
 ```vbscript
            Set PointedDim = ElemDispatch
            ' Read dimension tolerances
+```
 ```
 
 ```
@@ -404,7 +448,7 @@ By this way the Drawing document keep his state before macro processing.
 
 End of the macro.
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

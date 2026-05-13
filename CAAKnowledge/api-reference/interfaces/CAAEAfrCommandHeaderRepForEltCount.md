@@ -2,9 +2,7 @@
 title: "CAAEAfrCommandHeaderRepForEltCount"
 type: "interface"
 module: "CAAApplicationFrame"
-category: "framework"
-base: "CATBaseUnknown"
-inheritance_chain: "CAAEAfrCommandHeaderRepForEltCount → CATBaseUnknown"
+category: api-reference
 method_count: 3
 visibility: "local"
 has_tie_binding: false
@@ -12,8 +10,6 @@ verified: true
 ---
 # CAAEAfrCommandHeaderRepForEltCount
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAEAfrCommandHeaderRepForEltCount → CATBaseUnknown  
 **模块**: CAAApplicationFrame  
 **分类**: framework  
 **可见性**: local  
@@ -21,5 +17,32 @@ verified: true
 
 ## 依赖
 
-- `CATBaseUnknown.h`
+---
 
+## Interface Overview
+
+**Inherited Methods**: Please refer to the base interface documentation above.
+
+---
+
+## Interface Overview
+
+This interface inherits from **from**. 
+
+**Inherited Methods**: Please refer to the base interface documentation above.
+
+---
+
+## Related Use Cases
+
+- [3D PLM Enterprise Architecture](../../use-cases/caaafrcases/CAAAfrSampleEditorHdr.md)
+
+## Interface Notes
+
+This interface is part of the **CAA** module.
+
+**Status**: This interface document is a template. Please refer to the official API documentation for more information.
+
+**Related Resources**:
+- [Quick References](../..//quick-refs/)
+- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)

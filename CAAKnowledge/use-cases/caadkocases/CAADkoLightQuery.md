@@ -4,13 +4,13 @@ title: "Running Light Query"
 category: "use case"
 module: "CAADkoUseCases"
 tags: ["CATIVpmLightQueryManager", "CAAVPMDesktopObjects", "CATIVpmPredicate_var", "CATIVpmQuery_var", "CAADkoLightQuery", "CATIVpmPathExpression_var", "CATIVpmLightQueryManager_var", "CATIVpmFactoryManager_var"]
-source_file: "Doc/online/CAADkoUseCases/CAADkoLightQuery.htm"
+source_file: "Doc/online/CAADkoUseCases/CAADkoLightQuery.htmmd"
 converted: "2026-05-11T17:33:45.996993"
 ```
 
 ---
 tags: ["CATIVpmLightQueryManager", "CAAVPMDesktopObjects", "CATIVpmPredicate_var", "CATIVpmQuery_var", "CAADkoLightQuery", "CATIVpmPathExpression_var", "CATIVpmLightQueryManager_var", "CATIVpmFactoryManager_var"]
-source_file: "Doc/online/CAADkoUseCases/CAADkoLightQuery.htm"
+source_file: "Doc/online/CAADkoUseCases/CAADkoLightQuery.htmmd"
 converted: "2026-05-11T17:33:45.996993"
 Lifecycle Applications |  EBOM Part & Assembly Detailing |  Running Light Query _Running Light Query_
 
@@ -42,7 +42,7 @@ The first problem with that traditional query is that it is time consuming: all 
   1. In this use case, we set up the Light Query to get the Part Instances matching a filter. We define if the query is case sensitive or not, if it has to be run in database and memory or database only. We select the list of attributes that we want to get. We define the attribute used to sort the results.
   2. On the results, we print the Part Number and the UUID (unique identifier) of each Part Instance.
 
-[Top] How to Launch CAADkoLightQuery To launch CAADkoLightQuery, you will need to set up the build time environment, then compile CAADkoLightQuery along with its prerequisites, set up the run time environment, and then execute the use case [1]. [Top] Where to Find the CAADkoLightQuery Code The CAADkoLightQuery use case is made of a single file located in the CAADkoLightQuery.m module of the CAAVPMDesktopObjects.edu framework: Windows | `InstallRootDirectory\CAAVPMDesktopObjects.edu\CAADkoLightQuery.m\`
+[Top] How to Launch CAADkoLightQuery To launch CAADkoLightQuery, you will need to set up the build time environment, then compile CAADkoLightQuery along with its prerequisites, set up the run time environment, and then execute the use case [1]. [Top] Where to Find the CAADkoLightQuery Code The CAADkoLightQuery use case is made of a single file located in the CAADkoLightQuery.m module of the CAAVPMDesktopObjects.edu framework: Windows | `InstallRootDirectory/CAAVPMDesktopObjects.edu/CAADkoLightQuery.m/`
 ---|---
 1. In this use case, we set up the Light Query to get the Part Instances matching a filter. We define if the query is case sensitive or not, if it has to be run in database and memory or database only. We select the list of attributes that we want to get. We define the attribute used to sort the results.
 2. On the results, we print the Part Number and the UUID (unique identifier) of each Part Instance.
@@ -80,7 +80,7 @@ CATIVpmPredicate_var WhereClause = ::IsLike( PathExpr, cvalue );
 CATIVpmQuery_var Query = CreateQuery( "VPMItemInstance", NULL_var, WhereClause );
 The query is defined to be case sensitive.
 
-       Query->SetCaseSensitive();
+       Query->SetCaseSensitive(#);
 
 ---
 The Light Query can be run in database only or in database and memory. The next parameter sets the run in database and memory.
@@ -173,21 +173,26 @@ Here we sort the results according to the values of the V_level integer attribut
           _SEQUENCE_CORBAAny PartNumberValues;
           CATListOfInt IsSet;
 ```vbscript
+```vbscript
           RC = oQueryResult->getAllValuesForAttribute( PartNumberAttributeName, PartNumberValues, IsSet );
+
+```
 
 ```
 
 ---
 CATListOfInt IsSet;
+```vbscript
 RC = oQueryResult->getAllValuesForAttribute( PartNumberAttributeName, PartNumberValues, IsSet );
 The values are put in a sequence of CORBAAny objects. The method fills a list of integers, IsSet, that have the value 1 if the attribute is set (has a defined value) or 0 if the attribute is unset (the attribute does not have a value). If the IsSet flag is set to 0, then the value found in the CORBAAny is meaningless.
 Once we have the values, we print them out:
+```
 
-          int nbValues = PartNumberValues.length();
+          int nbValues = PartNumberValues.length(#);
           for( int i=1; i<=nbValues; i++ )
 
           {
-int nbValues = PartNumberValues.length();
+int nbValues = PartNumberValues.length(#);
 for( int i=1; i<=nbValues; i++ )
              CATUnicodeString PartNumber;
              PartNumberValues[i-1] >> PartNumber;
@@ -228,7 +233,7 @@ After that, we get the unique identifiers (UUID) of each Part Instance. This is 
           RC = ENOVLightQueryToFullObjectsServices::getUUIDs( Indexes, UUIDs, oQueryResult );
 ```
 
-          int nbUUIDs = UUIDs.Size();
+          int nbUUIDs = UUIDs.Size(#);
           for( i=1; i <= nbUUIDs; i++ )
 
           {
@@ -238,7 +243,7 @@ CATLISTV(_SEQUENCE_octet) UUIDs;
 RC = ENOVLightQueryToFullObjectsServices::getUUIDs( Indexes, UUIDs, oQueryResult );
 ```
 
-int nbUUIDs = UUIDs.Size();
+int nbUUIDs = UUIDs.Size(#);
 for( i=1; i <= nbUUIDs; i++ )
              TRACE << "Part at index " << i << " has the UUID : " << GetHexaValue( UUIDs[i] ) << endl;
 ```

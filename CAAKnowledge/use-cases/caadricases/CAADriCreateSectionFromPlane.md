@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating a Section View from a Plane"
-category: "use case"
+category: use-case case"
 module: "CAADriUseCases"
 tags: ["CATIDftStandardManager", "CATIGeometricalElement", "CATIPrtContainer", "CATIDftDrawing", "CAADrwCreateSectionFromPlane", "CATIDftDocumentServices", "CATIContainer_var", "CATIA", "CATI2DLine_var", "CATIStringList", "CATIDftView", "CATIPrtPart_var", "CATIAlias", "CATInit_var", "CATISpecObject_var", "CATISpecObject", "CATIDescendants", "CAADrwCreatViewFrom3D", "CATIProduct", "CATIDftGenViewFactory"]
-source_file: "Doc/online/CAADriUseCases/CAADriCreateSectionFromPlane.htm"
+source_file: "Doc/online/CAADriUseCases/CAADriCreateSectionFromPlane.htmmd"
 converted: "2026-05-11T17:31:50.976131"
 ```
 
@@ -65,11 +65,11 @@ CAADrwCreateSectionFromPlane is a use case of the CAADraftingInterfaces.edu fram
 
 To launch CAADrwCreateSectionFromPlane, you will need to set up the build time environment, then compile CAADrwCreateSectionFromPlane along with its prerequisites, set up the run time environment, and then execute the use case [1].
 
-When you launch the use case, pass the full pathname of the Drawing file as argument. A Part file is delivery in the following path: CAADraftingInterfaces.edu\CNext\resources\graphic\PartWithPlaneAndSketchForSectionView.CATPart.
+When you launch the use case, pass the full pathname of the Drawing file as argument. A Part file is delivery in the following path: CAADraftingInterfaces.edu/CNext/resources/graphic/PartWithPlaneAndSketchForSectionView.CATPart.
 
   * With Windows
 
-When you launch the use case, pass the full pathname of the Drawing file as argument. A Part file is delivery in the following path: CAADraftingInterfaces.edu\CNext\resources\graphic\PartWithPlaneAndSketchForSectionView.CATPart.
+When you launch the use case, pass the full pathname of the Drawing file as argument. A Part file is delivery in the following path: CAADraftingInterfaces.edu/CNext/resources/graphic/PartWithPlaneAndSketchForSectionView.CATPart.
         e:> mkrun -c cmd
         CAADrwCreateSectionFromPlane c/.../PartWithPlaneAndSketchForSectionView.CATPart c/DrawingTestOutput.CATDrawing
 
@@ -87,10 +87,10 @@ When you launch the use case, pass the full pathname of the Drawing file as argu
 The CAADrwCreateSectionFromPlane use case is made of a single source file named CAADrwCreateSectionFromPlane.cpp located in the CAADrwCreateSectionFromPlane.m module of the CAADraftingInterfaces.edu framework:
 
 The CAADrwCreateSectionFromPlane use case is made of a single source file named CAADrwCreateSectionFromPlane.cpp located in the CAADrwCreateSectionFromPlane.m module of the CAADraftingInterfaces.edu framework:
-Windows | ` InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwCreateSectionFromPlane.m\`
+Windows | ` InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCreateSectionFromPlane.m/`
 
 The CAADrwCreateSectionFromPlane use case is made of a single source file named CAADrwCreateSectionFromPlane.cpp located in the CAADrwCreateSectionFromPlane.m module of the CAADraftingInterfaces.edu framework:
-Windows | ` InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwCreateSectionFromPlane.m\`
+Windows | ` InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCreateSectionFromPlane.m/`
 Unix | ` InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCreateSectionFromPlane.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -181,10 +181,10 @@ if(NULL_var != spInitOnDoc)
           // Get the part feature of the container.
 CATIPrtContainer * piPrtCont = (CATIPrtContainer*) spInitOnDoc->GetRootContainer("CATIPrtContainer");
 if (piPrtCont)
-          CATIPrtPart_var spPart = piPrtCont->GetPart();
+          CATIPrtPart_var spPart = piPrtCont->GetPart(#);
 
           // Get the appropriate plane
-CATIPrtPart_var spPart = piPrtCont->GetPart();
+CATIPrtPart_var spPart = piPrtCont->GetPart(#);
           CATIDescendants *piDescPart=NULL;
 ```vbscript
           if (SUCCEEDED(spPart->QueryInterface(IID_CATIDescendants,(void**)&piDescPart)))
@@ -198,7 +198,7 @@ if (SUCCEEDED(spPart->QueryInterface(IID_CATIDescendants,(void**)&piDescPart)))
 
             piDescPart->GetAllChildren ("CATPlane",listFeatures) ;
 
-            int nbChilds = listFeatures.Size();
+            int nbChilds = listFeatures.Size(#);
             CATISpecObject_var spFeat;
 ```vbscript
             for (int i = 1; i <= nbChilds; i++)
@@ -206,7 +206,7 @@ if (SUCCEEDED(spPart->QueryInterface(IID_CATIDescendants,(void**)&piDescPart)))
 ```
 
             {
-int nbChilds = listFeatures.Size();
+int nbChilds = listFeatures.Size(#);
 CATISpecObject_var spFeat;
 for (int i = 1; i <= nbChilds; i++)
               spFeat = listFeatures[i];
@@ -238,7 +238,7 @@ if (SUCCEEDED(spFeat->QueryInterface(IID_CATPlane, (void**)&piPlane)))
 if (SUCCEEDED(spFeat->QueryInterface(IID_CATPlane, (void**)&piPlane)))
 CATIAlias *piPlaneAlias = NULL;
 if (SUCCEEDED(piPlane->QueryInterface(IID_CATIAlias, (void**)&piPlaneAlias)))
-                    CATUnicodeString PlaneName = piPlaneAlias->GetAlias();
+                    CATUnicodeString PlaneName = piPlaneAlias->GetAlias(#);
     	        const CATUnicodeString PlaneSection_UC = "PlaneForSection";
                     if (PlaneName == PlaneSection_UC)
 ```vbscript
@@ -263,8 +263,10 @@ All the planes in the Part document are retrieved by using the ` GetAllChildren`
     ...
 
     // -------------------------------------------------------------------------------------------------------------------------------------------------------
+```vbscript
     // Sub program to create an associative section view from Plane.
     // -------------------------------------------------------------------------------------------------------------------------------------------------------
+```
     HRESULT CreateSectionViewFromPlanInDrawingDoc(CATDocument *ipNewDoc, CATPlane*ipiPlane)
     {
 HRESULT CreateSectionViewFromPlanInDrawingDoc(CATDocument *ipNewDoc, CATPlane*ipiPlane)
@@ -294,7 +296,7 @@ CATIDftDocumentServices *piDftDocServices = NULL;
 CATIContainer_var spDrwCont;
 if (SUCCEEDED(ipNewDoc->QueryInterface(IID_CATIDftDocumentServices, (void **)&piDftDocServices)))
           piDftDocServices->GetDrawing(IID_CATIDftDrawing, (void **)&piDftDrawing);
-          piDftDocServices->Release();
+          piDftDocServices->Release(#);
           piDftDocServices = NULL;
 ```vbscript
           if (piDftDrawing)
@@ -303,7 +305,7 @@ if (SUCCEEDED(ipNewDoc->QueryInterface(IID_CATIDftDocumentServices, (void **)&pi
 
           {
 piDftDocServices->GetDrawing(IID_CATIDftDrawing, (void **)&piDftDrawing);
-piDftDocServices->Release();
+piDftDocServices->Release(#);
 piDftDocServices = NULL;
 if (piDftDrawing)
             CATISpecObject *piDrawingSO=NULL;
@@ -319,7 +321,7 @@ CATISpecObject *piDrawingSO=NULL;
 if (SUCCEEDED(piDftDrawing->QueryInterface(IID_CATISpecObject,(void **)&piDrawingSO)))
 ```vbscript
 ```vbscript
-              spDrwCont = piDrawingSO->GetFeatContainer();
+              spDrwCont = piDrawingSO->GetFeatContainer(#);
               if (NULL_var != spDrwCont)
 ```
 
@@ -332,7 +334,7 @@ if (SUCCEEDED(piDftDrawing->QueryInterface(IID_CATISpecObject,(void **)&piDrawin
 if (SUCCEEDED(piDftDrawing->QueryInterface(IID_CATISpecObject,(void **)&piDrawingSO)))
 ```vbscript
 ```vbscript
-spDrwCont = piDrawingSO->GetFeatContainer();
+spDrwCont = piDrawingSO->GetFeatContainer(#);
 if (NULL_var != spDrwCont)
 ```
 
@@ -408,18 +410,18 @@ break;
                     }
 break;
 delete[] wstd; wstd = NULL;
-                    piListstd->Release(); piListstd=NULL;
+                    piListstd->Release(#); piListstd=NULL;
 
                   }
 delete[] wstd; wstd = NULL;
-piListstd->Release(); piListstd=NULL;
-                  piStdmgr->Release (); piStdmgr=NULL;
+piListstd->Release(#); piListstd=NULL;
+                  piStdmgr->Release (#); piStdmgr=NULL;
 
                 }
               }
 
               // Creation of new generative seection view from 3D Sketch in the active sheet of the Drawing Document
-piStdmgr->Release (); piStdmgr=NULL;
+piStdmgr->Release (#); piStdmgr=NULL;
               CATIDftView *piDftSectionViewFrom3D = NULL;
               CATIDftSheet *piDftSheet = NULL;
               piDftDrawing->GetActiveSheet(&piDftSheet);
@@ -445,19 +447,19 @@ CATIDftGenViewFactory *piDftGenViewFact = NULL;
 if (piDftSheet && SUCCEEDED(piDftSheet->QueryInterface(IID_CATIDftGenViewFactory,(void **)&piDftGenViewFact)))
                 CATIGeometricalElement *piGeomElem = NULL;
 ```vbscript
-                if (SUCCEEDED(ipiPlane->QueryInterface(CATIGeometricalElement::ClassId(), (void**) &piGeomElem)))
+                if (SUCCEEDED(ipiPlane->QueryInterface(CATIGeometricalElement::ClassId(#), (void**) &piGeomElem)))
 
 ```
 
                 {
 CATIGeometricalElement *piGeomElem = NULL;
-if (SUCCEEDED(ipiPlane->QueryInterface(CATIGeometricalElement::ClassId(), (void**) &piGeomElem)))
+if (SUCCEEDED(ipiPlane->QueryInterface(CATIGeometricalElement::ClassId(#), (void**) &piGeomElem)))
                   CATCell_var spCell;
                   CATBody_var spBody;
-                  spBody = piGeomElem->GetBodyResult();
+                  spBody = piGeomElem->GetBodyResult(#);
 ```vbscript
 ```vbscript
-                  spCell = piGeomElem->GetGeometryResult();
+                  spCell = piGeomElem->GetGeometryResult(#);
                   if (NULL_var == spCell && NULL_var != spBody)
 
 ```
@@ -466,10 +468,10 @@ if (SUCCEEDED(ipiPlane->QueryInterface(CATIGeometricalElement::ClassId(), (void*
 
                   {
 CATBody_var spBody;
-spBody = piGeomElem->GetBodyResult();
+spBody = piGeomElem->GetBodyResult(#);
 ```vbscript
 ```vbscript
-spCell = piGeomElem->GetGeometryResult();
+spCell = piGeomElem->GetGeometryResult(#);
 if (NULL_var == spCell && NULL_var != spBody)
 ```
 
@@ -477,7 +479,7 @@ if (NULL_var == spCell && NULL_var != spBody)
 ```
 
                     spBody->GetAllCells(AllFaces, 2);
-                    int FaceCount = AllFaces.Size();
+                    int FaceCount = AllFaces.Size(#);
 ```vbscript
                     for (int i = 1 ; i <= FaceCount; i++)
 
@@ -487,7 +489,7 @@ if (NULL_var == spCell && NULL_var != spBody)
 ```vbscript
 CATLISTP(CATCell) AllFaces;
 spBody->GetAllCells(AllFaces, 2);
-int FaceCount = AllFaces.Size();
+int FaceCount = AllFaces.Size(#);
 for (int i = 1 ; i <= FaceCount; i++)
 ```vbscript
                       if (AllFaces[i])
@@ -496,7 +498,7 @@ for (int i = 1 ; i <= FaceCount; i++)
 ```
 
                       {
-int FaceCount = AllFaces.Size();
+int FaceCount = AllFaces.Size(#);
 for (int i = 1 ; i <= FaceCount; i++)
 ```vbscript
 ```vbscript
@@ -526,12 +528,12 @@ break;
                   mathPlane.GetNormal (vecNormalToPlane);
                   CATMathVector ProVec = vecNormalToPlane^vecProfile;
                   CATMathDirection vecPro;
-                  vecPro.SetCoord(ProVec.GetX(),ProVec.GetY(),ProVec.GetZ());
+                  vecPro.SetCoord(ProVec.GetX(#),ProVec.GetY(#),ProVec.GetZ(#));
 
                   // Offset
 CATMathVector ProVec = vecNormalToPlane^vecProfile;
 CATMathDirection vecPro;
-vecPro.SetCoord(ProVec.GetX(),ProVec.GetY(),ProVec.GetZ());
+vecPro.SetCoord(ProVec.GetX(#),ProVec.GetY(#),ProVec.GetZ(#));
                   int viewProfile = 0;
 
                   // Section View defined by a plane
@@ -548,31 +550,31 @@ CATISketch *ipi3DSketch = NULL;
      &piDftSectionViewFrom3D);
 CATIProduct *piProduct= NULL;
 hr = piDftGenViewFact->CreateStandAloneSectionView(ptOrigin, DftSectionView, vecPro,viewProfile, ipi3DSketch,spCell,spBody,iLimitPoints, piProduct,
-                  piGeomElem->Release();piGeomElem=NULL;
+                  piGeomElem->Release(#);piGeomElem=NULL;
 
                 }
 CATIProduct *piProduct= NULL;
 hr = piDftGenViewFact->CreateStandAloneSectionView(ptOrigin, DftSectionView, vecPro,viewProfile, ipi3DSketch,spCell,spBody,iLimitPoints, piProduct,
-piGeomElem->Release();piGeomElem=NULL;
-                piDftGenViewFact->Release();piDftGenViewFact=NULL;
+piGeomElem->Release(#);piGeomElem=NULL;
+                piDftGenViewFact->Release(#);piDftGenViewFact=NULL;
 
               }
 
-piGeomElem->Release();piGeomElem=NULL;
-piDftGenViewFact->Release();piDftGenViewFact=NULL;
-              piDrawingSO->Release();
+piGeomElem->Release(#);piGeomElem=NULL;
+piDftGenViewFact->Release(#);piDftGenViewFact=NULL;
+              piDrawingSO->Release(#);
               piDrawingSO=NULL;
 
             }
-piDrawingSO->Release();
+piDrawingSO->Release(#);
 piDrawingSO=NULL;
-            piDftDrawing->Release();
+            piDftDrawing->Release(#);
             piDftDrawing = NULL;
 
           }
         }
       }
-piDftDrawing->Release();
+piDftDrawing->Release(#);
 piDftDrawing = NULL;
       return hr;
 

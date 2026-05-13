@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Windows Object"
-category: "use-case"
+category: tech-article
 module: "CAAScdInfTechArticles"
 tags: []
-source_file: "Doc/online/CAAScdInfTechArticles/CAAInfObjWindows.htm"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfObjWindows.htmmd"
 converted: "2026-05-11T17:31:52.432118"
 ```
 

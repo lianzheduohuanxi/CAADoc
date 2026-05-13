@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Schematics Modeler"
-category: "use cases"
+category: use-case cases"
 module: "CAASchBase"
 tags: []
-source_file: "Doc/online/CAASchBase/CAASchHome.htm"
+source_file: "Doc/online/CAASchBase/CAASchHome.htmmd"
 converted: "2026-05-11T17:31:51.532130"
 ```
 

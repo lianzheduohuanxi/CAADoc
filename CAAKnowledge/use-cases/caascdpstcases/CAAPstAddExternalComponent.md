@@ -4,7 +4,7 @@ title: "Adding an External Component"
 category: "use-case"
 module: "CAAScdPstUseCases"
 tags: ["CAAPstAddExternalComponent", "CAAScdPstUseCases", "CATIA", "CAAPstHull"]
-source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddExternalComponent.htm"
+source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddExternalComponent.htmmd"
 converted: "2026-05-11T17:31:52.319791"
 ```
 
@@ -49,9 +49,13 @@ This macro shows you how to create a simple product structure that imports an ex
 ```
 
 ```vbscript
+```vbscript
           Dim oProductDoc As Document
 ```vbscript
+```
+```vbscript
           Set oProductDoc = CATIA.Documents.**Add**("Product")
+```
 ```
 
 ```
@@ -60,11 +64,15 @@ This macro shows you how to create a simple product structure that imports an ex
 ```vbscript
 ```vbscript
           'Retrieve the root product.
+```vbscript
           Dim oRoot As Product
           Set oRoot = oProductDoc.Product
           'Retrieve the root product collection of products.
+```
+```vbscript
           Dim oRootCol As Products
           Set oRootCol = oRoot.Products
+```
 ```
 
 ```
@@ -89,9 +97,13 @@ A new Product document is created using the `Add` method of the documents collec
 ```
 
 ```vbscript
+```vbscript
           Dim oPartDoc As Document
 ```vbscript
+```
+```vbscript
           Set oPartDoc = CATIA.Documents.**Open**(sDocPath & "CAAPstHull.CATPart")
+```
 ```
 
 ```
@@ -114,9 +126,13 @@ The Part document to be imported is opened using the `Open` method of the _Docum
 ```
 
 ```vbscript
+```vbscript
           Dim oNewComponent As Product
 ```vbscript
+```
+```vbscript
           Set oNewComponent = oRootCol.**AddExternalComponent**(oPartDoc)
+```
 ```
 
 ```
@@ -127,7 +143,7 @@ The Part document to be imported is opened using the `Open` method of the _Docum
 
 A new part is imported under the product collection using the `AddExternalComponent` method of the _Products_ object.
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

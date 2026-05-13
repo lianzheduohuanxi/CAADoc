@@ -5,13 +5,13 @@ category: "use-case"
 module: "CAACenAPIChangesR7"
 version: "V5R7"
 tags: ["CATIDimForwards", "CATIDimCst", "CATIBRepAccess", "CATIREdge"]
-source_file: "Doc/online/CAACenAPIChangesR7/MecModInterfacesSP.htm"
+source_file: "Doc/online/CAACenAPIChangesR7/MecModInterfacesSP.htmmd"
 converted: "2026-05-11T17:33:52.171535"
 ```
 
 ---
 tags: ["CATIDimForwards", "CATIDimCst", "CATIBRepAccess", "CATIREdge"]
-source_file: "Doc/online/CAACenAPIChangesR7/MecModInterfacesSP.htm"
+source_file: "Doc/online/CAACenAPIChangesR7/MecModInterfacesSP.htmmd"
 converted: "2026-05-11T17:33:52.171535"
 CAA API Modifications |  MecModInterfaces |
 

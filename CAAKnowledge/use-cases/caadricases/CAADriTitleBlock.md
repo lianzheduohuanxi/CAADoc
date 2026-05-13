@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating Frames and Title Blocks in a CATDrawing Document"
-category: "use case"
+category: use-case case"
 module: "CAADriUseCases"
 tags: ["CATIDrwAnnotationFactory_var", "CATISheet_var", "CATIDftTextProperties", "CATIDftText", "CATIDrwAnnotationFactory", "CAADrwTitleBlock", "CATIDftDocumentServices", "CATI2DWFFactory", "CAA2", "CATIA", "CAADRWTitleBlock", "CATIDrawing", "CATIView_var", "CATIDrwAxisLine_var", "CATISpecObject_var", "CATIView", "CATIDrwSubString", "CATI2DWFFactory_var", "CATIDrwCenterLine_var", "CAADraftingInterfaces"]
-source_file: "Doc/online/CAADriUseCases/CAADriTitleBlock.htm"
+source_file: "Doc/online/CAADriUseCases/CAADriTitleBlock.htmmd"
 converted: "2026-05-11T17:31:51.027919"
 ```
 
@@ -99,10 +99,10 @@ When you launch the use case, pass the full pathname of the file into which you 
 The CAADrwTitleBlock use case is made of a single source file named CAADrwTitleBlock.cpp located in the CAADrwTitleBlock.m module of the CAADraftingInterfaces.edu framework:
 
 The CAADrwTitleBlock use case is made of a single source file named CAADrwTitleBlock.cpp located in the CAADrwTitleBlock.m module of the CAADraftingInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwTitleBlock.m\`
+Windows | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwTitleBlock.m/`
 
 The CAADrwTitleBlock use case is made of a single source file named CAADrwTitleBlock.cpp located in the CAADrwTitleBlock.m module of the CAADraftingInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwTitleBlock.m\`
+Windows | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwTitleBlock.m/`
 Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwTitleBlock.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -180,12 +180,12 @@ CATIDrawing *piDrawing = NULL;
 CATIDrawing *piDrawing = NULL;
 if (SUCCEEDED(pDoc->QueryInterface(IID_CATIDftDocumentServices, (void **)&piDftDocServices)))
         piDftDocServices->**GetDrawing**(IID_**CATIDrawing** , (void **)&piDrawing);
-        piDftDocServices->**Release**();
+        piDftDocServices->**Release**(#);
 
       }
 
 piDftDocServices->**GetDrawing**(IID_**CATIDrawing** , (void **)&piDrawing);
-piDftDocServices->**Release**();
+piDftDocServices->**Release**(#);
       if (NULL == piDrawing)
         return 1;
 
@@ -200,12 +200,12 @@ The root feature of a drawing document is the Drawing, that is, the feature that
 
     ...
       // We can get the current sheet
-      **CATISheet** _var spSheet = piDrawing->**GetCurrentSheet**();
+      **CATISheet** _var spSheet = piDrawing->**GetCurrentSheet**(#);
       // And the sheet background view
-      **CATIView** _var spBgView = spSheet->**GetBackgroundView**();
+      **CATIView** _var spBgView = spSheet->**GetBackgroundView**(#);
 
       // Memory cleaning
-      piDrawing->**Release**();
+      piDrawing->**Release**(#);
     ...
 
 ---
@@ -434,19 +434,23 @@ CATIDrwAnnotationFactory_var spAnnFactory = spBgView;
 ```
 
       {
+```vbscript
         // Set String
 CATIDftText *piDftText = NULL;
+```
 const double txtpos1[2] = {1013.,45.};
 if (SUCCEEDED(spAnnFactory->CreateDftText(txtpos1,&piDftText)))
         CATUnicodeString textString("TITLE BLOCK PERFORMED BY CAA2 APPLICATION");
-        wchar_t *ptxtChar = new wchar_t[textString.GetLengthInChar()+1];
+        wchar_t *ptxtChar = new wchar_t[textString.GetLengthInChar(#)+1];
         textString.ConvertToWChar(ptxtChar);
         piDftText->SetString(ptxtChar);
         delete [] ptxtChar;
         ptxtChar = NULL;
 
+```vbscript
         // Text properties modification: Set bold and italic
 textString.ConvertToWChar(ptxtChar);
+```
 piDftText->SetString(ptxtChar);
 delete [] ptxtChar;
 ptxtChar = NULL;
@@ -463,17 +467,17 @@ if (SUCCEEDED(piDftText->GetTextProperties(&piDftTextProp)))
           piDftTextProp->SetBold(TRUE);
           piDftTextProp->SetItalic(TRUE);
 
-          piDftTextProp->Release();piDftTextProp=NULL;
+          piDftTextProp->Release(#);piDftTextProp=NULL;
 
         }
 piDftTextProp->SetBold(TRUE);
 piDftTextProp->SetItalic(TRUE);
-piDftTextProp->Release();piDftTextProp=NULL;
-        piDftText->Release();piDftText=NULL;
+piDftTextProp->Release(#);piDftTextProp=NULL;
+        piDftText->Release(#);piDftText=NULL;
 
       }
-piDftTextProp->Release();piDftTextProp=NULL;
-piDftText->Release();piDftText=NULL;
+piDftTextProp->Release(#);piDftTextProp=NULL;
+piDftText->Release(#);piDftText=NULL;
       const double txtpos2[2] = {940., 40.};
 ```vbscript
       if (SUCCEEDED(spAnnFactory->CreateDftText(txtpos2,&piDftText)))
@@ -481,19 +485,23 @@ piDftText->Release();piDftText=NULL;
 ```
 
       {
+```vbscript
         // Set String
 const double txtpos2[2] = {940., 40.};
+```
 if (SUCCEEDED(spAnnFactory->CreateDftText(txtpos2,&piDftText)))
-        CATUnicodeString textString("DASSAULT \nSYSTEMES");
-        wchar_t *ptxtChar = new wchar_t[textString.GetLengthInChar()+1];
+        CATUnicodeString textString("DASSAULT /nSYSTEMES");
+        wchar_t *ptxtChar = new wchar_t[textString.GetLengthInChar(#)+1];
         textString.ConvertToWChar(ptxtChar);
         piDftText->SetString(ptxtChar);
         delete [] ptxtChar;
         ptxtChar = NULL;
         CATIDftTextProperties *piDftTextProp = NULL;
 
+```vbscript
         // Text properties modification: Set bold and italic
 piDftText->SetString(ptxtChar);
+```
 delete [] ptxtChar;
 ptxtChar = NULL;
 CATIDftTextProperties *piDftTextProp = NULL;
@@ -508,18 +516,18 @@ CATIDftTextProperties *piDftTextProp = NULL;
 if (SUCCEEDED(piDftText->GetTextProperties(&piDftTextProp)))
           piDftTextProp->SetBold(TRUE);
           piDftTextProp->SetItalic(TRUE);
-          piDftTextProp->Release();piDftTextProp=NULL;
+          piDftTextProp->Release(#);piDftTextProp=NULL;
 
         }
 piDftTextProp->SetBold(TRUE);
 piDftTextProp->SetItalic(TRUE);
-piDftTextProp->Release();piDftTextProp=NULL;
-        piDftText->Release();piDftText=NULL;
+piDftTextProp->Release(#);piDftTextProp=NULL;
+        piDftText->Release(#);piDftText=NULL;
 
       }
 piDftTextProp->SetItalic(TRUE);
-piDftTextProp->Release();piDftTextProp=NULL;
-piDftText->Release();piDftText=NULL;
+piDftTextProp->Release(#);piDftTextProp=NULL;
+piDftText->Release(#);piDftText=NULL;
       const double txtpos3[2] = {940., 54.};
 ```vbscript
       if (SUCCEEDED(spAnnFactory->CreateDftText(txtpos3,&piDftText)))
@@ -527,18 +535,22 @@ piDftText->Release();piDftText=NULL;
 ```
 
       {
+```vbscript
         // Set String
 const double txtpos3[2] = {940., 54.};
+```
 if (SUCCEEDED(spAnnFactory->CreateDftText(txtpos3,&piDftText)))
         CATUnicodeString textString("Date : 07 - 31 - 2000");
-        wchar_t *ptxtChar = new wchar_t[textString.GetLengthInChar()+1];
+        wchar_t *ptxtChar = new wchar_t[textString.GetLengthInChar(#)+1];
         textString.ConvertToWChar(ptxtChar);
         piDftText->SetString(ptxtChar);
         delete [] ptxtChar;
         ptxtChar = NULL;
 
+```vbscript
         // Text properties modification: Set bold and italic
 textString.ConvertToWChar(ptxtChar);
+```
 piDftText->SetString(ptxtChar);
 delete [] ptxtChar;
 ptxtChar = NULL;
@@ -567,24 +579,24 @@ CATIDrwSubString *piDrwSubString = NULL;
 if (SUCCEEDED(piDftText->QueryInterface(IID_CATIDrwSubString,(void **)&piDrwSubString)))
             piDrwSubString->SetSelection(1,21);
             piDftTextProp->SetFontSize(3.5);
-            piDrwSubString->Release();piDrwSubString=NULL;
+            piDrwSubString->Release(#);piDrwSubString=NULL;
 
           }
 piDrwSubString->SetSelection(1,21);
 piDftTextProp->SetFontSize(3.5);
-piDrwSubString->Release();piDrwSubString=NULL;
-          piDftTextProp->Release();piDftTextProp=NULL;
+piDrwSubString->Release(#);piDrwSubString=NULL;
+          piDftTextProp->Release(#);piDftTextProp=NULL;
 
         }
 piDftTextProp->SetFontSize(3.5);
-piDrwSubString->Release();piDrwSubString=NULL;
-piDftTextProp->Release();piDftTextProp=NULL;
-        piDftText->Release();piDftText=NULL;
+piDrwSubString->Release(#);piDrwSubString=NULL;
+piDftTextProp->Release(#);piDftTextProp=NULL;
+        piDftText->Release(#);piDftText=NULL;
 
       }
 
       // axis line and center line creation
-piDftText->Release();piDftText=NULL;
+piDftText->Release(#);piDftText=NULL;
       CATIDrwAxisLine_var axisline = spAnnFactory->CreateDrwAxisLine(Line1,Line2);
       CATIDrwCenterLine_var centerline = spAnnFactory->CreateDrwCenterLine(Cercle1);
 

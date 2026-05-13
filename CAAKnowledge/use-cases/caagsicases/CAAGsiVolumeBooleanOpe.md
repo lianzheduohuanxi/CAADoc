@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Inserting Boolean Operations on Volume Features"
-category: "use case"
+category: use-case case"
 module: "CAAGsiUseCases"
 tags: ["CAAGSMInterfaces", "CATIPrtBooleanFactory", "CATIPrtContainer", "CAAGsiStartVolumeForBoolean", "CAAGsiVolumeOpe", "CATIPrtPart_var", "CATInit", "CATISpecObject_var", "CATIPrtBooleanFactory_var", "CAAGsiStartForBoolean", "CAAGsiVolumeFormFeatures", "CAAGsiObjectUpdate", "CAAGsiVolumeBooleanOpe"]
-source_file: "Doc/online/CAAGsiUseCases/CAAGsiVolumeBooleanOpe.htm"
+source_file: "Doc/online/CAAGsiUseCases/CAAGsiVolumeBooleanOpe.htmmd"
 converted: "2026-05-11T17:31:50.644673"
 ```
 
@@ -72,12 +72,12 @@ Launch the use case as follows:
 
   * With Windows
 
-        e:>CAAGsiVolumeBooleanOpe InstallDir\CAAGSMInterfaces.edu\Data.d\CAAGsiStartVolumeForBoolean.CATPart CAAGsiStartVolumeForBoolean.CATPart outputDirectory\CAAGsiVolumeBooleanOpe.CATPart
+        e:>CAAGsiVolumeBooleanOpe InstallDir/CAAGSMInterfaces.edu/Data.d/CAAGsiStartVolumeForBoolean.CATPart CAAGsiStartVolumeForBoolean.CATPart outputDirectory/CAAGsiVolumeBooleanOpe.CATPart
 
 ---
   * With UNIX
 
-        $ CAAGsiVolumeBooleanOpe InstallDir\CAAGSMInterfaces.edu\Data.d\CAAGsiStartVolumeForBoolean.CATPart CAAGsiStartVolumeForBoolean.CATPart outputDirectory/CAAGsiVolumeBooleanOpe.CATPart
+        $ CAAGsiVolumeBooleanOpe InstallDir/CAAGSMInterfaces.edu/Data.d/CAAGsiStartVolumeForBoolean.CATPart CAAGsiStartVolumeForBoolean.CATPart outputDirectory/CAAGsiVolumeBooleanOpe.CATPart
 
 ---
 
@@ -94,18 +94,18 @@ where:
 The CAAGsiVolumeBooleanOpe use case is made of main program located in the CAAGsiVolumeBooleanOpe.m module of the CAAGSMInterfaces.edu framework:
 
 The CAAGsiVolumeBooleanOpe use case is made of main program located in the CAAGsiVolumeBooleanOpe.m module of the CAAGSMInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAAGSMInterfaces.edu\CAAGsiVolumeBooleanOpe.m\`
+Windows | `InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiVolumeBooleanOpe.m/`
 
 The CAAGsiVolumeBooleanOpe use case is made of main program located in the CAAGsiVolumeBooleanOpe.m module of the CAAGSMInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAAGSMInterfaces.edu\CAAGsiVolumeBooleanOpe.m\`
+Windows | `InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiVolumeBooleanOpe.m/`
 Unix | `InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiVolumeBooleanOpe.m/`
 
 The input CAAGsiStartForBoolean.CATPart is proposed in Data.d directory of CAAGSMInterfaces.edu
 
-Windows | `InstallRootDirectory\CAAGSMInterfaces.edu\Data.d\CAAGsiStartForBoolean.CATPart `
+Windows | `InstallRootDirectory/CAAGSMInterfaces.edu/Data.d/CAAGsiStartForBoolean.CATPart `
 
 The input CAAGsiStartForBoolean.CATPart is proposed in Data.d directory of CAAGSMInterfaces.edu
-Windows | `InstallRootDirectory\CAAGSMInterfaces.edu\Data.d\CAAGsiStartForBoolean.CATPart `
+Windows | `InstallRootDirectory/CAAGSMInterfaces.edu/Data.d/CAAGsiStartForBoolean.CATPart `
 Unix | `InstallRootDirectory/CAAGSMInterfaces.edu/Data.d/CAAGsiStartForBoolean.CATPart`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -131,11 +131,11 @@ We will now comment each of those sections by looking at the code of the main me
 
 CAAGsiVolumeBooleanOpe sample first creates a session and opens the input CATPart.
 
-Note: The important feature of the following sequence of code consists in the required call to the GetPart() method of the CATPrtContainer interfaces. This method allow to load in session the different containers of the part
+Note: The important feature of the following sequence of code consists in the required call to the GetPart(#) method of the CATPrtContainer interfaces. This method allow to load in session the different containers of the part
 
     ....
     // creates a session
-Note: The important feature of the following sequence of code consists in the required call to the GetPart() method of the CATPrtContainer interfaces. This method allow to load in session the different containers of the part
+Note: The important feature of the following sequence of code consists in the required call to the GetPart(#) method of the CATPrtContainer interfaces. This method allow to load in session the different containers of the part
     char *pSessionName = "SampleSession";
     CATSession *pSession = NULL;
     rc = Create_Session(pSessionName, pSession);
@@ -192,10 +192,10 @@ pDoc->QueryInterface(IID_CATInit, (void**)&pDocAsInit) ;
 if ( NULL != pDocAsInit ) {
        piPartContainer =
           (CATIPrtContainer*)pDocAsInit->GetRootContainer("CATIPrtContainer");
-       pDocAsInit->Release(); pDocAsInit = NULL ;
+       pDocAsInit->Release(#); pDocAsInit = NULL ;
 
        if( NULL != piPartContainer ) {
-          CATISpecObject_var spPart = piPartContainer->GetPart() ;
+          CATISpecObject_var spPart = piPartContainer->GetPart(#) ;
           spPrtPart = spPart ;
 
        }
@@ -225,7 +225,7 @@ if ( NULL !=piPartContainer ) {
 
          spBoolPrtFact = _pBoolPrtFact;
 ```vbscript
-         if (_pBoolPrtFact) _pBoolPrtFact -> Release(); _pBoolPrtFact = NULL;
+         if (_pBoolPrtFact) _pBoolPrtFact -> Release(#); _pBoolPrtFact = NULL;
 
 ```
 

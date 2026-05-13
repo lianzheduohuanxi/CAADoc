@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating Sheets and Views in a CATDrawing Document"
-category: "use case"
+category: use-case case"
 module: "CAADriUseCases"
 tags: ["CATIDftStandardManager", "CATIDftDrawing", "CATIDftDrawingFormat", "CATIDftDocumentServices", "CATIContainer_var", "CATIA", "CATIDftViewMakeUp", "CAADrwStructure", "CATIDrawing", "CATIStringList", "CATIDftView", "CATIDftSheetFormat", "CATIDrwFactory", "CATIUnknownList", "CATISpecObject_var", "CATIView", "CATISpecObject", "CATI2DWFFactory_var", "CATIDftFormat_var", "CAADraftingInterfaces"]
-source_file: "Doc/online/CAADriUseCases/CAADriStructure.htm"
+source_file: "Doc/online/CAADriUseCases/CAADriStructure.htmmd"
 converted: "2026-05-11T17:31:51.020431"
 ```
 
@@ -88,10 +88,10 @@ When you launch the use case, pass the full pathname of the file into which you 
 The CAADrwStructure use case is made of a single source file named CAADrwStructure.cpp located in the CAADrwStructure.m module of the CAADraftingInterfaces.edu framework:
 
 The CAADrwStructure use case is made of a single source file named CAADrwStructure.cpp located in the CAADrwStructure.m module of the CAADraftingInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwStructure.m\`
+Windows | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwStructure.m/`
 
 The CAADrwStructure use case is made of a single source file named CAADrwStructure.cpp located in the CAADrwStructure.m module of the CAADraftingInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwStructure.m\`
+Windows | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwStructure.m/`
 Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwStructure.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -205,18 +205,18 @@ if (piDftDrawing)
 CATISpecObject *piSpecObj=NULL;
 if (SUCCEEDED(piDftDrawing->QueryInterface(IID_CATISpecObject,(void **)&piSpecObj)))
 ```vbscript
-            spDrwCont = piSpecObj->**GetFeatContainer**();
+            spDrwCont = piSpecObj->**GetFeatContainer**(#);
 ```
 
-            piSpecObj->Release();
+            piSpecObj->Release(#);
             piSpecObj=NULL;
 
           }
         }
       }
-piSpecObj->Release();
+piSpecObj->Release(#);
 piSpecObj=NULL;
-      piDftDocServices->Release();
+      piDftDocServices->Release(#);
       piDftDocServices=NULL;
 
     }
@@ -293,12 +293,12 @@ break;
         }
 break;
 delete[] wstd; wstd = NULL;
-        piListstd->Release(); piListstd=NULL;
+        piListstd->Release(#); piListstd=NULL;
 
       }
 delete[] wstd; wstd = NULL;
-piListstd->Release(); piListstd=NULL;
-      piStdmgr->Release (); piStdmgr=NULL;
+piListstd->Release(#); piListstd=NULL;
+      piStdmgr->Release (#); piStdmgr=NULL;
 
     }
     ...
@@ -345,7 +345,7 @@ CATLISTV(CATISpecObject_var) spListFormat;
 if (SUCCEEDED(piDftFormats->**GetAvailableFormats**(spListFormat)))
 ```
 
-        int nbformats= spListFormat.Size();
+        int nbformats= spListFormat.Size(#);
 ```
 
         // Gets the first format in the list.
@@ -355,12 +355,12 @@ CATLISTV(CATISpecObject_var) spListFormat;
 if (SUCCEEDED(piDftFormats->**GetAvailableFormats**(spListFormat)))
 ```
 
-int nbformats= spListFormat.Size();
+int nbformats= spListFormat.Size(#);
         if (nbformats >= 1)
 ```
 
         {
-int nbformats= spListFormat.Size();
+int nbformats= spListFormat.Size(#);
 if (nbformats >= 1)
           CATIDftFormat_var spFormat = spListFormat[1];
 ```vbscript
@@ -372,15 +372,15 @@ if (nbformats >= 1)
             // Memory clean.
 CATIDftFormat_var spFormat = spListFormat[1];
 if (FAILED(spFormat->**GetFormatName**(myFormatName)))
-            piDftFormats->Release();
+            piDftFormats->Release(#);
             piDftFormats=NULL;
-            piDftDrawing->Release();
+            piDftDrawing->Release(#);
             piDftDrawing=NULL;
             CATDocumentServices::Remove (*pDoc);
 
             ::Delete_Session("SampleSession");
 piDftFormats=NULL;
-piDftDrawing->Release();
+piDftDrawing->Release(#);
 piDftDrawing=NULL;
 CATDocumentServices::Remove (*pDoc);
             return 4;
@@ -389,13 +389,13 @@ CATDocumentServices::Remove (*pDoc);
         }
       }
 return 4;
-      piDftFormats->Release();
+      piDftFormats->Release(#);
       piDftFormats=NULL;
 
     }
 
     // Adds the format to the current sheet.
-piDftFormats->Release();
+piDftFormats->Release(#);
 piDftFormats=NULL;
     CATIUnknownList *piListOfSheet=NULL;
     CATIDftSheetFormat *piDftSheetFormat=NULL;
@@ -470,18 +470,18 @@ if (SUCCEEDED(item->QueryInterface (IID_CATIDftSheetFormat,(void **)&piDftSheetF
 if (FAILED(piDftSheetFormat->**SetSheetFormat**(myFormatName)))
 ```
 
-                item->Release();
+                item->Release(#);
                 item=NULL;
-                piDftSheetFormat->Release();
+                piDftSheetFormat->Release(#);
                 piDftSheetFormat=NULL;
-                piDftDrawing->Release();
+                piDftDrawing->Release(#);
                 piDftDrawing=NULL;
                 CATDocumentServices::Remove (*pDoc);
 ```
 
                 ::Delete_Session("SampleSession");
 piDftSheetFormat=NULL;
-piDftDrawing->Release();
+piDftDrawing->Release(#);
 piDftDrawing=NULL;
 CATDocumentServices::Remove (*pDoc);
                 return 5;
@@ -490,14 +490,14 @@ CATDocumentServices::Remove (*pDoc);
 piDftDrawing=NULL;
 CATDocumentServices::Remove (*pDoc);
 return 5;
-              piDftSheetFormat->Release();
+              piDftSheetFormat->Release(#);
               piDftSheetFormat=NULL;
 
             }
 return 5;
-piDftSheetFormat->Release();
+piDftSheetFormat->Release(#);
 piDftSheetFormat=NULL;
-            item->Release();
+            item->Release(#);
             item=NULL;
 
           }
@@ -620,13 +620,13 @@ CATIDftView *piDftNewView=NULL;
 CATIDftView *piDftNewView=NULL;
 if (SUCCEEDED(piNewView->QueryInterface(IID_CATIDftView,(void **)&piDftNewView)))
       piDftNewSheet->**SetDefaultActiveView**(piDftNewView);
-      piDftNewView->Release();
+      piDftNewView->Release(#);
       piDftNewView=NULL;
 
     }
 
     // Get the Wire frame factory to create geometry.
-piDftNewView->Release();
+piDftNewView->Release(#);
 piDftNewView=NULL;
     CATI2DWFFactory_var spGeomFactory(piNewView);
 

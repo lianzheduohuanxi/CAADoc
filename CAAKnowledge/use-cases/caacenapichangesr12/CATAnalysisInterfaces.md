@@ -5,7 +5,7 @@ category: "use-case"
 module: "CAACenAPIChangesR12"
 version: "V5R12"
 tags: ["CATISamVisibility"]
-source_file: "Doc/online/CAACenAPIChangesR12/CATAnalysisInterfaces.htm"
+source_file: "Doc/online/CAACenAPIChangesR12/CATAnalysisInterfaces.htmmd"
 converted: "2026-05-11T17:33:50.526846"
 ```
 

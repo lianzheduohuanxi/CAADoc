@@ -4,7 +4,7 @@ title: "Creating a Schematic Network Object"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAADoc", "CATIAProduct", "CATIASchNetworkAnalysis", "CAAScdSchUseCases", "CATIA", "CAASchAppBase", "CAASCHEDUApp", "CAASchNetwork", "CAASchPlatformModeler", "CAASCH_Network01", "CAASchAppUtilities"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchNetwork.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchNetwork.htmmd"
 converted: "2026-05-11T17:31:51.405039"
 ```
 
@@ -33,9 +33,9 @@ This macro shows you how to create a schematic network object.Given a list of in
   * Setup:
 
 >   1. Build CAASchAppBase.m and CAASchAppUtilities.m, located in CAASchPlatformModeler.edu (RADE is required).
->   2. Copy generated DLLs, CAASchAppBase.dll and CAASchAppUtilities.m, respectively, to the run-time environment folder "intel_a\code\bin."
->   3. Copy CAASCHEDUApp.CATfct, located CAASchPlatformModeler.edu\CNext\resources\graphic, to the run-time environment folder "intel_a\resources\graphic."
->   4. Copy CAASchPlatformModeler.edu\CNext\code\dictionary\CAASchPlatformModeler.edu.dico to the run-time environment folder "intel_a\code\dictionary."
+>   2. Copy generated DLLs, CAASchAppBase.dll and CAASchAppUtilities.m, respectively, to the run-time environment folder "intel_a/code/bin."
+>   3. Copy CAASCHEDUApp.CATfct, located CAASchPlatformModeler.edu/CNext/resources/graphic, to the run-time environment folder "intel_a/resources/graphic."
+>   4. Copy CAASchPlatformModeler.edu/CNext/code/dictionary/CAASchPlatformModeler.edu.dico to the run-time environment folder "intel_a/code/dictionary."
 >
 
 [ CAASchNetwork.CATScript ](CAASchNetworkSource.md)is located in the CAAScdSchUseCases module. [Execute macro](macros/CAASchNetwork.CATScript) (Windows only).
@@ -61,22 +61,30 @@ The macro first loads CAASCH_Network01.CATProduct. |     ...
 ```
 
 ```vbscript
+```vbscript
     Dim sFilePath
+```vbscript
+```
 ```vbscript
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
+```
 
 ```
 
-            "online\CAAScdSchUseCases\samples\CAASCH_Network01.CATProduct")
+            "online/CAAScdSchUseCases/samples/CAASCH_Network01.CATProduct")
 
 ```vbscript
+```vbscript
 Dim sFilePath
+```vbscript
+```
 ```vbscript
 ```vbscript
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
+```
 ```
 
 ```
@@ -100,15 +108,23 @@ Next, the macro acquires the schematic root object from the document. The schema
 ```
 
 ```vbscript
+```vbscript
     Dim objPrdRoot As Product
+```vbscript
+```
 ```vbscript
 ```vbscript
     Dim objSchRoot As SchematicRoot
     If ( Not ( objSchDoc Is Nothing ) ) Then
+```
+```vbscript
       Set objPrdRoot = objSchDoc.Product
       If ( Not ( objPrdRoot Is Nothing ) ) Then
+```
+```vbscript
         Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
       End If
+```
     End If
 ```
 
@@ -139,11 +155,15 @@ This macro provides a private Find2ComponentInst function which searches for 2 c
 ```
 
 ```vbscript
+```vbscript
        Set objSchBaseFact = objSchRoot.GetSchBaseFactory
+```vbscript
+```
 ```vbscript
 ```vbscript
        Set objSchTempListFact = objSchRoot.GetTemporaryListFactory
 
+```
 ```
 
 ```
@@ -155,9 +175,11 @@ This macro provides a private Find2ComponentInst function which searches for 2 c
 ```vbscript
             Not ( objSchTempListFact Is Nothing ) ) Then
 ```vbscript
+```vbscript
           Set objLCntbl_g = objSchTempListFact.CreateListOfObjects
           Set objLGRR_g = objSchTempListFact.CreateListOfObjects
 
+```
 ```
 
 ```
@@ -196,8 +218,10 @@ This macro provides a private Find2ComponentInst function which searches for 2 c
 
              Find2ComponentInst objSchRoot
 
+```vbscript
              Set objLNetWork = objSchBaseFact.CreateNetwork (objLCntbl_g, _
                objLGRR_g)
+```
 ```
 
     ...
@@ -228,7 +252,10 @@ The macro first find out the number of network objects in the output list. Then,
 ```
 
 ```vbscript
+```vbscript
        Dim intNbNet As Integer
+```vbscript
+```
 ```vbscript
 ```vbscript
        Dim intNetIndex As Integer
@@ -240,15 +267,20 @@ The macro first find out the number of network objects in the output list. Then,
        Dim strName As String
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Dim objMemPrd As Product
 ```vbscript
+```
+```vbscript
 Dim strName As String
+```
 ```
 
        intNbNet = objLNetWork.Count
@@ -282,9 +314,11 @@ For intNetIndex = 1 To intNbNet
 
 ```vbscript
 ```vbscript
+```vbscript
          Set objLNetMember = Nothing
 
          Set objSchNet = objLNetWork.Item (intNetIndex,"CATIASchNetworkAnalysis")
+```
 ```
 
 ```
@@ -297,7 +331,9 @@ For intNetIndex = 1 To intNbNet
          '---------------------------------------------------------------------
          If ( Not ( objSchNet Is Nothing ) ) Then
 
+```vbscript
             Set objLNetMember = objSchNet.ListNetworkObjects
+```
 ```
 
 ```
@@ -328,7 +364,9 @@ For intNetIndex = 1 To intNbNet
 ```vbscript
             For intMemIndex = 1 To intNbMember
 
+```vbscript
               Set objMemPrd = objLNetMember.Item (intMemIndex,"CATIAProduct")
+```
 ```
 
 ```
@@ -361,8 +399,10 @@ For intNetIndex = 1 To intNbNet
 ```vbscript
          If ( Not ( objSchNet Is Nothing ) ) Then
 
+```vbscript
             Set objLNetMember = objSchNet.ListExtremityObjects
 
+```
 ```
 
 ```
@@ -390,7 +430,9 @@ For intNetIndex = 1 To intNbNet
 ```vbscript
             For intMemIndex = 1 To intNbMember
 
+```vbscript
               Set objMemPrd = objLNetMember.Item (intMemIndex,"CATIAProduct")
+```
 ```
 
               strName = ""

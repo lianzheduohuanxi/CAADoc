@@ -4,13 +4,13 @@ title: "Modifying the Geometry of a Face"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsFaceReplaceSurface", "CATICGMTopFaceReplaceSurface"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopReplaceFace.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopReplaceFace.htmmd"
 converted: "2026-05-11T17:33:49.298443"
 ```
 
 ---
 tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsFaceReplaceSurface", "CATICGMTopFaceReplaceSurface"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopReplaceFace.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopReplaceFace.htmmd"
 converted: "2026-05-11T17:33:49.298443"
 Modifying the Geometry of a Face
 
@@ -39,10 +39,10 @@ CATICGMTopFaceReplaceSurface * pOp = ::CATCGMCreateFaceReplaceSurfaceOperator(pi
     piNewSurf->GetLimits(limits);
     pOp->ReplaceWith(piOldFace, piNewSurf, limits, CATOrientationNegative);
 
-    pOp->Run();
+    pOp->Run(#);
 
-    CATBody * piResultBody = pOp->GetResult();
-    pOp->Release();
+    CATBody * piResultBody = pOp->GetResult(#);
+    pOp->Release(#);
     pOp = NULL;
 
     ---

@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CAAScrBase", "CATIA", "CAAScrJavaScript", "CAAScdInfUseCases", "CAAArrCreatePathway", "CAAArrCreatePathwaySource", "CAAScdArrUseCases", "CAAInfLauchMacro", "CAAlink"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreatePathway.htm"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreatePathway.htmmd"
 converted: "2026-05-11T11:27:02.678902"
 ---
 
@@ -53,7 +53,7 @@ Here we define a round section and change the visualization mode to `CatArrangem
     
   
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 
@@ -74,40 +74,46 @@ within a product document.
 
 *Copyright  2000, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 ...
    '----------------------------------------------
    'Create a new product document
+```vbscript
    Dim objProdDoc        As ProductDocument
    Dim objRootProd       As Product
    Set objProdDoc      = CATIA.Documents.Add(&quot;Product&quot;)
    Set objRootProd     = objProdDoc.Product
    ...
 ```
+```
 
 ```vbscript
 ...
    '----------------------------------------------
    'Retrieving Root Product's Relative Axis and Position Information
+```vbscript
    Dim objMove           As Move
    Set objMove      = objRootProd.Move
 
    '----------------------------------------------
+```
    ' Get ArrangementProduct
+```vbscript
    Dim objArrProd        As ArrangementProduct
    Set objArrProd   = objRootProd.GetTechnologicalObject(&quot;ArrangementProduct&quot;)
 ...
+```
 ```
 
 ```vbscript
 ...
    ' Create ArrangementPathway under the Root Product
+```vbscript
    Dim dblPathwayPoints(75)      As Double
    Dim dblMathDirection(3)        As Double
    Dim objArrPathway             As ArrangementPathway
 
+```
 
    dblPathwayPoints(0)   =  300.0
    dblPathwayPoints(1)   =  100.0
@@ -127,8 +133,10 @@ within a product document.
    dblMathDirection(1) = 0.0
    dblMathDirection(2) = 0.0
 
+```vbscript
    Set objArrPathway        = objArrProd.ArrangementPathways.AddPathway(objMove, _
                                                                         dblPathwayPoints, _
+```
                                                                         dblMathDirection)
   ...
 ```
@@ -143,8 +151,10 @@ within a product document.
 
    ' Define Bend Radius of Nodes
    '---------------------------------------------- 
+```vbscript
    Dim intK As Integer   
    For intK = 1 To objArrPathway.Nodes.Count
+```
    objArrPathway.Nodes.Item(intK).BendRadius = 10.0
    Next
   ...
@@ -152,5 +162,7 @@ within a product document.
 
 ```vbscript
 ...
+```vbscript
  End Sub
+```
 ```

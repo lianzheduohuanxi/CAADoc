@@ -4,13 +4,13 @@ title: "mkmancpp"
 category: "use-case"
 module: "CAABtlQuickRefs"
 tags: ["CAA2Usage", "CAA2Level"]
-source_file: "Doc/online/CAABtlQuickRefs/CAABtlMkmancpp.htm"
+source_file: "Doc/online/CAABtlQuickRefs/CAABtlMkmancpp.htmmd"
 converted: "2026-05-11T17:33:50.001870"
 ```
 
 ---
 tags: ["CAA2Usage", "CAA2Level"]
-source_file: "Doc/online/CAABtlQuickRefs/CAABtlMkmancpp.htm"
+source_file: "Doc/online/CAABtlQuickRefs/CAABtlMkmancpp.htmmd"
 converted: "2026-05-11T17:33:50.001870"
 RADE |  C++ API Documentation Generator |  mkmancpp _Generating documentation for C++ header files_
 
@@ -87,9 +87,11 @@ You can ignore the other directories and files. Most of these files are pointed 
 
 This command parses the current workspace and generates the HTML documentation of the public members of the L1 tagged C++ header files located in the PublicInterfaces directories of all the frameworks in the workspace.
 
+```vbscript
       * Set the workspace to parse and the documentation output directory  UNIX |  `mkmancpp -W /u/users/UserName/myWs -o /u/users/UserName/myWs/htmlDoc `
 ---|---
-**Windows** |  `mkmancpp -W E/myWs -o E/myWs\htmlDoc`
+```
+**Windows** |  `mkmancpp -W E/myWs -o E/myWs/htmlDoc`
 This command parses the workspace myWs and generates the HTML documentation in the directory htmlDoc of this workspace. Again the public members of the L1 tagged C++ header files located in the PublicInterfaces directories of all the frameworks in the workspace are processed.
       * Run at the workspace root to generate PublicInterfaces and ProtectedInterfaces headers documentation:
 
@@ -116,7 +118,7 @@ This command parses the current workspace and generates the HTML documentation o
 
       * Run at the workspace root to generate PublicInterfaces headers documentation with a footer and a style sheet included in all pages:  UNIX |  `mkmancpp -htmlfooter /u/users/UserName/Footer.txt -stylesheet /u/users/UserName/Stylesheet.css`
 ---|---
-**Windows** |  `mkmancpp -htmlfooter E/myWS\Footer.txt -stylesheet E/myWS\Stylesheet.css`
+**Windows** |  `mkmancpp -htmlfooter E/myWS/Footer.txt -stylesheet E/myWS/Stylesheet.css`
 This command parses the current workspace and generates the HTML documentation of the public members of the L1 tagged C++ header files located in the PublicInterfaces directories of all the frameworks in the workspace. The footer must contain an HTML section which is included at the bottom of each generated file. The style sheet is referenced by each generated file.
 [Top] References [1] | [CAA V5 C++ Interface and Class Documentation Rules](../CAADocTechArticles/CAADocCppHeaderDoc.md)
 ---|---

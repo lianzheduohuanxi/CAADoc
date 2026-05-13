@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Graphical Properties"
-category: "use-case"
+category: tech-article
 module: "CAAVisTechArticles"
 tags: ["CATIAVisPropertySet", "CATIA", "CATIProperty", "CATIVisProperties", "CATISelectShow", "CATIVisu", "CAAEPstVisPropertiesPoint"]
-source_file: "Doc/online/CAAVisTechArticles/CAAVisGraphicProperties.htm"
+source_file: "Doc/online/CAAVisTechArticles/CAAVisGraphicProperties.htmmd"
 converted: "2026-05-11T17:31:52.277889"
 ```
 
@@ -148,8 +148,8 @@ On the _CATIProperty_ interface, a copy of this instance is stored. So, a priori
 
 In the visualization process, there are two cases to distinguish, even though they join together at the end. The total and the partial revisualization of the model. But at first, it is important to give the methods of the _CATExtIVisu_ adapter class of the _CATIVisu_ interface in relationship with the properties:
 
-  * `virtual CATRep * **BuildRep**()`
-  * `virtual void **SetGraphicAttribut**()`
+  * `virtual CATRep * **BuildRep**(#)`
+  * `virtual void **SetGraphicAttribut**(#)`
   * `virtual int **ModifyRep**(const CATNotification & iNotif)`
   * `virtual void **SetPointGraphicAttribute**(CATRep * iRep, CATVisPropertyType iPropertyType, CATVisPropertiesValues & iPropertyValues)`
   * `virtual void **SetMeshGraphicAttribute**(CATRep * iRep, CATVisPropertyType iPropertyType, CATVisPropertiesValues & iPropertyValues)`

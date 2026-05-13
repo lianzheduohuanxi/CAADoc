@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CAAScrBase", "CATIA", "CAAInfGettingStarted"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfGettingStartedSource.htm"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfGettingStartedSource.htmmd"
 converted: "2026-05-11T11:27:02.688648"
 ---
 
@@ -11,7 +11,8 @@ Language="VBSCRIPT"
 
 'My macro creates five cylinders
 
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
 
 Dim documents1 As Documents
 Set documents1 = CATIA.Documents
@@ -38,9 +39,12 @@ Dim reference1 As AnyObject
 Set reference1 = originElements1.PlaneXY
 
 x = 0
+```
 
+```vbscript
 Dim arrayOfVariantOfDouble1(8)
 arrayOfVariantOfDouble1(0) = 0.000000
+```
 arrayOfVariantOfDouble1(1) = 0.000000
 arrayOfVariantOfDouble1(2) = 0.000000
 arrayOfVariantOfDouble1(3) = 1.000000
@@ -52,13 +56,16 @@ arrayOfVariantOfDouble1(8) = 0.000000
 
 For I = 1 To 5
 
+```vbscript
   Dim sketch1 As Sketch
   Set sketch1 = sketches1.Add(reference1)
 
   sketch1.SetAbsoluteAxisData arrayOfVariantOfDouble1
+```
 
+```vbscript
   Dim factory2D1 As Factory2D
-  Set factory2D1 = sketch1.OpenEdition()
+  Set factory2D1 = sketch1.OpenEdition(#)
 
   Dim geometricElements1 As GeometricElements
   Set geometricElements1 = sketch1.GeometricElements
@@ -70,21 +77,27 @@ For I = 1 To 5
   Set line2D1 = axis2D1.GetItem("HDirection")
 
   line2D1.ReportName = 1
+```
 
+```vbscript
   Dim line2D2 As AnyObject
   Set line2D2 = axis2D1.GetItem("VDirection")
 
   line2D2.ReportName = 2
+```
 
+```vbscript
   Dim circle2D1 As Circle2D
   Set circle2D1 = factory2D1.CreateClosedCircle(x, 0.000000, 10.000000)
 
   circle2D1.ReportName = 3
+```
 
   sketch1.CloseEdition 
 
   part1.Update 
 
+```vbscript
   Dim shapeFactory1 As Factory
   Set shapeFactory1 = part1.ShapeFactory
 
@@ -92,19 +105,23 @@ For I = 1 To 5
   Set pad1 = shapeFactory1.AddNewPad(sketch1, 20.000000)
 
   part1.Update 
+```
 
   x = x + 25
  
 Next
+```vbscript
 End Sub  
 
+```
 
 ```vbscript
 Language="VBSCRIPT"
 
 'My macro creates five cylinders
 
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
 
 Dim documents1 As Documents
 Set documents1 = CATIA.Documents
@@ -131,9 +148,12 @@ Dim reference1 As AnyObject
 Set reference1 = originElements1.PlaneXY
 
 x = 0
+```
 
+```vbscript
 Dim arrayOfVariantOfDouble1(8)
 arrayOfVariantOfDouble1(0) = 0.000000
+```
 arrayOfVariantOfDouble1(1) = 0.000000
 arrayOfVariantOfDouble1(2) = 0.000000
 arrayOfVariantOfDouble1(3) = 1.000000
@@ -145,13 +165,16 @@ arrayOfVariantOfDouble1(8) = 0.000000
 
 For I = 1 To 5
 
+```vbscript
   Dim sketch1 As Sketch
   Set sketch1 = sketches1.Add(reference1)
 
   sketch1.SetAbsoluteAxisData arrayOfVariantOfDouble1
+```
 
+```vbscript
   Dim factory2D1 As Factory2D
-  Set factory2D1 = sketch1.OpenEdition()
+  Set factory2D1 = sketch1.OpenEdition(#)
 
   Dim geometricElements1 As GeometricElements
   Set geometricElements1 = sketch1.GeometricElements
@@ -163,21 +186,27 @@ For I = 1 To 5
   Set line2D1 = axis2D1.GetItem("HDirection")
 
   line2D1.ReportName = 1
+```
 
+```vbscript
   Dim line2D2 As AnyObject
   Set line2D2 = axis2D1.GetItem("VDirection")
 
   line2D2.ReportName = 2
+```
 
+```vbscript
   Dim circle2D1 As Circle2D
   Set circle2D1 = factory2D1.CreateClosedCircle(x, 0.000000, 10.000000)
 
   circle2D1.ReportName = 3
+```
 
   sketch1.CloseEdition 
 
   part1.Update 
 
+```vbscript
   Dim shapeFactory1 As Factory
   Set shapeFactory1 = part1.ShapeFactory
 
@@ -185,9 +214,12 @@ For I = 1 To 5
   Set pad1 = shapeFactory1.AddNewPad(sketch1, 20.000000)
 
   part1.Update 
+```
 
   x = x + 25
  
 Next
+```vbscript
 End Sub
+```
 ```

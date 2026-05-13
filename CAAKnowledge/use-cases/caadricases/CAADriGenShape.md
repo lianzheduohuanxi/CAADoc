@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Editing Generated Shapes in Generative Views"
-category: "use case"
+category: use-case case"
 module: "CAADriUseCases"
 tags: ["CATIDftDocumentServices", "CATIDftPattern", "CATIDftView", "CATIProduct", "CATIDftDrawing", "CAADraftingInterfaces", "CATIA", "CAADrwGenShape", "CATIDrwGenDrawShape", "CATIUnknownList"]
-source_file: "Doc/online/CAADriUseCases/CAADriGenShape.htm"
+source_file: "Doc/online/CAADriUseCases/CAADriGenShape.htmmd"
 converted: "2026-05-11T17:31:51.006322"
 ```
 
@@ -64,11 +64,11 @@ This Use Case shows how to retrieve contours of GenShape. In the section view of
 
 To launch CAADrwGenShape, you will need to set up the build time environment, then compile CAADrwGenShape along with its prerequisites, set up the run time environment, and then execute the use case [1].
 
-When you launch the use case, pass the full pathname of the Drawing file as argument. A Drawing file is delivery in the following path: CAADraftingInterfaces.edu\CNext\resources\graphic\DrawingForGenShapeUseCase.CATDrawing.
+When you launch the use case, pass the full pathname of the Drawing file as argument. A Drawing file is delivery in the following path: CAADraftingInterfaces.edu/CNext/resources/graphic/DrawingForGenShapeUseCase.CATDrawing.
 
   * With Windows
 
-When you launch the use case, pass the full pathname of the Drawing file as argument. A Drawing file is delivery in the following path: CAADraftingInterfaces.edu\CNext\resources\graphic\DrawingForGenShapeUseCase.CATDrawing.
+When you launch the use case, pass the full pathname of the Drawing file as argument. A Drawing file is delivery in the following path: CAADraftingInterfaces.edu/CNext/resources/graphic/DrawingForGenShapeUseCase.CATDrawing.
         e:> mkrun -c cmd
         CAADrwGenShape c/.../DrawingForGenShapeUseCase.CATDrawing
 
@@ -86,10 +86,10 @@ When you launch the use case, pass the full pathname of the Drawing file as argu
 The CAADrwGenShape use case is made of a single source file named CAADrwGenShape.cpp located in the CAADrwGenShape.m module of the CAADraftingInterfaces.edu framework:
 
 The CAADrwGenShape use case is made of a single source file named CAADrwGenShape.cpp located in the CAADrwGenShape.m module of the CAADraftingInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwGenShape.m\`
+Windows | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwGenShape.m/`
 
 The CAADrwGenShape use case is made of a single source file named CAADrwGenShape.cpp located in the CAADrwGenShape.m module of the CAADraftingInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwGenShape.m\`
+Windows | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwGenShape.m/`
 Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwGenShape.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -189,28 +189,28 @@ if (SUCCEEDED(pDocDrawing->QueryInterface(IID_CATIDftDocumentServices, (void **)
 if (SUCCEEDED(piDftDocServices->GetDrawing(IID_CATIDftDrawing, (void **)&piDrawing)))
 ```
 
-        piDftDocServices->Release();
+        piDftDocServices->Release(#);
         piDftDocServices=NULL;
 ```
 
       }
 ```vbscript
 if (SUCCEEDED(piDftDocServices->GetDrawing(IID_CATIDftDrawing, (void **)&piDrawing)))
-piDftDocServices->Release();
+piDftDocServices->Release(#);
 piDftDocServices=NULL;
       else
 ```
 
       {
-piDftDocServices->Release();
+piDftDocServices->Release(#);
 piDftDocServices=NULL;
 else
-        piDftDocServices->Release();
+        piDftDocServices->Release(#);
         piDftDocServices=NULL;
 
         // Ends session
         ::Delete_Session("SampleSession");
-piDftDocServices->Release();
+piDftDocServices->Release(#);
 piDftDocServices=NULL;
         return 3;
 
@@ -368,12 +368,12 @@ for (int numpt=1 ; numpt<=NbPtcnt ; numpt++)
           {
 CATMathPoint2D *tmpt = ListOfPoints[numpt];
 if (tmpt)
-            cerr << " Number point = " << numpt << " X= = "<< tmpt->GetX() << "Y = " << tmpt->GetY() << endl;
+            cerr << " Number point = " << numpt << " X= = "<< tmpt->GetX(#) << "Y = " << tmpt->GetY(#) << endl;
 
             // Memory clean
 CATMathPoint2D *tmpt = ListOfPoints[numpt];
 if (tmpt)
-cerr << " Number point = " << numpt << " X= = "<< tmpt->GetX() << "Y = " << tmpt->GetY() << endl;
+cerr << " Number point = " << numpt << " X= = "<< tmpt->GetX(#) << "Y = " << tmpt->GetY(#) << endl;
             delete tmpt , tmpt=NULL;
 
           }
@@ -425,19 +425,19 @@ CATUnicodeString instanceName;
         {
 CATUnicodeString instanceName;
 if (SUCCEEDED (piProd->GetPrdInstanceName( instanceName ) ))
-          cerr << "Part instance name"<< instanceName.CastToCharPtr() <<endl;
+          cerr << "Part instance name"<< instanceName.CastToCharPtr(#) <<endl;
 
         }
 ```vbscript
 if (SUCCEEDED (piProd->GetPrdInstanceName( instanceName ) ))
-cerr << "Part instance name"<< instanceName.CastToCharPtr() <<endl;
-        piProd->Release();piProd=NULL;
+cerr << "Part instance name"<< instanceName.CastToCharPtr(#) <<endl;
+        piProd->Release(#);piProd=NULL;
 ```
 
       }
-cerr << "Part instance name"<< instanceName.CastToCharPtr() <<endl;
-piProd->Release();piProd=NULL;
-      piUnk->Release();piUnk=NULL;
+cerr << "Part instance name"<< instanceName.CastToCharPtr(#) <<endl;
+piProd->Release(#);piProd=NULL;
+      piUnk->Release(#);piUnk=NULL;
 
     }
     ...
@@ -463,7 +463,7 @@ if (SUCCEEDED(piGenShape->GetPattern(&piDftPattern)))
       piDftPattern->GetPatternType(&patternType);
       if (patternType == 1)
       cerr << "Hatching Pattern found" << endl;
-      piDftPattern->Release(),piDftPattern=NULL;
+      piDftPattern->Release(#),piDftPattern=NULL;
 
     }
     ...

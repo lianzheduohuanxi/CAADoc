@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Part Document Automation Objects"
-category: "use-case"
+category: tech-article
 module: "CAAScdMmrTechArticles"
 tags: []
-source_file: "Doc/online/CAAScdMmrTechArticles/CAAMmrTocPartDocument.htm"
+source_file: "Doc/online/CAAScdMmrTechArticles/CAAMmrTocPartDocument.htmmd"
 converted: "2026-05-11T17:31:51.155629"
 ```
 
@@ -89,11 +89,15 @@ In addition, the **Part** object aggregates:
   * The factories: a **ShapeFactory** object to create shapes, an **HybridShapeFactory** object to create hybrid shapes, and an **InstanceFactory** object to instantiate either User Defined Features or a Power Copies. You can retrieve the first two factories using the Part's ShapeFactory and HybridShapeFactory properties respectively. You can retrieve the InstanceFactory object thanks to the Part's GetCustomerFactory method as follows, assuming Part1 is the **Part** object of the active Part document:
 
 ```vbscript
+```vbscript
         Dim myFactory As InstanceFactory
+```vbscript
+```
 ```vbscript
 ```vbscript
         Set myFactory = Part1.GetCustomerFactory("InstanceFactory")
 
+```
 ```
 
 ```

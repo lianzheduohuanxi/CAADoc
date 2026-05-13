@@ -4,13 +4,13 @@ title: "Adding Business Rules to an Interactive Command"
 category: "use case"
 module: "CAADkpUseCases"
 tags: ["CATIAVPMVDALock", "CAAVPMDesktopProduct", "CAADkpCustomCommand", "CATIAVPMVDACommand", "CATIAVPMVDACommandFactory_var", "CATIVpmFactoryObject"]
-source_file: "Doc/online/CAADkpUseCases/CAADkpCustomCommand.htm"
+source_file: "Doc/online/CAADkpUseCases/CAADkpCustomCommand.htmmd"
 converted: "2026-05-11T17:33:46.012499"
 ```
 
 ---
 tags: ["CATIAVPMVDALock", "CAAVPMDesktopProduct", "CAADkpCustomCommand", "CATIAVPMVDACommand", "CATIAVPMVDACommandFactory_var", "CATIVpmFactoryObject"]
-source_file: "Doc/online/CAADkpUseCases/CAADkpCustomCommand.htm"
+source_file: "Doc/online/CAADkpUseCases/CAADkpCustomCommand.htmmd"
 converted: "2026-05-11T17:33:46.012499"
 Lifecycle Applications |  EBOM Part & Assembly Detailing |  Adding Business Rules to an Interactive Command _Customizing an interactive command with a pre- and a post-process_
 
@@ -37,12 +37,12 @@ What You Will Learn With This Use Case This use case is intended to show you how
 When the panel is constructed, the user exit is called through BeforeInit and AfterInit methods (there is no difference between them) in order to change the list of attributes : attributes can be added, removed, hidden, filled with calculated default values... An attribute can be made sensitive.
 When filling the panel and when a sensitive attribute looses the focus, the user exit is called through BeforeCheck and AfterCheck methods (there is no difference between them) in order to perform some checks on the filled values, and compute other values.
 When the user clics on the OK button, the user exit is called through BeforeExecute method with every attributes and their values. At this time the user exit can still send an error code to prevent the creation of the object.
-The creation occurs, and when the server has done with it, the user exit is called a last time through AfterExecute method.   [Top] The CAADkpCustomCommand Use Case CAADkpCustomCommand is a use case of the CAAVPMDesktopProduct.edu framework that illustrates VPMDesktopProduct framework capabilities. [Top] What Does CAADkpCustomCommand Do CAADkpCustomCommand is showing how to hide an attribute, how to give a default value to another one, how to make sensitive another attribute, how to compute an attribute value from what has been filled, how to check the value of an attribute and send an error code if the value is not good, how to retrieve the created object and lock it.   [Top] How to Launch CAADkpCustomCommand To launch CAADkpCustomCommand , you will need to set up the build time environment, then compile CAADkpCustomCommand along with its prerequisites, set up the run time environment, and then execute the use case [1]. [Top] Where to Find the CAADkpCustomCommand Code The CAADkpCustomCommand use case is made of several classes/a single file located in the CAADkpCustomCommand.m module of the CAAVPMDesktopProduct.edu framework: | Windows | `InstallRootDirectory\CAAVPMDesktopProduct.edu\CAADkpCustomCommand.m\`
+The creation occurs, and when the server has done with it, the user exit is called a last time through AfterExecute method.   [Top] The CAADkpCustomCommand Use Case CAADkpCustomCommand is a use case of the CAAVPMDesktopProduct.edu framework that illustrates VPMDesktopProduct framework capabilities. [Top] What Does CAADkpCustomCommand Do CAADkpCustomCommand is showing how to hide an attribute, how to give a default value to another one, how to make sensitive another attribute, how to compute an attribute value from what has been filled, how to check the value of an attribute and send an error code if the value is not good, how to retrieve the created object and lock it.   [Top] How to Launch CAADkpCustomCommand To launch CAADkpCustomCommand , you will need to set up the build time environment, then compile CAADkpCustomCommand along with its prerequisites, set up the run time environment, and then execute the use case [1]. [Top] Where to Find the CAADkpCustomCommand Code The CAADkpCustomCommand use case is made of several classes/a single file located in the CAADkpCustomCommand.m module of the CAAVPMDesktopProduct.edu framework: | Windows | `InstallRootDirectory/CAAVPMDesktopProduct.edu/CAADkpCustomCommand.m/`
 
 When the panel is constructed, the user exit is called through BeforeInit and AfterInit methods (there is no difference between them) in order to change the list of attributes : attributes can be added, removed, hidden, filled with calculated default values... An attribute can be made sensitive.
 When filling the panel and when a sensitive attribute looses the focus, the user exit is called through BeforeCheck and AfterCheck methods (there is no difference between them) in order to perform some checks on the filled values, and compute other values.
 When the user clics on the OK button, the user exit is called through BeforeExecute method with every attributes and their values. At this time the user exit can still send an error code to prevent the creation of the object.
-The creation occurs, and when the server has done with it, the user exit is called a last time through AfterExecute method.   [Top] The CAADkpCustomCommand Use Case CAADkpCustomCommand is a use case of the CAAVPMDesktopProduct.edu framework that illustrates VPMDesktopProduct framework capabilities. [Top] What Does CAADkpCustomCommand Do CAADkpCustomCommand is showing how to hide an attribute, how to give a default value to another one, how to make sensitive another attribute, how to compute an attribute value from what has been filled, how to check the value of an attribute and send an error code if the value is not good, how to retrieve the created object and lock it.   [Top] How to Launch CAADkpCustomCommand To launch CAADkpCustomCommand , you will need to set up the build time environment, then compile CAADkpCustomCommand along with its prerequisites, set up the run time environment, and then execute the use case [1]. [Top] Where to Find the CAADkpCustomCommand Code The CAADkpCustomCommand use case is made of several classes/a single file located in the CAADkpCustomCommand.m module of the CAAVPMDesktopProduct.edu framework: | Windows | `InstallRootDirectory\CAAVPMDesktopProduct.edu\CAADkpCustomCommand.m\`
+The creation occurs, and when the server has done with it, the user exit is called a last time through AfterExecute method.   [Top] The CAADkpCustomCommand Use Case CAADkpCustomCommand is a use case of the CAAVPMDesktopProduct.edu framework that illustrates VPMDesktopProduct framework capabilities. [Top] What Does CAADkpCustomCommand Do CAADkpCustomCommand is showing how to hide an attribute, how to give a default value to another one, how to make sensitive another attribute, how to compute an attribute value from what has been filled, how to check the value of an attribute and send an error code if the value is not good, how to retrieve the created object and lock it.   [Top] How to Launch CAADkpCustomCommand To launch CAADkpCustomCommand , you will need to set up the build time environment, then compile CAADkpCustomCommand along with its prerequisites, set up the run time environment, and then execute the use case [1]. [Top] Where to Find the CAADkpCustomCommand Code The CAADkpCustomCommand use case is made of several classes/a single file located in the CAADkpCustomCommand.m module of the CAAVPMDesktopProduct.edu framework: | Windows | `InstallRootDirectory/CAAVPMDesktopProduct.edu/CAADkpCustomCommand.m/`
 Unix | `InstallRootDirectory/CAAVPMDesktopProduct.edu/CAADkpCustomCommand.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed. [Top] Step-by-Step There are five logical steps in CAADkpCustomCommand:
 
@@ -78,12 +78,12 @@ class ExportedByCAADkpCustomCommand ENOVECreateExtension : public CATBaseUnknown
             /** Default Constructor.
              */
 
-            ENOVECreateExtension();
+            ENOVECreateExtension(#);
 
             /** Destructor.
              */
 
-            virtual ~ENOVECreateExtension();
+            virtual ~ENOVECreateExtension(#);
 
             /** Called before showing the panel.
               * Most of the time a panel shows up with a list of attributes to fill. This method is
@@ -91,14 +91,14 @@ class ExportedByCAADkpCustomCommand ENOVECreateExtension : public CATBaseUnknown
               * some default values, make some mandatory or sensitive.
              */
 
-            HRESULT BeforeInit();
+            HRESULT BeforeInit(#);
 
             /** Called before showing the panel.
               * This method is called just after @href #BeforeInit and has the same use as this one.
               * So, you can implement just one of them and leave the other empty.
              */
 
-            HRESULT AfterInit();
+            HRESULT AfterInit(#);
 
             /** Called when a sensitive attribute looses the focus.
               * When filling the attributes on the screen, if a sensitive attribute looses the focus,
@@ -106,14 +106,14 @@ class ExportedByCAADkpCustomCommand ENOVECreateExtension : public CATBaseUnknown
               * entered for this attribute can be retrieved to compute other values of attributes.
              */
 
-            HRESULT BeforeCheck();
+            HRESULT BeforeCheck(#);
 
             /** Called when a sensitive attribute looses the focus.
               * This method is called just after @href #BeforeCheck and has the same use as this one.
               * So, you can implement just one of them and leave the other empty.
              */
 
-            HRESULT AfterCheck();
+            HRESULT AfterCheck(#);
 
             /** Called when validating the panel.
               * When the OK button is clicked at the end of the filling process, this method is
@@ -121,14 +121,14 @@ class ExportedByCAADkpCustomCommand ENOVECreateExtension : public CATBaseUnknown
               * executed, this method can return an error code.
              */
 
-            HRESULT BeforeExecute();
+            HRESULT BeforeExecute(#);
 
             /** Called at the very end of the process.
               * This method is called after the actual command is executed. Nothing can be done here to
               * prevent the command from being executed.
              */
 
-            HRESULT AfterExecute();
+            HRESULT AfterExecute(#);
 
 ```vbscript
         private :
@@ -161,13 +161,13 @@ In the header file of the class, make it derive from CATBaseUnknown, and use the
     /** Default Constructor.
      */
 
-    ENOVECreateExtension::ENOVECreateExtension()
+    ENOVECreateExtension::ENOVECreateExtension(#)
     {}
 
     /** Destructor.
      */
 
-    ENOVECreateExtension::~ENOVECreateExtension()
+    ENOVECreateExtension::~ENOVECreateExtension(#)
     {}
 
     /** Called before showing the panel.
@@ -176,9 +176,9 @@ In the header file of the class, make it derive from CATBaseUnknown, and use the
       * some default values, make some mandatory or sensitive.
      */
 
-    HRESULT ENOVECreateExtension::BeforeInit()
+    HRESULT ENOVECreateExtension::BeforeInit(#)
     {
-HRESULT ENOVECreateExtension::BeforeInit()
+HRESULT ENOVECreateExtension::BeforeInit(#)
         HRESULT RC = S_OK;
         return RC;
 
@@ -189,9 +189,9 @@ HRESULT ENOVECreateExtension::BeforeInit()
       * So, you can implement just one of them and leave the other empty.
      */
 
-    HRESULT ENOVECreateExtension::AfterInit()
+    HRESULT ENOVECreateExtension::AfterInit(#)
     {
-HRESULT ENOVECreateExtension::AfterInit()
+HRESULT ENOVECreateExtension::AfterInit(#)
         HRESULT RC = S_OK;
         return RC;
 
@@ -203,9 +203,9 @@ HRESULT ENOVECreateExtension::AfterInit()
       * entered for this attribute can be retrieved to compute other values of attributes.
      */
 
-    HRESULT ENOVECreateExtension::BeforeCheck()
+    HRESULT ENOVECreateExtension::BeforeCheck(#)
     {
-HRESULT ENOVECreateExtension::BeforeCheck()
+HRESULT ENOVECreateExtension::BeforeCheck(#)
         HRESULT RC = S_OK;
         return RC;
 
@@ -216,9 +216,9 @@ HRESULT ENOVECreateExtension::BeforeCheck()
       * So, you can implement just one of them and leave the other empty.
      */
 
-    HRESULT ENOVECreateExtension::AfterCheck()
+    HRESULT ENOVECreateExtension::AfterCheck(#)
     {
-HRESULT ENOVECreateExtension::AfterCheck()
+HRESULT ENOVECreateExtension::AfterCheck(#)
         HRESULT RC = S_OK;
         return RC;
 
@@ -230,9 +230,9 @@ HRESULT ENOVECreateExtension::AfterCheck()
       * executed, this method can return an error code.
      */
 
-    HRESULT ENOVECreateExtension::BeforeExecute()
+    HRESULT ENOVECreateExtension::BeforeExecute(#)
     {
-HRESULT ENOVECreateExtension::BeforeExecute()
+HRESULT ENOVECreateExtension::BeforeExecute(#)
         HRESULT RC = S_OK;
         return RC;
 
@@ -243,9 +243,9 @@ HRESULT ENOVECreateExtension::BeforeExecute()
       * prevent the command from being executed.
      */
 
-    HRESULT ENOVECreateExtension::AfterExecute()
+    HRESULT ENOVECreateExtension::AfterExecute(#)
     {
-HRESULT ENOVECreateExtension::AfterExecute()
+HRESULT ENOVECreateExtension::AfterExecute(#)
         HRESULT RC = S_OK;
         return RC;
 
@@ -317,8 +317,10 @@ if ( SUCCEEDED( RC ) && pDescAttribute )
         }
 
         // 3. Make the V_Name attribute sensitive.
+```vbscript
         // 4. Set the additional icon to be displayed on the UI for this attribute
         // Do not allocate VPMIQAttribute, the method does it.
+```
 
         VPMIQAttribute * pNameAttribute = NULL;
 VPMIQAttribute * pNameAttribute = NULL;
@@ -338,9 +340,11 @@ if ( SUCCEEDED( RC ) && pNameAttribute )
 
     	pNameAttribute->SetSensible( 1 );
 
+```vbscript
     	//Set the additional icon to be displayed
-    	//The number set using SetIconsFacet() API will be mapped to an icon according to the entries present in
-    	//docs\java\VPMAttributeIconList.properties file on the Client side
+    	//The number set using SetIconsFacet(#) API will be mapped to an icon according to the entries present in
+```
+    	//docs/java/VPMAttributeIconList.properties file on the Client side
 pNameAttribute->SetSensible( 1 );
     	CATListOfInt iconNum;
     	iconNum.Append(1);
@@ -395,7 +399,7 @@ RC = spUECommand->get_Parameter( "ENOVIA_VPMPartMaster", "V_description", pDescA
 if ( SUCCEEDED( RC ) && pDescAttribute )
 ```
 
-    	    CORBAAny NameValue = pNameAttribute->GetValue();
+    	    CORBAAny NameValue = pNameAttribute->GetValue(#);
 
     	    CATUnicodeString StringNameValue;
     	    NameValue >> StringNameValue;
@@ -437,12 +441,12 @@ RC = spUECommand->get_Parameter( "ENOVIA_VPMPartMaster", "V_ID", pIDAttribute );
 if ( SUCCEEDED( RC ) && pIDAttribute )
 ```
 
-    	CORBAAny IDValue = pIDAttribute->GetValue();
+    	CORBAAny IDValue = pIDAttribute->GetValue(#);
     	CATUnicodeString StringIDValue;
     	IDValue >> StringIDValue;
 
     	// 3. If the value is a forbidden one, return an error.
-CORBAAny IDValue = pIDAttribute->GetValue();
+CORBAAny IDValue = pIDAttribute->GetValue(#);
 CATUnicodeString StringIDValue;
 IDValue >> StringIDValue;
     	if ( StringIDValue == "ForbiddenValue" )
@@ -494,7 +498,7 @@ RC = piCreatedObject->QueryInterface( IID_ENOVIABusinessObject, (void **) & piCr
 if ( SUCCEEDED( RC ) && piCreatedBO )
 ```
 
-    	    CATIAVPMVDACommandFactory_var spCommandFactory = GetCommandFactory();
+    	    CATIAVPMVDACommandFactory_var spCommandFactory = GetCommandFactory(#);
     	    CATIAVPMVDACommand * piCommand = NULL;
 
     	    CATUnicodeString LockString( "Lock" );
@@ -520,8 +524,8 @@ CATIAVPMVDALock * piLockCommand = NULL;
 RC = piCommand->QueryInterface( IID_CATIAVPMVDALock, (void **) & piLockCommand );
     	    piLockCommand->put_BObject( piCreatedBO );
     	    piLockCommand->put_referenceAlso( 0==0 );
-    	    RC = piLockCommand->Exec();
-                piCreatedBO->Release();
+    	    RC = piLockCommand->Exec(#);
+                piCreatedBO->Release(#);
 
     	}
         }

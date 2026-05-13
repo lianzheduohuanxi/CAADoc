@@ -6,7 +6,7 @@ title: "CATIArrBendableString, CATIAArrSystemLineProduct Interfaces Use Case
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CAAPslTubingExtract", "CATIAArrBendableString", "CATIArrSystemLineProduct", "CATIA", "CATIArrBendableString", "CATIAArrSystemLineProduct"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAPslTubingExtract.htm"
+source_file: "Doc/online/CAAScdArrUseCases/CAAPslTubingExtract.htmmd"
 converted: "2026-05-11T17:31:51.583562"
 ```
 
@@ -21,7 +21,7 @@ converted: "2026-05-11T17:31:51.583562"
  This example shows how to extract Bendable Data from BendableString objects (Pipe with bends, Tube with bends). Help is taken of a macro. This macro has a reference to CATIArrBendableString, CATIAArrSystemLineProduct  Interfaces (referred to as ArrBendableString and as ArrSystemLineProduct in reference Visual Basic document).This macro opens an existing Product document and retrieves the CATIAArrSystemLineProduct selection. Then it obtains the subproducts of this selection, which adhere to CATIAArrBendableString. It then gets the bending details of the ArrBendableString object.
 ---|---
 This example shows how to extract Bendable Data from BendableString objects (Pipe with bends, Tube with bends). Help is taken of a macro. This macro has a reference to CATIArrBendableString, CATIAArrSystemLineProduct  Interfaces (referred to as ArrBendableString and as ArrSystemLineProduct in reference Visual Basic document).This macro opens an existing Product document and retrieves the CATIAArrSystemLineProduct selection. Then it obtains the subproducts of this selection, which adhere to CATIAArrBendableString. It then gets the bending details of the ArrBendableString object.
- PslTubingExtract is launched after CATIA is up and the reference document is opened.PslTubingExtract.CATScript is located in the runtime directory Operating System (say intel_a)\code\command
+ PslTubingExtract is launched after CATIA is up and the reference document is opened.PslTubingExtract.CATScript is located in the runtime directory Operating System (say intel_a)/code/command
  CAAPslTubingExtract includes the following steps:
 
   1. Prolog
@@ -49,25 +49,37 @@ The ArrSystemLineProduct object is a collection object that manages ArrBendableS
 
     ...
 ```vbscript
+```vbscript
        Set objCATIAV5Document0 = CATIA.ActiveDocument
+```
 ```
 
 ```vbscript
 ```vbscript
 ```vbscript
        '//---------- Get Arrworkbench from current document
+```vbscript
        Set objCATIAV5ArrWorkbench0 = objCATIAV5Document0.GetWorkbench("ArrWorkbench")
        '//---------- Get current selection
+```
+```vbscript
        Set objCATIAV5Selection = objCATIAV5Document0.Selection
        Dim objSysLineProduct As ArrSystemLineProduct
        Dim objBendableString As ArrBendableString
        ' Find from the selection list, objects that conform to the CATIAArrSystemLineProduct interface.
+```
+```vbscript
        Set objSysLineProduct = objCATIAV5Selection.FindObject("CATIAArrSystemLineProduct")
        ' Get the count of subproducts, actual subproduct (methods of CATIArrSystemLineProduct interface)
+```
+```vbscript
        Dim intNumOfSubProducts As integer
        intNumOfSubProducts = objSysLineProduct.GetSubProductsCount("CATIAArrBendableString")
+```
        For intSubProdIndex =1 to intNumOfSubProducts
+```vbscript
          Set objBendableString = objSysLineProduct.GetSubItem(intSubProdIndex)
+```
 ```
 
 ```
@@ -98,8 +110,10 @@ The ArrSystemLineProduct object is a collection object that manages ArrBendableS
 ```
 
 ```vbscript
+```vbscript
       Dim dblSegmentData(14) As Double
       objBendableString.GetSegmentData intForLooping, dblSegmentData
+```
 ```
 
 ```vbscript
@@ -175,13 +189,15 @@ Thus we saw how to read a CATProduct document, retrieve the objects we are inter
 
     ...
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```
 
 ---
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Foreign Mathematical Functions"
-category: "use case"
+category: use-case case"
 module: "CAACgmModel"
 tags: ["CAAAmtForeign", "CAAGobForeign", "CAADoc", "CAAAmtFctMain", "CAAAdvancedMathematics", "CAAAmtForeignFunctionXY", "CAAAmtForeignFct", "CAAAmtForeignFctXY", "CAAAmtFct"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcAmtForeign.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcAmtForeign.htmmd"
 converted: "2026-05-11T17:33:48.152406"
 ```
 
@@ -35,7 +35,10 @@ _(u,v) - > F(u,v) = a*u + b*v + c * cos(u)*cos(v) + d_
 
 where _a_ , _b_ , _c_ , _d_ are definition parameters. This function can be later used to defined the evaluators of a surface called "eggs box".
 
+```vbscript
 Fig 1: The "Eggs Box" Using the New Type of Function ![Eggs Box](images/CAACgmAmtForeign.gif) | The surface is defined by three functions, one for each Cartesian coordinate:
+
+```
 
     * _FX(u,v) = a x*u + bx*v + dx_
     * _FY(u,v) = a y*u + by*v + dy_
@@ -53,8 +56,8 @@ and override the corresponding methods.
 
 The mandatory methods to provide are:
 
-    * `IsA()`: returns the class name of the new class
-    * `Eval()`: evaluates the function.
+    * `IsA(#)`: returns the class name of the new class
+    * `Eval(#)`: evaluates the function.
 
 In this case, the higher order evaluators are approximated. However, it is strongly recommended:
 
@@ -99,7 +102,7 @@ The CAAAmtForeign use case is made of:
 
 The CAAAmtFct.m module of the CAAAdvancedMathematics.edu framework is located in:
 
-`InstallRootFolder\CAADoc\CAAAdvancedMathematics.edu\CAAAmtFct.m\`
+`InstallRootFolder/CAADoc/CAAAdvancedMathematics.edu/CAAAmtFct.m/`
 
 The CAAAmtFct.m module of the CAAAdvancedMathematics.edu framework is located in:
 where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed.
@@ -141,11 +144,11 @@ _//-----------------------------------------------------------------
 const double iOrigin);
 _//-----------------------------------------------------------------
     _//Returns "CAAAmtForeignFctXY"_
-      CATMathClassId IsA() const;
+      CATMathClassId IsA(#) const;
 
       // _the type of available evaluations_
 _//Returns "CAAAmtForeignFctXY"_
-CATMathClassId IsA() const;
+CATMathClassId IsA(#) const;
       CATBoolean IsOption(const CATMathOption iOption) const;
 
       _//-----------------------------------------------------------------
@@ -288,7 +291,7 @@ double * fy2) const
       //    sin(u+delta) = cos(u)*sin(delta)-sin(u)*cos(delta)_
 _// To speed up this multi-evaluation, use a precomputation which computes
       long nu = NbPoints[0], nv = NbPoints[1];
-      const double * coords = iDomain.GetCoords();
+      const double * coords = iDomain.GetCoords(#);
       double uStart = coords[0], uDelta=0.;
       if (nu>1)
 ```vbscript

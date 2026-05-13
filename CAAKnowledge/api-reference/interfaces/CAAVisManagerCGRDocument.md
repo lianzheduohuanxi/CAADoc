@@ -2,9 +2,8 @@
 title: "CAAVisManagerCGRDocument"
 type: "interface"
 module: "CAAVisualization"
-category: "framework"
+category: api-reference
 base: "CAAVisManagerDocument"
-inheritance_chain: "CAAVisManagerCGRDocument → CAAVisManagerDocument → CATBaseUnknown"
 method_count: 1
 visibility: "local"
 has_tie_binding: false
@@ -13,7 +12,6 @@ verified: true
 # CAAVisManagerCGRDocument
 
 **基类**: CAAVisManagerDocument  
-**继承链**: CAAVisManagerCGRDocument → CAAVisManagerDocument → CATBaseUnknown  
 **模块**: CAAVisualization  
 **分类**: framework  
 **可见性**: local  
@@ -25,3 +23,26 @@ verified: true
 
 - `CAAVisManagerDocument.h`
 
+---
+
+## Interface Overview
+
+**Inherited Methods**: Please refer to the base interface documentation above.
+
+---
+
+## Related Use Cases
+
+This interface is used in the following use cases:
+
+- [CAAVisSampleVisManager](../../use-cases/caaviscases/CAAVisSampleVisManager.md)
+
+## Interface Notes
+
+This interface is part of the **CAA** module.
+
+**Status**: This interface document is a template. Please refer to the official API documentation for more information.
+
+**Related Resources**:
+- [Quick References](../..//quick-refs/)
+- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)

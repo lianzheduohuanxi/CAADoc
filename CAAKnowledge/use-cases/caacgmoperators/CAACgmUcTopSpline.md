@@ -4,13 +4,13 @@ title: "Using the Basic Topological Operators"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CATICGMContainer", "CAADoc", "CATICGMTopPointOperator", "CAATopSpline", "CATICGMObject", "CATICGMTopSplineOperator", "CAAGMModelGemBrowser", "CAATGMOperatorsInterfaces", "CATICGMTopLineOperator", "CAAGMOperatorsSpline", "CATICGMSplineBody", "CATICGMLengthFromBodyOnWire"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopSpline.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopSpline.htmmd"
 converted: "2026-05-11T17:33:49.328293"
 ```
 
 ---
 tags: ["CAAGMOperatorsInterfaces", "CATICGMContainer", "CAADoc", "CATICGMTopPointOperator", "CAATopSpline", "CATICGMObject", "CATICGMTopSplineOperator", "CAAGMModelGemBrowser", "CAATGMOperatorsInterfaces", "CATICGMTopLineOperator", "CAAGMOperatorsSpline", "CATICGMSplineBody", "CATICGMLengthFromBodyOnWire"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopSpline.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopSpline.htmmd"
 converted: "2026-05-11T17:33:49.328293"
 Using Basic Topological Operators (Point, Line, Spline)
 
@@ -54,7 +54,7 @@ Moreover, the use case shows an example of the curve length computation.
 
 The length analysis can be only used with the first way, except that there is no creation global function. In this case, the constructor is directly used. The CAAGMOperatorsSpline Use Case CAAGMOperatorsSpline is a use case of the CAAGMOperatorsInterfaces.edu framework that illustrates GMOperatorsInterfaces framework capabilities. What Does CAAGMOperatorsSpline Do Fig. 1: The created objects of the CAAGMOperatorsSpline use case ![CAAGMOperatorsSpline Use Case Created Objects](images/CAACgmTopSpline1.gif) | This use case details the two ways of creation of basic bodies.
 Moreover, the use case shows an example of the curve length computation.
-How to Launch CAAGMOperatorsSpline To launch CAAGMOperatorsSpline, you will need to set up the build time environment, then compile CAAGMOperatorsSpline.m along with its prerequisites, set up the run time environment, and then execute the use case [1]. If you simply type CAAGMOperatorsSpline with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsSpline e/SplineCreation.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAATopSpline Code The CAAGMOperatorsSpline use case is made of a main named CAATopSpline.cpp located in the CAAGMOperatorsSpline.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder\CAADoc\CAATGMOperatorsInterfaces.edu\CAAGMOperatorsSpline.m\` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. Step-by-Step There are six steps in CAATopSpline.cpp:
+How to Launch CAAGMOperatorsSpline To launch CAAGMOperatorsSpline, you will need to set up the build time environment, then compile CAAGMOperatorsSpline.m along with its prerequisites, set up the run time environment, and then execute the use case [1]. If you simply type CAAGMOperatorsSpline with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsSpline e/SplineCreation.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAATopSpline Code The CAAGMOperatorsSpline use case is made of a main named CAATopSpline.cpp located in the CAAGMOperatorsSpline.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder/CAADoc/CAATGMOperatorsInterfaces.edu/CAAGMOperatorsSpline.m/` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. Step-by-Step There are six steps in CAATopSpline.cpp:
     1. Creating the Geometry Factory
     2. Directly Creating Point Bodies and a Spline Body (first way)
     3. Using a Basic Topological Operator to Create Another Spline Body (second way.) This includes:
@@ -69,7 +69,7 @@ How to Launch CAAGMOperatorsSpline To launch CAAGMOperatorsSpline, you will need
     6. Writing the Model And Closing the Container
 Creating the Geometry Factory The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
 
-    CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**() ;
+    CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**(#) ;
 ```vbscript
     if (NULL==piGeomFactory) return (1);
 
@@ -87,11 +87,11 @@ Directly Creating Point Bodies and a Spline Body To operate in this way, you onl
     // defines an open configuration for the operator
 const int nbpts = 4;
 CATBody ** aPoints = new CATBody * [nbpts];
-    CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration();
+    CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration(#);
 
     // defines the data of the operator: configuration + journal
 CATBody ** aPoints = new CATBody * [nbpts];
-CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration();
+CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration(#);
     CATTopData topdata(pConfig,NULL);
 
     aPoints[0] = **::CATCGMCreateTopPointXYZ**(piGeomFactory,&topdata,10., 15., 0.);
@@ -184,15 +184,15 @@ CATCloseCGMContainer(piGeomFactory);  // close the factory and return
 return(2);
 ```
 
-    pSplineOp->**Run**();
+    pSplineOp->**Run**(#);
 
 ```
 
     // c- get the result
-    CATBody * piSplineBody2 = pSplineOp->**GetResult**();
+    CATBody * piSplineBody2 = pSplineOp->**GetResult**(#);
 
     // also get the computed tangents .
-CATBody * piSplineBody2 = pSplineOp->**GetResult**();
+CATBody * piSplineBody2 = pSplineOp->**GetResult**(#);
     const CATMathVector *  pComputedTangents=NULL;
     pSplineOp->**GetComputedTangents**(pComputedTangents);
 
@@ -208,13 +208,13 @@ pSplineOp->**GetComputedTangents**(pComputedTangents);
     {
 CATBody * aTgtBody[nbpts];
 for (int i=0;i <nbpts; i++)
-      double length = pComputedTangents[i].Norm();
+      double length = pComputedTangents[i].Norm(#);
       aTgtBody[i] = **::CATCGMCreateTopLineFromDirection**(piGeomFactory,
 
                                                     &topdata,
 ```vbscript
 for (int i=0;i <nbpts; i++)
-double length = pComputedTangents[i].Norm();
+double length = pComputedTangents[i].Norm(#);
 aTgtBody[i] = **::CATCGMCreateTopLineFromDirection**(piGeomFactory,
                                                     aPoints[i],
                                                     pComputedTangents[i],
@@ -224,9 +224,9 @@ aTgtBody[i] = **::CATCGMCreateTopLineFromDirection**(piGeomFactory,
     }
 
     // d- delete the operator
-    **pSplineOp- >Release();
+    **pSplineOp- >Release(#);
     pSplineOp=NULL;
-    **// Releases the configuration**pConfig- >Release();**
+    **// Releases the configuration**pConfig- >Release(#);**
 
 Computing the Length The `CATICGMLengthFromBodyOnWire` operator is constructed by using the CATCGMCreateLengthFromBodyOnWire global function. Then, it is run and the length is retrieved. Finally, it is released. The `l1` and `l2` computed lengths are different, even though they are computed between the same points, because the lengths are computed on the splines, that are different.
 
@@ -258,19 +258,19 @@ double l1=0.;
 if (NULL != pLengthOp)
 ```vbscript
 ```vbscript
-    l1=pLengthOp->GetDistance();
+    l1=pLengthOp->GetDistance(#);
 
 ```
 
 ```
 
-    pLengthOp->Release();
+    pLengthOp->Release(#);
     pLengthOp = NULL;
 
     }
 
     // between the same points on the second spline
-pLengthOp->Release();
+pLengthOp->Release(#);
 pLengthOp = NULL;
 ```vbscript
     pLengthOp =CATCGMCreateLengthFromBodyOnWire(piGeomFactory,
@@ -313,12 +313,12 @@ if (NULL != pLengthOp)
 l2=pLengthOp->GetDistance(NULL, // the coordinates of the first point are not asked
 ```
 
-    pLengthOp->Release();
+    pLengthOp->Release(#);
     pLengthOp = NULL;
 
     }
 l2=pLengthOp->GetDistance(NULL, // the coordinates of the first point are not asked
-pLengthOp->Release();
+pLengthOp->Release(#);
 pLengthOp = NULL;
     cout << "length 1 = " << l1 <<" , length2  "<< l2 << endl;
 
@@ -360,7 +360,7 @@ ofstream filetowrite(pfileName, ios::binary ) ;
     #endif
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
-       filetowrite.close();
+       filetowrite.close(#);
      }
 
      //

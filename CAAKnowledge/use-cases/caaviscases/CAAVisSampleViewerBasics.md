@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Understanding the Basics of the Visualization Process"
-category: "use case"
+category: use-case case"
 module: "CAAVisUseCases"
 tags: ["CAAVisBasicApplication", "CAAVisBasicAppli", "CAAVisualization", "CAAVisBasicWindow", "CAAVisBAseView"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleViewerBasics.htm"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleViewerBasics.htmmd"
 converted: "2026-05-11T17:31:52.210579"
 ```
 
@@ -65,10 +65,10 @@ To launch CAAVisBasicAppli, you will need to set up the build time environment, 
 To launch CAAVisBasicAppli, you will need to set up the build time environment, then compile CAAVisBasicAppli along with its prerequisites, set up the run time environment, and then execute the use case [1].
 The CAAVisBasicAppli use case is made of two classes named _CAAVisBasicApplication_ and _CAAVisBasicWindow_ located in the CAAVisBasicAppli.m module of the CAAVisualization.edu framework:
 
-Windows | `InstallRootDirectory\CAAVisualization.edu\CAAVisBasicAppli.m\`
+Windows | `InstallRootDirectory/CAAVisualization.edu/CAAVisBasicAppli.m/`
 
 The CAAVisBasicAppli use case is made of two classes named _CAAVisBasicApplication_ and _CAAVisBasicWindow_ located in the CAAVisBasicAppli.m module of the CAAVisualization.edu framework:
-Windows | `InstallRootDirectory\CAAVisualization.edu\CAAVisBasicAppli.m\`
+Windows | `InstallRootDirectory/CAAVisualization.edu/CAAVisBasicAppli.m/`
 Unix | `InstallRootDirectory/CAAVisualization.edu/CAAVisBasicAppli.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -80,8 +80,10 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 1 | Create a 3D navigation viewer instance | `CreateViewer` method
 2 | Create a 3D representation bag | `CreateModelRepresentation` method
 3 | Create the cuboid 3D representations | `CreateModelRepresentation` method
+```vbscript
 4 | Set graphic attributes to the representation | `CreateModelRepresentation` method
 5 | Compute the graphic representation bounding box | `CreateModelRepresentation` method
+```
 6 | Add the representation to the representation bag | `CreateModelRepresentation` method
 7 | Display the representation bag and its children | `VisualizeModel` method
 
@@ -93,18 +95,18 @@ Only the cuboid is taken as an example and described. All the methods belong to 
 The 3D navigation viewer is an instance of the _CATNavigation3DViewer_ class. It is created in the `CreateViewer` method of the _CAAVisBasicWindow_ class that is called when the application is launched.
 
 The 3D navigation viewer is an instance of the _CATNavigation3DViewer_ class. It is created in the `CreateViewer` method of the _CAAVisBasicWindow_ class that is called when the application is launched.
-    void CAAVisBasicWindow::CreateViewer()
+    void CAAVisBasicWindow::CreateViewer(#)
 
     {
 The 3D navigation viewer is an instance of the _CATNavigation3DViewer_ class. It is created in the `CreateViewer` method of the _CAAVisBasicWindow_ class that is called when the application is launched.
-void CAAVisBasicWindow::CreateViewer()
+void CAAVisBasicWindow::CreateViewer(#)
 ```vbscript
       _p3DViewer = new CATNavigation3DViewer(this,
 
 ```
 
                                              "3DViewerId",
-void CAAVisBasicWindow::CreateViewer()
+void CAAVisBasicWindow::CreateViewer(#)
 _p3DViewer = new CATNavigation3DViewer(this,
                                              CATDlgFraNoTitle,
                                              800, 450);
@@ -128,9 +130,9 @@ The `SetBackGroundColor` method sets the viewer background color to a shade of b
 [Top]
 #### Creating a 3D Representation Bag
 
-    void CAAVisBasicWindow::CreateModelRepresentation()
+    void CAAVisBasicWindow::CreateModelRepresentation(#)
     {
-      _pTheModelToDisplay = new CAT3DBagRep();
+      _pTheModelToDisplay = new CAT3DBagRep(#);
     ...
 
 ---
@@ -202,19 +204,19 @@ The created representation is added to the representation bag thanks to the `Add
 [Top]
 #### Displaying the Representation Bag and Its Children
 
-    void CAAVisBasicWindow::VisualizeModel()
+    void CAAVisBasicWindow::VisualizeModel(#)
     {
-void CAAVisBasicWindow::VisualizeModel()
+void CAAVisBasicWindow::VisualizeModel(#)
 ```vbscript
       if ( (NULL != _p3DViewer) && ( NULL != _pTheModelToDisplay) )
 
 ```
 
       {
-void CAAVisBasicWindow::VisualizeModel()
+void CAAVisBasicWindow::VisualizeModel(#)
 if ( (NULL != _p3DViewer) && ( NULL != _pTheModelToDisplay) )
         _p3DViewer->AddRep((CAT3DRep*)_pTheModelToDisplay);
-        _p3DViewer->Draw();
+        _p3DViewer->Draw(#);
 
       }
     }

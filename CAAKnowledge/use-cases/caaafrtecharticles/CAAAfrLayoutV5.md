@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Understanding the Application Frame Layout"
-category: "use-case"
+category: tech-article
 module: "CAAAfrTechArticles"
 tags: ["CATIDocumentEdit", "CAAAfrHistogramChartWindow", "CAAEMyInterface", "CATIAfrGeneralWksAddin", "CATISO", "CATIVisu", "CATIAApplicationFrame", "CATIEditor"]
-source_file: "Doc/online/CAAAfrTechArticles/CAAAfrLayoutV5.htm"
+source_file: "Doc/online/CAAAfrTechArticles/CAAAfrLayoutV5.htmmd"
 converted: "2026-05-11T17:17:55.923668"
 ```
 
@@ -103,16 +103,16 @@ This class is generally used to retrieve the current decorator in order to be se
 
     ...
 This class is generally used to retrieve the current decorator in order to be set as the dialog parent of a dialog box [6]:
-    CATApplicationFrame * **pFrame** = CATApplicationFrame::**GetFrame**();
+    CATApplicationFrame * **pFrame** = CATApplicationFrame::**GetFrame**(#);
 ```vbscript
     if ( NULL != pFrame )
 
 ```
 
     {
-CATApplicationFrame * **pFrame** = CATApplicationFrame::**GetFrame**();
+CATApplicationFrame * **pFrame** = CATApplicationFrame::**GetFrame**(#);
 if ( NULL != pFrame )
-       CATDialog * **pParent** = pFrame->**GetMainWindow**();
+       CATDialog * **pParent** = pFrame->**GetMainWindow**(#);
        CATMyDialogBox * pMyDialogBox = new MyDialogBox(**pParent** ,...);
 
     }
@@ -163,8 +163,10 @@ The _CATFrmEditor_ class has other roles mentioned below but not detailed in thi
 
   * Managing the UI active object,
   * Managing the sets of objects like : PSO,HSO,SDO,CSO [1]
+```vbscript
   * Managing the Interactive Set of Objects [15]
   * Controlling the send/receive command tree through its _CATCommandSelector_ instance [5]
+```
   * Managing the command header list [13]
 
 [Top]
@@ -179,21 +181,21 @@ This class manages all the windows created. It enables you to:
 ##### This class enables you to find all the windows opened for a document:
 
     ...
-    CATFrmLayout * **pLayout** = CATFrmLayout::**GetCurrentLayout**();
-CATFrmLayout * **pLayout** = CATFrmLayout::**GetCurrentLayout**();
+    CATFrmLayout * **pLayout** = CATFrmLayout::**GetCurrentLayout**(#);
+CATFrmLayout * **pLayout** = CATFrmLayout::**GetCurrentLayout**(#);
 ```vbscript
     if ( NULL != pLayout )
 
 ```
 
     {
-CATFrmLayout * **pLayout** = CATFrmLayout::**GetCurrentLayout**();
+CATFrmLayout * **pLayout** = CATFrmLayout::**GetCurrentLayout**(#);
 if ( NULL != pLayout )
 ```vbscript
        CATLISTP(CATFrmWindow) WindowList ;
 ```vbscript
-       WindowList = pLayout ->**GetWindowList**();
-       for ( int = i ; i <= WindowList.Size() ; i++ )
+       WindowList = pLayout ->**GetWindowList**(#);
+       for ( int = i ; i <= WindowList.Size(#) ; i++ )
 
 ```
 
@@ -205,8 +207,8 @@ if ( NULL != pLayout )
 CATLISTP(CATFrmWindow) WindowList ;
 ```vbscript
 ```vbscript
-WindowList = pLayout ->**GetWindowList**();
-for ( int = i ; i <= WindowList.Size() ; i++ )
+WindowList = pLayout ->**GetWindowList**(#);
+for ( int = i ; i <= WindowList.Size(#) ; i++ )
             if ( NULL != pCurrentWind )
 ```
 
@@ -215,10 +217,10 @@ for ( int = i ; i <= WindowList.Size() ; i++ )
 ```
 
             {
-               **CATFrmEditor** * pEditor = pCurrentWind->**GetEditor**();
+               **CATFrmEditor** * pEditor = pCurrentWind->**GetEditor**(#);
                if ( NULL != pEditor )
                {
-                   **CATDocument** * pDocument = pEditor ->**GetDocument**();
+                   **CATDocument** * pDocument = pEditor ->**GetDocument**(#);
                    if ( pDocument == pOurDocument)
                    {
                       // pCurrentWind is a window for our document
@@ -235,8 +237,8 @@ Each editor, a _CATFrmEditor_ class instance, sends an event when it is closing 
     ...
        ::AddCallback(this,
 Each editor, a _CATFrmEditor_ class instance, sends an event when it is closing or when its UI-active object is changing. If you are interested by receiving this information, you should be aware that the _CATFrmLayout_ class is the "sender" and not the editor itself. In your code you set the following callback:
-                    CATFrmLayout::**GetCurrentLayout**(),
-                    CATFrmEditor::EDITOR_CLOSE_ENDED(),
+                    CATFrmLayout::**GetCurrentLayout**(#),
+                    CATFrmEditor::EDITOR_CLOSE_ENDED(#),
                     (CATSubscriberMethod)&Class::MethodCB,
                     NULL);
 
@@ -249,7 +251,7 @@ Where:
 `This` | It is the subscriber.
 ---|---
 `CATFrmLayout::GetCurrentLayout` | The unique  _CATFrmLayout_ class instance is the event publisher.
-`CATFrmEditor::EDITOR_CLOSE_ENDED()` | It is the published event. You also have `CATFrmEditor::UIACTIVEOBJECT_CHANGED()`
+`CATFrmEditor::EDITOR_CLOSE_ENDED(#)` | It is the published event. You also have `CATFrmEditor::UIACTIVEOBJECT_CHANGED(#)`
 `Class::MethodCB` | It is the method called when the event is sent. As usual, the class must be the class name of this.
 
 When the editor is not the publisher, you should test in the callback method that the editor which sent the event is at the origin of the event.
@@ -301,7 +303,7 @@ Here is an action method of a state command of a Part workbench.
      ...
 CATBoolean MyStateClass::MyActionMethod(void *iPointIndice)
      CATFrmWindow * pWindowProduct = ...
-     CATFrmLayout *pLayout = CATFrmLayout::**GetCurrentLayout**();
+     CATFrmLayout *pLayout = CATFrmLayout::**GetCurrentLayout**(#);
      pLayout->**SetCurrentWindow**(pWindowProduct );
 
      ...
@@ -368,7 +370,7 @@ The name of the window will be `iWindowTag.` If it is not a complete file name, 
 
 The name of the window is `MyWindowName`
 
-  2. CATFrmWindow("**e/users\Part.CATPart** ", pEditor);
+  2. CATFrmWindow("**e/users/Part.CATPart** ", pEditor);
 
 The name of the window is `Part.CATPart`
 
@@ -447,8 +449,8 @@ The code in the `Build` method is the following:
     IID visu = IID_CAT3DGeoVisu;
     ListIVisu.fastadd(&visu);
 
-    CATVisManager * pVisuManager = **CATVisManager::GetVisManager**();
-    CATCommandSelector *pCommandSelector = pEditor->GetCommandSelector();
+    CATVisManager * pVisuManager = **CATVisManager::GetVisManager**(#);
+    CATCommandSelector *pCommandSelector = pEditor->GetCommandSelector(#);
 
     pVisuManager->**AttachTo**(_pRootObjectPath,pViewPoint,ListIVisu,pCommandSelector);
 
@@ -470,7 +472,7 @@ This `AttachTo` method must be called as many times as the root model is in a vi
 **For the temporary elements of the CATISO:**
 
     ...
-    CATISO * pISO = pEditor->**GetISO**()  ;
+    CATISO * pISO = pEditor->**GetISO**(#)  ;
     pISO->**AddViewer**(_pViewer);
     ...
 
@@ -483,10 +485,10 @@ The last operation in the `Build` method is to declare the PSO [1] and HSO [1] t
 
     ...
 The last operation in the `Build` method is to declare the PSO [1] and HSO [1] to the _CATVisManager_.
-    CATPSO * pPSO = pEditor->**GetPSO**() ;
+    CATPSO * pPSO = pEditor->**GetPSO**(#) ;
     pVisuManager->**AttachPSOTo**( pPSO,pViewPoint);
 
-    CATHSO * pHSO = pEditor->**GetHSO**() ;
+    CATHSO * pHSO = pEditor->**GetHSO**(#) ;
     pVisuManager->**AttachHSOTo**( pHSO,pViewPoint);
 
     ...
@@ -505,12 +507,12 @@ The `Build` method is now complete.
 This method is called when the end-user closes the document or when the window is closed.
 
     ...
-    void NewWindow :: DeleteWindow()
+    void NewWindow :: DeleteWindow(#)
     {
        // ISO management
-void NewWindow :: DeleteWindow()
+void NewWindow :: DeleteWindow(#)
           CATISO * pISO = NULL ;
-          pISO = GetEditor()->**GetISO**();
+          pISO = GetEditor(#)->**GetISO**(#);
 ```vbscript
 ```vbscript
           if  (NULL != pISO)   pISO->**RemoveViewer**(_pViewer);
@@ -521,25 +523,25 @@ void NewWindow :: DeleteWindow()
 
        // Root Model management
 CATISO * pISO = NULL ;
-pISO = GetEditor()->**GetISO**();
+pISO = GetEditor(#)->**GetISO**(#);
 ```vbscript
 if  (NULL != pISO)   pISO->**RemoveViewer**(_pViewer);
 ```
 
-          CATVisManager * pVisuManager = CATVisManager::**GetVisManager**();
+          CATVisManager * pVisuManager = CATVisManager::**GetVisManager**(#);
           CATViewpoint  * pViewPoint = NULL ;
 
-          pViewPoint = (CATViewpoint*) &(_pViewer->**GetMain3DViewpoint**());
+          pViewPoint = (CATViewpoint*) &(_pViewer->**GetMain3DViewpoint**(#));
           pVisuManager->**DetachFrom**(_pRootObjectPath,pViewPoint);
 
        // PSO/HSO management
-pViewPoint = (CATViewpoint*) &(_pViewer->**GetMain3DViewpoint**());
+pViewPoint = (CATViewpoint*) &(_pViewer->**GetMain3DViewpoint**(#));
 pVisuManager->**DetachFrom**(_pRootObjectPath,pViewPoint);
           pVisuManager->**DetachPSOFrom**(pViewPoint);
           pVisuManager->**DetachHSOFrom**(pViewPoint);
 
        // Mandatory call
-          **CATFrmWindow::DeleteWindow();**
+          **CATFrmWindow::DeleteWindow(#);**
     }
     ...
 
@@ -559,26 +561,26 @@ At the end of the `DeleteWindow` method, do not forget to call the parent method
 This method is called when the end user selects the Window/New Window command. Its role is to create a new instance of the window.
 
     ...
-    CATFrmWindow * MyWindow :: DuplicateWindow()
+    CATFrmWindow * MyWindow :: DuplicateWindow(#)
     {
        // Window creation
-CATFrmWindow * MyWindow :: DuplicateWindow()
-       CATString NameOfThis = **GetBaseName**().CastToCharPtr() ;
-       CAAAfrHistogramChartWindow * pWindowToReturn = new **MyWindow**(NameOfThis,GetEditor() )  ;
-       pWindowToReturn->**Build**();
+CATFrmWindow * MyWindow :: DuplicateWindow(#)
+       CATString NameOfThis = **GetBaseName**(#).CastToCharPtr(#) ;
+       CAAAfrHistogramChartWindow * pWindowToReturn = new **MyWindow**(NameOfThis,GetEditor(#) )  ;
+       pWindowToReturn->**Build**(#);
 
        // Assigning the characteristic of the current instance
-CATString NameOfThis = **GetBaseName**().CastToCharPtr() ;
-CAAAfrHistogramChartWindow * pWindowToReturn = new **MyWindow**(NameOfThis,GetEditor() )  ;
-pWindowToReturn->**Build**();
+CATString NameOfThis = **GetBaseName**(#).CastToCharPtr(#) ;
+CAAAfrHistogramChartWindow * pWindowToReturn = new **MyWindow**(NameOfThis,GetEditor(#) )  ;
+pWindowToReturn->**Build**(#);
        float r,v,b ;
        _pViewer->**GetBackgroundColor**(&r,&v,&b);
-       CATViewer *pNewViewer = pWindowToReturn->**GetViewer**()
+       CATViewer *pNewViewer = pWindowToReturn->**GetViewer**(#)
        pNewViewer->**SetBackgroundColor**(r,v,b);
 
       // Windows title management
 _pViewer->**GetBackgroundColor**(&r,&v,&b);
-CATViewer *pNewViewer = pWindowToReturn->**GetViewer**()
+CATViewer *pNewViewer = pWindowToReturn->**GetViewer**(#)
 pNewViewer->**SetBackgroundColor**(r,v,b);
        pWindowToReturn->**SetBaseName**(NameOfThis);
        return  pWindowToReturn ;
@@ -618,10 +620,10 @@ This interface must have at least one method  which creates an instance of the 
 
     ...
 This interface must have at least one method  which creates an instance of the new window. In general, this method contains three parts:
-    HRESULT CAAEMyInterface::CreateWindow()
+    HRESULT CAAEMyInterface::CreateWindow(#)
 
     {
-HRESULT CAAEMyInterface::CreateWindow()
+HRESULT CAAEMyInterface::CreateWindow(#)
        1/ Creating the new window
        2/ Managing the base name
        3/ Declaring the window as current
@@ -645,10 +647,10 @@ HRESULT rc = QueryInterface(IID_CATIEditor, (void**)&pIEditor);
        {
 HRESULT rc = QueryInterface(IID_CATIEditor, (void**)&pIEditor);
 if (SUCCEEDED(rc))
-          CATFrmEditor * pEditor = pIEditor->**GetEditor**();
+          CATFrmEditor * pEditor = pIEditor->**GetEditor**(#);
           CATString WindowBaseName ="xxx";
           MyWindow * pWindow = new **MyWindow**(WindowBaseName,pEditor);
-          pWindow ->**Build**()
+          pWindow ->**Build**(#)
 
     ...
 
@@ -662,7 +664,7 @@ This section enables you to modify the name of the first window. At first it is
 
     ...
 This section enables you to modify the name of the first window. At first it is important to retrieve the base name of the window, then apply the `SetBaseName` method with this name.
-          CATUnicodeString BaseName = pWindow->**GetBaseName**();
+          CATUnicodeString BaseName = pWindow->**GetBaseName**(#);
           pWindow->**SetBaseName**(BaseName);
 
     ...
@@ -674,7 +676,7 @@ The `SetCurrentWindow` method enables you to give the focus to the new window.
 
     ...
 The `SetCurrentWindow` method enables you to give the focus to the new window.
-          CATFrmLayout *currentLayout = CATFrmLayout::**GetCurrentLayout**();
+          CATFrmLayout *currentLayout = CATFrmLayout::**GetCurrentLayout**(#);
           currentLayout->**SetCurrentWindow**(pWindow)
 
     ...
@@ -724,8 +726,10 @@ It is the base class of all the classes defining a window to display a document.
 [12] | [Creating Interfaces](../CAASysTechArticles/CAASysCreatingInterfaces.md)
 [13] | [The Command Headers](CAAAfrCommandHeaders.md)
 [14] | [Using the Visualization Manager](../CAAVisUseCases/CAAVisSampleVisManager.md)
+```vbscript
 [15] | [Interactive Set of Objects](../CAAVisTechArticles/CAAVisISO.md)
 [Top]
+```
 
 * * *
 ### History

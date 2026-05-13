@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Multi-axis Machining Algorithms"
-category: "use case"
+category: use-case case"
 module: "CAASmaUseCases"
 tags: ["CATInstantiateComponent", "CATIGeometricalElement", "CATIGSMPoint_var", "CATIVisProperties_var", "CATIVisProperties", "CATIMfgTPMultipleMotion_var", "CATIMfgTPMultipleMotion", "CAAMultiAxisAlgorithms", "CATIContainer_var", "CATIPartRequest", "CATIGeometricalElement_var", "CATIMfgMachiningContainer", "CATIMfgManufacturingFactories", "CATIGSMFactory", "CAASmaMultiAxisAlgorithms", "CAASurfaceMachiningAlgoItf", "CATIDescendants_var", "CATIMfgMultiAxisAlgorithm", "CATISpecObject_var", "CATIPartRequest_var"]
-source_file: "Doc/online/CAASmaUseCases/CAASmaMultiAxisAlgorithms.htm"
+source_file: "Doc/online/CAASmaUseCases/CAASmaMultiAxisAlgorithms.htmmd"
 converted: "2026-05-11T17:31:50.835710"
 ```
 
@@ -79,18 +79,18 @@ Unix | `InstallRootDirectory/CAASurfaceMachiningAlgoItf.edu/InputData`
 
 where Filename is the path of a Part document. You can use the `CAAMultiAxisAlgorithms``.CATPart `located:
 Unix | `InstallRootDirectory/CAASurfaceMachiningAlgoItf.edu/InputData`
-Windows | `InstallRootDirectory\CAASurfaceMachiningAlgoItf.edu\InputData`
+Windows | `InstallRootDirectory/CAASurfaceMachiningAlgoItf.edu/InputData`
 
 [Top]
 #### Where to Find the CAASmaMultiAxisAlgorithms Code
 
-Windows | `InstallRootDirectory\CAASurfaceMachiningAlgoItf.edu\InputData`
+Windows | `InstallRootDirectory/CAASurfaceMachiningAlgoItf.edu/InputData`
 The use case code is located in the CAASmaMultiAxisAlgorithms.m module of the CAASurfaceMachiningAlgoItf.edu framework:
 
-Windows | `InstallRootDirectory\CAASurfaceMachiningAlgoItf.edu\CAASmaMultiAxisAlgorithms.m`
+Windows | `InstallRootDirectory/CAASurfaceMachiningAlgoItf.edu/CAASmaMultiAxisAlgorithms.m`
 
 The use case code is located in the CAASmaMultiAxisAlgorithms.m module of the CAASurfaceMachiningAlgoItf.edu framework:
-Windows | `InstallRootDirectory\CAASurfaceMachiningAlgoItf.edu\CAASmaMultiAxisAlgorithms.m`
+Windows | `InstallRootDirectory/CAASurfaceMachiningAlgoItf.edu/CAASmaMultiAxisAlgorithms.m`
 Unix | `InstallRootDirectory/CAASurfaceMachiningAlgoItf.edu/CAASmaMultiAxisAlgorithms.m`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -144,29 +144,33 @@ if (NULL_var != spPartRequest)
 The `CATDocumentServices::OpenDocument` static method opens the part document from the location given as first argument of the main program. From the root container of the part, we get the _CATIPartRequest_ interface and use it to access to the first geometrical set of the part.
 
 The `CATDocumentServices::OpenDocument` static method opens the part document from the location given as first argument of the main program. From the root container of the part, we get the _CATIPartRequest_ interface and use it to access to the first geometrical set of the part.
+```vbscript
           CATIDescendants_var spDescOnSurfacicSet = ListOfSurfacicSets[1];
 ```vbscript
+```
           if (NULL_var != spDescOnSurfacicSet)
 
 ```
 
           {
+```vbscript
 CATIDescendants_var spDescOnSurfacicSet = ListOfSurfacicSets[1];
 if (NULL_var != spDescOnSurfacicSet)
+```
              CATListValCATISpecObject_var ListOfGeometricalElts;
-             spDescOnSurfacicSet->**GetDirectChildren**(CATIGeometricalElement::ClassName(), ListOfGeometricalElts);
+             spDescOnSurfacicSet->**GetDirectChildren**(CATIGeometricalElement::ClassName(#), ListOfGeometricalElts);
 
              ...
 ```vbscript
 if (NULL_var != spDescOnSurfacicSet)
 CATListValCATISpecObject_var ListOfGeometricalElts;
-spDescOnSurfacicSet->**GetDirectChildren**(CATIGeometricalElement::ClassName(), ListOfGeometricalElts);
+spDescOnSurfacicSet->**GetDirectChildren**(CATIGeometricalElement::ClassName(#), ListOfGeometricalElts);
              for (int ig=1;ig<=NbGeometricalElts;ig++)
 ```
 
              {
 CATListValCATISpecObject_var ListOfGeometricalElts;
-spDescOnSurfacicSet->**GetDirectChildren**(CATIGeometricalElement::ClassName(), ListOfGeometricalElts);
+spDescOnSurfacicSet->**GetDirectChildren**(CATIGeometricalElement::ClassName(#), ListOfGeometricalElts);
 for (int ig=1;ig<=NbGeometricalElts;ig++)
                 CATIGeometricalElement_var spGeomElement = ListOfGeometricalElts[ig];
 ```vbscript
@@ -179,7 +183,7 @@ for (int ig=1;ig<=NbGeometricalElts;ig++)
 for (int ig=1;ig<=NbGeometricalElts;ig++)
 CATIGeometricalElement_var spGeomElement = ListOfGeometricalElts[ig];
 if (NULL_var != spGeomElement)
-                   CATBody_var spBody = spGeomElement->**GetBodyResult**();
+                   CATBody_var spBody = spGeomElement->**GetBodyResult**(#);
 ```
 
                    ...
@@ -243,13 +247,13 @@ for (int i=1;i<=NbCells;i++)
 for (int i=1;i<=NbCells;i++)
 CATEdge_var spEdge = ListOfCells[i];
 if (NULL_var != spEdge)
-                            CATEdgeCurve * pEdgeCurve = spEdge->GetCurve();
+                            CATEdgeCurve * pEdgeCurve = spEdge->GetCurve(#);
                             CATCurve_var spCurve = pEdgeCurve;
                             if (NULL_var != spCurve)
 ```
 
                             {
-CATEdgeCurve * pEdgeCurve = spEdge->GetCurve();
+CATEdgeCurve * pEdgeCurve = spEdge->GetCurve(#);
 CATCurve_var spCurve = pEdgeCurve;
 if (NULL_var != spCurve)
 ```vbscript
@@ -280,7 +284,7 @@ To store algorithms results, we need to get a machining tool path container.
 CATDocument *pProcessDoc = NULL;
 rc = **CATDocumentServices::New**("Process", pProcessDoc );
        CATIMfgMachiningContainer * piMfgEnvt = NULL;
-       piProcessContainer->QueryInterface(CATIMfgMachiningContainer::ClassId(), (void**)&piMfgEnvt);
+       piProcessContainer->QueryInterface(CATIMfgMachiningContainer::ClassId(#), (void**)&piMfgEnvt);
 ```vbscript
        if (piMfgEnvt)
 
@@ -288,7 +292,7 @@ rc = **CATDocumentServices::New**("Process", pProcessDoc );
 
        {
 CATIMfgMachiningContainer * piMfgEnvt = NULL;
-piProcessContainer->QueryInterface(CATIMfgMachiningContainer::ClassId(), (void**)&piMfgEnvt);
+piProcessContainer->QueryInterface(CATIMfgMachiningContainer::ClassId(#), (void**)&piMfgEnvt);
 if (piMfgEnvt)
          piMfgEnvt->**InitContainer**(FALSE,0);
 
@@ -302,7 +306,7 @@ piMfgEnvt->**InitContainer**(FALSE,0);
        CATString ClassName("CATMfgManufacturingFactories");
 ```
 
-       ::CATInstantiateComponent (ClassName, CATIMfgManufacturingFactories::ClassId(), (void**)& piFact);
+       ::CATInstantiateComponent (ClassName, CATIMfgManufacturingFactories::ClassId(#), (void**)& piFact);
 CATIContainer_var spTPContainer;
 CATIMfgManufacturingFactories *piFact =NULL;
 CATString ClassName("CATMfgManufacturingFactories");
@@ -327,7 +331,7 @@ The `CATDocumentServices::OpenDocument` static method creates a process document
 #### Running the multi-axis sweeping algorithm
 
        **CATIMfgMultiAxisAlgorithm** *piMMSweepingAlgo =NULL;
-       ::CATInstantiateComponent ("**CATMfgAlgoMultiAxisSweeping** ", CATIMfgMultiAxisAlgorithm::ClassId(), (void**)& piMMSweepingAlgo);
+       ::CATInstantiateComponent ("**CATMfgAlgoMultiAxisSweeping** ", CATIMfgMultiAxisAlgorithm::ClassId(#), (void**)& piMMSweepingAlgo);
        ...
 ```vbscript
        rc = piMMSweepingAlgo->**SetValue**(MfgAlgMachiningTolerance,0.1); _// Machining tolerance_
@@ -422,7 +426,7 @@ At last, `ComputeToolPath` creates and returns a tool path. It is created in the
 #### Running the multi-axis contour driven algorithm
 
       **CATIMfgMultiAxisAlgorithm** *piMMContourDriven =NULL;
-       ::CATInstantiateComponent ("**CATMfgAlgoMultiAxisContourDriven** ", CATIMfgMultiAxisAlgorithm::ClassId(), (void**)& piMMContourDriven);
+       ::CATInstantiateComponent ("**CATMfgAlgoMultiAxisContourDriven** ", CATIMfgMultiAxisAlgorithm::ClassId(#), (void**)& piMMContourDriven);
        ...
 ```vbscript
        rc = piMMContourDriven->**SetValue**(MfgAlgMachiningTolerance,0.1); _// Machining tolerance_
@@ -520,13 +524,13 @@ Finally we scan information of tool paths and create points in the part document
        {
 CATIPrtContainer_var spPrtContainer = ispPartContainer;
 if (NULL_var != spPrtContainer)
-          CATISpecObject_var spRootPart = spPrtContainer->GetPart();
+          CATISpecObject_var spRootPart = spPrtContainer->GetPart(#);
           spMechRootFactory->**CreateGeometricalSet**("",spRootPart,ospGeomSet);
 
        }
        ...
        **CATIMfgTPMultipleMotion** _var spMultipleMotion ((*pListOfMultipleMotion)[1]);
-CATISpecObject_var spRootPart = spPrtContainer->GetPart();
+CATISpecObject_var spRootPart = spPrtContainer->GetPart(#);
 spMechRootFactory->**CreateGeometricalSet**("",spRootPart,ospGeomSet);
 ```vbscript
        if (NULL_var != spMultipleMotion)

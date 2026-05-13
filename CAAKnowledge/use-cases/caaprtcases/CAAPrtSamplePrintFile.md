@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Printing Files"
-category: "use case"
+category: use-case case"
 module: "CAAPrtUseCases"
 tags: ["CAAPrtPrintFile", "CAAPrint"]
-source_file: "Doc/online/CAAPrtUseCases/CAAPrtSamplePrintFile.htm"
+source_file: "Doc/online/CAAPrtUseCases/CAAPrtSamplePrintFile.htmmd"
 converted: "2026-05-11T17:17:56.141802"
 ```
 
@@ -62,7 +62,7 @@ You can launch CAAPrtPrintFile using a JPEG file as argument. The use case lists
 
   * With Windows
 
-        E:>**CAAPrtPrintFile**  InstallRootDirectory\CAAPrint.edu\CNext\resources\graphic\images\CAAPrtPrintFile.jpg
+        E:>**CAAPrtPrintFile**  InstallRootDirectory/CAAPrint.edu/CNext/resources/graphic/images/CAAPrtPrintFile.jpg
 
 ---
   * With UNIX
@@ -85,10 +85,10 @@ _The CAAPrtPrintFile.jpg File_ ![](images/CAASamplePrtPrintFile.jpg)
 The CAAPrtPrintFile use case is made of a several classes located in the CAAPrtPrintFile.m module of the CAAPrint.edu framework:
 
 The CAAPrtPrintFile use case is made of a several classes located in the CAAPrtPrintFile.m module of the CAAPrint.edu framework:
-Windows | `InstallRootDirectory\CAAPrint.edu\CAAPrtPrintFile.m\`
+Windows | `InstallRootDirectory/CAAPrint.edu/CAAPrtPrintFile.m/`
 
 The CAAPrtPrintFile use case is made of a several classes located in the CAAPrtPrintFile.m module of the CAAPrint.edu framework:
-Windows | `InstallRootDirectory\CAAPrint.edu\CAAPrtPrintFile.m\`
+Windows | `InstallRootDirectory/CAAPrint.edu/CAAPrtPrintFile.m/`
 Unix | `InstallRootDirectory/CAAPrint.edu/CAAPrtPrintFile.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -127,20 +127,20 @@ As soon as the input file is retrieved, the list of available printers is displ
       int ReturnCode = 0;
       ... _// Retrieving the input file name is not described here_
 
-      **CATPrinterManager::Begin();**
+      **CATPrinterManager::Begin(#);**
 
       // Retrieves and displays the list of printers
       cout << "Available printers: " << endl << endl;
 
 cout << "Available printers: " << endl << endl;
 ```vbscript
-      for (int i=0; i<**CATPrinterManager::GetPrinterCount()** ; i++)
+      for (int i=0; i<**CATPrinterManager::GetPrinterCount(#)** ; i++)
 
 ```
 
       {
 cout << "Available printers: " << endl << endl;
-for (int i=0; i<**CATPrinterManager::GetPrinterCount()** ; i++)
+for (int i=0; i<**CATPrinterManager::GetPrinterCount(#)** ; i++)
         CATPrinter printer = **CATPrinterManager::GetPrinterFromIndex(i)** ;
         int old_width = cout.width(3);
         cout.setf( ios::right );
@@ -152,7 +152,7 @@ int old_width = cout.width(3);
 cout.setf( ios::right );
 cout << i+1;
 cout.setf( ios::left );
-        cout << " : " << (const char*) **printer.GetDescription()** << endl;
+        cout << " : " << (const char*) **printer.GetDescription(#)** << endl;
 
       }
       ...
@@ -168,7 +168,7 @@ The end user should now select a printer.
 
     ...
       CATPrinter printer = **CATPrinterManager::GetPrinterFromIndex**(printerIndex);
-      **CATPrinterManager::End();**
+      **CATPrinterManager::End(#);**
     ...
 
 ---
@@ -215,9 +215,11 @@ A print parameter object should be defined to be associated with the print file 
 
       parameters.SetRotation( CATPRINTCCW_90 );     _// Rotate the image_
       parameters.SetMapToPaper(1);                   _// Resize image to match paper forma_ t
+```vbscript
       parameters.SetMargins(20.0, 20.0, 10.0, 10.0); _// Set margins_
 
     ...
+```
 
 ---
 

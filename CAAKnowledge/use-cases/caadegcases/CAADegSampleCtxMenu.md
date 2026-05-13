@@ -4,13 +4,13 @@ title: "Creating Contextual Menus in a State Dialog Command"
 category: "use case"
 module: "CAADegUseCases"
 tags: ["CAADegAnalysisLogCmd", "CAAISysGeomFactory", "CAAISysLine", "CAAISysPoint", "CATISO", "CAADialogEngine", "CAAGeometry", "CAADegGeoCommands"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleCtxMenu.htm"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleCtxMenu.htmmd"
 converted: "2026-05-11T17:33:49.611686"
 ```
 
 ---
 tags: ["CAADegAnalysisLogCmd", "CAAISysGeomFactory", "CAAISysLine", "CAAISysPoint", "CATISO", "CAADialogEngine", "CAAGeometry", "CAADegGeoCommands"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleCtxMenu.htm"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleCtxMenu.htmmd"
 converted: "2026-05-11T17:33:49.611686"
 3D PLM Enterprise Architecture |  User Interface - Commands |  Creating Contextual Menus in a State Dialog Command _Customizing object's contextual menus in a state dialog command_
 
@@ -42,7 +42,7 @@ What You Will Learn With This Use Case This use case is intended to show how to 
     * Click twice to create the line
     * Select Analyze->Logical
     * Right click the line, and click one of the proposed item. The corresponding point is displayed.
-[Top] Where to Find the Use Case Code The Logical command is made of a single class named _CAADegAnalysisLogCmd_ located in the CAADegGeoCommands.m module of the CAADialogEngine.edu framework: Windows | `InstallRootDirectory\CAADialogEngine.edu\CAADegGeoCommands.m\`
+[Top] Where to Find the Use Case Code The Logical command is made of a single class named _CAADegAnalysisLogCmd_ located in the CAADegGeoCommands.m module of the CAADialogEngine.edu framework: Windows | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 ---|---
 Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
@@ -76,15 +76,15 @@ class CATMathPoint;
 class CAADegAnalysisLogCmd : public CATStateCommand
       CmdDeclareResource(CAADegAnalysisLogCmd,CATStateCommand);
       public :
-        CAADegAnalysisLogCmd();
-        virtual           ~CAADegAnalysisLogCmd();
+        CAADegAnalysisLogCmd(#);
+        virtual           ~CAADegAnalysisLogCmd(#);
 
         _// Manages the focus_
         CATStatusChangeRC Activate   ( CATCommand * iCmd,CATNotification * iNotif);
         CATStatusChangeRC Cancel     ( CATCommand * iCmd,CATNotification * iNotif);
         CATStatusChangeRC Desactivate( CATCommand * iCmd,CATNotification * iNotif);
 
-        virtual void **BuildGraph**(); _// Implements the statechart_
+        virtual void **BuildGraph**(#); _// Implements the statechart_
 
         CATBoolean **CreateCntxMenu**(void * iUsefulData);
 
@@ -122,7 +122,10 @@ This class includes the following:
     * The ` CreateCntxMenu` method is called when the end user clicks a line
     * The `StartPoint`, `MediumPoint`, and ` EndPoint` methods are the methods called by the menu items
     * The ` ShowPoint` method creates and displays the required point.
+```vbscript
 The data members are pointers to the path element agent used by the ` BuildGraph` method, the Interactive Set of Objects used to display the start, medium, or end point as a temporary point that doesn't belong to the document, and the document container that implements the point factory interface used to create this point. [Top] Enabling the Command to Be Instantiated by a Command Header The CAADegAnalysisLogCmd.cpp begins by:
+
+```
 
     ...
     #include "CATCreateExternalObject.h"
@@ -134,11 +137,11 @@ This macro creates a C function that creates an instance of this class. This fun
 
     ...
 This macro creates a C function that creates an instance of this class. This function is called by the command header to instantiate the command when the end user selects it if it weren't previously instantiated. [Top] Implementing the Command State chart Diagram Below is the code to write in the ` BuildGraph` method:
-    void CAADegAnalysisLogCmd::BuildGraph()
+    void CAADegAnalysisLogCmd::BuildGraph(#)
 
     {
 This macro creates a C function that creates an instance of this class. This function is called by the command header to instantiate the command when the end user selects it if it weren't previously instantiated. [Top] Implementing the Command State chart Diagram Below is the code to write in the ` BuildGraph` method:
-void CAADegAnalysisLogCmd::BuildGraph()
+void CAADegAnalysisLogCmd::BuildGraph(#)
        _daPathElement = new CATPathElementAgent("SelFirstLine");
        _daPathElement->AddElementType("CAAISysLine");
        _daPathElement->SetBehavior( CATDlgEngWithContext |
@@ -174,20 +177,20 @@ A _CATPathElement_ instance is created as a data member of the dialog command cl
     {
       // Selected Line
 CATBooleanCAADegAnalysisLogCmd::CreateCntxMenu(void * iData)
-      CATPathElement * pLinePath = _daPathElement->GetValue();
+      CATPathElement * pLinePath = _daPathElement->GetValue(#);
       CATBaseUnknown * pLine = NULL;
 ```vbscript
-      if ( pLinePath && pLinePath->GetSize() )
+      if ( pLinePath && pLinePath->GetSize(#) )
 
 ```
 
       {
-CATPathElement * pLinePath = _daPathElement->GetValue();
+CATPathElement * pLinePath = _daPathElement->GetValue(#);
 CATBaseUnknown * pLine = NULL;
-if ( pLinePath && pLinePath->GetSize() )
+if ( pLinePath && pLinePath->GetSize(#) )
 ```vbscript
 ```vbscript
-        pLine = (*pLinePath)[pLinePath->GetSize()-1];
+        pLine = (*pLinePath)[pLinePath->GetSize(#)-1];
 
 ```
 
@@ -196,10 +199,10 @@ if ( pLinePath && pLinePath->GetSize() )
       }
 
 ```vbscript
-if ( pLinePath && pLinePath->GetSize() )
+if ( pLinePath && pLinePath->GetSize(#) )
 ```vbscript
 ```vbscript
-pLine = (*pLinePath)[pLinePath->GetSize()-1];
+pLine = (*pLinePath)[pLinePath->GetSize(#)-1];
       if ( pLine)
 ```
 
@@ -211,14 +214,14 @@ pLine = (*pLinePath)[pLinePath->GetSize()-1];
         // Retrieves the contextual menu
 ```vbscript
 if ( pLine)
-        CATNotification *pNotif = GetLastNotification();
-        CATDlgContextualMenu *pCntxMenu = ((CATContext*)pNotif)->GetContextualMenu();
+        CATNotification *pNotif = GetLastNotification(#);
+        CATDlgContextualMenu *pCntxMenu = ((CATContext*)pNotif)->GetContextualMenu(#);
 
 ```
 
         // Default Item Title
-CATNotification *pNotif = GetLastNotification();
-CATDlgContextualMenu *pCntxMenu = ((CATContext*)pNotif)->GetContextualMenu();
+CATNotification *pNotif = GetLastNotification(#);
+CATDlgContextualMenu *pCntxMenu = ((CATContext*)pNotif)->GetContextualMenu(#);
         CATString StartString ("StartPoint");
         CATString MediumString("MediumPoint");
         CATString EndString ("EndPoint") ;
@@ -250,24 +253,24 @@ CATDlgPushItem * EndPoint      = new CATDlgPushItem(pCntxMenu,EndString) ;
         // Callbacks
 EndPoint->SetTitle(CATMsgCatalog::BuildMessage(
         AddAnalyseNotificationCB(EndPoint,
-                                 EndPoint->GetMenuIActivateNotification(),
+                                 EndPoint->GetMenuIActivateNotification(#),
                                  (CATCommandMethod) & CAADegAnalysisLogCmd::EndPoint,
     			     (void*) pLine );
 
         AddAnalyseNotificationCB(MediumPoint,
-                                 MediumPoint->GetMenuIActivateNotification(),
+                                 MediumPoint->GetMenuIActivateNotification(#),
     			  (CATCommandMethod) & CAADegAnalysisLogCmd::MediumPoint,
     			  (void*) pLine );
 
         AddAnalyseNotificationCB(StartPoint,
-                                 StartPoint->GetMenuIActivateNotification(),
+                                 StartPoint->GetMenuIActivateNotification(#),
     			  (CATCommandMethod) & CAADegAnalysisLogCmd::StartPoint,
     			  (void*) pLine );
 
       }
 ```vbscript
 AddAnalyseNotificationCB(StartPoint,
-StartPoint->GetMenuIActivateNotification(),
+StartPoint->GetMenuIActivateNotification(#),
 (CATCommandMethod) & CAADegAnalysisLogCmd::StartPoint,
 (void*) pLine );
       return TRUE ;
@@ -320,7 +323,7 @@ if (SUCCEEDED(rc))
           CATMathPoint point ;
           Line->GetStartPoint(point) ;
           ShowPoint(point);
-          Line -> Release();
+          Line -> Release(#);
 
         }
       }
@@ -329,15 +332,21 @@ if (SUCCEEDED(rc))
     ...
 
 ---
+```vbscript
 The `ShowPoint` method creates a point instance, if it doesn't already exist, that implements the _CAAISysPoint_ interface, and the point factory returns a pointer to this interface, and adds it to the Interactive Set of Objects. This makes it possible to display it. Then ` ShowPoint `assigns to that instance the coordinates of the _CATMathPoint_ instance passed from the called back method and updates the ISO with this point..
 
     ...
+```
+```vbscript
 The `ShowPoint` method creates a point instance, if it doesn't already exist, that implements the _CAAISysPoint_ interface, and the point factory returns a pointer to this interface, and adds it to the Interactive Set of Objects. This makes it possible to display it. Then ` ShowPoint `assigns to that instance the coordinates of the _CATMathPoint_ instance passed from the called back method and updates the ISO with this point..
     void CAADegAnalysisLogCmd::ShowPoint(CATMathPoint & iPoint)
+```
 
     {
+```vbscript
 The `ShowPoint` method creates a point instance, if it doesn't already exist, that implements the _CAAISysPoint_ interface, and the point factory returns a pointer to this interface, and adds it to the Interactive Set of Objects. This makes it possible to display it. Then ` ShowPoint `assigns to that instance the coordinates of the _CATMathPoint_ instance passed from the called back method and updates the ISO with this point..
 void CAADegAnalysisLogCmd::ShowPoint(CATMathPoint & iPoint)
+```
 ```vbscript
       if ( NULL == _piTemporaryPoint )
 
@@ -363,13 +372,13 @@ if (SUCCEEDED(rc))
                             (CATBaseUnknown**)&_piTemporaryPoint);
           _pISO->AddElement(_piTemporaryPoint);
 
-          piSysGeomFactory -> Release();
+          piSysGeomFactory -> Release(#);
           piSysGeomFactory=NULL;
 
         }
       }
 
-piSysGeomFactory -> Release();
+piSysGeomFactory -> Release(#);
 piSysGeomFactory=NULL;
 ```vbscript
       if (  NULL != _piTemporaryPoint )
@@ -379,9 +388,9 @@ piSysGeomFactory=NULL;
       {
 ```vbscript
 if (  NULL != _piTemporaryPoint )
-        _piTemporaryPoint->SetCoord((float) iPoint.GetX(),
-                                    (float) iPoint.GetY(),
-                                    (float) iPoint.GetZ());
+        _piTemporaryPoint->SetCoord((float) iPoint.GetX(#),
+                                    (float) iPoint.GetY(#),
+                                    (float) iPoint.GetZ(#));
         _pISO->**UpdateElement**(_piTemporaryPoint) ;
 ```
 
@@ -405,12 +414,12 @@ CATStatusChangeRC CAADegAnalysisLogCmd::Cancel(CATCommand *iCmd, CATNotification
 CATStatusChangeRC CAADegAnalysisLogCmd::Cancel(CATCommand *iCmd, CATNotification *iNotif)
 if (_TemporaryPoint)
         _ISO->**RemoveElement**(_TemporaryPoint);
-        _TemporaryPoint->Release();
+        _TemporaryPoint->Release(#);
         _TemporaryPoint= NULL ;
 
       }
 _ISO->**RemoveElement**(_TemporaryPoint);
-_TemporaryPoint->Release();
+_TemporaryPoint->Release(#);
 _TemporaryPoint= NULL ;
       return (CATStatusChangeRCCompleted);
 
@@ -420,19 +429,19 @@ _TemporaryPoint= NULL ;
 ---
 [Top] Releasing the Indication Agent A pointer to the selection agent was created in the command `BuildGraph` method as a data member to be accessed and used in different methods. It should be released when it becomes useless. This can be done in the command destructor, as shown here. This could also be done in the `Cancel` method called just before the destructor.
 
-    CAADegAnalysisLogCmd::CAADegAnalysisLogCmd()
+    CAADegAnalysisLogCmd::CAADegAnalysisLogCmd(#)
     {
       ...
-CAADegAnalysisLogCmd::CAADegAnalysisLogCmd()
+CAADegAnalysisLogCmd::CAADegAnalysisLogCmd(#)
 ```vbscript
       if ( NULL != _daPathElement  )
 
 ```
 
       {
-CAADegAnalysisLogCmd::CAADegAnalysisLogCmd()
+CAADegAnalysisLogCmd::CAADegAnalysisLogCmd(#)
 if ( NULL != _daPathElement  )
-         _daPathElement ->RequestDelayedDestruction() ;
+         _daPathElement ->RequestDelayedDestruction(#) ;
          _daPathElement = NULL ;
 
       }  ...
@@ -440,9 +449,9 @@ if ( NULL != _daPathElement  )
 ---
 [Top] Displaying the Contextual Menu when Clicking on Any Object and on the Background The same command should now react to any object whose representation is right clicked. This includes the viewer background. To do this, replace the ` AddElementType` method by the `AcceptOnNotify` method to make the dialog agent match any right click, and remove the `CATDlgEngWithContext` behavior from the `AddElementType` method. The rest of the method is unchanged.
 
-    void CAADegAnalysisLogCmd::BuildGraph()
+    void CAADegAnalysisLogCmd::BuildGraph(#)
     {
-void CAADegAnalysisLogCmd::BuildGraph()
+void CAADegAnalysisLogCmd::BuildGraph(#)
       _daPathElement = new **CATPathElementAgent**("SelFirstLine");
       _daPathElement->**AcceptOnNotify**(NULL, "CATContext");
       _daPathElement->**SetBehavior**(CATDlgEngRepeat);

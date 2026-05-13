@@ -4,7 +4,7 @@ title: "CAAAniPostProImageCreation.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniPostProImageCreation", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPostProImageCreationSource.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPostProImageCreationSource.htmmd"
 converted: "2026-05-11T17:31:51.755530"
 ```
 
@@ -29,7 +29,10 @@ converted: "2026-05-11T17:31:51.755530"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
+
+```
 
 ```
 
@@ -38,18 +41,22 @@ converted: "2026-05-11T17:31:51.755530"
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
+```vbscript
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
 ```vbscript
         End If
     ' -----------------------------------------------------------
@@ -66,24 +73,30 @@ End If
 ```vbscript
 ' -----------------------------------------------------------
     ' Open the CATAnalysis Document
-    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis")
+```vbscript
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Cube_R13_Freq.CATAnalysis")
+```
 ```
 
 ```
 
 ```
 
+```vbscript
 ```vbscript
 ```vbscript
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ```
+```
 
 ```
 
 ```vbscript
+```vbscript
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```vbscript
+```
     ' Retrieve the Analysis Manager
 ```
 
@@ -91,77 +104,101 @@ Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ```vbscript
 ```vbscript
+```vbscript
     Set oAnalysisManager = oAnalysisDocument.Analysis
 
 ```
+```
 
 ```
 
 ```vbscript
+```vbscript
 Set oAnalysisManager = oAnalysisDocument.Analysis
 ```vbscript
+```
     ' Retrieve the analysis model from the list of models
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisModels = oAnalysisManager.AnalysisModels
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oAnalysisModel = oAnalysisModels.Item(1)
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Set oAnalysisModel = oAnalysisModels.Item(1)
 ```vbscript
+```
     ' Retrieve the analysis cases and the first analysis case
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisCases = oAnalysisModel.AnalysisCases
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oAnalysisCase = oAnalysisCases.Item(1)
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Set oAnalysisCase = oAnalysisCases.Item(1)
 ```vbscript
+```
     ' Retrieve the analysis sets and analysis set by its name
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisSets = oAnalysisCase.AnalysisSets
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oAnalysisSet = oAnalysisSets.Item("Frequency Case Solution.1", catAnalysisSetSearchAll)
 
     Set oAnalysisImages = oAnalysisSet.AnalysisImages
     'Image creation  under Frequency Case Solution.1 imagename=Disp_Symbol,  hide existing image=no, showmesh = no, duplicate=yes
+```
     '=================================================================================
 
+```vbscript
     Set analysisImage1 = oAnalysisImages.Add("Disp_Symbol", False, False, True)
     'Image creation  under Frequency Case Solution.1 imagename=Mesh_Deformed,  hide existing image=yes, showmesh = no, duplicate=yes
+```
     '====================================================================================
 
+```vbscript
     Set analysisImage2 = oAnalysisImages.Add("Mesh_Deformed", True, False, True)
 
     Set analysisSet2 = oAnalysisSets.Item("Restraints.1", catAnalysisSetSearchAll)
+```
 ```
 
 ```
@@ -172,13 +209,17 @@ Set oAnalysisCase = oAnalysisCases.Item(1)
 ```vbscript
 ```vbscript
     ' Retrieve list of Analysis Images from Restraint set
+```vbscript
     Set analysisEntities1 = analysisSet2.AnalysisEntities
     Set analysisEntity1 = analysisEntities1.Item(1)
     Set analysisImages2 = analysisEntity1.AnalysisImages
     'Image creation  under Clamp imagename=Restraint,  hide existing image=yes, showmesh = yes, duplicate=no
+```
     '=================================================================================
 
+```vbscript
     Set analysisImage3 = analysisImages2.Add("Restraint", True, True, False)
+```
 ```
 
 ```
@@ -186,6 +227,8 @@ Set oAnalysisCase = oAnalysisCases.Item(1)
 ```
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

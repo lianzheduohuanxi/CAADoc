@@ -4,7 +4,7 @@ title: "Creating 2D Coating Mesh Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniMeshCoating1D", "CAAScdAniUseCases", "CAAAniMeshCoating2D"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshCoating2D.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshCoating2D.htmmd"
 converted: "2026-05-11T17:31:51.628491"
 ```
 
@@ -38,20 +38,26 @@ This use case shows you how to create coating 2D mesh part by extracting face el
 ```vbscript
     '-----------------------------------------------------------
     'Optional: allows to find the sample wherever it's installed
+```vbscript
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
+```
 
+```vbscript
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
         End If
 ```
 
@@ -62,8 +68,10 @@ This use case shows you how to create coating 2D mesh part by extracting face el
 ```vbscript
     '-----------------------------------------------------------
     'Open the Analysis document
-    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis")
+```vbscript
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Cube_R13_Freq.CATAnalysis")
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+```
 ```
 
 ```
@@ -84,16 +92,20 @@ Open the Analysis document. The Analysis document is fetched in the documentatio
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisManagar = oAnalysisDocument.Analysis
+```
 ```
 
 ```vbscript
 ```vbscript
 ```vbscript
     'Retrieve the part document and product
+```vbscript
     Set oAnalysisLinkedDocuments = oAnalysisManagar.LinkedDocuments
     Set partDocument = oAnalysisLinkedDocuments.Item(1)
     Set product = partDocument.Product
+```
 ```
 
 ```
@@ -105,9 +117,13 @@ Open the Analysis document. The Analysis document is fetched in the documentatio
 ```
 
 ```vbscript
+```vbscript
     Set publications1 = product.Publications
 ```vbscript
+```
+```vbscript
     Set pubFace = publications1.Item("Top")
+```
 ```
 
 ```
@@ -116,13 +132,19 @@ Open the Analysis document. The Analysis document is fetched in the documentatio
 ```vbscript
 ```vbscript
     'Retreive the analysis model
+```vbscript
     Set oAnalysisModels = oAnalysisManagar.AnalysisModels
     Set oAnalysisModel = oAnalysisModels.Item(1)
     'Retrive The mesh manager and the list of mesh parts
+```
+```vbscript
     Set oAnalysisMeshManager = oAnalysisModel.MeshManager
     Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
     'Retrieve the already existing Octree mesh part
+```
+```vbscript
     Set oAnalysisMeshPart = oAnalysisMeshParts.Item(1)
+```
 ```
 
 ```
@@ -135,8 +157,10 @@ Open the Analysis document. The Analysis document is fetched in the documentatio
 
 ```vbscript
 ```vbscript
+```vbscript
     Set reference1 = oAnalysisManager.CreateReferenceFromObject(oAnalysisMeshPart)
 
+```
 ```
 
 ```
@@ -145,11 +169,11 @@ Open the Analysis document. The Analysis document is fetched in the documentatio
 
 ---
 
-According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. The extraction of pre-defined geometric elements is done by using the Reference interface. This is equivalent to the selection of a B-Rep elements inside the interactive application. In this macro the reference is created from the octree tetrahedron mesh part.
+According to the general [ Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. The extraction of pre-defined geometric elements is done by using the Reference interface. This is equivalent to the selection of a B-Rep elements inside the interactive application. In this macro the reference is created from the octree tetrahedron mesh part.
 #### Creating the Mesh Part and Assigning Values to its Attributes.
 
     ...
-According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. The extraction of pre-defined geometric elements is done by using the Reference interface. This is equivalent to the selection of a B-Rep elements inside the interactive application. In this macro the reference is created from the octree tetrahedron mesh part.
+According to the general [ Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. The extraction of pre-defined geometric elements is done by using the Reference interface. This is equivalent to the selection of a B-Rep elements inside the interactive application. In this macro the reference is created from the octree tetrahedron mesh part.
 ```vbscript
 ```vbscript
     'Add the new Coating mesh part to the list of mesh parts
@@ -159,9 +183,13 @@ According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniToc
 ```
 
 ```vbscript
+```vbscript
     Set coat2D = oAnalysisMeshPart.Add ("MSHPart2DCoating")
 ```vbscript
+```
+```vbscript
     'Set the reference to the surface mesh part
+```
 ```
 
     coat2D.AddSupportFromReference product, reference1
@@ -186,9 +214,13 @@ coat2D.SetGlobalSpecification "ExtractionType", 1
 ```
 
 ```vbscript
+```vbscript
     Set meshSpecs = coat2D.AnalysisMeshLocalSpecifications
 ```vbscript
+```
+```vbscript
     Set spec = meshSpecs.Add("MSHCoatingLocalSpecification")
+```
 ```
 
     spec.SetAttribute "LocalExtractionType", 2
@@ -196,7 +228,9 @@ coat2D.SetGlobalSpecification "ExtractionType", 1
 ```
 
 ```vbscript
+```vbscript
 Set spec = meshSpecs.Add("MSHCoatingLocalSpecification")
+```
 ```
 
 spec.SetAttribute "LocalExtractionType", 2
@@ -211,19 +245,21 @@ spec.SetAttribute "LocalExtractionType", 2
     ...
 
 ---
-#### The local specification specifies the faces which are to be included or excluded while computing the coating mesh. You can specify multiple faces to one local specification. If you want to include some faces, and exclude some other then you need to create at least two local specifications. All the faces which are to be included, can be added as support to one local specification with the attribute "LocalExtractionType" valuated to 1\. Similarly faces which are to be exclude can be added as support to other local specification with the attribute "LocalExtractionType" valuated to 2.
+#### The local specification specifies the faces which are to be included or excluded while computing the coating mesh. You can specify multiple faces to one local specification. If you want to include some faces, and exclude some other then you need to create at least two local specifications. All the faces which are to be included, can be added as support to one local specification with the attribute "LocalExtractionType" valuated to 1/. Similarly faces which are to be exclude can be added as support to other local specification with the attribute "LocalExtractionType" valuated to 2.
 
 #### Epilog
 
     ...
+```vbscript
     End Sub
     ...
+```
 
 ---
 
 To run the macro interactively CATDocView environment variables must be defined. After running the macro the mesh may not be immediately visible, the user has to go to the Advanced Meshing Tools workbench to see the mesh.
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

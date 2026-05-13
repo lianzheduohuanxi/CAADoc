@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Using Callbacks to Trigger Actions"
-category: "use-case"
+category: tech-article
 module: "CAADlgTechArticles"
 tags: []
-source_file: "Doc/online/CAADlgTechArticles/CAADlgCallbacks.htm"
+source_file: "Doc/online/CAADlgTechArticles/CAADlgCallbacks.htmmd"
 converted: "2026-05-11T17:17:56.024159"
 ```
 
@@ -47,7 +47,7 @@ For example, consider the part of a dialog window shown below:
 
 ```
 
-![CATDlgParent.jpg \(7407 bytes\)](images/CATDlgParent.jpg)
+![CATDlgParent.jpg /(7407 bytes/)](images/CATDlgParent.jpg)
 
 It contains two frames named Axis and Bottom. Assume that these two frames have the dialog window as parent. The Axis frame contains three controls: the Reverse push button, the Normal to Surface check button, and the disabled editor displaying No selection. These three controls have the Axis frame as parent because they are contained in this frame. A pointer to the Axis frame were passed as the first argument of their constructor. Consequently they also have the Axis frame as command parent.
 
@@ -74,14 +74,16 @@ As an example, let's take one of the push buttons of the Burger window. It is in
 
 ```
 
+```vbscript
     ...                                          // Set a callback on it
 CATDlgPushButton * pApply;                    // Instantiate the push button
+```
 pApply = new CATDlgPushButton(this, "Apply_Push_Button");
 ```vbscript
     AddAnalyseNotificationCB(pApply,                                 // push button
 ```
 
-                             pApply->GetPushBActivateNotification(), // notification
+                             pApply->GetPushBActivateNotification(#), // notification
                              (CATCommandMethod)&Burger::labelApply,  // method to trigger
                              NULL);                                  // no data to pass to labelApply
 
@@ -92,7 +94,7 @@ NULL);                                  // no data to pass to labelApply
 where:
 
   * `pApply` is a pointer to push button
-  * `pApply->GetPushBActivateNotification()` retireves the notification to which the window must react
+  * `pApply->GetPushBActivateNotification(#)` retireves the notification to which the window must react
   * `(CATCommandMethod)&Burger::labelApply` is the method to trigger when the notification is emitted. The method l`abelApply` of the Burger object is casted to a `CATCommandMethod` method.
 
 Each time the user pushes on the Apply push button, a activation notification of the Apply push button, instance of the CATDlgPushBActivateNotification class, is emitted, and the callback mechanism is used to trigger the method labelApply. This method has the following signature:
@@ -118,7 +120,7 @@ When the user closes the window into which the control was located, you need to 
 
 When the user closes the window into which the control was located, you need to remove all the callbacks set on this control. To do this, in the window destructor, use the method `RemoveAnalyseNotificationCB` as follows:
     RemoveAnalyseNotificationCB(pApply,
-                                pApply->GetPushBActivateNotification(),
+                                pApply->GetPushBActivateNotification(#),
                                 NULL)
 
 ---
@@ -147,14 +149,14 @@ For example, suppose you create a transient window to key in a character string 
 ```vbscript
     AddAnalyseNotificationCB(          // set callback on the control to
            pPushButton,                // create the transient window
-           pPushButton->GetPushBActivateNotification(),
+           pPushButton->GetPushBActivateNotification(#),
            (CATCommandMethod)&MyDocument::CreateTransWindow,
            UsefulData);
 ```
 
     ...
 pPushButton,                // create the transient window
-pPushButton->GetPushBActivateNotification(),
+pPushButton->GetPushBActivateNotification(#),
 (CATCommandMethod)&MyDocument::CreateTransWindow,
 UsefulData);
     void MyDocument::CreateTransWindow(
@@ -178,13 +180,13 @@ this,                      // window
 CATDlgWndOK);
       AddAnalyseNotificationCB(                 // set callback on the
               _pWindow,                         // window when the
-              _pWindow->GetDiaOKNotification(), // text is keyed in
+              _pWindow->GetDiaOKNotification(#), // text is keyed in
               (CATCommandMethod)&MyDocument::MethodOK,
               (void *) _pWindow);
 
     }
     ...
-_pWindow->GetDiaOKNotification(), // text is keyed in
+_pWindow->GetDiaOKNotification(#), // text is keyed in
 (CATCommandMethod)&MyDocument::MethodOK,
 (void *) _pWindow);
     void MyDocument::MethodOK(                // do what is needed
@@ -197,11 +199,11 @@ _pWindow->GetDiaOKNotification(), // text is keyed in
 CATCommand * pCommand,  // to retrieve the text
 CATNotification * pNotification
 CATCommandClientData UsefulData) {
-                   TransWindowEditor->GetText() ;
+                   TransWindowEditor->GetText(#) ;
 
       ...
 CATCommandClientData UsefulData) {
-TransWindowEditor->GetText() ;
+TransWindowEditor->GetText(#) ;
       delete ((MyTransientWindow *) UsefulData); // delete transient window
 
     }
@@ -216,7 +218,7 @@ You normally set a callback, for example on a push button of your main window. T
 You normally set a callback, for example on a push button of your main window. The method called back when the user presses on this push button creates the transient window with all its stuff. To react to user actions in this window, you set callbacks wherever you need, and especially to react to completion and closing request, that is in these cases:
         AddAnalyseNotificationCB(
                   _pWindow,
-                  _pWindow->GetDiaCANCELNotification(),
+                  _pWindow->GetDiaCANCELNotification(#),
                   (CATCommandMethod)&MyDocument::MethodCANCEL,
                   (void *) _Window)
 
@@ -226,7 +228,7 @@ You normally set a callback, for example on a push button of your main window. T
 (void *) _Window)
         AddAnalyseNotificationCB(
                   _pWindow,
-                  _pWindow->GetWindCloseNotification(),
+                  _pWindow->GetWindCloseNotification(#),
                   (CATCommandMethod)&MyDocument::MethodClose,
                   (void *) _Window);
 

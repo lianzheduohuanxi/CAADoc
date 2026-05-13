@@ -4,13 +4,13 @@ title: "Creating an Helix"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsOverview", "CAAGMOperatorsInterfaces", "CAAGMOperatorsCreateHelix", "CAADoc", "CATICGMDynMassProperties1D", "CATICGMObject", "CAAGMModelGemBrowser", "CAATopCreateHelix"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopCreateHelix.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopCreateHelix.htmmd"
 converted: "2026-05-11T17:33:49.138578"
 ```
 
 ---
 tags: ["CAAGMOperatorsOverview", "CAAGMOperatorsInterfaces", "CAAGMOperatorsCreateHelix", "CAADoc", "CATICGMDynMassProperties1D", "CATICGMObject", "CAAGMModelGemBrowser", "CAATopCreateHelix"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopCreateHelix.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopCreateHelix.htmmd"
 converted: "2026-05-11T17:33:49.138578"
 Creating an Helix
 
@@ -33,21 +33,21 @@ What You Will Learn With This Use Case This use case is intended to help you cre
     * Creates an helix with a constant pitch and a constant radius and creates the body associated with the helix.
     * Creates an helix with a variable pitch and a constant radius and creates the body associated with the helix.
     * Writes the model and closes the container.
-How to Launch CAAGMOperatorsCreateHelix To launch CAAGMOperatorsCreateHelix, you will need to set up the build time environment, then compile CAAGMOperatorsCreateHelix.m along with its prerequisites, set up the run time environment, and then execute the use case [1]. If you simply type CAAGMOperatorsCreateHelix with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsCreateHelix e/helix.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAATopCreateHelix Code The CAAGMOperatorsCreateHelix use case is made of a main named CAATopCreateHelix.cpp located in the CAAGMOperatorsCreateHelix.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsCreateHelix.m\` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. Step-by-Step The use case is divided into the following steps:
+How to Launch CAAGMOperatorsCreateHelix To launch CAAGMOperatorsCreateHelix, you will need to set up the build time environment, then compile CAAGMOperatorsCreateHelix.m along with its prerequisites, set up the run time environment, and then execute the use case [1]. If you simply type CAAGMOperatorsCreateHelix with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsCreateHelix e/helix.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAATopCreateHelix Code The CAAGMOperatorsCreateHelix use case is made of a main named CAATopCreateHelix.cpp located in the CAAGMOperatorsCreateHelix.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder/CAADoc/CAAGMOperatorsInterfaces.edu/CAAGMOperatorsCreateHelix.m/` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. Step-by-Step The use case is divided into the following steps:
     * Creating the Geometry Factory, CATSoftwareConfiguration and CATTopData
     * Creating an Helix with a Constant Pitch and Constant Radius
     * Creating an Helix with a Variable Pitch and a Variable Radius
     * Writing the Model and Closing the Container
-How to Launch CAAGMOperatorsCreateHelix To launch CAAGMOperatorsCreateHelix, you will need to set up the build time environment, then compile CAAGMOperatorsCreateHelix.m along with its prerequisites, set up the run time environment, and then execute the use case [1]. If you simply type CAAGMOperatorsCreateHelix with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsCreateHelix e/helix.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAATopCreateHelix Code The CAAGMOperatorsCreateHelix use case is made of a main named CAATopCreateHelix.cpp located in the CAAGMOperatorsCreateHelix.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsCreateHelix.m\` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. Step-by-Step The use case is divided into the following steps:
+How to Launch CAAGMOperatorsCreateHelix To launch CAAGMOperatorsCreateHelix, you will need to set up the build time environment, then compile CAAGMOperatorsCreateHelix.m along with its prerequisites, set up the run time environment, and then execute the use case [1]. If you simply type CAAGMOperatorsCreateHelix with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsCreateHelix e/helix.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAATopCreateHelix Code The CAAGMOperatorsCreateHelix use case is made of a main named CAATopCreateHelix.cpp located in the CAAGMOperatorsCreateHelix.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder/CAADoc/CAAGMOperatorsInterfaces.edu/CAAGMOperatorsCreateHelix.m/` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. Step-by-Step The use case is divided into the following steps:
 Creating the Geometry Factory, CATSoftwareConfiguration and CATTopData The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
 
-    CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**() ;
+    CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**(#) ;
 ```vbscript
     if (NULL==piGeomFactory) return (1);
 
 ```
 
-    CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration();
+    CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration(#);
     CATTopData topdata(pConfig);
 
 Creating an Helix with a Constant Pitch and Constant Radius An helix with a constant pitch is created by using the CATGeoFactory::CreateHelix API. With this method, you can specify either a constant radius (last argument set to 0) or a linear variation coefficient for the radius (number of mm per helix turn). With the code below:
@@ -68,15 +68,21 @@ You get the helix below: ![Helix](images/CAACgmTophelix1.gif) | Note that the or
 1,                            /* the orientation with respect to the axis */
 0);                            /* the radius evolution = number of mm/turn*/
 You get the helix below: ![Helix](images/CAACgmTophelix1.gif) | Note that the origin point (B) does not belong to the helix as the start angle is set to 90 deg. To have the origin confused with the starting point, you should specify a start angle of 0. ![Helix Seen from Top](images/CAACgmTophelix0.gif)
+```vbscript
 Creating an Helix with a Variable Pitch and a Variable Radius To create an helix with a variable pitch and a variable radius (with a linear or not linear variation), you must use the CATHelix::Set API which takes CATLaws as arguments. Prior to calling this method, you must:
     1. Initialize the data for the helix to be created. To do this, use the CATGeoFactory::CreateHelix method.
+```
+```vbscript
     2. Compute the length of the initial helix by using the CATICGMDynMassProperties1D operator. A suitable length is required for the CATLaw creation. If you pass an inconsistent length to the CATLaw and CATHelix::Set method, you will get a throw.
 Creating the Radius Law A linear radius law is used as it can be used both for a constant and a linear law.
+```
 
     // (c) - create the radius linear law: radius is 100
 1. Initialize the data for the helix to be created. To do this, use the CATGeoFactory::CreateHelix method.
+```vbscript
 2. Compute the length of the initial helix by using the CATICGMDynMassProperties1D operator. A suitable length is required for the CATLaw creation. If you pass an inconsistent length to the CATLaw and CATHelix::Set method, you will get a throw.
 Creating the Radius Law A linear radius law is used as it can be used both for a constant and a linear law.
+```
     CATLaw * radiusLaw = ((CATLaw*)(piGeomFactory -> CreateLinearLaw(0.0, 100.0, theLength1, 100)));
 
 Creating the ZLaw as a CATCompositeLaw The ZLaw defines how the Z coordinate varies versus the CATCrvParam. A composite law with one CATMathFunctionX of degree 2 is defined (z = 0.02*CATCrvParam  2).
@@ -179,7 +185,7 @@ ofstream filetowrite(pfileName, ios::binary ) ;
     #endif
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
-       filetowrite.close();
+       filetowrite.close(#);
      }
 
      //

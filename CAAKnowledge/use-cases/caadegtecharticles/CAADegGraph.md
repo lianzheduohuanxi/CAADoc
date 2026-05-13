@@ -4,13 +4,13 @@ title: "Implementing the Command Statechart Diagram"
 category: "use-case"
 module: "CAADegTechArticles"
 tags: ["CAACreatePolylineCmd", "CAAILine", "CATI2DPoint", "CAACommandCmd", "CAACreateCircleCmd", "CATI3DCamera", "CATI2DControlPoint", "CATIAxle", "CAAIPoint", "CAACreateLineCmd", "CATIndication", "CATICamera", "CATIndicationAgent"]
-source_file: "Doc/online/CAADegTechArticles/CAADegGraph.htm"
+source_file: "Doc/online/CAADegTechArticles/CAADegGraph.htmmd"
 converted: "2026-05-11T17:33:49.838586"
 ```
 
 ---
 tags: ["CAACreatePolylineCmd", "CAAILine", "CATI2DPoint", "CAACommandCmd", "CAACreateCircleCmd", "CATI3DCamera", "CATI2DControlPoint", "CATIAxle", "CAAIPoint", "CAACreateLineCmd", "CATIndication", "CATICamera", "CATIndicationAgent"]
-source_file: "Doc/online/CAADegTechArticles/CAADegGraph.htm"
+source_file: "Doc/online/CAADegTechArticles/CAADegGraph.htmmd"
 converted: "2026-05-11T17:33:49.838586"
 3D PLM Enterprise Architecture |  User Interface - Commands |  Implementing the Command Statechart Diagram _From the statechart diagram to the BuildGraph method_
 
@@ -59,7 +59,7 @@ Abstract This article shows how to code the command class `BuildGraph` method th
 
 Implementing the Statechart Diagram The statechart diagram is implemented using the `BuildGraph` method. States, transitions, guard conditions, actions, and dialog agents are created in this method, and states, guard conditions and action methods are declared as transition parameters, or as state parameters.
 
-    void CAACommandCmd::BuildGraph()
+    void CAACommandCmd::BuildGraph(#)
     {
       // Create states
       // Create dialog agents, set their behaviors, and plug them to the states
@@ -85,7 +85,7 @@ Implementing the Statechart Diagram The statechart diagram is implemented using 
 ---
     * The Cancel state is a flavor of the final state. Like the final state, it ends the command, but in addition, it requests the [command undo](CAADegUndoRedo.md) when the command completes. It is created using the `GetCancelState` method.
 
-          CATDialogState * stCancelState = GetCancelState();
+          CATDialogState * stCancelState = GetCancelState(#);
 
 ---
 The parameter passed as the argument of the methods `GetInitialState` and `AddDialogState` is the state identifier. This identifier is used in the state dialog command resource file to declare prompts to display when the state is the active one. [Top] Creating Composite States Composite states are created like simple states.
@@ -107,15 +107,17 @@ Any dialog agent has a behavior that you can customize. For example, you can act
 
 ---
 _daIndicationAgent = new CATIndicationAgent("2DIndicationAgentId");
-Enabling a 3D Point Indication on a 2D Screen An indication agent that is dedicated to a command running with a 2D viewer directly retrieves the 2D point coordinates from the screen plane, expressed with respect to the document absolute axis system. With a 3D viewer, the click on the screen is undetermined. If you do not provide a projection plane, the default is a plane parallel to the screen. You can supply a plane, attached to the dialog agent, on which the point clicked on the screen plane will be projected according to the sight direction of the current viewpoint. ![3DIndicationAgent.gif \(7508 bytes\)](images/3DIndicationAgent.gif) Pay attention to this plane: it should not be perpendicular to the near or far planes, that is to the screen plane, in order to get a point. To create a plane, create the plane axis system origin, and the two plane axes, then set the origin and the axes as those of the plane, and set the plane as the indication agent plane using the `SetMathPlane` method.
+Enabling a 3D Point Indication on a 2D Screen An indication agent that is dedicated to a command running with a 2D viewer directly retrieves the 2D point coordinates from the screen plane, expressed with respect to the document absolute axis system. With a 3D viewer, the click on the screen is undetermined. If you do not provide a projection plane, the default is a plane parallel to the screen. You can supply a plane, attached to the dialog agent, on which the point clicked on the screen plane will be projected according to the sight direction of the current viewpoint. ![3DIndicationAgent.gif /(7508 bytes/)](images/3DIndicationAgent.gif) Pay attention to this plane: it should not be perpendicular to the near or far planes, that is to the screen plane, in order to get a point. To create a plane, create the plane axis system origin, and the two plane axes, then set the origin and the axes as those of the plane, and set the plane as the indication agent plane using the `SetMathPlane` method.
 
     CATMathPoint origin(0,0,0);  // Create projection plane origin and axes
     CATMathDirection u(1,0,0);
     CATMathDirection v(0,1,0);
 
     CATMathPlane Plane;
+```vbscript
     Plane.SetOrigin(origin);     // Set them to the projection plane
     Plane.SetDirections(u, v);
+```
 
     _daIndicationAgent->**SetMathPlane**(Plane); // Assigns the plane to the dialog agent
 
@@ -132,15 +134,15 @@ If you want to make sure that the plane is not perpendicular to the screen plane
 If you want to make sure that the plane is not perpendicular to the screen plane, you can, for example, check that the vector normal to the plane is not perpendicular to the sight direction of the viewpoint. This can be done as follows.
     CATCATBoolean isPlaneNormal = FALSE;
 
-    CATFrmLayout * pCurrentLayout = CATFrmLayout::GetCurrentLayout();
+    CATFrmLayout * pCurrentLayout = CATFrmLayout::GetCurrentLayout(#);
     if ( NULL != pCurrentLayout )
 ```
 
     {
 CATCATBoolean isPlaneNormal = FALSE;
-CATFrmLayout * pCurrentLayout = CATFrmLayout::GetCurrentLayout();
+CATFrmLayout * pCurrentLayout = CATFrmLayout::GetCurrentLayout(#);
 if ( NULL != pCurrentLayout )
-      CATFrmWindow * pCurrentWindow = pCurrentLayout->GetCurrentWindow();
+      CATFrmWindow * pCurrentWindow = pCurrentLayout->GetCurrentWindow(#);
 ```vbscript
       if ( NULL != pCurrentWindow )
 
@@ -149,11 +151,11 @@ if ( NULL != pCurrentLayout )
       {
 ```vbscript
 if ( NULL != pCurrentLayout )
-CATFrmWindow * pCurrentWindow = pCurrentLayout->GetCurrentWindow();
+CATFrmWindow * pCurrentWindow = pCurrentLayout->GetCurrentWindow(#);
 if ( NULL != pCurrentWindow )
         CATICamera * piICamera = NULL;
 ```vbscript
-        piICamera = pCurrentWindow->GetCurrentCamera();
+        piICamera = pCurrentWindow->GetCurrentCamera(#);
 
         if (NULL != piICamera)
 ```
@@ -162,7 +164,7 @@ if ( NULL != pCurrentWindow )
 
         {
 CATICamera * piICamera = NULL;
-piICamera = pCurrentWindow->GetCurrentCamera();
+piICamera = pCurrentWindow->GetCurrentCamera(#);
 ```vbscript
 if (NULL != piICamera)
 ```
@@ -181,28 +183,28 @@ HRESULT rc = piICamera->QueryInterface(IID_CATI3DCamera,(void **)& pi3DCamera);
 if ( SUCCEEDED(rc) )
             CATMathVector Normal;
             Plane.GetNormal(Normal);
-            CATMathDirection Sight = pi3DCamera->GetDirection();
+            CATMathDirection Sight = pi3DCamera->GetDirection(#);
 ```vbscript
             isPlaneNormal = Sight.IsNormal(Normal);
 
 ```
 
-            pi3DCamera->Release();
+            pi3DCamera->Release(#);
             pi3DCamera=NULL;
 
           }
 ```vbscript
 isPlaneNormal = Sight.IsNormal(Normal);
-pi3DCamera->Release();
+pi3DCamera->Release(#);
 pi3DCamera=NULL;
-          piICamera->Release();
+          piICamera->Release(#);
           piICamera= NULL ;
 ```
 
         }
       }
     }
-piICamera->Release();
+piICamera->Release(#);
 piICamera= NULL ;
 ```vbscript
     if (FALSE == isPlaneNormal) ...
@@ -228,15 +230,15 @@ Retrieving the Indicated Point The point indicated by the end user is retrieved 
 
           ...
 Retrieving the Indicated Point The point indicated by the end user is retrieved directly as a _CATMathPoint2D_ instance in case of a 2D viewer, and should be transformed as a _CATMathPoint_ with a 3D viewer.
-          CATMathPoint2D IndPoint = _daIndicationAgent->GetValue();
+          CATMathPoint2D IndPoint = _daIndicationAgent->GetValue(#);
 
-          double X = IndPoint.GetX();
-          double Y = IndPoint.GetY();
+          double X = IndPoint.GetX(#);
+          double Y = IndPoint.GetY(#);
 
           // OR
-CATMathPoint2D IndPoint = _daIndicationAgent->GetValue();
-double X = IndPoint.GetX();
-double Y = IndPoint.GetY();
+CATMathPoint2D IndPoint = _daIndicationAgent->GetValue(#);
+double X = IndPoint.GetX(#);
+double Y = IndPoint.GetY(#);
           double X, Y;
           IndPoint.GetCoord(X, Y);
 
@@ -246,18 +248,18 @@ double Y = IndPoint.GetY();
     * With a 3D viewer
 
           ...
-          CATMathPoint2D IndPoint2D = _daIndicationAgent->GetValue();
+          CATMathPoint2D IndPoint2D = _daIndicationAgent->GetValue(#);
           CATMathPoint IndPoint3D;
-          Plane.EvalPoint(IndPoint2D.GetX(),IndPoint2D.GetY(), IndPoint3D);
+          Plane.EvalPoint(IndPoint2D.GetX(#),IndPoint2D.GetY(#), IndPoint3D);
 
-          double X = IndPoint3D.GetX();
-          double Y = IndPoint3D.GetY();
-          double Z = IndPoint3D.GetZ();
+          double X = IndPoint3D.GetX(#);
+          double Y = IndPoint3D.GetY(#);
+          double Z = IndPoint3D.GetZ(#);
 
           // OR
-double X = IndPoint3D.GetX();
-double Y = IndPoint3D.GetY();
-double Z = IndPoint3D.GetZ();
+double X = IndPoint3D.GetX(#);
+double Y = IndPoint3D.GetY(#);
+double Z = IndPoint3D.GetZ(#);
           double, X, Y, Z;
           IndPoint3D.GetCoord(X, Y, Z);
 
@@ -274,19 +276,19 @@ If you do not have define an explicit plane, you retrieve the default plane, wit
     ...
 ```vbscript
 If you do not have define an explicit plane, you retrieve the default plane, with the `GetMathPlane` method.
-    CATMathPlane Plane = _daIndicationAgent->**GetMathPlane**();
-    Plane.EvalPoint(IndPoint2D.GetX(),IndPoint2D.GetY(), IndPoint3D);
+    CATMathPlane Plane = _daIndicationAgent->**GetMathPlane**(#);
+    Plane.EvalPoint(IndPoint2D.GetX(#),IndPoint2D.GetY(#), IndPoint3D);
 ```
 
     ...
 
 ---
-CATMathPlane Plane = _daIndicationAgent->**GetMathPlane**();
-Plane.EvalPoint(IndPoint2D.GetX(),IndPoint2D.GetY(), IndPoint3D);
+CATMathPlane Plane = _daIndicationAgent->**GetMathPlane**(#);
+Plane.EvalPoint(IndPoint2D.GetX(#),IndPoint2D.GetY(#), IndPoint3D);
  Using the Select command, provided as an arrow button in the user interface and shown here as the current command with its focused icon, the end user selects the top face of the pad. This face is put into the CSO, and its contour is highlighted. No predicate is done about what could be the next current command.
 
  The end user clicks the Thickness command. The selected face is taken as input to be the face to thicken. If the clicked command cannot take a face as input, the selected face is ignored by the command, and is deselected, that is  removed from the CSO.
-**Action-object** : Each command that requires an end user input enables the action-object paradigm. The command can be selected first, and if no object is active, or if no active object matches the expected one(s), the active objects are deselected and the command waits for the end user to select an appropriate object, and takes this object as input. ![Selection3.jpg \(52480 bytes\)](images/Selection3.jpg) | The thickness command is clicked, but no face is selected. The command includes a selection step that lets the end user select the face to thicken.
+**Action-object** : Each command that requires an end user input enables the action-object paradigm. The command can be selected first, and if no object is active, or if no active object matches the expected one(s), the active objects are deselected and the command waits for the end user to select an appropriate object, and takes this object as input. ![Selection3.jpg /(52480 bytes/)](images/Selection3.jpg) | The thickness command is clicked, but no face is selected. The command includes a selection step that lets the end user select the face to thicken.
 ---|---
 Using the Select command, provided as an arrow button in the user interface and shown here as the current command with its focused icon, the end user selects the top face of the pad. This face is put into the CSO, and its contour is highlighted. No predicate is done about what could be the next current command.
 The end user clicks the Thickness command. The selected face is taken as input to be the face to thicken. If the clicked command cannot take a face as input, the selected face is ignored by the command, and is deselected, that is  removed from the CSO.
@@ -311,28 +313,28 @@ If you do nothing else, your path element dialog agent will be valued with any o
 
     * **Enabling a given object to be selected (Type Query)** : To value your path element dialog agent when the end user selects a given type of object, use the `AddElementType` method to set an interface this object implements. The following example shows how to value a path element dialog agent when the end user selects objects implementing the _CAAIPoint_ interface.
 
-          _daSelectionAgent->AddElementType(CAAIPoint::ClassId());
+          _daSelectionAgent->AddElementType(CAAIPoint::ClassId(#));
 
 ---
-_daSelectionAgent->AddElementType(CAAIPoint::ClassId());
-When a dialog agent is intended for such objects implementing the _CAAIPoint_ interface, it automatically sets the  cursor as ![NoEntry.gif \(864 bytes\)](images/NoEntry.gif) when the end user moves or locates the mouse above the representation of an object that doesn't implement this interface. The `AddElementType` method can be used as many times as you want the dialog agent to be valued with  objects implementing different interfaces. For example, if you want to value it with points or with lines, write:
+_daSelectionAgent->AddElementType(CAAIPoint::ClassId(#));
+When a dialog agent is intended for such objects implementing the _CAAIPoint_ interface, it automatically sets the  cursor as ![NoEntry.gif /(864 bytes/)](images/NoEntry.gif) when the end user moves or locates the mouse above the representation of an object that doesn't implement this interface. The `AddElementType` method can be used as many times as you want the dialog agent to be valued with  objects implementing different interfaces. For example, if you want to value it with points or with lines, write:
 
-          _daSelectionAgent->AddElementType(CAAIPoint::ClassId());
-          _daSelectionAgent->AddElementType(CAAILine::ClassId());
+          _daSelectionAgent->AddElementType(CAAIPoint::ClassId(#));
+          _daSelectionAgent->AddElementType(CAAILine::ClassId(#));
 
 ---
-_daSelectionAgent->AddElementType(CAAIPoint::ClassId());
-_daSelectionAgent->AddElementType(CAAILine::ClassId());
+_daSelectionAgent->AddElementType(CAAIPoint::ClassId(#));
+_daSelectionAgent->AddElementType(CAAILine::ClassId(#));
 The order in which the interfaces are declared using the `AddElementType` method is not taken into account. You can also set an ordered list of the interfaces among which the object selected should match at least one, and use the `SetOrderedTypeList` method to pass this ordered list to the dialog agent. Interface support is then sequentially checked using the list order.
 
           CATListOfCATString Types;
-          Types.Append(CAAIPoint::ClassId());
-          Types.Append(CAAILine::ClassId());
+          Types.Append(CAAIPoint::ClassId(#));
+          Types.Append(CAAILine::ClassId(#));
           _daSelectionAgent->SetOrderedTypeList(Types);
 
 ---
-Types.Append(CAAIPoint::ClassId());
-Types.Append(CAAILine::ClassId());
+Types.Append(CAAIPoint::ClassId(#));
+Types.Append(CAAILine::ClassId(#));
 _daSelectionAgent->SetOrderedTypeList(Types);
 In this case, the _CAAIPoint_ is queried first against the selected object, and if the query fails, then the _CAAILine_ interface is queried.
 
@@ -359,9 +361,9 @@ This puts the object in the PSO and in the HSO. You can use `CATDlgEngWithPSO` o
     * Topological constraints, such as check if a point belongs to a given plane
     * Interval constraints, such as check if a number is between 0 and 100
     * Lexical constraints, such as check if a date is a "MM/DD/YY" string.
-When a dialog agent has such a filter, it applies the filter to check if the end user input is valid. It automatically sets the  cursor as ![NoEntry.gif \(864 bytes\)](images/NoEntry.gif) when the end user moves or locates the mouse above the representation of an object that doesn't match the filter.  Use acquisition filters to provide single-data constraints, such as `0<=N<=100`, and conditions to provide multiple-data constraints, such as `[point1<>point2 ?]`. Using filters simplifies conditions (all single-data constraints are provided as filters) and improves performance (conditions are checked only when each data has been checked). Use a condition method or a filter can seem equivalent, but there is a point to consider. Suppose your dialog agent has the pre-highlight behavior. With the condition method the wrong selected element will be first pre-highlighted and then the condition method will reject it. To re-pre-select an other element a re-initialization will be done, but the wrong element will be always pre-highlighted. With the filter the element will be pre-highlighted only if it is really selectable.  A filter can be created using the `Filter` method of the _CATStateCommand_ class:
+When a dialog agent has such a filter, it applies the filter to check if the end user input is valid. It automatically sets the  cursor as ![NoEntry.gif /(864 bytes/)](images/NoEntry.gif) when the end user moves or locates the mouse above the representation of an object that doesn't match the filter.  Use acquisition filters to provide single-data constraints, such as `0<=N<=100`, and conditions to provide multiple-data constraints, such as `[point1<>point2 ?]`. Using filters simplifies conditions (all single-data constraints are provided as filters) and improves performance (conditions are checked only when each data has been checked). Use a condition method or a filter can seem equivalent, but there is a point to consider. Suppose your dialog agent has the pre-highlight behavior. With the condition method the wrong selected element will be first pre-highlighted and then the condition method will reject it. To re-pre-select an other element a re-initialization will be done, but the wrong element will be always pre-highlighted. With the filter the element will be pre-highlighted only if it is really selectable.  A filter can be created using the `Filter` method of the _CATStateCommand_ class:
 
-When a dialog agent has such a filter, it applies the filter to check if the end user input is valid. It automatically sets the  cursor as ![NoEntry.gif \(864 bytes\)](images/NoEntry.gif) when the end user moves or locates the mouse above the representation of an object that doesn't match the filter.  Use acquisition filters to provide single-data constraints, such as `0<=N<=100`, and conditions to provide multiple-data constraints, such as `[point1<>point2 ?]`. Using filters simplifies conditions (all single-data constraints are provided as filters) and improves performance (conditions are checked only when each data has been checked). Use a condition method or a filter can seem equivalent, but there is a point to consider. Suppose your dialog agent has the pre-highlight behavior. With the condition method the wrong selected element will be first pre-highlighted and then the condition method will reject it. To re-pre-select an other element a re-initialization will be done, but the wrong element will be always pre-highlighted. With the filter the element will be pre-highlighted only if it is really selectable.  A filter can be created using the `Filter` method of the _CATStateCommand_ class:
+When a dialog agent has such a filter, it applies the filter to check if the end user input is valid. It automatically sets the  cursor as ![NoEntry.gif /(864 bytes/)](images/NoEntry.gif) when the end user moves or locates the mouse above the representation of an object that doesn't match the filter.  Use acquisition filters to provide single-data constraints, such as `0<=N<=100`, and conditions to provide multiple-data constraints, such as `[point1<>point2 ?]`. Using filters simplifies conditions (all single-data constraints are provided as filters) and improves performance (conditions are checked only when each data has been checked). Use a condition method or a filter can seem equivalent, but there is a point to consider. Suppose your dialog agent has the pre-highlight behavior. With the condition method the wrong selected element will be first pre-highlighted and then the condition method will reject it. To re-pre-select an other element a re-initialization will be done, but the wrong element will be always pre-highlighted. With the filter the element will be pre-highlighted only if it is really selectable.  A filter can be created using the `Filter` method of the _CATStateCommand_ class:
     CATAcquisitionFilter * CATStateCommand::Filter
                             (FilterMethod iMethod, void * data);
 
@@ -437,7 +439,7 @@ CATBoolean MyCmd::TestCtrlPoint ( CATDialogAgent * iAgent, void * iUsefulData)
 CATBoolean MyCmd::TestCtrlPoint ( CATDialogAgent * iAgent, void * iUsefulData)
 CATBoolean ret = FALSE;
 if ( NULL != iAgent )
-         CATBaseUnknown * pSelectedElt= ((CATPathElementAgent *)iAgent)->GetElementValue();
+         CATBaseUnknown * pSelectedElt= ((CATPathElementAgent *)iAgent)->GetElementValue(#);
 ```vbscript
          if ( NULL != pSelectedElt )
 
@@ -446,7 +448,7 @@ if ( NULL != iAgent )
          {
 ```vbscript
 if ( NULL != iAgent )
-CATBaseUnknown * pSelectedElt= ((CATPathElementAgent *)iAgent)->GetElementValue();
+CATBaseUnknown * pSelectedElt= ((CATPathElementAgent *)iAgent)->GetElementValue(#);
 if ( NULL != pSelectedElt )
             CATI2DControlPoint * pI2DControlPoint = NULL;
             HRESULT rc = pSelectedElt->QueryInterface(IID_CATI2DControlPoint,
@@ -460,7 +462,7 @@ HRESULT rc = pSelectedElt->QueryInterface(IID_CATI2DControlPoint,
 (void **) & pI2DControlPoint );
 if SUCCEEDED(rc)
                ret = TRUE;
-               pI2DControlPoint ->Release();
+               pI2DControlPoint ->Release(#);
                pI2DControlPoint = NULL ;
 
             }
@@ -556,7 +558,10 @@ The behavior mode is a concatenation of the behavior parameters using the | char
     MyDialogAgent->SetBehavior(CATDlgEngRepeat | CATDlgEngWithUndo);
 
 ---
+```vbscript
 [Top] Notifier Set When a dialog agent is created, its _notifier set_ is the set of all the notifiers, that is, all viewers and dialog boxes that can send notifications conveyed to the dialog agent through the command thanks to the Send/receive communication protocol. But you can define explicitly the notifier set by calling the `AddNotifier` method, as many times as required.
+
+```
 
     void CATDialogAgent::AddNotifier(CATCommand * iNotifier);
 
@@ -570,9 +575,11 @@ Use the `RemoveNotifier` method to remove a given notifier from the notifier set
             (CATCommand * iNotifier, CATCommand * iNotification);
 
 ---
+```vbscript
     * Set `iNotifier` to `NULL` if the notification is notifier (viewer or dialog box) independent
     * Set `iNotification` to `NULL` to receive all the sent notifications, whatever their kind.
 (CATCommand * iNotifier, CATCommand * iNotification);
+```
 Use the `IgnoreOnNotify` method to remove a rule from the notification pattern. [Top] Plugging a Dialog Agent to a State Once the dialog agent is created and well defined with the appropriate behavior, you can plug it to the dialog state you intend it for. This is done using the `AddDialogAgent` method of the _CATDialogState_ class.
 
     stStartState->AddDialogAgent(_daIndicationAgent);
@@ -636,21 +643,21 @@ SourceState->AddDialogAgent(_daAgent);
     * Recycle the dialog agent to use it again as a brand new one.
 Retrieving the Selected Object To retrieve the object selected, use the `GetElementValue` method, as follows:
 
-    CATBaseUnknown * SelectedObject = _SelectionAgent->GetElementValue();
+    CATBaseUnknown * SelectedObject = _SelectionAgent->GetElementValue(#);
 
 ---
 Retrieving the Selected Object To retrieve the object selected, use the `GetElementValue` method, as follows:
-CATBaseUnknown * SelectedObject = _SelectionAgent->GetElementValue();
+CATBaseUnknown * SelectedObject = _SelectionAgent->GetElementValue(#);
 This is generally done in the appropriate action method, or possibly in a condition method. Retrieving the Selected Path Element You may want also to retrieve the path element which contains the selected object by using the `GetValue` method.
 
-    CATPathElement * SelectedPath = _SelectionAgent->GetValue();
+    CATPathElement * SelectedPath = _SelectionAgent->GetValue(#);
 
 ---
     * If you have not specified any interface or class, the returned path element contains all the elements from the root element to the selected element. For example, if the user selects the rear left wheel, the returned path is: Car/RearAxle/RearLeftWheel
     * Otherwise, with a type query, if the selected element is a child of the required element, the returned model path is a subpath, that is a path that begins with the root element and truncated with the first element matching the interface or class name specified using the `AddElementType` method. For example, if a CATIAxle is required and the user selects the rear left wheel, the returned subpath is: Car/RearAxle
 [Top] Retrieving the Multiselected Path Elements You may want also to retrieve the path elements which contains the multiselected objects by using the `GetListOfValue`s method, as a pointer to a CATSO instance that contains the list of path elements.
 
-    CATSO * SelectedPaths = _SelectionAgent->GetListOfValues();
+    CATSO * SelectedPaths = _SelectionAgent->GetListOfValues(#);
 
 ---
 With a type query, the returned path list contains only the matching object paths. Each object path may be truncated if the selected object is a child of the required one. For example, if a CATIAxle is required and the user selects the rear left wheel and the front axle, the returned list is:
@@ -658,19 +665,19 @@ With a type query, the returned path list contains only the matching object path
     * Car/FrontAxle (path for the front axle).
 [Top] Retrieving whether a Dialog Agent Is Valued You can query a dialog agent to know whether it is valued by calling the `IsOutputSet` method.
 
-    CATBoolean CATDialogAgent::IsOutputSet()
+    CATBoolean CATDialogAgent::IsOutputSet(#)
 
 ---
 [Top] Recycling a Dialog Agent Recycling allows a dialog agent to be reused once it has been input. This feature is useful in the following situations:
     * **Array input** : One acquisition variable is enough to input an array: a self-transition is used to store each data input in an array's element before recycling by means of the `InitializeAcquisition` method. For example, for a _CATIndicationAgent_ :
 
-          CATMathPoint2D point2D = _daIndication->GetValue();
+          CATMathPoint2D point2D = _daIndication->GetValue(#);
           ...
-          _daIndication->InitializeAcquisition();
+          _daIndication->InitializeAcquisition(#);
 
 ---
-CATMathPoint2D point2D = _daIndication->GetValue();
-_daIndication->InitializeAcquisition();
+CATMathPoint2D point2D = _daIndication->GetValue(#);
+_daIndication->InitializeAcquisition(#);
 ```vbscript
 If the dialog agent is recycled using the `InitializeAcquisition` method, you can use it again as if it were never used, that is, using the `IsOutputSetCondition` method. Another way of providing array input with a single dialog agent is to set it as repeatable using the `CATDlgEngRepeat` behavior parameter, and to use the `IsLastModifiedAgentCondition` method instead of the `IsOutputSetCondition` method.
 
@@ -781,12 +788,12 @@ Condition(...),
 Action(...));
 ```
 
-To make it possible to get out of the loop, another transition from the same source state to another target state should exist. Self-transitions are also useful to visualize the object that could be created at the current mouse location if the end user requested to create it. Below are two examples. ![RubberBanding1.gif \(2520 bytes\)](images/RubberBanding1.gif) | The circle is not yet created. The circle center is already created, and the end user moves the mouse. A circle that corresponds to the current mouse location is drawn. It corresponds to the circle that would be created if the end user clicked the mouse at that location. This is made possible thanks to a self-transition looping on a state that expects the circle radius input by means of an indication.
+To make it possible to get out of the loop, another transition from the same source state to another target state should exist. Self-transitions are also useful to visualize the object that could be created at the current mouse location if the end user requested to create it. Below are two examples. ![RubberBanding1.gif /(2520 bytes/)](images/RubberBanding1.gif) | The circle is not yet created. The circle center is already created, and the end user moves the mouse. A circle that corresponds to the current mouse location is drawn. It corresponds to the circle that would be created if the end user clicked the mouse at that location. This is made possible thanks to a self-transition looping on a state that expects the circle radius input by means of an indication.
 ```
 
 ```vbscript
 Action(...));
-To make it possible to get out of the loop, another transition from the same source state to another target state should exist. Self-transitions are also useful to visualize the object that could be created at the current mouse location if the end user requested to create it. Below are two examples. ![RubberBanding1.gif \(2520 bytes\)](images/RubberBanding1.gif) | The circle is not yet created. The circle center is already created, and the end user moves the mouse. A circle that corresponds to the current mouse location is drawn. It corresponds to the circle that would be created if the end user clicked the mouse at that location. This is made possible thanks to a self-transition looping on a state that expects the circle radius input by means of an indication.
+To make it possible to get out of the loop, another transition from the same source state to another target state should exist. Self-transitions are also useful to visualize the object that could be created at the current mouse location if the end user requested to create it. Below are two examples. ![RubberBanding1.gif /(2520 bytes/)](images/RubberBanding1.gif) | The circle is not yet created. The circle center is already created, and the end user moves the mouse. A circle that corresponds to the current mouse location is drawn. It corresponds to the circle that would be created if the end user clicked the mouse at that location. This is made possible thanks to a self-transition looping on a state that expects the circle radius input by means of an indication.
  The state dedicated to get the circle radius has an incoming transition that comes from a previous state that is not detailed here. As long as the end user moves the mouse, the viewer sends a preactivation notification that values a dialog agent and fires the self-transition whose action creates a temporary circle that corresponds to the current mouse location. As soon as the end user indicates a point, the transition that creates the circle fires, the circle is created and the final state is reached.
 The code to write to create the self-transition for the circle in the `BuildGraph` method is the following.
 
@@ -822,22 +829,27 @@ The indication dialog agent should feature a behavior that makes it react on pre
     * `CATDlgEngWithPrevaluation` enables the dialog agent to be valued from such a notification
     * `CATDlgEngAcceptOnPrevaluate` triggers the transition when the dialog agent is prevalued with such a notification, the default being that a selection should occur to trigger a transition.
 The indication dialog agent should feature a behavior that makes it react on preactivation notifications:
+```vbscript
 The transition is triggered as soon as the dialog agent is prevalued. Dialog agent prevaluation takes place when a preactivation notification is received. This is the case with an indication dialog agent as long as the mouse moves without clicking the left button. The `IsLastModifiedAgentCondition` method detects dialog agent prevaluation. Otherwise, using the `IsOutputSetCondition` method, the transition would be triggered only when the agent would be valued, that is once the end user would have clicked. The temporary circle displayed is not stored in the document, but added to the ISO (Interactive Set of Objects). It is created from a previous action, and updated according to the mouse move using the `UpdateCircle` method.
+
+```
 
     CATBoolean CAACreateCircleCmd::UpdateCircle(void * iData)
 
     {
       //        Get current point
+```vbscript
 The transition is triggered as soon as the dialog agent is prevalued. Dialog agent prevaluation takes place when a preactivation notification is received. This is the case with an indication dialog agent as long as the mouse moves without clicking the left button. The `IsLastModifiedAgentCondition` method detects dialog agent prevaluation. Otherwise, using the `IsOutputSetCondition` method, the transition would be triggered only when the agent would be valued, that is once the end user would have clicked. The temporary circle displayed is not stored in the document, but added to the ISO (Interactive Set of Objects). It is created from a previous action, and updated according to the mouse move using the `UpdateCircle` method.
 CATBoolean CAACreateCircleCmd::UpdateCircle(void * iData)
-      CATMathPoint2D point2D = _daIndicRadius->GetValue();
+```
+      CATMathPoint2D point2D = _daIndicRadius->GetValue(#);
       CATMathPoint Mouse;
-      _ProjPlane.EvalPoint(point2D.GetX(),point2D.GetY(),Mouse);
+      _ProjPlane.EvalPoint(point2D.GetX(#),point2D.GetY(#),Mouse);
 
       //        Compute the radius
-CATMathPoint2D point2D = _daIndicRadius->GetValue();
+CATMathPoint2D point2D = _daIndicRadius->GetValue(#);
 CATMathPoint Mouse;
-_ProjPlane.EvalPoint(point2D.GetX(),point2D.GetY(),Mouse);
+_ProjPlane.EvalPoint(point2D.GetX(#),point2D.GetY(#),Mouse);
 ```vbscript
       _Radius = (float) _CircleCenter.DistanceTo(Mouse);
 
@@ -845,7 +857,7 @@ _ProjPlane.EvalPoint(point2D.GetX(),point2D.GetY(),Mouse);
 
       //        Modify the temporary circle
 CATMathPoint Mouse;
-_ProjPlane.EvalPoint(point2D.GetX(),point2D.GetY(),Mouse);
+_ProjPlane.EvalPoint(point2D.GetX(#),point2D.GetY(#),Mouse);
 _Radius = (float) _CircleCenter.DistanceTo(Mouse);
       _TemporaryCircle->SetRadius(_Radius);
 
@@ -859,7 +871,7 @@ _TemporaryCircle->SetRadius(_Radius);
       //        Recycle the dialog agent
 _TemporaryCircle->SetRadius(_Radius);
 _ISO->UpdateElement(_TemporaryCircle);
-      _daIndicRadius->InitializeAcquisition();
+      _daIndicRadius->InitializeAcquisition(#);
 
       return TRUE;
 
@@ -867,9 +879,9 @@ _ISO->UpdateElement(_TemporaryCircle);
 
 ---
 return TRUE;
-The `UpdateElement` method updates the ISO with the modified temporary circle, and the dialog agent is recycled before the method returns. The "Get Point" state becomes active again, and the dialog agent can be reused thanks to the  `InitializeAcquisition` method. Note that if the dialog agent were set as repeatable using the `CATDlgEngRepeat` behavior parameter, it would be useless to recycle it. Here is another case with a polyline example. ![RubberBanding2.gif \(2160 bytes\)](images/RubberBanding2.gif) | The polyline is being built. Five line segments are created, and the end user moves the mouse to create the sixth one. The dashed line segment visualizes what would be this line segment if the end user clicked at the current mouse location. This is made possible thanks two self-transitions looping on a state. The first transition expects a point indication to create a line segment, the second one expects a point indication prevaluation to create the rubber band.
+The `UpdateElement` method updates the ISO with the modified temporary circle, and the dialog agent is recycled before the method returns. The "Get Point" state becomes active again, and the dialog agent can be reused thanks to the  `InitializeAcquisition` method. Note that if the dialog agent were set as repeatable using the `CATDlgEngRepeat` behavior parameter, it would be useless to recycle it. Here is another case with a polyline example. ![RubberBanding2.gif /(2160 bytes/)](images/RubberBanding2.gif) | The polyline is being built. Five line segments are created, and the end user moves the mouse to create the sixth one. The dashed line segment visualizes what would be this line segment if the end user clicked at the current mouse location. This is made possible thanks two self-transitions looping on a state. The first transition expects a point indication to create a line segment, the second one expects a point indication prevaluation to create the rubber band.
 
-The `UpdateElement` method updates the ISO with the modified temporary circle, and the dialog agent is recycled before the method returns. The "Get Point" state becomes active again, and the dialog agent can be reused thanks to the  `InitializeAcquisition` method. Note that if the dialog agent were set as repeatable using the `CATDlgEngRepeat` behavior parameter, it would be useless to recycle it. Here is another case with a polyline example. ![RubberBanding2.gif \(2160 bytes\)](images/RubberBanding2.gif) | The polyline is being built. Five line segments are created, and the end user moves the mouse to create the sixth one. The dashed line segment visualizes what would be this line segment if the end user clicked at the current mouse location. This is made possible thanks two self-transitions looping on a state. The first transition expects a point indication to create a line segment, the second one expects a point indication prevaluation to create the rubber band.
+The `UpdateElement` method updates the ISO with the modified temporary circle, and the dialog agent is recycled before the method returns. The "Get Point" state becomes active again, and the dialog agent can be reused thanks to the  `InitializeAcquisition` method. Note that if the dialog agent were set as repeatable using the `CATDlgEngRepeat` behavior parameter, it would be useless to recycle it. Here is another case with a polyline example. ![RubberBanding2.gif /(2160 bytes/)](images/RubberBanding2.gif) | The polyline is being built. Five line segments are created, and the end user moves the mouse to create the sixth one. The dashed line segment visualizes what would be this line segment if the end user clicked at the current mouse location. This is made possible thanks two self-transitions looping on a state. The first transition expects a point indication to create a line segment, the second one expects a point indication prevaluation to create the rubber band.
  The state dedicated to get a point of the polyline has an incoming transition that comes from a previous state that is not detailed here. As long as the end user moves the mouse, the viewer sends a preactivation notification that values a dialog agent and fires the self-transition whose action creates a temporary line that corresponds to the current mouse location. As soon as the end user indicates a point, another self-transition fires and the line segment is created. Due to the self-transition, the state remains active to enable another line segment creation. The final state is reached as soon as the end user right clicks.
 Creating Guard Conditions The guard condition is a CATBoolean expression that is evaluated as soon as the transition is triggered, and if it evaluates True, the transition fires and the associated action is executed. A guard condition is declared as the third parameter of the `AddTransition` method. A composite condition can be created by combining elementary conditions. In addition, an exit condition can be set onto the state. It is evaluated before the guard conditions, and if it evaluates False, the guard condition is not evaluated. [Top] Creating Conditions with Unconstrained Data Input An _unconstrained data input_ is either:
 
@@ -894,7 +906,7 @@ As soon as the dialog agent is valued, the condition is checked, and since there
     **IsLastModifiedAgentCondition(** _daAgent**)** , ...);
 
 ---
-[Top] Creating Conditions Constraining Data Input To constrain data input, you need to retrieve the input value and check it according to the constraints you want to apply to this data. You can do this either in a condition method, or using a condition class. Creating a condition class allows the condition to be reused in other commands. Another way of constraining data input is to create filters. Filters are set to dialog agents. When a dialog agent is assigned a filter, it is valued when the filter evaluates True. This means that the transition is not triggered as long as the filter evaluates False, and thus that the guard condition is not evaluated. This improves performance. In addition, the end user receives a feedback using the cursor featuring the no entry shape ![NoEntry.gif \(864 bytes\)](images/NoEntry.gif) when attempting to indicate or select an undesired object. Refer to Creating an Acquisition Filter to an Indication or a Path Element Dialog Agent for more information. Creating a Condition Method The easiest way to define a data constraint is to encapsulate it in a method of state dialog command. Such a condition method has a single argument and must return a CATBoolean.
+[Top] Creating Conditions Constraining Data Input To constrain data input, you need to retrieve the input value and check it according to the constraints you want to apply to this data. You can do this either in a condition method, or using a condition class. Creating a condition class allows the condition to be reused in other commands. Another way of constraining data input is to create filters. Filters are set to dialog agents. When a dialog agent is assigned a filter, it is valued when the filter evaluates True. This means that the transition is not triggered as long as the filter evaluates False, and thus that the guard condition is not evaluated. This improves performance. In addition, the end user receives a feedback using the cursor featuring the no entry shape ![NoEntry.gif /(864 bytes/)](images/NoEntry.gif) when attempting to indicate or select an undesired object. Refer to Creating an Acquisition Filter to an Indication or a Path Element Dialog Agent for more information. Creating a Condition Method The easiest way to define a data constraint is to encapsulate it in a method of state dialog command. Such a condition method has a single argument and must return a CATBoolean.
 
     CATBoolean ConditionMethod(void * iUsefulData);
 
@@ -926,9 +938,9 @@ For example, assume that a command creating a line in the 3D space needs to chec
     {
 CATBoolean CAACreateLineCmd::CheckEndPoint(void * iDummy)
       CATBoolean ret = TRUE;
-      CATMathPoint2D point2D = _daIndicationAgent->GetValue();
+      CATMathPoint2D point2D = _daIndicationAgent->GetValue(#);
       CATMathPoint EndPoint;
-      _ProjPlane.EvalPoint(point2D.GetX(),point2D.GetY(), EndPoint);
+      _ProjPlane.EvalPoint(point2D.GetX(#),point2D.GetY(#), EndPoint);
 
 ```vbscript
       if ( EndPoint.DistanceTo(StartPoint) < EPSILON )
@@ -937,16 +949,16 @@ CATBoolean CAACreateLineCmd::CheckEndPoint(void * iDummy)
 
       {
 CATMathPoint EndPoint;
-_ProjPlane.EvalPoint(point2D.GetX(),point2D.GetY(), EndPoint);
+_ProjPlane.EvalPoint(point2D.GetX(#),point2D.GetY(#), EndPoint);
 if ( EndPoint.DistanceTo(StartPoint) < EPSILON )
         ret = FALSE;
-        _daIndicationAgent->InitializeAcquisition();
+        _daIndicationAgent->InitializeAcquisition(#);
 
       }
 ```vbscript
 if ( EndPoint.DistanceTo(StartPoint) < EPSILON )
 ret = FALSE;
-_daIndicationAgent->InitializeAcquisition();
+_daIndicationAgent->InitializeAcquisition(#);
       return ret;
 ```
 
@@ -982,8 +994,8 @@ Creating a Condition Class When a condition is intended to be reusable, you can 
 class **NoCoincidence** : public CATStateCondition
       public:
         NoCoincidence(CATMathPoint StartPoint, CATIndicationAgent * daIndicationAgent);
-        virtual ~NoCoincidence();
-        virtual CATBoolean **GetStatus**();
+        virtual ~NoCoincidence(#);
+        virtual CATBoolean **GetStatus**(#);
       private:
         CATMathPoint         _StartPoint;
         CATIndicationAgent * _daIndicationAgent;
@@ -1005,14 +1017,14 @@ Let's have a look at the _NoCoincidence_ constructor and `GetStatus` method.
 
 NoCoincidence::NoCoincidence(CATMathPoint         StartPoint,
 CATIndicationAgent * daIndicationAgent)
-    CATBoolean NoCoincidence::**GetStatus**()
+    CATBoolean NoCoincidence::**GetStatus**(#)
 
     {
-CATBoolean NoCoincidence::**GetStatus**()
+CATBoolean NoCoincidence::**GetStatus**(#)
       CATBoolean ret = TRUE;
-      CATMathPoint2D point2D = _daIndicationAgent->GetValue();
+      CATMathPoint2D point2D = _daIndicationAgent->GetValue(#);
       CATMathPoint EndPoint;
-      _ProjPlane.EvalPoint(point2D.GetX(),point2D.GetY(), EndPoint);
+      _ProjPlane.EvalPoint(point2D.GetX(#),point2D.GetY(#), EndPoint);
 
 ```vbscript
       if ( EndPoint.DistanceTo(StartPoint) < EPSILON )
@@ -1021,16 +1033,16 @@ CATBoolean NoCoincidence::**GetStatus**()
 
       {
 CATMathPoint EndPoint;
-_ProjPlane.EvalPoint(point2D.GetX(),point2D.GetY(), EndPoint);
+_ProjPlane.EvalPoint(point2D.GetX(#),point2D.GetY(#), EndPoint);
 if ( EndPoint.DistanceTo(StartPoint) < EPSILON )
         ret = FALSE;
-        _daIndicationAgent->InitializeAcquisition();
+        _daIndicationAgent->InitializeAcquisition(#);
 
       }
 ```vbscript
 if ( EndPoint.DistanceTo(StartPoint) < EPSILON )
 ret = FALSE;
-_daIndicationAgent->InitializeAcquisition();
+_daIndicationAgent->InitializeAcquisition(#);
       return ret;
 ```
 
@@ -1179,8 +1191,8 @@ Creating an Action Class When an action is reusable, such as a line creation tha
 class CreateLine: public CATDiaAction
       public:
         CreateLine(CATMathPoint StartPoint, CATIndicationAgent * daIndicationAgent);
-        virtual ~CreateLine();
-        virtual CATBoolean Execute();
+        virtual ~CreateLine(#);
+        virtual CATBoolean Execute(#);
       private:
         CATMathPoint         _StartPoint;
         CATIndicationAgent * _daIndicationAgent;
@@ -1201,7 +1213,7 @@ Let's have a look at the _CreateLine_ constructor and `Execute` method.
 CreateLine::CreateLine(CATMathPoint         StartPoint,
 CATIndicationAgent * daIndicationAgent):
 _StartPoint(StartPoint), _daIndicationAgent(daIndicationAgent)
-    CATBoolean CreateLine::Execute()
+    CATBoolean CreateLine::Execute(#)
 
     {
       // Creates a line between StartPoint and EndPoint
@@ -1282,8 +1294,10 @@ where `action1` and `action2` are pointers to _CATDiaAction_ instances. [Top] Cr
 
 ---
 CATDialogState::SetLeaveAction(CATDiaAction * iAction);
+```vbscript
 Entry/Exit actions are not executed by a self-transition. [Top] Storing the Created Object in the CSO If your state dialog command creates a new object in the document, you should store this object in the Current Set of Objects to enable for the object-action paradigm. The next command will then be able to take this object as input without end user action. Storing the resulting object in the CSO is done in three steps in the appropriate method:
     1. Retrieve the current editor
+```
     2. Retrieve the CSO from the current editor
     3. Add the element to the CSO
 The following code shows how to add the `_CreatedObject` to the CSO:
@@ -1292,9 +1306,9 @@ The following code shows how to add the `_CreatedObject` to the CSO:
 2. Retrieve the CSO from the current editor
 3. Add the element to the CSO
 The following code shows how to add the `_CreatedObject` to the CSO:
-    CATFrmEditor * pEditor = GetEditor();
+    CATFrmEditor * pEditor = GetEditor(#);
     CATCSO * pCso;
-    if (pEditor && ((pCso = pEditor->GetCSO()) != NULL)
+    if (pEditor && ((pCso = pEditor->GetCSO(#)) != NULL)
                      pCso->AddElement(_CreatedObject);
 
     ...
@@ -1304,9 +1318,9 @@ The following code shows how to add the `_CreatedObject` to the CSO:
 
 * * *
 
-Troubleshooting A Self-transition Loops with no Means to Get out of the Loop ![symptom.gif \(111 bytes\)](../CAAIcons/images/symptom.gif) | A self-transition loops on the same state, and whatever the end user does, there is no means to get out of the loop.
+Troubleshooting A Self-transition Loops with no Means to Get out of the Loop ![symptom.gif /(111 bytes/)](../CAAIcons/images/symptom.gif) | A self-transition loops on the same state, and whatever the end user does, there is no means to get out of the loop.
 ---|---
-Troubleshooting A Self-transition Loops with no Means to Get out of the Loop ![symptom.gif \(111 bytes\)](../CAAIcons/images/symptom.gif) | A self-transition loops on the same state, and whatever the end user does, there is no means to get out of the loop.
+Troubleshooting A Self-transition Loops with no Means to Get out of the Loop ![symptom.gif /(111 bytes/)](../CAAIcons/images/symptom.gif) | A self-transition loops on the same state, and whatever the end user does, there is no means to get out of the loop.
  The state on which the self-transition loops has no dialog agent plugged, or the dialog agent is already valued, is not set as repeatable, and is not recycled.
  Either assign a dialog agent to the state, or recycle the existing one in the action method.
 

@@ -4,7 +4,7 @@ title: "Corner"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsCornerCreation", "CATICGMTopCorner", "CAAGMOperatorsInterfaces"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopCorner.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopCorner.htmmd"
 converted: "2026-05-11T17:33:49.126240"
 ```
 
@@ -69,17 +69,17 @@ pBodySupport,  // supporting shell
     pCornerOpe -> SetOffsetOrientation(-1,-1);
     int ResultTrimmingMode1 = pCornerOpe -> SetCircleMode(Direct); // shortest portion kept
     int ResultTrimmingMode2 = pCornerOpe -> SetSupportTrimmingSideAndMode(0,0); // no merge
-    pCornerOpe->Run();
-    CATBody *piCornerBody = pCornerOpe->GetResult();
-    pCornerOpe->Release();
+    pCornerOpe->Run(#);
+    CATBody *piCornerBody = pCornerOpe->GetResult(#);
+    pCornerOpe->Release(#);
     pCornerOpe = NULL;
 
 ---
-pCornerOpe->Release();
+pCornerOpe->Release(#);
 pCornerOpe = NULL;
-you get this result: Fig.2 Result of Corner Operation  ![Corner-SetOffsetOrientation\(-1,-1\)](images/CGM_corner_minus1_minus1.png)
+you get this result: Fig.2 Result of Corner Operation  ![Corner-SetOffsetOrientation/(-1,-1/)](images/CGM_corner_minus1_minus1.png)
 
-you get this result: Fig.2 Result of Corner Operation  ![Corner-SetOffsetOrientation\(-1,-1\)](images/CGM_corner_minus1_minus1.png)
+you get this result: Fig.2 Result of Corner Operation  ![Corner-SetOffsetOrientation/(-1,-1/)](images/CGM_corner_minus1_minus1.png)
 SetOffsetOrientation(-1,-1) | SetOffsetOrientation(1,-1)  | SetOffsetOrientation(1,-1)
 ```vbscript
 SetCircleMode(Direct) | SetCircleMode(Direct) | SetCircleMode(Complementary)
@@ -87,11 +87,11 @@ SetCircleMode(Direct) | SetCircleMode(Direct) | SetCircleMode(Complementary)
 ```
 
 **Merging the created corner with input wires** The created corner can be assembled or not with one input body or both input bodies. The input bodies are trimmed for this operation.  Fig.3 Merging the corner with the input wires
-you get this result: Fig.2 Result of Corner Operation  ![Corner-SetOffsetOrientation\(-1,-1\)](images/CGM_corner_minus1_minus1.png)
+you get this result: Fig.2 Result of Corner Operation  ![Corner-SetOffsetOrientation/(-1,-1/)](images/CGM_corner_minus1_minus1.png)
 SetOffsetOrientation(-1,-1) | SetOffsetOrientation(1,-1)  | SetOffsetOrientation(1,-1)
 ```vbscript
 SetCircleMode(Direct) | SetCircleMode(Direct) | SetCircleMode(Complementary)
-SetOffsetOrientation(1,-1)  and SetCircleMode(Direct) ![Corner-SetOffsetOrientation\(-1,-1\)](images/CGM_corner_minus1_minus1.png)
+SetOffsetOrientation(1,-1)  and SetCircleMode(Direct) ![Corner-SetOffsetOrientation/(-1,-1/)](images/CGM_corner_minus1_minus1.png)
 
 ```
 
@@ -99,7 +99,7 @@ SetOffsetOrientation(1,-1)  and SetCircleMode(Direct) ![Corner-SetOffsetOrienta
 SetOffsetOrientation(-1,-1) | SetOffsetOrientation(1,-1)  | SetOffsetOrientation(1,-1)
 ```vbscript
 SetCircleMode(Direct) | SetCircleMode(Direct) | SetCircleMode(Complementary)
-SetOffsetOrientation(1,-1)  and SetCircleMode(Direct) ![Corner-SetOffsetOrientation\(-1,-1\)](images/CGM_corner_minus1_minus1.png)
+SetOffsetOrientation(1,-1)  and SetCircleMode(Direct) ![Corner-SetOffsetOrientation/(-1,-1/)](images/CGM_corner_minus1_minus1.png)
 SetOffsetOrientation(-1,-1) |  SetSupportTrimmingSideAndMode(0,1)
 Result = Created corner + input wires  | SetOffsetOrientation(1,-1)
 ```

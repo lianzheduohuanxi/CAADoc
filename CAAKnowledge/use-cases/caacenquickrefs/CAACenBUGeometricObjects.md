@@ -4,13 +4,13 @@ title: "GeometricObjects Changed Classes or Interfaces"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: []
-source_file: "Doc/online/CAACenQuickRefs/CAACenBUGeometricObjects.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenBUGeometricObjects.htmmd"
 converted: "2026-05-11T17:33:46.290452"
 ```
 
 ---
 tags: []
-source_file: "Doc/online/CAACenQuickRefs/CAACenBUGeometricObjects.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenBUGeometricObjects.htmmd"
 converted: "2026-05-11T17:33:46.290452"
 GeometricObjects Changed Classes or Interfaces
 

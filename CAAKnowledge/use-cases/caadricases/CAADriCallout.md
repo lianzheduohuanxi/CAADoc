@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Editing Callout in Generative Views"
-category: "use case"
+category: use-case case"
 module: "CAADriUseCases"
 tags: ["CATIDftDocumentServices", "CATIGenerSpec", "CATIDrwSimpleText", "CATIDrwAnnotationComponent", "CATIDftView", "CATIDftDrawing", "CATIDrwSubText_var", "CAADraftingInterfaces", "CATIA", "CATIDftText", "CAADrwCallout", "CATIUnknownList", "CATIDrwCalloutAccess"]
-source_file: "Doc/online/CAADriUseCases/CAADriCallout.htm"
+source_file: "Doc/online/CAADriUseCases/CAADriCallout.htmmd"
 converted: "2026-05-11T17:31:50.931544"
 ```
 
@@ -65,11 +65,11 @@ Fig. 2 represents the Drawing document modified by the use case program.  All Ca
 
 To launch CAADrwCallout, you will need to set up the build time environment, then compile CAADrwCallout along with its prerequisites, set up the run time environment, and then execute the use case [1].
 
-When you launch the use case, pass the full pathname of the Drawing file as argument. A Drawing file is delivery in the following path: CAADraftingInterfaces.edu\CNext\resources\graphic\DrawingForCalloutUseCase.CATDrawing.
+When you launch the use case, pass the full pathname of the Drawing file as argument. A Drawing file is delivery in the following path: CAADraftingInterfaces.edu/CNext/resources/graphic/DrawingForCalloutUseCase.CATDrawing.
 
   * With Windows
 
-When you launch the use case, pass the full pathname of the Drawing file as argument. A Drawing file is delivery in the following path: CAADraftingInterfaces.edu\CNext\resources\graphic\DrawingForCalloutUseCase.CATDrawing.
+When you launch the use case, pass the full pathname of the Drawing file as argument. A Drawing file is delivery in the following path: CAADraftingInterfaces.edu/CNext/resources/graphic/DrawingForCalloutUseCase.CATDrawing.
         e:> mkrun -c cmd
         CAADrwCallout c/.../DrawingForCalloutUseCase.CATDrawing c/DrawingTestOutput.CATDrawing
 
@@ -87,10 +87,10 @@ When you launch the use case, pass the full pathname of the Drawing file as argu
 The CAADrwCallout use case is made of a single source file named CAADrwCallout.cpp located in the CAADrwCallout.m module of the CAADraftingInterfaces.edu framework:
 
 The CAADrwCallout use case is made of a single source file named CAADrwCallout.cpp located in the CAADrwCallout.m module of the CAADraftingInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwCallout.m\`
+Windows | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCallout.m/`
 
 The CAADrwCallout use case is made of a single source file named CAADrwCallout.cpp located in the CAADrwCallout.m module of the CAADraftingInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwCallout.m\`
+Windows | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCallout.m/`
 Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCallout.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -192,7 +192,7 @@ if (SUCCEEDED(pDocDrawing->QueryInterface(IID_CATIDftDocumentServices,(void **)&
 if (SUCCEEDED(piDftDocServices->GetDrawing(IID_CATIDftDrawing, (void **)&piDrawing)))
 ```
 
-        piDftDocServices->Release();
+        piDftDocServices->Release(#);
         piDftDocServices=NULL;
 
       }
@@ -354,7 +354,7 @@ CATIDftView *piDefView=NULL;
 if (SUCCEEDED(piCallout->GetAssociatedView(&piDefView)))
       piDefView->GetViewName(&pViewName);
       ViewName.BuildFromWChar(pViewName);
-      cerr << " View name associated to the processed callout: " << ViewName.CastToCharPtr() << endl;
+      cerr << " View name associated to the processed callout: " << ViewName.CastToCharPtr(#) << endl;
 
     ...
 
@@ -402,23 +402,23 @@ CATMathDirection vecpro;
         {
 ```vbscript
 if (SUCCEEDED(piGenerSpec->GetSectionProfile(ListOfPoints,depli,vecpro)))
-          int NbPt = ListOfPoints.Size();
+          int NbPt = ListOfPoints.Size(#);
           for (int numpt=1 ; numpt<=NbPt ; numpt++)
 ```
 
           {
 ```vbscript
 if (SUCCEEDED(piGenerSpec->GetSectionProfile(ListOfPoints,depli,vecpro)))
-int NbPt = ListOfPoints.Size();
+int NbPt = ListOfPoints.Size(#);
 for (int numpt=1 ; numpt<=NbPt ; numpt++)
             CATMathPoint2D *tmpt = ListOfPoints[numpt];
-            cerr << " Number point = " << numpt << ", X= "<< tmpt->GetX() << "Y = " << tmpt->GetY() << endl;
+            cerr << " Number point = " << numpt << ", X= "<< tmpt->GetX(#) << "Y = " << tmpt->GetY(#) << endl;
 
 ```
 
             // Memory clean
 CATMathPoint2D *tmpt = ListOfPoints[numpt];
-cerr << " Number point = " << numpt << ", X= "<< tmpt->GetX() << "Y = " << tmpt->GetY() << endl;
+cerr << " Number point = " << numpt << ", X= "<< tmpt->GetX(#) << "Y = " << tmpt->GetY(#) << endl;
 ```vbscript
             if (tmpt) delete tmpt , tmpt=NULL;
 
@@ -504,20 +504,20 @@ CATIDftText *piDftText = NULL;
 if (SUCCEEDED(piAnnot->QueryInterface(IID_CATIDrwSimpleText,(void **)&piText)))
             CATIDrwSubText_var spSubText;
             spSubText = piText->GetSubText(1);
-            CATUnicodeString textName = spSubText->GetText();
-            cerr << " texte name = " << textName.CastToCharPtr() << endl;
+            CATUnicodeString textName = spSubText->GetText(#);
+            cerr << " texte name = " << textName.CastToCharPtr(#) << endl;
 
-            piText->Release(); piText=NULL;
+            piText->Release(#); piText=NULL;
 ```
 
           }
-CATUnicodeString textName = spSubText->GetText();
-cerr << " texte name = " << textName.CastToCharPtr() << endl;
-piText->Release(); piText=NULL;
+CATUnicodeString textName = spSubText->GetText(#);
+cerr << " texte name = " << textName.CastToCharPtr(#) << endl;
+piText->Release(#); piText=NULL;
           else if(SUCCEEDED(piAnnot->QueryInterface(IID_CATIDftText,(void **)&piDftText)))
 
           {
-piText->Release(); piText=NULL;
+piText->Release(#); piText=NULL;
 else if(SUCCEEDED(piAnnot->QueryInterface(IID_CATIDftText,(void **)&piDftText)))
             wchar_t *ptextName=NULL;
 ```vbscript
@@ -531,7 +531,7 @@ wchar_t *ptextName=NULL;
 if (SUCCEEDED(piDftText->GetString(&ptextName)))
               CATUnicodeString strTextName;
               strTextName.BuildFromWChar(ptextName);
-              cerr << " texte name = " <<strTextName.CastToCharPtr() << endl;
+              cerr << " texte name = " <<strTextName.CastToCharPtr(#) << endl;
 ```vbscript
               if (ptextName) delete[] ptextName; ptextName = NULL;
 
@@ -540,15 +540,15 @@ if (SUCCEEDED(piDftText->GetString(&ptextName)))
             }
 CATUnicodeString strTextName;
 strTextName.BuildFromWChar(ptextName);
-cerr << " texte name = " <<strTextName.CastToCharPtr() << endl;
+cerr << " texte name = " <<strTextName.CastToCharPtr(#) << endl;
 if (ptextName) delete[] ptextName; ptextName = NULL;
-            piDftText->Release();piDftText=NULL;
+            piDftText->Release(#);piDftText=NULL;
 
           }
-cerr << " texte name = " <<strTextName.CastToCharPtr() << endl;
+cerr << " texte name = " <<strTextName.CastToCharPtr(#) << endl;
 if (ptextName) delete[] ptextName; ptextName = NULL;
-piDftText->Release();piDftText=NULL;
-          piAnnot->Release();piAnnot=NULL;
+piDftText->Release(#);piDftText=NULL;
+          piAnnot->Release(#);piAnnot=NULL;
 
         }
       }

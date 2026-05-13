@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "DrawingSheet Object"
-category: "use-case"
+category: tech-article
 module: "CAAScdDriTechArticles"
 tags: ["CATIA"]
-source_file: "Doc/online/CAAScdDriTechArticles/CAADriObjDrawingSheet.htm"
+source_file: "Doc/online/CAAScdDriTechArticles/CAADriObjDrawingSheet.htmmd"
 converted: "2026-05-11T17:31:51.121705"
 ```
 
@@ -29,21 +29,29 @@ A drawing sheet has a page setup that defines the sheet attributes, such as its 
 Use the **Views** property to return the **Views** collection.
 
 ```vbscript
+```vbscript
     Dim ViewCollection As Object
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set ViewCollection = CATIA.Documents(2).ActiveSheet.Views
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Dim ViewCollection As Object
 ```vbscript
+```
+```vbscript
 Set ViewCollection = CATIA.Documents(2).ActiveSheet.Views
+```
 ```
 
 ```
@@ -51,11 +59,15 @@ Set ViewCollection = CATIA.Documents(2).ActiveSheet.Views
 Use the **DrawingPageSetup** property to retrieve the sheet setup attributes.
 
 ```vbscript
+```vbscript
     Dim SheetSetup As Object
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set SheetSetup = CATIA.Documents(2).ActiveSheet.DrawingPageSetup
 
+```
 ```
 
 ```

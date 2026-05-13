@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CATIA", "CAASchPlatformModeler", "CAASchAppObjFactory", "CAAScrBase", "CAASCHEDUFuncString", "CATIASchComponent2", "CAAScdInfUseCases", "CAASchAppObjFactory_02", "CAASCHEDU_SamplePID", "CAASCHEDUApp", "CAASchAppObjFactory_01", "CAAInfLauchMacro", "CAASchAppUtilities", "CATIASchGRR", "CAASCHEDUCompressFunc", "CAASchAppBase", "CAAScrJavaScript", "CAAScdSchUseCases", "CAASCHEDUConnector", "CATIASchCompatible"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchAppObjFactory.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchAppObjFactory.htmmd"
 converted: "2026-05-11T11:27:02.642129"
 ---
 

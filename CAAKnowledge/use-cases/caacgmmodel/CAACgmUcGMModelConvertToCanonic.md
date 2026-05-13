@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Extracting the Canonical Representation of a Curve"
-category: "use case"
+category: use-case case"
 module: "CAACgmModel"
 tags: ["CAAGMModelInterfaces", "CATICGMConvertCurveToCanonic", "CAAGMModelConvertToCanonic"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelConvertToCanonic.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelConvertToCanonic.htmmd"
 converted: "2026-05-11T17:33:48.288651"
 ```
 
@@ -33,8 +33,8 @@ With the code below:
     const double Scale = 100.;
     const CATLONG32 NbPoints = 10;
     CATMathSetOfPointsND Points(3,NbPoints);
-    double eps = 0.01*piGeomFactory->GetResolution();
-    Points.Reset();
+    double eps = 0.01*piGeomFactory->GetResolution(#);
+    Points.Reset(#);
 ```vbscript
     for (CATLONG32 k=0; k < NbPoints; k++)
 
@@ -42,8 +42,8 @@ With the code below:
 
        {
 CATMathSetOfPointsND Points(3,NbPoints);
-double eps = 0.01*piGeomFactory->GetResolution();
-Points.Reset();
+double eps = 0.01*piGeomFactory->GetResolution(#);
+Points.Reset(#);
 for (CATLONG32 k=0; k < NbPoints; k++)
     	  double lambda =double(k)/double(NbPoints);
     	  double p[3];
@@ -83,7 +83,7 @@ The code below creates a curve whose type is CATLineType
 The code below creates a curve whose type is CATLineType
 CATICGMConvertCurveToCanonic * pCrvToCanonicOpe1 = NULL;
 pCrvToCanonicOpe1 =::CATCGMCreateConvertCurveToCanonic(piGeomFactory,pConfig,pSpline1,Lim1);
-    pCrvToCanonicOpe1->Run();
+    pCrvToCanonicOpe1->Run(#);
     CATCurve * pCrv1 = pCrvToCanonicOpe1->GetResult(oCrvLim1);
 ```vbscript
     if (pCrv1==NULL ||!pCrv1->IsATypeOf(CATLineType))

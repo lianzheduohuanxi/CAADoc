@@ -4,13 +4,13 @@ title: "Using the Topological Objects"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CATICGMIntersectionCrvCrv", "CAADoc", "CAATobTetra", "CATICGMObject", "CATICGMProjectionPtSur", "CAAGMModelGemBrowser", "CAAGMModelCreation", "CATIntersectionSurSur", "CAAGMModelInterfaces", "CAAGMModelTetra", "CATIA"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcTobTetra.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcTobTetra.htmmd"
 converted: "2026-05-11T17:33:48.580181"
 ```
 
 ---
 tags: ["CATICGMIntersectionCrvCrv", "CAADoc", "CAATobTetra", "CATICGMObject", "CATICGMProjectionPtSur", "CAAGMModelGemBrowser", "CAAGMModelCreation", "CATIntersectionSurSur", "CAAGMModelInterfaces", "CAAGMModelTetra", "CATIA"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcTobTetra.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcTobTetra.htmmd"
 converted: "2026-05-11T17:33:48.580181"
 Using the Topological Objects
 
@@ -59,7 +59,7 @@ The description of the geometry and of the cells is not sufficient to describe t
     * The relative orientation between the geometry and the topology.
     * The relative orientation of a cell inside its domain.
     * The location of a domain: does it represent an internal or external boundary?
-How to Launch CAAGMModelTetra To launch CAAGMModelTetra, you will need to set up the build time environment, then compile CAAGMModelTetra.m along with its prerequisites, set up the run time environment, and then execute the use case [5]. If you simply type CAAGMModelTetra with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMModelTetra e/TetraCreation.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMModelTetra Code The CAAGMModelTetra use case is made of a main named CAATobTetra.cpp located in the CAAGMModelTetra.m module of the `CAAGMModelInterfaces`.edu framework: `InstallRootFolder\CAADoc\CAAGMModelInterfaces.edu\CAAGMModelTetra.m\` where `InstallRootFolder` [5] is the folder where the API CD-ROM is installed. Step-by-Step The use case is divided into the following steps:
+How to Launch CAAGMModelTetra To launch CAAGMModelTetra, you will need to set up the build time environment, then compile CAAGMModelTetra.m along with its prerequisites, set up the run time environment, and then execute the use case [5]. If you simply type CAAGMModelTetra with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMModelTetra e/TetraCreation.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMModelTetra Code The CAAGMModelTetra use case is made of a main named CAATobTetra.cpp located in the CAAGMModelTetra.m module of the `CAAGMModelInterfaces`.edu framework: `InstallRootFolder/CAADoc/CAAGMModelInterfaces.edu/CAAGMModelTetra.m/` where `InstallRootFolder` [5] is the folder where the API CD-ROM is installed. Step-by-Step The use case is divided into the following steps:
     * Creating the Geometry Factory
     * Creating the Geometry
     * Creating the Vertices
@@ -74,7 +74,7 @@ How to Launch CAAGMModelTetra To launch CAAGMModelTetra, you will need to set up
 Creating the Geometry Factory The geometry factory (CATGeoFactory) creates and manages all the `CATICGMObject` (and the curves and surfaces in particular) [4]. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
 
 Creating the Geometry Factory The geometry factory (CATGeoFactory) creates and manages all the `CATICGMObject` (and the curves and surfaces in particular) [4]. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
-    CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**() ;
+    CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**(#) ;
 ```vbscript
     if (NULL==piGeomFactory) return (1);
 
@@ -82,19 +82,19 @@ Creating the Geometry Factory The geometry factory (CATGeoFactory) creates and m
 
 Creating the Geometry The topology is a logical information describing the boundary of geometric objects: so, first create the geometry! To create planes, directly use the `CreatePlane` method of the `CATGeoFactory`. If NULL pointers are returned, close the factory and return an error.
 
-    CATPlane * piPlanexy = piGeomFactory->**CreatePlane**(CATMathPoint(),
+    CATPlane * piPlanexy = piGeomFactory->**CreatePlane**(CATMathPoint(#),
                                                         CATMathPoint(1,0,0),
 ```vbscript
                                                         CATMathPoint(0,1,0));
 ```
 
-      CATPlane * piPlaneyz = piGeomFactory->CreatePlane(CATMathPoint(),
+      CATPlane * piPlaneyz = piGeomFactory->CreatePlane(CATMathPoint(#),
                                                         CATMathPoint(0,1,0),
 ```vbscript
                                                         CATMathPoint(0,0,1));
 ```
 
-      CATPlane * piPlanexz = piGeomFactory->CreatePlane(CATMathPoint(),
+      CATPlane * piPlanexz = piGeomFactory->CreatePlane(CATMathPoint(#),
                                                         CATMathPoint(1,0,0),
 ```vbscript
                                                         CATMathPoint(0,0,1));
@@ -215,12 +215,12 @@ The `CATPCurve` must be used to create the real geometry of the edge: the `CATEd
 
       CATListOfInt           orients;
       CATCrvLimits           crvLim1,crvLim2;
-      double resolution = piGeomFactory ->**GetResolution**();
+      double resolution = piGeomFactory ->**GetResolution**(#);
 
       // Appends the first curve in of the sim curve
 CATListOfInt           orients;
 CATCrvLimits           crvLim1,crvLim2;
-double resolution = piGeomFactory ->**GetResolution**();
+double resolution = piGeomFactory ->**GetResolution**(#);
       curves.Append(piPLinexy01);
       piPLinexy01->GetLimits(crvLim1);
 
@@ -537,13 +537,13 @@ Creating the Vertices Before creating any topological entity, you first must cre
     // ----------- Creates the factory of the cells
       //
 Creating the Vertices Before creating any topological entity, you first must create the factory of these entity: this factory is a CATBody, and not the CATGeoFactory. The factory of the CATBody, however, still is the CATGeoFactory.
-      CATBody * piTetra = piGeomFactory->**CreateBody**();
+      CATBody * piTetra = piGeomFactory->**CreateBody**(#);
 
       // is all right?
       if (NULL==piTetra)
       {
     	::CATCloseCGMContainer(piGeomFactory);
-CATBody * piTetra = piGeomFactory->**CreateBody**();
+CATBody * piTetra = piGeomFactory->**CreateBody**(#);
 if (NULL==piTetra)
 ```vbscript
     	return (1);
@@ -556,24 +556,24 @@ return (1);
 Using `Tetra` as the cell factory, we can now create the vertices, and associate them with their geometry (macro point).
 
     CATVertex *piVertex0=NULL, *piVertex1=NULL, *piVertex2=NULL, *piVertex3=NULL;
-      piVertex0 = pi**Tetra** ->**CreateVertex**();
+      piVertex0 = pi**Tetra** ->**CreateVertex**(#);
 ```vbscript
 ```vbscript
-      piVertex1 = piTetra->CreateVertex();
-      piVertex2 = piTetra->CreateVertex();
-      piVertex3 = piTetra->CreateVertex();
+      piVertex1 = piTetra->CreateVertex(#);
+      piVertex2 = piTetra->CreateVertex(#);
+      piVertex3 = piTetra->CreateVertex(#);
 
 ```
 
 ```
 
       // is all right?
-piVertex0 = pi**Tetra** ->**CreateVertex**();
+piVertex0 = pi**Tetra** ->**CreateVertex**(#);
 ```vbscript
 ```vbscript
-piVertex1 = piTetra->CreateVertex();
-piVertex2 = piTetra->CreateVertex();
-piVertex3 = piTetra->CreateVertex();
+piVertex1 = piTetra->CreateVertex(#);
+piVertex2 = piTetra->CreateVertex(#);
+piVertex3 = piTetra->CreateVertex(#);
 ```
 
       if (NULL==piVertex0 || NULL==piVertex1 ||NULL==piVertex2 ||NULL==piVertex3)
@@ -582,7 +582,7 @@ piVertex3 = piTetra->CreateVertex();
 
       {
     	::CATCloseCGMContainer(piGeomFactory);
-piVertex3 = piTetra->CreateVertex();
+piVertex3 = piTetra->CreateVertex(#);
 ```vbscript
 if (NULL==piVertex0 || NULL==piVertex1 ||NULL==piVertex2 ||NULL==piVertex3)
     	return (1);
@@ -604,26 +604,26 @@ Creating the Edges First create them void.
     	      *piEdge23=NULL, *piEdge30=NULL, *piEdge13=NULL;
 Creating the Edges First create them void.
 CATEdge *piEdge01=NULL, *piEdge12=NULL, *piEdge20=NULL,
-      piEdge01 = piTetra->**CreateEdge**();
+      piEdge01 = piTetra->**CreateEdge**(#);
 ```vbscript
 ```vbscript
-      piEdge12 = piTetra->CreateEdge();
-      piEdge20 = piTetra->CreateEdge();
-      piEdge23 = piTetra->CreateEdge();
-      piEdge30 = piTetra->CreateEdge();
-      piEdge13 = piTetra->CreateEdge();
+      piEdge12 = piTetra->CreateEdge(#);
+      piEdge20 = piTetra->CreateEdge(#);
+      piEdge23 = piTetra->CreateEdge(#);
+      piEdge30 = piTetra->CreateEdge(#);
+      piEdge13 = piTetra->CreateEdge(#);
 
 ```
 
 ```
 
       // Is all right?
-piEdge20 = piTetra->CreateEdge();
+piEdge20 = piTetra->CreateEdge(#);
 ```vbscript
 ```vbscript
-piEdge23 = piTetra->CreateEdge();
-piEdge30 = piTetra->CreateEdge();
-piEdge13 = piTetra->CreateEdge();
+piEdge23 = piTetra->CreateEdge(#);
+piEdge30 = piTetra->CreateEdge(#);
+piEdge13 = piTetra->CreateEdge(#);
 ```
 
       if (NULL==piEdge01 || NULL==piEdge12 ||NULL==piEdge20 ||
@@ -642,8 +642,10 @@ NULL==piEdge23 || NULL==piEdge30 || NULL==piEdge13)
       }
 
 Now, for each edge:
+```vbscript
     * Set its geometry (`SetCurve`): the edge curve, and the relative orientation of the edge curve and the edge. The orientation of the edge is given by the sense start edge -> end edge.
     * Bound the edge by its start vertex (`AddBoundingCell`):
+```
       * The "start" attribute is given by the matter side set to `CATSideLeft`.
       * The `NULL` argument states the fact that no domain is associated with a vertex.
       * The last argument details which poec of the macro point is the end of the edge curve.
@@ -692,12 +694,12 @@ piEdge01->AddBoundingCell(piVertex1,**CATSideRight** ,NULL,piPoec01End);
 Creating the Loops and Faces Once again, first create a void topology. For the loop, indicates whether the loop defines an inner (hole) or outer boundary. In the case of the tetrahedron, the faces do not have any holes, all the loops are external.
 
     CATFace *piFacexy=NULL, *piFaceyz=NULL, *piFacexz=NULL, *piFacec=NULL;
-      piFacexy = piTetra->**CreateFace**();
+      piFacexy = piTetra->**CreateFace**(#);
 ```vbscript
 ```vbscript
-      piFaceyz = piTetra->CreateFace();
-      piFacexz = piTetra->CreateFace();
-      piFacec  = piTetra->CreateFace();
+      piFaceyz = piTetra->CreateFace(#);
+      piFacexz = piTetra->CreateFace(#);
+      piFacec  = piTetra->CreateFace(#);
 ```
 
 ```
@@ -705,11 +707,11 @@ Creating the Loops and Faces Once again, first create a void topology. For the l
       CATLoop *piLoopxy=NULL, *piLoopyz=NULL, *piLoopxz=NULL, *piLoopc=NULL;
 
       // The loops define external boundary of the faces (CATLocationOuter)
-piFaceyz = piTetra->CreateFace();
+piFaceyz = piTetra->CreateFace(#);
 ```vbscript
 ```vbscript
-piFacexz = piTetra->CreateFace();
-piFacec  = piTetra->CreateFace();
+piFacexz = piTetra->CreateFace(#);
+piFacec  = piTetra->CreateFace(#);
 ```
 
 ```
@@ -779,51 +781,51 @@ piFacexy->**SetSurface**(piPlanexy,CATOrientationNegative);
 piFacexy->**AddBoundingCell**(piEdge20,CATSideRight,pi**Loop** xy,piPLinexy20);
 piFacexy->AddBoundingCell(piEdge12,CATSideRight,piLoopxy,piPLinexy12);
 piFacexy->AddBoundingCell(piEdge01,CATSideRight,piLoopxy,piPLinexy01);
-      piLoopxy->Done();
+      piLoopxy->Done(#);
 
       // Faceyz
 piFacexy->AddBoundingCell(piEdge01,CATSideRight,piLoopxy,piPLinexy01);
-piLoopxy->Done();
+piLoopxy->Done(#);
       piFaceyz->AddDomain(piLoopyz);
 
       // Associates with the geometry and bounds the face
-piLoopxy->Done();
+piLoopxy->Done(#);
 piFaceyz->AddDomain(piLoopyz);
       piFaceyz->SetSurface(piPlaneyz,CATOrientationNegative);
       piFaceyz->AddBoundingCell(piEdge30,CATSideRight,piLoopyz,piPLineyz20);
       piFaceyz->AddBoundingCell(piEdge23,CATSideRight,piLoopyz,piPLineyz12);
       piFaceyz->AddBoundingCell(piEdge20,CATSideLeft,piLoopyz,piPLineyz01);
-      piLoopyz->Done();// _The loop is finished!_
+      piLoopyz->Done(#);// _The loop is finished!_
 
       // Facexz
 piFaceyz->AddBoundingCell(piEdge23,CATSideRight,piLoopyz,piPLineyz12);
 piFaceyz->AddBoundingCell(piEdge20,CATSideLeft,piLoopyz,piPLineyz01);
-piLoopyz->Done();// _The loop is finished!_
+piLoopyz->Done(#);// _The loop is finished!_
       piFacexz->AddDomain(piLoopxz);
 
       // Associates with the geometry and bounds the face
-piLoopyz->Done();// _The loop is finished!_
+piLoopyz->Done(#);// _The loop is finished!_
 piFacexz->AddDomain(piLoopxz);
       piFacexz->SetSurface(piPlanexz);
       piFacexz->AddBoundingCell(piEdge01,CATSideLeft,piLoopxz,piPLinexz01);
       piFacexz->AddBoundingCell(piEdge13,CATSideLeft,piLoopxz,piPLinexz12);
       piFacexz->AddBoundingCell(piEdge30,CATSideLeft,piLoopxz,piPLinexz20);
-      piLoopxz->Done();// The loop is finished!
+      piLoopxz->Done(#);// The loop is finished!
 
       // Facec
 piFacexz->AddBoundingCell(piEdge13,CATSideLeft,piLoopxz,piPLinexz12);
 piFacexz->AddBoundingCell(piEdge30,CATSideLeft,piLoopxz,piPLinexz20);
-piLoopxz->Done();// The loop is finished!
+piLoopxz->Done(#);// The loop is finished!
       piFacec->AddDomain(piLoopc);
 
       // Associates with the geometry and bounds the face
-piLoopxz->Done();// The loop is finished!
+piLoopxz->Done(#);// The loop is finished!
 piFacec->AddDomain(piLoopc);
       piFacec->SetSurface(piPlanec);
       piFacec->AddBoundingCell(piEdge12,CATSideLeft,piLoopc,piPLinec01);
       piFacec->AddBoundingCell(piEdge23,CATSideLeft,piLoopc,piPLinec12);
       piFacec->AddBoundingCell(piEdge13,CATSideRight,piLoopc,piPLinec20);
-      piLoopc->Done();// The loop is finished!
+      piLoopc->Done(#);// The loop is finished!
 
 Creating the Shell In the use case, the shell is aimed to bound a volume, it is an external boundary of a future volume (CATLocationOuter). To create a skin body, use the CATLocationIn3DSpace value instead, and directly attach the shell to the body (i.e.: go to step 9 and attach the shell to the body. But you still have to add the face inside the shell with the `AddCell` method).
 
@@ -842,13 +844,13 @@ Creating the Volume After creating a void volume (`CreateVolume`), add it in the
 Creating the Volume After creating a void volume (`CreateVolume`), add it in the already created shell (`AddDomain`). As before, bound the volume by the faces by using the `AddBoundingCell` method:
     CATVolume * piVolume = NULL;
 ```vbscript
-      piVolume = piTetra->**CreateVolume**();
+      piVolume = piTetra->**CreateVolume**(#);
 
 ```
 
       // is all right?
 CATVolume * piVolume = NULL;
-piVolume = piTetra->**CreateVolume**();
+piVolume = piTetra->**CreateVolume**(#);
 ```vbscript
 ```vbscript
       if (NULL==piShell || NULL==piVolume )
@@ -859,7 +861,7 @@ piVolume = piTetra->**CreateVolume**();
 
       {
     	::CATCloseCGMContainer(piGeomFactory);
-piVolume = piTetra->**CreateVolume**();
+piVolume = piTetra->**CreateVolume**(#);
 ```vbscript
 if (NULL==piShell || NULL==piVolume )
     	return (1);
@@ -881,7 +883,7 @@ piVolume->**AddDomain**(piShell);
 Creating the Lump After creating a void lump (`CreateLump`), add it the already created volume (`AddCell`).
 
     CATLump * piLump = NULL;
-      piLump = piTetra->**CreateLump**();
+      piLump = piTetra->**CreateLump**(#);
 ```vbscript
 ```vbscript
       if (NULL==piShell || NULL==piVolume )
@@ -893,7 +895,7 @@ Creating the Lump After creating a void lump (`CreateLump`), add it the already 
       {
     	 ::CATCloseCGMContainer(piGeomFactory);
 CATLump * piLump = NULL;
-piLump = piTetra->**CreateLump**();
+piLump = piTetra->**CreateLump**(#);
 ```vbscript
 if (NULL==piShell || NULL==piVolume )
     		return (1);
@@ -914,32 +916,32 @@ Completing and Freezing the Body Adds the lump to the body (`AddDomain`). The to
 Completing and Freezing the Body Adds the lump to the body (`AddDomain`). The topological structure is finished. It remains to declare this completion with the `Completed` method. As this method can throw errors, these errors are caught and written on the usual output.
 piTetra->**AddDomain**(piLump);
 CATTry    // to catch an error
-    	piTetra->Completed();
-            piTetra->Freeze();
+    	piTetra->Completed(#);
+            piTetra->Freeze(#);
 
       }
 CATTry    // to catch an error
-piTetra->Completed();
-piTetra->Freeze();
+piTetra->Completed(#);
+piTetra->Freeze(#);
       CATCatch(CATError,error)
 
       {
-piTetra->Completed();
-piTetra->Freeze();
+piTetra->Completed(#);
+piTetra->Freeze(#);
 CATCatch(CATError,error)
-        cout << error->GetMessageText()<<endl;
-        cout << (error->GetNLSMessage()).CastToCharPtr()<<endl;
+        cout << error->GetMessageText(#)<<endl;
+        cout << (error->GetNLSMessage(#)).CastToCharPtr(#)<<endl;
         rc=4;
 
       }
-cout << error->GetMessageText()<<endl;
-cout << (error->GetNLSMessage()).CastToCharPtr()<<endl;
+cout << error->GetMessageText(#)<<endl;
+cout << (error->GetNLSMessage(#)).CastToCharPtr(#)<<endl;
 rc=4;
       CATEndTry
 
 The `Freeze` method declares that the body cannot be modified anymore. Using a frozen body in a topological operation leads to the duplication in the resulting body of the cells and domains that must be modified. The resulting body shares with the initial body the cells and domains that are not touched by the operation. Scanning the Topological Structure To retrieve the number of domains of a body, use the `CATBody::GetNbDomains` method. In case of the tetrahedron, only one domain is created. To retrieve a given domain, use the `CATBody::GetDomain` method, which argument is the rank (from 1 to `GetNbDomains`) of the domain to retrieve. A body can contain domain of different dimensions.
 
-    long nbDomain = piTetra ->**GetNbDomains**();
+    long nbDomain = piTetra ->**GetNbDomains**(#);
 ```vbscript
       if (1!=nbDomain)
 
@@ -947,7 +949,7 @@ The `Freeze` method declares that the body cannot be modified anymore. Using a f
 
       {
     	::CATCloseCGMContainer(piGeomFactory);
-long nbDomain = piTetra ->**GetNbDomains**();
+long nbDomain = piTetra ->**GetNbDomains**(#);
 if (1!=nbDomain)
 ```vbscript
     	return (10);
@@ -986,7 +988,7 @@ Now, to retrieve the number of cells of the lump domain, use `CATDomain::GetAllC
 
     CATLISTP(CATCell) listCells;
       piDomain ->**GetAllCells**(listCells, 3 );
-      int nbCells = listCells.**Size**();
+      int nbCells = listCells.**Size**(#);
 ```vbscript
       if (1 != nbCells)
 
@@ -995,7 +997,7 @@ Now, to retrieve the number of cells of the lump domain, use `CATDomain::GetAllC
       {
     	::CATCloseCGMContainer(piGeomFactory);
 piDomain ->**GetAllCells**(listCells, 3 );
-int nbCells = listCells.**Size**();
+int nbCells = listCells.**Size**(#);
 if (1 != nbCells)
 ```vbscript
     	return (11);
@@ -1025,7 +1027,7 @@ if (NULL==piVolumeCell)
 return (1);
 From the volume to the shell: check that the volume is made of faces by retrieving the dimension of the cells of the domain.
 
-    nbDomain = piVolumeCell->GetNbDomains();
+    nbDomain = piVolumeCell->GetNbDomains(#);
 ```vbscript
 ```vbscript
       piDomain = piVolumeCell->GetDomain(1);
@@ -1035,12 +1037,12 @@ From the volume to the shell: check that the volume is made of faces by retrievi
 ```
 
       // It is a shell, because it is made of faces (dimension 2).
-nbDomain = piVolumeCell->GetNbDomains();
+nbDomain = piVolumeCell->GetNbDomains(#);
 ```vbscript
 piDomain = piVolumeCell->GetDomain(1);
 ```
 
-      short dimShell = piDomain->**GetLowDimension**();
+      short dimShell = piDomain->**GetLowDimension**(#);
 ```vbscript
       if ( 2 != dimShell )
 
@@ -1048,7 +1050,7 @@ piDomain = piVolumeCell->GetDomain(1);
 
       {
     	::CATCloseCGMContainer(piGeomFactory);
-short dimShell = piDomain->**GetLowDimension**();
+short dimShell = piDomain->**GetLowDimension**(#);
 if ( 2 != dimShell )
 ```vbscript
     	return (12);
@@ -1060,10 +1062,10 @@ if ( 2 != dimShell )
 return (12);
 From the shell to the faces: first clean the list with `RemoveAll` that frees the memory of the list, but does not remove the objects. Then, get all the cells (4 faces for the tetrahedron).
 
-    listCells.**RemoveAll**();
+    listCells.**RemoveAll**(#);
 
       piDomain ->**GetAllCells**(listCells,dimShell);
-      nbCells = listCells.Size();
+      nbCells = listCells.Size(#);
 ```vbscript
 ```vbscript
       if (4!=nbCells)
@@ -1075,7 +1077,7 @@ From the shell to the faces: first clean the list with `RemoveAll` that frees th
       {
     	::CATCloseCGMContainer(piGeomFactory);
 piDomain ->**GetAllCells**(listCells,dimShell);
-nbCells = listCells.Size();
+nbCells = listCells.Size(#);
 ```vbscript
 if (4!=nbCells)
     	return (13);
@@ -1149,7 +1151,7 @@ if (NULL==piGeom)
         // Another way to retrieve the cells: use a boundary iterator
 return (14);
         CATBoundaryIterator  *  pBoundaryIt =
-                                   listCells[i]->**CreateBoundaryIterator**();
+                                   listCells[i]->**CreateBoundaryIterator**(#);
 ```vbscript
         if (NULL==pBoundaryIt)
 
@@ -1158,7 +1160,7 @@ return (14);
         {
     	  ::CATCloseCGMContainer(piGeomFactory);
 CATBoundaryIterator  *  pBoundaryIt =
-listCells[i]->**CreateBoundaryIterator**();
+listCells[i]->**CreateBoundaryIterator**(#);
 if (NULL==pBoundaryIt)
 ```vbscript
     	  return (1);
@@ -1217,7 +1219,7 @@ ofstream filetowrite(pfileName, ios::binary ) ;
     #endif
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
-       filetowrite.close();
+       filetowrite.close(#);
      }
 
      //

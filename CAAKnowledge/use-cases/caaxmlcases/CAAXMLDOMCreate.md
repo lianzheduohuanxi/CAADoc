@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating XML documents with DOM"
-category: "use case"
+category: use-case case"
 module: "CAAXmlUseCases"
 tags: ["CATIDOMElement", "CAAXMLParser", "CAAXMLDOMCreate", "CATIDOMComment", "CATIXMLDOMDocumentBuilder", "CATIDOMImplementation", "CATIXMLDOMDocumentBuilder_var", "CATIDOMDocument_var", "CATIDOMDocument", "CATIDOMImplementation_var", "CATIDOMDocumentType_var", "CATIDOMText_var", "CATIDOMComment_var", "CATIDOMText", "CATIDOMElement_var"]
-source_file: "Doc/online/CAAXmlUseCases/CAAXMLDOMCreate.htm"
+source_file: "Doc/online/CAAXmlUseCases/CAAXMLDOMCreate.htmmd"
 converted: "2026-05-11T17:33:45.610569"
 ```
 
@@ -83,10 +83,10 @@ where `<outfilepath>` is the path of the XML file, which will be created.
 where `<outfilepath>` is the path of the XML file, which will be created.
 The CAAXMLDOMCreate use case is made of one file located in the CAAXMLDOMCreate.m module of the CAAXMLParser.edu framework:
 
-Windows | `InstallRootDirectory\CAAXMLParser.edu\CAAXMLDOMCreate.m\`
+Windows | `InstallRootDirectory/CAAXMLParser.edu/CAAXMLDOMCreate.m/`
 
 The CAAXMLDOMCreate use case is made of one file located in the CAAXMLDOMCreate.m module of the CAAXMLParser.edu framework:
-Windows | `InstallRootDirectory\CAAXMLParser.edu\CAAXMLDOMCreate.m\`
+Windows | `InstallRootDirectory/CAAXMLParser.edu/CAAXMLDOMCreate.m/`
 Unix | `InstallRootDirectory/CAAXMLParser.edu/CAAXMLDOMCreate.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -112,9 +112,9 @@ Please note that most of the APIs from the XMLParser framework return a _HRESULT
     do {
 ```vbscript
 ```vbscript
-        hr = XMLParserAPI_1();
+        hr = XMLParserAPI_1(#);
         if (FAILED(hr)) { break; }
-        hr = XMLParserAPI_2();
+        hr = XMLParserAPI_2(#);
         if (FAILED(hr)) { break; }
 
 ```
@@ -122,13 +122,13 @@ Please note that most of the APIs from the XMLParser framework return a _HRESULT
 ```
 
         ...
-hr = XMLParserAPI_1();
+hr = XMLParserAPI_1(#);
 ```vbscript
 ```vbscript
 if (FAILED(hr)) { break; }
-hr = XMLParserAPI_2();
+hr = XMLParserAPI_2(#);
 if (FAILED(hr)) { break; }
-        hr = XMLParserAPI_N();
+        hr = XMLParserAPI_N(#);
         if (FAILED(hr)) { break; }
 
 ```
@@ -140,7 +140,7 @@ if (FAILED(hr)) { break; }
 if (FAILED(hr)) { break; }
 ```vbscript
 ```vbscript
-hr = XMLParserAPI_N();
+hr = XMLParserAPI_N(#);
 if (FAILED(hr)) { break; }
     if (FAILED(hr)) {
 ```

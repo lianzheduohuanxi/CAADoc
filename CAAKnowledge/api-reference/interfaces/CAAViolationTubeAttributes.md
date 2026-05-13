@@ -2,7 +2,7 @@
 title: "CAAViolationTubeAttributes"
 type: "interface"
 module: "CAAPlantShipInterfaces"
-category: "framework"
+category: api-reference
 base: "CATPspCheckViolation"
 inheritance_chain: "CAAViolationTubeAttributes → CATPspCheckViolation"
 method_count: 0
@@ -31,3 +31,20 @@ verified: true
 - `CATUnicodeString.h`
 - `CATListOfCATUnicodeString.h`
 
+---
+
+## Interface Overview
+
+This interface inherits from **CATPspCheckViolation**. 
+
+**Inherited Methods**: Please refer to the base interface documentation above.
+
+## Interface Notes
+
+This interface is part of the **CAA** module.
+
+**Status**: This interface document is a template. Please refer to the official API documentation for more information.
+
+**Related Resources**:
+- [Quick References](../..//quick-refs/)
+- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)

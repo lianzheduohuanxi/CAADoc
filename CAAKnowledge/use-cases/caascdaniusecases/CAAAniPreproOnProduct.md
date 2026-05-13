@@ -3,7 +3,7 @@ title: "Creating Connection Properties on a Product"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CAAScrBase", "CATIAParameter", "CATIA", "CAAScdAniUseCases", "CAAScrJavaScript", "CATIAConstraints", "CAAAniTocAnalysisDocument", "CAAScdInfUseCases", "CAAAniPreproOnProduct", "CAAScdAniTechArticles", "CAAAniPreprocessingFeatures", "CATISamImportDefine", "CAAInfLauchMacro", "CAAAniPreproOnProductSource"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproOnProduct.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproOnProduct.htmmd"
 converted: "2026-05-11T11:27:02.495592"
 ---
 
@@ -79,14 +79,16 @@ The product document is fetched in the documentation installation path,
 
 According to the general
 		[
-		Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.htm) structure, this macro uses some standard procedures 
+		Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures 
 		to navigate or retrieve the required objects. First, from the **document**, 
 		we find the **Analysis manager Object**, the **Analysis models** and 
 		the **Analysis cases Objects**. From both last object (Analysis Model 
 		and Analysis case), you can get access to **Analysis Sets** and **Analysis 
 		entities** that defines the preprocessing actions. This step create a 
+```vbscript
 		new case and create two input sets (Restraint Set and Load Set) and a solution 
 		set (StaticSet).
+```
 		
 
 [Top]
@@ -143,7 +145,7 @@ To run the macro interactively CATDocView and ADL_ODT_SLASH
 		environment variables must be defined.
 	
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 
@@ -164,8 +166,6 @@ a generative way.
 
 *Copyright  2001, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 ...
 ```
@@ -174,36 +174,48 @@ a generative way.
 &#39;_____________________________________________________________________________________
 &#39; Optional: allows to find the sample wherever it&#39;s installed
 
+```vbscript
   sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
   sSep=CATIA.SystemService.Environ(&quot;ADL_ODT_SLASH&quot;)
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,&quot;No Doc Path Defined&quot;
     End If
+```
 &#39;_____________________________________________________________________________________
 &#39; Get the collection of documents in session
+```vbscript
   Set documents1 = CATIA.Documents
 &#39; ----------------------------------------------------------- 
+```
 &#39; Get the collection of documents in session 
 &#39; Create the CATAnalysis Document 
+```vbscript
    Set TheAnalysisDocument = documents1.Add(&quot;Analysis&quot;) 
    
 &#39; if WB name already is &quot;GPSCfg&quot;, not to use StartWorkbench 
+```
+```vbscript
    WBName = CATIA.GetWorkbenchId if (WBName &lt;&gt; &quot;GPSCfg&quot;) Then 
       CATIA.StartWorkbench(&quot;GPSCfg&quot;)
    End If
+```
  ...
 ```
 
 ```vbscript
 ...
 &#39; Start to scan the existing structure of analysis document:  Retrieve the AnalysisManager
+```vbscript
   Set analysisManager1 = TheAnalysisDoc.Analysis
+```
 ```
 
 ```vbscript
+```vbscript
 Dim arrayOfVariantOfShort1(0)
   analysisManager1.ImportDefineFile (sDocPath &amp; sSep  &amp; &quot;online&quot; &amp; sSep &amp; &quot;CAAScdAniUseCases&quot;
+```
                                      &amp; sSep &amp; &quot;samples&quot; &amp; sSep &amp; &quot;basic_assembly.CATProduct&quot;),
 ```
 
@@ -212,22 +224,28 @@ Dim arrayOfVariantOfShort1(0)
 
 &#39; _____________________________________________________________________________________
 &#39; Reframe All.
+```vbscript
   Set specsAndGeomWindow2 = CATIA.ActiveWindow
   Set viewer3D1 = specsAndGeomWindow2.ActiveViewer
   viewer3D1.Reframe 
-
+```
 
 &#39; _____________________________________________________________________________________
 &#39; Scan the analysis document:  Retrieve the Pointed documents to extract the reference for preprocessing
+```vbscript
   Set analysisLinkedDocuments1 = analysisManager1.LinkedDocuments
   CATIA.SystemService.Print analysisLinkedDocuments1.Name
   If (analysisLinkedDocuments1.Count &lt;&gt; 1 ) Then
+```
+```vbscript
     Err.Raise 9999,,&quot;NbDoc Li NE 1&quot;
   End If
+```
 
 &#39; _____________________________________________________________________________________
 &#39; Retrieve the CATProduct Document and associated publications and constraints collection.
 
+```vbscript
   Set productDocument1 = analysisLinkedDocuments1.Item(1)
 
   Set product1 = productDocument1.Product
@@ -237,11 +255,13 @@ Dim arrayOfVariantOfShort1(0)
   Set constraints1 = product1.Connections(&quot;CATIAConstraints&quot;)
 ...
 ```
+```
 
 ```vbscript
 ...
 &#39; _____________________________________________________________________________________
 &#39; Create a Virtual Part in the analysis model to transmit the load.
+```vbscript
 Set analysisSets1 = analysisModel1.AnalysisSets
 Set analysisSet1 = analysisSets1.ItemByType(&quot;PropertySet&quot;)
 
@@ -249,10 +269,13 @@ Set analysisEntities1 = analysisSet1.AnalysisEntities
 Set analysisEntity1 = analysisEntities1.Add(&quot;SAMVirPartRigid&quot;)
 Set publication1 = publications1.Item(&quot;FaceCylinderTop&quot;)
 analysisEntity1.AddSupportFromPublication product1, publication1
+```
+```vbscript
 Set basicComponents1 = analysisEntity1.BasicComponents
 Set basicComponent1 = basicComponents1.GetItem(&quot;SAMRigSlavePoint.1&quot;)
 Set publication4 = publications1.Item(&quot;ForceHandler&quot;)
 basicComponent1.AddSupportFromPublication product1, publication4
+```
 
 ...
 ```
@@ -262,9 +285,11 @@ basicComponent1.AddSupportFromPublication product1, publication4
 &#39; _____________________________________________________________________________________
 &#39; Create a Fastened connection in the analysis model to complete the constraints 
 &#39; definition
+```vbscript
 Set analysisEntity2 = analysisEntities1.Add(&quot;SAMFaceFaceFastened&quot;)
 Set constraint1 = constraints1.Item(&quot;Surface contact.2&quot;)
 analysisEntity2.AddSupportFromConstraint product1, constraint1
+```
 
 ...
 ```
@@ -273,26 +298,30 @@ analysisEntity2.AddSupportFromConstraint product1, constraint1
 ...
 &#39; _____________________________________________________________________________________ 
 &#39; Create a Static Case in the current analysis model. 
+```vbscript
    Set analysisModels1 = analysisManager1.AnalysisModels 
    Set analysisModel1 = analysisModels1.Item(1) 
    Set analysisCases1 = analysisModel1.AnalysisCases
    
-   Set analysisCase1 = analysisCases1.Add()
+   Set analysisCase1 = analysisCases1.Add(#)
    Set analysisSets1 = analysisCase1.AnalysisSets
    Set analysisSet1 = analysisSets1.Add(&quot;RestraintSet&quot;, catAnalysisSetIn)
    Set analysisSet2 = analysisSets1.Add(&quot;LoadSet&quot;, catAnalysisSetIn)
    Set analysisSet3 = analysisCase1.AddSolution(&quot;StaticSet&quot;)
   ...
 ```
+```
 
 ```vbscript
 ...
 &#39; _____________________________________________________________________________________
 &#39; Create clamp boundary. Associated to a publication
+```vbscript
 Set analysisEntities2 = analysisSet2.AnalysisEntities
 Set analysisEntity3 = analysisEntities2.Add(&quot;SAMClamp&quot;)
 Set publication2 = publications1.Item(&quot;FaceToClamp&quot;)
 analysisEntity3.AddSupportFromPublication product1, publication2
+```
 ...
 ```
 
@@ -300,17 +329,23 @@ analysisEntity3.AddSupportFromPublication product1, publication2
 ...
 &#39; _____________________________________________________________________________________
 &#39; Create load boundary. Associated to the virtual part
+```vbscript
 Set analysisEntities3 = analysisSet3.AnalysisEntities
 
 Set analysisEntity4 = analysisEntities3.Add(&quot;SAMDistributedForce&quot;)
 Set reference2 = analysisManager1.CreateReferenceFromObject(analysisEntity1)
 analysisEntity4.AddSupportFromReference reference2, reference2
+```
 
+```vbscript
 Set basicComponents2 = analysisEntity4.BasicComponents
 Set basicComponent2 = basicComponents2.GetItem(&quot;SAMForceAxis.1&quot;)
 basicComponent2.SetValue &quot;Values&quot;, 0, 0, 0, 1
+```
+```vbscript
 Set basicComponent3 = basicComponents2.GetItem(&quot;SAMForceVector.1&quot;)
 basicComponent3.SetDimensions 3, 1, 1
+```
 basicComponent3.SetValue &quot;&quot;, 1, 1, 1, 100.000000
 basicComponent3.SetValue &quot;&quot;, 2, 1, 1, 0.000000
 basicComponent3.SetValue &quot;&quot;, 3, 1, 1, 0.000000
@@ -321,6 +356,7 @@ basicComponent3.SetValue &quot;&quot;, 3, 1, 1, 0.000000
 ...
 &#39; Some examples to read the data on the basic component
 &#39;In this case, direct read 
+```vbscript
 CATIA.SystemService.Print &quot; ForceVector &quot; &amp; basicComponent3.GetValue(&quot;&quot;, 1, 1, 1) 
 CATIA.SystemService.Print &quot; ForceVector &quot; &amp; basicComponent3.GetValue(&quot;&quot;, 2, 1, 1)
 CATIA.SystemService.Print &quot; ForceVector &quot; &amp; basicComponent3.GetValue(&quot;&quot;, 3, 1, 1)
@@ -331,14 +367,19 @@ CATIA.SystemService.Print &quot; ForceVector Dimension &quot; &amp; basicCompone
 CATIA.SystemService.Print &quot; ForceVector Dimension &quot; &amp; basicComponent3.GetLayersNumber (&quot;&quot;)
 
 &#39;In this case, use the Kwe CATIAParameter interface.
+```
+```vbscript
 Set ParametersList = analysisManager1.Parameters
 Set SubList = ParametersList.SubList(basicComponent3,FALSE)
 
 For i = 1 to SubList.Count
+```
+```vbscript
 	Set Parameter = SubList.Item(i)
 	CATIA.SystemService.Print Parameter.Name  
 	CATIA.SystemService.Print Parameter.ValueAsString
 Next
+```
 
 ...
 ```

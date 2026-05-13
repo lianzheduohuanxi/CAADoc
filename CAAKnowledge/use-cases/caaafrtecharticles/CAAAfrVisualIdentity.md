@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "What Is the Product Line Visual Identity"
-category: "use-case"
+category: tech-article
 module: "CAAAfrTechArticles"
 tags: ["CATIA"]
-source_file: "Doc/online/CAAAfrTechArticles/CAAAfrVisualIdentity.htm"
+source_file: "Doc/online/CAAAfrTechArticles/CAAAfrVisualIdentity.htmmd"
 converted: "2026-05-11T17:17:55.938631"
 ```
 
@@ -37,8 +37,10 @@ A product line should be easily recognized from others using some visual feature
 
 The components that help to differentiate your product line from any other are the following:
 
+```vbscript
   * **The product line name** , such as CATIA. It appears in the Help menu and in the Help About dialog box, in the sentence "CATIA is a registered trademark ..." and must be used as the product line resource file names: CATIA.CATNls and CATIA.CATRsc. If the name includes several words, only the first one is used for the resource file names
   * **The product line version level**. It appears in:  ![](images/CAAAfrVICATIAWinTitle.jpg) | The application frame window title, either displayed or iconified, such as CATIA V5
+```
 ---|---
 The components that help to differentiate your product line from any other are the following:
  The title of the welcome dialog box displayed when the application is just launched: "Welcome to CATIA V5"
@@ -56,8 +58,10 @@ There are shown at their right places on the figure below.
 
 ![](images/CAAAfrVICATIAScreenV5R9.gif)
 
+```vbscript
   * **The splash screen** is an image or an animation that displays when the end user launches the application. A static image is used for the P1 level, and an animation for the P2 level. The two files must have the same name, such as Splash.bmp and Splash.avi respectively for CATIA.
 The image width must be 320 pixels and the height must be 240 pixels.
+```
 
 ![](images/CAAAfrVICATIASplash.gif)
 

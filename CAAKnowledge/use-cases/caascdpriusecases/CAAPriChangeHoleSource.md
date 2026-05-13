@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdPriUseCases"
 tags: ["CAAScrBase", "CATIAHole", "CAAPriChangeHole", "CATIA", "CAAScdPriUseCases"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangeHoleSource.htm"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangeHoleSource.htmmd"
 converted: "2026-05-11T11:27:02.724899"
 ---
 
@@ -19,7 +19,8 @@ Option Explicit
 '   CATIA Level:  V5R13 
 ' ***********************************************************************
 
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
 
 Dim oPartDocument As PartDocument
 Dim oCATIAFileSys
@@ -38,45 +39,59 @@ Dim iHoleInSelection As Boolean
 Dim oParameters As Parameters
 Dim i as Long
 
+```
+
 ' ----------------------------------------------------------- 
 ' Optional: allows to find the sample wherever it's installed
 dim sDocPath As String 
+```vbscript
 sDocPath=CATIA.SystemService.Environ("CATDocView")
 If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
   Err.Raise 9999,,"No Doc Path Defined"
 End If
+```
 ' ----------------------------------------------------------- 
 
 ' ------------
 ' The string as delimiter between input in the text file
 ' ------------
-iDelimiter = "\\"
+iDelimiter = "//"
 
 ' ------------
 ' Get the CATIA file system
 ' ------------
+```vbscript
 Set oCATIAFileSys = CATIA.FileSystem
 ' ------------
+```
 ' Get the file containing the hole parameters
 ' ------------
-Set oFile = oCATIAFileSys.GetFile(sDocPath & "\online\CAAScdPriUseCases\macros\CAAPriChangeHole.txt")
+```vbscript
+Set oFile = oCATIAFileSys.GetFile(sDocPath & "/online/CAAScdPriUseCases/macros/CAAPriChangeHole.txt")
 ' ------------
+```
 ' Get the text stream
 ' ------------
+```vbscript
 Set oTextSteam = oFile.OpenAsTextStream("ForReading")
 ' ------------
+```
 ' Get the part document
 ' ------------
+```vbscript
 Set oPartDocument = CATIA.ActiveDocument
 ' ------------
+```
 ' Test the selection content
 ' ------------
 If oPartDocument.Selection.Count = 0 Then
     ' ------------
     ' The selection content is empty, the macro ends
     ' ------------
+```vbscript
     MsgBox "Please select the holes you wish to transform before running the macro.", vbOKOnly, "Warning"
 Else
+```
     ' ------------
     ' The selection content is not empty
     ' Read the text file data unit
@@ -161,10 +176,14 @@ Else
                 oHole.Diameter.Value = CDbl(iArray(iRow, 2))
                 oHole.Diameter.MaximumTolerance = (CDbl(iArray(iRow, 3)) - CDbl(iArray(iRow, 2))) * oUnit
                 oHole.Diameter.MinimumTolerance = (CDbl(iArray(iRow, 4)) - CDbl(iArray(iRow, 2))) * oUnit
+```vbscript
                 Set oParameters = oPartDocument.Part.Parameters.SubList(oHole, True)
                 ' ------------
+```
+```vbscript
                 ' Set the hole description parameter
                 ' ------------
+```
                 If ParameterExists("Hole_Description", oParameters) = True Then
                     oParameters.Item("Hole_Description").ValuateFromString (iArray(iRow, 0))
                 Else
@@ -210,34 +229,45 @@ Else
     End If
 End If
 
+```vbscript
 End Sub
 
 Private Function CatObjectExistsInSelection(CatSelection As Selection, CatObjectName As String, CatObject As Object) As Boolean
 
+```
+
 ' ------------
 ' Define wether an specific object exists in the selection or not
 ' ------------
+```vbscript
 On Error Resume Next
 Set CatObject = CatSelection.FindObject(CatObjectName)
 CatObjectExistsInSelection = (Err.Number = 0)
+```
 Err.Clear
 
+```vbscript
 End Function
 
 Private Function ParameterExists(ItemIndex As String, ItemCollection As Object) As Boolean
 
+```
+
 ' ------------
 ' Define wether an parameter exists in a collection or not
 ' ------------
+```vbscript
 Dim TmpItem As Variant
 On Error Resume Next
 Set TmpItem = ItemCollection.Item(ItemIndex)
 ParameterExists = (Err.Number = 0)
+```
 Err.Clear
 
+```vbscript
 End Function
 
-
+```
 
 ```vbscript
 Option Explicit
@@ -252,7 +282,8 @@ Option Explicit
 '   CATIA Level:  V5R13 
 ' ***********************************************************************
 
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
 
 Dim oPartDocument As PartDocument
 Dim oCATIAFileSys
@@ -271,47 +302,60 @@ Dim iHoleInSelection As Boolean
 Dim oParameters As Parameters
 Dim i as Long
 ```
+```
 
 ```vbscript
 ' ----------------------------------------------------------- 
 ' Optional: allows to find the sample wherever it's installed
 dim sDocPath As String 
+```vbscript
 sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
 If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
   Err.Raise 9999,,&quot;No Doc Path Defined&quot;
 End If
+```
 ' ----------------------------------------------------------- 
 
 ' ------------
 ' The string as delimiter between input in the text file
 ' ------------
-iDelimiter = &quot;\\&quot;
+iDelimiter = &quot;//&quot;
 
 ' ------------
 ' Get the CATIA file system
 ' ------------
+```vbscript
 Set oCATIAFileSys = CATIA.FileSystem
 ' ------------
+```
 ' Get the file containing the hole parameters
 ' ------------
-Set oFile = oCATIAFileSys.GetFile(sDocPath &amp; &quot;\online\CAAScdPriUseCases\macros\CAAPriChangeHole.txt&quot;)
+```vbscript
+Set oFile = oCATIAFileSys.GetFile(sDocPath &amp; &quot;/online/CAAScdPriUseCases/macros/CAAPriChangeHole.txt&quot;)
 ' ------------
+```
 ' Get the text stream
 ' ------------
+```vbscript
 Set oTextSteam = oFile.OpenAsTextStream(&quot;ForReading&quot;)
 ' ------------
+```
 ' Get the part document
 ' ------------
+```vbscript
 Set oPartDocument = CATIA.ActiveDocument
 ' ------------
+```
 ' Test the selection content
 ' ------------
 If oPartDocument.Selection.Count = 0 Then
     ' ------------
     ' The selection content is empty, the macro ends
     ' ------------
+```vbscript
     MsgBox &quot;Please select the holes you wish to transform before running the macro.&quot;, vbOKOnly, &quot;Warning&quot;
 Else
+```
     ' ------------
     ' The selection content is not empty
     ' Read the text file data unit
@@ -396,10 +440,14 @@ Else
                 oHole.Diameter.Value = CDbl(iArray(iRow, 2))
                 oHole.Diameter.MaximumTolerance = (CDbl(iArray(iRow, 3)) - CDbl(iArray(iRow, 2))) * oUnit
                 oHole.Diameter.MinimumTolerance = (CDbl(iArray(iRow, 4)) - CDbl(iArray(iRow, 2))) * oUnit
+```vbscript
                 Set oParameters = oPartDocument.Part.Parameters.SubList(oHole, True)
                 ' ------------
+```
+```vbscript
                 ' Set the hole description parameter
                 ' ------------
+```
                 If ParameterExists(&quot;Hole_Description&quot;, oParameters) = True Then
                     oParameters.Item(&quot;Hole_Description&quot;).ValuateFromString (iArray(iRow, 0))
                 Else
@@ -445,30 +493,42 @@ Else
     End If
 End If
 
+```vbscript
 End Sub
 
 Private Function CatObjectExistsInSelection(CatSelection As Selection, CatObjectName As String, CatObject As Object) As Boolean
 
+```
+
 ' ------------
 ' Define wether an specific object exists in the selection or not
 ' ------------
+```vbscript
 On Error Resume Next
 Set CatObject = CatSelection.FindObject(CatObjectName)
 CatObjectExistsInSelection = (Err.Number = 0)
+```
 Err.Clear
 
+```vbscript
 End Function
 
 Private Function ParameterExists(ItemIndex As String, ItemCollection As Object) As Boolean
 
+```
+
 ' ------------
 ' Define wether an parameter exists in a collection or not
 ' ------------
+```vbscript
 Dim TmpItem As Variant
 On Error Resume Next
 Set TmpItem = ItemCollection.Item(ItemIndex)
 ParameterExists = (Err.Number = 0)
+```
 Err.Clear
 
+```vbscript
 End Function
+```
 ```

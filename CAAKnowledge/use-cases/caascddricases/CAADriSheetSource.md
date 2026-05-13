@@ -4,13 +4,13 @@ title: "CAADriSheet.CATScript"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CATIA", "CAADriSheet", "CAAScdDriUseCases"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriSheetSource.htm"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriSheetSource.htmmd"
 converted: "2026-05-11T17:31:51.107736"
 ```
 
 ---
 tags: ["CATIA", "CAADriSheet", "CAAScdDriUseCases"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriSheetSource.htm"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriSheetSource.htmmd"
 converted: "2026-05-11T17:31:51.107736"
     Option Explicit
 
@@ -34,7 +34,10 @@ converted: "2026-05-11T17:31:51.107736"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
+
+```
 
 ```
 
@@ -44,20 +47,26 @@ converted: "2026-05-11T17:31:51.107736"
         ' -----------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String
+```vbscript
         sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
+```
 
+```vbscript
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
         End If
 ```
 
@@ -68,15 +77,17 @@ converted: "2026-05-11T17:31:51.107736"
 ```vbscript
         ' -----------------------------------------------------------
         ' Open the Drawing document
+```vbscript
         Dim oDoc As Document
         set oDoc = CATIA.Documents.Open(sDocPath & _
 ```
-
 ```
 
 ```
 
-                     "\online\CAAScdDriUseCases\samples\CAADriSheet.CATDrawing")
+```
+
+                     "/online/CAAScdDriUseCases/samples/CAADriSheet.CATDrawing")
 
 ```vbscript
 ```vbscript
@@ -91,9 +102,13 @@ converted: "2026-05-11T17:31:51.107736"
 ```
 
 ```vbscript
+```vbscript
     Dim oDrawingSheets As DrawingSheets
 ```vbscript
+```
+```vbscript
     Set oDrawingSheets = oDoc.Sheets
+```
 ```
 
 ```
@@ -120,10 +135,14 @@ converted: "2026-05-11T17:31:51.107736"
 
 ```
 
+```vbscript
     MsgBox "Click OK to create the new sheet."
     Dim oDrawingSheet As DrawingSheet
 ```vbscript
+```
+```vbscript
     Set oDrawingSheet = oDrawingSheets.Add("New Sheet")
+```
 ```
 
 ```
@@ -150,12 +169,16 @@ converted: "2026-05-11T17:31:51.107736"
 
 ```
 
+```vbscript
     MsgBox "Click OK to activate the new sheet."
     oDrawingSheet.Activate
+```
 
 ```
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

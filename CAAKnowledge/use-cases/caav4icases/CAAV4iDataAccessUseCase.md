@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Retrieving Data of an Element of a V4 Document"
-category: "use case"
+category: use-case case"
 module: "CAAV4iUseCases"
 tags: ["CAADoc", "CAACATIAV4Interfaces", "CAAV4iV4DataAccess", "CAAV4iEduV4DataAccess", "CATIAV4Interfaces"]
-source_file: "Doc/online/CAAV4iUseCases/CAAV4iDataAccessUseCase.htm"
+source_file: "Doc/online/CAAV4iUseCases/CAAV4iDataAccessUseCase.htmmd"
 converted: "2026-05-11T17:33:45.752658"
 ```
 
@@ -73,7 +73,7 @@ Where:
 
 You can use the model `CUBE.model` located in `CAADoc/``CAA``CATIAV4Interfaces``.edu/CNext/resources/graphic`
 
-  * Windows : `InstallRootDirectory\CAADoc\CAA``CATIAV4Interfaces``.edu\CNext\resources\graphic`
+  * Windows : `InstallRootDirectory/CAADoc/CAA``CATIAV4Interfaces``.edu/CNext/resources/graphic`
   * Unix : `InstallRootDirectory/CAADoc/CAA``CATIAV4Interfaces``.edu/CNext/resources/graphic`
 
 [Top]
@@ -81,10 +81,10 @@ You can use the model `CUBE.model` located in `CAADoc/``CAA``CATIAV4Interfaces``
 
 The CAAV4iEduV4DataAccess use case is made of a single file located in the CAAV4iEduV4DataAccess.m module of the CAACATIAV4Interfaces.edu framework:
 The CAAV4iEduV4DataAccess use case is made of a single file located in the CAAV4iEduV4DataAccess.m module of the CAACATIAV4Interfaces.edu framework:
-  Windows | `InstallRootDirectory\`CAACATIAV4Interfaces`.edu\`CAAV4iEduV4DataAccess`.m\`
+  Windows | `InstallRootDirectory/`CAACATIAV4Interfaces`.edu/`CAAV4iEduV4DataAccess`.m/`
 
 The CAAV4iEduV4DataAccess use case is made of a single file located in the CAAV4iEduV4DataAccess.m module of the CAACATIAV4Interfaces.edu framework:
-Windows | `InstallRootDirectory\`CAACATIAV4Interfaces`.edu\`CAAV4iEduV4DataAccess`.m\`
+Windows | `InstallRootDirectory/`CAACATIAV4Interfaces`.edu/`CAAV4iEduV4DataAccess`.m/`
 Unix | `InstallRootDirectory/`CAACATIAV4Interfaces`.edu/`CAAV4iEduV4DataAccess`.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -168,14 +168,14 @@ CATV4iGisels retrieves the first element of the set _setElem_.
 #### Retrieving the data
 
     ...
-              CATString identificator=element->GetId();
+              CATString identificator=element->GetId(#);
     ...
-CATString identificator=element->GetId();
+CATString identificator=element->GetId(#);
               int itp, its;
               element->GetType(itp, its);
 
     ...
-CATString identificator=element->GetId();
+CATString identificator=element->GetId(#);
 int itp, its;
 element->GetType(itp, its);
               int layer =-1;
@@ -203,7 +203,7 @@ result = CATV4iGirvis( element, oShow, oPick, oCol, oBlink, oThick, oLine, ier);
 If _element_ has been correctly created by CATV4iGisels, the data can be retrieved.
 ```
 
-_element- >Id()_ retrieves the identificator of the _element_ ,
+_element- >Id(#)_ retrieves the identificator of the _element_ ,
 _element- >GetType(...)_ retrieves the primary and the secondary types of _element_
 _...CATV4iGirlay(..._ retrieves the number of the layer
 _...CATV4iGirvis(..._ retrieves graphical data about the element : show, pickable, color, blink, steady, thickness, line type.

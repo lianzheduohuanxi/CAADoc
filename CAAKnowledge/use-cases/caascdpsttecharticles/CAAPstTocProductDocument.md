@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Product Document Automation Objects"
-category: "use-case"
+category: tech-article
 module: "CAAScdPstTechArticles"
 tags: ["CATIA", "CATIAFixTogethers"]
-source_file: "Doc/online/CAAScdPstTechArticles/CAAPstTocProductDocument.htm"
+source_file: "Doc/online/CAAScdPstTechArticles/CAAPstTocProductDocument.htmmd"
 converted: "2026-05-11T17:31:52.343589"
 ```
 
@@ -85,21 +85,29 @@ The first nine items represent an axis rotation, and the last three a translatio
 The two collections of **Constraint** and **FixTogether** objects can be retrieved from the root product object using its `Connections` method. For example, assuming `product1` is the root product, the **FixTogethers** collection can be retrieved as follows.
 
 ```vbscript
+```vbscript
     Dim fixTogethers1 As FixTogethers
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set fixTogethers1 = product1.Connections("CATIAFixTogethers")
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Dim fixTogethers1 As FixTogethers
 ```vbscript
+```
+```vbscript
 Set fixTogethers1 = product1.Connections("CATIAFixTogethers")
+```
 ```
 
 ```
@@ -107,27 +115,37 @@ Set fixTogethers1 = product1.Connections("CATIAFixTogethers")
 The **AssemblyConvertor** , **MaterialManager** , and **PositionedMaterial** objects can be retrieved from the root product using its `GetItem` method, with  the "BillOfMaterial", "CATMatManagerVBExt", and "CATMaterialVBExt" strings as argument respectively. Here is an example to retrieve the **MaterialManager** object from the **Product** object.
 
 ```vbscript
+```vbscript
     Dim oRootProduct As Product
+```
 ```
 
     ...
 ```vbscript
+```vbscript
 Dim oRootProduct As Product
+```vbscript
+```
 ```vbscript
 ```vbscript
     Dim oMatManager As MaterialManager
     Set oMatManager = oRootProduct.GetItem("CATMatManagerVBExt")
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Dim oMatManager As MaterialManager
 ```vbscript
+```
+```vbscript
 Set oMatManager = oRootProduct.GetItem("CATMatManagerVBExt")
+```
 ```
 
 ```

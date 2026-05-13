@@ -3,14 +3,16 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdKniUseCases"
 tags: ["CAAScrBase", "CATIA", "CAAKniClash", "CAAKniFilterRightBelowRoot", "CAAScdKniUseCases"]
-source_file: "Doc/online/CAAScdKniUseCases/CAAKniFilterRightBelowRootSource.htm"
+source_file: "Doc/online/CAAScdKniUseCases/CAAKniFilterRightBelowRootSource.htmmd"
 converted: "2026-05-11T11:27:02.707332"
 ---
 
 Option Explicit
 ' COPYRIGHT DASSAULT SYSTEMES 2001
+```vbscript
 Dim Language as String
 Language="VBScript"
+```
 
 ' ***********************************************************************
 '   Purpose:      Given a CATProduct document,
@@ -37,44 +39,60 @@ Language="VBScript"
 '   CATIA Level:  V5R6 
 ' ***********************************************************************
 
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
+
+```
 
     ' ----------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
+```vbscript
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,"No Doc Path Defined"
     End If
+```
     ' ----------------------------------------------------------- 
 
     ' Open the Part document 
+```vbscript
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
-		"online\CAAScdKniUseCases\samples\CAAKniClash.CATProduct")
+		"online/CAAScdKniUseCases/samples/CAAKniClash.CATProduct")
+```
+```vbscript
     Dim oDoc As Document
     set oDoc = CATIA.Documents.Open(sFilePath)
 
  ' Set the CATIA popup file alerts to False
  ' It prevents to stop the macro at each alert during its execution
+```
+```vbscript
  CATIA.DisplayFileAlerts = False
+
+```
 
  ' Retrieve your active document - CATIA is your application 
  ' You get the active document by using the ActiveDocument property
  ' on your application object
+```vbscript
  Dim oActiveDoc As Document 
  Set oActiveDoc = CATIA.ActiveDocument 
  
  Dim i,j,k As Integer
  Dim BelongToComp As Integer
  ' Check whether the document is a CATProduct
+```
  If (InStr(oActiveDoc.Name,".CATProduct")) <> 0  Then 
 
     ' Scan the complete list of parameters                          
+```vbscript
     Dim oProductList As Products
     Set oProductList = oActiveDoc.Product.Products
     Dim S1 As String
     For i = 1 to oActiveDoc.Product.Parameters.Count
+```
     S1 =  oActiveDoc.Product.Parameters.Item(i).Name
     ' Use the BelongToComp flag to set the parameter status
     ' Initial value = 0 (does not belong to a sub-component)
@@ -97,17 +115,23 @@ Sub CATMain()
        end if
     Next    
  Else 
+```vbscript
     MsgBox "The active document must be a CATProduct"
 End If
+```
 
+```vbscript
 End Sub
 
+```
 
 ```vbscript
 Option Explicit
 ' COPYRIGHT DASSAULT SYSTEMES 2001
+```vbscript
 Dim Language as String
 Language="VBScript"
+```
 
 ' ***********************************************************************
 '   Purpose:      Given a CATProduct document,
@@ -134,44 +158,60 @@ Language="VBScript"
 '   CATIA Level:  V5R6 
 ' ***********************************************************************
 
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
+
+```
 
     ' ----------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
+```vbscript
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,"No Doc Path Defined"
     End If
+```
     ' ----------------------------------------------------------- 
 
     ' Open the Part document 
+```vbscript
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
-		"online\CAAScdKniUseCases\samples\CAAKniClash.CATProduct")
+		"online/CAAScdKniUseCases/samples/CAAKniClash.CATProduct")
+```
+```vbscript
     Dim oDoc As Document
     set oDoc = CATIA.Documents.Open(sFilePath)
 
  ' Set the CATIA popup file alerts to False
  ' It prevents to stop the macro at each alert during its execution
+```
+```vbscript
  CATIA.DisplayFileAlerts = False
+
+```
 
  ' Retrieve your active document - CATIA is your application 
  ' You get the active document by using the ActiveDocument property
  ' on your application object
+```vbscript
  Dim oActiveDoc As Document 
  Set oActiveDoc = CATIA.ActiveDocument 
  
  Dim i,j,k As Integer
  Dim BelongToComp As Integer
  ' Check whether the document is a CATProduct
+```
  If (InStr(oActiveDoc.Name,".CATProduct")) &lt;&gt; 0  Then 
 
     ' Scan the complete list of parameters                          
+```vbscript
     Dim oProductList As Products
     Set oProductList = oActiveDoc.Product.Products
     Dim S1 As String
     For i = 1 to oActiveDoc.Product.Parameters.Count
+```
     S1 =  oActiveDoc.Product.Parameters.Item(i).Name
     ' Use the BelongToComp flag to set the parameter status
     ' Initial value = 0 (does not belong to a sub-component)
@@ -194,8 +234,12 @@ Sub CATMain()
        end if
     Next    
  Else 
+```vbscript
     MsgBox "The active document must be a CATProduct"
 End If
+```
 
+```vbscript
 End Sub
+```
 ```

@@ -3,7 +3,7 @@ title: "CAAAniMeshSurfaceWelding.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CAAScrBase", "CATIA", "CAAScdAniUseCases", "CAAAniMeshSurfaceWelding"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSurfaceWeldingSource.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSurfaceWeldingSource.htmmd"
 converted: "2026-05-11T11:27:02.557513"
 ---
 
@@ -21,39 +21,54 @@ converted: "2026-05-11T11:27:02.557513"
 '   CATIA Level:  V5R16
 ' ***********************************************************************
 
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
 
 ' ----------------------------------------------------------- 
+```
 ' Optional: allows to find the sample wherever it's installed
+```vbscript
   sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,"No Doc Path Defined"
     End If
+```
 ' ----------------------------------------------------------- 
 
 ' Open the CATAnalysis Document
-sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\WeldConnections.CATAnalysis")
+```vbscript
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/WeldConnections.CATAnalysis")
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ' Retrieve the analysis Manager 
+```
+```vbscript
 Set oAnalysisManagar = oAnalysisDocument.Analysis
 Set oAnalysisSet = oAnalysisManagar.AnalysisSets
 
 ' Retrieve the part document and product
+```
+```vbscript
 Set oAnalysisLinkedDocuments = oAnalysisManagar.LinkedDocuments
 Set partDocument = oAnalysisLinkedDocuments.Item(1)
 Set product = partDocument.Product
 
 ' Retrieve the analysis model
+```
+```vbscript
 Set oAnalysisModels = oAnalysisManagar.AnalysisModels
 Set oAnalysisModel = oAnalysisModels.Item(1)
 
 'Retrieve the mesh manager and list of mesh parts
+```
+```vbscript
 Set oAnalysisMeshManager = oAnalysisModel.MeshManager 
 Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
 
 'Retrieve the connection design manager and connection
+```
+```vbscript
 Set connection = oAnalysisSet.ItemByType("ConnectionDesignManager")
 Set connSet = connection.AnalysisSets
 Set conn = connSet.ItemByType("ConnectionDesignSet")
@@ -61,10 +76,16 @@ Set entity = conn.AnalysisEntities
 Set surfConn  = entity.Item(3)
 
 'Create reference from the surface analysis connection
+```
+```vbscript
 Set reference1 = oAnalysisManagar.CreateReferenceFromObject(surfConn)
 
 'Add new surface analysis connection mesh to the list of mesh parts
+```
+```vbscript
 Set surfWeld = oAnalysisMeshParts.Add ("MSHPartConnWeldSurf") 
+
+```
 
 'Assign previously created reference as support
 surfWeld.AddSupportFromReference NOTHING, reference1
@@ -78,9 +99,10 @@ surfWeld.SetGlobalSpecification "MiddleCombination", 10
 'Update the mesh part
 surfWeld.Update
 
+```vbscript
 End Sub
 
-
+```
 
 ```vbscript
 ' COPYRIGHT DASSAULT SYSTEMES 2000
@@ -97,43 +119,54 @@ End Sub
 '   CATIA Level:  V5R16
 ' ***********************************************************************
 
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
 
 ' ----------------------------------------------------------- 
+```
 ' Optional: allows to find the sample wherever it's installed
+```vbscript
   sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,"No Doc Path Defined"
     End If
+```
 ' ----------------------------------------------------------- 
 
-
-
 ' Open the CATAnalysis Document
-sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\WeldConnections.CATAnalysis&quot;)
+```vbscript
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online/CAAScdAniUseCases/samples/WeldConnections.CATAnalysis&quot;)
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
-
 ' Retrieve the analysis Manager 
+```
+```vbscript
 Set oAnalysisManagar = oAnalysisDocument.Analysis
 Set oAnalysisSet = oAnalysisManagar.AnalysisSets
 
 ' Retrieve the part document and product
+```
+```vbscript
 Set oAnalysisLinkedDocuments = oAnalysisManagar.LinkedDocuments
 Set partDocument = oAnalysisLinkedDocuments.Item(1)
 Set product = partDocument.Product
 
 ' Retrieve the analysis model
+```
+```vbscript
 Set oAnalysisModels = oAnalysisManagar.AnalysisModels
 Set oAnalysisModel = oAnalysisModels.Item(1)
 
 'Retrieve the mesh manager and list of mesh parts
+```
+```vbscript
 Set oAnalysisMeshManager = oAnalysisModel.MeshManager 
 Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
 
-
 'Retrieve the connection design manager and connection
+```
+```vbscript
 Set connection = oAnalysisSet.ItemByType("ConnectionDesignManager")
 Set connSet = connection.AnalysisSets
 Set conn = connSet.ItemByType("ConnectionDesignSet")
@@ -141,10 +174,16 @@ Set entity = conn.AnalysisEntities
 Set surfConn  = entity.Item(3)
 
 'Create reference from the surface analysis connection
+```
+```vbscript
 Set reference1 = oAnalysisManagar.CreateReferenceFromObject(surfConn)
 
 'Add new surface analysis connection mesh to the list of mesh parts
+```
+```vbscript
 Set surfWeld = oAnalysisMeshParts.Add ("MSHPartConnWeldSurf") 
+
+```
 
 'Assign previously created reference as support
 surfWeld.AddSupportFromReference NOTHING, reference1
@@ -158,7 +197,7 @@ surfWeld.SetGlobalSpecification "MiddleCombination", 10
 'Update the mesh part
 surfWeld.Update
 
-
-
+```vbscript
 End Sub
+```
 ```

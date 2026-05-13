@@ -4,7 +4,7 @@ title: "Modifying Structure Objects"
 category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CAAStrCreationOfStructureObjects", "CAAStrCreateOfStructureObject", "CAAStrModificationOfStructureObjects", "CAAScdStrUseCases", "CATIA"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfStructureObjects.htm"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfStructureObjects.htmmd"
 converted: "2026-05-11T17:31:50.901137"
 ```
 
@@ -36,11 +36,14 @@ This macro shows you how to modify structure objects. This macro modifies some m
       ...
 ```vbscript
 ```vbscript
+```vbscript
         Dim doc As Document
 
         Dim StrWorkbench As StrWorkbench
 ```
+```
 
+```vbscript
 ```vbscript
 ```vbscript
         Dim strFactory As StrObjectFactory
@@ -50,6 +53,7 @@ This macro shows you how to modify structure objects. This macro modifies some m
         Set rootProduct = doc.Product
 
         Set strWorkbench = doc.GetWorkbench("StrWorkbench")
+```
 ```
 
 ```
@@ -65,21 +69,29 @@ This step describes how to get the structure workbench.
 
       ...
 ```vbscript
+```vbscript
        Dim strMembers as StrMembers
+```vbscript
+```
 ```vbscript
 ```vbscript
        Set strMembers = rootProduct.GetTechnologicalObject("StructureMembers")
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
        Dim member as StrMember
 ```vbscript
+```
+```vbscript
        Set member = strMembers.Item("Column_3")
+```
 ```
 
 ```
@@ -115,15 +127,19 @@ We rotate the member and we change its current anchor point.
 
 ```vbscript
 ```vbscript
+```vbscript
         Set strPlates = rootProduct.GetTechnologicalObject("StructurePlates")
 
 ```
+```
 
 ```
 
 ```vbscript
+```vbscript
 Set strPlates = rootProduct.GetTechnologicalObject("StructurePlates")
 ```vbscript
+```
 ```vbscript
         dim plate as StrPlates
         set plate = strPlates.Item("PlateType_11")
@@ -158,7 +174,7 @@ This step describes how to get the plate collection and how to get one specific 
 
 We reverse the material orientation of the plate and we change its thickness.
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

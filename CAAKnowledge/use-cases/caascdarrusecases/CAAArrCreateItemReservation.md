@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CAAScrBase", "CATIA", "CAAArrCreateItemReservationSource", "CAAScrJavaScript", "CAAScdInfUseCases", "CAAArrCreateItemReservation", "CAAScdArrUseCases", "CAAInfLauchMacro", "CAAlink"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateItemReservation.htm"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateItemReservation.htmmd"
 converted: "2026-05-11T11:27:02.677615"
 ---
 
@@ -46,7 +46,7 @@ The newly created *ArrangementItemReservation* object is displayed
     
   
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 
@@ -67,45 +67,53 @@ object within a product document.
 
 *Copyright  2000, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 ...
    '----------------------------------------------
    'Create a new product document
+```vbscript
    Dim objProdDoc        As ProductDocument
    Dim objRootProd       As Product
    Set objProdDoc      = CATIA.Documents.Add(&quot;Product&quot;)
    Set objRootProd     = objProdDoc.Product
    ...
 ```
+```
 
 ```vbscript
 ...
    '----------------------------------------------
    'Retrieving Root Product's Relative Axis and Position Information
+```vbscript
    Dim objMove           As Move
    Dim objPosition       As Position
    Set objMove      = objRootProd.Move
    Set objPosition  = objRootProd.Position
 
    '----------------------------------------------
+```
    ' Get ArrangementProduct
+```vbscript
    Dim objArrProd        As ArrangementProduct
    Set objArrProd   = objRootProd.GetTechnologicalObject(&quot;ArrangementProduct&quot;)
 ...
+```
 ```
 
 ```vbscript
 ...
    '----------------------------------------------
    ' Create Item Reservation under the Root Product
+```vbscript
    Dim dblItemResPos(11)  As Double
    Dim objItemRes     As ArrangementItemReservation
 
    objPosition.GetComponents dblItemResPos
+```
+```vbscript
    Set objItemRes      = objArrProd.ArrangementItemReservations.AddItemReservation(objMove, _
 dblItemResPos, 200.0, 500.0, 200.0, 500.0, 0.0, 0.0)
+```
 ...
 ```
 
@@ -119,5 +127,7 @@ dblItemResPos, 200.0, 500.0, 200.0, 500.0, 0.0, 0.0)
 
 ```vbscript
 ...
+```vbscript
  End Sub
+```
 ```

@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating Foreign Surfaces"
-category: "use case"
+category: use-case case"
 module: "CAACgmModel"
 tags: ["CAAAmtForeign", "CAAGMModelForeignSurfaceData", "CAADoc", "CAAGobFS", "CAAGobApplicationName", "CAAGMModelCreation", "CAAAdvancedMathematics", "CAAGMModelForeign", "CAAGMModelInterfaces", "CAAAmtForeignFunctionXY", "CAAAmtForeignFct", "CAAAmtForeignFctXY", "CAAAForeignSurfaceSample", "CATICGMDomainBinder", "CATIA", "CATIForeignSurface"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGobForeign.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGobForeign.htmmd"
 converted: "2026-05-11T17:33:48.383671"
 ```
 
@@ -55,7 +55,7 @@ The CAAGMModelForeign use case contains the definition of the new class located:
     * In the ProtectedInterfaces directory of the CAAGMModelInterfaces.edu framework for the header CAAGMModelForeignSurfaceData.h
     * In the CAAGMModelForeign.m module of the CAAGMModelInterfaces.edu framework for the corresponding source code CAAGMModelForeignSurfaceData.cpp
 
-`InstallRootFolder\CAADoc\`CAAGMModelInterfaces`.edu\CAAGMModelForeign.m\`
+`InstallRootFolder/CAADoc/`CAAGMModelInterfaces`.edu/CAAGMModelForeign.m/`
 
 where `InstallRootFolder` [7] is the folder where the API CD-ROM is installed.
 
@@ -112,7 +112,7 @@ class **ExportedByCAAGMModelForeign** CAAGMModelForeignSurfaceData : public **CA
      // Mandatory methods for CATCGMAttribute
      //------------------------------------------------------------------------------
     // Default constructor.
-      CAAGMModelForeignSurfaceData();
+      CAAGMModelForeignSurfaceData(#);
 
     // Streams the data.
       void   **Stream**(CATCGMStream & iStr) const ;
@@ -270,13 +270,13 @@ The transformation process [2] is managed by the `CATTransfoManager,` that coach
 
 void CAAGMModelForeignSurfaceData::**Move3D**(**CATTransfoManager** & iTransfo)
 ```vbscript
-             if ( FALSE == iTransfo.IsIdentity() )    // in case of a non-identity tranformation
+             if ( FALSE == iTransfo.IsIdentity(#) )    // in case of a non-identity tranformation
 
 ```
 
              {
 ```vbscript
-if ( FALSE == iTransfo.IsIdentity() )    // in case of a non-identity tranformation
+if ( FALSE == iTransfo.IsIdentity(#) )    // in case of a non-identity tranformation
                  CATMathTransformation* pMathTransfo = NULL;
                  iTransfo.GetMathTransformation( pMathTransfo ) ;
 
@@ -287,7 +287,7 @@ if ( FALSE == iTransfo.IsIdentity() )    // in case of a non-identity tranformat
 
 iTransfo.GetMathTransformation( pMathTransfo ) ;
 if ( NULL != pMathTransfo )
-                   double determinant = pMathTransfo->GetMatrix().Determinant() ;
+                   double determinant = pMathTransfo->GetMatrix(#).Determinant(#) ;
 ```vbscript
                    if (  determinant > 0. )           // only direct tranformations
 
@@ -295,7 +295,7 @@ if ( NULL != pMathTransfo )
 
                    {
 
-double determinant = pMathTransfo->GetMatrix().Determinant() ;
+double determinant = pMathTransfo->GetMatrix(#).Determinant(#) ;
 if (  determinant > 0. )           // only direct tranformations
                      CATMathVector Vector ;
 

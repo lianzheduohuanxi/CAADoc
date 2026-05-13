@@ -2,7 +2,7 @@
 title: "CAAPrtStringImage"
 type: "interface"
 module: "CAAPrint"
-category: "framework"
+category: api-reference
 base: "CATPrintImage"
 inheritance_chain: "CAAPrtStringImage → CATPrintImage"
 method_count: 0
@@ -30,3 +30,36 @@ verified: true
 - `CATPrintImage.h`
 - `CATUnicodeString.h`
 
+---
+
+## Interface Overview
+
+This interface inherits from **CATPrintImage**. 
+
+**Inherited Methods**: Please refer to the base interface documentation above.
+
+---
+
+## Interface Overview
+
+This interface inherits from **from**. 
+
+**Inherited Methods**: Please refer to the base interface documentation above.
+
+---
+
+## Related Use Cases
+
+This interface is used in the following use cases:
+
+- [CAAPrtSamplePrintableObjects](../../use-cases/caaprtcases/CAAPrtSamplePrintableObjects.md)
+
+## Interface Notes
+
+This interface is part of the **CAA** module.
+
+**Status**: This interface document is a template. Please refer to the official API documentation for more information.
+
+**Related Resources**:
+- [Quick References](../..//quick-refs/)
+- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)

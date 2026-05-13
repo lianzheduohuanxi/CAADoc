@@ -4,7 +4,7 @@ title: "CAAStrWeldInfoOnMembers.CATScript"
 category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CATIA", "CATIASfmMember", "CAAStrWeldInfoOnMembers"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrWeldInfoOnMembersSource.htm"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrWeldInfoOnMembersSource.htmmd"
 converted: "2026-05-11T17:31:50.911084"
 ```
 
@@ -27,12 +27,17 @@ converted: "2026-05-11T17:31:50.911084"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
 
+```
 ```
 
 ```vbscript
+```vbscript
     Dim ObjPart As Part
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set ObjPart = CATIA.ActiveDocument.Part
@@ -43,6 +48,7 @@ converted: "2026-05-11T17:31:50.911084"
     Dim ManagerObj As SfmManager
     Set ManagerObj = FactoryObj.GetManager
 ```
+```
 
 ```
 
@@ -52,12 +58,15 @@ converted: "2026-05-11T17:31:50.911084"
 ```vbscript
 ```vbscript
     'RETRIEVING THE SUPERMembers
+```vbscript
     Dim SuperMembers As References
     Set SuperMembers = ManagerObj.GetSuperMembers
 
     Dim SuperMember1 As SfmMember
     Set SuperMember1 = SuperMembers.Item(1)
     'Retrieving The Split Members
+```
+```vbscript
     Dim SplitMembers As References
     Set SplitMembers = SuperMember1.SplitProfiles
 
@@ -67,21 +76,28 @@ converted: "2026-05-11T17:31:50.911084"
     Set SelctionObj = CATIA.ActiveDocument.Selection
     'DECK Member
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Set SelctionObj = CATIA.ActiveDocument.Selection
 ```vbscript
+```
 'DECK Member
 ```
 
     SelctionObj.Add SplitMember1
+```vbscript
     Dim DeckMember1 As SfmMember
 ```vbscript
+```
+```vbscript
     Set DeckMember1 = SelctionObj.FindObject("CATIASfmMember")
+```
 ```
 
 ```
@@ -90,17 +106,23 @@ Set SelctionObj = CATIA.ActiveDocument.Selection
 ```vbscript
 ```vbscript
     'Retrieving Super Plates
+```vbscript
     Dim SuperPlates As References
     Set SuperPlates = ManagerObj.GetSuperPlates
     'Retrieving Operating Super Plate
+```
+```vbscript
     Dim SuperPlate1 As SfmSuperPlate
     Set SuperPlate1 = SuperPlates.Item(1)
     'Retrieving the SplitPlates of SuperPlate1
+```
+```vbscript
     Dim OperatingSplitPlateRefs As References
     Set OperatingSplitPlateRefs = SuperPlate1.SplitPlates
 
     Dim OperatingSplitPlate As Reference
     Set OperatingSplitPlate = OperatingSplitPlateRefs.Item(1)
+```
 ```
 
 ```
@@ -108,7 +130,10 @@ Set SelctionObj = CATIA.ActiveDocument.Selection
 ```
 
 ```vbscript
+```vbscript
     Dim WeldsUC1 As SfmWelds
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set WeldsUC1 = DeckMember1.GetWelds(OperatingSplitPlate)
@@ -117,15 +142,20 @@ Set SelctionObj = CATIA.ActiveDocument.Selection
     Set WeldUC1 = WeldsUC1.Item(1)
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Dim WeldUC1 As SfmWeld
 ```vbscript
+```
+```vbscript
 Set WeldUC1 = WeldsUC1.Item(1)
+```
 ```
 
     ustrWeldTypeUC1 = WeldUC1.WeldType
@@ -136,7 +166,10 @@ Set WeldUC1 = WeldsUC1.Item(1)
 ```
 
 ```vbscript
+```vbscript
     Dim WeldsUC2 As SfmWelds
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set WeldsUC2 = DeckMember1.GetWelds(Nothing)
@@ -145,15 +178,20 @@ Set WeldUC1 = WeldsUC1.Item(1)
     Set WeldUC2 = WeldsUC2.Item(1)
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Dim WeldUC2 As SfmWeld
 ```vbscript
+```
+```vbscript
 Set WeldUC2 = WeldsUC2.Item(1)
+```
 ```
 
     ustrWeldTypeUC2 = WeldUC2.WeldType
@@ -164,6 +202,8 @@ Set WeldUC2 = WeldsUC2.Item(1)
 ```
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

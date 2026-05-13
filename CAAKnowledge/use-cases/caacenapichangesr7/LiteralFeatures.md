@@ -5,13 +5,13 @@ category: "use-case"
 module: "CAACenAPIChangesR7"
 version: "V5R7"
 tags: ["CATIParmPublisher", "CAALifServices", "CATIParmPublisherNew"]
-source_file: "Doc/online/CAACenAPIChangesR7/LiteralFeatures.htm"
+source_file: "Doc/online/CAACenAPIChangesR7/LiteralFeatures.htmmd"
 converted: "2026-05-11T17:33:52.117776"
 ```
 
 ---
 tags: ["CATIParmPublisher", "CAALifServices", "CATIParmPublisherNew"]
-source_file: "Doc/online/CAACenAPIChangesR7/LiteralFeatures.htm"
+source_file: "Doc/online/CAACenAPIChangesR7/LiteralFeatures.htmmd"
 converted: "2026-05-11T17:33:52.117776"
 CAA API Modifications|  LiteralFeatures  |
 

@@ -4,13 +4,13 @@ title: "Auditing CAA Code on ProtectedInterfaces Usage"
 category: "use-case"
 module: "CAACenAPIChanges"
 tags: ["CAABlobUIIC", "CAABlob", "CATINamingPart", "CAABlobBlobize", "CAAProtectedChecker", "CAACheckPro", "CAABlobUI", "CAABlobBlobizer"]
-source_file: "Doc/online/CAACenAPIChanges/CAACenHowToAuditProtectedUsage.htm"
+source_file: "Doc/online/CAACenAPIChanges/CAACenHowToAuditProtectedUsage.htmmd"
 converted: "2026-05-11T17:33:50.063318"
 ```
 
 ---
 tags: ["CAABlobUIIC", "CAABlob", "CATINamingPart", "CAABlobBlobize", "CAAProtectedChecker", "CAACheckPro", "CAABlobUI", "CAABlobBlobizer"]
-source_file: "Doc/online/CAACenAPIChanges/CAACenHowToAuditProtectedUsage.htm"
+source_file: "Doc/online/CAACenAPIChanges/CAACenHowToAuditProtectedUsage.htmmd"
 converted: "2026-05-11T17:33:50.063318"
 CAA V5 Encyclopedia |    |  Auditing CAA Code on ProtectedInterfaces Usage _How to effectively check ProtectedInterfaces usage in a CAA application_
 
@@ -38,9 +38,12 @@ You can also use an existing workspace. No source will be modified. A few files 
 
 **Note** : The set of frameworks that you assess must only use Dassault Systmes' frameworks. All frameworks that are not present in this workspace will be considered as Dassault Systmes frameworks in the subsequent steps and usage of their ProtectedInterfaces will so generate traces and compilation errors.
 
+```vbscript
       * Set up a mkmk environment [1] and build the workspace prerequisites:
 
-            E:> **< mkmk_install>**\intel_a\code\command\tck_init
+```
+
+            E:> **< mkmk_install>**/intel_a/code/command/tck_init
             E:> tck_profile **TCK**
             E:> cd myWorkspace
             E/myWorkspace> mkGetPreq -p ...
@@ -76,25 +79,25 @@ To run CAACheckPro, type:
 
 ---
       * Compilation errors issued by this first step must be ignored. Then starts the detection of included ProtectedInterfaces headers
-            # Analyzing framework named: E/mkClos4\.\CAABlobUI
-            #  NEW Identity card path name: E/mkClos4\.\CAABlobUI\IdentityCard\IdentityCard.mk
-            #  Loading dependencies databases named: E/mkClos4\.\CAABlobUI\IdentityCard/Objects/iintel_a/Xref/Dependencies.mkXDB ...
+            # Analyzing framework named: E/mkClos4/./CAABlobUI
+            #  NEW Identity card path name: E/mkClos4/./CAABlobUI/IdentityCard/IdentityCard.mk
+            #  Loading dependencies databases named: E/mkClos4/./CAABlobUI/IdentityCard/Objects/iintel_a/Xref/Dependencies.mkXDB ...
             #   Analyzing dependencies ...
             # +  New direct prerequisite to DummyFW level Public added
             # +  New direct prerequisite to SpecialAPI level Public added
-            # ++ **Using non public header** AdvancedTopologicalOpe\ProtectedInterfaces\CATCreateTopProjection.h
-            # ++ **Using non public header** MechanicalModeler\ProtectedInterfaces\CATMfAlgoConfigServices.h
-            # ++ **Using non public header** MechanicalModeler\ProtectedInterfaces\CATINamingPart.h
+            # ++ **Using non public header** AdvancedTopologicalOpe/ProtectedInterfaces/CATCreateTopProjection.h
+            # ++ **Using non public header** MechanicalModeler/ProtectedInterfaces/CATMfAlgoConfigServices.h
+            # ++ **Using non public header** MechanicalModeler/ProtectedInterfaces/CATINamingPart.h
 
 ---
 All the headers listed are the CAA ProtectedInterfaces files **recursively** included by the application, meaning that they may either be directly included by the application headers or included by a CAA Protectednterfaces header included by the application.
 
       * After detection of such headers, a second build starts with the created IdentityCard files that turn the prerequisites to Dassault Systmes' frameworks to Public
             ## start step: CIbuild   at 10/11/2004-14:28:53
-            #make: CAABlobUI intel_a\code\productIC\CAABlobUIIC.script
+            #make: CAABlobUI intel_a/code/productIC/CAABlobUIIC.script
 All the headers listed are the CAA ProtectedInterfaces files **recursively** included by the application, meaning that they may either be directly included by the application headers or included by a CAA Protectednterfaces header included by the application.
             Redefinition line(54) :  AddPrereqComponent("SpecialAPI",Public,NotExported)
-            Script Error >>> file: E/mkClos4\BlobUI\IdentityCard\IdentityCard.mk line: 0 compilation failed <<<
+            Script Error >>> file: E/mkClos4/BlobUI/IdentityCard/IdentityCard.mk line: 0 compilation failed <<<
 
 ---
       * Those IdentityCard compilation errors can be ignored. Then, whenever a ProtectedInterfaces header is **directly** included in the application, the following message appears:
@@ -105,8 +108,8 @@ All the headers listed are the CAA ProtectedInterfaces files **recursively** inc
 ---
       * And if this file is actually needed to compile, you will have related compilation errors:
 
-            **E/mkClos4\.\CAABlobUI\CAABlobBlobizer.m\src\CAABlobBlobize.cpp(16) : error C2653: 'CATMfAlgoConfigServices' : is not a class or namespace name
-            E/mkClos4\.\CAABlob\CAABlobBlobizer.m\src\CAABlobBlobize.cpp(17) : error C2065: 'CreateConfigurationData' : undeclared identifier**
+            **E/mkClos4/./CAABlobUI/CAABlobBlobizer.m/src/CAABlobBlobize.cpp(16) : error C2653: 'CATMfAlgoConfigServices' : is not a class or namespace name
+            E/mkClos4/./CAABlob/CAABlobBlobizer.m/src/CAABlobBlobize.cpp(17) : error C2065: 'CreateConfigurationData' : undeclared identifier**
 
 ---
 **Notes** :

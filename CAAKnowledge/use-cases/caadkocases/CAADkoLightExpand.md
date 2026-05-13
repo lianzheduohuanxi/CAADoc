@@ -4,13 +4,13 @@ title: "Running Light Expand"
 category: "use case"
 module: "CAADkoUseCases"
 tags: ["CATIVpmLightExpandObject", "CAAVPMDesktopObjects", "CAADkoLightExpand"]
-source_file: "Doc/online/CAADkoUseCases/CAADkoLightExpand.htm"
+source_file: "Doc/online/CAADkoUseCases/CAADkoLightExpand.htmmd"
 converted: "2026-05-11T17:33:45.981463"
 ```
 
 ---
 tags: ["CATIVpmLightExpandObject", "CAAVPMDesktopObjects", "CAADkoLightExpand"]
-source_file: "Doc/online/CAADkoUseCases/CAADkoLightExpand.htm"
+source_file: "Doc/online/CAADkoUseCases/CAADkoLightExpand.htmmd"
 converted: "2026-05-11T17:33:45.981463"
 Lifecycle Applications |  EBOM Part & Assembly Detailing |  Running Light Expand _Running Light Expand_
 
@@ -42,7 +42,7 @@ After having implemented Light Query to solve those issues, Light Expand has bee
   1. In this use case, we set up the Light Expand to get the instances attached under the root PRC. This example focuses on the structure of parts under a PRC. It is possible to expand different kinds of objects and get different kinds of object types in the results.
   2. On the results, we print the type, name, out of sync status, lock information of each object.
 
-[Top] How to Launch CAADkoLightExpand To launch CAADkoLightExpand, you will need to set up the build time environment, then compile CAADkoLightExpand along with its prerequisites, set up the run time environment, and then execute the use case [1]. [Top] Where to Find the CAADkoLightExpand Code The CAADkoLightExpand use case is made of a single file located in the CAADkoLightExpand.m module of the CAAVPMDesktopObjects.edu framework: Windows | `InstallRootDirectory\CAAVPMDesktopObjects.edu\CAADkoLightExpand.m\`
+[Top] How to Launch CAADkoLightExpand To launch CAADkoLightExpand, you will need to set up the build time environment, then compile CAADkoLightExpand along with its prerequisites, set up the run time environment, and then execute the use case [1]. [Top] Where to Find the CAADkoLightExpand Code The CAADkoLightExpand use case is made of a single file located in the CAADkoLightExpand.m module of the CAAVPMDesktopObjects.edu framework: Windows | `InstallRootDirectory/CAAVPMDesktopObjects.edu/CAADkoLightExpand.m/`
 ---|---
 1. In this use case, we set up the Light Expand to get the instances attached under the root PRC. This example focuses on the structure of parts under a PRC. It is possible to expand different kinds of objects and get different kinds of object types in the results.
 2. On the results, we print the type, name, out of sync status, lock information of each object.
@@ -115,12 +115,12 @@ We want to get all kinds of attached document, if any.
 ---
 [Top] Use the results to print some information For each object in the result structure, we get the type of the object, its name, its out of sync status, its lock status, the number of attached documents and we print everything.
 
-          int nb = ExpandResult->Size();
+          int nb = ExpandResult->Size(#);
           TRACE << "There are " << nb << " parts and GCo in the result of the expand" << endl;
           for( int i=1; i<=nb; i++ )
 
           {
-int nb = ExpandResult->Size();
+int nb = ExpandResult->Size(#);
 TRACE << "There are " << nb << " parts and GCo in the result of the expand" << endl;
 for( int i=1; i<=nb; i++ )
              CATIVpmLightExpandObject * LEXObj = (*ExpandResult)[i];
@@ -170,7 +170,7 @@ LEXObj->getLockInfo( LockOwner );
                 if ( Documents != NULL )
 ```vbscript
 ```vbscript
-                   nbDocs = Documents->Size();
+                   nbDocs = Documents->Size(#);
 
 ```
 
@@ -194,7 +194,7 @@ TRACE << "Generic Component";
 TRACE << " at level " << level << ", named : " << Name << ",";
 if (( BasicType == LEX_PartInstance ) || ( BasicType == LEX_ProductInstance ) || ( BasicType == LEX_TempoItemInstance ))
 ```vbscript
-                   if ( LockOwner.GetLengthInChar() > 0 )
+                   if ( LockOwner.GetLengthInChar(#) > 0 )
 ```
 
                       TRACE << " locked by " << LockOwner << ",";

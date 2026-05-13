@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Checking the Confusion of Points on a Curve"
-category: "use case"
+category: use-case case"
 module: "CAACgmModel"
 tags: ["CATICGMConfusionPtOnCrvPtOnCrv", "CAADoc", "CAAGMModelConfusionOpe", "CAAGMModelGemBrowser", "CAAGMModelInterfaces", "CATICGMLocalAnalysis1D"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelConfusionPtCrvOpe.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelConfusionPtCrvOpe.htmmd"
 converted: "2026-05-11T17:33:48.267654"
 ```
 
@@ -58,7 +58,7 @@ CAAGMModelConfusionOpe `e/confusion.NCGM`
 This NCGM file can be displayed using the CAAGMModelGemBrowser use case [3].
 The CAAGMModelConfusionOpe use case is made of a main named CAAGMModelConfusionOpe.cpp located in the CAAGMModelConfusionOpe.m module of the CAAGMModelInterfaces.edu framework:
 
-`InstallRootFolder\CAADoc\CAAGMModelInterfaces.edu\CAAGMModelConfusionOpe.m\`
+`InstallRootFolder/CAADoc/CAAGMModelInterfaces.edu/CAAGMModelConfusionOpe.m/`
 
 where `InstallRootFolder` [4] is the folder where the API CD-ROM is installed.
 ## Step-by-Step
@@ -87,17 +87,17 @@ The initial step which consists in creating the geometry factory as well as the 
 double ThetaRange = CAT2PI*0.66;
 CATCircle * pCircle = piGeomFactory->CreateCircle(radius,Plane, 0, ThetaRange);
 if (NULL==pCircle )
-    CATCrvLimits limits = pCircle->GetLimits();
+    CATCrvLimits limits = pCircle->GetLimits(#);
 
     // b - Create two points on this circular circle
 ```vbscript
 if (NULL==pCircle )
-CATCrvLimits limits = pCircle->GetLimits();
+CATCrvLimits limits = pCircle->GetLimits(#);
     double l1 = 0.5;
 ```
 
     //double l2 = 0.500025; // confusion not not achieved for tol = Res*0.1
-CATCrvLimits limits = pCircle->GetLimits();
+CATCrvLimits limits = pCircle->GetLimits(#);
 double l1 = 0.5;
     double l2 = 0.500024; // confusion is achieved for tol = Res*0.1
     CATCrvParam param1(l1,limits);
@@ -125,7 +125,7 @@ CATICGMConfusionPtOnCrvPtOnCrv * pConfusionOpe1 =::CATCGMCreateConfusion(piGeomF
     // d - Check the confusion
 CATICGMConfusionPtOnCrvPtOnCrv * pConfusionOpe1 =::CATCGMCreateConfusion(piGeomFactory, pConfig, Pt1, Pt2, Resolution*0.1);
 cout << "Tolerance " << Resolution*0.1 << endl;
-    if (pConfusionOpe1->GetConfusion())
+    if (pConfusionOpe1->GetConfusion(#))
       cout << "Confusion is achieved " << endl;
     else
       cout << "Confusion is not achieved " << endl;

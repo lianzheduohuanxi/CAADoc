@@ -4,7 +4,7 @@ title: "About VB, VBA, Debug, and Portability"
 category: "use-case"
 module: "CAAScdInfTechArticles"
 tags: ["CATIA"]
-source_file: "Doc/online/CAAScdInfTechArticles/CAAInfHints.htm"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfHints.htmmd"
 converted: "2026-05-11T17:31:52.415555"
 ```
 
@@ -24,11 +24,15 @@ Since V5R7 Dassault Systemes products based on the V5 Platform don't use anymore
 
  The typing requirement are incompatible for Basic Script code and VB code. When a **method returns an abstract object** like the **ActiveDocument** method that returns a **Document** ,**** Basic Script expects the variable in which the return value will be stored to be of the type declared by the signature of the method:
 
+```vbscript
 > Dim oDoc As Document
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oDoc = CATIA.ActiveDocument ' returns a Document
 
+```
 ```
 
 ```
@@ -38,29 +42,39 @@ Since V5R7 Dassault Systemes products based on the V5 Platform don't use anymore
 
 ```
 
+```vbscript
 > Dim oPart As Part
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oPart = oDoc.Part
 
+```
 ```
 
 ```
 
  When using VB, you will need a PartDocument object to use the Part property:
 
+```vbscript
 > Dim oDoc As **Part** Document
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oDoc = CATIA.ActiveDocument ' returns a Document
 
     Dim oPart As Part
 ```
+```
 
+```vbscript
 ```vbscript
 ```vbscript
     Set oPart = oDoc.Part
 
+```
 ```
 
 ```
@@ -77,20 +91,26 @@ Since V5R7 Dassault Systemes products based on the V5 Platform don't use anymore
 
  You will also have to take care of **methods with array parameters** like in the following example where we extract and display the multiple possible values of a **StringParameter** in VBScript or BasicScript:
 
+```vbscript
 > Dim strParam1 As StrParam
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set strParam1 = parameters1.Item("STRING")
 
 ```
+```
 
 ```
 
 ```vbscript
+```vbscript
 Set strParam1 = parameters1.Item("STRING")
 ```vbscript
+```
 ```vbscript
-    iSize = strParam1.GetEnumerateValuesSize()
+    iSize = strParam1.GetEnumerateValuesSize(#)
 
 ```
 
@@ -115,24 +135,32 @@ msgbox myArray(i)
 Next
  Copy/pasting this piece of code in a VB project may lead, depending on your VB/VBA level to a compilation error because VB may be unable to deal with the signatures that we use for our array types and issues the following message:
 
+```vbscript
 > `Function or interface marked as restricted, or the function uses an automation type not supported by Visual Basic.`
 
  A simple workaround is to un-type the variable on which the method is applied.
+```
 
+```vbscript
 > Dim strParam1 ' **As StrParam**
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set strParam1 = parameters1.Item("STRING")
 
 ```
+```
 
 ```
 
 ```vbscript
+```vbscript
 Set strParam1 = parameters1.Item("STRING")
 ```vbscript
+```
 ```vbscript
-    iSize = strParam1.GetEnumerateValuesSize()
+    iSize = strParam1.GetEnumerateValuesSize(#)
 
 ```
 
@@ -202,21 +230,27 @@ See the Script Debugger's documentation for more information on how to proceed.
 
  [Top]
  ## Inter releases compatibility
+```vbscript
  ### Virtual Function Tables compatibility
 
  The CAA V5 Automation Object Model evolves with each new release. The list of the methods of an object may change. Depending on the way VB or VBA calls those methods this may have an impact on your application even if a new method has been added.
+```
 
  The following code for example:
 
+```vbscript
 > Dim oObject
 The CAA V5 Automation Object Model evolves with each new release. The list of the methods of an object may change. Depending on the way VB or VBA calls those methods this may have an impact on your application even if a new method has been added.
+```
 The following code for example:
     oObject.DoThis
 
  Where oObject is not typed, will perform a late binding call to _DoThis_ , using the _Invoke_ method at build time and leaving _oObjet_ perform the actual call to _DoThis_ at runtime inside its implementation of _Invoke_. The following code however:
 
+```vbscript
 > Dim oObject  **As**  SpecificTypeOfObject
     oObject.DoThat
+```
 
 oObject.DoThat
  will perform an early binding call, meaning basically that a description of the virtual function table of _oObject_ will be re-created from the information available in the type library describing the _SpecificTypeOfObject_ type and the call will be made using a position in this table.
@@ -264,7 +298,7 @@ To switch running macros from one version to another one, say from V5R27 to **3D
 
  By default, this folder is:
 
- `C/Program Files\Dassault Systemes\B27\win_b64\code\bin`
+ `C/Program Files/Dassault Systemes/B27/win_b64/code/bin`
 
 By default, this folder is:
  Replace `win_b64` with `intel_a` if you run a 32 bit version.
@@ -275,15 +309,17 @@ By default, this folder is:
 
        4. This command is a silent command. Wait about for one minute to let it complete.
 
+```vbscript
      * Set the **3D** EXPERIENCER2017x scripting server:
 catstart -run "V5RegServer -unset CATIA"
+```
 4. This command is a silent command. Wait about for one minute to let it complete.
        1. Open a prompt window in administrator mode.
        2. Change to the folder in which you installed CATIA or DELMIA.
 
  By default, this folder is:
 
- `C/Program Files\Dassault Systemes\B419\win_b64\code\bin`
+ `C/Program Files/Dassault Systemes/B419/win_b64/code/bin`
 
 By default, this folder is:
  Replace `win_b64` with `intel_a` if you run a 32 bit version.
@@ -305,7 +341,7 @@ In V5 many environment files can be created in any folders, so it is recommended
  There is a known limitation concerning the usage of the Boolean type in the V5 Automation methods invoked from VBA. In V5 applications, the Boolean type
 is defined as an 'unsigned char' where the VBA definition is a short. When a V5 method returns True, the returned integer value is 1, though VBA is expecting -1. Because of this difference, the following VBA code will not work as expected (the method boolMethod returns True):
 
-> `If myObj.boolMethod() = True Then // This test will fail
+> `If myObj.boolMethod(#) = True Then // This test will fail
 ...
 There is a known limitation concerning the usage of the Boolean type in the V5 Automation methods invoked from VBA. In V5 applications, the Boolean type
 is defined as an 'unsigned char' where the VBA definition is a short. When a V5 method returns True, the returned integer value is 1, though VBA is expecting -1. Because of this difference, the following VBA code will not work as expected (the method boolMethod returns True):
@@ -319,11 +355,11 @@ End If `
 
  to correct this limitation, you have to write some code like this :
 
-> `If myObj.boolMethod() Then End If `
+> `If myObj.boolMethod(#) Then End If `
 
  or
 
-> ` If myObj.boolMethod() != False Then
+> ` If myObj.boolMethod(#) != False Then
 ...
 ```vbscript
 ```vbscript
@@ -341,13 +377,15 @@ End If `
 
 ```
 
-> `Not(myObj.boolMethod())`
+> `Not(myObj.boolMethod(#))`
 
  will return True instead of returning False. To use correctly the 'Not' operator you have to use a variable to store the boolean value before applying the operator :
 
+```vbscript
 > `Dim myBool
 will return True instead of returning False. To use correctly the 'Not' operator you have to use a variable to store the boolean value before applying the operator :
-myBool = myObj.boolMethod()
+```
+myBool = myObj.boolMethod(#)
 ```vbscript
 Not(myBool) `
 
@@ -360,59 +398,84 @@ Not(myBool) `
  Another very specific problem may occur when using a VBA class featuring a function that returns a boolean. In the following example:
 
 ```vbscript
-     Sub CATMain()
+```vbscript
+     Sub CATMain(#)
 
+```
 ```
 
 ```vbscript
+```vbscript
          Dim oClass1 As Class1
+```vbscript
+```
 ```vbscript
 ```vbscript
          Set oCLass1 = New Class1
          Dim bReture As Boolean
-         bReture = oClass.IsRetureBooleanFunction()
+         bReture = oClass.IsRetureBooleanFunction(#)
+```
 
+```vbscript
          Dim RefreshDisp As Boolean
          CATIA.RefreshDisplay = False
 ```
+```
 
 ```
 
+```vbscript
          RefreshDisp = CATIA.RefreshDisplay
          Debug.Print " CASE FALSE : False expected=" & CInt(False) & " False returned=" & CInt(RefreshDisp)
+```
+```vbscript
          CATIA.RefreshDisplay = True
          RefreshDisp = CATIA.RefreshDisplay
          Debug.Print " CASE TRUE : True expected=" & CInt(True) & " True returned= " & CInt(RefreshDisp)
+```
+```vbscript
 ```vbscript
      End Sub
 
+```
 ```
 
 ```
 
  The class `Class1` offers the `IsRetureBooleanFunction` function:
 
-     Function IsRetureBooleanFunction() As Boolean
+```vbscript
+     Function IsRetureBooleanFunction(#) As Boolean
          IsRetureBooleanFunction = True
+```vbscript
+```
 ```vbscript
      End Function
 
 ```
+```
 
+```vbscript
  The execution of `CATMain` shows that the value returned by `CATIA.RefreshDisplay` is always invalid. A simple workaround consists in declaring the `IsRetureBooleanFunction` function this way:
 
-     Function IsRetureBooleanFunction() As **Variant**
+     Function IsRetureBooleanFunction(#) As **Variant**
          IsRetureBooleanFunction = True
+```vbscript
+```
 ```vbscript
      End Function
 
+```
 ```
 
  ### Limitation for VBA in a 64 bit context when a macro program declares a function
 
  The following kind of declaration:
 
+```vbscript
 > ` Private Declare Function MyFunctionNameInDll Lib "E/My.dll" (...) As ...`
+
+```
 
  is not possible in a 64 bit context if the `My.dll` is a 64 bit dll. The V5 VBA integration for 64 bit applications is based on a separate 32 bit application dedicated to VBA. A DLL referenced by a VBA macro must so be a 32 bit one. Moreover, such a 32-bit dll cannot use the dlls from the V5 installation that are, in that case, 64 ones.
  ### Usage if the VBA DoEvent function

@@ -4,13 +4,13 @@ title: "Topological Journal: Creation and Validation (2)"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMCheckForPart", "CAAGMOperatorsInterfaces", "CAAGMOperatorsCheckGnOK", "CAAGMTopDumpJournal", "CAATopCheckNoCopy", "CAAAddInputBody", "CAACheck"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcJournalChecking2.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcJournalChecking2.htmmd"
 converted: "2026-05-11T17:33:48.974055"
 ```
 
 ---
 tags: ["CAAGMCheckForPart", "CAAGMOperatorsInterfaces", "CAAGMOperatorsCheckGnOK", "CAAGMTopDumpJournal", "CAATopCheckNoCopy", "CAAAddInputBody", "CAACheck"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcJournalChecking2.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcJournalChecking2.htmmd"
 converted: "2026-05-11T17:33:48.974055"
 Topological Journal: Creation and Validation (2)
 
@@ -52,11 +52,11 @@ and the code below:
 pJournalNew->ReportCreation( NULL, faceList[4], new CATCGMJournalInfo(3));
 pJournalNew->ReportCreation( NULL, faceList[5], new CATCGMJournalInfo(4));
 pJournalNew->ReportCreation( NULL, faceList[6], new CATCGMJournalInfo(5));
-    pJournalNew->Tass();
+    pJournalNew->Tass(#);
     CAAGMTopDumpJournal(pJournalNew);
 
 ---
-pJournalNew->Tass();
+pJournalNew->Tass(#);
 CAAGMTopDumpJournal(pJournalNew);
 you get this result on the standard output:
 
@@ -84,11 +84,11 @@ CAAGMCheckForPart * reportCheck = new CAAGMCheckForPart(pJournalNew,
 piPrismBody,
     reportCheck->CAAAddInputBody(pBody1, CAATopCheckNoCopy);
     reportCheck->CAAAddInputBody(pBody2, CAATopCheckNoCopy);
-    int checkReturn = reportCheck->CAACheck();
+    int checkReturn = reportCheck->CAACheck(#);
 
 ---
 reportCheck->CAAAddInputBody(pBody2, CAATopCheckNoCopy);
-int checkReturn = reportCheck->CAACheck();
+int checkReturn = reportCheck->CAACheck(#);
 checks the created journal and generates two output .md files containing information on the journal.  **Step 1 -** Open the first file, you can read something like this. The journal is valid:
 
     (1) - Mandatory Checking that all cells in result body can be traced back OK

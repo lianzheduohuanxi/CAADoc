@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "How to Use the Topological Operators"
-category: "technical article"
+category: use-case article"
 module: "CAACgmModel"
 tags: ["CATICGMSolidPrimitive", "CAAGMOperatorsSpline", "CATICGMTopSkin", "CATICGMTopOperator", "CATICGMGeoToTopOperator"]
-source_file: "Doc/online/CAACgmModel/CAACgmTaUseTopoOperators.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmTaUseTopoOperators.htmmd"
 converted: "2026-05-11T17:33:48.060274"
 ```
 
@@ -85,14 +85,14 @@ CATICGMTopSkin * pSkinOp = ::CATCGMCreateTopSkin (piGeomFactory,
     // Run the operator
 aLimits,
 aOrientations);
-    pSkinOp->Run();
+    pSkinOp->Run(#);
 
     // Get the resulting body
-    CATBody * piSkinBody = pSkinOp->GetResult();
+    CATBody * piSkinBody = pSkinOp->GetResult(#);
     ...
 ### How to Delete a Topological Operator
 
-CATBody * piSkinBody = pSkinOp->GetResult();
+CATBody * piSkinBody = pSkinOp->GetResult(#);
 Topological operators should be deleted by using the **Release** method.
 
     CATICGMTopSkin * pSkinOp = ::CATCGMCreateTopSkin (piGeomFactory,
@@ -106,7 +106,7 @@ CATICGMTopSkin * pSkinOp = ::CATCGMCreateTopSkin (piGeomFactory,
     // delete the operator
 CATICGMTopSkin * pSkinOp = ::CATCGMCreateTopSkin (piGeomFactory,
 piPlane, ...)
-    pSkinOp **- >Release();
+    pSkinOp **- >Release(#);
 
     **pSkinOp **= NULL;**
 ### In Short

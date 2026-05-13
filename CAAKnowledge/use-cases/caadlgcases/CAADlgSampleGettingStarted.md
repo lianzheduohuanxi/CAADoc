@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Getting Started with Dialog Boxes"
-category: "use case"
+category: use-case case"
 module: "CAADlgUseCases"
 tags: ["CAADlgHelloWindow", "CAADlgHelloWindowId", "CAADlgHelloApplication", "CATInteractiveApplication", "CATIA", "CAADialog"]
-source_file: "Doc/online/CAADlgUseCases/CAADlgSampleGettingStarted.htm"
+source_file: "Doc/online/CAADlgUseCases/CAADlgSampleGettingStarted.htmmd"
 converted: "2026-05-11T17:17:55.978720"
 ```
 
@@ -81,10 +81,10 @@ To launch CAADlgHelloApplication, you will need to set up the build time environ
 To launch CAADlgHelloApplication, you will need to set up the build time environment, then compile CAADlgHelloApplication along with its prerequisites, set up the run time environment, and then execute the use case [3].
 The CAADlgHelloApplication use case is made of a several classes located in the CAADlgHelloApplication.m module of the CAADialog.edu framework:
 
-Windows | `InstallRootDirectory\CAADialog.edu\``CAADlgHelloApplication``.m\`
+Windows | `InstallRootDirectory/CAADialog.edu/``CAADlgHelloApplication``.m/`
 
 The CAADlgHelloApplication use case is made of a several classes located in the CAADlgHelloApplication.m module of the CAADialog.edu framework:
-Windows | `InstallRootDirectory\CAADialog.edu\``CAADlgHelloApplication``.m\`
+Windows | `InstallRootDirectory/CAADialog.edu/``CAADlgHelloApplication``.m/`
 Unix | `InstallRootDirectory/CAADialog.edu/CAADlgHelloApplication.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -99,12 +99,12 @@ _CAADlgHelloApplication.cpp_ | The interactive application source file
 _CAADlgHelloWindow.h_ | The application window header file
 _CAADlgHelloWindow.cpp_ | The application window source file
 
-The resource file CAADlgHelloWindow.CATNls is located in the CNext\resources\msgcatalog directory.
+The resource file CAADlgHelloWindow.CATNls is located in the CNext/resources/msgcatalog directory.
 
 [Top]
 ### Step-by-Step
 
-The resource file CAADlgHelloWindow.CATNls is located in the CNext\resources\msgcatalog directory.
+The resource file CAADlgHelloWindow.CATNls is located in the CNext/resources/msgcatalog directory.
 There are two logical steps in CAADlgHelloApplication:
 
   1. Creating the Interactive Application
@@ -124,9 +124,9 @@ Let's look at CAADlgHelloApplication.h, the application header file:
 
         CAADlgHelloApplication(const CATString &iIdentifier);
 
-        virtual ~CAADlgHelloApplication();
-        void **BeginApplication**();
-        int **EndApplication**();
+        virtual ~CAADlgHelloApplication(#);
+        void **BeginApplication**(#);
+        int **EndApplication**(#);
 
     };
 
@@ -147,34 +147,34 @@ The CAADlgHelloApplication.cpp looks like that:
                             **CATInteractiveApplication**(NULL, iIdentifier) {}
 
 CAADlgHelloApplication::CAADlgHelloApplication(const CATString& iIdentifier):
-    CAADlgHelloApplication::~CAADlgHelloApplication() {}
+    CAADlgHelloApplication::~CAADlgHelloApplication(#) {}
 
-    void CAADlgHelloApplication::**BeginApplication**()
+    void CAADlgHelloApplication::**BeginApplication**(#)
 
     {
 
-CAADlgHelloApplication::~CAADlgHelloApplication() {}
-void CAADlgHelloApplication::**BeginApplication**()
+CAADlgHelloApplication::~CAADlgHelloApplication(#) {}
+void CAADlgHelloApplication::**BeginApplication**(#)
       CAADlgHelloWindow * pMainWindow = new **CAADlgHelloWindow**(this);
 
-      pMainWindow->**Build**();
+      pMainWindow->**Build**(#);
 
       pMainWindow->**SetVisibility**(CATDlgShow);
 
     }
 
-pMainWindow->**Build**();
+pMainWindow->**Build**(#);
 pMainWindow->**SetVisibility**(CATDlgShow);
-    int CAADlgHelloApplication::**EndApplication**()
+    int CAADlgHelloApplication::**EndApplication**(#)
 
     {
 pMainWindow->**SetVisibility**(CATDlgShow);
-int CAADlgHelloApplication::**EndApplication**()
+int CAADlgHelloApplication::**EndApplication**(#)
       return(**0**);
 
     }
 
-int CAADlgHelloApplication::**EndApplication**()
+int CAADlgHelloApplication::**EndApplication**(#)
 return(**0**);
     CAADlgHelloApplication **ApplicationInstance**("Hello");
 
@@ -203,9 +203,9 @@ class CAADlgHelloWindow : public **CATDlgDocument**
 
         CAADlgHelloWindow(CATInteractiveApplication * iParentCommand);
 
-        virtual ~CAADlgHelloWindow();
+        virtual ~CAADlgHelloWindow(#);
 
-        void     **Build**();
+        void     **Build**(#);
 
       private:
 
@@ -242,14 +242,14 @@ The file CAADlgHelloWindow.cpp looks like that:
     {
     }
 
-    CAADlgHelloWindow::~CAADlgHelloWindow()
+    CAADlgHelloWindow::~CAADlgHelloWindow(#)
     {
       _pHelloApplication = NULL ;
     }
 
-CAADlgHelloWindow::~CAADlgHelloWindow()
+CAADlgHelloWindow::~CAADlgHelloWindow(#)
 _pHelloApplication = NULL ;
-    void CAADlgHelloWindow::Build()
+    void CAADlgHelloWindow::Build(#)
 
     {
 
@@ -258,7 +258,7 @@ _pHelloApplication = NULL ;
 CATDlgLabel * pLabel = new **CATDlgLabel**(this,"MessageId");
       AddAnalyseNotificationCB(this,
 ```vbscript
-                                GetWindCloseNotification(),
+                                GetWindCloseNotification(#),
 ```
 
                                (CATCommandMethod)&CAADlgHelloWindow::**Exit** , NULL);
@@ -266,7 +266,7 @@ CATDlgLabel * pLabel = new **CATDlgLabel**(this,"MessageId");
     }
 
 ```vbscript
-GetWindCloseNotification(),
+GetWindCloseNotification(#),
 (CATCommandMethod)&CAADlgHelloWindow::**Exit** , NULL);
     void CAADlgHelloWindow::**Exit**(CATCommand         * iSendingCommand,
                                CATNotification    * iSentNotification,
@@ -277,7 +277,7 @@ GetWindCloseNotification(),
 void CAADlgHelloWindow::**Exit**(CATCommand         * iSendingCommand,
 CATNotification    * iSentNotification,
 CATCommandClientData iUsefulData)
-       _pHelloApplication->**Destroy**();
+       _pHelloApplication->**Destroy**(#);
        _pHelloApplication = NULL ;
 
     }

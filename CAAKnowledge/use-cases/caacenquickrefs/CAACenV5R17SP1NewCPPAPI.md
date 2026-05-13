@@ -4,13 +4,13 @@ title: "New C++ Authorized APIs in CAA V5R17 SP1"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIA", "CATIMmiResultFreeze", "CATImmENOVIAProvider", "CATImmCAAServices"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R17SP1NewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R17SP1NewCPPAPI.htmmd"
 converted: "2026-05-11T17:33:47.309649"
 ```
 
 ---
 tags: ["CATIA", "CATIMmiResultFreeze", "CATImmENOVIAProvider", "CATImmCAAServices"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R17SP1NewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R17SP1NewCPPAPI.htmmd"
 converted: "2026-05-11T17:33:47.309649"
 CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R17 SP1
 
@@ -36,4 +36,7 @@ History Version: **1** [Aug 2006] | Document created
 * * *
 
 _Copyright © 1999-2006, Dassault Systèmes. All rights reserved._
+```vbscript
 Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.md) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.md) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.md)
+
+```

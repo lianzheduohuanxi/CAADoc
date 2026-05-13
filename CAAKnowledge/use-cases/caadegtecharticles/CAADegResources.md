@@ -4,13 +4,13 @@ title: "Assigning Resources to a State Dialog Command"
 category: "use-case"
 module: "CAADegTechArticles"
 tags: ["CAAGeometry", "CAADegCreateTriangleCmd"]
-source_file: "Doc/online/CAADegTechArticles/CAADegResources.htm"
+source_file: "Doc/online/CAADegTechArticles/CAADegResources.htmmd"
 converted: "2026-05-11T17:33:49.875645"
 ```
 
 ---
 tags: ["CAAGeometry", "CAADegCreateTriangleCmd"]
-source_file: "Doc/online/CAADegTechArticles/CAADegResources.htm"
+source_file: "Doc/online/CAADegTechArticles/CAADegResources.htmmd"
 converted: "2026-05-11T17:33:49.875645"
 3D PLM Enterprise Architecture |  User Interface - Commands |  Assigning Resources to a State Dialog Command _How to refer to external resources for the command prompts_
 
@@ -229,7 +229,7 @@ The following pictures show the undo and the redo prompts for the  first transi
     * If you have forgot an undo/redo prompt, you can detect them thanks to the syntax used to display a default undo/redo title.
             The left image shows the default title, whereas the right image shows the title coming from the NLS resource file: ![](images/CAADegResourcesWithoutUndoRedo.jpg)
 ---|---
-The **()** and the **[]** signs are added to the undo/redo prompts.
+The **(#)** and the **[]** signs are added to the undo/redo prompts.
       * **(** xxx**) ...** where xxx is the default undo title of the command which is the short help of the last triggered command header.
       * **[** xxx**] ...** where xxx is the identifier of the agent.
 [Top]

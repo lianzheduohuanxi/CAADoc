@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Managing Transitions between Workbenches"
-category: "use case"
+category: use-case case"
 module: "CAAAfrUseCases"
 tags: ["CAAAfrGeometryWksTransition", "CAAAfrGeometryWks", "CAAAfrGeometryWks_trans", "CAAEAfrGeometryWksTransition", "CAAGeometry", "CATIWorkbenchTransition", "CAAApplicationFrame"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleWorkbenchTransitions.htm"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleWorkbenchTransitions.htmmd"
 converted: "2026-05-11T17:17:55.847355"
 ```
 
@@ -71,10 +71,10 @@ This creates a new CAAGeometry document with the CAA Geometrical Creation workbe
 This creates a new CAAGeometry document with the CAA Geometrical Creation workbench active.
 The CAAAfrGeometryWksTransition use case is made of a single class named _CAAEAfrGeometryWksTransition_ located in the CAAAfrGeometryWksTransition.m module of the CAAApplicationFrame.edu framework:
 
-Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeometryWksTransition.m\`
+Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeometryWksTransition.m/`
 
 The CAAAfrGeometryWksTransition use case is made of a single class named _CAAEAfrGeometryWksTransition_ located in the CAAAfrGeometryWksTransition.m module of the CAAApplicationFrame.edu framework:
-Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeometryWksTransition.m\`
+Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeometryWksTransition.m/`
 Unix | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeometryWksTransition.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -107,14 +107,14 @@ This class is a data extension of a made of the workshop identifier suffixed by 
            **CATDeclareClass** ;
 class CAAEAfrGeometryWksTransition : public CATExtIWorkbenchTransition
            public:
-              CAAEAfrGeometryWksTransition();
-              virtual ~CAAEAfrGeometryWksTransition();
+              CAAEAfrGeometryWksTransition(#);
+              virtual ~CAAEAfrGeometryWksTransition(#);
 
          };
 
 ---
 
-virtual ~CAAEAfrGeometryWksTransition();
+virtual ~CAAEAfrGeometryWksTransition(#);
 The CATDeclareClass macro states that this class belongs to a component. The class has only a constructor and a destructor.
 
   2. Create the CAAEAfrGeometryWksTransition.cpp file.
@@ -133,24 +133,24 @@ CATBaseUnknown,
 CAAAfrGeometryWks_trans);
          TIE_CATIWorkbenchTransition(CAAEAfrGeometryWksTransition);
 
-         CAAEAfrGeometryWksTransition::CAAEAfrGeometryWksTransition()
+         CAAEAfrGeometryWksTransition::CAAEAfrGeometryWksTransition(#)
 
          {
 ```vbscript
 TIE_CATIWorkbenchTransition(CAAEAfrGeometryWksTransition);
-CAAEAfrGeometryWksTransition::CAAEAfrGeometryWksTransition()
+CAAEAfrGeometryWksTransition::CAAEAfrGeometryWksTransition(#)
            _newDoc = "CAAGeometry" ;
 ```
 
          }
 
-CAAEAfrGeometryWksTransition::CAAEAfrGeometryWksTransition()
+CAAEAfrGeometryWksTransition::CAAEAfrGeometryWksTransition(#)
 _newDoc = "CAAGeometry" ;
-         CAAEAfrGeometryWksTransition::~CAAEAfrGeometryWksTransition() {}
+         CAAEAfrGeometryWksTransition::~CAAEAfrGeometryWksTransition(#) {}
 
 ---
 
-CAAEAfrGeometryWksTransition::~CAAEAfrGeometryWksTransition() {}
+CAAEAfrGeometryWksTransition::~CAAEAfrGeometryWksTransition(#) {}
 The `CATImplementClass` macro reads: the _CAAEAfrGeometryWksTransition_ class is a data extension of the late type _CAAAfrGeometryWks_trans_. As any extension class, its third argument is _CATBaseUnknown_. The constructor assigns the type CAAGeometry to the document type to create using the `_newDoc` data member of the base class _CATExtIWorkbenchTransition_. This type is the one to which the workbench is dedicated.
 
 Since the `DoTransition` method is not implemented, the one of the base class _CATExtIWorkbenchTransition_ is executed instead. It creates a new CAAGeometry document, except if:

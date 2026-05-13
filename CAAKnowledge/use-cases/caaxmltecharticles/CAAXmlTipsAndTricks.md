@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "XML tips and tricks"
-category: "use-case"
+category: tech-article
 module: "CAAXmlTechArticles"
 tags: ["CATISAXParser_var", "CATIXMLSAXFactory", "CATIndentationCharacter", "CATIXMLDOMDocumentBuilder", "CATIXMLDOMDocumentBuilder_var", "CATIndentation", "CATISAXEntityResolver", "CATIDOMText", "CATIXMLSAXFactory_var"]
-source_file: "Doc/online/CAAXmlTechArticles/CAAXmlTipsAndTricks.htm"
+source_file: "Doc/online/CAAXmlTechArticles/CAAXmlTipsAndTricks.htmmd"
 converted: "2026-05-11T17:33:45.696790"
 ```
 
@@ -56,18 +56,18 @@ The XMLParser framework uses the HRESULT / CATError mechanism to manage errors.
         CATUnicodeString message = "XMLParser call has failed/n";
         CATError* error = **CATError::CATGetLastError**(hr);
         if (error != NULL) {
-            message.Append(error->GetNLSMessage());
-            error->Release();
+            message.Append(error->GetNLSMessage(#));
+            error->Release(#);
             error = NULL;
 
         }
 ```vbscript
 if (error != NULL) {
-message.Append(error->GetNLSMessage());
-error->Release();
+message.Append(error->GetNLSMessage(#));
+error->Release(#);
 error = NULL;
-        CATError::CATCleanLastError();
-        cerr << message.ConvertToChar() << endl;
+        CATError::CATCleanLastError(#);
+        cerr << message.ConvertToChar(#) << endl;
 ```
 
     }
@@ -143,7 +143,7 @@ To use a specific V5 SAX component (say XML4C5 since you want SAX with schema va
 
 ---
 
-![warning.gif \(206 bytes\)](../CAAIcons/images/warning.gif) Note that some DOM methods take as a parameter objects coming from the SAX object model. DOM and SAX V5 component can work together only if they are backed by the same parser (XML4C3 DOM can work with XML4C3 SAX, but not with XML4C5 SAX). For more details on V5 DOM and SAX components, see [2].
+![warning.gif /(206 bytes/)](../CAAIcons/images/warning.gif) Note that some DOM methods take as a parameter objects coming from the SAX object model. DOM and SAX V5 component can work together only if they are backed by the same parser (XML4C3 DOM can work with XML4C3 SAX, but not with XML4C5 SAX). For more details on V5 DOM and SAX components, see [2].
 
 [Top]
 #### Pass Options Using CATListOfCATUnicodeStrings
@@ -163,7 +163,7 @@ CATIXMLDOMDocumentBuilder_var builder;
     CATListOfCATUnicodeString writeOptionValues;
     writeOptionValues.Append("UTF-16");
     writeOptionValues.Append("1");
-    writeOptionValues.Append("\t");
+    writeOptionValues.Append("/t");
 ```vbscript
     hr = builder->WriteToFile(document, outputFile, **writeOptions, writeOptionValues**);
 
@@ -199,7 +199,7 @@ DOM and SAX parsers can run in two modes: non-validating and validating. Non val
 
 ---
 
-![warning.gif \(206 bytes\)](../CAAIcons/images/warning.gif)If no option is specified, a validating parser will be used. A validating parser requires the document to have an associated DTD or XSD schema at a location the parser can access. If the document does not specify its DTD or XSD schema, the parsing will fail. For instance the following XML document cannot be parsed by a validating parser, but will work fine with a non-validating parser.
+![warning.gif /(206 bytes/)](../CAAIcons/images/warning.gif)If no option is specified, a validating parser will be used. A validating parser requires the document to have an associated DTD or XSD schema at a location the parser can access. If the document does not specify its DTD or XSD schema, the parsing will fail. For instance the following XML document cannot be parsed by a validating parser, but will work fine with a non-validating parser.
 
     <?xml version="1.0"?>
     <car/>
@@ -261,7 +261,7 @@ To use a validating parser, you need to pass to the parser a document which refe
 
 The schema is always specified in an external resource. The parser will use the value of the system ID contained in the `noNamespaceSchemaLocation` and `schemaLocation` attributes to try to locate the resource. The system ID can be either a URI relative to the position of the XML document, or an absolute URI. You can also use a _CATISAXEntityResolver_ to help the parser locate the external resource. For more information on this possibility, see [4].
 
-![warning.gif \(206 bytes\)](../CAAIcons/images/warning.gif) Note that schema validation depends on namespaces. Make sure to activate the `CATEnableNameSpaces` option in the `CATIXMLDOMDocumentBuilder::Parse` and `CATIXMLSAXFactory::CreateParser` when using schemas.
+![warning.gif /(206 bytes/)](../CAAIcons/images/warning.gif) Note that schema validation depends on namespaces. Make sure to activate the `CATEnableNameSpaces` option in the `CATIXMLDOMDocumentBuilder::Parse` and `CATIXMLSAXFactory::CreateParser` when using schemas.
 
 [Top]
 ### XML Generation Tips
@@ -320,7 +320,7 @@ If your XML files need to be manually edited by humans or for debugging purposes
 
 ---
 
-![warning.gif \(206 bytes\)](../CAAIcons/images/warning.gif) Note however that these two XML files are not equivalent. If you use the `CATIndentation` and `CATIndentationCharacter` options, white space is inserted in the XML document. Depending on the grammar file, this might or might not be allowed. Furthermore, the resuting DOM structure will be altered, since _CATIDOMText_ nodes will be inserted at various places in the DOM tree to represent this white space. An alternative approach to these options is not to display XML in the console or a text editor, but to use an XML-enabled tool to view the XML, such as a web browser, or a dedicated XML editor.
+![warning.gif /(206 bytes/)](../CAAIcons/images/warning.gif) Note however that these two XML files are not equivalent. If you use the `CATIndentation` and `CATIndentationCharacter` options, white space is inserted in the XML document. Depending on the grammar file, this might or might not be allowed. Furthermore, the resuting DOM structure will be altered, since _CATIDOMText_ nodes will be inserted at various places in the DOM tree to represent this white space. An alternative approach to these options is not to display XML in the console or a text editor, but to use an XML-enabled tool to view the XML, such as a web browser, or a dedicated XML editor.
 
 [Top]
 #### Use CATSortAttributes for Stable Output

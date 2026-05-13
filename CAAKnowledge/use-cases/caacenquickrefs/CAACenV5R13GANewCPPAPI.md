@@ -4,13 +4,13 @@ title: "New C++ Authorized APIs in CAA V5R13 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATINT32", "CATIElbMountingEquipment", "CATITPSCaptureList", "CATITPSSetVisu", "CATIEhfFlatteningParameters", "CATIEhiMultiBranchable", "CATIStructurePlate", "CATIBatchElementsCAA", "CATIAVPMVDAValidateAttributeChg", "CATIStructureObject", "CATISchGRRRoute2", "CATIEhiBranchable", "CATIMfgToolAssembly3DVisuCustom", "CATIMfgActivitySyntax", "CATIPDMUEReadMode", "CATIniInputDescriptionAdaptor", "CATISysSettingController", "CATImplementSettingCtrl", "CATIMfgToolAssemblyEditorCustom", "CATIBatchCAA"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R13GANewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R13GANewCPPAPI.htmmd"
 converted: "2026-05-11T17:33:47.138016"
 ```
 
 ---
 tags: ["CATINT32", "CATIElbMountingEquipment", "CATITPSCaptureList", "CATITPSSetVisu", "CATIEhfFlatteningParameters", "CATIEhiMultiBranchable", "CATIStructurePlate", "CATIBatchElementsCAA", "CATIAVPMVDAValidateAttributeChg", "CATIStructureObject", "CATISchGRRRoute2", "CATIEhiBranchable", "CATIMfgToolAssembly3DVisuCustom", "CATIMfgActivitySyntax", "CATIPDMUEReadMode", "CATIniInputDescriptionAdaptor", "CATISysSettingController", "CATImplementSettingCtrl", "CATIMfgToolAssemblyEditorCustom", "CATIBatchCAA"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R13GANewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R13GANewCPPAPI.htmmd"
 converted: "2026-05-11T17:33:47.138016"
 CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R13 GA
 
@@ -30,22 +30,28 @@ The following are the new CAA V5R13 GA C++ Authorized APIs, compared with CAA V5
     * Class CATLISTP(CATCommandHeader)
     * Class CATLISTP(CATFrmEditor)
     * Class CATStackableCommandSet
+```vbscript
     * Global Function CATAfrGetCommandHeader
     * Global Function CATAfrStartCommand
     * Interface CATIAfrActivateWorkbench
+```
     * Interface CATIAfrCmdPaletteOptions
     * Interface CATIAfrPaletteOptions
   * BasicTopologicalOpe framework
     * Class CATTopPolarExtremumOperator
     * Enumeration CatTopPolarExtremum
+```vbscript
     * Global Function CATCreateTopPolarExtremumOperator
   * BatchInfrastructure framework
+```
     * Class CATBatchLogCAA
     * Class CATBatchParameters
     * Class CATBatStatePubCAA
     * Enumeration ExportedByCATBatchUtils
+```vbscript
     * Global Function GetCATIBatchCAA
     * Interface CATIBatchCAA
+```
     * Interface CATIBatchElementCAA
     * Interface CATIBatchElementsCAA
   * CATAnalysisInterfaces framework
@@ -59,10 +65,12 @@ The following are the new CAA V5R13 GA C++ Authorized APIs, compared with CAA V5
   * CATGraphicProperties framework
     * Class CATExtIVisProperties
   * CATIAV4Interfaces framework
+```vbscript
     * Global Function CATV4iGiresi
     * Global Function CATV4iGirevi
     * Global Function CATV4iGirmat
     * Interface CATIV4DataTranslator
+```
   * CATPDMBaseInterfaces framework
     * Interface CATIPDMUEReadMode
   * CATSchPlatformInterfaces framework
@@ -76,9 +84,11 @@ The following are the new CAA V5R13 GA C++ Authorized APIs, compared with CAA V5
     * Enumeration CATTPSDimLimType
     * Enumeration CATTPSLinkWithGeomType
     * Enumeration CATTPSSearchAlgoType
+```vbscript
     * Global Function CATCreateCATITPSCaptureList
     * Global Function CATCreateCATITPSViewList
     * Interface CATITPSAssociativeGroup
+```
     * Interface CATITPSCapture
     * Interface CATITPSCaptureFactory
     * Interface CATITPSCaptureList
@@ -105,8 +115,10 @@ The following are the new CAA V5R13 GA C++ Authorized APIs, compared with CAA V5
   * ENOVDDManager framework
     * Class ENOVDDMNGAccessLog
   * ENOVDesktopDocumentBOCmds framework
+```vbscript
     * Global Function GetDocCommandFactory
     * Interface ENOVIAVDADocCheckIn
+```
     * Interface ENOVIAVDADocCheckOut
     * Interface ENOVIAVDADocConvertToMultiSheet
     * Interface ENOVIAVDADocCreateNewFormat
@@ -142,10 +154,12 @@ The following are the new CAA V5R13 GA C++ Authorized APIs, compared with CAA V5
   * GeometricObjects framework
     * Class CATLISTP(CATCurve)
   * GeometricOperators framework
+```vbscript
     * Global Function CATCreateEdgeCurveComputation
     * Global Function CATCreateInclusion
     * Global Function CATCreatePlanarMapping
   * InteractiveInterfaces framework
+```
     * Class CATIniInputDescriptionAdaptor
     * Interface CATIInputDescription
   * ManufacturingInterfaces framework
@@ -157,12 +171,16 @@ The following are the new CAA V5R13 GA C++ Authorized APIs, compared with CAA V5
   * MechanicalModeler framework
     * Class CATMmrLinearBodyServices
   * NewTopologicalObjects framework
+```vbscript
     * Global Function CATCreatePositionPtFaceOperator
   * ObjectModelerBase framework
+```
     * Class CATLISTP(CATIDocId)
     * Class CATOmbWarmStartServices
+```vbscript
     * Global Function CATOmbPerformAfterContainerCreation
   * OptimizationInterfaces framework
+```
     * Interface CATIKwoWorkshopAddin
     * Interface CATIOptUpdateManagement
   * SPACATIAV5ToGeneric framework
@@ -174,8 +192,10 @@ The following are the new CAA V5R13 GA C++ Authorized APIs, compared with CAA V5
     * Class SPAXStartPsReadFileTaskEvt
   * SPAXIDIToCATIAV5 framework
     * Macro or #define DECL_IDITOV5
+```vbscript
     * Global Function RunIDIV5Conversion
   * SketcherInterfaces framework
+```
     * Interface CATI2DEquivalentTopology
   * SpecialAPI framework
     * Typedef CATINT32
@@ -218,8 +238,10 @@ The following are the new CAA V5R13 GA C++ Authorized APIs, compared with CAA V5
   * TopologicalOperators framework
     * Class CATTopBodyExtremum
     * Enumeration CATMinMax
+```vbscript
     * Global Function CATCreateDirBodyExtremum
   * VPMDesktopObjects framework
+```
     * Class ENOVCustoCommandUtils
     * Interface CATIAVPMVDAValidateAttributeChg
   * VPMDesktopServices framework

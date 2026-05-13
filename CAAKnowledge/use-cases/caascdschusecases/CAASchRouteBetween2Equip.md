@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CATIA", "CAASchPlatformModeler", "CATIASchCompGraphic", "CAAScrBase", "CAASCHEDUFuncString", "CAAScdInfUseCases", "CAASCHEDUApp", "CATIASchGRRComp", "CAAInfLauchMacro", "CAASchAppUtilities", "CATIASchGRR", "CAASCH_RouteBetween2Equip", "CAASchRouteBetween2Equip_01", "CAASchAppBase", "CAAScrJavaScript", "CAAScdSchUseCases", "CAASCHEDUConnector", "CATIASchCompatible", "CAASchRouteBetween2EquipSource", "CAASchRouteBetween2Equip_02"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchRouteBetween2Equip.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchRouteBetween2Equip.htmmd"
 converted: "2026-05-11T11:27:02.624110"
 ---
 

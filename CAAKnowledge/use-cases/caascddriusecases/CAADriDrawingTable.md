@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CAAScrBase", "CAADriObjDrawingSheets", "CATIA", "CAADriUseCases", "CAAScrJavaScript", "CAAScdDriTechArticles", "CAAScdInfUseCases", "CAADriObjDrawingView", "CAADriDrawingtable", "CAADriObjDrawingDocument", "CAADriObjDrawingSheet", "CAADriDrawingTable", "CAAInfLauchMacro", "CAADriDrawingTableSource"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriDrawingTable.htm"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriDrawingTable.htmmd"
 converted: "2026-05-11T11:27:02.761079"
 ---
 
@@ -127,7 +127,7 @@ End of the macro.
     
   
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 
@@ -148,36 +148,44 @@ method of the *DrawingTables* collection.
 
 *Copyright  2002, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 ...
+```vbscript
     ' Set the CATIA popup file alerts to False
     ' It prevents to stop the macro at each alert during its execution
+```
+```vbscript
     CATIA.DisplayFileAlerts = False
   ...
+```
 ```
 
 ```vbscript
 ...
     ' Create a new drawing document
+```vbscript
     Set oDrwDocument = CATIA.Documents.Add(&quot;Drawing&quot;)
 
     ' Set the drawing document standard
     oDrwDocument.Standard = catISO
+```
   ...
 ```
 
 ```vbscript
 ...
     ' Retrieve the drawing document's sheets collection
+```vbscript
     Set oDrwSheets = oDrwDocument.Sheets
 
     ' Retrieve the active sheet
+```
+```vbscript
     Set oDrwSheet = oDrwSheets.ActiveSheet
 
     ' Set the sheet properties
     oDrwSheet.PaperSize = catPaperA4
+```
     oDrwSheet.Orientation = catPaperLandscape
     oDrwSheet.Scale2 = 1
   ...
@@ -186,22 +194,30 @@ method of the *DrawingTables* collection.
 ```vbscript
 ...
     ' Retrieve the active view of the sheet
+```vbscript
     Set oDrwView = oDrwSheet.Views.ActiveView
   ...
+```
 ```
 
 ```vbscript
 ...
     ' Retrieve the view's tables collection
+```vbscript
     Set oDrwTables = oDrwView.Tables
     
     ' Create a new drawing table
+```
+```vbscript
     Set oDrwTable = oDrwTables.Add(107, 70, 9, 9, 5, 20)
+```
 ```
 
 ```vbscript
+```vbscript
 ' Set the drawing table's name
     oDrwTable.Name = &quot;Title Block&quot;
+```
   ...
 ```
 
@@ -233,8 +249,10 @@ method of the *DrawingTables* collection.
     oDrwTable.MergeCells 8, 8, 2, 1
     oDrwTable.MergeCells 8, 9, 2, 1
 
+```vbscript
     ' Set the drawing table's row sizes
     oDrwTable.SetRowSize 1, 20
+```
     oDrwTable.SetRowSize 2, 4
     oDrwTable.SetRowSize 3, 5
     oDrwTable.SetRowSize 4, 7
@@ -244,8 +262,10 @@ method of the *DrawingTables* collection.
     oDrwTable.SetRowSize 8, 3
     oDrwTable.SetRowSize 9, 7
 
+```vbscript
     ' Set the drawing table's column sizes
     oDrwTable.SetColumnSize 1, 45
+```
     oDrwTable.SetColumnSize 2, 20
     oDrwTable.SetColumnSize 3, 15
     oDrwTable.SetColumnSize 4, 15

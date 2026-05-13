@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Scanning a Model to Retrieve V4 Elements"
-category: "use case"
+category: use-case case"
 module: "CAAV4iUseCases"
 tags: ["CATIAV4Interfaces", "CAACATIAV4Interfaces", "CAAV4iEduModelScan", "CAAV4iModelScan"]
-source_file: "Doc/online/CAAV4iUseCases/CAAV4iScanUseCase.htm"
+source_file: "Doc/online/CAAV4iUseCases/CAAV4iScanUseCase.htmmd"
 converted: "2026-05-11T17:33:45.798397"
 ```
 
@@ -57,27 +57,27 @@ Then, it scans the model to retrieve each workspace, every workspace are scaned 
 CAAV4iEduModelScan retrieves all the element of a model. The name of each element is retrieved and put in a file.
 At the end of CAAV4iEduModelScan using the input model DITTOS.model, the output file looks like :
 
-> > > > \--*MASTER
->  \----*SET1
->  \------*CST1
->  \------*CRV1
->  \------*SOL1
->  \------*DIT4
->  \------*DIT5
->  \----*SET2
->  \------*SOL3
->  \------*SOL5
->  \----*SET5
->  \------*DIT6
->  \------*DIT7
->  \--DETAIL-1
->  \----*SET3
->  \------*SOL7
->  \------*SOL9
->  \--DETAIL-2
->  \----*SET4
->  \------*SOL11
->  \------*SOL13
+> > > > /--*MASTER
+>  /----*SET1
+>  /------*CST1
+>  /------*CRV1
+>  /------*SOL1
+>  /------*DIT4
+>  /------*DIT5
+>  /----*SET2
+>  /------*SOL3
+>  /------*SOL5
+>  /----*SET5
+>  /------*DIT6
+>  /------*DIT7
+>  /--DETAIL-1
+>  /----*SET3
+>  /------*SOL7
+>  /------*SOL9
+>  /--DETAIL-2
+>  /----*SET4
+>  /------*SOL11
+>  /------*SOL13
 
 [Top]
 #### How to Launch CAAV4iEduModelScan
@@ -95,7 +95,7 @@ Where:
 
 You can use the model `DITTOS.model` located in `CAA``CATIAV4Interfaces``.edu/InputData`
 
-  * Windows : `InstallRootDirectory\CAA``CATIAV4Interfaces``.edu\InputData`
+  * Windows : `InstallRootDirectory/CAA``CATIAV4Interfaces``.edu/InputData`
   * Unix : `InstallRootDirectory/CAA``CATIAV4Interfaces``.edu/InputData`
 
 [Top]
@@ -103,10 +103,10 @@ You can use the model `DITTOS.model` located in `CAA``CATIAV4Interfaces``.edu/In
 
 The CAAV4iEduModelScan use case is made of a single file located in the CAAV4iEduModelScan.m module of the CAACATIAV4Interfaces.edu framework:
 The CAAV4iEduModelScan use case is made of a single file located in the CAAV4iEduModelScan.m module of the CAACATIAV4Interfaces.edu framework:
-  Windows | `InstallRootDirectory\CAACATIAV4Interfaces.edu\`CAAV4iEduModelScan`.m\`
+  Windows | `InstallRootDirectory/CAACATIAV4Interfaces.edu/`CAAV4iEduModelScan`.m/`
 
 The CAAV4iEduModelScan use case is made of a single file located in the CAAV4iEduModelScan.m module of the CAACATIAV4Interfaces.edu framework:
-Windows | `InstallRootDirectory\CAACATIAV4Interfaces.edu\`CAAV4iEduModelScan`.m\`
+Windows | `InstallRootDirectory/CAACATIAV4Interfaces.edu/`CAAV4iEduModelScan`.m/`
 Unix | `InstallRootDirectory/CAACATIAV4Interfaces.edu/`CAAV4iEduModelScan`.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -173,7 +173,7 @@ while(!endWsp && !ier)
           if (wspElem)
 ```
 
-            outputFile << "--"<<wspElem->GetId()<<endl;
+            outputFile << "--"<<wspElem->GetId(#)<<endl;
 
 ```
 
@@ -204,7 +204,9 @@ Then, while _endWsp_ is false, the identificator of the workspace is printed in 
 ```vbscript
 if (! CATV4iGisset(wspElem, setElem, endSet, ier) )
 ```vbscript
+```vbscript
             while(!endSet && !ier)
+```
 ```
 
 ```
@@ -213,11 +215,13 @@ if (! CATV4iGisset(wspElem, setElem, endSet, ier) )
 ```vbscript
 if (! CATV4iGisset(wspElem, setElem, endSet, ier) )
 ```vbscript
+```vbscript
 while(!endSet && !ier)
               if (setElem)
 ```
+```
 
-                outputFile << "----"<<setElem->GetId()<<endl;
+                outputFile << "----"<<setElem->GetId(#)<<endl;
 
 ```
 
@@ -261,14 +265,14 @@ while(!endEls && !ier)
                   if (element)
 ```
 
-                    outputFile << "------"<<element->GetId()<<endl;
+                    outputFile << "------"<<element->GetId(#)<<endl;
 ```
 
     ...
 
 ```vbscript
 if (element)
-outputFile << "------"<<element->GetId()<<endl;
+outputFile << "------"<<element->GetId(#)<<endl;
                   if (! CATV4iGisels(setElem, element, nextElement, endEls, ier) )
 ```
 

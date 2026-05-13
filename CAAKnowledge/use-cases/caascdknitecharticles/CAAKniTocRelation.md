@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Relations Automation Objects"
-category: "use-case"
+category: tech-article
 module: "CAAScdKniTechArticles"
 tags: []
-source_file: "Doc/online/CAAScdKniTechArticles/CAAKniTocRelation.htm"
+source_file: "Doc/online/CAAScdKniTechArticles/CAAKniTocRelation.htmmd"
 converted: "2026-05-11T17:31:52.009476"
 ```
 

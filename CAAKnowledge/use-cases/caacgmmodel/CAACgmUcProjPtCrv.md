@@ -4,7 +4,7 @@ title: "Projecting a Point onto a Curve"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CATICGMProjectionPtCrv", "CAAGMModelInterfaces", "CAAGMModelProjectionOpe"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcProjPtCrv.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcProjPtCrv.htmmd"
 converted: "2026-05-11T17:33:48.498129"
 ```
 
@@ -64,30 +64,30 @@ pConfig,
 piCartP1,
 piNurbsCurve);
 ```vbscript
-    if (pPtCrvOpe->GetNumberOfPoints()   >  0)
+    if (pPtCrvOpe->GetNumberOfPoints(#)   >  0)
 
 ```
 
       {
 piNurbsCurve);
-if (pPtCrvOpe->GetNumberOfPoints()   >  0)
-         pPtCrvOpe->BeginningPoint();
+if (pPtCrvOpe->GetNumberOfPoints(#)   >  0)
+         pPtCrvOpe->BeginningPoint(#);
 ```vbscript
-    	while ( pPtCrvOpe->NextPoint() )
+    	while ( pPtCrvOpe->NextPoint(#) )
 
 ```
 
     	    {
 ```vbscript
-if (pPtCrvOpe->GetNumberOfPoints()   >  0)
-pPtCrvOpe->BeginningPoint();
-while ( pPtCrvOpe->NextPoint() )
+if (pPtCrvOpe->GetNumberOfPoints(#)   >  0)
+pPtCrvOpe->BeginningPoint(#);
+while ( pPtCrvOpe->NextPoint(#) )
 ```vbscript
 ```vbscript
-    		distancePtCrv = pPtCrvOpe->GetDistance();
-    		pProjectedPtOnCrv = pPtCrvOpe->GetPointOnCurve() ;
-    		pProjectedCartPoint = pPtCrvOpe->GetCartesianPoint() ;
-    		pProjectedCrvParam = pPtCrvOpe->GetParam() ;
+    		distancePtCrv = pPtCrvOpe->GetDistance(#);
+    		pProjectedPtOnCrv = pPtCrvOpe->GetPointOnCurve(#) ;
+    		pProjectedCartPoint = pPtCrvOpe->GetCartesianPoint(#) ;
+    		pProjectedCrvParam = pPtCrvOpe->GetParam(#) ;
 ```
 
 ```

@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating a Workbench"
-category: "use case"
+category: use-case case"
 module: "CAAAfrUseCases"
 tags: ["CATIxxxConfiguration", "CAAAfrMSurfRevolStr", "CAACube", "CAAAfrGeoCreationMbr", "CAAAfrTSolidEltTorusStr", "CAAAfrCuboidHdr", "CAAAfrMSurfOffsetStr", "CAAGeometry", "CAAAfrTSolidEltCuboidStr", "CATIA", "CAAAfrCylinder2Hdr", "CAAAfrTSolidEltCylinder1Str", "CAAAfrMSolidSphereStr", "CAAAfrMSolidCuboidStr", "CAAAfrGeoCreationWkbFactory", "CAADegCreateCuboidCmd", "CAAAfrTorusHdr", "CAADegGeoCommands", "CAAAfrOffsetSurfHdr", "CAAAfrGeoCreationWkb"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleWorkbench.htm"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleWorkbench.htmmd"
 converted: "2026-05-11T17:17:55.841364"
 ```
 
@@ -82,10 +82,10 @@ This creates a new CAAGeometry document with the CAA V5: Geometrical Creation wo
 This creates a new CAAGeometry document with the CAA V5: Geometrical Creation workbench active.
 The CAAAfrGeoCreationWbench use case is made of classes and interfaces located in the CAAAfrGeoCreationWbench.m module and in the ProtectedInterfaces directory of the CAAApplicationFrame.edu framework:
 
-Windows | ` InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeoCreationWbench.m\`
+Windows | ` InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeoCreationWbench.m/`
 
 The CAAAfrGeoCreationWbench use case is made of classes and interfaces located in the CAAAfrGeoCreationWbench.m module and in the ProtectedInterfaces directory of the CAAApplicationFrame.edu framework:
-Windows | ` InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeoCreationWbench.m\`
+Windows | ` InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeoCreationWbench.m/`
 Unix | ` InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeoCreationWbench.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -112,24 +112,24 @@ But before creating the workbench, you should:
   * Create the module directory to store the workbench code along with its two subdirectories LocalInterfaces and src. Then you will need to create the following files.  In the framework's ProtectedInterfaces directory
 ---
   | CAAIAfrGeoCreationWkbAddin.h | The header file of the workbench exposed interface to enable clients to create add-ins
-In the CAAAfrGeoCreationWbench.m\LocalInterfaces directory
+In the CAAAfrGeoCreationWbench.m/LocalInterfaces directory
   | CAAIAfrGeoCreationWkbFactory.h | The header file of the workbench factory interface
   | CAAAfrGeoCreationWkbFactory.h | The header file of the workbench factory class
   | CAAAfrGeoCreationWkb.h | The header file of the workbench description class
-In the CAAAfrGeoCreationWbench.m\src directory
+In the CAAAfrGeoCreationWbench.m/src directory
   | CAAIAfrGeoCreationWkbAddin.cpp | The source file of the workbench exposed interface to enable clients to create add-ins
   | CAAIAfrGeoCreationWkbFactory.cpp | The source file of the workbench factory interface
   | CAAAfrGeoCreationWkbFactory.cpp | The source file of the workbench factory class
   | CAAAfrGeoCreationWkb.cpp | The source file of the workbench description class
   | TIE_CAAIAfrGeoCreationWkbAddin.tsrc | The file to create the TIE for CAAIAfrGeometryWksAddin
   | TIE_CAAIAfrGeoCreationWkbFactory.tsrc | The file to create the TIE for CAAIAfrGeometryWksFactory
-In the dictionary, that is the CNext\code\dictionary directory, referenced at run time using the CATDictionaryPath environment variable, create or update
+In the dictionary, that is the CNext/code/dictionary directory, referenced at run time using the CATDictionaryPath environment variable, create or update
   | CAAApplicationFrame.edu.dico | The interface dictionary
   | CAAApplicationFrame.edu.fact | The factory dictionary
-In the CNext\resources\msgcatalog directory, referenced at run time using the CATMsgCatalogPath environment variable
+In the CNext/resources/msgcatalog directory, referenced at run time using the CATMsgCatalogPath environment variable
   | CAAAfrGeoCreationWkb.CATNls | The workbench message file
   | CAAAfrGeoCreationWkbHeader.CATNls and
-In the CNext\resources\msgcatalog directory, referenced at run time using the CATMsgCatalogPath environment variable
+In the CNext/resources/msgcatalog directory, referenced at run time using the CATMsgCatalogPath environment variable
 CAAAfrGeoCreationWkbHeader.CATRsc | The command header resource files
 
 To create the CAA Geometrical Creation workbench, there are seven steps:
@@ -211,7 +211,7 @@ The Multi-Workspace Application Builder (mkmk) will generate the TIE for this in
 [Top]
 #### Creating the Workbench Factory
 
- ![warning.gif \(206 bytes\)](../CAAIcons/images/warning.gif)The factory class that creates workbench instances must concatenate the name of the class to instantiate, that is, the workbench description class **CAAAfrGeoCreationWkb** , with the string **Factory**. This gives **CAAAfrGeoCreationWkbFactory.**
+ ![warning.gif /(206 bytes/)](../CAAIcons/images/warning.gif)The factory class that creates workbench instances must concatenate the name of the class to instantiate, that is, the workbench description class **CAAAfrGeoCreationWkb** , with the string **Factory**. This gives **CAAAfrGeoCreationWkbFactory.**
 
 To create this class, create:
 
@@ -297,12 +297,12 @@ class CATCmdWorkbench;
 class CAAAfrGeoCreationWkb : public CATBaseUnknown
            CATDeclareClass;
            public:
-              CAAAfrGeoCreationWkb();
-              virtual ~CAAAfrGeoCreationWkb();
+              CAAAfrGeoCreationWkb(#);
+              virtual ~CAAAfrGeoCreationWkb(#);
 
-              void              CreateCommands();
-              CATCmdWorkbench * CreateWorkbench();
-              CATClassId        GetAddinInterface();
+              void              CreateCommands(#);
+              CATCmdWorkbench * CreateWorkbench(#);
+              CATClassId        GetAddinInterface(#);
               void              GetCustomInterfaces(CATListPV * oDefaultIIDList ,
                                                     CATListPV * oCustomIIDList) ;
            private:
@@ -343,29 +343,29 @@ CATImplementClass(CAAAfrGeoCreationWkb, Implementation, CATBaseUnknown, CATNull)
 
 ```
 
-         CAAAfrGeoCreationWkb::CAAAfrGeoCreationWkb() {}
-         CAAAfrGeoCreationWkb::~CAAAfrGeoCreationWkb() {}
+         CAAAfrGeoCreationWkb::CAAAfrGeoCreationWkb(#) {}
+         CAAAfrGeoCreationWkb::~CAAAfrGeoCreationWkb(#) {}
 
-         void CAAAfrGeoCreationWkb::CreateCommands()
+         void CAAAfrGeoCreationWkb::CreateCommands(#)
 ```
 
          {
            ...  // See Creating the Command Headers
          }
 
-         CATCmdWorkbench * CAAAfrGeoCreationWkb::CreateWorkbench()
+         CATCmdWorkbench * CAAAfrGeoCreationWkb::CreateWorkbench(#)
          {
            ...  // See Creating the Workbench and Arranging the Commands
          }
 
-CATCmdWorkbench * CAAAfrGeoCreationWkb::CreateWorkbench()
-         CATClassId CAAAfrGeoCreationWkb::GetAddinInterface()
+CATCmdWorkbench * CAAAfrGeoCreationWkb::CreateWorkbench(#)
+         CATClassId CAAAfrGeoCreationWkb::GetAddinInterface(#)
 
          {
            return "CAAIAfrGeoCreationWkbAddin";
          }
 
-CATClassId CAAAfrGeoCreationWkb::GetAddinInterface()
+CATClassId CAAAfrGeoCreationWkb::GetAddinInterface(#)
 return "CAAIAfrGeoCreationWkbAddin";
          void CAAAfrGeoCreationWkb::GetCustomInterfaces(CATListPV * oDefaultIIDList,
                                                         CATListPV * oCustomIIDList)
@@ -410,13 +410,13 @@ MacDeclareHeader(CAAAfrGeoCreationWkbHeader);
 The `MacDeclareHeader` macro creates the header file and the source file for the CAAAfrGeoCreationWkbHeader class, and associates with this class the resource files CAAAfrGeoCreationWkbHeader.CATNls and CAAAfrGeoCreationWkbHeader.CATRsc. See Providing the Resources and Inserting the Workbench into the Start Menu.
   2. Create the code to instantiate your command headers in the empty ` CreateCommands` method. This method should contain one instantiation statement of the command header class per command. Each statement has the following form, for example for the Cuboid command.
 
-         void CAAAfrGeoCreationWkb::CreateCommands()
+         void CAAAfrGeoCreationWkb::CreateCommands(#)
 ```
 
          {
            ...
 2. Create the code to instantiate your command headers in the empty ` CreateCommands` method. This method should contain one instantiation statement of the command header class per command. Each statement has the following form, for example for the Cuboid command.
-void CAAAfrGeoCreationWkb::CreateCommands()
+void CAAAfrGeoCreationWkb::CreateCommands(#)
            new CAAAfrGeoCreationWkbHeader("CAAAfrCuboidHdr",
 
                                           "CAADegGeoCommands",
@@ -455,15 +455,15 @@ You should create:
 1. Creating the Workbench
 The workbench contains its toolbars and its menu bar. Create the workbench as an instance of the _CATCmdWorkbench_ class using the `NewAccess` macro.
 
-         CATCmdWorkbench * **CAAAfrGeoCreationWkb** ::CreateWorkbench()
+         CATCmdWorkbench * **CAAAfrGeoCreationWkb** ::CreateWorkbench(#)
 
          {
 The workbench contains its toolbars and its menu bar. Create the workbench as an instance of the _CATCmdWorkbench_ class using the `NewAccess` macro.
-CATCmdWorkbench * **CAAAfrGeoCreationWkb** ::CreateWorkbench()
+CATCmdWorkbench * **CAAAfrGeoCreationWkb** ::CreateWorkbench(#)
            NewAccess(CATCmdWorkbench,pCAAAfrGeoCreationWkb,**CAAAfrGeoCreationWkb**);
 
            ... // See Creating the Containers for the Toolbars and the Menu Bar
-CATCmdWorkbench * **CAAAfrGeoCreationWkb** ::CreateWorkbench()
+CATCmdWorkbench * **CAAAfrGeoCreationWkb** ::CreateWorkbench(#)
 NewAccess(CATCmdWorkbench,pCAAAfrGeoCreationWkb,**CAAAfrGeoCreationWkb**);
            return pCAAAfrGeoCreationWkb;
 
@@ -737,7 +737,7 @@ The resource files must have the workbench identifier as file name, that is CAAA
 
 ---
 
-The workbench resource files are then CAAAfrGeoCreationWkb.CATNls and CAAAfrGeoCreationWkb.CATRsc. These files are located in the CNext\resources\msgcatalog directory of the framework containing the workbench module. This directory includes subdirectories, one for each language into which the title and messages of the CAAAfrGeoCreationWkb.CATNls file can be translated. The resource files contain:
+The workbench resource files are then CAAAfrGeoCreationWkb.CATNls and CAAAfrGeoCreationWkb.CATRsc. These files are located in the CNext/resources/msgcatalog directory of the framework containing the workbench module. This directory includes subdirectories, one for each language into which the title and messages of the CAAAfrGeoCreationWkb.CATNls file can be translated. The resource files contain:
     * Workbench: the title, messages, and icons to be displayed in the **Start menu**
     * Toolbars: their titles
     * Menus and submenus: their titles, icons, and mnemonics

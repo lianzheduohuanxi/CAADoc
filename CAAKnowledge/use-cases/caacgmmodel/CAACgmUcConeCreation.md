@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Cone"
-category: "use case"
+category: use-case case"
 module: "CAACgmModel"
 tags: ["CAAGMModelConeCreation", "CAAGMModelInterfaces"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcConeCreation.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcConeCreation.htmmd"
 converted: "2026-05-11T17:33:48.181947"
 ```
 

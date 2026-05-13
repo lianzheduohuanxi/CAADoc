@@ -4,13 +4,13 @@ title: "New C++ Authorized APIs in CAA V5R17 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIMfgCopyOperation", "CATIPrdTransactionalEventMgt", "CATITPSConsumable", "CATI2DLMainWkbAddin", "CATInstantCollabDesignCAAItf", "CATIMfgUndoManager", "CATI2DLBackWkbAddin", "CATIColMergeContextRole", "CATIAVPMVDAAlternatePart", "CATImmIdentifierAcquisitionAgent", "CATIColMergeable", "CATIImmNavAddin", "CATISamAnalysisGeneralSettingAtt", "CATIMfgMultiAxisAlgorithm", "CATIAApplicationFrame", "CATIPDMUEDocumentName", "CATIColSharable", "CATIPrtUIFactory", "CATIAV4Interfaces", "CATIEhfUIPArrangeJunction"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R17GANewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R17GANewCPPAPI.htmmd"
 converted: "2026-05-11T17:33:47.294353"
 ```
 
 ---
 tags: ["CATIMfgCopyOperation", "CATIPrdTransactionalEventMgt", "CATITPSConsumable", "CATI2DLMainWkbAddin", "CATInstantCollabDesignCAAItf", "CATIMfgUndoManager", "CATI2DLBackWkbAddin", "CATIColMergeContextRole", "CATIAVPMVDAAlternatePart", "CATImmIdentifierAcquisitionAgent", "CATIColMergeable", "CATIImmNavAddin", "CATISamAnalysisGeneralSettingAtt", "CATIMfgMultiAxisAlgorithm", "CATIAApplicationFrame", "CATIPDMUEDocumentName", "CATIColSharable", "CATIPrtUIFactory", "CATIAV4Interfaces", "CATIEhfUIPArrangeJunction"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R17GANewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R17GANewCPPAPI.htmmd"
 converted: "2026-05-11T17:33:47.294353"
 CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R17 GA
 
@@ -22,23 +22,29 @@ The following are the new CAA V5R17 GA C++ Authorized APIs, compared with CAA V5
     * Macro or #define CATMUTABLE
   * AdvancedTopologicalOpe framework
     * Class CATTopExtrapolWireOpe
+```vbscript
     * Global Function CATCreateTopExtrapolWireOpe
   * AnalysisMeshingToolsItf framework
+```
     * Class CATMSHCustomHighlight
     * Typedef CATMSHMethodHilight
   * BasicTopologicalOpe framework
     * Class CATTopEdgePropagation
     * Enumeration CATTopEdgePropagationDiagnosis
+```vbscript
     * Global Function CATCreateTopEdgePropagation
   * CATAnalysisInterfaces framework
+```
     * Interface CATISamAnalysisGeneralSettingAtt
   * CATIAApplicationFrame framework
     * Class CATCafCenterGraph
   * CATIAV4Interfaces framework
+```vbscript
     * Global Function CATV4iGetV4ElementFromJele
     * Global Function CATV4iGirad1
     * Global Function CATV4iGircom
   * CATImmENOVIAProvider framework
+```
     * Class CATImmIdentifierAcquisitionAgent
     * Interface CATIImmNavAddin
     * Interface CATIImmSearchAddin
@@ -51,6 +57,7 @@ The following are the new CAA V5R17 GA C++ Authorized APIs, compared with CAA V5
     * Macro or #define SizeCollabUUID
     * Enumeration CATIColMergeContextFlag
     * Enumeration CATIColMergeContextRole
+```vbscript
     * Global Function CATColAfterMerge
     * Global Function CATColBeforeMerge
     * Global Function CATColCanBeSharedAs
@@ -64,6 +71,7 @@ The following are the new CAA V5R17 GA C++ Authorized APIs, compared with CAA V5
     * Global Function CATColShareAs
     * Global Function CATCreateCATICollabServices
     * Interface CATIColId
+```
     * Interface CATIColInvariantId
     * Interface CATICollabServices
     * Interface CATIColMergeable
@@ -72,6 +80,7 @@ The following are the new CAA V5R17 GA C++ Authorized APIs, compared with CAA V5
     * Interface CATIColSharable
     * Typedef CATListOfShareAccess
   * CATPDMBase framework
+```vbscript
     * Global Function ExtractDocumentSetToFileDirectory
     * Global Function GetDocumentSetFromV_IDAndRevision
     * Global Function OpenCatalogDocumentFromV_ID
@@ -83,6 +92,7 @@ The following are the new CAA V5R17 GA C++ Authorized APIs, compared with CAA V5
     * Global Function SavePartAndDocument
     * Global Function StartEV5Server
   * CATPDMBaseInterfaces framework
+```
     * Interface CATIPDMUEDocumentName
   * CATTPSInterfaces framework
     * Interface CATITPSConsumable
@@ -113,9 +123,11 @@ The following are the new CAA V5R17 GA C++ Authorized APIs, compared with CAA V5
     * Enumeration CATGSMUnfoldSurfaceType
     * Enumeration CATGSMUnfoldTargetOrientationMode
   * GeometricOperators framework
+```vbscript
     * Global Function CATConcatenateNurbsCurves
     * Global Function CATConcatenateNurbsSurfaces
   * ManufacturingInterfaces framework
+```
     * Interface CATIMfgActInEditorActivity
     * Interface CATIMfgCopyOperation
     * Interface CATIMfgToolAssemblyCompensationManagement
@@ -123,19 +135,27 @@ The following are the new CAA V5R17 GA C++ Authorized APIs, compared with CAA V5
   * Mathematics framework
     * Class CATLISTP(CATMathBox2D)
     * Class CATTolerance
+```vbscript
     * Global Function CATGetDefaultTolerance
     * Global Function Intersect
   * MechanicalModeler framework
+```
+```vbscript
     * Global Function CATBRepDecodeCellInBody
   * PLMSecuritySSOCClient framework
+```
     * Class PLMSSOClient
     * Class PLMSSOCredential
     * Class PLMSSOCredentialSet
   * PSNInteroperability framework
+```vbscript
     * Global Function CATSimpleQueryToVPM
   * PartInterfaces framework
+```
+```vbscript
     * Global Function CATCreateCATIPrtUIFactory
     * Interface CATIPrtUIFactory
+```
   * ProductStructureInterfaces framework
     * Interface CATIPrdTransactionalEventMgt
   * SurfaceMachiningAlgoInterfaces framework
@@ -144,8 +164,10 @@ The following are the new CAA V5R17 GA C++ Authorized APIs, compared with CAA V5
     * Typedef CATLONG
   * TopologicalOperators framework
     * Class CATTopReflectLine
+```vbscript
     * Global Function CATCreateTopReflectLine
   * VPMDesktopObjects framework
+```
     * Class ENOVIObjectAttrAccess
     * Interface CATIAVPMVDAAlternatePart
     * Interface CATIAVPMVDASubstitute
@@ -171,4 +193,7 @@ History Version: **1** [Apr 2006] | Document created
 * * *
 
 _Copyright © 1999-2006, Dassault Systèmes. All rights reserved._
+```vbscript
 Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.md) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.md) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.md)
+
+```

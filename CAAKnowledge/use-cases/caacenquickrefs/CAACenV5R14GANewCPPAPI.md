@@ -4,13 +4,13 @@ title: "New C++ Authorized APIs in CAA V5R14 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATICfgUserExit2", "CATIV4IV4WritingSettingAtt", "CATIMf3DBehavior", "CATIAVPMVDAUnlock", "CATISPAMeasureSettingAtt", "CATISchematicInit", "CATIPDAdapterInterfaces", "CATIMciMultiCADSettingAtt", "CATIDftFormat", "CATIMfgActivityInformation", "CATILieToleranceSheetSettingAtt", "CATIArrAttachSubscriber", "CATIStrColorSTDObjectSettingAtt", "CATITPSEditorUIFTASettingAtt", "CATIMfGeometryAccess", "CATIArrAttachmentFactory", "CATIStrMaterialSFDObjectSettingAtt", "CATISPASectioningSettingAtt", "CATIMfTriDimResult", "CATIDftSheetFormat"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R14GANewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R14GANewCPPAPI.htmmd"
 converted: "2026-05-11T17:33:47.180388"
 ```
 
 ---
 tags: ["CATICfgUserExit2", "CATIV4IV4WritingSettingAtt", "CATIMf3DBehavior", "CATIAVPMVDAUnlock", "CATISPAMeasureSettingAtt", "CATISchematicInit", "CATIPDAdapterInterfaces", "CATIMciMultiCADSettingAtt", "CATIDftFormat", "CATIMfgActivityInformation", "CATILieToleranceSheetSettingAtt", "CATIArrAttachSubscriber", "CATIStrColorSTDObjectSettingAtt", "CATITPSEditorUIFTASettingAtt", "CATIMfGeometryAccess", "CATIArrAttachmentFactory", "CATIStrMaterialSFDObjectSettingAtt", "CATISPASectioningSettingAtt", "CATIMfTriDimResult", "CATIDftSheetFormat"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R14GANewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R14GANewCPPAPI.htmmd"
 converted: "2026-05-11T17:33:47.180388"
 CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R14 GA
 
@@ -23,9 +23,11 @@ The following are the new CAA V5R14 GA C++ Authorized APIs, compared with CAA V5
     * Class  CATTopSpine
     * Enumeration  CATTopBlendBehaviour_Mode
     * Enumeration  CATTopSpineRelimitation_Type
+```vbscript
     * Global Function  CATCreateTopShellOrientation
     * Global Function  CATCreateTopSpine
   * AnalysisMeshingModel framework
+```
     * Class  CATMSHListOfMeshPart
   * ApplicationFrame framework
     * Class  CATAfrCommandHeaderRep
@@ -123,8 +125,10 @@ The following are the new CAA V5R14 GA C++ Authorized APIs, compared with CAA V5
     * Enumeration  VPMDicPRIMITIVEType
     * Enumeration  VPMDicTYPE
     * Enumeration  VPMDicVISIBILITY
+```vbscript
     * Global Function  GetVPMIDicMgr
     * Interface  VPMIDicElement
+```
     * Interface  VPMIDicMgr
   * CATPlantShipInterfaces framework
     * Interface  CATIPspStretchableData
@@ -143,8 +147,10 @@ The following are the new CAA V5R14 GA C++ Authorized APIs, compared with CAA V5
   * CATSmInterfaces framework
     * Interface  CATIStmCatalogSHMObjectSettingAtt
   * CATTPSInterfaces framework
+```vbscript
     * Global Function  CATCreateCATITPSGeometryList
     * Interface  CATITPSBrowserUIDMUTolSettingAtt
+```
     * Interface  CATITPSEditorUIFTAInfraSettingAtt
     * Interface  CATITPSEditorUIFTASettingAtt
     * Interface  CATITPSGeometryList
@@ -209,10 +215,12 @@ The following are the new CAA V5R14 GA C++ Authorized APIs, compared with CAA V5
     * Interface  CATISiFiFittingSettingAtt
     * Interface  CATISiFiManipSettingAtt
   * FreeFormOperators framework
+```vbscript
     * Global Function  CATCreateInterproxCrv
     * Global Function  CATCreateInterproxSur
     * Global Function  CATCreateLiss
   * GSMInterfaces framework
+```
     * Enumeration  CATGSMCanonicalSurfaceDetection
     * Enumeration  CATGSMCSCorrectionMode
     * Enumeration  CATGSMImplicitLawInterpolationMode
@@ -230,10 +238,12 @@ The following are the new CAA V5R14 GA C++ Authorized APIs, compared with CAA V5
     * Class  CATMathNurbsCurveTools
     * Class  CATMathNurbsSurfaceTools
     * Enumeration  MathNurbsDimension
+```vbscript
     * Global Function  CATCreateLocalAnalysis
     * Global Function  CATCreateMathNurbsCurveTools
     * Global Function  CATCreateMathNurbsSurfaceTools
   * InteractiveInterfaces framework
+```
     * Interface  CATIIniSearchSVisibilityCriterion
   * KnowledgeInterfaces framework
     * Interface  CATICkeCheck
@@ -262,8 +272,10 @@ The following are the new CAA V5R14 GA C++ Authorized APIs, compared with CAA V5
     * Macro or #define  CATCGMStreamDumpCommentBEGIN
     * Macro or #define  CATCGMStreamDumpCommentEND
     * Macro or #define  CATCGMStreamDumpXMLCommentBEGIN
+```vbscript
     * Global Function  CATTan
   * MecModInterfaces framework
+```
     * Class  CATLISTP(CATIRSur)
     * Interface  CATIFeaturize
     * Interface  CATIMechanicalFeature
@@ -303,8 +315,10 @@ The following are the new CAA V5R14 GA C++ Authorized APIs, compared with CAA V5
     * Class  CATOptValuesAndDerivativesAdapter
     * Interface  CATIOptValuesAndDerivativesAccess
   * PSNInteroperability framework
+```vbscript
     * Global Function  ExecuteOnServer
   * ProcessPlatformVisu framework
+```
     * Interface  CATIWSPROCAddin
   * ProductStructureInterfaces framework
     * Interface  CATICustoIconProduct
@@ -315,8 +329,10 @@ The following are the new CAA V5R14 GA C++ Authorized APIs, compared with CAA V5
     * Enumeration  InitStatus
   * SPAProeToCATIAV5 framework
     * Macro or #define  DECL_PROECATIAV5WR
+```vbscript
     * Global Function  RunProEDirectConversion
   * SketcherInterfaces framework
+```
     * Interface  CATI2DFixTogether
   * SpaceAnalysisInterfaces framework
     * Interface  CATISPAMeasureSettingAtt
@@ -357,8 +373,10 @@ The following are the new CAA V5R14 GA C++ Authorized APIs, compared with CAA V5
     * Class  CATBodyChecker
     * Class  CATLayDownOperator
     * Enumeration  CATFilletLawId
+```vbscript
     * Global Function  CATCreateTopLayDown
   * VPMDesktopObjects framework
+```
     * Interface  CATIAVPMVDAUnlock
   * VPMInterfaces framework
     * Interface  CATICfgUserExit2

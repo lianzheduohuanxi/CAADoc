@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Warm Start Incremental Backup"
-category: "use-case"
+category: tech-article
 module: "CAAAfrTechArticles"
 tags: ["CATIContainer", "CATIdent", "CAAMyCommand", "CATInit"]
-source_file: "Doc/online/CAAAfrTechArticles/CAAAfrWarmstart.htm"
+source_file: "Doc/online/CAAAfrTechArticles/CAAAfrWarmstart.htmmd"
 converted: "2026-05-11T17:17:55.951704"
 ```
 
@@ -97,7 +97,7 @@ Unix | : | $HOME/CATTemp
 
 Data to do an incremental backup is stored in the CNext02.roll directory located in the `CATTemp` environment variable which is by default:
 Unix | : | $HOME/CATTemp
-Windows | : | DriveName/Documents and Settings\LogonName\Local Settings\Application Data\DassaultSystemes\CATTemp
+Windows | : | DriveName/Documents and Settings/LogonName/Local Settings/Application Data/DassaultSystemes/CATTemp
 
 CNext02.roll contains:
 
@@ -129,7 +129,7 @@ Fig.2 Warm start Data Diagram ![](images/CAAAfrWarmStartDiagram.jpg)
 Fig.2 Warm start Data Diagram ![](images/CAAAfrWarmStartDiagram.jpg)
 Now that backup data is described, we can explained how it is used according to end user interactions.
 
-  1. **The session is opened in "Incremental backup"** **mode** \- Fig.1
+  1. **The session is opened in "Incremental backup"** **mode** /- Fig.1
 
 The CNext02.roll directory is created.
 
@@ -160,7 +160,7 @@ The Autosave.log and Undoredo.log files cannot be deleted, since there is one di
 
 In this case, the re-initialization is possible. The Autosave.log and Undoredo.log files are deleted and the document copies are brought up to date.
 
-  8. **Modification on documents are done, and then a command which is not warm start compliant is executed** \- See the detailed list
+  8. **Modification on documents are done, and then a command which is not warm start compliant is executed** /- See the detailed list
 
 All data contained in the CNext02.roll directory are deleted. The end user is informed by the following message that the incremental warm start is deactivated:
 
@@ -345,7 +345,7 @@ if ( SUCCEEDED(rc) && (TRUE == WarmStartActivationState) )
           rc = **CATOmbWarmStartServices** ::**Deactivate**(WarningMessageToDisplay);
 ```vbscript
 ```vbscript
-          if (SUCCEEDED(rc) && (0 != WarningMessageToDisplay.GetLengthInChar()) )
+          if (SUCCEEDED(rc) && (0 != WarningMessageToDisplay.GetLengthInChar(#)) )
 
 ```
 
@@ -355,35 +355,35 @@ if ( SUCCEEDED(rc) && (TRUE == WarmStartActivationState) )
 CATUnicodeString WarningMessageToDisplay ;
 rc = **CATOmbWarmStartServices** ::**Deactivate**(WarningMessageToDisplay);
 ```vbscript
-if (SUCCEEDED(rc) && (0 != WarningMessageToDisplay.GetLengthInChar()) )
+if (SUCCEEDED(rc) && (0 != WarningMessageToDisplay.GetLengthInChar(#)) )
 ```
 
-             CATApplicationFrame *pFrame = CATApplicationFrame::**GetFrame**();
+             CATApplicationFrame *pFrame = CATApplicationFrame::**GetFrame**(#);
 ```vbscript
-             if ( (NULL != pFrame ) && ( NULL != pFrame->**GetMainWindow**() ))
+             if ( (NULL != pFrame ) && ( NULL != pFrame->**GetMainWindow**(#) ))
 
 ```
 
              {
 ```vbscript
-if (SUCCEEDED(rc) && (0 != WarningMessageToDisplay.GetLengthInChar()) )
-CATApplicationFrame *pFrame = CATApplicationFrame::**GetFrame**();
-if ( (NULL != pFrame ) && ( NULL != pFrame->**GetMainWindow**() ))
+if (SUCCEEDED(rc) && (0 != WarningMessageToDisplay.GetLengthInChar(#)) )
+CATApplicationFrame *pFrame = CATApplicationFrame::**GetFrame**(#);
+if ( (NULL != pFrame ) && ( NULL != pFrame->**GetMainWindow**(#) ))
                 CATDlgNotify * pNotify = new **CATDlgNotify**(
-                                            pFrame->GetMainWindow(),
+                                            pFrame->GetMainWindow(#),
 ```
 
                                             "AutoSaveId",
 ```vbscript
-if ( (NULL != pFrame ) && ( NULL != pFrame->**GetMainWindow**() ))
+if ( (NULL != pFrame ) && ( NULL != pFrame->**GetMainWindow**(#) ))
 CATDlgNotify * pNotify = new **CATDlgNotify**(
-pFrame->GetMainWindow(),
+pFrame->GetMainWindow(#),
                                       CATDlgNfyInformation|CATDlgNfyOK|CATDlgWndModal) ;
 
                 CATUnicodeString NotifyWindowTitle= "....";
                 pNotify->**DisplayBlocked**(WarningMessageToDisplay,NotifyWindowTitle);
 
-                pNotify->**RequestDelayedDestruction();**
+                pNotify->**RequestDelayedDestruction(#);**
                 pNotify = NULL ;
 ```
 
@@ -444,7 +444,7 @@ The `Activate` method of the _CATOmbWarmStartServices_ class enables you to try 
           CATUnicodeString WarningMessageToDisplay ;
           rc = **CATOmbWarmStartServices** ::**Activate**(WarningMessageToDisplay);
 ```vbscript
-          if (SUCCEEDED(rc) && (0 != WarningMessageToDisplay.GetLengthInChar()) )
+          if (SUCCEEDED(rc) && (0 != WarningMessageToDisplay.GetLengthInChar(#)) )
 ```
 
 ```
@@ -453,35 +453,35 @@ The `Activate` method of the _CATOmbWarmStartServices_ class enables you to try 
 CATUnicodeString WarningMessageToDisplay ;
 rc = **CATOmbWarmStartServices** ::**Activate**(WarningMessageToDisplay);
 ```vbscript
-if (SUCCEEDED(rc) && (0 != WarningMessageToDisplay.GetLengthInChar()) )
+if (SUCCEEDED(rc) && (0 != WarningMessageToDisplay.GetLengthInChar(#)) )
 ```
 
-             CATApplicationFrame *pFrame = CATApplicationFrame::**GetFrame**();
+             CATApplicationFrame *pFrame = CATApplicationFrame::**GetFrame**(#);
 ```vbscript
-             if ( (NULL != pFrame ) && ( NULL != pFrame->**GetMainWindow**() ))
+             if ( (NULL != pFrame ) && ( NULL != pFrame->**GetMainWindow**(#) ))
 
 ```
 
              {
 ```vbscript
-if (SUCCEEDED(rc) && (0 != WarningMessageToDisplay.GetLengthInChar()) )
-CATApplicationFrame *pFrame = CATApplicationFrame::**GetFrame**();
-if ( (NULL != pFrame ) && ( NULL != pFrame->**GetMainWindow**() ))
+if (SUCCEEDED(rc) && (0 != WarningMessageToDisplay.GetLengthInChar(#)) )
+CATApplicationFrame *pFrame = CATApplicationFrame::**GetFrame**(#);
+if ( (NULL != pFrame ) && ( NULL != pFrame->**GetMainWindow**(#) ))
                 CATDlgNotify * pNotify = new **CATDlgNotify**(
-                                            pFrame->GetMainWindow(),
+                                            pFrame->GetMainWindow(#),
 ```
 
                                             "AutoSaveId",
 ```vbscript
-if ( (NULL != pFrame ) && ( NULL != pFrame->**GetMainWindow**() ))
+if ( (NULL != pFrame ) && ( NULL != pFrame->**GetMainWindow**(#) ))
 CATDlgNotify * pNotify = new **CATDlgNotify**(
-pFrame->GetMainWindow(),
+pFrame->GetMainWindow(#),
                                             CATDlgNfyInformation|CATDlgNfyOK|CATDlgWndModal) ;
 
                 CATUnicodeString NotifyWindowTitle= "....";
                 pNotify->**DisplayBlocked**(WarningMessageToDisplay,NotifyWindowTitle);
 
-                pNotify->**RequestDelayedDestruction();**
+                pNotify->**RequestDelayedDestruction(#);**
                 pNotify = NULL ;
 ```
 
@@ -560,12 +560,12 @@ if ( SUCCEEDED(rc) )
 ```
 
           pInitOnApplicativeContainer->**Init**(FALSE);
-          pInitOnApplicativeContainer->Release();
+          pInitOnApplicativeContainer->Release(#);
           pInitOnApplicativeContainer = NULL ;
 
        }
 pInitOnApplicativeContainer->**Init**(FALSE);
-pInitOnApplicativeContainer->Release();
+pInitOnApplicativeContainer->Release(#);
 pInitOnApplicativeContainer = NULL ;
        rc ::**CATOmbPerformAfterContainerCreation**(pIContainer);
 

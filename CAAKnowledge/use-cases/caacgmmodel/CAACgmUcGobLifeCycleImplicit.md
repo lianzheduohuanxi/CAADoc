@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating Implicit Objects"
-category: "use case"
+category: use-case case"
 module: "CAACgmModel"
 tags: ["CATICGMContainer", "CAADoc", "CATICGMObject", "CAAGMModelGemBrowser", "CAAGMModelLifeCycleImplicit", "CAAGMModelInterfaces", "CATIA"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGobLifeCycleImplicit.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGobLifeCycleImplicit.htmmd"
 converted: "2026-05-11T17:33:48.407972"
 ```
 
@@ -55,7 +55,7 @@ This NCGM file can be displayed using the CAAGMModelGemBrowser use case.
 
 The CAAGMModelLifeCycleImplicit use case is made of a main named CAAGMModelLifeCycleImplicit.cpp located in the CAAGMModelLifeCycleImplicit.m module of the CAAGMModelInterfaces.edu framework:
 
-`InstallRootFolder\CAADoc\CAAGMModelInterfaces.edu\CAAGMModelLifeCycleImplicit.m\`
+`InstallRootFolder/CAADoc/CAAGMModelInterfaces.edu/CAAGMModelLifeCycleImplicit.m/`
 
 where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed.
 ## Step-by-Step
@@ -76,7 +76,7 @@ The main program is divided into the following steps:
 5. Writing the Model and Closing the Container
 The geometry factory (`CATGeoFactory`) creates and manages all the CATICGMObject This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
 
-    CATGeoFactory* piGeomFactory = ::CATCreateCGMContainer() ;
+    CATGeoFactory* piGeomFactory = ::CATCreateCGMContainer(#) ;
 ```vbscript
     if (NULL == piGeomFactory) return (1);
 
@@ -84,11 +84,11 @@ The geometry factory (`CATGeoFactory`) creates and manages all the CATICGMObject
 
 ### Creating the Implicit Geometry Factory
 
-CATGeoFactory* piGeomFactory = ::CATCreateCGMContainer() ;
+CATGeoFactory* piGeomFactory = ::CATCreateCGMContainer(#) ;
 if (NULL == piGeomFactory) return (1);
 The implicit factory is retrieved from the standard factory by using the `CATGeoFactory::GetImplicitGeoFactory` method.
 
-    CATGeoFactory * piImplicitFactory =piGeomFactory->GetImplicitGeoFactory( );
+    CATGeoFactory * piImplicitFactory =piGeomFactory->GetImplicitGeoFactory(#);
 ```vbscript
     if (NULL == piImplicitFactory) return (1);
 
@@ -96,7 +96,7 @@ The implicit factory is retrieved from the standard factory by using the `CATGeo
 
 ### Creating the Implicit Objects: the CATPlane, the Initial CATPline and the Cloned CATPLine
 
-CATGeoFactory * piImplicitFactory =piGeomFactory->GetImplicitGeoFactory( );
+CATGeoFactory * piImplicitFactory =piGeomFactory->GetImplicitGeoFactory(#);
 if (NULL == piImplicitFactory) return (1);
 You create implicit objects exactly like you would create standard or explicit objects, except that the implicit factory is to be used.
 
@@ -120,7 +120,7 @@ CATPLine * pPline =  piImplicitFactory->CreatePLine   (p1, p2, piPlane );
     ...
 CATCloneManager * pCloneManager= new CATCloneManager(piImplicitFactory, CatCGMFullDuplicate);
     pCloneManager->Add(pPline);
-    pCloneManager->Run();
+    pCloneManager->Run(#);
     CATICGMObject* piClonedPLine=NULL;
 ```vbscript
     piClonedPLine = pCloneManager->ReadImage(pPline);
@@ -129,7 +129,7 @@ CATCloneManager * pCloneManager= new CATCloneManager(piImplicitFactory, CatCGMFu
 
 ### Removing the Two Plines with RemoveDependancies and Attempting to Create a New CATPline
 
-pCloneManager->Run();
+pCloneManager->Run(#);
 CATICGMObject* piClonedPLine=NULL;
 piClonedPLine = pCloneManager->ReadImage(pPline);
 The RemoveDependancies option only applies to implicit objects. By using it, you will remove all the implicit objects no longer used by the object which is to be removed.
@@ -181,7 +181,7 @@ ofstream filetowrite(pfileName, ios::binary ) ;
     #endif
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
-       filetowrite.close();
+       filetowrite.close(#);
      }
 
      _//

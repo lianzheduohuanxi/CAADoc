@@ -4,7 +4,7 @@ title: "Creating Advanced Surface Mesh Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniMeshAdvSurf", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshAdvSurf.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshAdvSurf.htmmd"
 converted: "2026-05-11T17:31:51.608533"
 ```
 
@@ -38,20 +38,26 @@ This use case shows you how to create Advanced surface mesh part on an existing 
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
+```vbscript
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
       If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
+```
 
+```vbscript
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
         End If
 ```
 
@@ -62,8 +68,10 @@ This use case shows you how to create Advanced surface mesh part on an existing 
 ```vbscript
     ' -----------------------------------------------------------
     'Open the Analysis document
-    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Surface.CATAnalysis")
+```vbscript
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Surface.CATAnalysis")
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+```
 ```
 
 ```
@@ -85,92 +93,120 @@ Open the Analysis document. The Analysis document is retrieved in the documentat
 
 ```vbscript
 ```vbscript
+```vbscript
     Set oAnalysisManager = oAnalysisDocument.Analysis
 
 ```
+```
 
 ```
 
 ```vbscript
+```vbscript
 Set oAnalysisManager = oAnalysisDocument.Analysis
 ```vbscript
+```
     'Retreive the part document from Analysis manager
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisLinkedDocument = oAnalysisManager.LinkedDocuments
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set partDocument = oAnalysisLinkedDocuments.Item(1)
     Set product = partDocument.Product
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Set product = partDocument.Product
 ```vbscript
+```
     'Retrieve the analysis model from the list of models
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisModels = oAnalysisManager.AnalysisModels
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oAnalysisModel = oAnalysisManager.Item(1)
 
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Set oAnalysisModels = oAnalysisManager.AnalysisModels
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set oAnalysisModel = oAnalysisManager.Item(1)
     'Retrieve mesh manager and mesh part
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisMeshManager = oAnalysisModel.MeshManager
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
 ```vbscript
+```
     'Retrieve publications from product and retrieve the published surface and edge
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set publications1 = product.Publications
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set pubEdge = publications1.Item("Edge")
     Set pubSurf = publications1.Item("Round Hole.1")
 
+```
 ```
 
 ```
@@ -181,11 +217,11 @@ Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
 
 ---
 
-According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. The extraction of pre-defined geometric elements is done by using the Reference interface. This is equivalent to the selection of a B-Rep element inside the interactive application. Here the reference is created from a published face.
+According to the general [ Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. The extraction of pre-defined geometric elements is done by using the Reference interface. This is equivalent to the selection of a B-Rep element inside the interactive application. Here the reference is created from a published face.
 #### Creating the Mesh Part and Assigning Values to its Attributes.
 
     ...
-According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. The extraction of pre-defined geometric elements is done by using the Reference interface. This is equivalent to the selection of a B-Rep element inside the interactive application. Here the reference is created from a published face.
+According to the general [ Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. The extraction of pre-defined geometric elements is done by using the Reference interface. This is equivalent to the selection of a B-Rep element inside the interactive application. Here the reference is created from a published face.
 ```vbscript
 ```vbscript
     'Add the new Advanced surface mesh part to the list of mesh parts
@@ -196,21 +232,27 @@ According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniToc
 
 ```vbscript
 ```vbscript
+```vbscript
     Set surfPart = meshParts.Add ("MSHPartSmartSurf")
 
 ```
+```
 
 ```
 
 ```vbscript
+```vbscript
 Set surfPart = meshParts.Add ("MSHPartSmartSurf")
 ```vbscript
+```
     'Add support from the published surface
 ```
 
     surfPart.AddSupportFromPublication product, pubSurf
 ```vbscript
+```vbscript
 'Set the global Specifications
+```
 ```
 
 ```
@@ -248,17 +290,25 @@ surfPart.SetGlobalSpecification "MeshAbsSagValue", "1.0 mm"
 ```
 
 ```vbscript
+```vbscript
 Set meshSpecs = surfPart.AnalysisMeshLocalSpecifications
 ```vbscript
+```
+```vbscript
 Set spec = meshSpecs.Add("MSHDistributionElement")
+```
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Set meshSpecs = surfPart.AnalysisMeshLocalSpecifications
 ```vbscript
+```
+```vbscript
 Set spec = meshSpecs.Add("MSHDistributionElement")
+```
 ```
 
 ```
@@ -280,14 +330,16 @@ Here parameters are set with their respective units, this helps in setting up of
 #### Epilog
 
     ...
+```vbscript
      End Sub
     ...
+```
 
 ---
 
 To run the macro interactively CATDocView environment variable must be defined.
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

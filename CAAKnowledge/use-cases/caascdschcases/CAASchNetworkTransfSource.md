@@ -4,13 +4,13 @@ title: "CAASchNetworkTransf.CATScript"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CATIAProduct", "CAAScdSchUseCases", "CATIA", "CATIASchGRR", "CATIASchCompGraphic", "CATIASchMovable", "CAASCH_Network01", "CAASchNetworkTransf", "CATIASchAppConnectable"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchNetworkTransfSource.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchNetworkTransfSource.htmmd"
 converted: "2026-05-11T17:31:51.422498"
 ```
 
 ---
 tags: ["CATIAProduct", "CAAScdSchUseCases", "CATIA", "CATIASchGRR", "CATIASchCompGraphic", "CATIASchMovable", "CAASCH_Network01", "CAASchNetworkTransf", "CATIASchAppConnectable"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchNetworkTransfSource.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchNetworkTransfSource.htmmd"
 converted: "2026-05-11T17:31:51.422498"
     Option Explicit
 
@@ -25,8 +25,10 @@ converted: "2026-05-11T17:31:51.422498"
     '   CATIA Level:  V5R15
     ' *****************************************************************************
     '------------------------------------------------------------------------------
+```vbscript
     ' These variables are visible to private Sub and CATMain
     '------------------------------------------------------------------------------
+```
 ```
 
 ```
@@ -34,20 +36,27 @@ converted: "2026-05-11T17:31:51.422498"
 ```
 
 ```vbscript
+```vbscript
     Dim objLGRR_g As SchListOfObjects
+```vbscript
+```
 ```vbscript
 ```vbscript
     Dim objLCntbl_g As SchListOfObjects
     Dim objLSelected_g As SchListOfObjects
 
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
+
+```
 
 ```
 
@@ -57,7 +66,9 @@ converted: "2026-05-11T17:31:51.422498"
         ' -------------------------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String
+```vbscript
         sDocPath=CATIA.SystemService.Environ("CATDocView")
+```
 ```
 
 ```
@@ -67,11 +78,15 @@ converted: "2026-05-11T17:31:51.422498"
         strMessage = strMessage &  "sDocPath = " & sDocPath
 
 ```vbscript
+```vbscript
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+```vbscript
+```
 ```vbscript
 ```vbscript
           Err.Raise 9999,sDocPath,"No Doc Path Defined"
         End If
+```
 ```
 
 ```
@@ -83,18 +98,23 @@ converted: "2026-05-11T17:31:51.422498"
 ```vbscript
         ' -------------------------------------------------------------------------
         ' Open the schematic document
+```vbscript
         Dim sFilePath
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
-
 ```
 
 ```
 
-                "online\CAAScdSchUseCases\samples\CAASCH_Network01.CATProduct")
+```
+
+                "online/CAAScdSchUseCases/samples/CAASCH_Network01.CATProduct")
 
 ```vbscript
+```vbscript
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+```vbscript
+```
 ```vbscript
 ```vbscript
         Dim objSchDoc As Document
@@ -103,14 +123,17 @@ sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
         Dim strMessage As String
 
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Dim strMessage As String
         strMessage = _
+```
 ```
 
           "--------------------------------------------------------------------" & vbCr
@@ -129,21 +152,31 @@ strMessage = strMessage & _
 ```
 
 ```vbscript
+```vbscript
         Dim objPrdRoot As Product
+```vbscript
+```
 ```vbscript
 ```vbscript
         Dim objSchRoot As SchematicRoot
         If ( Not ( objSchDoc Is Nothing ) ) Then
+```
+```vbscript
           Set objPrdRoot = objSchDoc.Product
           If ( Not ( objPrdRoot Is Nothing ) ) Then
+```
+```vbscript
             Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
           End If
+```
         End If
 
+```vbscript
         Dim objSchBaseFact As SchBaseFactory
         Dim objSchTempListFact As SchTempListFactory
         Dim objLNetWork As SchListOfObjects
 
+```
 ```
 
 ```
@@ -160,8 +193,10 @@ strMessage = strMessage & _
            '-----------------------------------------------------------------------
            ' Get all the necessary factories.
            '-----------------------------------------------------------------------
+```vbscript
            Set objSchBaseFact = objSchRoot.GetSchBaseFactory
            Set objSchTempListFact = objSchRoot.GetTemporaryListFactory
+```
 ```
 
 ```
@@ -173,10 +208,12 @@ strMessage = strMessage & _
 ```vbscript
                 Not ( objSchTempListFact Is Nothing ) ) Then
 ```vbscript
+```vbscript
               Set objLCntbl_g = objSchTempListFact.CreateListOfObjects
               Set objLGRR_g = objSchTempListFact.CreateListOfObjects
               Set objLSelected_g = objSchTempListFact.CreateListOfObjects
 
+```
 ```
 
 ```
@@ -217,8 +254,10 @@ strMessage = strMessage & _
 
                  FindNetworkComponentInst objSchRoot
 
+```vbscript
                  Set objLNetWork = objSchBaseFact.CreateNetwork (objLCntbl_g, _
                    objLGRR_g)
+```
 
 ```
 
@@ -239,9 +278,12 @@ strMessage = strMessage & _
 ```vbscript
         If (  Not ( objLNetWork Is Nothing ) ) Then
 
+```vbscript
            Dim objSchNet As SchMovable
 ```
+```
 
+```vbscript
 ```vbscript
 ```vbscript
            Dim Db2Vector (2) As CATSafeArrayVariant
@@ -249,16 +291,21 @@ strMessage = strMessage & _
            Dim intNbNet As Integer
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Dim DbScaleFactor As Double
 ```vbscript
+```
+```vbscript
 Dim intNbNet As Integer
            Db2Vector(0) = 50.0
+```
            Db2Vector(1) = 0.0
 ```
 
@@ -273,8 +320,10 @@ Dim intNbNet As Integer
            If ( intNbNet > 0 ) Then
 ```vbscript
 ```vbscript
+```vbscript
               Set objSchNet = objLNetWork.Item (1,"CATIASchMovable")
 
+```
 ```
 
 ```
@@ -322,7 +371,9 @@ Dim intNbNet As Integer
                  '  be "reshaped".
                  '  objLSelected_g is set in FindNetworkComponentInst
                  '-----------------------------------------------------------------
+```vbscript
                  Dim intSelected As Integer
+```
 ```
 
 ```
@@ -332,7 +383,9 @@ Dim intNbNet As Integer
 ```
 
 ```vbscript
+```vbscript
 Dim intSelected As Integer
+```
 ```
 
 intSelected = objLSelected_g.Count
@@ -379,10 +432,15 @@ End If '--- If ( Not ( objLNetWork Is Nothing ) ...
 ```
 
           "--------------------------------------------------------------------" & vbCr
+```vbscript
         MsgBox strMessage
 
 ```vbscript
+```
+```vbscript
     End Sub
+
+```
 
 ```
 
@@ -399,7 +457,9 @@ End If '--- If ( Not ( objLNetWork Is Nothing ) ...
 
 ```
 
+```vbscript
     Private Sub FindNetworkComponentInst (objSchRootArg As SchematicRoot)
+```
 ```
 
 ```vbscript
@@ -408,9 +468,11 @@ End If '--- If ( Not ( objLNetWork Is Nothing ) ...
 ```vbscript
        If ( objLGRR_g Is Nothing ) Then Exit Sub
 
+```vbscript
        Dim objLCompInst As SchListOfObjects
        Dim intNbComp As Integer
 
+```
 ```
 
 ```
@@ -421,8 +483,10 @@ End If '--- If ( Not ( objLNetWork Is Nothing ) ...
        If ( Not ( objSchRootArg Is Nothing ) ) Then
 ```vbscript
 ```vbscript
+```vbscript
           Set objLCompInst = objSchRootArg.GetComponents
           If ( Not ( objLCompInst Is Nothing ) ) Then
+```
 ```
 
 ```
@@ -433,6 +497,7 @@ End If '--- If ( Not ( objLNetWork Is Nothing ) ...
 ```vbscript
        End If
 
+```vbscript
        Dim intIndex As Integer
        Dim intNbFlow As Integer
        Dim objCntbl As SchConnectable
@@ -443,6 +508,7 @@ End If '--- If ( Not ( objLNetWork Is Nothing ) ...
        Dim intNbFound As Integer
        Dim intSelected As Integer
 
+```
 ```
 
 ```
@@ -484,8 +550,10 @@ For intIndex = 1 To intNbComp
 
 ```vbscript
 ```vbscript
+```vbscript
             Set objCntbl = objLCompInst.Item (intIndex,"CATIASchAppConnectable")
 
+```
 ```
 
 ```
@@ -494,7 +562,9 @@ For intIndex = 1 To intNbComp
 ```vbscript
             If ( Not ( objCntbl Is Nothing ) ) Then
 
+```vbscript
                Set objPrd = objSchRootArg.GetInterface ( _
+```
 ```
 
 ```
@@ -519,8 +589,10 @@ For intIndex = 1 To intNbComp
                If ( intFound > 0 ) Then
 ```vbscript
 ```vbscript
+```vbscript
                  Dim ObjSchCompGraph As SchCompGraphic
                  Set objSchCompGraph = objSchRootArg.GetInterface ( _
+```
 ```
 
 ```
@@ -532,10 +604,12 @@ For intIndex = 1 To intNbComp
 If ( intFound > 0 ) Then
 ```vbscript
 ```vbscript
+```vbscript
 Dim ObjSchCompGraph As SchCompGraphic
 Set objSchCompGraph = objSchRootArg.GetInterface ( _
                  Set objGRR = GetComponentImage (objSchCompGraph)
 
+```
 ```
 
 ```
@@ -580,7 +654,9 @@ Set objSchCompGraph = objSchRootArg.GetInterface ( _
 ```vbscript
 ```vbscript
        End If '--- If (Not ( objLCompInst Is Nothing ) ...
+```vbscript
     End Sub
+```
 ```
 
 ```
@@ -599,21 +675,29 @@ Set objSchCompGraph = objSchRootArg.GetInterface ( _
 ```
 
 ```vbscript
+```vbscript
     Private Function GetComponentImage (objSchCompGraphArg As SchCompGraphic) As SchGRR
        Dim objSchLSymbols As SchListOfObjects
+```
 ```
 
 ```vbscript
 ```vbscript
        If ( Not ( objSchCompGraphArg Is Nothing ) ) Then
+```vbscript
           Set objSchLSymbols = objSchCompGraphArg.ListGraphicalImages
           If ( Not ( objSchLSymbols Is Nothing ) ) Then
+```
+```vbscript
              Set GetComponentImage = objSchLSymbols.Item (1,"CATIASchGRR")
           End If
+```
        End If
 ```
 
 ```
 
+```vbscript
     End Function
+```
 ```

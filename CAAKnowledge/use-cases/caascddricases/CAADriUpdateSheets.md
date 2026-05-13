@@ -4,7 +4,7 @@ title: "Updating all Sheets of all Drawing Documents of a Given Folder"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CAADriUpdateSheets", "CATIA", "CAADriUseCases", "CAAScdDriUseCases"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriUpdateSheets.htm"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriUpdateSheets.htmmd"
 converted: "2026-05-11T17:31:51.112727"
 ```
 
@@ -35,22 +35,28 @@ This macro shows you how to update sheets in Drawing documents. This macro retri
 
       ...
 ```vbscript
+```vbscript
       ' Set the CATIA popup file alerts to False
 ```
+```
 
+```vbscript
 ```vbscript
 ```vbscript
 ```vbscript
 ' Set the CATIA popup file alerts to False
       ' It prevents to stop the macro at each alert during its execution
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
       CATIA.DisplayFileAlerts = False
+```
 ```
 
       ...
@@ -64,16 +70,22 @@ The CATIA prompts are disabled thanks to the `DisplayFileAlerts` property of the
 The CATIA prompts are disabled thanks to the `DisplayFileAlerts` property of the _Application_ object set to `False`.
 ```vbscript
 ```vbscript
+```vbscript
       ' Set the file system object containing the folder
 
 ```
+```
 
 ```
 
 ```vbscript
+```vbscript
       Dim fileSys As FileSystem
 ```vbscript
+```
+```vbscript
       Set fileSys = CATIA.FileSystem
+```
 ```
 
 ```
@@ -96,29 +108,35 @@ The `FileSystem` property of the _Application_ object returns a portable object 
 ```
 
 ```vbscript
+```vbscript
         Dim sFolderPath As String
 ```vbscript
+```
         sFolderPath = InputBox( "Enter a folder path:", "Update All Sheets Of a Folder" ,_
 ```
 
-                                sDocPath & "\online\CAAScdDriUseCases\samples")
+                                sDocPath & "/online/CAAScdDriUseCases/samples")
         If (Not oFileSys.FolderExists(sFolderPath)) Then
+```vbscript
 ```vbscript
 ```vbscript
           Err.Raise 9999,,sFolderPath & ": This Folder does not exist"
         End If
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 ```vbscript
 ```vbscript
         ' Set the folder object
         Dim oFolder As Folder
         Set oFolder = oFileSys.GetFolder(sFolderPath)
+```
 ```
 
 ```
@@ -144,12 +162,16 @@ The folder is retrieved in `folder` from the `fileSys` object using the `GetFold
 ```
 
 ```vbscript
+```vbscript
         Dim iI, iJ
 ```vbscript
+```
 ```vbscript
         For iI = 1 To oFolder.Files.Count
+```vbscript
             Dim oFile As Object
             Set oFile = oFolder.Files.Item(iI)
+```
 ```
 
 ```
@@ -161,15 +183,18 @@ The folder is retrieved in `folder` from the `fileSys` object using the `GetFold
 ```vbscript
             '  Retrieve in the files collection only the Drawing documents from its extension
             If InStr(oFile.Name, ".CATDrawing") <> 0 Then
+```vbscript
                 ' Set and open a Drawing document
                 Dim oDoc As Document
                 Set oDoc = CATIA.Documents.Open(oFile.Path)
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 ```vbscript
 ```vbscript
@@ -177,10 +202,13 @@ The folder is retrieved in `folder` from the `fileSys` object using the `GetFold
 Dim oDoc As Document
 Set oDoc = CATIA.Documents.Open(oFile.Path)
 ```
+```
 
 ```
 
+```vbscript
                 MsgBox "Updating Document " & oFile.Path, 0  ' VBOKOnly
+```
 ```
 
 ```vbscript
@@ -262,8 +290,10 @@ End If
 ```
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```
 
 ---
@@ -272,7 +302,7 @@ When all the sheets are processed, the drawing document is successively saved an
 
 <.td>
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

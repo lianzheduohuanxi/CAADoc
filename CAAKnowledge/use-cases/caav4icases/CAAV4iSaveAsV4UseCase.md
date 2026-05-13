@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating V4 Data from a V5 Geometrical Element"
-category: "use case"
+category: use-case case"
 module: "CAAV4iUseCases"
 tags: ["CAAGobSurfV4DataSaver", "CAACATIAV4Interfaces", "CAASurfV4DataSaver", "CATIForeignCurve_var", "CAAV4iEduSaveAsV4", "CATIForeignSurface_var", "CATIA", "CATIV4DataSaver"]
-source_file: "Doc/online/CAAV4iUseCases/CAAV4iSaveAsV4UseCase.htm"
+source_file: "Doc/online/CAAV4iUseCases/CAAV4iSaveAsV4UseCase.htmmd"
 converted: "2026-05-11T17:33:45.786384"
 ```
 
@@ -65,10 +65,10 @@ __
 
 __
 The CAAV4iEduSaveAsV4 use case is made of two files located in the CAAV4iEduSaveAsV4.m module of the CAACATIAV4Interfaces.edu framework:
-  Windows | `InstallRootDirectory\`CAACATIAV4Interfaces`.edu\`CAAV4iEduSaveAsV4`.m\`
+  Windows | `InstallRootDirectory/`CAACATIAV4Interfaces`.edu/`CAAV4iEduSaveAsV4`.m/`
 
 The CAAV4iEduSaveAsV4 use case is made of two files located in the CAAV4iEduSaveAsV4.m module of the CAACATIAV4Interfaces.edu framework:
-Windows | `InstallRootDirectory\`CAACATIAV4Interfaces`.edu\`CAAV4iEduSaveAsV4`.m\`
+Windows | `InstallRootDirectory/`CAACATIAV4Interfaces`.edu/`CAAV4iEduSaveAsV4`.m/`
 Unix | `InstallRootDirectory/`CAACATIAV4Interfaces`.edu/`CAAV4iEduSaveAsV4`.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.

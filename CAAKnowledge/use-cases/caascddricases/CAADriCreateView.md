@@ -4,7 +4,7 @@ title: "Creating a Front View in a new Drawing Document"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CATIA", "CAADriCreateView", "CAAScdDriUseCases"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriCreateView.htm"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriCreateView.htmmd"
 converted: "2026-05-11T17:31:51.042883"
 ```
 
@@ -24,8 +24,10 @@ This macro shows you how to create views in Drawing documents. It retrieves a pa
 
   1. Prolog
   2. Creating a New View in the Active Sheet
+```vbscript
   3. Set its Parameters to Make it a Generative Front View
   4. Epilog
+```
 
 #### Prolog
 
@@ -37,20 +39,26 @@ This macro shows you how to create views in Drawing documents. It retrieves a pa
 ```
 
 ```vbscript
+```vbscript
         Dim oPartToDraw As PartDocument
+```vbscript
+```
 ```vbscript
         Set oPartToDraw = CATIA.Documents.Open(sDocPath & _
 ```
+```
 
 ```
 
-                 "\online\CAAScdDriUseCases\samples\Cube.CATPart")
+                 "/online/CAAScdDriUseCases/samples/Cube.CATPart")
 ```vbscript
 ```vbscript
 ```vbscript
         ' Create a drawing document: it becomes the active document.
+```vbscript
         Dim oDrawing As DrawingDocument
         Set oDrawing = CATIA.Documents.Add("Drawing")
+```
 ```
 
 ```
@@ -75,9 +83,13 @@ Open the part document to draw and create a new _[DrawingDocument](../CAAScdDriT
 ```
 
 ```vbscript
+```vbscript
         Dim oSheet As DrawingSheet
 ```vbscript
+```
+```vbscript
         Set oSheet = oDrawing.Sheets.ActiveSheet
+```
 ```
 
 ```
@@ -86,8 +98,10 @@ Open the part document to draw and create a new _[DrawingDocument](../CAAScdDriT
 ```vbscript
 ```vbscript
         ' Create a view called "Front View" in this sheet
+```vbscript
         Dim oFrontView As DrawingView
         Set oFrontView = oSheet.Views.Add("Front View")
+```
 ```
 
 ```
@@ -99,7 +113,10 @@ Open the part document to draw and create a new _[DrawingDocument](../CAAScdDriT
 ---
 
 The new [_DrawingView_](../CAAScdDriTechArticles/CAADriObjDrawingView.md) is created in the active _[DrawingSheet](../CAAScdDriTechArticles/CAADriObjDrawingSheet.md)_ that is found on the [_DrawingSheets_](../CAAScdDriTechArticles/CAADriObjDrawingSheets.md) collection aggregated by the _DrawingDocument_ object.
+```vbscript
 #### Set its Parameters to Make it a Generative Front View
+
+```
 
     ...
 The new [_DrawingView_](../CAAScdDriTechArticles/CAADriObjDrawingView.md) is created in the active _[DrawingSheet](../CAAScdDriTechArticles/CAADriObjDrawingSheet.md)_ that is found on the [_DrawingSheets_](../CAAScdDriTechArticles/CAADriObjDrawingSheets.md) collection aggregated by the _DrawingDocument_ object.
@@ -112,11 +129,15 @@ The new [_DrawingView_](../CAAScdDriTechArticles/CAADriObjDrawingView.md) is cre
 ```
 
 ```vbscript
+```vbscript
         Dim oFrontViewGB As DrawingViewGenerativeBehavior
+```vbscript
+```
 ```vbscript
 ```vbscript
         Set oFrontViewGB = oFrontView.GenerativeBehavior
         ' Declare the part to draw in this front view
+```
         oFrontViewGB.Document = oPartToDraw
         ' Define this view as a front view, with the XY plane (in oPartToDraw) as projection plane
 ```
@@ -162,7 +183,7 @@ Update the now completely defined generative behavior.
 
 ```
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

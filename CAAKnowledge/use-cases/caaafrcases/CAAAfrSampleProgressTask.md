@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating an Interruptible Task"
-category: "use case"
+category: use-case case"
 module: "CAAAfrUseCases"
 tags: ["CATIProgressTask", "CAAAfrProgressTaskSampleCmd", "CAAApplicationFrame", "CAAProgressClock", "CAAGeometry", "CAAAfrProgressTaskSampleId", "CAAAfrProgressTask", "CATIA", "CATIProgressTaskUI"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleProgressTask.htm"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleProgressTask.htmmd"
 converted: "2026-05-11T17:17:55.806965"
 ```
 
@@ -111,7 +111,10 @@ _Fig.3: The "_Progress Task" Command ![](images/CAAAfrProgressTaskCommandDlg.jpg
 
 See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)" use case for a detailed description of how this use case should be launched. For the specific scenario :
 
+```vbscript
 Launch CATIA. When the application is ready:
+
+```
 
   * On the **Start** menu, point to **Infrastructure** , and then click **CAA V5: Geometrical Analysis**
   * Launch the **Progress Task** command to see the **Interruptible Task** dialog box:
@@ -133,10 +136,10 @@ Launch CATIA. When the application is ready:
 The CAAAfrProgressTask use case is made of a single file located in the CAAAfrProgressTask.m module of the CAAApplicationFrame.edu framework:
 
 The CAAAfrProgressTask use case is made of a single file located in the CAAAfrProgressTask.m module of the CAAApplicationFrame.edu framework:
-Windows | `InstallRootDirectory\``CAAApplicationFrame.edu\CAAAfrProgressTask.m\`
+Windows | `InstallRootDirectory/``CAAApplicationFrame.edu/CAAAfrProgressTask.m/`
 
 The CAAAfrProgressTask use case is made of a single file located in the CAAAfrProgressTask.m module of the CAAApplicationFrame.edu framework:
-Windows | `InstallRootDirectory\``CAAApplicationFrame.edu\CAAAfrProgressTask.m\`
+Windows | `InstallRootDirectory/``CAAApplicationFrame.edu/CAAAfrProgressTask.m/`
 Unix | `InstallRootDirectory/``CAAApplicationFrame.edu/CAAAfrProgressTask.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -183,13 +186,13 @@ class CAAAfrProgressTaskSampleCmd : public CATDlgDialog
 
 ```
 
-        CAAAfrProgressTaskSampleCmd();
+        CAAAfrProgressTaskSampleCmd(#);
 
-        virtual ~CAAAfrProgressTaskSampleCmd();
+        virtual ~CAAAfrProgressTaskSampleCmd(#);
 
         ...
 
-virtual ~CAAAfrProgressTaskSampleCmd();
+virtual ~CAAAfrProgressTaskSampleCmd(#);
 ```vbscript
       private :
 
@@ -273,14 +276,14 @@ The `CATCreateClass` macro enables the instantiation of the command by its class
      * The constructor:
 
     ...
-    CAAAfrProgressTaskSampleCmd::CAAAfrProgressTaskSampleCmd()
-              :**CATDlgDialog** ((CATApplicationFrame::GetFrame())->GetMainWindow(),
+    CAAAfrProgressTaskSampleCmd::CAAAfrProgressTaskSampleCmd(#)
+              :**CATDlgDialog** ((CATApplicationFrame::GetFrame(#))->GetMainWindow(#),
                               "CAAAfrProgressTaskSampleId",
-CAAAfrProgressTaskSampleCmd::CAAAfrProgressTaskSampleCmd()
+CAAAfrProgressTaskSampleCmd::CAAAfrProgressTaskSampleCmd(#)
                               CATDlgGridLayout | CATDlgWndBtnClose )
 
     {
-CAAAfrProgressTaskSampleCmd::CAAAfrProgressTaskSampleCmd()
+CAAAfrProgressTaskSampleCmd::CAAAfrProgressTaskSampleCmd(#)
 CATDlgGridLayout | CATDlgWndBtnClose )
       _pInterruptTask = new **CATDlgCheckButton**(this, "InterruptId" );
       _pInterruptTask->SetGridConstraints(0,0,1,1,CATGRID_CENTER);
@@ -289,31 +292,31 @@ CATDlgGridLayout | CATDlgWndBtnClose )
       pComputeButton = new **CATDlgPushButton**(this, "ComputeButtonId" );
       pComputeButton->SetGridConstraints(1,0,1,1,CATGRID_CENTER);
 
-      AddAnalyseNotificationCB(pComputeButton, pComputeButton->GetPushBActivateNotification(),
+      AddAnalyseNotificationCB(pComputeButton, pComputeButton->GetPushBActivateNotification(#),
                     (CATCommandMethod)&CAAAfrProgressTaskSampleCmd::**ClickCompute** ,
                                 NULL);
 
-      AddAnalyseNotificationCB(this, this->GetWindCloseNotification(),
+      AddAnalyseNotificationCB(this, this->GetWindCloseNotification(#),
                     (CATCommandMethod)&CAAAfrProgressTaskSampleCmd::**ClickClose** ,
                                 NULL);
-      AddAnalyseNotificationCB(this, this->GetDiaCLOSENotification(),
+      AddAnalyseNotificationCB(this, this->GetDiaCLOSENotification(#),
                     (CATCommandMethod)&CAAAfrProgressTaskSampleCmd::**ClickClose** ,
                                 NULL);
 
-      **_pEditor** = CATFrmEditor::GetCurrentEditor();
+      **_pEditor** = CATFrmEditor::GetCurrentEditor(#);
 ```vbscript
-AddAnalyseNotificationCB(this, this->GetDiaCLOSENotification(),
+AddAnalyseNotificationCB(this, this->GetDiaCLOSENotification(#),
 (CATCommandMethod)&CAAAfrProgressTaskSampleCmd::**ClickClose** ,
 NULL);
-      if ( (NULL != _pEditor) && (NULL != CATFrmLayout::GetCurrentLayout()) )
+      if ( (NULL != _pEditor) && (NULL != CATFrmLayout::GetCurrentLayout(#)) )
 ```
 
       {
          ::**AddCallback**(this,
 ```vbscript
-if ( (NULL != _pEditor) && (NULL != CATFrmLayout::GetCurrentLayout()) )
-                    CATFrmLayout::GetCurrentLayout(),
-    		  CATFrmEditor::EDITOR_CLOSE_ENDED(),
+if ( (NULL != _pEditor) && (NULL != CATFrmLayout::GetCurrentLayout(#)) )
+                    CATFrmLayout::GetCurrentLayout(#),
+    		  CATFrmEditor::EDITOR_CLOSE_ENDED(#),
     		  (CATSubscriberMethod)&CAAAfrProgressTaskSampleCmd::EditorClose,
     		  NULL);
 ```
@@ -346,20 +349,20 @@ In the destructor code, it is not necessary to delete the dialog object created 
 
     ...
 In the destructor code, it is not necessary to delete the dialog object created in this command, as it will be automatically deleted by the Dialog process, but it is strongly recommended to reset the data member to NULL.
-    CAAAfrProgressTaskSampleCmd::~CAAAfrProgressTaskSampleCmd()
+    CAAAfrProgressTaskSampleCmd::~CAAAfrProgressTaskSampleCmd(#)
 
     {
 In the destructor code, it is not necessary to delete the dialog object created in this command, as it will be automatically deleted by the Dialog process, but it is strongly recommended to reset the data member to NULL.
-CAAAfrProgressTaskSampleCmd::~CAAAfrProgressTaskSampleCmd()
+CAAAfrProgressTaskSampleCmd::~CAAAfrProgressTaskSampleCmd(#)
        _pInterruptTask   = NULL ;
 
 ```vbscript
-       if ( (NULL != _pEditor) && ( NULL != CATFrmLayout::GetCurrentLayout()) )
+       if ( (NULL != _pEditor) && ( NULL != CATFrmLayout::GetCurrentLayout(#)) )
 
 ```
 
        {
-          ::**RemoveSubscriberCallbacks**(this,CATFrmLayout::GetCurrentLayout());
+          ::**RemoveSubscriberCallbacks**(this,CATFrmLayout::GetCurrentLayout(#));
        }
 
        _pEditor = NULL ;
@@ -395,7 +398,7 @@ HRESULT rc = QueryInterface(IID_CATIProgressTask,(void**)& pIProgressTask);
 if ( SUCCEEDED(rc) && (NULL != _pInterruptTask ) )
 ```vbscript
 ```vbscript
-          if ( CATDlgCheck == _pInterruptTask->GetState() )
+          if ( CATDlgCheck == _pInterruptTask->GetState(#) )
 
 ```
 
@@ -405,7 +408,7 @@ if ( SUCCEEDED(rc) && (NULL != _pInterruptTask ) )
 ```vbscript
 if ( SUCCEEDED(rc) && (NULL != _pInterruptTask ) )
 ```vbscript
-if ( CATDlgCheck == _pInterruptTask->GetState() )
+if ( CATDlgCheck == _pInterruptTask->GetState(#) )
 ```
 
              Task.**Schedule**(pIProgressTask,**TRUE** ,NULL);
@@ -414,7 +417,7 @@ if ( CATDlgCheck == _pInterruptTask->GetState() )
           }else
           {
 ```vbscript
-if ( CATDlgCheck == _pInterruptTask->GetState() )
+if ( CATDlgCheck == _pInterruptTask->GetState(#) )
 Task.**Schedule**(pIProgressTask,**TRUE** ,NULL);
              Task.**Schedule**(pIProgressTask,**FALSE** ,NULL);
 ```
@@ -422,7 +425,7 @@ Task.**Schedule**(pIProgressTask,**TRUE** ,NULL);
           }
 
 Task.**Schedule**(pIProgressTask,**FALSE** ,NULL);
-          pIProgressTask->Release();
+          pIProgressTask->Release(#);
           pIProgressTask = NULL ;
 
       }
@@ -450,7 +453,7 @@ CATNotification      * iNotification,
 CATCommandClientData   iUsefulData)
       SetVisibility(CATDlgHide);
 
-      **RequestDelayedDestruction**();
+      **RequestDelayedDestruction**(#);
     }
     ...
 
@@ -481,10 +484,10 @@ CATCallback       iCallBack )
 
           // Now this extension will receive any message.
           //
-          ::**RemoveSubscriberCallbacks**(this,CATFrmLayout::GetCurrentLayout());
+          ::**RemoveSubscriberCallbacks**(this,CATFrmLayout::GetCurrentLayout(#));
 
           // Suicide
-          **RequestDelayedDestruction**();
+          **RequestDelayedDestruction**(#);
 
           _pEditor = NULL ;
        }

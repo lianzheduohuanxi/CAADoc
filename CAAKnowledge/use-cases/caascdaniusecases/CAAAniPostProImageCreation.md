@@ -3,7 +3,7 @@ title: "Generating Images"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CAAScrBase", "CATIA", "CAAScdAniUseCases", "CAAScrJavaScript", "CAAAniTocAnalysisDocument", "CAAScdInfUseCases", "CAAScdAniTechArticles", "CAAAniPostProImageCreationSource", "CAAInfLauchMacro", "CAAAniPostProImageCreation"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPostProImageCreation.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPostProImageCreation.htmmd"
 converted: "2026-05-11T11:27:02.552985"
 ---
 
@@ -24,7 +24,7 @@ Open the Analysis document. The Analysis document is retrieved in the documentat
 
 According to the general
 		[
-		Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.htm) structure, this macro uses some standard 
+		Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard 
 		procedures to navigate or retrieve the required objects. First, from the **
 		Document**, we find the **Analysis Manager Object**, and the **
 		Analysis Model**.
@@ -62,7 +62,7 @@ To run the macro interactively CATDocView
     
        
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 
@@ -97,15 +97,19 @@ This use case has shown how to generate images under different Analysis sets.
 ```vbscript
 &#39; ----------------------------------------------------------- 
 &#39; Optional: allows to find the sample wherever it&#39;s installed
+```vbscript
   sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,&quot;No Doc Path Defined&quot;
     End If
+```
 &#39; ----------------------------------------------------------- 
 ' Open the Analysis document 
-sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis&quot;)
+```vbscript
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online/CAAScdAniUseCases/samples/Cube_R13_Freq.CATAnalysis&quot;)
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+```
 ```
 
 ```vbscript
@@ -118,28 +122,39 @@ Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ```vbscript
 ' Retrieve the Analysis Manager
+```vbscript
 Set oAnalysisManager = oAnalysisDocument.Analysis
 			
 ' Retrieve the analysis model from the list of models
+```
+```vbscript
 Set oAnalysisModels = oAnalysisManager.AnalysisModels
 Set oAnalysisModel = oAnalysisModels.Item(1)
+```
 ```
 
 ```vbscript
 ' Retrieve the analysis cases and the first analysis case
+```vbscript
 Set oAnalysisCases = oAnalysisModel.AnalysisCases
 Set oAnalysisCase = oAnalysisCases.Item(1)
+```
 ```
 
 ```vbscript
 ' Retrieve the analysis sets and analysis set by its name
+```vbscript
 Set oAnalysisSets = oAnalysisCase.AnalysisSets
 Set oAnalysisSet = oAnalysisSets.Item("Frequency Case Solution.1", catAnalysisSetSearchAll)
+```
 ```
 
 ```vbscript
 ' Get the list of images from analysis set 
+```vbscript
 Set oAnalysisImages = oAnalysisSet.AnalysisImages
+
+```
 
 ...
 ```
@@ -150,26 +165,34 @@ Set oAnalysisImages = oAnalysisSet.AnalysisImages
 
 ```vbscript
 ' Create image under Frequency Case Solution.1
+```vbscript
 Set analysisImage1 = oAnalysisImages.Add("Disp_Symbol", False, False, True)
 Set analysisImage2 = oAnalysisImages.Add("Mesh_Deformed", True, False, True)
+```
 ```
 
 ```vbscript
 ' Retrieve the Restraint set from the list of analysis sets
+```vbscript
 Set analysisSet2 = oAnalysisSets.Item("Restraints.1", catAnalysisSetSearchAll)
+```
 ```
 
 ```vbscript
 ' Retrieve list of Analysis Images from Restraint set
+```vbscript
 Set analysisEntities1 = analysisSet2.AnalysisEntities
 Set analysisEntity1 = analysisEntities1.Item(1)
 Set analysisImages2 = analysisEntity1.AnalysisImages
 ```
+```
 
 ```vbscript
 ' Add new image under the Restraint set
+```vbscript
 Set analysisImage3 = analysisImages2.Add("Restraint", True, True, False)
 ```
+```
 
 ```vbscript
 ...
@@ -177,6 +200,8 @@ Set analysisImage3 = analysisImages2.Add("Restraint", True, True, False)
 
 ```vbscript
 ...
+```vbscript
 End Sub
 ...
+```
 ```

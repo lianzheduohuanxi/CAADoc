@@ -4,13 +4,13 @@ title: "CAAArrCreateRun.CATScript"
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CATIA", "CAAArrCreateRun"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateRunSource.htm"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateRunSource.htmmd"
 converted: "2026-05-11T17:31:51.571552"
 ```
 
 ---
 tags: ["CATIA", "CAAArrCreateRun"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateRunSource.htm"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateRunSource.htmmd"
 converted: "2026-05-11T17:31:51.571552"
     Option Explicit
 
@@ -36,15 +36,20 @@ converted: "2026-05-11T17:31:51.571552"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
+
+```
 
 ```
 
 ```vbscript
 ```vbscript
 ```vbscript
+```vbscript
        ' On Error Resume Next
        '----------------------------------------------
+```
        'Create a new product document
 ```
 
@@ -53,12 +58,16 @@ converted: "2026-05-11T17:31:51.571552"
 ```
 
 ```vbscript
+```vbscript
        Dim objProdDoc        As ProductDocument
+```vbscript
+```
 ```vbscript
 ```vbscript
        Dim objRootProd       As Product
        Set objProdDoc      = CATIA.Documents.Add("Product")
        Set objRootProd     = objProdDoc.Product
+```
 ```
 
 ```
@@ -70,17 +79,23 @@ converted: "2026-05-11T17:31:51.571552"
 ```vbscript
        '----------------------------------------------
        'Retrieving Root Product's Relative Axis and Position Information
+```vbscript
        Dim objMove           As Move
        Set objMove      = objRootProd.Move
        '----------------------------------------------
+```
        ' Get ArrangementProduct
+```vbscript
        Dim objArrProd        As ArrangementProduct
        Set objArrProd   = objRootProd.GetTechnologicalObject("ArrangementProduct")
        '----------------------------------------------
+```
        ' Create ArrangementRun under the Root Product
+```vbscript
        Dim dblRunPoints(75)      As Double
        Dim dblMathDirection(3)   As Double
        Dim objArrRun             As ArrangementRun
+```
 ```
 
 ```
@@ -198,8 +213,10 @@ converted: "2026-05-11T17:31:51.571552"
 ```
 
 ```vbscript
+```vbscript
        Set objArrRun             = objArrProd.ArrangementRuns.AddRun(objMove,dblRunPoints, dblMathDirection)
 ```vbscript
+```
 ```vbscript
        '----------------------------------------------
        ' Change Properties of ArrangementRun
@@ -217,8 +234,10 @@ converted: "2026-05-11T17:31:51.571552"
 ```vbscript
        '----------------------------------------------
        ' Define Bend Radius of Nodes
+```vbscript
        Dim intK As Integer
        For intK = 1 To objArrRun.ArrangementNodes.Count
+```
 ```
 
 ```
@@ -229,7 +248,9 @@ converted: "2026-05-11T17:31:51.571552"
 ```vbscript
 ```vbscript
 ' Define Bend Radius of Nodes
+```vbscript
 Dim intK As Integer
+```
 ```
 
 ```
@@ -241,6 +262,8 @@ For intK = 1 To objArrRun.ArrangementNodes.Count
 ```vbscript
        Next
 
+```vbscript
     End Sub
 
+```
 ```

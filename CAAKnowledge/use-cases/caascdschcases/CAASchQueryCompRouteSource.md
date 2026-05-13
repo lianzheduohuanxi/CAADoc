@@ -4,13 +4,13 @@ title: "CAASchQueryCompRoute.CATScript"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAASCH_CompRoute01", "CATIAProduct", "CAASchQueryCompRoute", "CATIASchGRRRoute", "CATIASchRouteGraphic", "CAAScdSchUseCases", "CATIASchGRRComp", "CATIA", "CATIASchCntrLocation", "CATIASchGRR", "CATIASchCompGraphic", "CATIASchAppConnectable"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchQueryCompRouteSource.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchQueryCompRouteSource.htmmd"
 converted: "2026-05-11T17:31:51.455417"
 ```
 
 ---
 tags: ["CAASCH_CompRoute01", "CATIAProduct", "CAASchQueryCompRoute", "CATIASchGRRRoute", "CATIASchRouteGraphic", "CAAScdSchUseCases", "CATIASchGRRComp", "CATIA", "CATIASchCntrLocation", "CATIASchGRR", "CATIASchCompGraphic", "CATIASchAppConnectable"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchQueryCompRouteSource.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchQueryCompRouteSource.htmmd"
 converted: "2026-05-11T17:31:51.455417"
     Option Explicit
 
@@ -34,7 +34,10 @@ converted: "2026-05-11T17:31:51.455417"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
+
+```
 
 ```
 
@@ -44,18 +47,22 @@ converted: "2026-05-11T17:31:51.455417"
         ' -------------------------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String
+```vbscript
         sDocPath=CATIA.SystemService.Environ("CATDocView")
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
           Err.Raise 9999,sDocPath,"No Doc Path Defined"
 ```vbscript
+```
         End If
 ```
 
@@ -66,18 +73,23 @@ converted: "2026-05-11T17:31:51.455417"
 ```vbscript
         ' -------------------------------------------------------------------------
         ' Open the schematic document
+```vbscript
         Dim sFilePath
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
-
 ```
 
 ```
 
-                "online\CAAScdSchUseCases\samples\CAASCH_CompRoute01.CATProduct")
+```
+
+                "online/CAAScdSchUseCases/samples/CAASCH_CompRoute01.CATProduct")
 
 ```vbscript
+```vbscript
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+```vbscript
+```
 ```vbscript
 ```vbscript
         Dim objSchDoc As Document
@@ -86,14 +98,17 @@ sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
         Dim strMessage As String
 
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Dim strMessage As String
         strMessage = _
+```
 ```
 
           "--------------------------------------------------------------------" & vbCr
@@ -112,17 +127,26 @@ strMessage = strMessage & _
 ```
 
 ```vbscript
+```vbscript
         Dim objPrdRoot As Product
+```vbscript
+```
 ```vbscript
 ```vbscript
         Dim objSchRoot As SchematicRoot
         If ( Not ( objSchDoc Is Nothing ) ) Then
+```
+```vbscript
           Set objPrdRoot = objSchDoc.Product
           If ( Not ( objPrdRoot Is Nothing ) ) Then
+```
+```vbscript
             Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
           End If
+```
         End If
 
+```vbscript
         Dim objSchLComps As SchListOfObjects
         Dim objSchLCompRefs As SchListOfObjects
         Dim objSchLRoutes As SchListOfObjects
@@ -130,6 +154,7 @@ strMessage = strMessage & _
         Dim objCurDoc As Document
         Dim strCurDocName As String
 
+```
 ```
 
 ```
@@ -140,7 +165,9 @@ strMessage = strMessage & _
 ```vbscript
         If ( Not ( objSchRoot Is Nothing ) ) Then
 
+```vbscript
            Set objSchSession = objSchRoot.GetSchematicSession
+```
 ```
 
 ```
@@ -152,8 +179,10 @@ strMessage = strMessage & _
            '| Query the name of the current document
            '-----------------------------------------------------------------------
            If ( Not ( objSchSession Is Nothing ) ) Then
+```vbscript
               Set objCurDoc = objSchSession.GetCurrentDocument
               If ( Not ( objCurDoc Is Nothing ) ) Then
+```
 ```
 
 ```
@@ -166,16 +195,20 @@ strMessage = strMessage & _
            End If
         End If
 
+```vbscript
         Dim intNbComp As Integer
         Dim intNbRoute As Integer
         Dim intIndex As Integer
         Dim objPrd As Product
         Dim strName As String
         ' -------------------------------------------------------------------------
+```
         ' |  List schematic component references in the model
         ' -------------------------------------------------------------------------
 
+```vbscript
         Set objSchLCompRefs = objSchRoot.GetRefComponents
+```
 ```
 
 ```
@@ -200,14 +233,18 @@ strMessage = strMessage &  "Number of schematic component REFERENCES = " _
 ```vbscript
 ```vbscript
              For intIndex = 1 To intNbComp
+```vbscript
                 Set objPrd = Nothing
+```
 ```
 
 ```
 
                 strName = ""
+```vbscript
                 Set objPrd = objSchLCompRefs.Item (intIndex,"CATIAProduct")
 ```vbscript
+```
                 If ( Not ( objPrd Is Nothing ) ) Then
 ```
 
@@ -217,7 +254,9 @@ strMessage = strMessage &  "Number of schematic component REFERENCES = " _
 
                      & "= " & strName & vbCr
 ```vbscript
+```vbscript
 Set objPrd = objSchLCompRefs.Item (intIndex,"CATIAProduct")
+```
 ```
 
 If ( Not ( objPrd Is Nothing ) ) Then
@@ -243,6 +282,7 @@ strMessage = strMessage &  "  member " & intIndex _
         ' |  List schematic component instances in the model
         ' -------------------------------------------------------------------------
 
+```vbscript
         Set objSchLComps = objSchRoot.GetComponents
 
         Dim objGRRCompInst As SchGRRComp
@@ -255,6 +295,7 @@ strMessage = strMessage &  "  member " & intIndex _
         Dim intNb As Integer
 
         Set objLFilter = Nothing
+```
 ```
 
 ```
@@ -273,9 +314,12 @@ strMessage = strMessage &  "  member " & intIndex _
 ```vbscript
            If (intNbComp > 0) Then
 
+```vbscript
              Dim iCntr As Integer
 ```
+```
 
+```vbscript
 ```vbscript
 ```vbscript
              Dim intNbCntr As Integer
@@ -287,6 +331,7 @@ strMessage = strMessage &  "  member " & intIndex _
              Dim dbCntrY As Double
 
 ```
+```
 
 ```
 
@@ -296,9 +341,12 @@ strMessage = strMessage &  "  member " & intIndex _
 ```vbscript
              For intIndex = 1 To intNbComp
 
+```vbscript
                 Set objPrd = Nothing
 ```
+```
 
+```vbscript
 ```vbscript
 ```vbscript
                 Set objCompGraphInst = Nothing
@@ -309,23 +357,30 @@ strMessage = strMessage &  "  member " & intIndex _
                 Set objSchLDbComp = Nothing
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Set objGRR = Nothing
 ```vbscript
+```
+```vbscript
 Set objSchLDbComp = Nothing
+```
 ```
 
                 strName = ""
 ```
 
 ```vbscript
+```vbscript
                 Set objPrd = objSchLComps.Item (intIndex,"CATIAProduct")
 ```vbscript
+```
                 If ( Not ( objPrd Is Nothing ) ) Then
 ```
 
@@ -335,15 +390,19 @@ Set objSchLDbComp = Nothing
 
                      & "= " & strName & vbCr
 ```vbscript
+```vbscript
 Set objPrd = objSchLComps.Item (intIndex,"CATIAProduct")
+```
 ```
 
 If ( Not ( objPrd Is Nothing ) ) Then
 strName = objPrd.Name
 strMessage = strMessage &  "  member " & intIndex _
 ```vbscript
+```vbscript
                    Set objCompGraphInst = objSchRoot.GetInterface  ("CATIASchCompGraphic", _
                      objPrd)
+```
                 End If
 ```
 
@@ -355,8 +414,10 @@ strMessage = strMessage &  "  member " & intIndex _
                 ' component instance.
                 '------------------------------------------------------------------
                 If ( Not ( objCompGraphInst Is Nothing ) ) Then
+```vbscript
                    Set objGRRCompInst = GetComponentImage (objCompGraphInst)
                    If ( Not ( objGRRCompInst Is Nothing ) ) Then
+```
 ```
 
 ```
@@ -366,7 +427,9 @@ strMessage = strMessage &  "  member " & intIndex _
 ```vbscript
 If ( Not ( objCompGraphInst Is Nothing ) ) Then
 ```vbscript
+```vbscript
 Set objGRRCompInst = GetComponentImage (objCompGraphInst)
+```
 ```
 
 ```
@@ -432,15 +495,19 @@ strMessage = strMessage & "---- rotation matrix = " & _
 ```vbscript
                    End If '--- If ( Not ( objGRRComp Is Nothing )...
 
+```vbscript
                    Set objCntbl = objSchRoot.GetInterface ("CATIASchAppConnectable",_
+```
 ```
 
 ```
 
                      objCompGraphInst)
 ```vbscript
+```vbscript
                    Set objGRR = objSchRoot.GetInterface ("CATIASchGRR", objGRRCompInst)
 
+```
 ```
 
 ```
@@ -456,8 +523,10 @@ strMessage = strMessage & "---- rotation matrix = " & _
                 ' Get the connector locations of all component instances
                 '------------------------------------------------------------------
                 If ( Not ( objCntbl Is Nothing ) And  Not ( objGRR Is Nothing ) ) Then
+```vbscript
                    Set objLCntrs = objCntbl.AppListConnectors (objLFilter)
                    If ( Not ( objLCntrs Is Nothing ) ) Then
+```
 ```
 
 ```
@@ -467,20 +536,26 @@ strMessage = strMessage & "---- rotation matrix = " & _
 ```vbscript
 ```vbscript
                          For iCntr = 1 To intNbCntr
+```vbscript
                             Set objLDbCntr = Nothing
                             Set objCntr = Nothing
                             Set objCntr = objLCntrs.Item (iCntr,"CATIASchCntrLocation")
                             If ( Not ( objCntr Is Nothing )) Then
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Set objCntr = Nothing
 ```vbscript
+```
+```vbscript
 Set objCntr = objLCntrs.Item (iCntr,"CATIASchCntrLocation")
+```
 ```
 
 ```
@@ -551,12 +626,14 @@ strMessage = strMessage & " position = " & dbCntrX & _
         ' |  List schematic route instances
         ' -------------------------------------------------------------------------
 
+```vbscript
         Set objSchLRoutes = objSchRoot.GetRoutes
 
         Dim objGRRRoute As SchGRRRoute
         Dim objSchRouteGraph As SchRouteGraphic
         Dim objSchLDbRoute As SchListOfDoubles
         Dim intNbOut As Integer
+```
 ```
 
 ```
@@ -579,28 +656,36 @@ strMessage = strMessage & " position = " & dbCntrX & _
              For intIndex = 1 To intNbRoute
 ```vbscript
 ```vbscript
+```vbscript
                 Set objPrd = Nothing
                 Set objGRRRoute = Nothing
                 Set objSchRouteGraph = Nothing
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Set objGRRRoute = Nothing
 ```vbscript
+```
+```vbscript
 Set objSchRouteGraph = Nothing
+```
 ```
 
                 strName = ""
 ```
 
 ```vbscript
+```vbscript
                 Set objPrd = objSchLRoutes.Item (intIndex,"CATIAProduct")
 ```vbscript
+```
                 If ( Not ( objPrd Is Nothing ) ) Then
 ```
 
@@ -623,8 +708,10 @@ Set objSchRouteGraph = Nothing
 strName = objPrd.PartNumber
 strMessage = strMessage &  "  member " & _
                      intIndex & "= " & strName & vbCr
+```vbscript
                    Set objSchRouteGraph = objSchRoot.GetInterface  ("CATIASchRouteGraphic", _
                      objPrd)
+```
                 End If
 ```
 
@@ -636,7 +723,9 @@ strMessage = strMessage &  "  member " & _
                 '------------------------------------------------------------------
                 If ( Not ( objSchRouteGraph Is Nothing ) ) Then
 
+```vbscript
                    Set objGRRRoute = GetRoutePrimitives (objSchRouteGraph,objSchRoot)
+```
 ```
 
 ```
@@ -646,7 +735,9 @@ strMessage = strMessage &  "  member " & _
 ```vbscript
                    If ( Not ( objGRRRoute Is Nothing ) ) Then
 ```vbscript
+```vbscript
                       Set objSchLDbRoute = Nothing
+```
 ```
 
                       objGRRRoute.GetPath objSchLDbRoute
@@ -667,13 +758,17 @@ intNbOut > 3 ) Then
                          intNb = objSchLDbRoute.Count
 
 ```vbscript
+```vbscript
                          Dim iIndex As Integer
+```vbscript
+```
 ```vbscript
 ```vbscript
                          Dim jIndex As integer
                          Dim dbX As Double
                          Dim dbY As Double
                          Dim intNbPoint As Integer
+```
 ```
 
 ```
@@ -736,10 +831,15 @@ End If '--- If ( Not ( objSchLRoutes Is Nothing ) ...
         strMessage = strMessage & _
 
           "--------------------------------------------------------------------" & vbCr
+```vbscript
         MsgBox strMessage
 
 ```vbscript
+```
+```vbscript
     End Sub
+
+```
 
 ```
 
@@ -757,23 +857,31 @@ End If '--- If ( Not ( objSchLRoutes Is Nothing ) ...
 ```
 
 ```vbscript
+```vbscript
     Private Function GetComponentImage (objSchCompGraphArg As SchCompGraphic) As SchGRRComp
        Dim objSchLSymbols As SchListOfObjects
+```
 ```
 
 ```vbscript
 ```vbscript
        If ( Not ( objSchCompGraphArg Is Nothing ) ) Then
+```vbscript
           Set objSchLSymbols = objSchCompGraphArg.ListGraphicalImages
           If ( Not ( objSchLSymbols Is Nothing ) ) Then
+```
+```vbscript
              Set GetComponentImage = objSchLSymbols.Item (1,"CATIASchGRRComp")
           End If
+```
        End If
 ```
 
 ```
 
+```vbscript
     End Function
+```
 ```
 
 ```vbscript
@@ -790,7 +898,9 @@ End If '--- If ( Not ( objSchLRoutes Is Nothing ) ...
 
 ```
 
+```vbscript
     Private Function GetRoutePrimitives (objSchRouteGraphArg As SchRouteGraphic, _
+```
 ```
 
 ```vbscript
@@ -802,25 +912,37 @@ End If '--- If ( Not ( objSchLRoutes Is Nothing ) ...
 
 ```
 
+```vbscript
 Private Function GetRoutePrimitives (objSchRouteGraphArg As SchRouteGraphic, _
       objSchRootArg As SchematicRoot) As SchGRRRoute
 ```
+```
 
 ```vbscript
+```vbscript
        Dim objSchLGRR As SchListOfObjects
+```vbscript
+```
 ```vbscript
 ```vbscript
        Dim objSchGRR As SchGRR
        If ( Not ( objSchRouteGraphArg Is Nothing ) And _
 ```
+```
 
             Not ( objSchRootArg Is Nothing ) ) Then
 ```vbscript
+```vbscript
           Set objSchLGRR = objSchRouteGraphArg.ListGraphicalPrimitives
           If ( Not ( objSchLGRR Is Nothing ) ) Then
+```
+```vbscript
              Set objSchGRR = objSchLGRR.Item (1,"CATIASchGRR")
              If ( Not ( objSchGRR Is Nothing ) ) Then
+```
+```vbscript
                 Set GetRoutePrimitives = objSchRootArg.GetInterface ("CATIASchGRRRoute", _
+```
 ```
 
 ```
@@ -836,8 +958,10 @@ Private Function GetRoutePrimitives (objSchRouteGraphArg As SchRouteGraphic, _
 ```
 
 ```vbscript
+```vbscript
     End Function
 
+```
 ```
 
 ```

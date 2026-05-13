@@ -4,13 +4,13 @@ title: "mkIc2Xml"
 category: "use-case"
 module: "CAABtlQuickRefs"
 tags: ["CATIAR211", "CATIAR209"]
-source_file: "Doc/online/CAABtlQuickRefs/CAABtlMkIc2XmlV5.htm"
+source_file: "Doc/online/CAABtlQuickRefs/CAABtlMkIc2XmlV5.htmmd"
 converted: "2026-05-11T17:33:49.978874"
 ```
 
 ---
 tags: ["CATIAR211", "CATIAR209"]
-source_file: "Doc/online/CAABtlQuickRefs/CAABtlMkIc2XmlV5.htm"
+source_file: "Doc/online/CAABtlQuickRefs/CAABtlMkIc2XmlV5.htmmd"
 converted: "2026-05-11T17:33:49.978874"
 RADE |  Multi-Workspace Application Builder |  mkIc2Xml Migrate .h ID cards to XML
 
@@ -47,7 +47,7 @@ Synopsis **mkIc2Xml** [**-W** WSPath] [**-a** | **-L** FWlist | FW1 [FW2 ...]] [
 `FW1 [FW2 ...]` | Process frameworks FW1, FW2? etc.
 Example Conversion of frameworks A, A.tst, A.edu Identity Cards from .h to XML.
 
-    >ls *\IdentityCard\*.h
+    >ls */IdentityCard/*.h
     A.edu/IdentityCard/IdentityCard.h  A.tst/IdentityCard/IdentityCard.h  A/IdentityCard/IdentityCard.h
     >mkIc2Xml A A.edu A.tst
     == Starting generation: 3 framework(s) to do
@@ -57,7 +57,7 @@ A.edu/IdentityCard/IdentityCard.h  A.tst/IdentityCard/IdentityCard.h  A/Identity
     A.tst Done [3/3]
 
     == Generation done
-    >ls *\IdentityCard\*.xml
+    >ls */IdentityCard/*.xml
 A Done [1/3]
 A.edu Done [2/3]
 A.tst Done [3/3]

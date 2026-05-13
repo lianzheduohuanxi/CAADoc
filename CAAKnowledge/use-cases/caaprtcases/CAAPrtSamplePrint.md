@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Adding Print Standard Functions to Your Application"
-category: "use case"
+category: use-case case"
 module: "CAAPrtUseCases"
 tags: ["CATIA", "CAAPrtDialog", "CAAPrint", "CAAPrtApplication", "CAAPrtApplicationUse"]
-source_file: "Doc/online/CAAPrtUseCases/CAAPrtSamplePrint.htm"
+source_file: "Doc/online/CAAPrtUseCases/CAAPrtSamplePrint.htmmd"
 converted: "2026-05-11T17:17:56.124848"
 ```
 
@@ -91,10 +91,10 @@ To launch CAAPrtApplication, you will need to set up the build time environment,
 To launch CAAPrtApplication, you will need to set up the build time environment, then compile CAAPrtApplication along with its prerequisites, set up the run time environment, and then execute the use case [1].
 The CAAPrtApplication use case is made of an application class and of a window class whose header and source files are located in the CAAPrtApplication.m module of the CAAPrint.edu framework:
 
-Windows | `InstallRootDirectory\CAAPrint.edu\CAAPrtApplication.m`
+Windows | `InstallRootDirectory/CAAPrint.edu/CAAPrtApplication.m`
 
 The CAAPrtApplication use case is made of an application class and of a window class whose header and source files are located in the CAAPrtApplication.m module of the CAAPrint.edu framework:
-Windows | `InstallRootDirectory\CAAPrint.edu\CAAPrtApplication.m`
+Windows | `InstallRootDirectory/CAAPrint.edu/CAAPrtApplication.m`
 Unix | `InstallRootDirectory/CAAPrint.edu/CAAPrtApplication.m`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -142,7 +142,10 @@ These capabilities are proposed to the end user as items of the File menu. A cal
 void CAAPrtDialog::PrintCB(CATCommand           * iSendingCommand,
 CATNotification      * iSentNotification,
 CATCommandClientData   iUsefulData)
-      _appli->**SetBusyCursor**(); _// Set the cursor as an hourglass_
+```vbscript
+      _appli->**SetBusyCursor**(#); _// Set the cursor as an hourglass_
+
+```
 
       _// Instantiates the Print dialog box_
       CATPrintDialog * print = new **CATPrintDialog**(this, "Print", _viewer);

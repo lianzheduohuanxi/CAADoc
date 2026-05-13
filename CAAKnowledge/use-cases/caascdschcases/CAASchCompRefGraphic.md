@@ -4,7 +4,7 @@ title: "Managing the Graphical Representation of a Schematic Reference Component
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAAScdSchUseCases", "CAASchCompRefGraphic", "CATIA", "CATIASchGRR", "CATIASchCompGraphic", "CAASCH_Detail03"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchCompRefGraphic.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchCompRefGraphic.htmmd"
 converted: "2026-05-11T17:31:51.330224"
 ```
 
@@ -42,22 +42,30 @@ The macro first loads CAASCH_Detail03.CATProduct. |     ...
 ```
 
 ```vbscript
+```vbscript
     Dim sFilePath
+```vbscript
+```
 ```vbscript
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
+```
 
 ```
 
-            "online\CAAScdSchUseCases\samples\CAASCH_Detail03.CATProduct")
+            "online/CAAScdSchUseCases/samples/CAASCH_Detail03.CATProduct")
 
 ```vbscript
+```vbscript
 Dim sFilePath
+```vbscript
+```
 ```vbscript
 ```vbscript
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
+```
 ```
 
 ```
@@ -81,15 +89,23 @@ Next, the macro acquires the schematic root object from the document. The schema
 ```
 
 ```vbscript
+```vbscript
     Dim objPrdRoot As Product
+```vbscript
+```
 ```vbscript
 ```vbscript
     Dim objSchRoot As SchematicRoot
     If ( Not ( objSchDoc Is Nothing ) ) Then
+```
+```vbscript
       Set objPrdRoot = objSchDoc.Product
       If ( Not ( objPrdRoot Is Nothing ) ) Then
+```
+```vbscript
         Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
       End If
+```
     End If
 ```
 
@@ -106,11 +122,15 @@ Using the GetRefComponents method, a list of existing schematic reference compon
 
     ...
 ```vbscript
+```vbscript
     Dim objLCompRefs As SchListOfObjects
+```vbscript
+```
 ```vbscript
 ```vbscript
     Dim objCompRefGraphic As SchCompGraphic
 
+```
 ```
 
 ```
@@ -127,7 +147,9 @@ Using the GetRefComponents method, a list of existing schematic reference compon
        '-----------------------------------------------------------------------
        ' Find a list of reference component in the model
        '-----------------------------------------------------------------------
+```vbscript
        Set objLCompRefs = objSchRoot.GetRefComponents
+```
 ```
 
 ```
@@ -145,7 +167,9 @@ Using the GetRefComponents method, a list of existing schematic reference compon
           ' Get a SchCompGraphic interface handle from a reference
           ' component
           '--------------------------------------------------------------------
+```vbscript
           Set objCompRefGraphic = objLCompRefs.Item (1,"CATIASchCompGraphic")
+```
 ```
 
 ```
@@ -161,7 +185,9 @@ The macro calls GetComponentSymbol to find a symbol that has not been associated
 
     ...
 ```vbscript
+```vbscript
               Dim objUnassocSymbol As AnyObject
+```
 ```
 
 ```vbscript
@@ -171,7 +197,9 @@ The macro calls GetComponentSymbol to find a symbol that has not been associated
               ' Find a symbol that is not associated with any reference in
               ' the model
               '----------------------------------------------------------------
+```vbscript
               Set objUnassocSymbol = GetComponentSymbol (objSchRoot)
+```
 ```
 
 ```
@@ -218,9 +246,13 @@ ListGraphicalRepresentation returns a list of graphical representations. This li
 
     ...
 ```vbscript
+```vbscript
               Dim objLGraphic As SchListOfObjects
 ```vbscript
+```
+```vbscript
               Set objLGraphic = objCompRefGraphic.ListGraphicalRepresentations
+```
 ```
 
 ```
@@ -234,19 +266,25 @@ The macro finds the first member of the list of graphical representations obtain
 
     ...
 ```vbscript
+```vbscript
                  Set objGRR = Nothing
 ```vbscript
+```
 ```vbscript
                  If (intNbGraphic > 1) Then
+```vbscript
                     Set objGRR = objLGraphic.Item(intNbGraphic,"CATIASchGRR")
                     If ( Not (objGRR Is Nothing ) ) Then
+```
 ```
 
 ```
 
                        objCompRefGraphic.RemoveGraphicalRepresentation objGRR
+```vbscript
                        Set objLGraphic = objCompRefGraphic.ListGraphicalRepresentations
 ```vbscript
+```
                        If ( Not ( objLGraphic Is Nothing ) ) Then
 ```
 

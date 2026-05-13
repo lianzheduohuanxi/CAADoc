@@ -4,7 +4,7 @@ title: "CAAAniMeshRotation.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniMeshRotation", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshRotationSource.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshRotationSource.htmmd"
 converted: "2026-05-11T17:31:51.684711"
 ```
 
@@ -31,7 +31,10 @@ converted: "2026-05-11T17:31:51.684711"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
+
+```
 
 ```
 
@@ -40,20 +43,26 @@ converted: "2026-05-11T17:31:51.684711"
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
+```vbscript
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
+```
 
+```vbscript
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
 ```vbscript
         End If
     ' -----------------------------------------------------------
@@ -69,33 +78,43 @@ converted: "2026-05-11T17:31:51.684711"
 ```vbscript
 ' -----------------------------------------------------------
     ' Open the CATAnalysis Document
-    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Surface.CATAnalysis")
+```vbscript
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Surface.CATAnalysis")
+```
 ```
 
 ```
 
 ```
 
+```vbscript
 ```vbscript
 ```vbscript
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ```
+```
 
 ```
 
 ```vbscript
+```vbscript
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```vbscript
+```
     ' Retrieve the analysis Manager
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisManagar = oAnalysisDocument.Analysis
 ```vbscript
+```
+```vbscript
     Set oAnalysisSet = oAnalysisManagar.AnalysisSets
+```
 ```
 
 ```
@@ -104,25 +123,37 @@ Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```vbscript
 ```vbscript
     ' Retrieve the part document and product
+```vbscript
     Set oAnalysisLinkedDocuments = oAnalysisManagar.LinkedDocuments
     Set partDocument = oAnalysisLinkedDocuments.Item(1)
     Set product = partDocument.Product
     'Retrieve the published line
+```
     ' the mesh will be rotated along this line
+```vbscript
     Set publications = product.Publications
     Set pubAxis = publications.Item("Axis")
     ' Retrieve the analysis model
+```
+```vbscript
     Set oAnalysisModels = oAnalysisManagar.AnalysisModels
     Set oAnalysisModel = oAnalysisModels.Item(1)
     'Retrieve the mesh manager and list of mesh parts
+```
+```vbscript
     Set oAnalysisMeshManager = oAnalysisModel.MeshManager
     Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
     Set surfMesh = oAnalysisMeshParts.Item("Surface Mesh.1")
     'Create the reference of the surface mesh
+```
+```vbscript
     Set reference = oAnalysisManagar.CreateReferenceFromObject(surfMesh)
     'Add the mesh part to list of mesh parts
+```
+```vbscript
     Set meshTrans = oAnalysisMeshParts.Add("MSHPartRotation")
     'Assign the reference to the mesh part
+```
 ```
 
 ```
@@ -133,8 +164,10 @@ Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```vbscript
 ```vbscript
 'Add the mesh part to list of mesh parts
+```vbscript
 Set meshTrans = oAnalysisMeshParts.Add("MSHPartRotation")
 'Assign the reference to the mesh part
+```
 ```
 
 ```
@@ -149,7 +182,9 @@ meshTrans.AddSupportFromReference NOTHING, reference
     meshTrans.SetGlobalSpecification "Tolerance", "1.0 mm"
     meshTrans.SetGlobalSpecification "NbCopies", 2
 ```vbscript
+```vbscript
     'Set the specification; the axis of rotation
+```
 ```
 
     meshTrans.SetSpecificationFromPublication "Direction", product, pubAxis, 0
@@ -160,6 +195,8 @@ meshTrans.AddSupportFromReference NOTHING, reference
     meshTrans.Update
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

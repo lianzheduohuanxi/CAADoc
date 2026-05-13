@@ -4,13 +4,13 @@ title: "New C++ Authorized APIs in CAA V5R12 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATINT32", "CATIAVPMVDAImport", "CATIMeasurablePoint", "CATIElbFactory", "CATIRepeatableCommand", "CATIMfgNavigateMachinableFeatView", "CATIIniSearchDimensionCriterion", "CATIIniSearchIntegerCriterion", "CATIIniSearchRealCriterion", "CATIMfgTPMultipleMotionSynchro", "CATIPspPhysicalProduct", "CATIIniSearchStringCriterion", "CATIPspAttribute", "CATIPspSpatial", "CATITPSViewFactory", "CATIMeasurableCircle", "CATIMf3DAxisSystemManager", "CATISamSupportFilter", "CATIPspCntrFlow", "CATIMfgNavigateActivityView"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R12GANewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R12GANewCPPAPI.htmmd"
 converted: "2026-05-11T17:33:47.111006"
 ```
 
 ---
 tags: ["CATINT32", "CATIAVPMVDAImport", "CATIMeasurablePoint", "CATIElbFactory", "CATIRepeatableCommand", "CATIMfgNavigateMachinableFeatView", "CATIIniSearchDimensionCriterion", "CATIIniSearchIntegerCriterion", "CATIIniSearchRealCriterion", "CATIMfgTPMultipleMotionSynchro", "CATIPspPhysicalProduct", "CATIIniSearchStringCriterion", "CATIPspAttribute", "CATIPspSpatial", "CATITPSViewFactory", "CATIMeasurableCircle", "CATIMf3DAxisSystemManager", "CATISamSupportFilter", "CATIPspCntrFlow", "CATIMfgNavigateActivityView"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R12GANewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R12GANewCPPAPI.htmmd"
 converted: "2026-05-11T17:33:47.111006"
 CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R12 GA
 
@@ -19,8 +19,10 @@ CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R12 GA
 The following are the new CAA V5R12 GA C++ Authorized APIs, compared with CAA V5R11 at GA level.
 
   * Administration framework
+```vbscript
     * Global Function CATIsInstalled
   * AdvancedTopologicalOpe framework
+```
     * Macro or #define CATFrFTopologicalSweep_ListPOfCATCurve
   * AnalysisMeshingModel framework
     * Interface CATIMSHGroup
@@ -47,13 +49,16 @@ The following are the new CAA V5R12 GA C++ Authorized APIs, compared with CAA V5
   * CATAnalysisResources framework
     * Class CATEAnalysisEntityPreproSubscriber
   * CATAssemblyInterfaces framework
+```vbscript
     * Global Function CATAsmCstSetFeatGetCont
     * Interface CATIAsmCstSetFeatFactory
+```
     * Interface CATIAsmCstSetFeature
   * CATHVDiagramInterfaces framework
     * Interface CATIHvuWkbCfgAddin
   * CATIAV4Interfaces framework
     * Class CATV4iV4Element
+```vbscript
     * Global Function CATV4iGetMaster
     * Global Function CATV4iGirele
     * Global Function CATV4iGiride
@@ -80,6 +85,7 @@ The following are the new CAA V5R12 GA C++ Authorized APIs, compared with CAA V5
     * Global Function CATV4iGmlanl
     * Global Function CATV4iGmlesc
   * CATPDMBase framework
+```
     * Class CATPDMServices
   * CATPDMBaseInterfaces framework
     * Enumeration CATPDMLogStatus
@@ -177,8 +183,10 @@ The following are the new CAA V5R12 GA C++ Authorized APIs, compared with CAA V5
   * GeometricObjects framework
     * Macro or #define CATCGMImplAttributeBRep
   * GeometricOperators framework
+```vbscript
     * Global Function CATCreateConfusion
   * InteractiveInterfaces framework
+```
     * Class CATIniSearchEnumeration
     * Interface CATIIniSearchAndCriterion
     * Interface CATIIniSearchBooleanCriterion
@@ -261,9 +269,11 @@ The following are the new CAA V5R12 GA C++ Authorized APIs, compared with CAA V5
   * NewTopologicalObjects framework
     * Class CATRecomposeShells
     * Class CATTopSewSkin
+```vbscript
     * Global Function CATCreateRecomposeShells
     * Global Function CATCreateSewSkin
   * OptimizationInterfaces framework
+```
     * Class CATOptAlgorithmUIFactoryAdapter
     * Macro or #define CATOptApproxAlgorithmAttributeAccessName
     * Macro or #define CATOptApproxAlgorithmCATIType
@@ -281,8 +291,10 @@ The following are the new CAA V5R12 GA C++ Authorized APIs, compared with CAA V5
     * Interface CATI2DConicCurve
   * System framework
     * Class CATSysPreferenceRepository
+```vbscript
     * Global Function FreeVariantSafeArray
     * Interface IClassFactory
+```
     * Typedef BOOL
     * Typedef CATBaseUnknown_ptr
     * Typedef CATINT32
@@ -291,9 +303,11 @@ The following are the new CAA V5R12 GA C++ Authorized APIs, compared with CAA V5
   * TopologicalOperators framework
     * Class CATTopSweepSkinSkinSegment
     * Macro or #define CATTopSweepWireSkinSegment
+```vbscript
     * Global Function CATCreateTopSweepSkinSkinSegment
     * Global Function CATCreateTopSweepWireSkinSegment
   * V5ToV4Geo framework
+```
     * Interface CATIV4DataSaver
   * VPMDesktopObjects framework
     * Class ENOVApplicationQuery

@@ -1,17 +1,17 @@
 ---
 ```vbscript
 title: "Part Object"
-category: "use-case"
+category: tech-article
 module: "CAAScdMmrTechArticles"
 tags: []
-source_file: "Doc/online/CAAScdMmrTechArticles/CAAMmrObjPart.htm"
+source_file: "Doc/online/CAAScdMmrTechArticles/CAAMmrObjPart.htmmd"
 converted: "2026-05-11T17:31:51.142657"
 ```
 
 ---
 # Part Object
 
-source_file: "Doc/online/CAAScdMmrTechArticles/CAAMmrObjPart.htm"
+source_file: "Doc/online/CAAScdMmrTechArticles/CAAMmrObjPart.htmmd"
 converted: "2026-05-11T17:31:51.142657"
 See Also | UseCases |  Properties |  Methods
 

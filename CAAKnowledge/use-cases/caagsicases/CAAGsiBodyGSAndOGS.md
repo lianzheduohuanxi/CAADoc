@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Inserting Shape Design Features in Different Geometrical Feature Sets"
-category: "use case"
+category: use-case case"
 module: "CAAGsiUseCases"
 tags: ["CAAGsiCreateGeometricFeatureSets", "CATIMmiOrderedGeometricalSet_var", "CATIPrtBooleanFactory", "CATIPrtContainer", "CATIGSMSweepUnspec_var", "CAAGSMInterfaces", "CAAGsiUserTools", "CATIMechanicalTool_var", "CAAGsiServices", "CATIGSMProceduralViwe", "CATIGSMFactory", "CATIPrtFactory", "CATIGSMExtrude_var", "CATIPrtFactory_var", "CATIPrtPart_var", "CAAGsiObjectUpdate", "CATIDescendants_var", "CATIBasicTool_var", "CATISpecObject_var", "CATIMmiNonOrderedGeometricalSet_var"]
-source_file: "Doc/online/CAAGsiUseCases/CAAGsiBodyGSAndOGS.htm"
+source_file: "Doc/online/CAAGsiUseCases/CAAGsiBodyGSAndOGS.htmmd"
 converted: "2026-05-11T17:31:50.621208"
 ```
 
@@ -24,7 +24,10 @@ Use Case
 * * *
 ### Abstract
 
+```vbscript
 This article discusses the CAAGsiBodyGSAndOGS use case. This use case explains how to create different types of Geometrical Set and instanciate features in them.
+
+```
 
   * **What You Will Learn With This Use Case**
   * **The CAAGsiBodyGSAndOGS Use Case**
@@ -68,7 +71,7 @@ Launch the use case as follows:
 
   * With Windows
 
-        e:>CAAGsiBodyGSAndOGS outputDirectory\CAAGsiBodyGSAndOGS.CATPart
+        e:>CAAGsiBodyGSAndOGS outputDirectory/CAAGsiBodyGSAndOGS.CATPart
 
 ---
   * With UNIX
@@ -89,10 +92,10 @@ where:
 The CAAGsiBodyGSAndOGS use case is made of main program located in the CAAGsiBodyGSAndOGS.m module of the CAAGSMInterfaces.edu framework:
 
 The CAAGsiBodyGSAndOGS use case is made of main program located in the CAAGsiBodyGSAndOGS.m module of the CAAGSMInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAAGSMInterfaces.edu\CAAGsiBodyGSAndOGS.m\`
+Windows | `InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiBodyGSAndOGS.m/`
 
 The CAAGsiBodyGSAndOGS use case is made of main program located in the CAAGsiBodyGSAndOGS.m module of the CAAGSMInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAAGSMInterfaces.edu\CAAGsiBodyGSAndOGS.m\`
+Windows | `InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiBodyGSAndOGS.m/`
 Unix | `InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiBodyGSAndOGS.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -117,11 +120,11 @@ We will now comment each of those sections by looking at the code of the main me
 
 CAAGsiBodyGSAndOGS sample first creates a session and opens the input CATPart.
 
-Note: The important feature of the following sequence of code consists in the required call to the GetPart() method of the CATPrtContainer interfaces. This method allow to load in session the different containers of the part
+Note: The important feature of the following sequence of code consists in the required call to the GetPart(#) method of the CATPrtContainer interfaces. This method allow to load in session the different containers of the part
 
     ...
     // creates a session
-Note: The important feature of the following sequence of code consists in the required call to the GetPart() method of the CATPrtContainer interfaces. This method allow to load in session the different containers of the part
+Note: The important feature of the following sequence of code consists in the required call to the GetPart(#) method of the CATPrtContainer interfaces. This method allow to load in session the different containers of the part
     char *pSessionName = "SampleSession";
     CATSession *pSession = NULL;
     rc = Create_Session(pSessionName, pSession);
@@ -178,10 +181,10 @@ pDoc->QueryInterface(IID_CATInit, (void**)&pDocAsInit) ;
 if ( NULL != pDocAsInit ) {
        piPartContainer =
           (CATIPrtContainer*)pDocAsInit->GetRootContainer("CATIPrtContainer");
-       pDocAsInit->Release(); pDocAsInit = NULL ;
+       pDocAsInit->Release(#); pDocAsInit = NULL ;
 
        if( NULL != piPartContainer ) {
-          CATISpecObject_var spPart = piPartContainer->GetPart() ;
+          CATISpecObject_var spPart = piPartContainer->GetPart(#) ;
           spPrtPart = spPart ;
 
        }
@@ -207,7 +210,7 @@ Then in the initialization phase the wireframe and shape design factory , Part D
 
          spGsmFact = _pFact;
 ```vbscript
-         if (_pFact) _pFact -> Release(); _pFact = NULL;
+         if (_pFact) _pFact -> Release(#); _pFact = NULL;
 
 ```
 
@@ -215,7 +218,7 @@ Then in the initialization phase the wireframe and shape design factory , Part D
 
       // Retrieve the Part Design factory Interface
 spGsmFact = _pFact;
-if (_pFact) _pFact -> Release(); _pFact = NULL;
+if (_pFact) _pFact -> Release(#); _pFact = NULL;
        CATIPrtFactory * _pPrtFact =NULL;
        rc = piPartContainer -> QueryInterface(IID_CATIPrtFactory ,(void**)&_pPrtFact);
 ```vbscript
@@ -223,13 +226,13 @@ if (_pFact) _pFact -> Release(); _pFact = NULL;
 ```
 
            spPrtFact = _pPrtFact;
-           if (_pPrtFact) _pPrtFact -> Release();
+           if (_pPrtFact) _pPrtFact -> Release(#);
            _pPrtFact = NULL;
 
            }
         }
 spPrtFact = _pPrtFact;
-if (_pPrtFact) _pPrtFact -> Release();
+if (_pPrtFact) _pPrtFact -> Release(#);
 _pPrtFact = NULL;
        CATIPrtBooleanFactory * _pBoolPrtFact =NULL;
        rc = piPartContainer -> QueryInterface(IID_CATIPrtBooleanFactory ,(void**)&_pBoolPrtFact);
@@ -239,7 +242,7 @@ _pPrtFact = NULL;
 
             spBoolPrtFact =  _pBoolPrtFact;
 ```vbscript
-            if (_pBoolPrtFact) _pBoolPrtFact -> Release(); _pBoolPrtFact = NULL;
+            if (_pBoolPrtFact) _pBoolPrtFact -> Release(#); _pBoolPrtFact = NULL;
 
 ```
 
@@ -257,17 +260,19 @@ The Type of working tool is given as input in the sample
 Three type of Geometric Feature set can be used for shape design features
 
 >   * Body = Mechanical Tool that allow to aggregate Solid part design feature and  Shape Design features =  Points, Wires and Surfaces
+```vbscript
 >   * Geometrical Set = Shape Design features, Points, Wires, Surfaces and Volumes can be inserted , non ordered set , not rules of creation order in the set is imposed
 >   * Ordered Geometrical Set := Shape Design features, Points, Wires, Surfaces and Volumes can be inserted , elements are ordered and if needed absorbed depending on related defined rule on the feature (implement of CATIInputDescription interface of MecmodInterfaces frameework - for exemple "Split" feature is a modification feature thus its main input is absorbed)
 >
+```
 
 In the use case, we use a generic tool CAAGsiCreateGeometricFeatureSets to create Sets provided in
 
 In the use case, we use a generic tool CAAGsiCreateGeometricFeatureSets to create Sets provided in
-Windows | `InstallRootDirectory\CAAGSMInterfaces.edu\CAAGsiServices.m\`
+Windows | `InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiServices.m/`
 
 In the use case, we use a generic tool CAAGsiCreateGeometricFeatureSets to create Sets provided in
-Windows | `InstallRootDirectory\CAAGSMInterfaces.edu\CAAGsiServices.m\`
+Windows | `InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiServices.m/`
 Unix | `InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiServices.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -285,8 +290,10 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
     // -  TYPE_GeometricalSet
     // -  TYPE_OrderedGeometricalSet
     // -  TYPE_Body
+```vbscript
     iTypeOfTool = TYPE_GeometricalSet ;
     spParentTool = NULL_var ;
+```
     rc = CAAGsiCreateGeometricFeatureSets (spCont, iName , spParentTool , spSpecTool , Diag , UNDER_Part , iTypeOfTool);
 ```vbscript
     if (FAILED(rc)) {
@@ -349,18 +356,20 @@ spParentForTool = spPart ;
         //Retrieve the current tool
 
 else if (iTopLevel==0 && spInputParentTool == NULL_var ) {
-        CATIBasicTool_var spCurrentTool = spPart -> GetCurrentTool();
+        CATIBasicTool_var spCurrentTool = spPart -> GetCurrentTool(#);
 
         spParentForTool = spCurrentTool;
 
         // Read Current feature : A tool has to be insert after the current feature
-CATIBasicTool_var spCurrentTool = spPart -> GetCurrentTool();
+CATIBasicTool_var spCurrentTool = spPart -> GetCurrentTool(#);
 spParentForTool = spCurrentTool;
-        CATISpecObject_var spCurrentFeat = spPart->GetCurrentFeature();
+        CATISpecObject_var spCurrentFeat = spPart->GetCurrentFeature(#);
 
+```vbscript
        // Set up the insertion position in the current tool
        // If he current feature is already a tool position =0 , insert at the end of the tool
-CATISpecObject_var spCurrentFeat = spPart->GetCurrentFeature();
+```
+CATISpecObject_var spCurrentFeat = spPart->GetCurrentFeature(#);
 ```vbscript
        if ( spCurrentFeat != spCurrentTool) {
 
@@ -378,8 +387,10 @@ if ( spCurrentFeat != spCurrentTool) {
     ...
 
 ---
+```vbscript
 Step2 : Check the targeted part is and available parent for the set to create  When the Geometrical features set is about to be insert under a targeted Parent (TopLevel ==0 ), we need to check that the whished type of tool is consistant Ex: A Geometric Set (GS) can not be inserted under a Body .
 Note :When parent is the Part (TopLevel == 1) we are sure to be able to create whished tool
+```
 
      ...
     // Toplevel ==0  // Tools to be insert under a targeted  Parenttool
@@ -391,22 +402,30 @@ Note :When parent is the Part (TopLevel == 1) we are sure to be able to create w
 
 ```vbscript
 if (iTopLevel==0) {
+```vbscript
        CATIMmiNonOrderedGeometricalSet_var spNonOrderedGeomSet = spParentForTool ;
        CATIMmiOrderedGeometricalSet_var spOrderedGeomSet = spParentForTool ;
        CATIMechanicalTool_var spMechanicalSet = spParentForTool ;
        if (iType == 0 ) {
+```
+```vbscript
 ```vbscript
           if ( NULL_var != spNonOrderedGeomSet ) {
+```
 ```
 
                oDiag = 0; // GS a inserer dans un GS ou sous un feature d'un GS
 ```
 
           }
+```vbscript
 CATIMechanicalTool_var spMechanicalSet = spParentForTool ;
 if (iType == 0 ) {
+```
+```vbscript
 ```vbscript
 if ( NULL_var != spNonOrderedGeomSet ) {
+```
 ```
 
 oDiag = 0; // GS a inserer dans un GS ou sous un feature d'un GS
@@ -420,13 +439,17 @@ else {
 cout<<" (CAAGsiCreateGeometricFeatureSets) ERROR , a GS can only be inserted under another GS or directly under the part"<< endl ;
 oDiag =1 ; // GS que l'on veut inserer dans un Body ou OGS
        else if (iType == 1 || iType ==2 ) {
+```vbscript
            if ( NULL_var != spOrderedGeomSet || NULL_var != spMechanicalSet ) {
                oDiag = 0; // Body or OGS , GS a inserer dans un Body or OGS
+```
 
            }
 else if (iType == 1 || iType ==2 ) {
+```vbscript
 if ( NULL_var != spOrderedGeomSet || NULL_var != spMechanicalSet ) {
 oDiag = 0; // Body or OGS , GS a inserer dans un Body or OGS
+```
           else {
                cout<<" (CAAGsiCreateGeometricFeatureSets) ERROR , a body or an OGS can only be inserted under another Body or OGS or directly under the part"<< endl ;
                oDiag =2 ; // Body or GS que l'on veut inserer dans un GS
@@ -436,7 +459,10 @@ oDiag = 0; // Body or OGS , GS a inserer dans un Body or OGS
     ...
 
 ---
+```vbscript
 Step3 : Create the set  Create the set : Body, Geometrical Set or Ordered geometrical Set
+
+```
 
      ...
     // Create of the Tool
@@ -542,15 +568,19 @@ Ex: If the set is a Body , only surfacic extrude can be insert in a Body
     CATGSMFeatureContextType GSDCreationContext ;
 
 CATGSMFeatureContextType GSDCreationContext ;
+```vbscript
     if ( TYPE_GeometricalSet == iTypeOfTool || TYPE_OrderedGeometricalSet == iTypeOfTool ) {
            cout<<" (CAAGsiBodyGSAndOGS) Create volumes / set is GS or OGS " << endl ;
+```
 
            // -- Creation of feature in Volume context
            // Available Feature GSD Extrude / Revol / MultiSections Surfaces / Sweep
            // Note: Input profiles need to be closed curves or surfaces (check is done at feature build)
 ```vbscript
+```vbscript
 if ( TYPE_GeometricalSet == iTypeOfTool || TYPE_OrderedGeometricalSet == iTypeOfTool ) {
 cout<<" (CAAGsiBodyGSAndOGS) Create volumes / set is GS or OGS " << endl ;
+```
            GSDCreationContext= CATGSMVolumeCtxt;
 ```
 

@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAADlgUseCases"
 tags: ["CATIA", "CAADlgAddNotification", "CAASysTechArticles", "CAADocStyleSheets", "CAADlgNotifRemove", "CAADlgContainer", "CAADialog", "CAADlgRemoveNotification", "CAADlgErrorNotification", "CAADocUseCases", "CAADlgModel", "CAADlgNotifAdd", "CATImplementClass", "CAASysSendReceive", "CAADlgNotifError", "CAASysCallbackversusSendReceive", "CAADlgViewScreen", "CAADlgSendReceive", "CAADocRunSample", "CAADlgElement"]
-source_file: "Doc/online/CAADlgUseCases/CAADlgSampleSendReceive.htm"
+source_file: "Doc/online/CAADlgUseCases/CAADlgSampleSendReceive.htmmd"
 converted: "2026-05-11T11:27:02.790993"
 ---
 
@@ -203,16 +203,14 @@ command to send the model object for which the notification was sent.
 
 *Copyright  2000, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 #include &quot;CATNotification.h&quot;
 class CAADlgAddNotification: public CATNotification
 {
   CATDeclareClass;
   public:
-    CAADlgAddNotification();
-    virtual CAADlgAddNotification();
+    CAADlgAddNotification(#);
+    virtual CAADlgAddNotification(#);
   private:
     CAADlgAddNotification(const CAADlgAddNotification&amp;iObjectToCopy);
     CAADlgAddNotification &amp; operator = (const CAADlgAddNotification &amp;iObjectToCopy);
@@ -224,9 +222,9 @@ class CAADlgAddNotification: public CATNotification
 
 CATImplementClass(CAADlgAddNotification, Implementation, CATBaseUnknown,CATNull);
 
-CAADlgAddNotification::CAADlgAddNotification(): CATNotification(CATNotificationDeleteOn)
+CAADlgAddNotification::CAADlgAddNotification(#): CATNotification(CATNotificationDeleteOn)
 {}
-CAADlgAddNotification::CAADlgAddNotification()
+CAADlgAddNotification::CAADlgAddNotification(#)
 {}
 ```
 
@@ -237,14 +235,14 @@ void CAADlgModel::Add(CAADlgElement * iNewElement)
   {
     ... // The element is successfully added
 
-     CAADlgAddNotification * pAddNotification = new CAADlgAddNotification();
-     SendNotification(GetFather(), pAddNotification);
+     CAADlgAddNotification * pAddNotification = new CAADlgAddNotification(#);
+     SendNotification(GetFather(#), pAddNotification);
      pAddNotification = NULL;
   }
   else
   {
-     CAADlgErrorNotification * pErrorNotification = new CAADlgErrorNotification();     
-     SendNotification(GetFather(), pErrorNotification);
+     CAADlgErrorNotification * pErrorNotification = new CAADlgErrorNotification(#);     
+     SendNotification(GetFather(#), pErrorNotification);
      pErrorNotification = NULL;
   }
 }
@@ -256,7 +254,7 @@ CATNotifPropagationMode CAADlgContainer::AnalyseNotification(CATCommand      *iS
 {
   if (iReceive-&gt;IsAKindOf(&quot;CAADlgNotifError&quot;))
   {
-      printf(&quot;The Command Container catches an error \n&quot;);
+      printf(&quot;The Command Container catches an error /n&quot;);
       return(CATNotifDontTransmitToFather);
   }
   else
@@ -267,7 +265,7 @@ CATNotifPropagationMode CAADlgContainer::AnalyseNotification(CATCommand      *iS
 ```
 
 ```vbscript
-void CAADlgViewScreen::WantedFocus() 
+void CAADlgViewScreen::WantedFocus(#) 
 {
   RequestStatusChange(CATCommandMsgRequestSharedMode);
 }
@@ -281,11 +279,11 @@ CATNotifPropagationMode CAADlgViewScreen::AnalyseNotification(CATCommand      *i
        iReceive-&gt;IsAKindOf(&quot;CAADlgRemoveNotification&quot;) )
   {
     CAADlgElement *pElement= NULL;
-    pElement = (CAADlgElement *)iSending-&gt;SendObject(CAADlgElement::ClassName(), iReceive);
+    pElement = (CAADlgElement *)iSending-&gt;SendObject(CAADlgElement::ClassName(#), iReceive);
 
     if ( NULL != pElement) 
     {
-      pElement-&gt;Release(); 
+      pElement-&gt;Release(#); 
       pElement = NULL ;
       return(CATNotifDontTransmitToFather);
       }
@@ -309,7 +307,7 @@ void *CAADlgModel::SendCommandSpecificObject(const char      *iObjectClassNeeded
     if ( _pTheLastElementManipulated-&gt;IsAKindOf(iObjectClassNeeded) )
     {
       pObjectToReturn = _pTheLastElementManipulated;
-      pObjectToReturn-&gt;AddRef();
+      pObjectToReturn-&gt;AddRef(#);
     }
   } 
   return pObjectToReturn ;

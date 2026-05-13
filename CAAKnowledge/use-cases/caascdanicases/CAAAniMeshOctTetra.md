@@ -4,7 +4,7 @@ title: "Creating Octree Tetrahedron Mesh Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAScdAniUseCases", "CAAAniMeshOctTetra"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshOctTetra.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshOctTetra.htmmd"
 converted: "2026-05-11T17:31:51.671739"
 ```
 
@@ -43,21 +43,27 @@ This macro shows you how to create an octree tetrahedron mesh parts. This macro 
 ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
 
+```vbscript
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
+```
 
+```vbscript
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
         End If
 ```
 
@@ -68,8 +74,10 @@ This macro shows you how to create an octree tetrahedron mesh parts. This macro 
 ```vbscript
     ' -----------------------------------------------------------
     ' Open the Analysis document
-    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis")
+```vbscript
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Cube_R13_Freq.CATAnalysis")
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+```
 ```
 
 ```
@@ -90,16 +98,20 @@ Open the Analysis document. The Analysis document is retrieved in the documentat
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisManager = oAnalysisDocument.Analysis
+```
 ```
 
 ```vbscript
 ```vbscript
 ```vbscript
     ' Retrieve the part document from Analysis manager
+```vbscript
     Set oAnalysisLinkedDocument = oAnalysisManager.LinkedDocuments
     Set partDocument = oAnalysisLinkedDocuments.Item(1)
     Set product = partDocument.Product
+```
 ```
 
 ```
@@ -111,9 +123,13 @@ Open the Analysis document. The Analysis document is retrieved in the documentat
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisModels = oAnalysisManager.AnalysisModels
 ```vbscript
+```
+```vbscript
     Set oAnalysisModel = oAnalysisManager.Item(1)
+```
 ```
 
 ```
@@ -122,12 +138,16 @@ Open the Analysis document. The Analysis document is retrieved in the documentat
 ```vbscript
 ```vbscript
     ' Retrieve mesh manager and mesh part
+```vbscript
     Set oAnalysisMeshManager = oAnalysisModel.MeshManager
     Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
     ' Retrieve publications from product and retrieve the published face.
+```
+```vbscript
     Set publications1 = product.Publications
     Set pubEdge = publications1.Item("Edge")
     Set pubPartBody = publications1.Item("PartBody")
+```
 ```
 
 ```
@@ -138,7 +158,7 @@ Open the Analysis document. The Analysis document is retrieved in the documentat
 
 ---
 
-According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. The extraction of pre-defined geometric elements is done with the help of Reference interface. This is equivalent to the selection of a B-Rep elements inside the interactive application. In this macro reference is created from published body and published edge.
+According to the general [ Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. The extraction of pre-defined geometric elements is done with the help of Reference interface. This is equivalent to the selection of a B-Rep elements inside the interactive application. In this macro reference is created from published body and published edge.
 #### Creating Mesh Part and Assigning Values to its Attributes
 
     ...
@@ -148,8 +168,10 @@ According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniToc
 ```
 
 ```vbscript
+```vbscript
     Set octreePart = meshParts.Add ("MSHPartOctree3D")
 ```vbscript
+```
     ' Add reference previously created
 ```
 
@@ -186,9 +208,13 @@ octreePart.AddSupportFromPublication product, pubPartBody
 ```
 
 ```vbscript
+```vbscript
     Set meshspecs1 = octreePart.AnalysisMeshLocalSpecifications
 ```vbscript
+```
+```vbscript
     Set spec1 = meshspecs1.Add("MSHLocalMeshSize")
+```
 ```
 
     spec1.SetAttribute "MSHMeshSizeMag", "1.5 mm"
@@ -209,8 +235,10 @@ octreePart.AddSupportFromPublication product, pubPartBody
     ...
 
 ```vbscript
+```vbscript
 End Sub
 
+```
 ```
 
     ...
@@ -219,7 +247,7 @@ End Sub
 
 To run the macro interactively CATDocView environment variable must be defined. After running the macro the mesh may not be immediately visible, the user has to go to the Afvanced meshing tools workbench to see the mesh.
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

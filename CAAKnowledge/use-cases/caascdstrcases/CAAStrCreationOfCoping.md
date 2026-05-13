@@ -4,7 +4,7 @@ title: "Creating Copings"
 category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CATIA", "CATIAStrFeatureFactory", "CAAScdStrUseCases", "CAAStrCreateCoping"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfCoping.htm"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfCoping.htmmd"
 converted: "2026-05-11T17:31:50.865138"
 ```
 
@@ -45,12 +45,17 @@ CAAStrCreateCoping includes five steps:
 #### Prolog
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
 
+```
 ```
 
 ```vbscript
+```vbscript
     Dim StrWorkbench As StrWorkbench
+```vbscript
+```
 ```vbscript
 ```vbscript
     Dim strFactory As StrObjectFactory
@@ -68,6 +73,7 @@ CAAStrCreateCoping includes five steps:
     Set strMembers = rootProduct.GetTechnologicalObject("StructureMembers")
 
 ```
+```
 
 ```
 
@@ -76,7 +82,9 @@ CAAStrCreateCoping includes five steps:
 #### Retrieving the Factory from Object on which Coping Is to Be Done
 
 ```vbscript
+```vbscript
 Set strMembers = rootProduct.GetTechnologicalObject("StructureMembers")
+```
 ```
 
 This step describes how to get Structure Feature Factory. The Factory object is retrieved by adding object to nibble to the selection list.
@@ -90,7 +98,10 @@ This step describes how to get Structure Feature Factory. The Factory object is 
 ```
 
 ```vbscript
+```vbscript
     Dim PlateToNibble As StrPlate
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set PlateToNibble = strPlates.Item("Deck_014.2")
@@ -98,16 +109,21 @@ This step describes how to get Structure Feature Factory. The Factory object is 
     Dim PlateSelection As Selection
     Set PlateSelection = CATIA.ActiveDocument.Selection
 ```
+```
 
 ```
 
     PlateSelection.Add PlateToNibble
 
+```vbscript
     Dim FactoryForPlate As StrFeatureFactory
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set FactoryForPlate = PlateSelection.FindObject("CATIAStrFeatureFactory")
 
+```
 ```
 
 ```
@@ -117,7 +133,9 @@ This step describes how to get Structure Feature Factory. The Factory object is 
 #### Defining the Limits
 
 ```vbscript
+```vbscript
 Set FactoryForPlate = PlateSelection.FindObject("CATIAStrFeatureFactory")
+```
 ```
 
 The limits are defined by adding them to list of variant which can contain only one element at a time.
@@ -131,7 +149,10 @@ The limits are defined by adding them to list of variant which can contain only 
 ```
 
 ```vbscript
+```vbscript
     Dim Limitplate1 As StrPlate
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set Limitplate1 = strPlates.Item("Shell_002.1")
@@ -146,6 +167,7 @@ The limits are defined by adding them to list of variant which can contain only 
     Set Listoflimits2(0) = LimitSurface1
 
 ```
+```
 
 ```
 
@@ -154,7 +176,9 @@ The limits are defined by adding them to list of variant which can contain only 
 #### Creating Coping
 
 ```vbscript
+```vbscript
 Set Listoflimits2(0) = LimitSurface1
+```
 ```
 
 Create Coping by passing list of limits containing one element and Type. Coping SubType can also be defined later.
@@ -169,17 +193,21 @@ Create Coping by passing list of limits containing one element and Type. Coping 
 
 ```vbscript
 ```vbscript
+```vbscript
     Dim NibblingFeature1, NibblingFeature2 As StrNibblingFeature
 
     Set NibblingFeature1 = FactoryForPlate.AddNibbling(Listoflimits1, "Remove")
+```
 ```
 
 ```vbscript
 ```vbscript
     NibblingFeature1.SubType = "ButtButt"
 
+```vbscript
     Set NibblingFeature2 = FactoryForPlate.AddNibbling(Listoflimits2, "Remove")
     NibblingFeature2.SubType = "CurrCurr"
+```
 
 ```
 
@@ -202,7 +230,10 @@ In Case2: we will apply coping on Member when it is limited by 2 Members and One
 ```
 
 ```vbscript
+```vbscript
     Dim MembertoNibble1 As StrMember
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set MembertoNibble1 = strMembers.Item("BottShell_LStf_003.1")
@@ -210,14 +241,19 @@ In Case2: we will apply coping on Member when it is limited by 2 Members and One
     Dim MemberSelection As Selection
     Set MemberSelection = CATIA.ActiveDocument.Selection
 ```
+```
 
 ```
 
     MemberSelection.Add MembertoNibble1
 
+```vbscript
     Dim FactoryForMember As StrFeatureFactory
 ```vbscript
+```
+```vbscript
     Set FactoryForMember = MemberSelection.FindObject("CATIAStrFeatureFactory")
+```
 ```
 
 ```
@@ -226,6 +262,7 @@ In Case2: we will apply coping on Member when it is limited by 2 Members and One
 ```vbscript
 ```vbscript
     'Define the Limits for MembertoNibble1
+```vbscript
     Dim L1 As StrMember
     Set L1 = strMembers.Item("Shell_VStf_006.1")
 
@@ -243,24 +280,33 @@ In Case2: we will apply coping on Member when it is limited by 2 Members and One
     Set Listoflimits3(0) = L1
     Set Listoflimits4(0) = L2
     'Create Nibbling by defining Type and SubType
+```
+```vbscript
     Dim NibblingFeature3, NibblingFeature4, NibblingFeature5 As StrNibblingFeature
 
     Set NibblingFeature3 = FactoryForMember.AddNibbling(Listoflimits3, "WeldCut")
     Set NibblingFeature4 = FactoryForMember.AddNibbling(Listoflimits4, "LongPoint")
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Set NibblingFeature3 = FactoryForMember.AddNibbling(Listoflimits3, "WeldCut")
+```vbscript
+```
 ```vbscript
 ```vbscript
 Set NibblingFeature4 = FactoryForMember.AddNibbling(Listoflimits4, "LongPoint")
     NibblingFeature4.Type = "ShortPoint"
+```
+```vbscript
     Set NibblingFeature5 = FactoryForMember.AddNibbling(Listoflimits5, "Remove")
 
+```
 ```
 
 ```
@@ -269,7 +315,9 @@ Set NibblingFeature4 = FactoryForMember.AddNibbling(Listoflimits4, "LongPoint")
 
 NibblingFeature4.Type = "ShortPoint"
 ```vbscript
+```vbscript
 Set NibblingFeature5 = FactoryForMember.AddNibbling(Listoflimits5, "Remove")
+```
 ```
 
 In case3 we will define the extrapolation offset for the lateral face of stiffener.
@@ -284,7 +332,10 @@ In case3 we will define the extrapolation offset for the lateral face of stiffen
 ```
 
 ```vbscript
+```vbscript
     Dim MembertoNibble2 As StrMember
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set MembertoNibble2 = strMembers.Item("Deck_TStf_005.1")
@@ -292,14 +343,19 @@ In case3 we will define the extrapolation offset for the lateral face of stiffen
     Dim Member2Sel As Selection
     Set Member2Sel = CATIA.ActiveDocument.Selection
 ```
+```
 
 ```
 
     Member2Sel.Add MembertoNibble2
 
+```vbscript
     Dim FactoryForMember2 As StrFeatureFactory
 ```vbscript
+```
+```vbscript
     Set FactoryForMember2 = Member2Sel.FindObject ("CATIAStrFeatureFactory")
+```
 ```
 
 ```
@@ -308,14 +364,18 @@ In case3 we will define the extrapolation offset for the lateral face of stiffen
 ```vbscript
 ```vbscript
     'Define the Limits for MembertoNibble2
+```vbscript
     Dim L4 As StrPlate
     Set L4 = strPlates.Item("Deck_014.2")
 
     Dim ListofLimits6(0) As Variant
     Set ListofLimits6(0) = L4
     'Create Nibbling by defining the Extrapolation Offset
+```
+```vbscript
     Dim NibblingFeature6 As StrNibblingFeature
     Set NibblingFeature6 = FactoryForMember2.AddNibbling(ListofLimits6, "Remove")
+```
 ```
 
 ```
@@ -326,8 +386,10 @@ In case3 we will define the extrapolation offset for the lateral face of stiffen
 ```vbscript
 ```vbscript
 'Create Nibbling by defining the Extrapolation Offset
+```vbscript
 Dim NibblingFeature6 As StrNibblingFeature
 Set NibblingFeature6 = FactoryForMember2.AddNibbling(ListofLimits6, "Remove")
+```
 ```
 
 ```
@@ -336,7 +398,7 @@ Set NibblingFeature6 = FactoryForMember2.AddNibbling(ListofLimits6, "Remove")
 
 ```
 
-![End Task Icon](../CAAScrBase/images/aendtask.gif)
+![End Task Icon](./assets/images/aendtask.gif)
 
 [Top]
 

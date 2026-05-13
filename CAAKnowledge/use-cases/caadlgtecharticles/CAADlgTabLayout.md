@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Arranging Dialog Objects Using Tabulations"
-category: "use-case"
+category: tech-article
 module: "CAADlgTechArticles"
 tags: []
-source_file: "Doc/online/CAADlgTechArticles/CAADlgTabLayout.htm"
+source_file: "Doc/online/CAADlgTechArticles/CAADlgTabLayout.htmmd"
 converted: "2026-05-11T17:17:56.095914"
 ```
 
@@ -214,7 +214,7 @@ Below is an example of such a window, showing the tabulation lines. The text pri
 
 Tabulation lines are always declared, for a given container, from left to right for horizontal tabulation lines (0 and 1 in the figure) and from top to bottom for vertical ones (0, 1, and 2 in the figure). Note that each container contained in the window, that is Frame1, Frame2, and TabContainer, has implicit tabulation lines, one vertical and one horizontal. The controls located in these containers are laid out horizontally from left to right by default along the horizontal tabulation lines.
 
-The size of each container or control is determined using its actual contents. The largest sizes are used to place tabulation lines. For example, TabContainer has the largest width among the objects attached along the vertical tabulation line \xb0 0 and thus this width determines the space allocated between the vertical tabulation lines 0 and 1\. Space remain available beside Frame1, Slider and Spinner.
+The size of each container or control is determined using its actual contents. The largest sizes are used to place tabulation lines. For example, TabContainer has the largest width among the objects attached along the vertical tabulation line /xb0 0 and thus this width determines the space allocated between the vertical tabulation lines 0 and 1/. Space remain available beside Frame1, Slider and Spinner.
 
 The code to achieve that is as follows:
 

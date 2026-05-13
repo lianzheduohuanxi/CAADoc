@@ -4,13 +4,13 @@ title: "CAA V5R16 News Highlights"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIParameterEditor", "CATIIniSearchSymbolCriterion", "CATIXMLSAXFactory", "CATIBehOperationManagement", "CATIEwrFilter", "CATIxPDMSendToService", "CATIXMLDOMDocumentBuilder", "CATIVizVisualizationSettingAtt", "CATIVariableManagement", "CATICafSearchSettingAtt", "CATIA"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenNewsR16.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenNewsR16.htmmd"
 converted: "2026-05-11T17:33:47.006273"
 ```
 
 ---
 tags: ["CATIParameterEditor", "CATIIniSearchSymbolCriterion", "CATIXMLSAXFactory", "CATIBehOperationManagement", "CATIEwrFilter", "CATIxPDMSendToService", "CATIXMLDOMDocumentBuilder", "CATIVizVisualizationSettingAtt", "CATIVariableManagement", "CATICafSearchSettingAtt", "CATIA"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenNewsR16.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenNewsR16.htmmd"
 converted: "2026-05-11T17:33:47.006273"
 CAA V5 Encyclopedia |  |  CAA V5R16 News Highlights _News in CAA V5R16 C++ and Java_
 

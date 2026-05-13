@@ -4,7 +4,7 @@ title: "CAAAniMesh1D.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAScdAniUseCases", "CAAAniMesh1D"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMesh1DSource.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMesh1DSource.htmmd"
 converted: "2026-05-11T17:31:51.604045"
 ```
 
@@ -31,7 +31,10 @@ converted: "2026-05-11T17:31:51.604045"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
+
+```
 
 ```
 
@@ -40,17 +43,21 @@ converted: "2026-05-11T17:31:51.604045"
 ```vbscript
     '-----------------------------------------------------------
     'Optional: allows to find the sample wherever it's installed
+```vbscript
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
     Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
 ```vbscript
     End If
     '-----------------------------------------------------------
@@ -67,46 +74,60 @@ End If
 ```vbscript
 '-----------------------------------------------------------
     'Open the CATAnalysis Document
-    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Beam.CATAnalysis")
+```vbscript
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Beam.CATAnalysis")
+```
 ```
 
 ```
 
 ```
 
+```vbscript
 ```vbscript
 ```vbscript
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ```
+```
 
 ```
 
 ```vbscript
+```vbscript
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```vbscript
+```
     'Retrieve the Analysis Managar and Analysis Model
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Set oAnalysisManager = oAnalysisDocument.Analysis
+```
 ```
 
 ```vbscript
 ```vbscript
 ```vbscript
     'Retrieve the part document and product
+```vbscript
     Set oAnalysisLinkedDocuments = oAnalysisManager.LinkedDocuments
     Set partDocument = oAnalysisLinkedDocuments.Item(1)
     Set product = partDocument.Product
     'Retrieve the analysis model from list of models
+```
+```vbscript
     Set oAnalysisModels = oAnalysisManager.AnalysisModels
     Set oAnalysisModel = oAnalysisModels.Item(1)
     'Retrieve mesh manager and mesh part
+```
+```vbscript
     Set oAnalysisMeshManager = oAnalysisModel.MeshManager
     Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
+```
 ```
 
 ```
@@ -118,13 +139,19 @@ Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```
 
 ```vbscript
+```vbscript
     Set publications = product.Publications
+```vbscript
+```
 ```vbscript
 ```vbscript
     Set pubLine = publications.Item("Line.3")
     'Add the new beam mesh part to the list of mesh parts
+```
+```vbscript
     Set beamPart = oAnalysisMeshParts.Add("MSHPart1D")
 
+```
 ```
 
 ```
@@ -135,7 +162,9 @@ Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```vbscript
 ```vbscript
 'Add the new beam mesh part to the list of mesh parts
+```vbscript
 Set beamPart = oAnalysisMeshParts.Add("MSHPart1D")
+```
 ```
 
 ```
@@ -159,6 +188,8 @@ Set beamPart = oAnalysisMeshParts.Add("MSHPart1D")
 ```
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

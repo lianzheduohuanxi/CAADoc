@@ -4,13 +4,13 @@ title: "The XML IdentityCard Special File"
 category: "use-case"
 module: "CAABtlTechArticles"
 tags: []
-source_file: "Doc/online/CAABtlTechArticles/CAABtlMANIdCardXMLV5.htm"
+source_file: "Doc/online/CAABtlTechArticles/CAABtlMANIdCardXMLV5.htmmd"
 converted: "2026-05-11T17:33:46.062618"
 ```
 
 ---
 tags: []
-source_file: "Doc/online/CAABtlTechArticles/CAABtlMANIdCardXMLV5.htm"
+source_file: "Doc/online/CAABtlTechArticles/CAABtlMANIdCardXMLV5.htmmd"
 converted: "2026-05-11T17:33:46.062618"
 RADE |  Multi-Workspace Application Builder |  The XML IdentityCard Special File _Purpose and use_
 

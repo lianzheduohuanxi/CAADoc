@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CAAInfCreateDocument", "CAAScrBase", "CATIA"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfCreateDocumentSource.htm"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfCreateDocumentSource.htmmd"
 converted: "2026-05-11T11:27:02.699521"
 ---
 
@@ -19,18 +19,22 @@ Option Explicit
 '   CATIA Level:  V5R7 
 ' *****************************************************************************
 
-Sub CATMain()
+```vbscript
+Sub CATMain(#)
+
+```
 
     'Create a new part document.
     'Add the new document to the end of the collection of documents.
     'Create and display a new window for the new document.
     'Activate the new document and the window.
+```vbscript
     Dim oNewPartDoc As Document
     Set oNewPartDoc = CATIA.Documents.Add("Part")
    
 End Sub
 
-
+```
 
 ```vbscript
 Option Explicit
@@ -45,15 +49,19 @@ Option Explicit
 '   CATIA Level:  V5R7 
 ' *****************************************************************************
 
+```vbscript
+Sub CATMain(#)
 
-Sub CATMain()
+```
 
     'Create a new part document.
     'Add the new document to the end of the collection of documents.
     'Create and display a new window for the new document.
     'Activate the new document and the window.
+```vbscript
     Dim oNewPartDoc As Document
     Set oNewPartDoc = CATIA.Documents.Add("Part")
    
 End Sub
+```
 ```

@@ -1,11 +1,11 @@
 ---
 ```vbscript
 title: "CATxPDMInterfaces Framework Modifications in V5R18"
-category: "use-case"
+category: use-case
 module: "CAACenAPIChangesR18"
 version: "V5R18"
 tags: ["CATIxPDMProductItem"]
-source_file: "Doc/online/CAACenAPIChangesR18/CATxPDMInterfaces.htm"
+source_file: "Doc/online/CAACenAPIChangesR18/CATxPDMInterfaces.htmmd"
 converted: "2026-05-11T17:33:51.453533"
 ```
 

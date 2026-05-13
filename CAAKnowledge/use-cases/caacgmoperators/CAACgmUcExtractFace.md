@@ -4,13 +4,13 @@ title: "Extract a Face from a Solid"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsExtractFace", "CAAGMOperatorsInterfaces", "CATICGMTopExtractFace"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcExtractFace.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcExtractFace.htmmd"
 converted: "2026-05-11T17:33:48.913581"
 ```
 
 ---
 tags: ["CAAGMOperatorsExtractFace", "CAAGMOperatorsInterfaces", "CATICGMTopExtractFace"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcExtractFace.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcExtractFace.htmmd"
 converted: "2026-05-11T17:33:48.913581"
 Extract a Face from a Solid
 
@@ -34,18 +34,20 @@ With the code below:
     ...
 With the code below:
 CATICGMTopExtractFace* pExtractFaceOp = CATCGMCreateTopExtractFace(pGeomFactory, &topData;, pFace);
-    pExtractFaceOp->Run();
-    CATBody* pExtractFaceBody = pExtractFaceOp->GetResult();
-    pExtractFaceOp->Release();
+    pExtractFaceOp->Run(#);
+    CATBody* pExtractFaceBody = pExtractFaceOp->GetResult(#);
+    pExtractFaceOp->Release(#);
     pExtractFaceOp = NULL;
 
     ...
-pExtractFaceOp->Run();
-CATBody* pExtractFaceBody = pExtractFaceOp->GetResult();
-pExtractFaceOp->Release();
+pExtractFaceOp->Run(#);
+CATBody* pExtractFaceBody = pExtractFaceOp->GetResult(#);
+pExtractFaceOp->Release(#);
 pExtractFaceOp = NULL;
+```vbscript
     CATLONG32 ioMaxDim = -1;
     CATBoolean ioHomogeneity = FALSE;
+```
     pExtractFaceBody->GetCellsHighestDimension(ioMaxDim, ioHomogeneity);
     CATLISTP(CATCell) faces;
     pExtractFaceBody->GetAllCells(faces, 2);
@@ -56,15 +58,20 @@ pExtractFaceBody->GetCellsHighestDimension(ioMaxDim, ioHomogeneity);
 CATLISTP(CATCell) faces;
 pExtractFaceBody->GetAllCells(faces, 2);
 ```vbscript
-    if (2 != ioMaxDim || 1 != faces.Size())
+```vbscript
+    if (2 != ioMaxDim || 1 != faces.Size(#))
+
+```
 
 ```
 
      {
         ::CATCloseCGMContainer(pGeomFactory);
 pExtractFaceBody->GetAllCells(faces, 2);
-if (2 != ioMaxDim || 1 != faces.Size())
 ```vbscript
+if (2 != ioMaxDim || 1 != faces.Size(#))
+```vbscript
+```
         return (1);
 
 ```

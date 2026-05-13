@@ -4,7 +4,7 @@ title: "Creating an ArrangementBoundary Object"
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CAAArrCreateBoundary", "CATIA", "CAAScdArrUseCases"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateBoundary.htm"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateBoundary.htmmd"
 converted: "2026-05-11T17:31:51.537121"
 ```
 
@@ -49,12 +49,16 @@ This macro shows you how to create an ArrangementBoundary object under a Product
 ```
 
 ```vbscript
+```vbscript
        Dim objProdDoc        As ProductDocument
+```vbscript
+```
 ```vbscript
 ```vbscript
        Dim objRootProd       As Product
        Set objProdDoc      = CATIA.Documents.Add("Product")
        Set objRootProd     = objProdDoc.Product
+```
 ```
 
 ```
@@ -80,9 +84,13 @@ Once the new Product document has been created, fetch the _ArrangementProduct_ a
 ```
 
 ```vbscript
+```vbscript
        Dim objMove           As Move
 ```vbscript
+```
+```vbscript
        Set objMove      = objRootProd.Move
+```
 ```
 
 ```
@@ -92,8 +100,10 @@ Once the new Product document has been created, fetch the _ArrangementProduct_ a
 ```vbscript
        '----------------------------------------------
        ' Get ArrangementProduct
+```vbscript
        Dim objArrProd        As ArrangementProduct
        Set objArrProd   = objRootProd.GetTechnologicalObject("ArrangementProduct")
+```
 ```
 
 ```
@@ -118,21 +128,27 @@ The _ArrangementBoundaries_ object is a collection object that manages _Arrangem
 ```
 
 ```vbscript
+```vbscript
        Dim dblBoundaryPoints(75)      As Double
+```vbscript
+```
 ```vbscript
 ```vbscript
        Dim dblMathDirection(3)        As Double
        Dim objArrBoundary             As ArrangementBoundary
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Dim objArrBoundary             As ArrangementBoundary
 ```vbscript
+```
        dblBoundaryPoints(0)   =  300.0
        dblBoundaryPoints(1)   =  100.0
        dblBoundaryPoints(2)   =  0.0
@@ -171,8 +187,10 @@ dblBoundaryPoints(5)   =  1.25
 ```
 
 ```vbscript
+```vbscript
        Set objArrBoundary             = objArrProd.ArrangementBoundaries.AddBoundary(objMove, _
                                                                                      dblBoundaryPoints, _
+```
                                                                                      dblMathDirection)
 ```
 
@@ -198,8 +216,10 @@ The newly created _ArrangementBoundary_ object is visualized as a curve and does
 ```
 
 ```vbscript
+```vbscript
        Dim intK  As Integer
 ```vbscript
+```
        For intK = 1 To objArrBoundary.Nodes.Count
 ```
 
@@ -216,13 +236,15 @@ Here we define a rectangular section and change the visualization mode to `CatAr
 
     ...
 ```vbscript
+```vbscript
      End Sub
 
+```
 ```
 
 ---
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

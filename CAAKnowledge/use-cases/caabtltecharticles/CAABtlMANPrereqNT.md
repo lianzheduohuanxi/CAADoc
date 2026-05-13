@@ -4,13 +4,13 @@ title: "The Prerequisites on Windows NT"
 category: "use-case"
 module: "CAABtlTechArticles"
 tags: []
-source_file: "Doc/online/CAABtlTechArticles/CAABtlMANPrereqNT.htm"
+source_file: "Doc/online/CAABtlTechArticles/CAABtlMANPrereqNT.htmmd"
 converted: "2026-05-11T17:33:46.125203"
 ```
 
 ---
 tags: []
-source_file: "Doc/online/CAABtlTechArticles/CAABtlMANPrereqNT.htm"
+source_file: "Doc/online/CAABtlTechArticles/CAABtlMANPrereqNT.htmmd"
 converted: "2026-05-11T17:33:46.125203"
 RADE |  Multi-Workspace Application Builder |  The Prerequisites on Windows NT _Explicitly declaring DLL_
 

@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Drafting Modeler Overview"
-category: "concept"
+category: tech-article
 module: "CAADriTechArticles"
 tags: ["CATISketchEditor", "CATIDftDrawing", "CATIABase", "CATIADrawingComponent", "CATIDrwAnnotationFactory", "CATI2DWFFactory", "CATIGenerSpec", "CATIDrwAnnotation", "CATIDrwAddIn", "CATI2Dxxx", "CATIDrwFactory", "CATIView", "CATIDftMultiSheet", "CATIDrwAnnotationComponent", "CATIDftGenViewFactory", "CATI2DConstraintFactory", "CAADraftingInterfaces", "CATISketch", "CATIDftSheet"]
-source_file: "Doc/online/CAADriTechArticles/CAADriDraftingOverView.htm"
+source_file: "Doc/online/CAADriTechArticles/CAADriDraftingOverView.htmmd"
 converted: "2026-05-11T17:31:51.038395"
 ```
 

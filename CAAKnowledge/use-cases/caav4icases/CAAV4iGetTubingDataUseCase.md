@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Retrieving Data of an Element of a V4 Document"
-category: "use case"
+category: use-case case"
 module: "CAAV4iUseCases"
 tags: ["CAADoc", "CAACATIAV4Interfaces", "CAAV4iEduV4GetTubingData", "CAAV4iEduGetTubingData", "CAAV4iEduV4DataAccess", "CAAV4iGetTubingData", "CATIAV4Interfaces"]
-source_file: "Doc/online/CAAV4iUseCases/CAAV4iGetTubingDataUseCase.htm"
+source_file: "Doc/online/CAAV4iUseCases/CAAV4iGetTubingDataUseCase.htmmd"
 converted: "2026-05-11T17:33:45.764869"
 ```
 
@@ -73,7 +73,7 @@ Where:
 
 You can use the model TUBING`.model` and TUBING2.model located in `CAADoc/``CAA``CATIAV4Interfaces``.edu/CNext/resources/graphic`
 
-  * Windows : `InstallRootDirectory\CAADoc\CAA``CATIAV4Interfaces``.edu\CNext\resources\graphic`
+  * Windows : `InstallRootDirectory/CAADoc/CAA``CATIAV4Interfaces``.edu/CNext/resources/graphic`
   * Unix : `InstallRootDirectory/CAADoc/CAA``CATIAV4Interfaces``.edu/CNext/resources/graphic`
 
 [Top]
@@ -81,10 +81,10 @@ You can use the model TUBING`.model` and TUBING2.model located in `CAADoc/``CAA`
 
 The CAAV4iEduGetTubingData use case is made of a single file located in the CAAV4iEduGetTubingData.m module of the CAACATIAV4Interfaces.edu framework:
 The CAAV4iEduGetTubingData use case is made of a single file located in the CAAV4iEduGetTubingData.m module of the CAACATIAV4Interfaces.edu framework:
-  Windows | `InstallRootDirectory\`CAACATIAV4Interfaces`.edu\`CAAV4iEduGetTubingData`.m\`
+  Windows | `InstallRootDirectory/`CAACATIAV4Interfaces`.edu/`CAAV4iEduGetTubingData`.m/`
 
 The CAAV4iEduGetTubingData use case is made of a single file located in the CAAV4iEduGetTubingData.m module of the CAACATIAV4Interfaces.edu framework:
-Windows | `InstallRootDirectory\`CAACATIAV4Interfaces`.edu\`CAAV4iEduGetTubingData`.m\`
+Windows | `InstallRootDirectory/`CAACATIAV4Interfaces`.edu/`CAAV4iEduGetTubingData`.m/`
 Unix | `InstallRootDirectory/`CAACATIAV4Interfaces`.edu/`CAAV4iEduGetTubingData`.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -173,7 +173,7 @@ CATV4iGisels retrieves the first element of the set _setElem_.
 
 ```vbscript
 If _element_ has been correctly created by CATV4iGisels, the data can be retrieved.
-_element- >Id()_ retrieves the identificator of the _element_ ,
+_element- >Id(#)_ retrieves the identificator of the _element_ ,
 _element- >GetType(...)_ retrieves the primary and the secondary types of _element_
 _...CATV4iGirlay(..._ retrieves the number of the layer
 _...CATV4iGirvis(..._ retrieves graphical data about the element : show, pickable, color, blink, steady, thickness, line type.

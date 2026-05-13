@@ -4,7 +4,7 @@ title: "Creating a Point on a Wire"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGMModelInterfaces", "CATICGMBodyFromLengthOnWire", "CAAGMModelBodyfromLengthOnWire"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcTopGMModelPtOnWire.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcTopGMModelPtOnWire.htmmd"
 converted: "2026-05-11T17:33:48.597676"
 ```
 
@@ -70,8 +70,8 @@ piGeomFactory,
 pWire,
 pVertex, // the origin vertex (in purple)
 300.0);  // the arc length in mm
-    pPointOnWire->Run();
-    CATBody* pResultBody = pPointOnWire->GetResult();
+    pPointOnWire->Run(#);
+    CATBody* pResultBody = pPointOnWire->GetResult(#);
 
     ---
 

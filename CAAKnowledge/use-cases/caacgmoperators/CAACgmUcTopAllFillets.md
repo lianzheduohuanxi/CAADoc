@@ -4,13 +4,13 @@ title: "Creating Fillets"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CAATopVariableFillets", "CAATopConstantFillets", "CATICGMObject", "CAAGMModelGemBrowser", "CATICGMDynFillet", "CAATopRollingEdges", "CAATopFilletsMain", "CAAGMOperatorsAllFillets"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopAllFillets.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopAllFillets.htmmd"
 converted: "2026-05-11T17:33:49.071438"
 ```
 
 ---
 tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CAATopVariableFillets", "CAATopConstantFillets", "CATICGMObject", "CAAGMModelGemBrowser", "CATICGMDynFillet", "CAATopRollingEdges", "CAATopFilletsMain", "CAAGMOperatorsAllFillets"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopAllFillets.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopAllFillets.htmmd"
 converted: "2026-05-11T17:33:49.071438"
 Fillets
 
@@ -34,7 +34,7 @@ What You Will Learn With This Use Case This use case is intended to help you use
 What You Will Learn With This Use Case This use case is intended to help you use fillets in geometric modeler applications. The CAAGMOperatorsAllFillets Use Case CAAGMOperatorsAllFillets is a use case of the CAAGMOperatorsInterfaces.edu framework that illustrates GMOperatorsInterfaces framework capabilities. What Does CAAGMOperatorsAllFillets Do? CAAGMOperatorsAllFillets creates two solid cuboids, performs a Boolean union of the cubes, then creates fillets on the resulting solid. ![Constant Radius Fillet](images/CAACgmTopfilletconstant.gif) | The CAATopConstantFillets function which is defined in the CAATopConstantFillets.cpp file creates a constant fillet along the edges common to both cubes.
  The CAATopRollingEdges function which is defined in the CAATopRollingEdges.cpp file creates a fillet along the common edges and for specified rolling edges.
  The CAATopVariableFillets function which is defined in the CAATopVariableFillets.cpp file creates a variable radius fillet on one edge of the solid.
-How to Launch CAAGMOperatorsAllFillets To launch CAAGMOperatorsAllFillets, you will need to set up the build time environment, then compile CAAGMOperatorsAllFillets.m along with its prerequisites, set up the run time environment, and then execute the use case [1]. If you simply type CAAGMOperatorsAllFillets with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsAllFillets e/Fillets.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMOperatorsAllFillets Code The CAAGMOperatorsAllFillets use case is made of a main named CAATopFilletsMain.cpp located in the CAAGMOperatorsAllFillets.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsAllFillets.m\` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. Step-by-Step There are seven steps in CAATopFilletsMain.cpp:
+How to Launch CAAGMOperatorsAllFillets To launch CAAGMOperatorsAllFillets, you will need to set up the build time environment, then compile CAAGMOperatorsAllFillets.m along with its prerequisites, set up the run time environment, and then execute the use case [1]. If you simply type CAAGMOperatorsAllFillets with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsAllFillets e/Fillets.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMOperatorsAllFillets Code The CAAGMOperatorsAllFillets use case is made of a main named CAATopFilletsMain.cpp located in the CAAGMOperatorsAllFillets.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder/CAADoc/CAAGMOperatorsInterfaces.edu/CAAGMOperatorsAllFillets.m/` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. Step-by-Step There are seven steps in CAATopFilletsMain.cpp:
     1. Creating the Geometry Factory
     2. Creating the Solid Cuboids
     3. Performing a Boolean Union on the Cuboids
@@ -44,7 +44,7 @@ How to Launch CAAGMOperatorsAllFillets To launch CAAGMOperatorsAllFillets, you w
     7. Writing the Model and Closing the Container
 Creating the Geometry Factory The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
 
-    CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**() ;
+    CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**(#) ;
 ```vbscript
     if (NULL==piGeomFactory) return (1);
 
@@ -159,7 +159,7 @@ ofstream filetowrite(pfileName, ios::binary ) ;
     #endif
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
-       filetowrite.close();
+       filetowrite.close(#);
      }
 
      //

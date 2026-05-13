@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAVseUseCases"
 tags: ["CAADkoImplementUE", "CATImplementClass", "CAAEDkoUserExitOrderVersioning", "CAADocStyleSheets", "CAAEDkoUserExitVersionToUpdate", "CATIVpmAttribute", "CAADocRunSample", "CATIVPMObjectVersion", "CAADocUseCases", "CAAVPMDesktopObjects", "CATIAVPMObjectVersion", "CAAVPMSTEPExchanges"]
-source_file: "Doc/online/CAAVseUseCases/CAAVseImplementUE.htm"
+source_file: "Doc/online/CAAVseUseCases/CAAVseImplementUE.htmmd"
 converted: "2026-05-11T11:27:02.799516"
 ---
 
@@ -42,10 +42,15 @@ the import tool will depend on this information.
 To launch CAADkoImplementUE, you will need to:
 
   
+```vbscript
 - Set up the build time environment, then compile CAADkoImplementUE.m module
     along with its prerequisites
+```
   
+```vbscript
 - Set up the run time environment
+
+```
 
 This is described in [1].
 
@@ -204,8 +209,6 @@ by the import tool.
 
 *Copyright  2001, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 #include &quot;CATBaseUnknown.h&quot;
 class CATUnicodeString;
@@ -215,8 +218,8 @@ class CAAEDkoUserExitOrderVersioning : public CATBaseUnknown
   CATDeclareClass;
   public:
   
-    CAAEDkoUserExitOrderVersioning();
-    virtual ~CAAEDkoUserExitOrderVersioning();
+    CAAEDkoUserExitOrderVersioning(#);
+    virtual ~CAAEDkoUserExitOrderVersioning(#);
 
     HRESULT IsBeforeThan( const CATUnicodeString &amp; iVersion1,
                           const CATUnicodeString &amp; iVersion2 );
@@ -243,8 +246,8 @@ CATImplementClass(CAAEDkoUserExitOrderVersioning,
 #include &quot;TIE_VPMIExUEOrderVersioning.h&quot;
 TIE_VPMIExUEOrderVersioning(CAAEDkoUserExitOrderVersioning);
 
-CAAEDkoUserExitOrderVersioning::CAAEDkoUserExitOrderVersioning() {}
-CAAEDkoUserExitOrderVersioning::~CAAEDkoUserExitOrderVersioning() {}
+CAAEDkoUserExitOrderVersioning::CAAEDkoUserExitOrderVersioning(#) {}
+CAAEDkoUserExitOrderVersioning::~CAAEDkoUserExitOrderVersioning(#) {}
 
 //-----------------------------------------------------------------------------
 
@@ -276,8 +279,8 @@ class CAAEDkoUserExitVersionToUpdate : public CATBaseUnknown
 
   public: 
 
-    CAAEDkoUserExitVersionToUpdate();
-    virtual ~CAAEDkoUserExitVersionToUpdate();
+    CAAEDkoUserExitVersionToUpdate(#);
+    virtual ~CAAEDkoUserExitVersionToUpdate(#);
 
     HRESULT RightToUpdate(const CATIAVPMObjectVersion* iObjectVersion);
     HRESULT GenerateTheNextV_Version(const CATUnicodeString iCurrentV_Version,
@@ -310,8 +313,8 @@ CATImplementClass(CAAEDkoUserExitVersionToUpdate,
 #include &quot;TIE_VPMIExUEVersionToUpdate.h&quot;
 TIE_VPMIExUEVersionToUpdate(CAAEDkoUserExitVersionToUpdate);
 
-CAAEDkoUserExitVersionToUpdate::CAAEDkoUserExitVersionToUpdate() {}
-CAAEDkoUserExitVersionToUpdate::~CAAEDkoUserExitVersionToUpdate() {}
+CAAEDkoUserExitVersionToUpdate::CAAEDkoUserExitVersionToUpdate(#) {}
+CAAEDkoUserExitVersionToUpdate::~CAAEDkoUserExitVersionToUpdate(#) {}
 ...
 ```
 
@@ -330,7 +333,7 @@ HRESULT CAAEDkoUserExitVersionToUpdate::RightToUpdate(const CATIAVPMObjectVersio
     CORBAAny oValue;
     // Get the status
     hr = piVpmAttributeOnObject-&gt;GetValue(&quot;V_status&quot;, oValue);
-    piVpmAttributeOnObject-&gt;Release();
+    piVpmAttributeOnObject-&gt;Release(#);
     piVpmAttributeOnObject = NULL;
     if (SUCCEEDED(hr))
     {

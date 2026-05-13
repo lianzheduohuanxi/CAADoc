@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Basic Topological Operators"
-category: "use case"
+category: use-case case"
 module: "CAATopUseCases"
 tags: ["CAAATopSpline", "CAAGemBrowser", "CATICGMObject", "CAATopSpline", "CAABopSpine", "CAATopologicalOperators", "CATICGMContainer"]
-source_file: "Doc/online/CAATopUseCases/CAATopSpline.htm"
+source_file: "Doc/online/CAATopUseCases/CAATopSpline.htmmd"
 converted: "2026-05-11T17:31:50.766842"
 ```
 
@@ -83,7 +83,7 @@ CAATopSpline is a use case of the CAATopologicalOperators.edu framework that ill
 [Top]
 #### What Does CAATopSpline Do
 
-Fig. 1: The created objects of the CAATopSpline use case ![Spline1.gif \(29988 bytes\)](images/Spline1.gif) | This use case details the two ways of creation of basic bodies.
+Fig. 1: The created objects of the CAATopSpline use case ![Spline1.gif /(29988 bytes/)](images/Spline1.gif) | This use case details the two ways of creation of basic bodies.
 
   * `SplineBody` is directly created with a global function
   * `SplineBody2` is created by an operator. Tangency constraints are imposed on the extremities. The operator also returns the tangents to all the passing points, that are used to create lines.
@@ -114,10 +114,10 @@ This NCGM file can be displayed using the CAAGemBrowser use case.
 This NCGM file can be displayed using the CAAGemBrowser use case.
 The CAATopSpline use case is made of a main named CAATopSpline.cpp located in the CAATopSpline.m module of the CAATopologicalOperators.edu framework:
 
-Windows | `InstallRootDirectory\CAATopologicalOperators.edu\CAATopSpline.m\`
+Windows | `InstallRootDirectory/CAATopologicalOperators.edu/CAATopSpline.m/`
 
 The CAATopSpline use case is made of a main named CAATopSpline.cpp located in the CAATopSpline.m module of the CAATopologicalOperators.edu framework:
-Windows | `InstallRootDirectory\CAATopologicalOperators.edu\CAATopSpline.m\`
+Windows | `InstallRootDirectory/CAATopologicalOperators.edu/CAATopSpline.m/`
 Unix | `InstallRootDirectory/CAATopologicalOperators.edu/CAATopSpline.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -147,7 +147,7 @@ There are six steps in CAATopSpline.cpp:
 The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
 
 The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
-    CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**() ;
+    CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**(#) ;
 ```vbscript
     if (NULL==piGeomFactory) return (1);
 
@@ -174,7 +174,7 @@ _//
     CATBody ** aPoints = new CATBody * [nbpts];
 
     _// defines an open configuration for the operator_
-    CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration();
+    CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration(#);
     _// defines the data of the operator: configuration + journal_
     CATTopData topdata(pConfig,NULL);
 
@@ -278,10 +278,10 @@ CATCloseCGMContainer(piGeomFactory);  _// close the factory_ _and return_
 return(2);
 ```
 
-    pSplineOp->**Run**();
+    pSplineOp->**Run**(#);
 
     _// c- get the result_
-    CATBody * piSplineBody2 = pSplineOp->**GetResult**();
+    CATBody * piSplineBody2 = pSplineOp->**GetResult**(#);
 
     _// also get the computed tangents ._
     const CATMathVector *  pComputedTangents=NULL;
@@ -296,13 +296,13 @@ return(2);
 _//Create topological lines representing the tangents_
 CATBody * aTgtBody[nbpts];
 for (int i=0;i <nbpts; i++)
-      double length = pComputedTangents[i].Norm();
+      double length = pComputedTangents[i].Norm(#);
       aTgtBody[i] = **::CATCreateTopLineFromDirection**(piGeomFactory,
 
                                                     &topdata,
 ```vbscript
 for (int i=0;i <nbpts; i++)
-double length = pComputedTangents[i].Norm();
+double length = pComputedTangents[i].Norm(#);
 aTgtBody[i] = **::CATCreateTopLineFromDirection**(piGeomFactory,
                                                     aPoints[i],
                                                     pComputedTangents[i],
@@ -320,7 +320,7 @@ length);
 length);
 _// d- delete the operator_
 ```vbscript
-    pSplineOp=NULL;**_// Releases the configuration_**pConfig- >Release();**
+    pSplineOp=NULL;**_// Releases the configuration_**pConfig- >Release(#);**
 
 ```
 
@@ -359,7 +359,7 @@ double l1=0.;
 if (NULL != pLengthOp)
 ```vbscript
 ```vbscript
-     l1=pLengthOp->**GetDistance**();
+     l1=pLengthOp->**GetDistance**(#);
 
 ```
 
@@ -369,14 +369,14 @@ if (NULL != pLengthOp)
 double l1=0.;
 if (NULL != pLengthOp)
 ```vbscript
-l1=pLengthOp->**GetDistance**();
+l1=pLengthOp->**GetDistance**(#);
 ```
 
      pLengthOp = NULL;**
 
     }
 
-l1=pLengthOp->**GetDistance**();
+l1=pLengthOp->**GetDistance**(#);
 pLengthOp = NULL;**
     _// between the same points on the second spline_
     pLengthOp =new CATLengthFromBodyOnWire(piGeomFactory,
@@ -482,7 +482,7 @@ ofstream filetowrite(pfileName, ios::binary ) ;
     #endif
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
-       filetowrite.close();
+       filetowrite.close(#);
      }
 
      _//

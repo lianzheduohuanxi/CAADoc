@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Arranging Dialog Objects"
-category: "use-case"
+category: tech-article
 module: "CAADlgTechArticles"
 tags: []
-source_file: "Doc/online/CAADlgTechArticles/CAADlgObjectLayout.htm"
+source_file: "Doc/online/CAADlgTechArticles/CAADlgObjectLayout.htmmd"
 converted: "2026-05-11T17:17:56.052020"
 ```
 

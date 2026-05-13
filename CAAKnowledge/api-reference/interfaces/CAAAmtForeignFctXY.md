@@ -2,9 +2,7 @@
 title: "CAAAmtForeignFctXY"
 type: "interface"
 module: "CAAAdvancedMathematics"
-category: "framework"
-base: "CATMathFunctionXY"
-inheritance_chain: "CAAAmtForeignFctXY → CATMathFunctionXY"
+category: api-reference
 method_count: 0
 visibility: "public"
 has_tie_binding: false
@@ -12,8 +10,6 @@ verified: true
 ---
 # CAAAmtForeignFctXY
 
-**基类**: CATMathFunctionXY  
-**继承链**: CAAAmtForeignFctXY → CATMathFunctionXY  
 **模块**: CAAAdvancedMathematics  
 **分类**: framework  
 **可见性**: public  
@@ -28,5 +24,36 @@ verified: true
 ## 依赖
 
 - `CAAAmtForeignFct.h`
-- `CATMathFunctionXY.h`
 
+---
+
+## Interface Overview
+
+**Inherited Methods**: Please refer to the base interface documentation above.
+
+---
+
+## Interface Overview
+
+This interface inherits from **from**. 
+
+**Inherited Methods**: Please refer to the base interface documentation above.
+
+---
+
+## Related Use Cases
+
+This interface is used in the following use cases:
+
+- [CAACgmUcAmtForeign](../../use-cases/caacgmmodel/CAACgmUcAmtForeign.md)
+- [CAACgmUcGobForeign](../../use-cases/caacgmmodel/CAACgmUcGobForeign.md)
+
+## Interface Notes
+
+This interface is part of the **CAA** module.
+
+**Status**: This interface document is a template. Please refer to the official API documentation for more information.
+
+**Related Resources**:
+- [Quick References](../..//quick-refs/)
+- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)

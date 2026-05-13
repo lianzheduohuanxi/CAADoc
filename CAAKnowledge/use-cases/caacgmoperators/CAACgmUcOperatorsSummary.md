@@ -4,13 +4,13 @@ title: "GMOperators List of Use Cases"
 category: "use-case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsDraftCreation", "CAAGMOperatorsCompatible", "CAAGMOperatorsBodyExtremum", "CAAGMOperatorsShellOrientation", "CAAGMOperatorsCornerCreation", "CAAGMOperatorsSilhouette", "CAAGMOperatorsFaceReplaceSurface", "CAAGMOperatorsPattern", "CAAGMOperatorsCheckForPart", "CAAGMOperatorsNurbsSurfMultiPatch", "CAAGMOperatorsProgressBar", "CAAGMOperatorsAllFillets", "CAAGMOperatorsCheckGnOK", "CAAGMOperatorsExtractFace", "CAAGMOperatorsInDegree", "CAAGMOperatorsProperties", "CAAGMOperatorsBoundaryCreation", "CAAGMOperatorsWireAssembly", "CAAGMOperatorsIntersectShellShell"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcOperatorsSummary.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcOperatorsSummary.htmmd"
 converted: "2026-05-11T17:33:49.012195"
 ```
 
 ---
 tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsDraftCreation", "CAAGMOperatorsCompatible", "CAAGMOperatorsBodyExtremum", "CAAGMOperatorsShellOrientation", "CAAGMOperatorsCornerCreation", "CAAGMOperatorsSilhouette", "CAAGMOperatorsFaceReplaceSurface", "CAAGMOperatorsPattern", "CAAGMOperatorsCheckForPart", "CAAGMOperatorsNurbsSurfMultiPatch", "CAAGMOperatorsProgressBar", "CAAGMOperatorsAllFillets", "CAAGMOperatorsCheckGnOK", "CAAGMOperatorsExtractFace", "CAAGMOperatorsInDegree", "CAAGMOperatorsProperties", "CAAGMOperatorsBoundaryCreation", "CAAGMOperatorsWireAssembly", "CAAGMOperatorsIntersectShellShell"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcOperatorsSummary.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcOperatorsSummary.htmmd"
 converted: "2026-05-11T17:33:49.012195"
 GMOperators List of Use Cases
 
@@ -22,8 +22,10 @@ The use cases illustrating the GMOperatorsInterfaces capabilities are delivered 
 GMOperators List of Use Cases
 The use cases illustrating the GMOperatorsInterfaces capabilities are delivered in CAAGMOperatorsInterfaces.edu  Table.1  CAAGMOperatorsInterfaces.edu: List of Use Cases Module | Purpose | Article
 CAAGMOperators2DBoxComputation.m | Compute the CATMathBox2D of a Cell. |  [Computing the CATMathBox2D of a Cell](CAACgmUcMathBox2D.md)
+```vbscript
 CAAGMOperatorsAdvancedRemoveFace.m | Remove a set of faces from a body. |  [Removing a Set of Faces from a Body](CAACgmUcAdvRemoveFace.md)
 CAAGMOperatorsAllFillets.m | Create various kinds of fillets.  |  [Fillets](CAACgmUcTopAllFillets.md)
+```
 CAAGMOperatorsBlendWithCouplingLines.m | Create blend surfaces (coupling lines). |  [Blend](CAACgmUcTopBlend.md)
 CAAGMOperatorsBlendWithCouplingModes.m | Create blend surfaces (coupling modes). | [Blend](CAACgmUcTopBlend.md)
 CAAGMOperatorsBodyChecker.m | Control the validity of curves and surfaces. |  [Using the Body Checker](CAACgmUcTopBodyChecker.md)

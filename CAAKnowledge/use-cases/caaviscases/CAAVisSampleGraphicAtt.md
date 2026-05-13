@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Using Graphic Attributes"
-category: "use case"
+category: use-case case"
 module: "CAAVisUseCases"
 tags: ["CAAVisBaseView", "CAAVisRepWindow", "CAAVisualization", "CAAVisRep", "CAAVisRepApplication"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleGraphicAtt.htm"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleGraphicAtt.htmmd"
 converted: "2026-05-11T17:31:52.107319"
 ```
 
@@ -68,10 +68,10 @@ To launch CAAVisRep, you will need to set up the build time environment, then co
 To launch CAAVisRep, you will need to set up the build time environment, then compile CAAVisRep along with its prerequisites, set up the run time environment, and then execute the use case [1].
 The CAAVisRep use case is made of two classes named _CAAVisRepApplication_ and _CAAVisRepWindow_ located in the CAAVisRep code is located in the CAAVisRep.m use case module of the CAAVisualization.edu framework:
 
-Windows | `InstallRootDirectory\CAAVisualization.edu\CAAVisRep.m`
+Windows | `InstallRootDirectory/CAAVisualization.edu/CAAVisRep.m`
 
 The CAAVisRep use case is made of two classes named _CAAVisRepApplication_ and _CAAVisRepWindow_ located in the CAAVisRep code is located in the CAAVisRep.m use case module of the CAAVisualization.edu framework:
-Windows | `InstallRootDirectory\CAAVisualization.edu\CAAVisRep.m`
+Windows | `InstallRootDirectory/CAAVisualization.edu/CAAVisRep.m`
 Unix | `InstallRootDirectory/CAAVisualization.edu/CAAVisRep.m`
 
 where `InstallRootDirectory` is the root directory of your CAA V5 installation.
@@ -96,18 +96,18 @@ To manage graphic attributes, there are four main steps:
 The 3D navigation viewer is an instance of the _CATNavigation3DViewer_ class. It is created in the `CreateViewer` method of the _CAAVisBaseView_ class that is called when the application is launched.
 
 The 3D navigation viewer is an instance of the _CATNavigation3DViewer_ class. It is created in the `CreateViewer` method of the _CAAVisBaseView_ class that is called when the application is launched.
-    void CAAVisRepWindow::CreateViewer()
+    void CAAVisRepWindow::CreateViewer(#)
 
     {
 The 3D navigation viewer is an instance of the _CATNavigation3DViewer_ class. It is created in the `CreateViewer` method of the _CAAVisBaseView_ class that is called when the application is launched.
-void CAAVisRepWindow::CreateViewer()
+void CAAVisRepWindow::CreateViewer(#)
 ```vbscript
       _p3DViewer = new CATNavigation3DViewer(this,
 
 ```
 
                                              "Navigation3DId",
-void CAAVisRepWindow::CreateViewer()
+void CAAVisRepWindow::CreateViewer(#)
 _p3DViewer = new CATNavigation3DViewer(this,
                                              CATDlgFraNoTitle,
                                              800, 450);
@@ -131,9 +131,9 @@ The `SetBackgroundColor` method changes the viewer background color. The `Attach
 [Top]
 #### Creating a 3D Representation Bag
 
-    void CAAVisRepWindow::CreateModelRepresentation()
+    void CAAVisRepWindow::CreateModelRepresentation(#)
     {
-      _pTheModelToDisplay = new CAT3DBagRep() ;
+      _pTheModelToDisplay = new CAT3DBagRep(#) ;
     ...
 
 ---
@@ -185,26 +185,26 @@ const CATMathPoint &iEndPoint,
 int                 iEdgeType)
       CAT3DCustomRep * pTheRepToReturn = NULL;
 ```vbscript
-      pTheRepToReturn = new **CAT3DCustomRep**();
+      pTheRepToReturn = new **CAT3DCustomRep**(#);
 
 ```
 
       // Creates a green dotted line
 CAT3DCustomRep * pTheRepToReturn = NULL;
-pTheRepToReturn = new **CAT3DCustomRep**();
+pTheRepToReturn = new **CAT3DCustomRep**(#);
       float coord[6] ;
-      coord[0] = (float) iStartPoint.GetX();
-      coord[1] = (float) iStartPoint.GetY();
-      coord[2] = (float) iStartPoint.GetZ();
-      coord[3] = (float) iEndPoint.GetX();
-      coord[4] = (float) iEndPoint.GetY();
-      coord[5] = (float) iEndPoint.GetZ();
+      coord[0] = (float) iStartPoint.GetX(#);
+      coord[1] = (float) iStartPoint.GetY(#);
+      coord[2] = (float) iStartPoint.GetZ(#);
+      coord[3] = (float) iEndPoint.GetX(#);
+      coord[4] = (float) iEndPoint.GetY(#);
+      coord[5] = (float) iEndPoint.GetZ(#);
 
       CAT3DLineGP * pLineGP = new **CAT3DLineGP**(coord, 2);
 
       **CATGraphicAttributeSet** LineGA;
-coord[4] = (float) iEndPoint.GetY();
-coord[5] = (float) iEndPoint.GetZ();
+coord[4] = (float) iEndPoint.GetY(#);
+coord[5] = (float) iEndPoint.GetZ(#);
 CAT3DLineGP * pLineGP = new **CAT3DLineGP**(coord, 2);
       LineGA.**SetColor**(GREEN);
       LineGA.**SetThickness**(4);  // Thickness ranges from 1 to 16
@@ -337,12 +337,12 @@ int iTypeFace)
       // Creates a cube with 6 faces
 int iTypeFace)
 CAT3DCustomRep * pTheRepToReturn = NULL ;
-      pTheRepToReturn = new CAT3DCustomRep();
+      pTheRepToReturn = new CAT3DCustomRep(#);
       CAT3DPlanarFaceGP * pPlanGP = NULL ;
 
         // Top face is not shown
       **CATGraphicAttributeSet** FaceNoShowGA;
-pTheRepToReturn = new CAT3DCustomRep();
+pTheRepToReturn = new CAT3DCustomRep(#);
 CAT3DPlanarFaceGP * pPlanGP = NULL ;
       FaceNoShowGA.**SetShowMode**(1);
       pPlanGP = CreateFaceGP(Point5,Point6,Point8,Point7);
@@ -405,21 +405,21 @@ The second cube is created with the default color, that is, white, and with its 
 The `AddRepToViewer` method displays the created representation.
 
 The `AddRepToViewer` method displays the created representation.
-    void CAAVisRepWindow::VisualizeModel()
+    void CAAVisRepWindow::VisualizeModel(#)
 
     {
 The `AddRepToViewer` method displays the created representation.
-void CAAVisRepWindow::VisualizeModel()
+void CAAVisRepWindow::VisualizeModel(#)
 ```vbscript
       if ( (NULL != _p3DViewer) && ( NULL != _pTheModelToDisplay) )
 
 ```
 
       {
-void CAAVisRepWindow::VisualizeModel()
+void CAAVisRepWindow::VisualizeModel(#)
 if ( (NULL != _p3DViewer) && ( NULL != _pTheModelToDisplay) )
         _p3DViewer->**AddRep**((CAT3DRep*)_pTheModelToDisplay);
-        _p3DViewer->**Draw**();
+        _p3DViewer->**Draw**(#);
 
       }
     }

@@ -4,7 +4,7 @@ title: "Getting Started with Automation"
 category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CAAScdInfUseCases", "CATIA", "CAAInfGettingStarted", "CATIASketch3"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfGettingStarted.htm"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfGettingStarted.htmmd"
 converted: "2026-05-11T17:31:52.374517"
 ```
 
@@ -102,44 +102,66 @@ We detail below, line by line, what has been recorded, following the interactive
 > >
 >>     Language="VBSCRIPT"
 >>
->>     Sub CATMain()
+```vbscript
+>>     Sub CATMain(#)
 
   1. Click on the**New** item of the **File** menu**,** or click on the ![](images/I_NewP2.gif) icon**,** and double-click Part to create a new part generates the following instructions:
+```
 
+```vbscript
 > Dim documents1 As Documents
 >          Set documents1 = CATIA.Documents
 >
+```
+```vbscript
 >          Dim partDocument1 As Document
 >          Set partDocument1 = documents1.Add("Part")
 >
+```
 
 A new document with the Part type is created. To do this, such a document is added to the _Documents_ collection of the `CATIA` application.
 
   2. Select the xy plane and click on the sketcher icon ![](images/I_SketcherP2.gif) to create a sketch:
 
+```vbscript
 > Dim part1 As Part
 >          Set part1 = partDocument1.Part
 >
+```
+```vbscript
 >          Dim bodies1 As Bodies
 >          Set bodies1 = part1.Bodies
 >
+```
+```vbscript
 >          Dim body1 As Body
 >          Set body1 = bodies1.Item("PartBody")
 >
+```
+```vbscript
 >          Dim sketches1 As Sketches
 >          Set sketches1 = body1.Sketches
 >
+```
+```vbscript
 >          Dim originElements1 As OriginElements
 >          Set originElements1 = part1.OriginElements
 >
+```
+```vbscript
 >          Dim reference1 As AnyObject
 >          Set reference1 = originElements1.PlaneXY
 >
+```
+```vbscript
 >          Dim sketch1 As Sketch
 >          Set sketch1 = sketches1.Add(reference1)
 >
+```
+```vbscript
 >          Dim arrayOfVariantOfDouble1(8)
 >          arrayOfVariantOfDouble1(0) = 0.000000
+```
 >          arrayOfVariantOfDouble1(1) = 0.000000
 >          arrayOfVariantOfDouble1(2) = 0.000000
 >          arrayOfVariantOfDouble1(3) = 1.000000
@@ -150,28 +172,38 @@ A new document with the Part type is created. To do this, such a document is add
 >          arrayOfVariantOfDouble1(8) = 0.000000
 >          sketch1.SetAbsoluteAxisData arrayOfVariantOfDouble1
 >
+```vbscript
 >          Dim factory2D1 As Factory2D
->          Set factory2D1 = sketch1.OpenEdition()
+>          Set factory2D1 = sketch1.OpenEdition(#)
 
 A _Sketch_ object named `Sketch1` is added to the _Sketches_ collection using the `reference1` _Reference_ corresponding to the XY plane as a support. Using a reference allows to create a sketch either on an element, as here the XY plane, or on a solid planar face that is not directly accessible as a VB object.
+```
 
 The `SetAbsoluteAxisData` method is used to define the orientation of the sketch axis, that can be on either side and can rotate inside of the support plane. A _Factory2D_ object is created by opening the sketch editor against the created sketch. This _Factory2D_ object features methods to create 2D objects.
 
 > >
+```vbscript
 >>     Dim geometricElements1 As GeometricElements
 >>     Set geometricElements1 = sketch1.GeometricElements
 >>
+```
+```vbscript
 >>     Dim axis2D1 As GeometricElement
 >>     Set axis2D1 = geometricElements1.Item("AbsoluteAxis")
 >>
+```
+```vbscript
 >>     Dim line2D1 As AnyObject
 >>     Set line2D1 = axis2D1.GetItem("HDirection")
 >>
+```
 >>     line2D1.ReportName = 1
 >>
+```vbscript
 >>     Dim line2D2 As AnyObject
 >>     Set line2D2 = axis2D1.GetItem("VDirection")
 >>
+```
 >>     line2D2.ReportName = 2
 
 When the sketch is created, an axis, that is the aggregation of a center point, and horizontal line and vertical line (directions), is created.
@@ -182,12 +214,16 @@ The axis is retrieved in the _GeometricElements_ collection of the _Sketch_ obje
   1. In the sketcher toolbar, select the circle icon ![](images/I_CircleCtrRadP2.gif) and click twice to indicate successively the center of the circle and a current point on the circle
 
 > >
+```vbscript
 >>     Dim circle2D1 As Circle2D
 >>     Set circle2D1 = factory2D1.CreateClosedCircle(0.000000, 0.000000, 10.000000)
 >>
+```
+```vbscript
 >>     Dim point2D1 As AnyObject
 >>     Set point2D1 = axis2D1.GetItem("Origin")
 >>
+```
 >>     circle2D1.CenterPoint = point2D1
 >>
 >>     circle2D1.ReportName = 3
@@ -206,7 +242,10 @@ The sketch editor is closed and the part udapted.
   2. Select the pad icon ![](images/I_PadP2.gif) to create a pad, and in the Pad Definition dialog box, choose a length of 10 mm and click OK. The pad is created.
 
 ```vbscript
+```vbscript
          Dim shapeFactory1 As Factory
+```vbscript
+```
 ```vbscript
 ```vbscript
              Set shapeFactory1 = part1.ShapeFactory
@@ -215,15 +254,20 @@ The sketch editor is closed and the part udapted.
              Set pad1 = shapeFactory1.AddNewPad(sketch1, 20.000000)
 
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 Dim pad1 As Pad
 ```vbscript
+```
+```vbscript
 Set pad1 = shapeFactory1.AddNewPad(sketch1, 20.000000)
+```
 ```
 
              part1.Update
@@ -277,17 +321,24 @@ On Unix. This editor must be accessible through the **PATH** environment variabl
          **'My macro creates five cylinders**
 
 ```vbscript
-         Sub CATMain()
+```vbscript
+         Sub CATMain(#)
+
+```
 
 ```
 
          **...**
 ```vbscript
+```vbscript
          Dim refer1 As AnyObject
+```vbscript
+```
 ```vbscript
 ```vbscript
          Set refer1 = originElements1.PlaneXY
 
+```
 ```
 
 ```
@@ -297,8 +348,10 @@ On Unix. This editor must be accessible through the **PATH** environment variabl
          **x = 0**
 
 ```vbscript
+```vbscript
          Dim arrayOfVariantOfDouble1(8)
 ```vbscript
+```
          arrayOfVariantOfDouble1(0) = 0.000000
 ```
 
@@ -306,7 +359,9 @@ On Unix. This editor must be accessible through the **PATH** environment variabl
 
          ...
 ```vbscript
+```vbscript
 Dim arrayOfVariantOfDouble1(8)
+```
 ```
 
 arrayOfVariantOfDouble1(0) = 0.000000
@@ -318,18 +373,26 @@ arrayOfVariantOfDouble1(0) = 0.000000
          **For I = 1 To 5**
 
 ```vbscript
+```vbscript
            Dim sketch1 As Sketch
 ```vbscript
+```
+```vbscript
            Set sketch1 = sketches1.Add(refer1)
+```
 ```
 
 ```
 
            **...**
 ```vbscript
+```vbscript
            Dim circle2D1 As Circle2D
 ```vbscript
+```
+```vbscript
            Set circle2D1 =                   _
+```
 ```
 
               factory2D1.CreateClosedCircle( _
@@ -354,9 +417,11 @@ circle2D1.ReportName = 3
            **x = x + 25
 circle2D1.ReportName = 3
 part1.Update
+```vbscript
          Next** End Sub
 
 You simply need to initialize a variable, here x, to allow for the sketch position in the plane to vary, and create a loop beginning with the `For` keyword and ending with the **`Next`** keyword. The `For` keyword specifies the counter variable `I` which will take all values between 1 and 5 inclusively. Move the array declaration and valuation outside of the loop:  those values do not change. Change the first parameter of the `CreateCloseCircle` method to `x`. Increment the value of the `x` variable to move the next center of 25mm from the previous one.
+```
 
   |
 

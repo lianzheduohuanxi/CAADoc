@@ -4,13 +4,13 @@ title: "Chamfer"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CATICGMDynAdvancedChamfer", "CAAGMOperatorsChamfer"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopChamfer.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopChamfer.htmmd"
 converted: "2026-05-11T17:33:49.109308"
 ```
 
 ---
 tags: ["CAAGMOperatorsInterfaces", "CATICGMDynAdvancedChamfer", "CAAGMOperatorsChamfer"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopChamfer.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopChamfer.htmmd"
 converted: "2026-05-11T17:33:49.109308"
 Chamfer
 
@@ -51,20 +51,20 @@ CATDynd1a1,
 CATICGMDynAdvancedChamfer *pChamferOp = CATCGMCreateDynAdvancedChamfer(iFactory, iTopData, iBody);
     pChamferOp->Append(pRibbon);
 
-    pChamferOp->SetCornerCap();
-    pChamferOp->Run();
+    pChamferOp->SetCornerCap(#);
+    pChamferOp->Run(#);
     CATBody * pChamferBody = NULL;
 ```vbscript
-    pChamferBody = pChamferOp->GetResult();
+    pChamferBody = pChamferOp->GetResult(#);
 
 ```
 
     ...
-pChamferOp->SetCornerCap();
-pChamferOp->Run();
+pChamferOp->SetCornerCap(#);
+pChamferOp->Run(#);
 CATBody * pChamferBody = NULL;
-pChamferBody = pChamferOp->GetResult();
-    pChamferOp->Release();
+pChamferBody = pChamferOp->GetResult(#);
+    pChamferOp->Release(#);
     pChamferOp = NULL;
 ```vbscript
     if (NULL != pRibbon)
@@ -72,7 +72,7 @@ pChamferBody = pChamferOp->GetResult();
 ```
 
     {
-pChamferOp->Release();
+pChamferOp->Release(#);
 pChamferOp = NULL;
 if (NULL != pRibbon)
       delete pRibbon;

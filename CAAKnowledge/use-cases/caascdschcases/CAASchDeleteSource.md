@@ -4,13 +4,13 @@ title: "CAASchDelete.CATScript"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CATIAProduct", "CAASCH_Delete01", "CAAScdSchUseCases", "CAASchDelete", "CATIA", "CATIASchRoute", "CATIASchComponent", "CATIASchAppConnector", "CATIASchAppConnectable"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchDeleteSource.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchDeleteSource.htmmd"
 converted: "2026-05-11T17:31:51.365141"
 ```
 
 ---
 tags: ["CATIAProduct", "CAASCH_Delete01", "CAAScdSchUseCases", "CAASchDelete", "CATIA", "CATIASchRoute", "CATIASchComponent", "CATIASchAppConnector", "CATIASchAppConnectable"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchDeleteSource.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchDeleteSource.htmmd"
 converted: "2026-05-11T17:31:51.365141"
     Option Explicit
 
@@ -31,7 +31,10 @@ converted: "2026-05-11T17:31:51.365141"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
+
+```
 
 ```
 
@@ -41,18 +44,22 @@ converted: "2026-05-11T17:31:51.365141"
         ' -------------------------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String
+```vbscript
         sDocPath=CATIA.SystemService.Environ("CATDocView")
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
           Err.Raise 9999,sDocPath,"No Doc Path Defined"
 ```vbscript
+```
         End If
 ```
 
@@ -63,18 +70,23 @@ converted: "2026-05-11T17:31:51.365141"
 ```vbscript
         ' -------------------------------------------------------------------------
         ' Open the schematic document
+```vbscript
         Dim sFilePath
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
-
 ```
 
 ```
 
-                "online\CAAScdSchUseCases\samples\CAASCH_Delete01.CATProduct")
+```
+
+                "online/CAAScdSchUseCases/samples/CAASCH_Delete01.CATProduct")
 
 ```vbscript
+```vbscript
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+```vbscript
+```
 ```vbscript
 ```vbscript
         Dim objSchDoc As Document
@@ -83,14 +95,17 @@ sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
         Dim strMessage As String
 
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
 Dim strMessage As String
         strMessage = _
+```
 ```
 
           "--------------------------------------------------------------------" & vbCr
@@ -109,19 +124,29 @@ strMessage = strMessage & _
 ```
 
 ```vbscript
+```vbscript
         Dim objPrdRoot As Product
+```vbscript
+```
 ```vbscript
 ```vbscript
         Dim objSchRoot As SchematicRoot
         If ( Not ( objSchDoc Is Nothing ) ) Then
+```
+```vbscript
           Set objPrdRoot = objSchDoc.Product
           If ( Not ( objPrdRoot Is Nothing ) ) Then
+```
+```vbscript
             Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
           End If
+```
         End If
 
+```vbscript
         Dim objSchBaseFact As SchBaseFactory
 
+```
 ```
 
 ```
@@ -132,16 +157,20 @@ strMessage = strMessage & _
 ```vbscript
         If ( Not ( objSchRoot Is Nothing ) ) Then
 
+```vbscript
            Set objSchBaseFact = objSchRoot.GetSchBaseFactory
 
            Dim objSchComp As SchComponent
 ```
+```
 
+```vbscript
 ```vbscript
 ```vbscript
            Dim objLRoutes As SchListOfObjects
            Dim intNbRouteBefore As Integer
            Dim intNbRouteAfter As Integer
+```
 ```
 
 ```
@@ -159,8 +188,10 @@ strMessage = strMessage & _
            '  each side of the deleted component will be concatenated by the
            '  system to become one.
            '-----------------------------------------------------------------------
+```vbscript
            Set objLRoutes = objSchRoot.GetRoutes
            If ( Not ( objLRoutes Is Nothing ) ) Then
+```
 ```
 
 ```
@@ -176,8 +207,10 @@ strMessage = strMessage & _
 ```vbscript
            If ( Not ( objSchBaseFact Is Nothing ) ) Then
 
+```vbscript
               Set objSchComp = FindComponentInst (objSchRoot)
 
+```
 ```
 
 ```
@@ -218,8 +251,10 @@ If ( Not ( objSchComp Is Nothing ) ) Then
            '  The first member will be extended and the 2 member will be
            '  deleted
            '-----------------------------------------------------------------------
+```vbscript
            Set objLRoutes = objSchRoot.GetRoutes
            If ( Not ( objLRoutes Is Nothing ) ) Then
+```
 ```
 
 ```
@@ -229,7 +264,10 @@ If ( Not ( objSchComp Is Nothing ) ) Then
               strMessage = strMessage & "after deleting an inserted component "
               strMessage = strMessage & " = " & intNbRouteAfter & vbCr
 
+```vbscript
               Dim objRoute1 As SchRoute
+```vbscript
+```
 ```vbscript
 ```vbscript
               Dim objRoute2 As SchRoute
@@ -240,6 +278,7 @@ If ( Not ( objSchComp Is Nothing ) ) Then
               Dim objAppRCntr1 As SchAppConnector
               Dim objAppRCntr2 As SchAppConnector
 ```
+```
 
 ```
 
@@ -249,8 +288,10 @@ If ( Not ( objSchComp Is Nothing ) ) Then
               If ( intNbRouteAfter > 0 ) Then
 ```vbscript
 ```vbscript
+```vbscript
                  Set objRoute1 = objLRoutes.Item (1, "CATIASchRoute")
 
+```
 ```
 
 ```
@@ -260,7 +301,9 @@ If ( Not ( objSchComp Is Nothing ) ) Then
 ```vbscript
                  If ( Not ( objRoute1 Is Nothing ) ) Then
 ```vbscript
+```vbscript
                     Set objRCntbl1 = objSchRoot.GetInterface ( _
+```
 ```
 
 ```
@@ -270,14 +313,20 @@ If ( Not ( objSchComp Is Nothing ) ) Then
 If ( Not ( objRoute1 Is Nothing ) ) Then
 ```vbscript
 ```vbscript
+```vbscript
 Set objRCntbl1 = objSchRoot.GetInterface ( _
                     If ( Not ( objRCntbl1 Is Nothing ) ) Then
+```
+```vbscript
                        Set objAppRCntr1 = FindOpenConnector (objSchRoot,objRCntbl1)
                        Set objRoute2 = objLRoutes.Item (2, "CATIASchRoute")
                     End If
+```
                  End If
                  If ( Not ( objRoute2 Is Nothing ) ) Then
+```vbscript
                     Set objRCntbl2 = objSchRoot.GetInterface ( _
+```
 ```
 
 ```
@@ -294,10 +343,14 @@ End If
 If ( Not ( objRoute2 Is Nothing ) ) Then
 ```vbscript
 ```vbscript
+```vbscript
 Set objRCntbl2 = objSchRoot.GetInterface ( _
                     If ( Not ( objRCntbl2 Is Nothing ) ) Then
+```
+```vbscript
                        Set objAppRCntr2 = FindOpenConnector (objSchRoot,objRCntbl2)
                     End If
+```
                  End If
 
 ```
@@ -312,8 +365,10 @@ Set objRCntbl2 = objSchRoot.GetInterface ( _
                        Not ( objAppRCntr1 Is Nothing ) And _
                        Not ( objAppRCntr2 Is Nothing ) ) Then
 ```vbscript
+```vbscript
                     Set objRoute2 = objLRoutes.Item (2, "CATIASchRoute")
                     If ( Not ( objRoute2 Is Nothing ) ) Then
+```
 ```
 
 ```
@@ -347,10 +402,15 @@ End If '--- If ( Not ( objSchRoot Is Nothing )...
 ```
 
           "--------------------------------------------------------------------" & vbCr
+```vbscript
         MsgBox strMessage
 
 ```vbscript
+```
+```vbscript
     End Sub
+
+```
 
 ```
 
@@ -368,13 +428,17 @@ End If '--- If ( Not ( objSchRoot Is Nothing )...
 ```
 
 ```vbscript
+```vbscript
     Private Function FindComponentInst (objSchRootArg As SchematicRoot) As SchComponent
 
        Dim objLCompInst As SchListOfObjects
 ```
+```
 
 ```vbscript
+```vbscript
        Dim intNbComp As Integer
+```
 ```
 
 ```
@@ -383,8 +447,10 @@ End If '--- If ( Not ( objSchRoot Is Nothing )...
        If ( Not ( objSchRootArg Is Nothing ) ) Then
 ```vbscript
 ```vbscript
+```vbscript
           Set objLCompInst = objSchRootArg.GetComponents
           If ( Not ( objLCompInst Is Nothing ) ) Then
+```
 ```
 
 ```
@@ -395,12 +461,14 @@ End If '--- If ( Not ( objSchRoot Is Nothing )...
 ```vbscript
        End If
 
+```vbscript
        Dim intIndex As Integer
        Dim objSchComp As SchComponent
        Dim objPrd As Product
        Dim strInstName As String
        Dim intFound As Integer
 
+```
 ```
 
 ```
@@ -441,8 +509,10 @@ For intIndex = 1 To intNbComp
 
 ```vbscript
 ```vbscript
+```vbscript
             Set objSchComp = objLCompInst.Item (intIndex,"CATIASchComponent")
 
+```
 ```
 
 ```
@@ -451,7 +521,9 @@ For intIndex = 1 To intNbComp
 ```vbscript
             If ( Not ( objSchComp Is Nothing ) ) Then
 
+```vbscript
                Set objPrd = objSchRootArg.GetInterface ( _
+```
 ```
 
 ```
@@ -476,7 +548,9 @@ For intIndex = 1 To intNbComp
 ```vbscript
                If ( intFound > 0 ) Then
 
+```vbscript
                   Set FindComponentInst = objSchRootArg.GetInterface ( _
+```
 ```
 
 ```
@@ -484,8 +558,10 @@ For intIndex = 1 To intNbComp
                     "CATIASchComponent", objSchComp)
 
 ```vbscript
+```vbscript
 Set FindComponentInst = objSchRootArg.GetInterface ( _
                   Exit For
+```
 ```vbscript
                End If
 
@@ -509,8 +585,10 @@ Set FindComponentInst = objSchRootArg.GetInterface ( _
 ```vbscript
 ```vbscript
        End If '--- If (Not ( objLCompInst Is Nothing ) ...
+```vbscript
     End Function
 
+```
 ```
 
 ```
@@ -527,7 +605,9 @@ Set FindComponentInst = objSchRootArg.GetInterface ( _
 
 ```
 
+```vbscript
     Private Function FindOpenConnector (objSchRootArg As SchematicRootArg, _
+```
 ```
 
 ```vbscript
@@ -539,19 +619,25 @@ Set FindComponentInst = objSchRootArg.GetInterface ( _
 
 ```
 
+```vbscript
 Private Function FindOpenConnector (objSchRootArg As SchematicRootArg, _
       objRCntblArg As SchAppConnectable) As SchAppConnector
+```
 
 ```
 
 ```vbscript
+```vbscript
        Dim objLAppCntr As SchListOfObjects
+```vbscript
+```
 ```vbscript
 ```vbscript
        Dim intNbCntr As Integer
        Dim objLFilter As SchListOfBSTRs
        Set objLFilter = Nothing
 
+```
 ```
 
 ```
@@ -562,8 +648,10 @@ Private Function FindOpenConnector (objSchRootArg As SchematicRootArg, _
        If ( Not ( objRCntblArg Is Nothing ) ) Then
 ```vbscript
 ```vbscript
+```vbscript
           Set objLAppCntr = objRCntblArg.AppListConnectors (objLFilter)
           If ( Not ( objLAppCntr Is Nothing ) ) Then
+```
 ```
 
 ```
@@ -574,10 +662,12 @@ Private Function FindOpenConnector (objSchRootArg As SchematicRootArg, _
 ```vbscript
        End If
 
+```vbscript
        Dim intIndex As Integer
        Dim objAppCntr As SchAppConnector
        Dim bIsConnected As Boolean
 
+```
 ```
 
 ```
@@ -608,8 +698,10 @@ Private Function FindOpenConnector (objSchRootArg As SchematicRootArg, _
 ```vbscript
           For intIndex = 1 To intNbCntr
 
+```vbscript
             Set objAppCntr = objLAppCntr.Item (intIndex,"CATIASchAppConnector")
 
+```
 ```
 
 ```
@@ -628,7 +720,9 @@ Private Function FindOpenConnector (objSchRootArg As SchematicRootArg, _
 ```vbscript
                If ( Not ( bIsConnected ) )Then
 
+```vbscript
                   Set FindOpenConnector = objSchRootArg.GetInterface ( _
+```
 ```
 
 ```
@@ -636,8 +730,10 @@ Private Function FindOpenConnector (objSchRootArg As SchematicRootArg, _
                     "CATIASchAppConnector", objAppCntr)
 
 ```vbscript
+```vbscript
 Set FindOpenConnector = objSchRootArg.GetInterface ( _
                   Exit For
+```
 ```vbscript
                End If
 
@@ -661,8 +757,10 @@ Set FindOpenConnector = objSchRootArg.GetInterface ( _
 ```vbscript
 ```vbscript
        End If '--- If (Not ( objLAppCntr Is Nothing ) ...
+```vbscript
     End Function
 
+```
 ```
 
 ```

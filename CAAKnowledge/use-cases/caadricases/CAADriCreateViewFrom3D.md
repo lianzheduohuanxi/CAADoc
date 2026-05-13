@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating a View from 3D"
-category: "use case"
+category: use-case case"
 module: "CAADriUseCases"
 tags: ["CATIDftStandardManager", "CATIDftDrawing", "CATIDftDocumentServices", "CATIContainer_var", "CATIA", "CATITPSList", "CATITPSDocument", "CAADrwCreateViewFrom3D", "CATIStringList", "CATIDftView", "CATITPSView", "CATITPSComponent", "CATISpecObject", "CAADrwCreatViewFrom3D", "CATInit", "CATIDftGenViewFactory", "CAADraftingInterfaces", "CATITPSSet", "CATIDftSheet"]
-source_file: "Doc/online/CAADriUseCases/CAADriCreateViewFrom3D.htm"
+source_file: "Doc/online/CAADriUseCases/CAADriCreateViewFrom3D.htmmd"
 converted: "2026-05-11T17:31:50.983117"
 ```
 
@@ -58,19 +58,23 @@ CAADrwCreateViewFrom3D is a use case of the CAADraftingInterfaces.edu framework 
 ---
 ![](images/CAACreateVIewFrom3D2.jpg)
 
+```vbscript
 Fig. 2 represents the Drawing document in which a front view has been created from the active TPS view of Annotation Set in the Part document. Note: A red cross is created to inform the end user that the text leader is associative to hidden geometry in the view.
 
 [Top]
+```
 #### How to Launch CAADrwCreateViewFrom3D
 
+```vbscript
 Fig. 2 represents the Drawing document in which a front view has been created from the active TPS view of Annotation Set in the Part document. Note: A red cross is created to inform the end user that the text leader is associative to hidden geometry in the view.
 To launch CAADrwCreateViewFrom3D, you will need to set up the build time environment, then compile CAADrwCreateViewFrom3D along with its prerequisites, set up the run time environment, and then execute the use case [1].
+```
 
-When you launch the use case, pass the full pathname of the Drawing file as argument. A Part file is delivery in the following path: CAADraftingInterfaces.edu\CNext\resources\graphic\PadWith3DAnnotations.CATPart.
+When you launch the use case, pass the full pathname of the Drawing file as argument. A Part file is delivery in the following path: CAADraftingInterfaces.edu/CNext/resources/graphic/PadWith3DAnnotations.CATPart.
 
   * With Windows
 
-When you launch the use case, pass the full pathname of the Drawing file as argument. A Part file is delivery in the following path: CAADraftingInterfaces.edu\CNext\resources\graphic\PadWith3DAnnotations.CATPart.
+When you launch the use case, pass the full pathname of the Drawing file as argument. A Part file is delivery in the following path: CAADraftingInterfaces.edu/CNext/resources/graphic/PadWith3DAnnotations.CATPart.
         e:> mkrun -c cmd
         CAADrwCreateViewFrom3D c/.../PadWith3DAnnotations.CATPart c/DrawingTestOutput.CATDrawing
 
@@ -88,10 +92,10 @@ When you launch the use case, pass the full pathname of the Drawing file as argu
 The CAADrwCreateViewFrom3D use case is made of a single source file named CAADrwCreateViewFrom3D .cpp located in the CAADrwCreateViewFrom3D.m module of the CAADraftingInterfaces.edu framework:
 
 The CAADrwCreateViewFrom3D use case is made of a single source file named CAADrwCreateViewFrom3D .cpp located in the CAADrwCreateViewFrom3D.m module of the CAADraftingInterfaces.edu framework:
-Windows | ` InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwCreateViewFrom3D.m\`
+Windows | ` InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCreateViewFrom3D.m/`
 
 The CAADrwCreateViewFrom3D use case is made of a single source file named CAADrwCreateViewFrom3D .cpp located in the CAADrwCreateViewFrom3D.m module of the CAADraftingInterfaces.edu framework:
-Windows | ` InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwCreateViewFrom3D.m\`
+Windows | ` InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCreateViewFrom3D.m/`
 Unix | ` InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCreateViewFrom3D.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -193,14 +197,18 @@ CATITPSList *piTPSList = NULL;
 if (SUCCEEDED(piTPSDoc->GetSets(&piTPSList)))
               unsigned int nbSet;
               piTPSList->Count(&nbSet);
+```vbscript
               if (nbSet > 0)
+```
 ```
 
               {
 unsigned int nbSet;
 piTPSList->Count(&nbSet);
+```vbscript
 if (nbSet > 0)
                 CATITPSComponent *piTPSCmp = NULL;
+```
 ```vbscript
                 if (SUCCEEDED(piTPSList->Item(0,&piTPSCmp)))
 
@@ -208,8 +216,10 @@ if (nbSet > 0)
 
                 {
 ```vbscript
+```vbscript
 if (nbSet > 0)
 CATITPSComponent *piTPSCmp = NULL;
+```
 if (SUCCEEDED(piTPSList->Item(0,&piTPSCmp)))
 ```vbscript
                   if (piTPSCmp)
@@ -224,8 +234,10 @@ if (SUCCEEDED(piTPSList->Item(0,&piTPSCmp)))
 if (piTPSCmp)
 ```
 
+```vbscript
                     CATITPSSet *piTPSSet = NULL;
 ```vbscript
+```
                     if (SUCCEEDED(piTPSCmp->QueryInterface(IID_CATITPSSet,(void **)&piTPSSet)))
 
 ```
@@ -233,8 +245,10 @@ if (piTPSCmp)
                     {
 ```vbscript
 if (piTPSCmp)
+```vbscript
 CATITPSSet *piTPSSet = NULL;
 if (SUCCEEDED(piTPSCmp->QueryInterface(IID_CATITPSSet,(void **)&piTPSSet)))
+```
                       CATITPSView *piTPSActiveView = NULL;
                       if (SUCCEEDED(piTPSSet->GetActiveView (&piTPSActiveView)) && piTPSActiveView)
 ```
@@ -249,8 +263,10 @@ if (SUCCEEDED(piTPSSet->GetActiveView (&piTPSActiveView)) && piTPSActiveView)
 ```
 
                         {
+```vbscript
                           // Call a Sub Program to Create a Drawing View from TPS View in a Drawing Document
                           // =========================================================================
+```
 IUnknown *pTPSViewUk = NULL;
 if (SUCCEEDED(piTPSActiveView->QueryInterface(IID_IUnknown,(void **)&pTPSViewUk)))
 ```vbscript
@@ -269,8 +285,10 @@ if (SUCCEEDED(piTPSActiveView->QueryInterface(IID_IUnknown,(void **)&pTPSViewUk)
 #### Creating the View from 3D
 
     ...
+```vbscript
     // Sub program to create a Drawing Generative View from TPS View.
     // =========================================================
+```
     HRESULT CreateViewFrom3DInDrawingDoc(CATDocument *ipNewDoc, CATITPSView *ipiTPSActiveView)
     {
 HRESULT CreateViewFrom3DInDrawingDoc(CATDocument *ipNewDoc, CATITPSView *ipiTPSActiveView)
@@ -300,7 +318,7 @@ CATIDftDocumentServices *piDftDocServices = NULL;
 CATIContainer_var spDrwCont;
 if (SUCCEEDED(ipNewDoc->QueryInterface(IID_CATIDftDocumentServices, (void **)&piDftDocServices)))
         piDftDocServices->GetDrawing(IID_CATIDftDrawing, (void **)&piDftDrawing);
-        piDftDocServices->Release();
+        piDftDocServices->Release(#);
         piDftDocServices = NULL;
 ```vbscript
         if (piDftDrawing)
@@ -309,7 +327,7 @@ if (SUCCEEDED(ipNewDoc->QueryInterface(IID_CATIDftDocumentServices, (void **)&pi
 
         {
 piDftDocServices->GetDrawing(IID_CATIDftDrawing, (void **)&piDftDrawing);
-piDftDocServices->Release();
+piDftDocServices->Release(#);
 piDftDocServices = NULL;
 if (piDftDrawing)
           CATISpecObject *piDrawingSO=NULL;
@@ -325,7 +343,7 @@ CATISpecObject *piDrawingSO=NULL;
 if (SUCCEEDED(piDftDrawing->QueryInterface(IID_CATISpecObject,(void **)&piDrawingSO)))
 ```vbscript
 ```vbscript
-            spDrwCont = piDrawingSO->GetFeatContainer();
+            spDrwCont = piDrawingSO->GetFeatContainer(#);
             if (NULL_var != spDrwCont)
 ```
 
@@ -338,7 +356,7 @@ if (SUCCEEDED(piDftDrawing->QueryInterface(IID_CATISpecObject,(void **)&piDrawin
 if (SUCCEEDED(piDftDrawing->QueryInterface(IID_CATISpecObject,(void **)&piDrawingSO)))
 ```vbscript
 ```vbscript
-spDrwCont = piDrawingSO->GetFeatContainer();
+spDrwCont = piDrawingSO->GetFeatContainer(#);
 if (NULL_var != spDrwCont)
 ```
 
@@ -414,18 +432,18 @@ break;
                   }
 break;
 delete[] wstd; wstd = NULL;
-                  piListstd->Release(); piListstd=NULL;
+                  piListstd->Release(#); piListstd=NULL;
 
                 }
 delete[] wstd; wstd = NULL;
-piListstd->Release(); piListstd=NULL;
-                piStdmgr->Release (); piStdmgr=NULL;
+piListstd->Release(#); piListstd=NULL;
+                piStdmgr->Release (#); piStdmgr=NULL;
 
               }
             }
 
             // Creation of new generative view from TPS view in the active sheet of the Drawing Document
-piStdmgr->Release (); piStdmgr=NULL;
+piStdmgr->Release (#); piStdmgr=NULL;
             CATIDftView *piDftViewFrom3D = NULL;
             CATIDftSheet *piDftSheet = NULL;
             piDftDrawing->GetActiveSheet(&piDftSheet);
@@ -460,7 +478,7 @@ if (piDftSheet && SUCCEEDED(piDftSheet->QueryInterface(IID_CATIDftGenViewFactory
                 hr = piDftGenViewFact->CreateViewFrom3D(ptOrigin, pTPSViewUk, &piDftViewFrom3D);
 ```
 
-                piDftGenViewFact->Release();piDftGenViewFact=NULL;
+                piDftGenViewFact->Release(#);piDftGenViewFact=NULL;
 ```
 
               }
@@ -470,29 +488,29 @@ if (piDftSheet && SUCCEEDED(piDftSheet->QueryInterface(IID_CATIDftGenViewFactory
 hr = piDftGenViewFact->CreateViewFrom3D(ptOrigin, pTPSViewUk, &piDftViewFrom3D);
 ```
 
-piDftGenViewFact->Release();piDftGenViewFact=NULL;
-              pTPSViewUk->Release();
+piDftGenViewFact->Release(#);piDftGenViewFact=NULL;
+              pTPSViewUk->Release(#);
               pTPSViewUk=NULL;
 ```
 
             }
-piDftGenViewFact->Release();piDftGenViewFact=NULL;
-pTPSViewUk->Release();
+piDftGenViewFact->Release(#);piDftGenViewFact=NULL;
+pTPSViewUk->Release(#);
 pTPSViewUk=NULL;
-            piDrawingSO->Release();
+            piDrawingSO->Release(#);
             piDrawingSO=NULL;
 
           }
 pTPSViewUk=NULL;
-piDrawingSO->Release();
+piDrawingSO->Release(#);
 piDrawingSO=NULL;
-          piDftDrawing->Release();
+          piDftDrawing->Release(#);
           piDftDrawing = NULL;
 
         }
        }
        }
-piDftDrawing->Release();
+piDftDrawing->Release(#);
 piDftDrawing = NULL;
       return hr;
 
@@ -504,7 +522,10 @@ piDftDrawing = NULL;
 
 The sub program `CreateViewFrom3DInDrawingDoc` creates a View from 3D by using the method `CreateViewFrom3D` of the _CATIDftGenViewFactory_ interface. This interface is implemented by the Sheet.
 
+```vbscript
 **Note** : Before the creation of the Drawing View, the Drawing Standard has to be correctly initialized. **It must be identical to the Standard used by the Annotation Set aggregating the TPS View in the 3D document** [3].
+
+```
 
 [Top]
 #### Saving the Document and Exiting

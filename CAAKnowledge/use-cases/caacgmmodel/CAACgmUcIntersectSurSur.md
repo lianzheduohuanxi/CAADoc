@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Intersecting Surfaces"
-category: "use case"
+category: use-case case"
 module: "CAACgmModel"
 tags: ["CAAGMModelInterfaces", "CAAGMModelGeometryCreation", "CATICGMIntersectionSurSur", "CAAGMModelIntersectionOpe"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcIntersectSurSur.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcIntersectSurSur.htmmd"
 converted: "2026-05-11T17:33:48.461523"
 ```
 
@@ -49,27 +49,27 @@ piGeomFactory,
 pConfig,
 piTabulatedCyl1,
 piTabulatedCyl2);
-    CATLONG32 nbOfSurfaces = pPtSurSur->GetNumberOfSurfaces();
+    CATLONG32 nbOfSurfaces = pPtSurSur->GetNumberOfSurfaces(#);
     cout   << "NumberOfSurfaces "   << nbOfSurfaces   << endl;
     if(nbOfSurfaces)
 
     	{
-CATLONG32 nbOfSurfaces = pPtSurSur->GetNumberOfSurfaces();
+CATLONG32 nbOfSurfaces = pPtSurSur->GetNumberOfSurfaces(#);
 cout   << "NumberOfSurfaces "   << nbOfSurfaces   << endl;
 if(nbOfSurfaces)
-    		pPtSurSur->BeginningSurface();
-    		while(pPtSurSur->NextSurface())
+    		pPtSurSur->BeginningSurface(#);
+    		while(pPtSurSur->NextSurface(#))
 
     		{
     			// Retrieve the CATPCurve in confusion on piNurbsSurface
     			// 4 Pcurves are expected as the second surface is immerged within the first one
-pPtSurSur->BeginningSurface();
-while(pPtSurSur->NextSurface())
+pPtSurSur->BeginningSurface(#);
+while(pPtSurSur->NextSurface(#))
 ```vbscript
     			CATLISTP(CATPCurve) listPCurve;
 ```vbscript
     			listPCurve = pPtSurSur->GetSurfaceBoundaries(piTabulatedCyl2);
-    			for (int i=1; i<=listPCurve.Size(); i++ )
+    			for (int i=1; i<=listPCurve.Size(#); i++ )
 
 ```
 
@@ -81,7 +81,7 @@ CATLISTP(CATPCurve) listPCurve;
 ```vbscript
 ```vbscript
 listPCurve = pPtSurSur->GetSurfaceBoundaries(piTabulatedCyl2);
-for (int i=1; i<=listPCurve.Size(); i++ )
+for (int i=1; i<=listPCurve.Size(#); i++ )
 ```
 
 ```
@@ -108,7 +108,7 @@ returns
 on the standard output. The CATPCurve geometries in confusion are the borders of the smaller tabulated cylinder.
 The code below:
 
-    CATLONG32 nbOfCurves0 = pPtSurSur->GetNumberOfCurves();
+    CATLONG32 nbOfCurves0 = pPtSurSur->GetNumberOfCurves(#);
     cout   << "NumberOfCurves "   << nbOfCurves0   << endl;
 
     ...

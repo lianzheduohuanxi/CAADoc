@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating Surface Machining Operations Overview"
-category: "use-case"
+category: tech-article
 module: "CAASmiTechArticles"
 tags: ["CAASmiConnectUserOperationWithMA", "CAASmgGuide", "CAASmgOperation", "CAASmiUserOperationWithMA", "CAASmgMachiningFeature", "CAASmiUserOperationWithMAToolPath", "CAASmiUserOperationCommand", "CAASmiUserOperationUI", "CAASmiUserOperationWithUserMFToolPath", "CAASurfaceMachiningItf", "CAASmiUserOperationCatalog", "CAASmiUserOperationWithUserMF", "CATIA", "CAASmiUserOperationGeomUI", "CAASmiUserOperationToolPathReplay", "CAASmiUserMachFeatureCatalog", "CAASmgOperationWithMA"]
-source_file: "Doc/online/CAASmiTechArticles/CAASmiOperationSampleOverview.htm"
+source_file: "Doc/online/CAASmiTechArticles/CAASmiOperationSampleOverview.htmmd"
 converted: "2026-05-11T17:31:51.295307"
 ```
 
@@ -106,12 +106,16 @@ When CATIA is opened,
   * Enable the "CAA SMG Tool Bar"
   * Click on the "CAA Plunge operation" command
   * The **first CAA SMG operation** is created and its dialog panel is displayed
+```vbscript
   * Set parameters and select an edge
   * Click on "Replay" button. The tool path is created !
+```
   * Click on the "CAA Box operation" command
   * The **second CAA SMG operation** is created and its dialog panel is displayed
+```vbscript
   * Set parameters and select geometry
   * Click on "Replay" button. The tool path is created !
+```
 
 [Top]
 #### Where to Find the Code
@@ -119,10 +123,10 @@ When CATIA is opened,
 The sample is made of a several modules of the CAASurfaceMachiningItf.edu framework:
 
 The sample is made of a several modules of the CAASurfaceMachiningItf.edu framework:
-Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\`
+Windows | `InstallRootDirectory/CAASurfaceMachiningItf.edu/`
 
 The sample is made of a several modules of the CAASurfaceMachiningItf.edu framework:
-Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\`
+Windows | `InstallRootDirectory/CAASurfaceMachiningItf.edu/`
 Unix | `InstallRootDirectory/CAASurfaceMachiningItf.edu/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.

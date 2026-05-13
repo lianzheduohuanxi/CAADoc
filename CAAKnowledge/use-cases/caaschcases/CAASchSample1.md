@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating Features in an Applicative Container"
-category: "use case"
+category: use-case case"
 module: "CAASchUseCases"
 tags: ["CAASchEduIn", "CAASchAppSample1", "CAASCHEDUApp", "CATISchAppObjectFactory", "CATISchSession", "CATIContainer_var", "CAASCHEDU_SamplePID", "CAASchAppBaseServices", "CAASchApp", "CATISchCompFlow", "CAASchEduOut1", "CATIExtendable_var", "CATISchBaseFactory", "CAASchAppSample1Main", "CAASchPlatformModeler", "CATISpecObject_var", "CAASchAppUtilities", "CATISpecObject", "CATISchAppConnectable", "CATISchComponent"]
-source_file: "Doc/online/CAASchUseCases/CAASchSample1.htm"
+source_file: "Doc/online/CAASchUseCases/CAASchSample1.htmmd"
 converted: "2026-05-11T17:31:51.513274"
 ```
 
@@ -64,8 +64,8 @@ Fig.1: CAASCHEDUApp.CATfct Catalog Contents ![](images/CAASchCATFct.gif)
 
 To launch CAASchAppSample1, you will need to set up the build time environment, then compile CAASchAppSample1 along with its prerequisites, set up the run time environment, and then execute the sample. This is fully described in the referenced article [1]. When launching the use case, you must pass the following arguments:
 
-  * **CAASchEduIn.CATProduct** \- the entire pathname, name and extension (.CATProduct) of the input drawing. Normally, it should be stored in the CNext/resources/graphic file directory.
-  * **CAASchEduOut1.CATProduct** \- the entire pathname, name and extension (.CATProduct) under which the new document is to be stored.
+  * **CAASchEduIn.CATProduct** /- the entire pathname, name and extension (.CATProduct) of the input drawing. Normally, it should be stored in the CNext/resources/graphic file directory.
+  * **CAASchEduOut1.CATProduct** /- the entire pathname, name and extension (.CATProduct) under which the new document is to be stored.
 
 [Top]
 #### Where to Find the CAASchAppSample1 Code
@@ -73,10 +73,10 @@ To launch CAASchAppSample1, you will need to set up the build time environment, 
 CAASchAppSample1 code is located in the CAASchAppSample1.m use case module of the CAASchPlatformModeler.edu framework:
 
 CAASchAppSample1 code is located in the CAASchAppSample1.m use case module of the CAASchPlatformModeler.edu framework:
-Windows | `InstallRootDirectory\CAASchPlatformModeler.edu\CAASchAppSample1.m`
+Windows | `InstallRootDirectory/CAASchPlatformModeler.edu/CAASchAppSample1.m`
 
 CAASchAppSample1 code is located in the CAASchAppSample1.m use case module of the CAASchPlatformModeler.edu framework:
-Windows | `InstallRootDirectory\CAASchPlatformModeler.edu\CAASchAppSample1.m`
+Windows | `InstallRootDirectory/CAASchPlatformModeler.edu/CAASchAppSample1.m`
 Unix | `InstallRootDirectory/CAASchPlatformModeler.edu/CAASchAppSample1.m`
 
 where `InstallRootDirectory` is the root directory of your CAA V5 installation. It is made of a two unique source files named CAASchAppSample1Main.cpp and CAASchAppSample1.cpp.
@@ -150,7 +150,7 @@ if ( SUCCEEDED( pSession->QueryInterface (IID_CATISchSession,(void**)&piSchSessi
       HRESULT rc = piSchSession->GetSchObjInterface(SCHEDUApplication_Name,
                                                     IID_CATISchAppObjectFactory,
                                                     (void**)&_piSchAppObjFact);
-      piSchSession->Release(); piSchSession = NULL;
+      piSchSession->Release(#); piSchSession = NULL;
 
     }
 
@@ -177,11 +177,11 @@ const CATUnicodeString &iUClass, const CATIContainer_var &iCont)
 
        SEQUENCE (CATBaseUnknown_ptr) L0Obj = iCont->
 ```vbscript
-          ListMembers(CATISpecObject::ClassName());
+          ListMembers(CATISpecObject::ClassName(#));
 
 ```
 
-       int SizeOfL0Obj = L0Obj.length();
+       int SizeOfL0Obj = L0Obj.length(#);
        CATISpecObject *piSpec;
 ```vbscript
        for (int iObj=0; iObj<SizeOfL0Obj; iObj++)
@@ -189,7 +189,7 @@ const CATUnicodeString &iUClass, const CATIContainer_var &iCont)
 ```
 
        {
-int SizeOfL0Obj = L0Obj.length();
+int SizeOfL0Obj = L0Obj.length(#);
 CATISpecObject *piSpec;
 for (int iObj=0; iObj<SizeOfL0Obj; iObj++)
 ```vbscript
@@ -221,10 +221,10 @@ piSpec = (CATISpecObject *) L0Obj[iObj];
 ```vbscript
 if (NULL != piSpec)
 if (!spObjFound)
-              ClassType = piSpec->GetType();
+              ClassType = piSpec->GetType(#);
 ```
 
-              printf ("Class Type -- %s\n", ClassType.ConvertToChar());
+              printf ("Class Type -- %s/n", ClassType.ConvertToChar(#));
 ```vbscript
               MatchPos = ClassType.SearchSubString(iUClass);
               if (MatchPos >= 0)
@@ -234,29 +234,29 @@ if (!spObjFound)
 ```
 
               {
-ClassType = piSpec->GetType();
+ClassType = piSpec->GetType(#);
 ```vbscript
-printf ("Class Type -- %s\n", ClassType.ConvertToChar());
+printf ("Class Type -- %s/n", ClassType.ConvertToChar(#));
 ```vbscript
 MatchPos = ClassType.SearchSubString(iUClass);
 if (MatchPos >= 0)
 ```
 
-                printf ("Match found \n");
+                printf ("Match found /n");
 ```
 
                 spObjFound = piSpec;
 
               }
             }
-printf ("Match found \n");
+printf ("Match found /n");
 spObjFound = piSpec;
-            piSpec->Release();
+            piSpec->Release(#);
             piSpec = NULL;
 
          }
        }
-piSpec->Release();
+piSpec->Release(#);
 piSpec = NULL;
        return spObjFound;
 

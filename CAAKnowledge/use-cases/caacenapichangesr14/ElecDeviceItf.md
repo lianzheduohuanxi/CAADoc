@@ -5,13 +5,13 @@ category: "use-case"
 module: "CAACenAPIChangesR14"
 version: "V5R14"
 tags: ["CATIElbCavity", "CATIProduct", "CATILinkableObject", "CATIElbSingleConnectorReference"]
-source_file: "Doc/online/CAACenAPIChangesR14/ElecDeviceItf.htm"
+source_file: "Doc/online/CAACenAPIChangesR14/ElecDeviceItf.htmmd"
 converted: "2026-05-11T17:33:50.897403"
 ```
 
 ---
 tags: ["CATIElbCavity", "CATIProduct", "CATILinkableObject", "CATIElbSingleConnectorReference"]
-source_file: "Doc/online/CAACenAPIChangesR14/ElecDeviceItf.htm"
+source_file: "Doc/online/CAACenAPIChangesR14/ElecDeviceItf.htmmd"
 converted: "2026-05-11T17:33:50.897403"
 CAA C++ API Modifications|  ElecDeviceItf Framework Modifications in V5R14 |
 

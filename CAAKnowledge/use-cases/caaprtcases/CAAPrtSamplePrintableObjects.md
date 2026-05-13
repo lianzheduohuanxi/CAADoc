@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Making Your Components Printable"
-category: "use case"
+category: use-case case"
 module: "CAAPrtUseCases"
 tags: ["CAAPrtPrintableString", "CAAPrtStringImage", "CAAPrint", "CAAPrtPrintableObjects", "CATIPrintable"]
-source_file: "Doc/online/CAAPrtUseCases/CAAPrtSamplePrintableObjects.htm"
+source_file: "Doc/online/CAAPrtUseCases/CAAPrtSamplePrintableObjects.htmmd"
 converted: "2026-05-11T17:17:56.133823"
 ```
 
@@ -63,10 +63,10 @@ To launch CAAPrtPrintableObjects, you will need to set up the build time environ
 To launch CAAPrtPrintableObjects, you will need to set up the build time environment, then compile CAAPrtPrintableObjects along with its prerequisites, set up the run time environment, and then execute the use case [2].
 The CAAPrtPrintableObjects use case is made of a several classes located in the CAAPrtPrintableObjects.m module of the CAAPrint.edu framework:
 
-Windows | `InstallRootDirectory\CAAPrint.edu\CAAPrtPrintableObjects.m\`
+Windows | `InstallRootDirectory/CAAPrint.edu/CAAPrtPrintableObjects.m/`
 
 The CAAPrtPrintableObjects use case is made of a several classes located in the CAAPrtPrintableObjects.m module of the CAAPrint.edu framework:
-Windows | `InstallRootDirectory\CAAPrint.edu\CAAPrtPrintableObjects.m\`
+Windows | `InstallRootDirectory/CAAPrint.edu/CAAPrtPrintableObjects.m/`
 Unix | `InstallRootDirectory/CAAPrint.edu/CAAPrtPrintableObjects.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -108,7 +108,7 @@ class  CAAPrtPrintableString : public CATBaseUnknown
 class  CAAPrtPrintableString : public CATBaseUnknown
 public:
       CAAPrtPrintableString (const CATUnicodeString & iString);
-      virtual ~CAAPrtPrintableString ();
+      virtual ~CAAPrtPrintableString (#);
 
       _// CATIPrintable interface method_
       CATPrintImage * **CreatePrintableImage**(void); _// Returns the image representing the strin_ g
@@ -141,14 +141,14 @@ Its source file is a follows.
                          : _string(iString)
     {}
 
-    CAAPrtPrintableString::~CAAPrtPrintableString()
+    CAAPrtPrintableString::~CAAPrtPrintableString(#)
     {}
 
-CAAPrtPrintableString::~CAAPrtPrintableString()
+CAAPrtPrintableString::~CAAPrtPrintableString(#)
     _// CATIPrintable implementation
 
     // Returns the image representing the printable object_
-CAAPrtPrintableString::~CAAPrtPrintableString()
+CAAPrtPrintableString::~CAAPrtPrintableString(#)
 _// CATIPrintable implementation
     CATPrintImage * CAAPrtPrintableString::CreatePrintableImage(void)
 
@@ -194,13 +194,13 @@ class CATPrintParameters; _// To use print parameters_
 class CAAPrtStringImage : public CATPrintImage
       public:
         CAAPrtStringImage(const CATUnicodeString &iString);
-        virtual ~CAAPrtStringImage();
+        virtual ~CAAPrtStringImage(#);
 
         _// Retrieves the image size_
         int GetSize(float& iWidth, float& iHeight);
 
         // _Draws the image using a given generator and specified print parameters_
-virtual ~CAAPrtStringImage();
+virtual ~CAAPrtStringImage(#);
 _// Retrieves the image size_
 int GetSize(float& iWidth, float& iHeight);
         int Decode(CATPrintGenerator* iGenerator, const CATPrintParameters& iParameters);
@@ -226,7 +226,7 @@ This class holds the character string, and has two methods
     {
 int CAAPrtStringImage::**GetSize**(float& oWidth, float& oHeight)
       _// The size depends on the string length_
-      int lg = _string.GetLengthInChar();
+      int lg = _string.GetLengthInChar(#);
       oHeight = 50.f;
       oWidth  = (lg+4)*10.;
       return 1;
@@ -250,7 +250,7 @@ int CAAPrtStringImage::**Decode**(CATPrintGenerator* iGenerator, const CATPrintP
       ...
 int CAAPrtStringImage::**Decode**(CATPrintGenerator* iGenerator, const CATPrintParameters& iParameters)
 iGenerator->**Begin**(iParameters);    _// Initializes generation_
-      iGenerator->**End**();                 _// Ends generation_
+      iGenerator->**End**(#);                 _// Ends generation_
       return 1;        _// Returns 1 to indicate successful execution_
 
     }
@@ -287,7 +287,7 @@ Some initializations are first performed, such as the drawing line width, the bl
 
       ...
 Some initializations are first performed, such as the drawing line width, the black and red colors, the black color being set as the color to use, and some attributes of the text to print.
-      int lg = _string.GetLengthInChar();
+      int lg = _string.GetLengthInChar(#);
 
       float y = 10.;
       float x = 10.;

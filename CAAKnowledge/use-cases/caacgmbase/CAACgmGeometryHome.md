@@ -4,13 +4,13 @@ title: "Geometry"
 category: "use cases"
 module: "CAACgmBase"
 tags: ["CATIA", "CAAGMModelInterfaces"]
-source_file: "Doc/online/CAACgmBase/CAACgmGeometryHome.htm"
+source_file: "Doc/online/CAACgmBase/CAACgmGeometryHome.htmmd"
 converted: "2026-05-11T17:33:47.799971"
 ```
 
 ---
 tags: ["CATIA", "CAAGMModelInterfaces"]
-source_file: "Doc/online/CAACgmBase/CAACgmGeometryHome.htm"
+source_file: "Doc/online/CAACgmBase/CAACgmGeometryHome.htmmd"
 converted: "2026-05-11T17:33:47.799971"
 Geometric Modeler New V6 operators have been coexisting with V5 operators from V5R20 so that CAA developers can start migrating their V5 applications to V6 while remaining in V5. CAA developers are encouraged to migrate to these new interfaces. The use cases related to geometry are delivered in the CAAGMModelInterfaces.edu framework. Turn to [GM Model](CAACgmGMModelHome.md) to access the documentation associated with the use cases. |  Geometry
 

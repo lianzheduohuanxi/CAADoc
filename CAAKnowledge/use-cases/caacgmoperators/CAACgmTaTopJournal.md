@@ -4,13 +4,13 @@ title: "Understanding the CGM Journal"
 category: "use-case"
 module: "CAACgmOperators"
 tags: []
-source_file: "Doc/online/CAACgmOperators/CAACgmTaTopJournal.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmTaTopJournal.htmmd"
 converted: "2026-05-11T17:33:48.669001"
 ```
 
 ---
 tags: []
-source_file: "Doc/online/CAACgmOperators/CAACgmTaTopJournal.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmTaTopJournal.htmmd"
 converted: "2026-05-11T17:33:48.669001"
 Topological Journal: Principles
 

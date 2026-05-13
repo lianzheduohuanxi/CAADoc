@@ -4,7 +4,7 @@ title: "Setting Controller Reference"
 category: "use-case"
 module: "CAAScdInfTechArticles"
 tags: ["CATImmLogonSettingCtrl", "CATIdeIgesSettingCtrl", "CATIColCollabIdentificationSettingCtrl", "CATIColCollabNetworkSettingCtrl", "CATIColConnectivitySettingCtrl"]
-source_file: "Doc/online/CAAScdInfTechArticles/CAAInfTabPageList.htm"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfTabPageList.htmmd"
 converted: "2026-05-11T17:31:52.475701"
 ```
 

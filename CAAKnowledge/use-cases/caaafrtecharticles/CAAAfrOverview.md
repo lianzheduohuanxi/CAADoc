@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Application Frame Overview"
-category: "concept"
+category: tech-article
 module: "CAAAfrTechArticles"
 tags: ["CATIUIActivate", "CATIExtGeo2DVisu", "CATI2DGeoVisu", "CATIWorkshopConfiguration", "CATIExtGeo3DVisu", "CATIShapeDesignAddin", "CATIWorkshop", "CATI3DGeoVisu", "CATIWorkbenchTransition", "CATIEditor"]
-source_file: "Doc/online/CAAAfrTechArticles/CAAAfrOverview.htm"
+source_file: "Doc/online/CAAAfrTechArticles/CAAAfrOverview.htmmd"
 converted: "2026-05-11T17:17:55.934142"
 ```
 
@@ -44,7 +44,7 @@ This article explains which paradigms CAA V5 uses to show objects and let end us
 
 The CAA V5 application window is the host for all CAA V5 documents. As an MDI (Multiple Document Interface) application window, it can display several document windows at the same time as child windows of its application window, one document window, and thus one document, being active at the same time. Have a look at the screen shot below.
 
-![CAAAfrFrameWindow.jpg \(100180 bytes\)](images/CAAAfrFrameWindow.jpg)
+![CAAAfrFrameWindow.jpg /(100180 bytes/)](images/CAAAfrFrameWindow.jpg)
 
 The CAA V5 application window is the host for all CAA V5 documents. As an MDI (Multiple Document Interface) application window, it can display several document windows at the same time as child windows of its application window, one document window, and thus one document, being active at the same time. Have a look at the screen shot below.
 It shows the application window that contains two document windows. It shows also a palette of the tools available to work on the active document. This is a Part document, and its window contains the 3D part, and the part's specification tree as a 2D graph immersed into the 3D viewer displayed in the document window. The active document being a Part document, the tools available are those dedicated to parts. They are made of commands you can find in pull-down menus and toolbars. The active command being dedicated to pad definition, it displays a dialog box to enable the end user to enter its own parameters to define or modify the pad being edited.
@@ -87,20 +87,20 @@ As for any MDI application, the CAA V5 application window can contain several wi
 
 When you open an existing Product document, the Product document's menus and toolbars making the workshop and the current workbench are made available, such as the File and Analyze menus, and the Constraint toolbar.
 
-###  ![CAAAfrWProduct.jpg \(53264 bytes\)](images/CAAAfrWProduct.jpg)
+###  ![CAAAfrWProduct.jpg /(53264 bytes/)](images/CAAAfrWProduct.jpg)
 
 As for any MDI application, the CAA V5 application window can contain several windows to several documents, compared to a SDI application whose application window can contain only one document window at a time. But rather than supporting monolithic documents, CAA V5 supports also compound documents, that is documents containing other documents. This means that documents can be pointed (linked), or contained (embedded) by other documents of different types, and can themselves point to or contain other documents. For example, a Product document can contain several Part documents, placed in space at appropriate locations and linked together to play their role in the part's assembly.
 When you open an existing Product document, the Product document's menus and toolbars making the workshop and the current workbench are made available, such as the File and Analyze menus, and the Constraint toolbar.
 When you double click on one of the parts making up the assembly, for example here on P2 part, the selected part becomes the **UI-active** object. The menus and toolbars change to those dedicated to Part documents, such as the File and Insert menus, and the Sketch-based Features toolbar, and you can work on this part using these tools.
 
-![CAAAfrWSketch.jpg \(89980 bytes\)](images/CAAAfrWSketch.jpg)
+![CAAAfrWSketch.jpg /(89980 bytes/)](images/CAAAfrWSketch.jpg)
 
 When you double click on one of the parts making up the assembly, for example here on P2 part, the selected part becomes the **UI-active** object. The menus and toolbars change to those dedicated to Part documents, such as the File and Insert menus, and the Sketch-based Features toolbar, and you can work on this part using these tools.
 You can remark that the active document is a Product displayed in a Product window, but inside this window, the active object is a Part and since this active object is a document, the Product workshop and workbench are replaced by the Part workshop. The Part is called the UI-active object in the Product document, UI standing for User Interface. Any document that can be included into another document is a UI-activable object, but there is one UI-active object at a time. By extension, we can say that the Part document activated in a Part document window is itself the UI-active object. Moreover, some object which are not documents can be UI-activable. This is for example the case for sketches, which can neither be created using the New command, nor opened from or saved to a file. Nevertheless, when you double click on a sketch, or when you create a new sketch by dragging the Sketcher icon onto a reference plane, the sketcher workshop is made active and replaces the Part workshop though the sketch is not a document.
 
 When you double click on a sketch in this part, for example in the specification tree, you change the 3D window into a 2D sketch window, and change the Part document menus and toolbars to the sketch menus and toolbars. The window remains the same, but the look and feel of it changes.
 
-![CAAAfrWPart.jpg \(58363 bytes\)](images/CAAAfrWPart.jpg)
+![CAAAfrWPart.jpg /(58363 bytes/)](images/CAAAfrWPart.jpg)
 
 The Product and Part documents, as well as the sketch, load their own editing tools when you request to edit them, rather than opening another window. This is qualified as document-centric since the document remains displayed in the same window, and the editing tools change around the document to adapt to the type of the object being edited, even if this object is another document. This is to be opposed to the application-centric model in which the data to be edited is brought to another application for editing and is then taken back in its genuine context. With the document-centric model, the document remains displayed, and you edit a linked or contained document in the context of the linking or containing document without opening another window. For this reason, this is called edit-in-context. (OLE calls this in-place activation, and OpenDoc calls it in-place editing.)
 
@@ -198,7 +198,7 @@ Any of them can decide what to do when a transition occurs. The application call
 
 To simplify the workbench interrelationships, each workbench must specify what should happen when it is selected, that is specify all its incoming transitions, even when it already is the active workshop and is selected by the end user. In addition, if your workbench is dedicated to a document type which can be pointed or contained by the document type to which the active document belongs, you should also implement the outgoing transitions to that workbench.
 
-![CAAAfrWbTransition.gif \(5286 bytes\)](images/CAAAfrWbTransition.gif)
+![CAAAfrWbTransition.gif /(5286 bytes/)](images/CAAAfrWbTransition.gif)
 
 Refer to the use case [6]
 ### Interactive Commands and Command Headers
@@ -223,14 +223,14 @@ To be emphasized or explained:
 
 Usually, commands are organized in the menu bar, as shown below:
 
-![CAAAfrAccess1.gif \(25709 bytes\)](images/CAAAfrAccess1.gif)
+![CAAAfrAccess1.gif /(25709 bytes/)](images/CAAAfrAccess1.gif)
 
 Usually, commands are organized in the menu bar, as shown below:
 The menu bar contains menus, such as Tools, that contain themselves commands, such as Analyze, and possibly submenus, such as Macro, that are related to the menu topic. A submenu contains other commands and possibly submenus that are related with the submenu topic. For example, the Macro submenu contains the Macros, Start Recording, and Stop Recording commands. The commands are shown as menu items.
 
 Commands are also contained in toolbars, like the Profiles toolbar shown below undocked, that is, as a separate dialog box:
 
-![CAAAfrAccess2.gif \(10929 bytes\)](images/CAAAfrAccess2.gif)
+![CAAAfrAccess2.gif /(10929 bytes/)](images/CAAAfrAccess2.gif)
 
 Commands are also contained in toolbars, like the Profiles toolbar shown below undocked, that is, as a separate dialog box:
 The Profiles toolbar contains commands shown using icons, such as the Profile command, and icon boxes, such as the icon box showing the Rectangle Profile command. An icon box contains a series of commands, but only shows either the first command in the icon box, or the last used. When the end user clicks the arrow located at the icon box right corner, the icon box opens, and the end user can select a command, such as the Parallelogram command. The icon box is closed, the Parallelogram command is launched and replaces the Rectangle command in the toolbar.
@@ -244,11 +244,11 @@ This is the end user view. Clicking on a menu item or an icon launches the comma
 
 When you want to arrange commands to propose them appropriately to the end user, you need to either create a workbench [3] or create an add-in [4] to an existing workshop or workbench. When you create such objects, you create in fact a containment tree structure to access to the commands. All these objects are therefore called **accesses** and their base class is _CATCmdAccess_. The objects that contain other objects are **containers** , and are instances of the CATCmdContainer class. The first container is the workshop or the workbench itself, and is an instance of the _CATCmdWorshop_ or _CATCmdWorkbench_ respectively, which both derive from _CATCmdContainer_. This container usually contains a menu container, and one or several toolbar containers. These containers can in turn contain other containers, such as a submenu or an icon box. At the lowest levels of this tree structure, you put the accesses for the commands. They are objects able to start the commands as soon as the end user clicks on the menu item or on the icon, and are therefore named **command starters**. Each command starter is associated with a **command header** that stands for the command and that holds the appropriate information about the command resources, such as the name displayed in the menu or the icon displayed in the toolbar, whether the command is available, and in which shared library the command code is located.
 
-![CAAAfrAccess3.gif \(26129 bytes\)](images/CAAAfrAccess3.gif)
+![CAAAfrAccess3.gif /(26129 bytes/)](images/CAAAfrAccess3.gif)
 
 A container/contained tree structure is built. This tree structure represents both the way objects are related to each other, and how they are arranged in menus and toolbars in front of the end user. The figure above shows these objects for the menu bar. The workshop or workbench container contains a menu bar container that contains all the available menus, such as Tools. Tools is a container that contains its submenu containers, such as Macro. It also contains leaf objects for the commands, named command starters, such as the one for the Analyze command, that stand for the command in the tree structure, and that are associated with the command header. The submenu can also contain separators to help for command layout. The Macro submenu container contains in turn command starters, such as the one for Macros.
 
-![CAAAfrAccess4.gif \(11306 bytes\)](images/CAAAfrAccess4.gif)
+![CAAAfrAccess4.gif /(11306 bytes/)](images/CAAAfrAccess4.gif)
 
 In the same way, the Profile toolbar is created as a container contained by the workshop, and that contains command starters such as for Profile, and other containers, such as Rectangle Profile which contains command starters to launch commands to create pseudo rectangle profiles, such as Rectangle or Parallelogram.
 
@@ -266,13 +266,18 @@ The editor is described by the _CATFrmEditor_ class [1]. This class manages the 
 [Top]
 #### The objects providing the interactive behavior
 
+```vbscript
   * The **CSO** , for Current Set of Objects: contains the current object(s). The selected objects are placed in the CSO, and the CSO can be used by any command to retrieve the selected objects. The Cut & Paste, Copy & Paste, and Drag & Drop use the CSO as input. The CSO is known by the current command. Objects contained in the CSO have usually their graphical representation highlighted.
   * The **SDO** , for Set of Dialog Objects: contains objects to be placed in toolbars such as input fields.
   * The **ISO** , for Interactive Set of Objects: used to contain interactive objects, that is objects that are not part of the document, but which are displayed to enable their document object handling, such as manipulator handles. A command can itself be put in the ISO, or an object it aggregates. Such objects should implement the _CATI2DGeoVisu_ or _CATI3DGeoVisu_ interface. The classes _CATIExtGeo2DVisu_ and _CATIExtGeo3DVisu_ provide basic implementations of these interfaces respectively
   * The **CATSO** , for Set of Objects.
   * The **CATXSO** , specialized by the following objects, known by the viewer:
+```
+```vbscript
     * The **HSO** , for Highlighted Set of Objects: the objects that the command highlights. Each object in the CSO is also in the HSO
     * The **PSO** , for Prehighlighted Set of Objects: the objects that are handled by a manipulator set by the current command, and that are preactivated and moved.
+
+```
 
 All these objects are created by the _CATFrmEditor_ class instance associated with the document.
 
@@ -281,7 +286,7 @@ All these objects are created by the _CATFrmEditor_ class instance associated wi
 
 A workshop is at a given time in a given context. What does this mean? Let's take an example to illustrate this. Imagine the active document is a Part document which includes a cylindric pad, as shown by the following figure.
 
-![CAAAfrPartWindow.jpg \(64977 bytes\)](images/CAAAfrPartWindow.jpg)
+![CAAAfrPartWindow.jpg /(64977 bytes/)](images/CAAAfrPartWindow.jpg)
 
 A workshop is at a given time in a given context. What does this mean? Let's take an example to illustrate this. Imagine the active document is a Part document which includes a cylindric pad, as shown by the following figure.
 At this moment, the Pad and Pocket icons are displayed grayed and cannot be clicked. This is because no free sketch exists in the document that can be used to create a pad or a pocket, and thus these commands are unusable. It's safe then to make them unavailable. On the opposite, the Hole icon is colored, meaning that the Hole command is available, since you can create a hole in the pad by simply selecting a face and entering the hole definition parameters in the dialog box displayed by the Hole command. Grayed and colored icons show clearly which commands are not available and which commands can be used at a given moment, depending on the document's context, that is often depending on what it contains. This prevents from mistakes and end user errors the client application should handle with additional code and error messages. When you change the active document, the workshop retrieves the document's context and displays as gray the icons of the unavailable commands in this context.

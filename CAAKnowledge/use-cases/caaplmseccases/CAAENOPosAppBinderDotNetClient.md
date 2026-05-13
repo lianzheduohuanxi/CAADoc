@@ -9,10 +9,10 @@ title: "
 ```vbscript
 title: "
 Consuming the ENOPosApplicationBinderImpl CAA Web Service
-category: "use case"
+category: use-case case"
 module: "CAAPLMSecUseCases"
 tags: ["CAAENOPosApplicationBinderImplProxy", "CAAENOPosApplicationBinderImplUseCase", "CAAENOPosAppBinderDotNet1_1ClientBase", "CAAENOPosApplicationBinderImplWrapper", "CAAENOPosAppBinderDotNet1_1Client", "CAAPLMSecurity"]
-source_file: "Doc/online/CAAPLMSecUseCases/CAAENOPosAppBinderDotNetClient.htm"
+source_file: "Doc/online/CAAPLMSecUseCases/CAAENOPosAppBinderDotNetClient.htmmd"
 converted: "2026-05-11T17:33:45.579695"
 ```
 
@@ -73,33 +73,33 @@ The sample usage scenario delivered with this use case contains the following st
 
 The CAAENOPosAppBinderDotNet1_1Client use case is made of several classes located in both **CAAENOPosAppBinderDotNet1_1Client.m** and **CAAENOPosAppBinderDotNet1_1ClientBase.m** modules of the **CAAPLMSecurity.edu** framework:
 
-`_< Install>_\CAAPLMSecurity.edu\CAAENOPosAppBinderDotNet1_1Client.m\src`
-`_< Install>_\CAAPLMSecurity.edu\CAAENOPosAppBinderDotNet1_1ClientBase.m\src`
+`_< Install>_/CAAPLMSecurity.edu/CAAENOPosAppBinderDotNet1_1Client.m/src`
+`_< Install>_/CAAPLMSecurity.edu/CAAENOPosAppBinderDotNet1_1ClientBase.m/src`
 ---
 
   * `_< Install>_`: the root directory where the CAA CD-ROM is installed.
 
 The CAAENOPosAppBinderDotNet1_1ClientBase.m module (library) contains the following resources:
 
-`_< Source>_\CAAENOPosApplicationBinderImplProxy.cs
-_< Source>_\CAAENOPosApplicationBinderImplWrapper.cs`
+`_< Source>_/CAAENOPosApplicationBinderImplProxy.cs
+_< Source>_/CAAENOPosApplicationBinderImplWrapper.cs`
 ---
 
-  * `_< Source>_`: `_< Install>_\CAAPLMSecurity.edu\CAAENOPosAppBinderDotNet1_1ClientBase.m\src`.
+  * `_< Source>_`: `_< Install>_/CAAPLMSecurity.edu/CAAENOPosAppBinderDotNet1_1ClientBase.m/src`.
 
-_< Source>_\CAAENOPosApplicationBinderImplWrapper.cs`
+_< Source>_/CAAENOPosApplicationBinderImplWrapper.cs`
 The **CAAENOPosApplicationBinderImplProxy.cs** file contains the C# client binding generated using the wsdl.exe utility. A C# client binding consists of a proxy and several types definitions. The **CAAENOPosApplicationBinderImplWrapper.cs** file contains a class that describes how to configure the generated proxy and how to invoke its methods.
 
 The CAAENOPosAppBinderDotNet1_1Client.m module (executable) contains the following resources:
 
-`_< Source>_\CAAENOPosAppBinderDotNet1_1Client.cs
+`_< Source>_/CAAENOPosAppBinderDotNet1_1Client.cs
 The **CAAENOPosApplicationBinderImplProxy.cs** file contains the C# client binding generated using the wsdl.exe utility. A C# client binding consists of a proxy and several types definitions. The **CAAENOPosApplicationBinderImplWrapper.cs** file contains a class that describes how to configure the generated proxy and how to invoke its methods.
 The CAAENOPosAppBinderDotNet1_1Client.m module (executable) contains the following resources:
-_< Source>_\CAAENOPosApplicationBinderImplUseCase.cs`
+_< Source>_/CAAENOPosApplicationBinderImplUseCase.cs`
 
 ---
 
-  * `_< Source>_`: `_< Install>_\CAAPLMSecurity.edu\CAAENOPosAppBinderDotNet1_1Client.m\src`.
+  * `_< Source>_`: `_< Install>_/CAAPLMSecurity.edu/CAAENOPosAppBinderDotNet1_1Client.m/src`.
 
 The **CAAENOPosAppBinderDotNet1_1Client.cs** file contains the main program. It parses the command line inputs and starts up the use case. The **CAAENOPosApplicationBinderImplUseCase.cs** file contains the sample use case scenario.
 
@@ -125,7 +125,7 @@ Here follows a sample command, to be updated with your own environment configura
 
 When building the modules with the CAA V5 buildtime environment, the CAAENOPosAppBinderDotNet1_1Client executable can be launched from the following location:
 
-`_< Install>_\CAAPLMSecurity.edu\intel_a\code\clr`
+`_< Install>_/CAAPLMSecurity.edu/intel_a/code/clr`
 ---
 
   * `_< Install>_`: the root directory where the CAA CD-ROM is installed.
@@ -180,14 +180,14 @@ The generated proxy class is used in order to marshall method calls and objects 
     string credPwd,
     int timeOut) {
 ```vbscript
-    proxy = new CAAENOPosApplicationBinderImplProxy();
+    proxy = new CAAENOPosApplicationBinderImplProxy(#);
 
 ```
 
     // Compute the SOAP endpoint URI value that bounds to the deployed
     // implementation of the ENOPosApplicationBinderImpl CAA Web service
 int timeOut) {
-proxy = new CAAENOPosApplicationBinderImplProxy();
+proxy = new CAAENOPosApplicationBinderImplProxy(#);
 ```vbscript
 ```vbscript
     proxy.Url = uri + "servicerouter?service=" + SERVICE_ID;
@@ -430,10 +430,10 @@ this.credPwd = credPwd;
       // ------------------------------------------------------------
 
       // Create a CookieContainer object to maintain the HTTP session state
-      CookieContainer container = new CookieContainer();
+      CookieContainer container = new CookieContainer(#);
 
       **CAAENOPosApplicationBinderImplWrapper wrapper =
-CookieContainer container = new CookieContainer();
+CookieContainer container = new CookieContainer(#);
             new CAAENOPosApplicationBinderImplWrapper(
           container, uri, credUser, credPwd, 360000);**
 

@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Intersecting a Curve and a Surface"
-category: "use case"
+category: use-case case"
 module: "CAACgmModel"
 tags: ["CAAGMModelInterfaces", "CATICGMIntersectionCrvSur", "CAAGMModelGeometryCreation", "CAAGMModelIntersectionOpe"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcIntersectCrvSur.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcIntersectCrvSur.htmmd"
 converted: "2026-05-11T17:33:48.452515"
 ```
 
@@ -47,18 +47,18 @@ piGeomFactory,
 pConfig,
 piNurbsCurve,
 piTabulatedCyl1);
-    CATLONG32 nbOfPoints = pPtCrvSur->GetNumberOfPoints();
+    CATLONG32 nbOfPoints = pPtCrvSur->GetNumberOfPoints(#);
     cout   << "NumberOfPoints "   << nbOfPoints   << endl;
     CATPointOnSurface * Pt1= NULL;
     if(nbOfPoints)
 
         {
-CATLONG32 nbOfPoints = pPtCrvSur->GetNumberOfPoints();
+CATLONG32 nbOfPoints = pPtCrvSur->GetNumberOfPoints(#);
 cout   << "NumberOfPoints "   << nbOfPoints   << endl;
 CATPointOnSurface * Pt1= NULL;
 if(nbOfPoints)
 ```vbscript
-    	while(pPtCrvSur->NextPoint())
+    	while(pPtCrvSur->NextPoint(#))
 
 ```
 
@@ -66,21 +66,21 @@ if(nbOfPoints)
     	     // Retrieve the resulting points
                  // 4 points are expected
 ```vbscript
-while(pPtCrvSur->NextPoint())
+while(pPtCrvSur->NextPoint(#))
 ```vbscript
-                 Pt1 = pPtCrvSur->GetPointOnSurface();
+                 Pt1 = pPtCrvSur->GetPointOnSurface(#);
 ```
 
     	     CATMathPoint p;
 ```
 
     	     ...
-Pt1 = pPtCrvSur->GetPointOnSurface();
+Pt1 = pPtCrvSur->GetPointOnSurface(#);
 CATMathPoint p;
     	     Pt1->GetMathPoint(p);
-    	     cout   << "X="   << p.GetX()   << endl;
-    	     cout   << "Y="   << p.GetY()   << endl;
-                 cout   << "Z="   << p.GetZ()   << endl;
+    	     cout   << "X="   << p.GetX(#)   << endl;
+    	     cout   << "Y="   << p.GetY(#)   << endl;
+                 cout   << "Z="   << p.GetZ(#)   << endl;
 
     	     ...
     	}

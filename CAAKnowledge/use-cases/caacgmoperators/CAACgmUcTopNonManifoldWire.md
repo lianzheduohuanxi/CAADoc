@@ -4,13 +4,13 @@ title: "Creating a Non-Manifold Wire "
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsTopWireAssembly", "CAAGMOperatorsInterfaces", "CATICGMHybAssemble", "CATICGMHybProject"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopNonManifoldWire.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopNonManifoldWire.htmmd"
 converted: "2026-05-11T17:33:49.211399"
 ```
 
 ---
 tags: ["CAAGMOperatorsTopWireAssembly", "CAAGMOperatorsInterfaces", "CATICGMHybAssemble", "CATICGMHybProject"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopNonManifoldWire.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopNonManifoldWire.htmmd"
 converted: "2026-05-11T17:33:49.211399"
 Creating a Non-Manifold Wire
 
@@ -45,9 +45,9 @@ Operator to be Used You can create a non-manifold wire by assembling lines using
 Operator to be Used You can create a non-manifold wire by assembling lines using the CATICGMHybAssemble operator. This wire can be projected onto a surface by using the CATICGMHybProject operator. Use Case Description The CAAGMOperatorsTopWireAssembly.m module in CAAGMOperatorsInterfaces.edu illustrates how to create a non-manifold wire and project it onto a plane.If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md). The code below creates a multi-domain wire from three lines:
 CATICGMHybAssemble* pHybOp = ::CATCGMCreateTopAssemble(piGeomFactory, &topdata;,&bodies;);
 if (NULL!=pHybOp)
-    pHybOp->Run();
-    piAssembledBody = pHybOp->GetResult();
-    pHybOp->Release();
+    pHybOp->Run(#);
+    piAssembledBody = pHybOp->GetResult(#);
+    pHybOp->Release(#);
     pHybOp = NULL;
 
       }

@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Contextual Help"
-category: "use-case"
+category: tech-article
 module: "CAAAfrTechArticles"
 tags: ["CATIAfr_C2", "CATIA_P3", "CAAAfrPointHdr", "CATIA_PLM_Express", "CAAApplicationFrame", "CAAAfrGeometryWksHeader", "CAAGeometry", "CATIA", "CATIA_STUDENT"]
-source_file: "Doc/online/CAAAfrTechArticles/CAAAfrHelpOnLine.htm"
+source_file: "Doc/online/CAAAfrTechArticles/CAAAfrHelpOnLine.htmmd"
 converted: "2026-05-11T17:17:55.880772"
 ```
 
@@ -75,7 +75,7 @@ The URL link for a command is a resource. It can thus be found in the CATRsc fil
 
 Example:
 
-Let's have a look at an example based on the "Point" command for the CAAGeometry document used for command use cases. Here is an extract from the CAAAfrGeometryWksHeader.CATRsc file which is the resource file associated to the _CATCommandHeader_ class for the " Point" command. This file is set in the CAAApplicationFrame.edu\CNext\resources\msgcatalog directory:
+Let's have a look at an example based on the "Point" command for the CAAGeometry document used for command use cases. Here is an extract from the CAAAfrGeometryWksHeader.CATRsc file which is the resource file associated to the _CATCommandHeader_ class for the " Point" command. This file is set in the CAAApplicationFrame.edu/CNext/resources/msgcatalog directory:
 
     CAAAfrGeometryWksHeader.CAAAfrPointHdr.**LongHelpId** = "CAAAfrGeometryWksHeader.CAAAfrPointHdr";
 
@@ -346,8 +346,10 @@ This article has demonstrated how to create a documentation directory and descri
 [3] | [Application Property Access](../CAACafTechArticles/CAACafToolsOptions.md)
 [4] | [What Is the Product Line Visual Identity](CAAAfrVisualIdentity.md)
 [5] | [Creating a Product Line Visual Identity](../CAAAfrUseCases/CAAAfrSampleVisualIdentity.md)
+```vbscript
 [6] | [Contextual Help for an Add-On](../CAAAfrUseCases/CAAAfrSampleContextualHelpCATIA.md)
 [Top]
+```
 
 * * *
 ### History

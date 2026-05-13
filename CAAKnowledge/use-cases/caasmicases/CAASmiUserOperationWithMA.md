@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Managing Geometry with Machining Areas"
-category: "use case"
+category: use-case case"
 module: "CAASmiUseCases"
 tags: ["CAASmiConnectUserOperationWithMA", "CATIM3xFeature", "CAASmiUserOperationWithMAGeometryPanel", "CATISmgFactory", "CAASmiUserOperationWithMA", "CATIMfgGeometryActivity", "CAASurfaceMachiningItf", "CATIAlias", "CAAESmiUserOperationWithMAGeometryEditor", "CATIEdit", "CAASmgOperationWithMA"]
-source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationWithMA.htm"
+source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationWithMA.htmmd"
 converted: "2026-05-11T17:31:51.267374"
 ```
 
@@ -74,10 +74,10 @@ This use case is a part of _Surface Machining Operation Sample_ [1]. You should 
 This use case is a part of _Surface Machining Operation Sample_ [1]. You should build all the modules of this sample at a time to be able to launch it [2].
 Don't forget to edit the interface dictionary located in:
 
-Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CNext\code\dictionary\`
+Windows | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CNext/code/dictionary/`
 
 Don't forget to edit the interface dictionary located in:
-Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CNext\code\dictionary\`
+Windows | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CNext/code/dictionary/`
 Unix | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CNext/code/dictionary/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed, and uncomment the appropriate lines by removing the '#' character.
@@ -88,10 +88,10 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed,
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed, and uncomment the appropriate lines by removing the '#' character.
 This use case is made of source files located in the CAASmiConnectUserOperationWithMA.m module of the CAASurfaceMachiningItf.edu framework:
 
-Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CAASmiConnectUserOperationWithMA.m`
+Windows | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CAASmiConnectUserOperationWithMA.m`
 
 This use case is made of source files located in the CAASmiConnectUserOperationWithMA.m module of the CAASurfaceMachiningItf.edu framework:
-Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CAASmiConnectUserOperationWithMA.m`
+Windows | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CAASmiConnectUserOperationWithMA.m`
 Unix | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CAASmiConnectUserOperationWithMA.m`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -166,7 +166,7 @@ if (SUCCEEDED(oRC))
 ```vbscript
 if (SUCCEEDED(oRC))
 pActivity->SetFeature(spMachFeature);
-          pSmgFactory->Release();
+          pSmgFactory->Release(#);
           pSmgFactory = NULL;
 ```
 
@@ -220,13 +220,13 @@ if (!!spFeatCont)
           _pListOfMAs = spFeatCont->ListMembers("CATIM3xFeature");
 ```
 
-          int NumbOfMAs = _pListOfMAs.Size();
+          int NumbOfMAs = _pListOfMAs.Size(#);
           for (int i=1;i<=NumbOfMAs;i++)
 ```
 
           {
 _pListOfMAs = spFeatCont->ListMembers("CATIM3xFeature");
-int NumbOfMAs = _pListOfMAs.Size();
+int NumbOfMAs = _pListOfMAs.Size(#);
 for (int i=1;i<=NumbOfMAs;i++)
             CATUnicodeString Name;
             CATBaseUnknown_var spMachArea = _pListOfMAs[i];
@@ -251,17 +251,17 @@ CATIAlias * pAlias = NULL;
 HRESULT RC = spMachArea->QueryInterface(IID_CATIAlias, (void**) &pAlias);
 if (SUCCEEDED(RC))
 ```vbscript
-                Name = pAlias->GetAlias();
+                Name = pAlias->GetAlias(#);
 ```
 
                 _pDlgCombo->SetLine(Name);
-                pAlias->Release();
+                pAlias->Release(#);
                 pAlias = NULL;
 
               }
 
 _pDlgCombo->SetLine(Name);
-pAlias->Release();
+pAlias->Release(#);
 pAlias = NULL;
               if (spMachArea->IsEqual(spCurrentMachArea) == 1)
                 _pDlgCombo->SetSelect(i-1,0);
@@ -274,14 +274,14 @@ pAlias = NULL;
 ```vbscript
         AddAnalyseNotificationCB(
           _pDlgCombo,
-          _pDlgCombo->GetComboSelectNotification(),
+          _pDlgCombo->GetComboSelectNotification(#),
           (CATCommandMethod) &CAASmiUserOperationWithMAGeometryPanel::SelectMachArea,NULL);
 
 ```
 
         // Creates the Machining Area editor
 _pDlgCombo,
-_pDlgCombo->GetComboSelectNotification(),
+_pDlgCombo->GetComboSelectNotification(#),
 (CATCommandMethod) &CAASmiUserOperationWithMAGeometryPanel::SelectMachArea,NULL);
 ```vbscript
         if (!!spCurrentMachArea)
@@ -311,7 +311,7 @@ if (SUCCEEDED(RC))
             CATDlgFrame * pMAFrame = pEdit->**GetPanelItem**(this,"**MAFrameID** ");
             if (pMAFrame)
               pMAFrame->SetGridConstraints( 1, 0, 2, 1, CATGRID_4SIDES);
-            pEdit->Release();
+            pEdit->Release(#);
             pEdit = NULL;
 
           }
@@ -344,7 +344,7 @@ if (SUCCEEDED(RC))
 ```
 
         pEdit->**GetPanelItem**(this,"**MAFrameID** ");
-        pEdit->Release();
+        pEdit->Release(#);
         pEdit = NULL;
 
       }

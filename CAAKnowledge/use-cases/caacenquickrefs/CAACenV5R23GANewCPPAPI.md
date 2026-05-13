@@ -4,13 +4,13 @@ title: "New C++ Authorized APIs in CAA V5-6R2013 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATICGMHybTrim", "CATITPSThreadGeometrySpecification", "CATICGMHybIntersect", "CATIMmiUseDatumFactory", "CATIMmiUseSolidInsertion", "CATIMmiMechanicalFeature_var", "CATITPSAssociatedTextVisu", "CATIMmiUseCharacteristicExtremity", "CATITPSTextVisu", "CATIVpmLightVersion", "CATIMmiUseStructureAnalyse", "CATIMmiUseMfBRep", "CATIMmiUseREdge", "CATICGMDynAdvancedFillet", "CATIMmiBRepScanServices", "CATIStrPPGExecLogSettingAtt", "CATICGMDynAdvancedDraft", "CATICGMTopExtrude", "CATICGMTopExtractFace", "CATIMmiUsePrtPart"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R23GANewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R23GANewCPPAPI.htmmd"
 converted: "2026-05-11T17:33:47.535004"
 ```
 
 ---
 tags: ["CATICGMHybTrim", "CATITPSThreadGeometrySpecification", "CATICGMHybIntersect", "CATIMmiUseDatumFactory", "CATIMmiUseSolidInsertion", "CATIMmiMechanicalFeature_var", "CATITPSAssociatedTextVisu", "CATIMmiUseCharacteristicExtremity", "CATITPSTextVisu", "CATIVpmLightVersion", "CATIMmiUseStructureAnalyse", "CATIMmiUseMfBRep", "CATIMmiUseREdge", "CATICGMDynAdvancedFillet", "CATIMmiBRepScanServices", "CATIStrPPGExecLogSettingAtt", "CATICGMDynAdvancedDraft", "CATICGMTopExtrude", "CATICGMTopExtractFace", "CATIMmiUsePrtPart"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R23GANewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R23GANewCPPAPI.htmmd"
 converted: "2026-05-11T17:33:47.535004"
 CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5-6R2013 GA
 
@@ -23,8 +23,10 @@ The following are the new CAA V5-6R2013 GA C++ Authorized APIs, compared with CA
   * CATGSMUseItf framework
     * Interface CATIGSMUseMultipleSolutionsManager
   * CATIAV4Interfaces framework
+```vbscript
     * Global Function CATV4iIsExternalWsp
   * CATMecModExtendItf framework
+```
     * Class CATMf3DBehaviorAdapter
     * Class CATMmrUseSolidInsertionAdapt
     * Interface CATIMmiAlgoConfigServices
@@ -132,13 +134,17 @@ The following are the new CAA V5-6R2013 GA C++ Authorized APIs, compared with CA
     * Enumeration CATFmAttributeAndValueKind
     * Enumeration CATFmAttributeUpdateBehavior
     * Enumeration CATFmAttributeValuationMode
+```vbscript
     * Global Function CATFmGetLastError
     * Interface CATIFmFeatureBehaviorCustomization
+```
     * Typedef CATFmEventSubscriberMethod
   * GMModelInterfaces framework
     * Enumeration CATLengthType
+```vbscript
     * Global Function CATCGMCreateBodyFromLengthOnWire
     * Interface CATICGMBodyFromLengthOnWire
+```
   * GMOperatorsInterfaces framework
     * Macro or #define CATPatternKOAndFar
     * Macro or #define CATPatternKO
@@ -147,6 +153,7 @@ The following are the new CAA V5-6R2013 GA C++ Authorized APIs, compared with CA
     * Macro or #define CATPatternOKWithSewing
     * Enumeration CATDynDraftPrevisualization
     * Enumeration CATFrFTopologicalDowngradeSetting_Type
+```vbscript
     * Global Function CATCGMCreateCompatibleForCGM
     * Global Function CATCGMCreateDirNewBodyExtremum
     * Global Function CATCGMCreateDynAdvancedChamfer
@@ -160,6 +167,7 @@ The following are the new CAA V5-6R2013 GA C++ Authorized APIs, compared with CA
     * Global Function CATCGMCreateTopPattern
     * Global Function CATCGMCreateTopSilhouette
     * Interface CATICGMDynAdvancedChamfer
+```
     * Interface CATICGMDynAdvancedDraft
     * Interface CATICGMDynAdvancedFillet
     * Interface CATICGMHybBoolean
@@ -193,15 +201,21 @@ The following are the new CAA V5-6R2013 GA C++ Authorized APIs, compared with CA
   * ObjectSpecsModeler framework
     * Class CATOsmCatalogAccessServices
   * PartInterfaces framework
+```vbscript
     * Global Function CATCreateCATIPrtThreadStandardServices
   * StructureInterfaces framework
+```
     * Interface CATIStrPPGExecLogSettingAtt
   * TopologicalOperators framework
+```vbscript
     * Global Function CATCreateDirNewBodyExtremum
   * TopologicalOperatorsLight framework
+```
+```vbscript
     * Global Function CATCreateTopEuclidianDistanceTool
     * Global Function CATCreateTopGeodesicDistanceTool
   * VPMDesktopProduct framework
+```
     * Interface ENOVIChangeStatusOfWP
   * VPMInterfaces framework
     * Interface CATICfgModificationUE
@@ -219,4 +233,7 @@ History Version: **1** [Sep 2012] | Document created
 * * *
 
 _Copyright © 1999-2012, Dassault Systèmes. All rights reserved._
+```vbscript
 Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.md) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.md) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.md)
+
+```

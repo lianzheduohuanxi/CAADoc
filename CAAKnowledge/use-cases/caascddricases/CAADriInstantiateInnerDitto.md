@@ -4,7 +4,7 @@ title: "Instantiating a Ditto in a Drawing View"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CAADriInstantiateInnerDitto", "CAADriInstantiateDittoSource", "CATIA", "CAADriUseCases", "CAAScdDriUseCases"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriInstantiateInnerDitto.htm"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriInstantiateInnerDitto.htmmd"
 converted: "2026-05-11T17:31:51.080302"
 ```
 
@@ -36,22 +36,28 @@ This macro shows you how to instantiate a ditto into a view from a detail view o
 
       ...
 ```vbscript
+```vbscript
         ' Set the CATIA popup file alerts to False
 ```
+```
 
+```vbscript
 ```vbscript
 ```vbscript
 ```vbscript
 ' Set the CATIA popup file alerts to False
         ' It prevents to stop the macro at each alert during its execution
 ```
+```
 
 ```
 
 ```
 
 ```vbscript
+```vbscript
         CATIA.DisplayFileAlerts = False
+```
 ```
 
       ...
@@ -72,14 +78,18 @@ The CATIA prompts are disabled thanks to the `DisplayFileAlerts` property of the
 ```
 
 ```vbscript
+```vbscript
         Dim oDrawing As DrawingDocument
+```vbscript
+```
 ```vbscript
         Set oDrawing = CATIA.Documents.Open(sDocPath & _
 ```
+```
 
 ```
 
-                 "\online\CAAScdDriUseCases\samples\CAADriInstantiateDittoSource.CATDrawing")
+                 "/online/CAAScdDriUseCases/samples/CAADriInstantiateDittoSource.CATDrawing")
       ...
 
 ---
@@ -98,9 +108,13 @@ A drawing document is opened, its window is reframed according to the size of th
 ```
 
 ```vbscript
+```vbscript
         Dim oSheets As DrawingSheets
 ```vbscript
+```
+```vbscript
         Set oSheets = oDrawing.Sheets
+```
 ```
 
 ```
@@ -109,11 +123,15 @@ A drawing document is opened, its window is reframed according to the size of th
 ```vbscript
 ```vbscript
         ' Retrieve the sheet where the detail view will be instantiated
+```vbscript
         Dim oSheet As DrawingSheet
         Set oSheet = oSheets.Item("Sheet.1")
         ' Retrieve the view where the detail view will be instantiated
+```
+```vbscript
         Dim oView As DrawingView
         Set oView = oSheet.Views.Item("View.3")
+```
 ```
 
 ```
@@ -124,8 +142,10 @@ A drawing document is opened, its window is reframed according to the size of th
 ```vbscript
 ```vbscript
 ' Retrieve the view where the detail view will be instantiated
+```vbscript
 Dim oView As DrawingView
 Set oView = oSheet.Views.Item("View.3")
+```
 ```
 
 ```
@@ -156,9 +176,13 @@ The view is activated.
 ```
 
 ```vbscript
+```vbscript
         Dim oDetailSheet As DrawingSheet
 ```vbscript
+```
+```vbscript
         Set oDetailSheet = oSheets.Item("Sheet.2 (Detail)")
+```
 ```
 
 ```
@@ -167,8 +191,10 @@ The view is activated.
 ```vbscript
 ```vbscript
         ' Retrieve the detail view to be instantiated
+```vbscript
         Dim oDetailView As DrawingView
         Set oDetailView = oDetailSheet.Views.Item("DrwDetail.1")
+```
 ```
 
 ```
@@ -194,13 +220,17 @@ The detail view object is retrieved from the collection using the `Item` method 
 ```
 
 ```vbscript
+```vbscript
         Dim ReturnStatus As String
+```vbscript
+```
 ```vbscript
 ```vbscript
         Dim iDittoCoordinates(1)
         Dim oDraw
         Set oDraw = oDrawing
         ReturnStatus = oDraw.Indicate2D("Indicate the ditto location", iDittoCoordinates)
+```
 ```
 
 ```
@@ -222,9 +252,13 @@ The ditto's location is retrieved using the `Indicate2D` method which allow user
 ```
 
 ```vbscript
+```vbscript
         Dim o2DComponents As DrawingComponents
 ```vbscript
+```
+```vbscript
         Set o2DComponents = oView.Components
+```
 ```
 
 ```
@@ -233,8 +267,10 @@ The ditto's location is retrieved using the `Indicate2D` method which allow user
 ```vbscript
 ```vbscript
         ' Create the ditto
+```vbscript
         Dim o2DComponent As DrawingComponent
         Set o2DComponent = o2DComponents.Add(oDetailView, iDittoCoordinates(0), iDittoCoordinates(1))
+```
 ```
 
 ```
@@ -257,9 +293,13 @@ The component object is created in the collection using the `Add` method from th
 ```
 
 ```vbscript
+```vbscript
         Dim oText As DrawingText
 ```vbscript
+```
+```vbscript
         Set oText = o2DComponent.GetModifiableObject(1)
+```
 ```
 
 ```
@@ -268,8 +308,10 @@ The component object is created in the collection using the `Add` method from th
 ```vbscript
 ```vbscript
         ' Modify the modifiable text value
+```vbscript
         Dim ReturnValue As String
         ReturnValue = InputBox("Enter a value", "", "New Value For Text")
+```
 ```
 
 ```
@@ -280,7 +322,9 @@ The component object is created in the collection using the `Add` method from th
 ```vbscript
 ```vbscript
 ' Modify the modifiable text value
+```vbscript
 Dim ReturnValue As String
+```
 ```
 
 ```
@@ -307,7 +351,7 @@ The text of the text object is returned using the `InputBox` procedure. Enter 10
 
 ![](images/img017.gif)
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

@@ -2,7 +2,7 @@
 title: "CATICAAAfrGeometryWksConfiguration"
 type: "interface"
 module: "CAAApplicationFrame"
-category: "framework"
+category: api-reference
 base: "CATIWorkbench"
 inheritance_chain: "CATICAAAfrGeometryWksConfiguration → CATIWorkbench"
 method_count: 0
@@ -41,3 +41,26 @@ verified: true
 - `CAAIAfrGeometryWksAddin.cpp`
 - `CAAIAfrGeometryWksFactory.cpp`
 
+---
+
+## Interface Overview
+
+This interface inherits from **CATIWorkbench**. 
+
+**Inherited Methods**: Please refer to the base interface documentation above.
+
+---
+
+## Related Use Cases
+
+- [3D PLM Enterprise Architecture](../../use-cases/caaafrcases/CAAAfrSampleWorkbench.md)
+
+## Interface Notes
+
+This interface is part of the **CAT** module.
+
+**Status**: This interface document is a template. Please refer to the official API documentation for more information.
+
+**Related Resources**:
+- [Quick References](../..//quick-refs/)
+- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)

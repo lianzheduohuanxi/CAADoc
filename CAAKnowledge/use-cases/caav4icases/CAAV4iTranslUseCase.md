@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating a V5 Geometrical Element from V4 Data"
-category: "use case"
+category: use-case case"
 module: "CAAV4iUseCases"
 tags: ["CAACATIAV4Interfaces", "CAAV4iEduTranslV4ToV5", "CAADataTranslator", "CATIV4DataTranslator", "CATIAV4Interfaces", "CATIA"]
-source_file: "Doc/online/CAAV4iUseCases/CAAV4iTranslUseCase.htm"
+source_file: "Doc/online/CAAV4iUseCases/CAAV4iTranslUseCase.htmmd"
 converted: "2026-05-11T17:33:45.807427"
 ```
 
@@ -65,10 +65,10 @@ __
 
 __
 The CAAV4iEduTranslV4ToV5 use case is made of one file located in the CAAV4iEduTranslV4ToV5.m module of the CAACATIAV4Interfaces.edu framework:
-  Windows | `InstallRootDirectory\`CAACATIAV4Interfaces`.edu\`CAAV4iEduTranslV4ToV5`.m\`
+  Windows | `InstallRootDirectory/`CAACATIAV4Interfaces`.edu/`CAAV4iEduTranslV4ToV5`.m/`
 
 The CAAV4iEduTranslV4ToV5 use case is made of one file located in the CAAV4iEduTranslV4ToV5.m module of the CAACATIAV4Interfaces.edu framework:
-Windows | `InstallRootDirectory\`CAACATIAV4Interfaces`.edu\`CAAV4iEduTranslV4ToV5`.m\`
+Windows | `InstallRootDirectory/`CAACATIAV4Interfaces`.edu/`CAAV4iEduTranslV4ToV5`.m/`
 Unix | `InstallRootDirectory/`CAACATIAV4Interfaces`.edu/`CAAV4iEduTranslV4ToV5`.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.

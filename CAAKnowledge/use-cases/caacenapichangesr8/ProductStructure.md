@@ -5,13 +5,13 @@ category: "use-case"
 module: "CAACenAPIChangesR8"
 version: "V5R8"
 tags: ["CATIProviders"]
-source_file: "Doc/online/CAACenAPIChangesR8/ProductStructure.htm"
+source_file: "Doc/online/CAACenAPIChangesR8/ProductStructure.htmmd"
 converted: "2026-05-11T17:33:52.687452"
 ```
 
 ---
 tags: ["CATIProviders"]
-source_file: "Doc/online/CAACenAPIChangesR8/ProductStructure.htm"
+source_file: "Doc/online/CAACenAPIChangesR8/ProductStructure.htmmd"
 converted: "2026-05-11T17:33:52.687452"
 CAA C++ API Modifications|  ProductStructure  |
 

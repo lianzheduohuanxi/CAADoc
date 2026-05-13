@@ -4,13 +4,13 @@ title: "Breaking a C1 Curve into C2 Pieces"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGMModelConvertCurveToC2", "CAAGMModelInterfaces", "CATICGMNurbsCurveTools", "CATIA", "CATICGMMathNurbsCurveTools"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcTopGMModelCurveC1ToC2.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcTopGMModelCurveC1ToC2.htmmd"
 converted: "2026-05-11T17:33:48.589667"
 ```
 
 ---
 tags: ["CAAGMModelConvertCurveToC2", "CAAGMModelInterfaces", "CATICGMNurbsCurveTools", "CATIA", "CATICGMMathNurbsCurveTools"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcTopGMModelCurveC1ToC2.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcTopGMModelCurveC1ToC2.htmmd"
 converted: "2026-05-11T17:33:48.589667"
 Breaking a C1 Curve into C2 Pieces
 
@@ -38,7 +38,7 @@ and the code below:
     ...
 and the code below:
 CATICGMNurbsCurveTools  * pNurbsTool3D  =::CATCGMCreateNurbsCurveTools(piGeomFactory, pConfig, pC1Nurbs);
-    CATNurbsToolsInfo infoContinuity = pNurbsTool3D->Check();
+    CATNurbsToolsInfo infoContinuity = pNurbsTool3D->Check(#);
 ```vbscript
     if (infoContinuity != Info_InternalContinuity)
 
@@ -46,23 +46,23 @@ CATICGMNurbsCurveTools  * pNurbsTool3D  =::CATCGMCreateNurbsCurveTools(piGeomFac
 
         {
 CATICGMNurbsCurveTools  * pNurbsTool3D  =::CATCGMCreateNurbsCurveTools(piGeomFactory, pConfig, pC1Nurbs);
-CATNurbsToolsInfo infoContinuity = pNurbsTool3D->Check();
+CATNurbsToolsInfo infoContinuity = pNurbsTool3D->Check(#);
 if (infoContinuity != Info_InternalContinuity)
     		cout << "The curve is C2 discontinuous" << endl;
 
          // Retrieves the parameters to be passed to the
-CATNurbsToolsInfo infoContinuity = pNurbsTool3D->Check();
+CATNurbsToolsInfo infoContinuity = pNurbsTool3D->Check(#);
 if (infoContinuity != Info_InternalContinuity)
 cout << "The curve is C2 discontinuous" << endl;
-         const CATKnotVector * inputKV = pC1Nurbs->GetKnotVector();  // the knot vector
-         CATLONG32  NbCp  =  inputKV->GetNumberOfControlPoints();
+         const CATKnotVector * inputKV = pC1Nurbs->GetKnotVector(#);  // the knot vector
+         CATLONG32  NbCp  =  inputKV->GetNumberOfControlPoints(#);
 
          ...
 cout << "The curve is C2 discontinuous" << endl;
-const CATKnotVector * inputKV = pC1Nurbs->GetKnotVector();  // the knot vector
-CATLONG32  NbCp  =  inputKV->GetNumberOfControlPoints();
+const CATKnotVector * inputKV = pC1Nurbs->GetKnotVector(#);  // the knot vector
+CATLONG32  NbCp  =  inputKV->GetNumberOfControlPoints(#);
          CATICGMMathNurbsCurveTools  * pMathNurbsTool3D  =::CATCGMCreateMathNurbsCurveTools( *inputKV,
-                pNurbs->IsRational(),
+                pNurbs->IsRational(#),
     			ctlPts,
     			CATMathNurbsFull3D,
     			aWeights);

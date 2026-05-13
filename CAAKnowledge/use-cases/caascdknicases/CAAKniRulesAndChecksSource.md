@@ -4,13 +4,13 @@ title: "CAAKniRulesAndChecks.CATScript"
 category: "use-case"
 module: "CAAScdKniUseCases"
 tags: ["CATIA", "CAAKniRulesAndChecks", "CAAScdKniUseCases"]
-source_file: "Doc/online/CAAScdKniUseCases/CAAKniRulesAndChecksSource.htm"
+source_file: "Doc/online/CAAScdKniUseCases/CAAKniRulesAndChecksSource.htmmd"
 converted: "2026-05-11T17:31:51.995311"
 ```
 
 ---
 tags: ["CATIA", "CAAKniRulesAndChecks", "CAAScdKniUseCases"]
-source_file: "Doc/online/CAAScdKniUseCases/CAAKniRulesAndChecksSource.htm"
+source_file: "Doc/online/CAAScdKniUseCases/CAAKniRulesAndChecksSource.htmmd"
 converted: "2026-05-11T17:31:51.995311"
     Option Explicit
 ```vbscript
@@ -22,8 +22,10 @@ converted: "2026-05-11T17:31:51.995311"
 ```
 
 ```vbscript
+```vbscript
     Dim Language as String
     Language="VBScript"
+```
 ```
 
 ```vbscript
@@ -34,16 +36,16 @@ converted: "2026-05-11T17:31:51.995311"
     '                 1 - Checks whether the active document is a CATPart
     '                 2 - Retrieves the Relations collection
     '                 3 - Creates the rule below
-    '                      if PartBody\Hole.1\Diameter > 10mm
-    '                      Message The hole diameter is PartBody\Hole.1\Diameter
+    '                      if PartBody/Hole.1/Diameter > 10mm
+    '                      Message The hole diameter is PartBody/Hole.1/Diameter
     '                 4 - Creates the check below:
-    '                      PartBody\Pad.1\FirstLimit\Length  > 100mm
+    '                      PartBody/Pad.1/FirstLimit/Length  > 100mm
     '
     '   Assumptions:
     '                 This macro is intended to be run on the
     '                 KwrMacro0.CATPart document or any CATPart document
-    '                 with the appropriate parameters (PartBody\Hole.1\Diameter
-    '                 and PartBody\Pad.1\FirstLimit\Length)
+    '                 with the appropriate parameters (PartBody/Hole.1/Diameter
+    '                 and PartBody/Pad.1/FirstLimit/Length)
     '
     '
     '
@@ -60,7 +62,10 @@ converted: "2026-05-11T17:31:51.995311"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
+
+```
 
 ```
 
@@ -70,58 +75,76 @@ converted: "2026-05-11T17:31:51.995311"
         ' -----------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String
+```vbscript
         sDocPath=CATIA.SystemService.Environ("CATDocView")
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
           Err.Raise 9999,,"No Doc Path Defined"
         End If
+```
         ' -----------------------------------------------------------
         ' Open the Part document
+```vbscript
         Dim sFilePath
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
-
 ```
 
 ```
 
-    		"online\CAAScdKniUseCases\samples\KwrMacro0.CATPart")
+```
+
+    		"online/CAAScdKniUseCases/samples/KwrMacro0.CATPart")
+```vbscript
 ```vbscript
 Dim sFilePath
+```vbscript
+```
 ```vbscript
 ```vbscript
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
         Dim oDoc As Document
         set oDoc = CATIA.Documents.Open(sFilePath)
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 ```vbscript
 ```vbscript
      ' Set the CATIA popup file alerts to False
      ' It prevents to stop the macro at each alert during its execution
+```
+```vbscript
      CATIA.DisplayFileAlerts = False
     ' Retrieve your active document - CATIA is your application
+```
     ' You get the active document by using the ActiveDocument property
     ' on your application object
+```vbscript
     Dim oActiveDoc As Document
     Set oActiveDoc = CATIA.ActiveDocument
     ' Check whether the document is a CATPart
+```
     If (InStr(oActiveDoc.Name,".CATPart")) <> 0  Then
         ' Retrieve the collection object which contains
         ' all the document relations.
         ' The statements below are only valid when the active
         ' document is a CATPart
+```vbscript
         Dim oRelations As Relations
         Set oRelations = oActiveDoc.Part.Relations
         ' Create the rule below:
-        '           if PartBody\Hole.1\Diameter > 10mm
-        '           Message The hole diameter is , PartBody\Hole.1\Diameter)
+```
+        '           if PartBody/Hole.1/Diameter > 10mm
+        '           Message The hole diameter is , PartBody/Hole.1/Diameter)
+```vbscript
         Dim Rule0 As Rule
         Set Rule0 = oRelations.CreateProgram("Rule.1",_
+```
 ```
 
 ```
@@ -130,24 +153,30 @@ sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 
                                              "", "" +_
 ```vbscript
+```vbscript
 Dim Rule0 As Rule
+```vbscript
+```
 ```vbscript
 Set Rule0 = oRelations.CreateProgram("Rule.1",_
                                              chr(10)_
 ```
+```
 
 ```
 
-                                             + "if PartBody\Hole.1\Diameter > 10mm" +_
+                                             + "if PartBody/Hole.1/Diameter > 10mm" +_
                                              chr(10) +_
-                         "Message (""The hole diameter is # "", PartBody\Hole.1\Diameter)" )
+                         "Message (""The hole diameter is # "", PartBody/Hole.1/Diameter)" )
 ```vbscript
 ```vbscript
 ```vbscript
         ' Create the check below:
-        '       PartBody\Pad.1\FirstLimit\Length  > 100mm
+        '       PartBody/Pad.1/FirstLimit/Length  > 100mm
+```vbscript
         Dim Check1 As Check
         Set Check1 = oRelations.CreateCheck  ( "Check.1", "Increase the pad thickness",_
+```
 ```
 
 ```
@@ -156,20 +185,28 @@ Set Rule0 = oRelations.CreateProgram("Rule.1",_
 
                                                "/* Check created by CRE 03/16/00 */" +_
 ```vbscript
+```vbscript
 Dim Check1 As Check
 ```vbscript
+```
+```vbscript
 Set Check1 = oRelations.CreateCheck  ( "Check.1", "Increase the pad thickness",_
-                                    chr(10) + "PartBody\Pad.1\FirstLimit\Length  > 100mm" )
+                                    chr(10) + "PartBody/Pad.1/FirstLimit/Length  > 100mm" )
+```
 ```vbscript
     ' Update the document
+```vbscript
     CATIA.ActiveDocument.Part.Update
+```
 ```
 
 ```
 
     else
+```vbscript
        MsgBox "The active document must be a CATPart"
 ```vbscript
+```
     End If
 
 ```
@@ -177,6 +214,8 @@ Set Check1 = oRelations.CreateCheck  ( "Check.1", "Increase the pad thickness",_
 ```
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

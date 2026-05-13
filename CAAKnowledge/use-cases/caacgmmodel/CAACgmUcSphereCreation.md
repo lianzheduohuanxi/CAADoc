@@ -4,13 +4,13 @@ title: "Sphere"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGMModelInterfaces", "CAAGMModelSphereCreation"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcSphereCreation.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcSphereCreation.htmmd"
 converted: "2026-05-11T17:33:48.523639"
 ```
 
 ---
 tags: ["CAAGMModelInterfaces", "CAAGMModelSphereCreation"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcSphereCreation.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcSphereCreation.htmmd"
 converted: "2026-05-11T17:33:48.523639"
 Creating a Frustum of a Sphere
 

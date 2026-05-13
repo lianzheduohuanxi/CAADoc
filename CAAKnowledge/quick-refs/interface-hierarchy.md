@@ -1,13 +1,14 @@
 ---
+category: quick-ref
 title: "接口继承树"
 type: "quick-reference"
 verified: true
 ---
+category: quick-ref
 
 # CATIA CAA V5 接口继承树
 
 > 本文档展示接口的完整继承关系
-
 
 ## CATBaseUnknown (根接口)
 
@@ -34,8 +35,10 @@ verified: true
 - **CAACafGeometryEltSettingCtrl**: CAACafGeometryEltSettingCtrl → CATBaseUnknown
 - **CAACafGeometryViewSettingCtrl**: CAACafGeometryViewSettingCtrl → CATBaseUnknown
 - **CAACafViewerFeedbackManager**: CAACafViewerFeedbackManager → CATBaseUnknown
+```vbscript
 - **CAAConcatenateStringUserFunction**: CAAConcatenateStringUserFunction → CATBaseUnknown
 - **CAACurveV4DataSaver**: CAACurveV4DataSaver → CATBaseUnknown
+```
 - **CAADataTranslator**: CAADataTranslator → CATBaseUnknown
 - **CAADegGeoSDOAdn**: CAADegGeoSDOAdn → CATBaseUnknown
 - **CAADlgBBEditorMessageHandler**: CAADlgBBEditorMessageHandler → CATBaseUnknown
@@ -70,7 +73,6 @@ _... 还有 297 个接口_
 - **CAAICafGeometryViewSettingAtt**: CAAICafGeometryViewSettingAtt → IUnknown
 
 ## 其他根接口
-
 
 ### CATStateCommand (61 个派生接口)
 

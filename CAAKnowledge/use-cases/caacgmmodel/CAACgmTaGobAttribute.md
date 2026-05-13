@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "The Management of Foreign Data"
-category: "use-case"
+category: use-case
 module: "CAACgmModel"
 tags: ["CATICGMObject", "CATICGMDomainBinder", "CATICGMObjects", "CATIA", "CATIForeignSurface"]
-source_file: "Doc/online/CAACgmModel/CAACgmTaGobAttribute.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmTaGobAttribute.htmmd"
 converted: "2026-05-11T17:33:47.890093"
 ```
 
@@ -221,12 +221,12 @@ class ExportedByXXX UserNonPersistentAttr : public CATCGMAttribute
     public :
     CATCGMDeclareAttribute(UserNonPersistentAttr,CATCGMAttribute);
 ```vbscript
-    UserNonPersistentAttr();
+    UserNonPersistentAttr(#);
     UserNonPersistentAttr(const UserNonPersistentAttr&);
 ```
 
     UserNonPersistentAttr& operator=(const UserNonPersistentAttr&);
-    virtual ~UserNonPersistentAttr();
+    virtual ~UserNonPersistentAttr(#);
 
     };
     #endif
@@ -240,14 +240,14 @@ The source file is then:
     //
 The source file is then:
 CATCGMImplAttribute(UserNonPersistentAttr,CATCGMAttribute,NoAppDef,1);
-    UserNonPersistentAttr::UserNonPersistentAttr() :
-    CATCGMAttribute()
+    UserNonPersistentAttr::UserNonPersistentAttr(#) :
+    CATCGMAttribute(#)
 
     {
     }
     //
-UserNonPersistentAttr::UserNonPersistentAttr() :
-CATCGMAttribute()
+UserNonPersistentAttr::UserNonPersistentAttr(#) :
+CATCGMAttribute(#)
     UserNonPersistentAttr::UserNonPersistentAttr(const UserNonPersistentAttr&)
 
     {
@@ -262,7 +262,7 @@ UserNonPersistentAttr::UserNonPersistentAttr(const UserNonPersistentAttr&)
     //
 UserNonPersistentAttr& UserNonPersistentAttr::operator=(const UserNonPersistentAttr&)
 return *this;
-    UserNonPersistentAttr::~UserNonPersistentAttr()
+    UserNonPersistentAttr::~UserNonPersistentAttr(#)
 
     {
     }
@@ -270,7 +270,7 @@ return *this;
 To use it:
 
     //Creates a UserNonPersistentAttr
-    UserNonPersistentAttr * pMyAttr=new UserNonPersistentAttr();
+    UserNonPersistentAttr * pMyAttr=new UserNonPersistentAttr(#);
     //
     // Puts it on a line
     piLine->PutAttribute(pMyAttr);

@@ -4,7 +4,7 @@ title: "Creating a Schematic Document"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CATIA", "CAASchCreateSchDocument2", "CAAScdSchUseCases"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchCreateSchDocument2.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchCreateSchDocument2.htmmd"
 converted: "2026-05-11T17:31:51.345185"
 ```
 
@@ -26,13 +26,17 @@ This macro shows you how to create a new schematic document. Schematic documents
   2. Initialize the new Schematic document the "schematic way"
   3. Get the current CNEXT session
   4. Create a new schematic document
+```vbscript
   5. Set the drawing standard
 
 #### Prolog
+```
 
 4. Create a new schematic document
+```vbscript
 5. Set the drawing standard
 The macro first creates a new document.. |     ...
+```
 
 ```vbscript
 ```vbscript
@@ -47,9 +51,13 @@ The macro first creates a new document.. |     ...
 ```
 
 ```vbscript
+```vbscript
     Dim objSchDoc As Document
 ```vbscript
+```
+```vbscript
     Set objSchDoc = CATIA.Documents.Add ("CATProduct")
+```
 ```
 
 ```
@@ -96,13 +104,18 @@ The macro first creates a new document.. |     ...
 ```
 
 ```vbscript
+```vbscript
          Set objSchDoc = CATIA.Documents.Open (strDocName)
+```
 ```
 
     ...
 
 ---
+```vbscript
 #### Set the drawing standard of the drafting viewer in the schematic document
+
+```
 
 A schematic document has a drafting viewer embedded in it. The drawing standard of that drafting viewer can be set by calling the SetDrawingStandard method. This macro also illustrates how to use the GetDrawingStandard method to retrieve the drawing standard of a schematic document.
 
@@ -111,8 +124,10 @@ A schematic document has a drafting viewer embedded in it. The drawing standard 
 ```vbscript
 ```vbscript
          '---------------------------------------------------------------------
+```vbscript
          ' Set the drawing standard if needed
          '---------------------------------------------------------------------
+```
 ```
 
 ```
@@ -126,8 +141,10 @@ A schematic document has a drafting viewer embedded in it. The drawing standard 
 ```
 
 ```vbscript
+```vbscript
             Dim std As CatDrawingStandard
             std = objSchRoot.GetDrawingStandard
+```
             strMessage = strMessage & "drawing standard = " & std & vbCr
          End If
 ```

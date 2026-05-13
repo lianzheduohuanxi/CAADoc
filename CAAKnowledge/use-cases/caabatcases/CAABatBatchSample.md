@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating a CAA V5 Batch"
-category: "use case"
+category: use-case case"
 module: "CAABatUseCases"
 tags: ["CAABatBatchSample", "CATIBatchElementCAA", "CATIBatch", "CATIBatchCAA", "CATIBatchElementsCAA", "CAABatchInfrastructure"]
-source_file: "Doc/online/CAABatUseCases/CAABatBatchSample.htm"
+source_file: "Doc/online/CAABatUseCases/CAABatBatchSample.htmmd"
 converted: "2026-05-11T17:33:45.740129"
 ```
 
@@ -40,15 +40,15 @@ This article discusses the CAABatBatchSample use case. This use case explains ho
 
 A V5 batch is a non interactive program which fits 3 principles.
 
-        \- The code is implemented in a library, by the “batchmain” function.
-        \- The batch is described in a XML file known as “file descriptor”.
-        \- Its inputs and outputs are described in one to card-index XML file known as “parameter file”.
+        /- The code is implemented in a library, by the “batchmain” function.
+        /- The batch is described in a XML file known as “file descriptor”.
+        /- Its inputs and outputs are described in one to card-index XML file known as “parameter file”.
 
 This use case is intended to help you to make your first steps in creating your own CAA V5 Batch. The main points are:
 
-        \- Write the batchmain library
-        \- Write your Batch Descriptor file
-        \- Write your Batch Parameter file
+        /- Write the batchmain library
+        /- Write your Batch Descriptor file
+        /- Write your Batch Parameter file
   [Top]
 ### The CAABatBatchSample Use Case
 
@@ -77,9 +77,9 @@ The parameter file used in this sample is _
     <!DOCTYPE root SYSTEM "Parameters.dtd" >
     <root batch_name="BatchSample" >
     <inputParameters>
-    <file id="file1" filePath="XXX\CAABatchInfrastructure.edu\Data.d\ATTRIBUTCXR1.model" type="bin"/>
-    <file id="file2" filePath="XXX\CAABatchInfrastructure.edu\Data.d\BOBINE.model" type="bin"/>
-    <file id="file3" filePath="XXX\CAABatchInfrastructure.edu\Data.d\CUBE.model" type="bin"/>
+    <file id="file1" filePath="XXX/CAABatchInfrastructure.edu/Data.d/ATTRIBUTCXR1.model" type="bin"/>
+    <file id="file2" filePath="XXX/CAABatchInfrastructure.edu/Data.d/BOBINE.model" type="bin"/>
+    <file id="file3" filePath="XXX/CAABatchInfrastructure.edu/Data.d/CUBE.model" type="bin"/>
     <simple_arg id="action" value="1"/>
     </inputParameters>
     <outputParameters>
@@ -97,7 +97,7 @@ _ where:
     oBatchSample is the name of the descriptor file.
     o<inputParameters> and </inputParameters> are the tags used to define the input parameters section.
     o<outputParameters> and </outputParameters> are the tags used to define the output parameters section.
-        o “XXX\ATTRIBUTCXR1.model” is the full path of the input file
+        o “XXX/ATTRIBUTCXR1.model” is the full path of the input file
         o folderPath attribute is the full path for the output directory. If this attribute is set to “”, such as in the example, the directory defined with the $BATCH_HOME variable is used.
 
 The Parameters.dtd file used to check the xml files syntax is provided by the Batch Infrastructure and is used for all batches.
@@ -141,8 +141,10 @@ To launch the use case you have to follow the following steps:
 
 ```vbscript
 ```vbscript
+```vbscript
     Set up the run time environment (mkrun on build time installation and catstart on runtime installation)
 
+```
 ```
 
 ```
@@ -159,10 +161,10 @@ To launch the use case you have to follow the following steps:
 The CAABatBatchSample use case is made of a single function named batchmain located in the CAABatBatchSample.m module of the CAABatchInfrastructure.edu framework:
 
 The CAABatBatchSample use case is made of a single function named batchmain located in the CAABatBatchSample.m module of the CAABatchInfrastructure.edu framework:
-Windows | InstallRootDirectory\CAABatchInfrastructure.edu\ CAABatBatchSample.m\
+Windows | InstallRootDirectory/CAABatchInfrastructure.edu/ CAABatBatchSample.m/
 
 The CAABatBatchSample use case is made of a single function named batchmain located in the CAABatBatchSample.m module of the CAABatchInfrastructure.edu framework:
-Windows | InstallRootDirectory\CAABatchInfrastructure.edu\ CAABatBatchSample.m\
+Windows | InstallRootDirectory/CAABatchInfrastructure.edu/ CAABatBatchSample.m/
 Unix | InstallRootDirectory/CAABatchInfrastructure.edu/ CAABatBatchSample.m/
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -184,7 +186,7 @@ There are seven logical steps to implement _CATBatBatchSample_ :
 [Top]
 #### Initializing the completion state
 
-    CATBatStatePubCAA* pub = CATBatStatePubCAA::GetCAAStatePub();
+    CATBatStatePubCAA* pub = CATBatStatePubCAA::GetCAAStatePub(#);
 
     pub->SetBatchState(10);
 
@@ -201,13 +203,13 @@ execution.
 
     CATBatchLogCAA::PutInLog("filepath: ");
 CATBatchLogCAA::PutInLog("filepath: ");
-    CATBatchLogCAA::PutInLog(usfile_path.CastToCharPtr() );
+    CATBatchLogCAA::PutInLog(usfile_path.CastToCharPtr(#) );
 
-    CATBatchLogCAA::PutInLog("\n");
+    CATBatchLogCAA::PutInLog("/n");
 
 ---
 
-CATBatchLogCAA::PutInLog("\n");
+CATBatchLogCAA::PutInLog("/n");
 The batch author can write in a batch log during the program execution. It allows the system to log information about
 what the batch is doing. It can be useful if the batch end abnormally.
 This log is written in the $BATCH_HOME/uuid/uuidLog.txt file. The default value for BATCH_HOME is /tmp (on UNIX) or
@@ -219,11 +221,11 @@ The only parameter allowed in the PutInLog method is a string.
 * * *
 #### Retrieving CATIBatch Interface
 
-    CATIBatchCAA* batch = GetCATIBatchCAA();
+    CATIBatchCAA* batch = GetCATIBatchCAA(#);
 
 ---
 
-CATIBatchCAA* batch = GetCATIBatchCAA();
+CATIBatchCAA* batch = GetCATIBatchCAA(#);
 The XML parameter file is read, at batch start, and an XML tree is generated in memory. CATIBatch is the main interface to access XML parameters tree from the batch.
 
 Interfaces CATIBatchElementCAA (for a tag) and CATIBatchElementsCAA (for a list of tags) can be retrieved from CATIBatchCAA allowing accessing the whole XML tree
@@ -286,14 +288,14 @@ hr = inputFiles->ItemCAA( i, elem );
     // at the end of the execution. Default for BATCH_HOME is /tmp or C/temp and uuid is a
     // generated identifier for each batch execution.
     	CATBatchLogCAA::PutInLog("filepath: ");
-    	CATBatchLogCAA::PutInLog(usfile_path.CastToCharPtr() );
-    	CATBatchLogCAA::PutInLog("\n");
+    	CATBatchLogCAA::PutInLog(usfile_path.CastToCharPtr(#) );
+    	CATBatchLogCAA::PutInLog("/n");
 
     ...
 
     //We store the file path in a list for later use
-CATBatchLogCAA::PutInLog(usfile_path.CastToCharPtr() );
-CATBatchLogCAA::PutInLog("\n");
+CATBatchLogCAA::PutInLog(usfile_path.CastToCharPtr(#) );
+CATBatchLogCAA::PutInLog("/n");
     l	istOfV4Files.Append( usfile_path );
 
     }
@@ -359,7 +361,7 @@ long.
 
 The tag <simple_arg> allows the batch author to describe “field=value” like arguments using the XML syntax.
 
-“LongArg” is a method used to retrieve the value of a long type argument. Equivalent methods exist on CATIBatchElementCAA interface according to the type expected for the given tag value (e.g StringArg() )
+“LongArg” is a method used to retrieve the value of a long type argument. Equivalent methods exist on CATIBatchElementCAA interface according to the type expected for the given tag value (e.g StringArg(#) )
 
 [Top]
 #### Retrieves the output parameters
@@ -404,35 +406,35 @@ char in_filename[CATMaxPathSize];
     char out_fullfilename[CATMaxPathSize];
     CATUnicodeString out_fullfilename_us;
 
-    CATBatchLogCAA::PutInLog("Output Creation \n");
+    CATBatchLogCAA::PutInLog("Output Creation /n");
 
 ```vbscript
-    for (int ii=1; ii<=listOfV4Files.Size(); ii++)
+    for (int ii=1; ii<=listOfV4Files.Size(#); ii++)
 
 ```
 
     {
-CATBatchLogCAA::PutInLog("Output Creation \n");
-for (int ii=1; ii<=listOfV4Files.Size(); ii++)
+CATBatchLogCAA::PutInLog("Output Creation /n");
+for (int ii=1; ii<=listOfV4Files.Size(#); ii++)
 ```vbscript
-    	memset(in_filename, '\0', CATMaxPathSize);
-    	memset(in_dirname, '\0', CATMaxPathSize);
-    	memset(out_fullfilename, '\0', CATMaxPathSize);
+    	memset(in_filename, '/0', CATMaxPathSize);
+    	memset(in_dirname, '/0', CATMaxPathSize);
+    	memset(out_fullfilename, '/0', CATMaxPathSize);
 
-    	CATSplitPath( listOfV4Files[ii].CastToCharPtr(), in_dirname, in_filename);
+    	CATSplitPath( listOfV4Files[ii].CastToCharPtr(#), in_dirname, in_filename);
 
 ```
 
     	char* ptr = NULL;
     	CATSysStrtok(in_filename, ".", &ptr);
 ```vbscript
-    	sprintf(out_fullfilename, "%s%c%s.CATPart", us_path.ConvertToChar() , dir_delim, in_filename);
+    	sprintf(out_fullfilename, "%s%c%s.CATPart", us_path.ConvertToChar(#) , dir_delim, in_filename);
 
 ```
 
     	CATBatchLogCAA::PutInLog("creating output : ");
     	CATBatchLogCAA::PutInLog(out_fullfilename);
-    	CATBatchLogCAA::PutInLog("\n");
+    	CATBatchLogCAA::PutInLog("/n");
     	out_fullfilename_us = out_fullfilename;
 
     	CATFCopy(&(listOfV4Files[ii]), &out_fullfilename_us, 0);

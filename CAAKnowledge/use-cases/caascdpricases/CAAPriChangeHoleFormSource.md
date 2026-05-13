@@ -4,13 +4,13 @@ title: "CAAPriChangeHoleForm.frm"
 category: "use-case"
 module: "CAAScdPriUseCases"
 tags: ["CAAScdPriUseCases", "CATIA", "CAAPriChangeHole", "CATIAHole", "CAAPriChangeHoleForm", "CAAPriChangeHoleVBA"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangeHoleFormSource.htm"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangeHoleFormSource.htmmd"
 converted: "2026-05-11T17:31:51.192048"
 ```
 
 ---
 tags: ["CAAScdPriUseCases", "CATIA", "CAAPriChangeHole", "CATIAHole", "CAAPriChangeHoleForm", "CAAPriChangeHoleVBA"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangeHoleFormSource.htm"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangeHoleFormSource.htmmd"
 converted: "2026-05-11T17:31:51.192048"
     Option Explicit
 
@@ -34,18 +34,24 @@ converted: "2026-05-11T17:31:51.192048"
 ```vbscript
     Private oUnit As Double
 
-    Private Sub cmdOk_Click()
+```vbscript
+    Private Sub cmdOk_Click(#)
+```
 ```
 
 ```
 
 ```vbscript
+```vbscript
     Dim oHole As Hole
+```vbscript
+```
 ```vbscript
 ```vbscript
     Dim iRow As Long
     Dim iHoleInSelection As Boolean
     Dim oParameters As Parameters
+```
 ```
 
 ```
@@ -171,15 +177,19 @@ Select Case mfgDescription.TextMatrix(iRow, 5)
             oHole.Diameter.Value = CDbl(mfgDescription.TextMatrix(iRow, 2))
             oHole.Diameter.MaximumTolerance = (CDbl(mfgDescription.TextMatrix(iRow, 3)) - CDbl(mfgDescription.TextMatrix(iRow, 2))) * oUnit
             oHole.Diameter.MinimumTolerance = (CDbl(mfgDescription.TextMatrix(iRow, 4)) - CDbl(mfgDescription.TextMatrix(iRow, 2))) * oUnit
+```vbscript
             Set oParameters = oPartDocument.Part.Parameters.SubList(oHole, True)
+```
 ```
 
 ```vbscript
 ```vbscript
 ```vbscript
             ' ------------
+```vbscript
             ' Set the hole description parameter
             ' ------------
+```
             If ParameterExists("Hole_Description", oParameters) = True Then
 ```
 
@@ -190,8 +200,10 @@ Select Case mfgDescription.TextMatrix(iRow, 5)
 ```vbscript
 ```vbscript
 ```vbscript
+```vbscript
 ' Set the hole description parameter
 ' ------------
+```
 If ParameterExists("Hole_Description", oParameters) = True Then
 ```
 
@@ -345,10 +357,13 @@ Loop
     Unload Me
 
 ```vbscript
+```vbscript
     End Sub
 
 End Sub
-    Private Sub cmdCancel_Click()
+    Private Sub cmdCancel_Click(#)
+
+```
 
 ```
 
@@ -379,23 +394,29 @@ End Sub
 ```
 
 ```vbscript
+```vbscript
     End Sub
 
-    Private Sub UserForm_Initialize()
+    Private Sub UserForm_Initialize(#)
 
+```
 ```
 
 ```vbscript
+```vbscript
     Dim oCATIAFileSys
+```vbscript
+```
 ```vbscript
 ```vbscript
     Dim oFile As File
     Dim oTextSteam As TextStream
     Dim oUnit As Double
     Dim oLine As String
-    Dim iArray() As String
+    Dim iArray(#) As String
     Dim oRow As Long
     Dim iDelimiter As String
+```
 ```
 
 ```
@@ -412,21 +433,27 @@ End Sub
 
 ```
 
-    iDelimiter = "\\"
+    iDelimiter = "//"
 ```vbscript
 ```vbscript
     ' ------------
     ' Get the CATIA file system
     ' ------------
+```vbscript
     Set oCATIAFileSys = CATIA.FileSystem
     ' ------------
+```
     ' Get the file containing the hole parameters
     ' ------------
-    Set oFile = oCATIAFileSys.GetFile(sDocPath & "\online\CAAScdPriUseCases\macros\CAAPriChangeHole.txt")
+```vbscript
+    Set oFile = oCATIAFileSys.GetFile(sDocPath & "/online/CAAScdPriUseCases/macros/CAAPriChangeHole.txt")
     ' ------------
+```
     ' Get the text stream
     ' ------------
+```vbscript
     Set oTextSteam = oFile.OpenAsTextStream("ForReading")
+```
 ```
 
 ```
@@ -436,7 +463,9 @@ End Sub
 ```
 
 ```vbscript
+```vbscript
 Set oTextSteam = oFile.OpenAsTextStream("ForReading")
+```
 ```
 
 oLine = oTextSteam.ReadLine
@@ -490,6 +519,8 @@ For i = 0 To 12
 ```
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

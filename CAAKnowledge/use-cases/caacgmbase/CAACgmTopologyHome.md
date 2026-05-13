@@ -4,13 +4,13 @@ title: "Topology"
 category: "use cases"
 module: "CAACgmBase"
 tags: ["CAAGMOperatorsInterfaces", "CATIA"]
-source_file: "Doc/online/CAACgmBase/CAACgmTopologyHome.htm"
+source_file: "Doc/online/CAACgmBase/CAACgmTopologyHome.htmmd"
 converted: "2026-05-11T17:33:47.855751"
 ```
 
 ---
 tags: ["CAAGMOperatorsInterfaces", "CATIA"]
-source_file: "Doc/online/CAACgmBase/CAACgmTopologyHome.htm"
+source_file: "Doc/online/CAACgmBase/CAACgmTopologyHome.htmmd"
 converted: "2026-05-11T17:33:47.855751"
 Geometric Modeler New V6 operators have been coexisting with V5 operators from V5R20 so that CAA developers can start migrating their V5 applications to V6 while remaining in V5. CAA developers are encouraged to migrate to these new interfaces. The use cases related to topology are delivered in the CAAGMOperatorsInterfaces.edu framework. Turn to [GM Operators](CAACgmGMOperatorsHome.md) to access the documentation associated with the use cases. |  Topology
 

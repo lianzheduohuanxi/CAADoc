@@ -4,13 +4,13 @@ title: "Using the Smart Duplicator"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CATICGMContainer", "CAADoc", "CATICGMObject", "CATICGMSmartBodyDuplicator", "CAAGMModelInterfaces", "CAATopSmartDuplicator", "CAAGMModelSmartDuplicator"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcTobSmartDuplicator.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcTobSmartDuplicator.htmmd"
 converted: "2026-05-11T17:33:48.560636"
 ```
 
 ---
 tags: ["CATICGMContainer", "CAADoc", "CATICGMObject", "CATICGMSmartBodyDuplicator", "CAAGMModelInterfaces", "CAATopSmartDuplicator", "CAAGMModelSmartDuplicator"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcTobSmartDuplicator.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcTobSmartDuplicator.htmmd"
 converted: "2026-05-11T17:33:48.560636"
 Using the Smart Duplicator
 
@@ -34,7 +34,7 @@ What You Will Learn With This Use Case This use case is intended to help you use
     * Specifies the cell to be modified in the smart duplication operation.
     * Creates a smart duplicator in order to modify the holed face and retrieves the duplicated face associated with the holed face.
     * Removes the internal loop in the duplicated face.
-How to Launch CAAGMModelSmartDuplicator  To launch CAAGMModelSmartDuplicator, you will need to set up the build time environment, then compile CAAGMModelSmartDuplicator.m along with its prerequisites, set up the run time environment, and then execute the use case [1]. CAAGMModelSmartDuplicator `e/partwithhole.NCGM` where `partwithhole.NCGM` is an input file delivered in the CAAGMModelInterfaces.edu/FunctionTests/InputData file. Where to Find the CAAGMModelSmartDuplicator Code The CAAGMModelSmartDuplicator use case is made of a main named CAATopSmartDuplicator.cpp located in the CAAGMModelSmartDuplicator.m module of the CAAGMModelInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMModelInterfaces.edu\CAAGMModelSmartDuplicator.m\` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. Step-by-Step There are six main steps in CAATopSmartDuplicator.cpp:
+How to Launch CAAGMModelSmartDuplicator  To launch CAAGMModelSmartDuplicator, you will need to set up the build time environment, then compile CAAGMModelSmartDuplicator.m along with its prerequisites, set up the run time environment, and then execute the use case [1]. CAAGMModelSmartDuplicator `e/partwithhole.NCGM` where `partwithhole.NCGM` is an input file delivered in the CAAGMModelInterfaces.edu/FunctionTests/InputData file. Where to Find the CAAGMModelSmartDuplicator Code The CAAGMModelSmartDuplicator use case is made of a main named CAATopSmartDuplicator.cpp located in the CAAGMModelSmartDuplicator.m module of the CAAGMModelInterfaces.edu framework: `InstallRootFolder/CAADoc/CAAGMModelInterfaces.edu/CAAGMModelSmartDuplicator.m/` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. Step-by-Step There are six main steps in CAATopSmartDuplicator.cpp:
     1. Loading the Container and Retrieving the Body to Be Checked
     2. Retrieving the Holed Face
     3. Touching the Topology to Be Modified
@@ -54,41 +54,41 @@ CATGeoFactory* piGeomFactory = CATLoadCGMContainer(filetoread);
 The initial body looks something like this: ![](images/CAACgmTobsmartDup1.gif) Retrieving the Holed Face To retrieve the holed face, all the faces of the body are scanned and for each cell, the number of internal domains is computed. For the cells which have internal domains, the domains are scanned. The internal loop is detected by using CATDomain::GetLocation.
 
 ```vbscript
-    for (int k = 1; k < faceList.Size()+1; k++)
+    for (int k = 1; k < faceList.Size(#)+1; k++)
 
 ```
 
     {
 The initial body looks something like this: ![](images/CAACgmTobsmartDup1.gif) Retrieving the Holed Face To retrieve the holed face, all the faces of the body are scanned and for each cell, the number of internal domains is computed. For the cells which have internal domains, the domains are scanned. The internal loop is detected by using CATDomain::GetLocation.
-for (int k = 1; k < faceList.Size()+1; k++)
+for (int k = 1; k < faceList.Size(#)+1; k++)
       CATCell * pLocalCell = faceList[k];
 ```vbscript
-      if (pLocalCell && pLocalCell-gt;GetNbInternalDomains() > 0)
+      if (pLocalCell && pLocalCell-gt;GetNbInternalDomains(#) > 0)
 
 ```
 
       {
 ```vbscript
-for (int k = 1; k < faceList.Size()+1; k++)
+for (int k = 1; k < faceList.Size(#)+1; k++)
 CATCell * pLocalCell = faceList[k];
-if (pLocalCell && pLocalCell-gt;GetNbInternalDomains() > 0)
-        int NbDomains=pLocalCell->GetNbDomains();
+if (pLocalCell && pLocalCell-gt;GetNbInternalDomains(#) > 0)
+        int NbDomains=pLocalCell->GetNbDomains(#);
         for(int j=1;j<=NbDomains;j++)
 ```
 
         {
 ```vbscript
-if (pLocalCell && pLocalCell-gt;GetNbInternalDomains() > 0)
-int NbDomains=pLocalCell->GetNbDomains();
+if (pLocalCell && pLocalCell-gt;GetNbInternalDomains(#) > 0)
+int NbDomains=pLocalCell->GetNbDomains(#);
 for(int j=1;j<=NbDomains;j++)
           CATDomain *pDomain=pLocalCell->GetDomain(j);
-          CATLocation Location=pDomain->GetLocation();
+          CATLocation Location=pDomain->GetLocation(#);
           if (Location==CATLocationInner)
 ```
 
           {
 CATDomain *pDomain=pLocalCell->GetDomain(j);
-CATLocation Location=pDomain->GetLocation();
+CATLocation Location=pDomain->GetLocation(#);
 if (Location==CATLocationInner)
             pInnerLoop=pDomain;                    // the inner loop
             holedFace = (CATFace *) faceList[k] ;  // the holed face
@@ -106,29 +106,29 @@ Touching the Topology to Be Modified The CATTopology::Touch method is used to sp
 
 Creating a Smart Duplicated Body First, you must create an empty body from CATGeoFactory. The CATICGMSmartBodyDuplicator operator is created from this new body. It must be run.
 
-    CATBody * copBody = piGeomFactory->CreateBody();
+    CATBody * copBody = piGeomFactory->CreateBody(#);
     CATICGMSmartBodyDuplicator * smartDuplicator =
       copBody->CreateISmartDuplicator(piBody, topdata);
     if (smartDuplicator == NULL) return (1);
-    smartDuplicator->Run();
+    smartDuplicator->Run(#);
     CATFace * duplicatedFace = (CATFace *)smartDuplicator->GetDuplicatedCell(holedFace);
 
 The cell which has been initially touched is retrieved by using the CATICGMSmartBodyDuplicator::GetDuplicatedCell method. Modifying the Touched Topology The face inner loop is retrieved by scanning its domains. A domain which is an internal domain is removed.
 
-    int NbD=duplicatedFace->GetNbDomains();
+    int NbD=duplicatedFace->GetNbDomains(#);
     for(int j=1;j<=NbD;j++)
 
     {
 The cell which has been initially touched is retrieved by using the CATICGMSmartBodyDuplicator::GetDuplicatedCell method. Modifying the Touched Topology The face inner loop is retrieved by scanning its domains. A domain which is an internal domain is removed.
-int NbD=duplicatedFace->GetNbDomains();
+int NbD=duplicatedFace->GetNbDomains(#);
 for(int j=1;j<=NbD;j++)
       CATDomain *pDom=duplicatedFace->GetDomain(j);
-      CATLocation Loc=pDom->GetLocation();
+      CATLocation Loc=pDom->GetLocation(#);
       if(Loc==CATLocationInner)
 
       {
 CATDomain *pDom=duplicatedFace->GetDomain(j);
-CATLocation Loc=pDom->GetLocation();
+CATLocation Loc=pDom->GetLocation(#);
 if(Loc==CATLocationInner)
         duplicatedFace->RemoveDomain(pDom);
 
@@ -156,7 +156,7 @@ ofstream filetowrite(pfileName, ios::binary ) ;
     #endif
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
-       filetowrite.close();
+       filetowrite.close(#);
      }
 
      //

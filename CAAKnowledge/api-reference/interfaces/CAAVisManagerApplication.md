@@ -2,7 +2,7 @@
 title: "CAAVisManagerApplication"
 type: "interface"
 module: "CAAVisualization"
-category: "framework"
+category: api-reference
 base: "CATInteractiveApplication"
 inheritance_chain: "CAAVisManagerApplication → CATInteractiveApplication"
 method_count: 2
@@ -26,3 +26,28 @@ verified: true
 - `CATInteractiveApplication.h`
 - `CAAVisManagerWindow.h`
 
+---
+
+## Interface Overview
+
+This interface inherits from **CATInteractiveApplication**. 
+
+**Inherited Methods**: Please refer to the base interface documentation above.
+
+---
+
+## Related Use Cases
+
+This interface is used in the following use cases:
+
+- [CAAVisSampleVisManager](../../use-cases/caaviscases/CAAVisSampleVisManager.md)
+
+## Interface Notes
+
+This interface is part of the **CAA** module.
+
+**Status**: This interface document is a template. Please refer to the official API documentation for more information.
+
+**Related Resources**:
+- [Quick References](../..//quick-refs/)
+- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)

@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAAScrBase", "CAASCH_SyncCompInst", "CATIA", "CAAScrJavaScript", "CAAScdSchUseCases", "CAAScdInfUseCases", "CAAInfLauchMacro", "CAASchSyncCompInst_01", "CAASchSyncCompInst", "CAASchSyncCompInstSource", "CATIASchComponent", "CATIASchUpdateInstances"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchSyncCompInst.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchSyncCompInst.htmmd"
 converted: "2026-05-11T11:27:02.663875"
 ---
 

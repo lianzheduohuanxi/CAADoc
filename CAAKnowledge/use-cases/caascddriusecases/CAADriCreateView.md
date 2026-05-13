@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CAAScrBase", "CAAScdDriUseCases", "CAADriCreateView", "CATIA", "CAAScrJavaScript", "CAAScdDriTechArticles", "CAADriObjDrawingSheets", "CAAScdInfUseCases", "CAADriCreateViewSource", "CAAInfLauchMacro", "CAADriObjDrawingSheet", "CAADriObjDrawingDocument", "CAADriObjDrawingView", "CAAlink"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriCreateView.htm"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriCreateView.htmmd"
 converted: "2026-05-11T11:27:02.752753"
 ---
 
@@ -11,7 +11,7 @@ converted: "2026-05-11T11:27:02.752753"
 
       
 
-Open the part document to draw and create a new *[DrawingDocument](../CAAScdDriTechArticles/CAADriObjDrawingDocument.htm)*.
+Open the part document to draw and create a new *[DrawingDocument](../CAAScdDriTechArticles/CAADriObjDrawingDocument.md)*.
       The part document is fetched in the documentation installation path, this
       path has already been stored in the `sDocPath` variable.
       
@@ -21,13 +21,15 @@ Open the part document to draw and create a new *[DrawingDocument](../CAAScdDriT
       
 
 The new *DrawingView*
-      is created in the active *[DrawingSheet](../CAAScdDriTechArticles/CAADriObjDrawingSheet.htm)*
+      is created in the active *[DrawingSheet](../CAAScdDriTechArticles/CAADriObjDrawingSheet.md)*
       that is found on the *DrawingSheets*
       collection aggregated by the *DrawingDocument* object.
       
 
+```vbscript
 #### Set its Parameters to Make it a Generative Front
       View
+```
       
       
 
@@ -47,7 +49,7 @@ Update the now completely defined generative behavior.
     
   
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 
@@ -67,38 +69,47 @@ This use case has shown how to create generative views in a drawing document.
 
 *Copyright  2001, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 ...
     ' Open the Part document 
+```vbscript
     Dim oPartToDraw As PartDocument
     Set oPartToDraw = CATIA.Documents.Open(sDocPath &amp; _
-             &quot;\online\CAAScdDriUseCases\samples\Cube.CATPart&quot;)
+             &quot;/online/CAAScdDriUseCases/samples/Cube.CATPart&quot;)
+```
 
     ' Create a drawing document: it becomes the active document.
+```vbscript
     Dim oDrawing As DrawingDocument
     Set oDrawing = CATIA.Documents.Add(&quot;Drawing&quot;)
   ...
+```
 ```
 
 ```vbscript
 ...
   ' Retrieve the active sheet
+```vbscript
     Dim oSheet As DrawingSheet
     Set oSheet = oDrawing.Sheets.ActiveSheet
 
     ' Create a view called &quot;Front View&quot; in this sheet
+```
+```vbscript
     Dim oFrontView As DrawingView
     Set oFrontView = oSheet.Views.Add(&quot;Front View&quot;)
   ...
+```
 ```
 
 ```vbscript
 ...
     ' Retrieve it generative behavior
+```vbscript
     Dim oFrontViewGB As DrawingViewGenerativeBehavior
     Set oFrontViewGB = oFrontView.GenerativeBehavior
+
+```
 
     ' Declare the part to draw in this front view
     oFrontViewGB.Document = oPartToDraw

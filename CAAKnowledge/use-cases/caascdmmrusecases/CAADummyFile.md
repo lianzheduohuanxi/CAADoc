@@ -1,9 +1,9 @@
 ---
 title: "Untitled"
-category: "use-case"
+category: use-case
 module: "CAAScdMmrUseCases"
 tags: ["CAAScrBase"]
-source_file: "Doc/online/CAAScdMmrUseCases/CAADummyFile.htm"
+source_file: "Doc/online/CAAScdMmrUseCases/CAADummyFile.htmmd"
 converted: "2026-05-11T11:27:02.714940"
 ---
 

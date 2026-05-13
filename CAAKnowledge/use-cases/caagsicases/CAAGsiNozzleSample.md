@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Creating a Nozzle Shape Thanks to Shape Design Features"
-category: "use case"
+category: use-case case"
 module: "CAAGsiUseCases"
 tags: ["CAAGSMInterfaces", "CAAGsiNozzle", "CATIGSMFactory", "CATISpecObject", "CAAGsiUserTools", "CAA2SampleSession", "CATIGSMTool_var", "CAAGsiObjTool", "CATISpecObject_var"]
-source_file: "Doc/online/CAAGsiUseCases/CAAGsiNozzleSample.htm"
+source_file: "Doc/online/CAAGsiUseCases/CAAGsiNozzleSample.htmmd"
 converted: "2026-05-11T17:31:50.638182"
 ```
 
@@ -80,7 +80,7 @@ Launch the use case as follows:
 
   * With Windows
 
-        e:>CAAGsiNozzle outputDirectory\CAAGsiNozzle.CATPart
+        e:>CAAGsiNozzle outputDirectory/CAAGsiNozzle.CATPart
 
 ---
   * With UNIX
@@ -101,10 +101,10 @@ where:
 The CAAGsiNozzle use case is made of main program located in the CAAGsiNozzle.m module of the CAAGSMInterfaces.edu framework:
 
 The CAAGsiNozzle use case is made of main program located in the CAAGsiNozzle.m module of the CAAGSMInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAAGSMInterfaces.edu\CAAGsiNozzle.m\`
+Windows | `InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiNozzle.m/`
 
 The CAAGsiNozzle use case is made of main program located in the CAAGsiNozzle.m module of the CAAGSMInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAAGSMInterfaces.edu\CAAGsiNozzle.m\`
+Windows | `InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiNozzle.m/`
 Unix | `InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiNozzle.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -178,14 +178,14 @@ CATLISTV(CATISpecObject_var) aObjectParameters;
       aObjectParameters.Append(spCurrent);
 
       CATISpecObject_var spPoint1 = CAAGsiObjTool.**CreatePointCoord**(aObjectParameters);
-      aObjectParameters.RemoveAll();
+      aObjectParameters.RemoveAll(#);
 ```
 
       ...
 
 ---
 
-aObjectParameters.RemoveAll();
+aObjectParameters.RemoveAll(#);
 Here we create a point coordinate at location (17,0,0). For this purpose, we first create three length parameters with values 17, 0, and 0 millimeters respectively, and put each into `spCurrent`, and then append `spCurrent` in the input list `aObjectParameters` that is bound to store the ordered parameters needed to create a feature. Finally, we create a point coordinate using `aObjectParameters` as input by calling the `CreatePointCoord`**** method.
 
 How to create a point on curve feature:
@@ -198,7 +198,7 @@ How to create a point on curve feature:
       CAAGsiObjTool.**CreateReal**("Parm", 0.0, spCurrent);
       aObjectParameters.Append(spCurrent);
       CATISpecObject_var spPoint14 = CAAGsiObjTool.**CreatePointOnCurve**(aObjectParameters,TRUE);
-      aObjectParameters.RemoveAll();
+      aObjectParameters.RemoveAll(#);
 
       ...
 
@@ -225,13 +225,13 @@ Now that we have created points, we can use them to create planes and lines.
       aObjectParameters.Append(spCurrent);
 
       CATISpecObject_var spPlaneY10 = CAAGsiObjTool.**CreatePlaneEquation**(aObjectParameters);
-      aObjectParameters.RemoveAll();
+      aObjectParameters.RemoveAll(#);
 
       ...
 
 ---
 
-aObjectParameters.RemoveAll();
+aObjectParameters.RemoveAll(#);
 Here we create the plane Y = 10. To do this, we create a plane equation with the `aObjectParameters` input list Here the parameters created are length for the plane coefficients, and after having created the four length parameters, we call the `CreatePlaneEquation`**** method.
 
 We can also create lines like this:
@@ -241,7 +241,7 @@ We can also create lines like this:
       aObjectParameters.Append(spPoint3);
       aObjectParameters.Append(spPoint5);
       CATISpecObject_var spLine3 = CAAGsiObjTool.**CreateLinePtPt**(aObjectParameters);
-      aObjectParameters.RemoveAll();
+      aObjectParameters.RemoveAll(#);
 
       ...
 
@@ -264,13 +264,13 @@ How to create circles:
       CAAGsiObjTool.**CreateLength**("Radius", 15.0, spCurrent);
       aObjectParameters.Append(spCurrent);
       CATISpecObject_var spCircle3 = CAAGsiObjTool.**CreateCircle2PointsRad**(aObjectParameters,FALSE,TRUE);
-      aObjectParameters.RemoveAll();
+      aObjectParameters.RemoveAll(#);
 
       ...
 
 ---
 
-aObjectParameters.RemoveAll();
+aObjectParameters.RemoveAll(#);
 We want to create a circle profile in plane Y=15. On this purpose, we first retrieve the `spPoint5`, `spPoint6` and `spPlaneY15` _CATISpecObject_ smart pointers and append them into the `aObjectParameters` input list used by the `CreateCircle2PointsRad`**** method to create a circle defined by two points and a radius.
 
 The circle will pass through Point.5 and Point.6 and will have for reference plane the plane Y=15. The circle Circle.3 will not be a geodesic circle and will keep the same orientation defined by the input. The part of the circle arc will depend on the orientation given to the method `CreateCircle2PointsRad`.
@@ -287,13 +287,13 @@ We can now create split features that will relimit a feature by intersection wit
       aObjectParameters.Append(spCircle6);
       aObjectParameters.Append(spPlaneAngle35);
       CATISpecObject_var spSplit1 = CAAGsiObjTool.**CreateSplit**(aObjectParameters,TRUE);
-      aObjectParameters.RemoveAll();
+      aObjectParameters.RemoveAll(#);
 
       ...
 
 ---
 
-aObjectParameters.RemoveAll();
+aObjectParameters.RemoveAll(#);
 We create a split feature that will be the relimitation of Circle.6 by Plane.6. To do this, we set `spCircle6` and `spPlaneAngle35` in the `aObjectParameters` input list and call `CreateSplit`**** to create Split.1 feature. The orientation (`TRUE` argument) enable us to choose between the two parts of the circle that is splitted.
 
 How to create a spline feature:
@@ -305,13 +305,13 @@ How to create a spline feature:
       CATISpecObject_var spDir1 = CAAGsiObjTool.**CreateDirection**(spLine7);
       CATISpecObject_var spDir2 = CAAGsiObjTool.**CreateDirection**(spLine8);
       CATISpecObject_var spSpline = CAAGsiObjTool.**CreateSpline**(aObjectParameters,spDir1,FALSE,spDir2,TRUE);
-      aObjectParameters.RemoveAll();
+      aObjectParameters.RemoveAll(#);
 
       ...
 
 ---
 
-aObjectParameters.RemoveAll();
+aObjectParameters.RemoveAll(#);
 The spline will go through Point.15 and Point.16. Then we create two directions that are defined relatively to a line feature. We create a spline feature that goes through Point.15 and Point.16, and that have two tangents defined at the extremity.We will take the inverse direction for `spDir1` and the same direction for `spDir2`.
 
 We have created two directions above that will not be seen in the Procedural View [3]. Indeed, direction features are internal features for shape design features.
@@ -328,13 +328,13 @@ Now that we have created the wireframe we need, we can create skins, let see how
       aObjectParameters.Append(spLine2);
       aObjectParameters.Append(spCircle1);
       CATISpecObject_var spSweep1 = CAAGsiObjTool.**CreateSweepOneGuide**(aObjectParameters);
-      aObjectParameters.RemoveAll();
+      aObjectParameters.RemoveAll(#);
 
       ...
 
 ---
 
-aObjectParameters.RemoveAll();
+aObjectParameters.RemoveAll(#);
 We create a sweep unspec feature with a guide Line.2 and a profile Circle.1. Line.2 will be used also as the spine of the explicit sweep.
 
 The same for the loft feature:
@@ -351,8 +351,8 @@ The same for the loft feature:
                                                             aObjectParameters,
                                                             spUnused);
 
-      aObjectParameters.RemoveAll();
-      aObjectParametersSections.RemoveAll();
+      aObjectParameters.RemoveAll(#);
+      aObjectParametersSections.RemoveAll(#);
 
       ...
 

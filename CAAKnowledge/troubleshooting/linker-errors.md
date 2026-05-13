@@ -1,8 +1,10 @@
 ---
+category: use-case
 title: "CAA链接器错误排查指南"
 type: "troubleshooting"
 verified: true
 ---
+category: use-case
 
 # CAA链接器错误排查指南
 
@@ -40,10 +42,10 @@ CATImplementInterface(CAAIAfrMRUManagement, CATBaseUnknown);
 
 **修复**: 检查 `LINK_WITH` 是否包含所有依赖:
 ```makefile
-LINK_WITH = \
-  CATApplicationFrame \
-  CATVisualization \
-  SystemTS \
+LINK_WITH = /
+  CATApplicationFrame /
+  CATVisualization /
+  SystemTS /
 ```
 
 ### 原因4: TIE 文件缺失
@@ -56,3 +58,4 @@ LINK_WITH = \
 3. 确认 Imakefile.mk 中包含了该 .cpp
 
 ---
+category: use-case

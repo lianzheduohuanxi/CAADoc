@@ -4,13 +4,13 @@ title: "Summary of Commands Around mkmk"
 category: "use-case"
 module: "CAABtlQuickRefs"
 tags: []
-source_file: "Doc/online/CAABtlQuickRefs/CAABtlMANMkThemIx.htm"
+source_file: "Doc/online/CAABtlQuickRefs/CAABtlMANMkThemIx.htmmd"
 converted: "2026-05-11T17:33:49.950844"
 ```
 
 ---
 tags: []
-source_file: "Doc/online/CAABtlQuickRefs/CAABtlMANMkThemIx.htm"
+source_file: "Doc/online/CAABtlQuickRefs/CAABtlMANMkThemIx.htmmd"
 converted: "2026-05-11T17:33:49.950844"
 RADE |  Multi-Workspace Application Builder |  Summary of Commands Around mkmk _Links to the mkmk family commands_
 

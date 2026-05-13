@@ -1,49 +1,43 @@
-#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
-CATIA CAA V5 知识库修复脚本 - 修复 source_file 扩展名
-将错误的 .md 扩展名改回 .htm
+修复 source_file 扩展名 - 将 .md 改为 .htm
 """
+
 import re
+import sys
 from pathlib import Path
 
-def fix_source_file_ext():
-    """修复 source_file 扩展名"""
-    use_case_dir = Path('CAAKnowledge/use-cases')
-    if not use_case_dir.exists():
-        print(f"目录不存在: {use_case_dir}")
-        return 0
-    
-    fixed = 0
-    for md_file in use_case_dir.rglob('*.md'):
-        try:
-            with open(md_file, 'r', encoding='utf-8', errors='ignore') as f:
-                content = f.read()
-            
-            # 检查是否有错误的 .md 扩展名
-            if 'source_file:' in content:
-                new_content = re.sub(
-                    r'source_file:\s*"([^"]*)\.md"',
-                    lambda m: f'source_file: "{m.group(1)}.htm"',
-                    content
-                )
-                
-                if new_content != content:
-                    with open(md_file, 'w', encoding='utf-8') as f:
-                        f.write(new_content)
-                    fixed += 1
-                    
-        except Exception as e:
-            print(f"Error processing {md_file}: {e}")
-    
-    print(f"修复了 {fixed} 个文件的 source_file 扩展名")
-    return fixed
+sys.stdout.reconfigure(encoding='utf-8')
+
+def fix_source_file_ext(content):
+    """修复source_file字段中的.md扩展名为.htm"""
+    # 匹配 source_file: xxx.md 或 "source_file": "xxx.md"
+    content = re.sub(r'(source_file["\s:]+)([^*"]+\.)(md["\s,]*)', r'\1\2htm\3', content)
+    content = re.sub(r"('source_file'\\s*:\\s*')([^']+)(\\.)(md)(')", r"\1\2\3htm\5", content)
+    return content
 
 def main():
-    print("=" * 60)
-    print("修复 source_file 扩展名")
-    print("=" * 60)
-    fix_source_file_ext()
-    print("=" * 60)
+    root_dir = Path(r'C:\Luxshare\CAADoc\CAAKnowledge')
+    md_files = list(root_dir.rglob('*.md'))
+    
+    total_files = len(md_files)
+    modified_count = 0
+    
+    print(f"Starting to fix source_file extensions in {total_files} files...")
+    
+    for md_file in md_files:
+        content = md_file.read_text(encoding='utf-8')
+        
+        # 检查是否有需要修复的扩展名
+        if re.search(r'source_file["\s:]+[^"]+\.md', content):
+            fixed = fix_source_file_ext(content)
+            if fixed != content:
+                md_file.write_text(fixed, encoding='utf-8')
+                modified_count += 1
+                print(f"  Fixed: {md_file.relative_to(root_dir)}")
+    
+    print(f"[OK] Source file extension fix completed!")
+    print(f"   - Modified: {modified_count}/{total_files}")
 
 if __name__ == '__main__':
     main()

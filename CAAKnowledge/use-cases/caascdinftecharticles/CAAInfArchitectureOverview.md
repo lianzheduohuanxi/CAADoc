@@ -4,7 +4,7 @@ title: "Object Architecture Overview"
 category: "concept"
 module: "CAAScdInfTechArticles"
 tags: ["CATIA"]
-source_file: "Doc/online/CAAScdInfTechArticles/CAAInfArchitectureOverview.htm"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfArchitectureOverview.htmmd"
 converted: "2026-05-11T17:31:52.406949"
 ```
 
@@ -36,7 +36,7 @@ converted: "2026-05-11T17:31:52.406949"
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/proddoc.gif)[![Product Structure Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdPstTechArticles/CAAPstTocProductDocument.md)
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)[![](../CAAScrAutomationImages/images/draftdoc.gif)](../CAAScdDriTechArticles/CAADriObjDrawingDocument.md)[![Drawing Document Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdDriTechArticles/CAADriTocDrawingDocument.md)![](../CAAScrAutomationImages/images/space.gif)
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)[![](../CAAScrAutomationImages/images/drsheets.gif)](../CAAScdDriTechArticles/CAADriObjDrawingSheets.md)
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/analydoc.gif)[![Analysis Document Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md)
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/analydoc.gif)[![Analysis Document Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md)
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/processdoc.gif)[![Process Document Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdDmiTechArticles/CAADmiTocActivity.md)
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/functdoc.gif)[![Functional Document Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdFsiTechArticles/CAAFsiTocFunctionalDocument.md)
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/matdoc.gif)[![Material Document Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdMatTechArticles/CAAMatTocMaterial.md)
@@ -94,41 +94,59 @@ For all objects, _Object References_ contains complete reference of inheritance,
 
  To retrieve or set the value of a property of a given object, write the object reference followed by a period and the property name. For example, you can retrieve in the **DocName** variable the value of  the full name of the active document as follows:
 
+```vbscript
  **DocName = CATIA.ActiveDocument.FullName**
 
  Or you can set this full name from the **DocName** variable as follows:
+```
 
+```vbscript
  **CATIA.ActiveDocument.FullName = DocName**
 
 Or you can set this full name from the **DocName** variable as follows:
+```
+```vbscript
  An object reference always starts from the root object, that is the application object which is always set to **CATIA** with in-process access. Then you use the Application object's properties to access the objects. In this case, the application object has the **ActiveDocument** property which holds the active document. You simply need to write **CATIA.ActiveDocument** to refer to the active document. Then the Document object has the **FullName** property to hold its full name. Simply add a period followed by **FullName** , and you get this full name.
 
  In the same way, you can request to see the hidden elements of the active document by setting the value of its **SeeHiddenElements** property to **True** , as follows:
+```
 
+```vbscript
  **CATIA.ActiveDocument.SeeHiddenElements = True**
 
  A _method_ is an action that you can request an object to do. For example, you can request to save the active document. To do this, the **Document** object includes the **Save** method. Simply request the document to save itself as follows:
+```
 
+```vbscript
  **CATIA.ActiveDocument.Save**
 
  Methods have often arguments requested by the action. For example, the **SaveAs** method carries out the action of saving a document with another name than the current one. This new name must be provided to perform this action, otherwise the **SaveAs** method cannot work. This name is passed as an argument of the **SaveAs** method. To save the active document with the name **NewName** , proceed as follows:
+```
 
+```vbscript
  **CATIA.ActiveDocument.SaveAs "NewName"**
 
  You will find in the **object reference** that each method is qualified as either a **Function** or a **Sub** , and with parentheses, even if they have no arguments, as follows:
-
-```vbscript
-     Function NewCamera() As Camera
-
-     Sub Update()
-
 ```
 
+```vbscript
+```vbscript
+     Function NewCamera(#) As Camera
+
+     Sub Update(#)
+
+```
+```
+
+```vbscript
  This is a Visual Basic notation to distinguish a method that returns a value, or **Function** , from one that doesn't, or **Sub**. Note that the returned value of a **Function** is indicated using the **As** keyword. In the example above, the **NewCamera** method is a **Function** because it returns a **Camera** object. See also **[Some Tips about Sub and Function](CAAInfSubFunction.md) **to know more about **Sub** and **Function**.
  ### About Inheritance, Aggregation, and Object Model
+```
 
+```vbscript
 This is a Visual Basic notation to distinguish a method that returns a value, or **Function** , from one that doesn't, or **Sub**. Note that the returned value of a **Function** is indicated using the **As** keyword. In the example above, the **NewCamera** method is a **Function** because it returns a **Camera** object. See also **[Some Tips about Sub and Function](CAAInfSubFunction.md) **to know more about **Sub** and **Function**.
  Inheritance and aggregation are the two main kinds of relationship between objects.
+```
 
  An object that inherits from another, named the _base_ object, inherits the properties and the methods of this base object and adds them to its own properties and methods. Inheritance helps to specialize objects while gathering common properties and methods in the base object. Inheritance is a iterative process, since an object can inherit from an object which itself inherits from another object which itself inherits, and so forth, and the lowest object in the inheritance tree inherits the properties and methods of all the objects above it. Inheritance is depicted using the following symbol ![](../CAAScrAutomationImages/images/parderiv.gif) in the object diagrams.
 

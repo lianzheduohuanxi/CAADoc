@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Visualizing Temporary Components"
-category: "use case"
+category: use-case case"
 module: "CAAVisUseCases"
 tags: ["CAADegGeoCommands", "CATInstantiateComponent", "CATI3DGeoVisu", "CAAVisualization", "CAAVisWireBox", "CAAVisTextModel", "CATIndicationAgent", "CATISO", "CATIA", "CATI2DGeoVisu", "CAAIVisTextModel", "CAADialogEngine", "CAAGeometry", "CAAIVisWireBox", "CAADegClippingByBoxCmd", "CATI3GeoVisu", "CAAVisTemporaryObjects"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleISO.htm"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleISO.htmmd"
 converted: "2026-05-11T17:31:52.128785"
 ```
 
@@ -17,14 +17,19 @@ converted: "2026-05-11T17:31:52.128785"
 |
 ### Visualizing Temporary Components
 
+```vbscript
 How to use the Interactive Set of Objects
 ---|---|---
+```
 Use Case
 
 * * *
 ### Abstract
 
+```vbscript
 A temporary component is a component which is not integrated into the data model of a V5 document. In most cases it is a simple component to help the understanding of an interactive command. The CAAVisTemporaryObjects use case [1] has explained how to create temporary components, the current one details how to use the interactive Set of Objects to visualize them. To take full advantage of this article, you can first read the technical article about the Interactive Set of Objects and the temporary components [2].
+
+```
 
   * **What You Will Learn With This Use Case**
   * **The CAADegClippingByBoxCmd Use Case**
@@ -60,7 +65,10 @@ Here it is the UML diagram [4] of the CAADegClippingByBoxCmd command.
 
 See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)" use case for a detailed description of how this use case should be launched. For the specific scenario:
 
+```vbscript
 Launch CATIA. When the application is ready:
+
+```
 
   * On the **Start** menu, point to **Infrastructure** , and then click **CAA V5: Geometrical Creation**
   * Launch the **Point** (![](../CAAAfrUseCases/images/CAAAfrPointIconNormal.jpg))command to create some points
@@ -86,10 +94,10 @@ All points outside the clipping box are removed from the document.
 All points outside the clipping box are removed from the document.
 The CAADegClippingByBoxCmd use case is made of the single class named _CAADegClippingByBoxCmd_ located in the CAADegGeoCommands.m module of the CAADialogEngine.edu framework:
 
-Windows | `InstallRootDirectory\CAADialogEngine.edu\CAADegGeoCommands.m\`
+Windows | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 
 The CAADegClippingByBoxCmd use case is made of the single class named _CAADegClippingByBoxCmd_ located in the CAADegGeoCommands.m module of the CAADialogEngine.edu framework:
-Windows | `InstallRootDirectory\CAADialogEngine.edu\CAADegGeoCommands.m\`
+Windows | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -115,14 +123,14 @@ The interactive set of objects are managed by the _CATFrmEditor_ class [5]. In t
 
     ...
 The interactive set of objects are managed by the _CATFrmEditor_ class [5]. In the CAADegClippingByBoxCmd class constructor they are retrieved.
-      CATFrmEditor * pEditor   = GetEditor();
+      CATFrmEditor * pEditor   = GetEditor(#);
 
       ...
-CATFrmEditor * pEditor   = GetEditor();
+CATFrmEditor * pEditor   = GetEditor(#);
 ```vbscript
-      _pFurtiveISO = pEditor->**GetFurtiveISO**() ;
+      _pFurtiveISO = pEditor->**GetFurtiveISO**(#) ;
 
-      _pISO = pEditor->**GetISO**() ;
+      _pISO = pEditor->**GetISO**(#) ;
 
 ```
 
@@ -139,7 +147,7 @@ In the CAADegClippingByBoxCmd class constructor you will find the three creation
 
     ...
 ```vbscript
-      _pCenterBoxModel     = new CATModelForRep3D();
+      _pCenterBoxModel     = new CATModelForRep3D(#);
 
 ```
 
@@ -202,7 +210,7 @@ When the state command is first activated, the text is displayed to be selected 
 
     ...
 When the state command is first activated, the text is displayed to be selected by the end user. This step consists in to create the graphic representation of the text component, and sets the component in the normal ISO.
-       HRESULT rc = **CreateRepForText**();
+       HRESULT rc = **CreateRepForText**(#);
 
       _pISO->**AddElement**(_pITextToSelectModel);
 
@@ -309,7 +317,7 @@ When the end user has selected a point to specify the center of the clipping box
     ...
 When the end user has selected a point to specify the center of the clipping box, a trihedral is displayed. This step consists in to create the graphic representation of the trihedral component, and sets the component in the normal ISO.
 ```vbscript
-    rc = **CreateRepForCenterBox**();
+    rc = **CreateRepForCenterBox**(#);
 
 ```
 
@@ -363,7 +371,7 @@ Now, an extract of the `Activate` method:
     {
 Now, an extract of the `Activate` method:
 if (TRUE == _CenterBoxModelToRestore)
-       HRESULT rc = **CreateRepForCenterBox**();
+       HRESULT rc = **CreateRepForCenterBox**(#);
 
        _pISO->**AddElement**(_pCenterBoxModel);
 
@@ -397,7 +405,7 @@ Once the point representing the center of the clipping box has been selected, a 
     _pIWireBox->**SetDimBox**(.2f);
 
 ```vbscript
-    _PreviousPointInScreenPlane = _daIndication->GetValue();
+    _PreviousPointInScreenPlane = _daIndication->GetValue(#);
 
 ```
 
@@ -423,26 +431,26 @@ At each mouse movement, the `UpdateClippingBox` method is called.
 
     ...
 At each mouse movement, the `UpdateClippingBox` method is called.
-    CATMathPoint2D CurrentPointInScreenPlane = **_daIndication** ->GetValue();
+    CATMathPoint2D CurrentPointInScreenPlane = **_daIndication** ->GetValue(#);
 
     float currentdimbox = .2f;
     _pIWireBox->**GetDimBox**(&currentdimbox);
 
 ```vbscript
-    if ( CurrentPointInScreenPlane.GetY() > _PreviousPointInScreenPlane.GetY() )
+    if ( CurrentPointInScreenPlane.GetY(#) > _PreviousPointInScreenPlane.GetY(#) )
 
 ```
 
     {
 float currentdimbox = .2f;
 _pIWireBox->**GetDimBox**(&currentdimbox);
-if ( CurrentPointInScreenPlane.GetY() > _PreviousPointInScreenPlane.GetY() )
+if ( CurrentPointInScreenPlane.GetY(#) > _PreviousPointInScreenPlane.GetY(#) )
        currentdimbox += .05f ;
 
     }else
     {
 ```vbscript
-if ( CurrentPointInScreenPlane.GetY() > _PreviousPointInScreenPlane.GetY() )
+if ( CurrentPointInScreenPlane.GetY(#) > _PreviousPointInScreenPlane.GetY(#) )
 currentdimbox += .05f ;
        if ( (currentdimbox - .2f) > EPSILON )
 ```
@@ -514,11 +522,11 @@ In the `destructor` class, the component are deleted by releasing the handles:
 
     ...
 In the `destructor` class, the component are deleted by releasing the handles:
-         _pITextToSelectModel->Release();
+         _pITextToSelectModel->Release(#);
 
-         _pCenterBoxModel->Release();
+         _pCenterBoxModel->Release(#);
 
-         _pIWireBox->Release();
+         _pIWireBox->Release(#);
 
     ...
 
@@ -544,8 +552,10 @@ This use case has explained how to use the main methods of the _CATISO_ class:
 
 [1] | [Creating Temporary Components](CAAVisSampleTempObject.md)
 ---|---
+```vbscript
 [2] | [Interactive Set of Objects](../CAAVisTechArticles/CAAVisISO.md)
 [3] | [Getting Started with State Dialog Command](../CAADegTechArticles/CAADegGettingStarted.md)
+```
 [4] | [Describing State Dialog Commands Using UML](../CAADegTechArticles/CAADegUMLDescription.md)
 [5] | [Understanding the Application Frame Layout ](../CAAAfrTechArticles/CAAAfrLayoutV5.md)
 [6] | [The CAA Command Model](../CAADegTechArticles/CAADegCommandModel.md)

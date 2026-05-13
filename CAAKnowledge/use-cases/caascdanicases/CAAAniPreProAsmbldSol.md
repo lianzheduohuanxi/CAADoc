@@ -4,7 +4,7 @@ title: "Creating Assembled Solution"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniPreProAsmbldSol", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProAsmbldSol.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProAsmbldSol.htmmd"
 converted: "2026-05-11T17:31:51.786958"
 ```
 
@@ -39,21 +39,27 @@ This use case shows you how to create an assembled solution. Here use of Edit/Se
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
+```vbscript
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     sSep=CATIA.SystemService.Environ("ADL_ODT_SLASH")
 ```
-
 ```
 
 ```
 
+```
+
+```vbscript
 ```vbscript
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
+```
 
+```vbscript
 ```vbscript
     Err.Raise 9999,,"No Doc Path Defined"
 ```vbscript
+```
     End If
 ```
 
@@ -64,7 +70,9 @@ This use case shows you how to create an assembled solution. Here use of Edit/Se
 ```vbscript
     ' -----------------------------------------------------------
     ' Open the Analysis document
+```vbscript
     Set analysisDocument1 = CATIA.Documents.Open(sDocPath & sSep & "online" & sSep & "CAAScdAniUseCases" &
+```
 ```
 
 ```
@@ -76,7 +84,9 @@ This use case shows you how to create an assembled solution. Here use of Edit/Se
 ```vbscript
 ' -----------------------------------------------------------
 ' Open the Analysis document
+```vbscript
 Set analysisDocument1 = CATIA.Documents.Open(sDocPath & sSep & "online" & sSep & "CAAScdAniUseCases" &
+```
 ```
 
 ```
@@ -98,22 +108,30 @@ Open the Analysis document. The Analysis document is retrieved in the documentat
 ```
 
 ```vbscript
+```vbscript
     Set analysisManager1 = analysisDocument1.Analysis
+```
 ```
 
 ```vbscript
 ```vbscript
 ```vbscript
     'Retrieve the product document from the linked document
+```vbscript
     Set analysisLinkedDocuments1 = analysisManager1.LinkedDocuments
     Set productDocument1 = analysisLinkedDocuments1.Item(1)
     'From product document retrieve products
+```
+```vbscript
     Set product1 = productDocument1.Product
     Set products1 = product1.Products
     Set product2 = products1.Item("Analysis1.1")
     'Retrieve the analysis models and the first model
+```
+```vbscript
     Set analysisModels1 = analysisManager1.AnalysisModels
     Set analysisModel1 = analysisModels1.Item(1)
+```
 ```
 
 ```
@@ -124,7 +142,7 @@ Open the Analysis document. The Analysis document is retrieved in the documentat
 
 ---
 
-According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , and  **Analysis Models**. From analysis models we retrieve the **Analysis Cases.**
+According to the general [ Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , and  **Analysis Models**. From analysis models we retrieve the **Analysis Cases.**
 #### Adding the assembled load set
 
     ...
@@ -134,7 +152,9 @@ According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniToc
 ```
 
 ```vbscript
+```vbscript
      Set analysisCases1 = analysisModel1.AnalysisCases
+```
 ```
 
 ```vbscript
@@ -142,18 +162,28 @@ According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniToc
 ```vbscript
     'Retrieve the second object that is Solution Case.1
     'from the list of analysis cases
+```vbscript
     Set analysisCase1 = analysisCases1.Item(2)
     'Retrieve the analysis case
+```
+```vbscript
     Set analysisSets1 = analysisCase1.AnalysisSets
     'Add two Assembled solution sets
+```
+```vbscript
     Set analysisSet1 = analysisSets1.Add("ElfAssembledSet", catAnalysisSetOut)
     Set analysisSet2 = analysisSets1.Add("ElfAssembledSet", catAnalysisSetOut)
     'Retrieve the basic component from the analysis set
+```
+```vbscript
     Set basicComponents1 = analysisSet1.BasicComponents
     Set basicComponent1 = basicComponents1.GetItem("ElfAssemblyPtr.1")
     'Retrieve the basic component from the analysis set
+```
+```vbscript
     Set basicComponents2 = analysisSet2.BasicComponents
     Set basicComponent2 = basicComponents2.GetItem("ElfAssemblyPtr.1")
+```
 ```
 
 ```
@@ -173,17 +203,21 @@ According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniToc
 ```
 
 ```vbscript
+```vbscript
     Set selection1 = analysisDocument1.Selection
     selection1.Search "Name=*DISP*,all"
+```
 ```
 
 ```vbscript
 ```vbscript
 ```vbscript
     'Retrieve the analysis manager object from the analysis document
+```vbscript
     Set documents1 = CATIA.Documents
     Set analysisDocument2 = documents1.Item("Analysis1.CATAnalysis")
     Set analysisManager2 = analysisDocument2.Analysis
+```
 ```
 
 ```
@@ -209,9 +243,13 @@ According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniToc
     For i =1 To selection1.Count
 ```vbscript
 ```vbscript
+```vbscript
               Set element = selection1.Item(i)
                IF (element.Type = "AnalysisSet" ) Then 'DO NOTHING
+```
+```vbscript
                   Set Reference = analysisManager2.CreateReferenceFromObject(element.Value)
+```
 ```
 
 ```
@@ -258,9 +296,13 @@ END IF
     For i =1 To selection1.Count
 ```vbscript
 ```vbscript
+```vbscript
               Set element = selection1.Item(i)
                IF (element.Type = "AnalysisSet" ) Then 'DO NOTHING
+```
+```vbscript
                    Set Reference = analysisManager2.CreateReferenceFromObject(element.Value)
+```
 ```
 
 ```
@@ -295,15 +337,17 @@ END IF
     ...
 
 ```vbscript
+```vbscript
 End Sub
 
+```
 ```
 
     ...
 
 ---
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 

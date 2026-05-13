@@ -4,13 +4,13 @@ title: "CAAStrCreationOfStructureObjects.CATScript"
 category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CAAStrCreationOfStructureObjects", "CATIA"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfStructureFoundationSource.htm"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfStructureFoundationSource.htmmd"
 converted: "2026-05-11T17:31:50.879106"
 ```
 
 ---
 tags: ["CAAStrCreationOfStructureObjects", "CATIA"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfStructureFoundationSource.htm"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfStructureFoundationSource.htmmd"
 converted: "2026-05-11T17:31:50.879106"
     Option Explicit
 
@@ -33,17 +33,23 @@ converted: "2026-05-11T17:31:50.879106"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
 
 ```
 
+```
+
+```vbscript
 ```vbscript
 ```vbscript
         Dim doc As Document
 
         Dim StrWorkbench As StrWorkbench
 ```
+```
 
+```vbscript
 ```vbscript
 ```vbscript
         Dim strFactory As StrObjectFactory
@@ -60,16 +66,21 @@ converted: "2026-05-11T17:31:50.879106"
 
         Set strFactory = component.GetTechnologicalObject("StructureObjectFactory")
         ' Creating a foundation assembly
+```
 
+```vbscript
         Dim foundation As StrFoundation
         Set foundation = strFactory.ExtendProductAsFoundation("")
         ' Retreiving the created foundation assembly
+```
 
+```vbscript
         Dim foundations As StrFoundations
         Set foundations = rootProduct.GetTechnologicalObject("StructureFoundations")
 
         Set foundation = foundations.Item(1)
 
+```
 ```
 
 ```
@@ -77,6 +88,8 @@ converted: "2026-05-11T17:31:50.879106"
 ```
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

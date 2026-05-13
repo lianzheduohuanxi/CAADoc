@@ -4,13 +4,13 @@ title: "Integrating a New Mechanical Feature in the CAA Exposed Model"
 category: "use case"
 module: "CAAOmmUseCases"
 tags: ["CATIContainer_var", "CAAOmmverticalLine", "CATISpecObject", "CATIAReferences", "CAAOllTypeLib", "CAAEOmmBuildVerticalLine", "CAAOmmVerticalLine", "CATIAReference", "CAAOmmCatalog", "CATIAHybriShape", "CATIPartRequest", "CATIAPart", "CATIAHybridShape", "CAAIOmmFactory", "CAAIAOmmFactory", "CATIBuild", "CAAIA", "CAAIOmmVerticalLine", "CAAOmm", "CATIAlias"]
-source_file: "Doc/online/CAAOmmUseCases/CAAOmmIntegration.htm"
+source_file: "Doc/online/CAAOmmUseCases/CAAOmmIntegration.htmmd"
 converted: "2026-05-11T17:33:46.031570"
 ```
 
 ---
 tags: ["CATIContainer_var", "CAAOmmverticalLine", "CATISpecObject", "CATIAReferences", "CAAOllTypeLib", "CAAEOmmBuildVerticalLine", "CAAOmmVerticalLine", "CATIAReference", "CAAOmmCatalog", "CATIAHybriShape", "CATIPartRequest", "CATIAPart", "CATIAHybridShape", "CAAIOmmFactory", "CAAIAOmmFactory", "CATIBuild", "CAAIA", "CAAIOmmVerticalLine", "CAAOmm", "CATIAlias"]
-source_file: "Doc/online/CAAOmmUseCases/CAAOmmIntegration.htm"
+source_file: "Doc/online/CAAOmmUseCases/CAAOmmIntegration.htmmd"
 converted: "2026-05-11T17:33:46.031570"
 Mechanical Modeler |  |  Integrating a New Mechanical Feature in the CAA Exposed Model _Performing OLE replay on features_
 
@@ -45,30 +45,40 @@ Once all the modules contained in CAAOLE4MecMod.edu have been compiled, you have
     Language="VBSCRIPT"
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
 
+```
 ```
 
 ```vbscript
+```vbscript
       Dim doc0 As Document
+```vbscript
+```
 ```vbscript
 ```vbscript
       Set doc0 = CATIA.Documents.Add("Part")
 
       Dim body1 As HybridBody
-      Set body1 = doc0.Part.HybridBodies.Add()
+      Set body1 = doc0.Part.HybridBodies.Add(#)
 
       Dim point1 As HybridShapePointCoord
       Set point1 = doc0.Part.HybridShapeFactory.AddNewPointCoord( 20., 50., 0. )
+```
 ```
 
 ```
 
       body1.AppendHybridShape point1
 
+```vbscript
       Dim point2 As HybridShapePointCoord
 ```vbscript
+```
+```vbscript
       Set point2 = doc0.Part.HybridShapeFactory.AddNewPointCoord( -30., 80., 0. )
+```
 ```
 
       body1.AppendHybridShape point2
@@ -76,7 +86,9 @@ Once all the modules contained in CAAOLE4MecMod.edu have been compiled, you have
 ```
 
 ```vbscript
+```vbscript
 Set point2 = doc0.Part.HybridShapeFactory.AddNewPointCoord( -30., 80., 0. )
+```
 ```
 
 body1.AppendHybridShape point2
@@ -84,7 +96,10 @@ body1.AppendHybridShape point2
       doc0.Part.Update
 
 ```vbscript
+```vbscript
       Dim Reference1 As Reference
+```vbscript
+```
 ```vbscript
 ```vbscript
       Set Reference1 = doc0.Part.CreateReferenceFromGeometry ( point1 )
@@ -98,6 +113,7 @@ body1.AppendHybridShape point2
       Dim line1 As OmmVerticalLine
       Set line1 = CustFact0.AddNewVerticalLine( Reference1, Reference2 )
 ```
+```
 
 ```
 
@@ -106,19 +122,24 @@ body1.AppendHybridShape point2
 ```
 
 ```vbscript
+```vbscript
 Set line1 = CustFact0.AddNewVerticalLine( Reference1, Reference2 )
+```
 ```
 
 body1.AppendHybridShape line1
       line1.Compute
 
 ```vbscript
+```vbscript
     End Sub
 
 ```
 
+```
+
 ---
-[Top] Where to Find the CAAOmm Code The CAAOmm use case is made of several modules located in the CAAOLE4MecMod.edu framework: Windows | `InstallRootDirectory\CAAOLE4MecMod.edu\`
+[Top] Where to Find the CAAOmm Code The CAAOmm use case is made of several modules located in the CAAOLE4MecMod.edu framework: Windows | `InstallRootDirectory/CAAOLE4MecMod.edu/`
 ---|---
 Unix | `InstallRootDirectory/CAAOLE4MecMod.edu/`
 Unix | `InstallRootDirectory/CAAOLE4MecMod.edu/`
@@ -170,12 +191,12 @@ Underneath this hierarchy of automation objects, there is a parallel hierarchy o
 
 ```
 
-Last, the CATIAPart object can instantiate a CATIAFactory object (through GetCustomerFactory()), which in turn can instantiate any automation object that may be needed, in particular instances of CATIA HybridShape. What about adding our Vertical Line feature to this? What we have done so far is creating a new feature with GSMGeom as father. This is the blue box in the lower left corner. The first step is to enrich this feature so that it implements a newly designed automation interface through which it can be manipulated from the automation world. This interface is named CAAIAOmmVerticalLine (CAAIA is CAA counterpart to CATIA as prefix for automation interfaces). This interface has got four methods for manipulating the Vertical Line by the two points that constrain it (blue box at bottom right). Since a Vertical Line is a kind of HybridShape, the CAAIAOmmVerticalLine interface derives from the CATIAHybridShape interface, so that all methods that apply to HybridShape also apply to our line. The script sample for example uses CATIAHybriShape::Compute to update the newly Created CAAOmmVerticalLine. Being a CATIAHybridShape also allows our feature to be put in the collection of Hybrid Shapes of an Hybrid Body, allowing to retrieve it through the same container-object access mechanism as the other Hybrid Shape features.  The code that implements this interface on the CAAOmmVerticalLine feature is beared by an extension to it, named CAAEOmmVerticalLine (bottom center). As our newly created feature inherits from GSMGeom, it inherits mechanical behaviors including an implementation for CATIAHybridShape. The last step consists in extending our automation model so that instances of CAAIAOmmVerticalLine can actually be created. This is done by providing another automation factory, called CAAIAOmmFactory. This factory's single method, AddNewVerticalLine(), instantiates a CAAIAOmmVerticalLine. The implementation code for CAAIAOmmFactory is beared by the CAAEOmmFactory class, which is an extension to the MechanicalPart Feature. This is mandatory in order for your factory to be found at run time. [Top] Creating IDL Interfaces We are now going to implement the interfaces we need as designed in the previous step. Since these interfaces are to be used in a variety of programming languages, such as Visual Basic or JavaScript, it is not written in a specific language, but in IDL (Interface Definition Language), a language which is specific to the definition of interfaces that can be used in a multi-languages environment. Here is the source file for the factory interface:
+Last, the CATIAPart object can instantiate a CATIAFactory object (through GetCustomerFactory(#)), which in turn can instantiate any automation object that may be needed, in particular instances of CATIA HybridShape. What about adding our Vertical Line feature to this? What we have done so far is creating a new feature with GSMGeom as father. This is the blue box in the lower left corner. The first step is to enrich this feature so that it implements a newly designed automation interface through which it can be manipulated from the automation world. This interface is named CAAIAOmmVerticalLine (CAAIA is CAA counterpart to CATIA as prefix for automation interfaces). This interface has got four methods for manipulating the Vertical Line by the two points that constrain it (blue box at bottom right). Since a Vertical Line is a kind of HybridShape, the CAAIAOmmVerticalLine interface derives from the CATIAHybridShape interface, so that all methods that apply to HybridShape also apply to our line. The script sample for example uses CATIAHybriShape::Compute to update the newly Created CAAOmmVerticalLine. Being a CATIAHybridShape also allows our feature to be put in the collection of Hybrid Shapes of an Hybrid Body, allowing to retrieve it through the same container-object access mechanism as the other Hybrid Shape features.  The code that implements this interface on the CAAOmmVerticalLine feature is beared by an extension to it, named CAAEOmmVerticalLine (bottom center). As our newly created feature inherits from GSMGeom, it inherits mechanical behaviors including an implementation for CATIAHybridShape. The last step consists in extending our automation model so that instances of CAAIAOmmVerticalLine can actually be created. This is done by providing another automation factory, called CAAIAOmmFactory. This factory's single method, AddNewVerticalLine(#), instantiates a CAAIAOmmVerticalLine. The implementation code for CAAIAOmmFactory is beared by the CAAEOmmFactory class, which is an extension to the MechanicalPart Feature. This is mandatory in order for your factory to be found at run time. [Top] Creating IDL Interfaces We are now going to implement the interfaces we need as designed in the previous step. Since these interfaces are to be used in a variety of programming languages, such as Visual Basic or JavaScript, it is not written in a specific language, but in IDL (Interface Definition Language), a language which is specific to the definition of interfaces that can be used in a multi-languages environment. Here is the source file for the factory interface:
 
     interface CAAIAOmmFactory : CATIAFactory
 
     {
-Last, the CATIAPart object can instantiate a CATIAFactory object (through GetCustomerFactory()), which in turn can instantiate any automation object that may be needed, in particular instances of CATIA HybridShape. What about adding our Vertical Line feature to this? What we have done so far is creating a new feature with GSMGeom as father. This is the blue box in the lower left corner. The first step is to enrich this feature so that it implements a newly designed automation interface through which it can be manipulated from the automation world. This interface is named CAAIAOmmVerticalLine (CAAIA is CAA counterpart to CATIA as prefix for automation interfaces). This interface has got four methods for manipulating the Vertical Line by the two points that constrain it (blue box at bottom right). Since a Vertical Line is a kind of HybridShape, the CAAIAOmmVerticalLine interface derives from the CATIAHybridShape interface, so that all methods that apply to HybridShape also apply to our line. The script sample for example uses CATIAHybriShape::Compute to update the newly Created CAAOmmVerticalLine. Being a CATIAHybridShape also allows our feature to be put in the collection of Hybrid Shapes of an Hybrid Body, allowing to retrieve it through the same container-object access mechanism as the other Hybrid Shape features.  The code that implements this interface on the CAAOmmVerticalLine feature is beared by an extension to it, named CAAEOmmVerticalLine (bottom center). As our newly created feature inherits from GSMGeom, it inherits mechanical behaviors including an implementation for CATIAHybridShape. The last step consists in extending our automation model so that instances of CAAIAOmmVerticalLine can actually be created. This is done by providing another automation factory, called CAAIAOmmFactory. This factory's single method, AddNewVerticalLine(), instantiates a CAAIAOmmVerticalLine. The implementation code for CAAIAOmmFactory is beared by the CAAEOmmFactory class, which is an extension to the MechanicalPart Feature. This is mandatory in order for your factory to be found at run time. [Top] Creating IDL Interfaces We are now going to implement the interfaces we need as designed in the previous step. Since these interfaces are to be used in a variety of programming languages, such as Visual Basic or JavaScript, it is not written in a specific language, but in IDL (Interface Definition Language), a language which is specific to the definition of interfaces that can be used in a multi-languages environment. Here is the source file for the factory interface:
+Last, the CATIAPart object can instantiate a CATIAFactory object (through GetCustomerFactory(#)), which in turn can instantiate any automation object that may be needed, in particular instances of CATIA HybridShape. What about adding our Vertical Line feature to this? What we have done so far is creating a new feature with GSMGeom as father. This is the blue box in the lower left corner. The first step is to enrich this feature so that it implements a newly designed automation interface through which it can be manipulated from the automation world. This interface is named CAAIAOmmVerticalLine (CAAIA is CAA counterpart to CATIA as prefix for automation interfaces). This interface has got four methods for manipulating the Vertical Line by the two points that constrain it (blue box at bottom right). Since a Vertical Line is a kind of HybridShape, the CAAIAOmmVerticalLine interface derives from the CATIAHybridShape interface, so that all methods that apply to HybridShape also apply to our line. The script sample for example uses CATIAHybriShape::Compute to update the newly Created CAAOmmVerticalLine. Being a CATIAHybridShape also allows our feature to be put in the collection of Hybrid Shapes of an Hybrid Body, allowing to retrieve it through the same container-object access mechanism as the other Hybrid Shape features.  The code that implements this interface on the CAAOmmVerticalLine feature is beared by an extension to it, named CAAEOmmVerticalLine (bottom center). As our newly created feature inherits from GSMGeom, it inherits mechanical behaviors including an implementation for CATIAHybridShape. The last step consists in extending our automation model so that instances of CAAIAOmmVerticalLine can actually be created. This is done by providing another automation factory, called CAAIAOmmFactory. This factory's single method, AddNewVerticalLine(#), instantiates a CAAIAOmmVerticalLine. The implementation code for CAAIAOmmFactory is beared by the CAAEOmmFactory class, which is an extension to the MechanicalPart Feature. This is mandatory in order for your factory to be found at run time. [Top] Creating IDL Interfaces We are now going to implement the interfaces we need as designed in the previous step. Since these interfaces are to be used in a variety of programming languages, such as Visual Basic or JavaScript, it is not written in a specific language, but in IDL (Interface Definition Language), a language which is specific to the definition of interfaces that can be used in a multi-languages environment. Here is the source file for the factory interface:
 interface CAAIAOmmFactory : CATIAFactory
       HRESULT AddNewVerticalLine(in CATIAReference ipiReferenceOnPoint1,
                                  in CATIAReference ipiReferenceOnPoint2,
@@ -322,12 +343,12 @@ And this is what we are going to do now:
 ---
 CATBaseUnknown,
 MechanicalPart );
-The IDL compilation of our IDL interfaces has produced a TIE_CAAIAOmmFactory.h C++ header file that we are going to use here for the definition of methods that must be provided as implementations for the IDL interface methods. CAAEOmmFactory is the name of the C++ class that we provide as the implementation class for the IDL OmmFactory interface. As per our previous design (see Designing The Exposed Model above), CAAEOmmFactory is an extension (CAA**E**) of the MechanicalPart feature. We can now begin to implement its methods, beginning by get_Name().
-  2. We can now begin to implement its methods,beginning by get_Name().
+The IDL compilation of our IDL interfaces has produced a TIE_CAAIAOmmFactory.h C++ header file that we are going to use here for the definition of methods that must be provided as implementations for the IDL interface methods. CAAEOmmFactory is the name of the C++ class that we provide as the implementation class for the IDL OmmFactory interface. As per our previous design (see Designing The Exposed Model above), CAAEOmmFactory is an extension (CAA**E**) of the MechanicalPart feature. We can now begin to implement its methods, beginning by get_Name(#).
+  2. We can now begin to implement its methods,beginning by get_Name(#).
 
          ...
-The IDL compilation of our IDL interfaces has produced a TIE_CAAIAOmmFactory.h C++ header file that we are going to use here for the definition of methods that must be provided as implementations for the IDL interface methods. CAAEOmmFactory is the name of the C++ class that we provide as the implementation class for the IDL OmmFactory interface. As per our previous design (see Designing The Exposed Model above), CAAEOmmFactory is an extension (CAA**E**) of the MechanicalPart feature. We can now begin to implement its methods, beginning by get_Name().
-2. We can now begin to implement its methods,beginning by get_Name().
+The IDL compilation of our IDL interfaces has produced a TIE_CAAIAOmmFactory.h C++ header file that we are going to use here for the definition of methods that must be provided as implementations for the IDL interface methods. CAAEOmmFactory is the name of the C++ class that we provide as the implementation class for the IDL OmmFactory interface. As per our previous design (see Designing The Exposed Model above), CAAEOmmFactory is an extension (CAA**E**) of the MechanicalPart feature. We can now begin to implement its methods, beginning by get_Name(#).
+2. We can now begin to implement its methods,beginning by get_Name(#).
          HRESULT CAAEOmmFactory::get_Name(CATBSTR & oName)
 
          {
@@ -342,11 +363,11 @@ HRESULT CAAEOmmFactory::get_Name(CATBSTR & oName)
 
 ---
 return S_OK;
-Our factory must provide a get_Name() method because it inherits from the anyObject interface through its CATIAFactory parent (in other words, each scripting object must be able to name itself). As an extension of the MechanicalPartFeature feature that is unique within a Part document, there will be only one CAAIOmmFactory per document. We so choose to return always the same name: OmmFactory.
+Our factory must provide a get_Name(#) method because it inherits from the anyObject interface through its CATIAFactory parent (in other words, each scripting object must be able to name itself). As an extension of the MechanicalPartFeature feature that is unique within a Part document, there will be only one CAAIOmmFactory per document. We so choose to return always the same name: OmmFactory.
   3. There is another property that is common to all automation objects, the Parent property. This is the goal of the next methods, still inherited from anyObject interface.
 
          ...
-Our factory must provide a get_Name() method because it inherits from the anyObject interface through its CATIAFactory parent (in other words, each scripting object must be able to name itself). As an extension of the MechanicalPartFeature feature that is unique within a Part document, there will be only one CAAIOmmFactory per document. We so choose to return always the same name: OmmFactory.
+Our factory must provide a get_Name(#) method because it inherits from the anyObject interface through its CATIAFactory parent (in other words, each scripting object must be able to name itself). As an extension of the MechanicalPartFeature feature that is unique within a Part document, there will be only one CAAIOmmFactory per document. We so choose to return always the same name: OmmFactory.
 3. There is another property that is common to all automation objects, the Parent property. This is the goal of the next methods, still inherited from anyObject interface.
          HRESULT __stdcall CAAEOmmFactory::get_Parent(CATBaseDispatch *&opiBaseOnOLEParent)
 
@@ -361,11 +382,11 @@ HRESULT __stdcall CAAEOmmFactory::get_Parent(CATBaseDispatch *&opiBaseOnOLEParen
 
 ---
 return rc;
-The data model exposed through automation is basically an aggregation model. As a result, every exposed object appears as aggregated within a higher level entity: a part contains a collection of its bodies, within which each body contains a collection of its features, and so on. The exposed data model is therefore organized as a tree. For any node in that tree, except the top node, the Parent property is expected to return the aggregating node above its target object. This can sometimes make this property non trivial to implement, if the actual underlying data model is not organized as an aggregation model, as an automation client expects. Here the situation is not desperate, though. Since the OmmFactory can be obtained from the Part through GetCustomerFactory(), and this is the only path to the factory, the OmmFactory appears to be contained in the Part. Therefore, when asked for its parent, the OmmFactory should return the Part object. However, behind the scenes, ie in the C++ world, the OmmFactory and the Part are actually one single object, or, more precisely, two extensions of the same Object Modeler component, the Mechanical Part. Consequently, the OmmFactory, to return its associated Part, returns itself cast to a CATIAPart interface thanks to an appropriate QueryInterface().
+The data model exposed through automation is basically an aggregation model. As a result, every exposed object appears as aggregated within a higher level entity: a part contains a collection of its bodies, within which each body contains a collection of its features, and so on. The exposed data model is therefore organized as a tree. For any node in that tree, except the top node, the Parent property is expected to return the aggregating node above its target object. This can sometimes make this property non trivial to implement, if the actual underlying data model is not organized as an aggregation model, as an automation client expects. Here the situation is not desperate, though. Since the OmmFactory can be obtained from the Part through GetCustomerFactory(#), and this is the only path to the factory, the OmmFactory appears to be contained in the Part. Therefore, when asked for its parent, the OmmFactory should return the Part object. However, behind the scenes, ie in the C++ world, the OmmFactory and the Part are actually one single object, or, more precisely, two extensions of the same Object Modeler component, the Mechanical Part. Consequently, the OmmFactory, to return its associated Part, returns itself cast to a CATIAPart interface thanks to an appropriate QueryInterface(#).
   4. After paying this tribute to the Automation world by implementing Parent and Name properties, we can now skip to the actual job of this factory: instantiating VerticalLine feature objects. This longer method is split is severel steps, here is the first one.
 
          ...
-The data model exposed through automation is basically an aggregation model. As a result, every exposed object appears as aggregated within a higher level entity: a part contains a collection of its bodies, within which each body contains a collection of its features, and so on. The exposed data model is therefore organized as a tree. For any node in that tree, except the top node, the Parent property is expected to return the aggregating node above its target object. This can sometimes make this property non trivial to implement, if the actual underlying data model is not organized as an aggregation model, as an automation client expects. Here the situation is not desperate, though. Since the OmmFactory can be obtained from the Part through GetCustomerFactory(), and this is the only path to the factory, the OmmFactory appears to be contained in the Part. Therefore, when asked for its parent, the OmmFactory should return the Part object. However, behind the scenes, ie in the C++ world, the OmmFactory and the Part are actually one single object, or, more precisely, two extensions of the same Object Modeler component, the Mechanical Part. Consequently, the OmmFactory, to return its associated Part, returns itself cast to a CATIAPart interface thanks to an appropriate QueryInterface().
+The data model exposed through automation is basically an aggregation model. As a result, every exposed object appears as aggregated within a higher level entity: a part contains a collection of its bodies, within which each body contains a collection of its features, and so on. The exposed data model is therefore organized as a tree. For any node in that tree, except the top node, the Parent property is expected to return the aggregating node above its target object. This can sometimes make this property non trivial to implement, if the actual underlying data model is not organized as an aggregation model, as an automation client expects. Here the situation is not desperate, though. Since the OmmFactory can be obtained from the Part through GetCustomerFactory(#), and this is the only path to the factory, the OmmFactory appears to be contained in the Part. Therefore, when asked for its parent, the OmmFactory should return the Part object. However, behind the scenes, ie in the C++ world, the OmmFactory and the Part are actually one single object, or, more precisely, two extensions of the same Object Modeler component, the Mechanical Part. Consequently, the OmmFactory, to return its associated Part, returns itself cast to a CATIAPart interface thanks to an appropriate QueryInterface(#).
 4. After paying this tribute to the Automation world by implementing Parent and Name properties, we can now skip to the actual job of this factory: instantiating VerticalLine feature objects. This longer method is split is severel steps, here is the first one.
          HRESULT __stdcall CAAEOmmFactory::AddNewVerticalLine(
                         CATIAReference * ipiReferenceOnPoint1,
@@ -398,7 +419,7 @@ rc = QueryInterface( IID_CATIPartRequest, ( void**) &piPartOnThis );
 CATBaseUnknown_var spBUOnMainTool ;
 rc = piPartOnThis->**GetMainBody**("",spBUOnMainTool);
            CATISpecObject_var spSpecOnMainTool = spBUOnMainTool ;
-           CATIContainer_var spiContainer ( spSpecOnMainTool->**GetFeatContainer**());
+           CATIContainer_var spiContainer ( spSpecOnMainTool->**GetFeatContainer**(#));
 
            ...
 
@@ -455,13 +476,13 @@ rc = spSpecOnInstance->QueryInterface( IID_CAAIAOmmVerticalLine,
     }
 
 ---
-The reference to points received in arguments are set onto the instance thanks to the put_Point1() and put_Point2() method, for which the next section details the implementation.
-  5. Now that the CAAIAOmmFactory is implemented, the next step is to implement the CAAIAOmmVerticalLine interface itself. The first section of this implementation consists in providing code for the standard get_Name() and get_Parent() methods:
+The reference to points received in arguments are set onto the instance thanks to the put_Point1(#) and put_Point2(#) method, for which the next section details the implementation.
+  5. Now that the CAAIAOmmFactory is implemented, the next step is to implement the CAAIAOmmVerticalLine interface itself. The first section of this implementation consists in providing code for the standard get_Name(#) and get_Parent(#) methods:
 
          ...
          #include "TIE_CAAIAOmmVerticalLine.h"
-The reference to points received in arguments are set onto the instance thanks to the put_Point1() and put_Point2() method, for which the next section details the implementation.
-5. Now that the CAAIAOmmFactory is implemented, the next step is to implement the CAAIAOmmVerticalLine interface itself. The first section of this implementation consists in providing code for the standard get_Name() and get_Parent() methods:
+The reference to points received in arguments are set onto the instance thanks to the put_Point1(#) and put_Point2(#) method, for which the next section details the implementation.
+5. Now that the CAAIAOmmFactory is implemented, the next step is to implement the CAAIAOmmVerticalLine interface itself. The first section of this implementation consists in providing code for the standard get_Name(#) and get_Parent(#) methods:
          TIE_CAAIAOmmVerticalLine( CAAEOmmVerticalLine);
 
          CATImplementClass( CAAEOmmVerticalLine,
@@ -483,15 +504,15 @@ HRESULT CAAEOmmVerticalLine::get_Name(CATBSTR & oName)
            if (SUCCEEDED(rc)) {
 ```
 
-             CATUnicodeString str = ipAliasOnThis->**GetAlias**();
-             ipAliasOnThis->Release();
+             CATUnicodeString str = ipAliasOnThis->**GetAlias**(#);
+             ipAliasOnThis->Release(#);
              str.ConvertToBSTR (&oName);
 
            }
 ```vbscript
 if (SUCCEEDED(rc)) {
-CATUnicodeString str = ipAliasOnThis->**GetAlias**();
-ipAliasOnThis->Release();
+CATUnicodeString str = ipAliasOnThis->**GetAlias**(#);
+ipAliasOnThis->Release(#);
 str.ConvertToBSTR (&oName);
            return rc;
 ```
@@ -516,8 +537,8 @@ opiBaseOnOLEParent=NULL;
             if (SUCCEEDED(rc)) {
 ```
 
-               CATISpecObject * pParent = ipSpecObjectOnThis->**GetFather**();
-               ipSpecObjectOnThis->Release();
+               CATISpecObject * pParent = ipSpecObjectOnThis->**GetFather**(#);
+               ipSpecObjectOnThis->Release(#);
                ipSpecObjectOnThis = NULL ;
 
 ```vbscript
@@ -526,23 +547,23 @@ opiBaseOnOLEParent=NULL;
 ```
 
                {
-ipSpecObjectOnThis->Release();
+ipSpecObjectOnThis->Release(#);
 ipSpecObjectOnThis = NULL ;
 while ((NULL != pParent) && (NULL == opiBaseOnOLEParent))
                   CATISpecObject * pParentCurrent = pParent ;
 ```vbscript
                   rc =  pParentCurrent->QueryInterface(IID_**CATIAHybridShapes** , (void**) &opiBaseOnOLEParent);
 
-                  pParent =  pParentCurrent -> GetFather();
+                  pParent =  pParentCurrent -> GetFather(#);
 
 ```
 
-                  pParentCurrent->Release();
+                  pParentCurrent->Release(#);
                   pParentCurrent = NULL ;
 
                }
             }
-pParentCurrent->Release();
+pParentCurrent->Release(#);
 pParentCurrent = NULL ;
             return rc;
 
@@ -551,16 +572,16 @@ pParentCurrent = NULL ;
 
 ---
 return rc;
-The name of the object is retrieved in a standard way by querying it for the support of CATIAlias, the standard naming interface, and using its GetAlias() method for retrieving the actual name. The get_Parent() method is implemented by using the parent-child relationship contained in the feature modeler. As any feature, our Vertical Line implements the _CATISpecObject_ interface. This interface provides the GetFather() method that returns the mechanical feature aggregating for _this._ However, this direct parent may not be a suitable parent for the automation world. Remember, the automation world presents a data model that is often simpler than the actual underlying data modeler. In this case, what aggregates the Vertical Line in the automation view that we want to provide is a collection of Hybrid Shapes. In the underlying model, the object that correspond to this collection may exist not only as a direct parent to the Vertical Line, but also as its ancestor up the parent-chidren tree. This is why we iterate from parent to grand parent, etc., in the last section of this code, until an object implementing CATIAHybridShapes is finally found, and we return it as the father for our Vertical Line.
-  6. The next methods to implements are the methods for getting and putting the points that are the input specs for our line. Here is the code for put_Point1(), the three others being very similar:
+The name of the object is retrieved in a standard way by querying it for the support of CATIAlias, the standard naming interface, and using its GetAlias(#) method for retrieving the actual name. The get_Parent(#) method is implemented by using the parent-child relationship contained in the feature modeler. As any feature, our Vertical Line implements the _CATISpecObject_ interface. This interface provides the GetFather(#) method that returns the mechanical feature aggregating for _this._ However, this direct parent may not be a suitable parent for the automation world. Remember, the automation world presents a data model that is often simpler than the actual underlying data modeler. In this case, what aggregates the Vertical Line in the automation view that we want to provide is a collection of Hybrid Shapes. In the underlying model, the object that correspond to this collection may exist not only as a direct parent to the Vertical Line, but also as its ancestor up the parent-chidren tree. This is why we iterate from parent to grand parent, etc., in the last section of this code, until an object implementing CATIAHybridShapes is finally found, and we return it as the father for our Vertical Line.
+  6. The next methods to implements are the methods for getting and putting the points that are the input specs for our line. Here is the code for put_Point1(#), the three others being very similar:
 
          ...
-The name of the object is retrieved in a standard way by querying it for the support of CATIAlias, the standard naming interface, and using its GetAlias() method for retrieving the actual name. The get_Parent() method is implemented by using the parent-child relationship contained in the feature modeler. As any feature, our Vertical Line implements the _CATISpecObject_ interface. This interface provides the GetFather() method that returns the mechanical feature aggregating for _this._ However, this direct parent may not be a suitable parent for the automation world. Remember, the automation world presents a data model that is often simpler than the actual underlying data modeler. In this case, what aggregates the Vertical Line in the automation view that we want to provide is a collection of Hybrid Shapes. In the underlying model, the object that correspond to this collection may exist not only as a direct parent to the Vertical Line, but also as its ancestor up the parent-chidren tree. This is why we iterate from parent to grand parent, etc., in the last section of this code, until an object implementing CATIAHybridShapes is finally found, and we return it as the father for our Vertical Line.
-6. The next methods to implements are the methods for getting and putting the points that are the input specs for our line. Here is the code for put_Point1(), the three others being very similar:
+The name of the object is retrieved in a standard way by querying it for the support of CATIAlias, the standard naming interface, and using its GetAlias(#) method for retrieving the actual name. The get_Parent(#) method is implemented by using the parent-child relationship contained in the feature modeler. As any feature, our Vertical Line implements the _CATISpecObject_ interface. This interface provides the GetFather(#) method that returns the mechanical feature aggregating for _this._ However, this direct parent may not be a suitable parent for the automation world. Remember, the automation world presents a data model that is often simpler than the actual underlying data modeler. In this case, what aggregates the Vertical Line in the automation view that we want to provide is a collection of Hybrid Shapes. In the underlying model, the object that correspond to this collection may exist not only as a direct parent to the Vertical Line, but also as its ancestor up the parent-chidren tree. This is why we iterate from parent to grand parent, etc., in the last section of this code, until an object implementing CATIAHybridShapes is finally found, and we return it as the father for our Vertical Line.
+6. The next methods to implements are the methods for getting and putting the points that are the input specs for our line. Here is the code for put_Point1(#), the three others being very similar:
          HRESULT __stdcall CAAEOmmVerticalLine::put_Point1(CATIAReference * ipiReferenceOnPoint1)
 
          {
-6. The next methods to implements are the methods for getting and putting the points that are the input specs for our line. Here is the code for put_Point1(), the three others being very similar:
+6. The next methods to implements are the methods for getting and putting the points that are the input specs for our line. Here is the code for put_Point1(#), the three others being very similar:
 HRESULT __stdcall CAAEOmmVerticalLine::put_Point1(CATIAReference * ipiReferenceOnPoint1)
             HRESULT rc=E_FAIL;
 
@@ -593,13 +614,13 @@ piSpecAttrAccessOnThis->**SetSpecObject**(piAttrKeyOnSpec,spSpecOnPoint1);
          }
 
 ---
-We begin by retrieving a pointer of _CATISpecAttrAccess_ , on _this,_ ie the Vertical Line. Then we use it to access the "Point1" attribute.  In this method we get the input point ipiReferenceOnPoint1 not as a feature, but as a CATIAReference. CATIAReferences are used because they provide a stable handle onto objects that are manipulated within scripts, whether those objects represent actual underlying model objects or only part of them. So we convert the reference into a real Feature through a call to `GetSpecFromReference`(), which manages the link from a reference to its referent. The last step consists in assigning the feature we got from GetSpecFromReference() as attribute to the vertical line.
+We begin by retrieving a pointer of _CATISpecAttrAccess_ , on _this,_ ie the Vertical Line. Then we use it to access the "Point1" attribute.  In this method we get the input point ipiReferenceOnPoint1 not as a feature, but as a CATIAReference. CATIAReferences are used because they provide a stable handle onto objects that are manipulated within scripts, whether those objects represent actual underlying model objects or only part of them. So we convert the reference into a real Feature through a call to `GetSpecFromReference`(#), which manages the link from a reference to its referent. The last step consists in assigning the feature we got from GetSpecFromReference(#) as attribute to the vertical line.
 
 [Top]
 
 * * *
 
-In Short This article explains what has to be done in order to integrate a new feature added to a CATIA application to the automation exposed view for that application. As a result, the new feature can be manipulated as the native features from within scripting environments such as Visual Basic. The first step is to 'plug' the new feature and its associated factory as new automation interfaces in the application automation model. From there, where those new behaviors should be implemented in the underlying, actual application model can be deduced. Then, automation interfaces for the new feature and its factory are written using the IDL language, and appropriate dictionary declaration is produced. Some more additional IDL code gathers those new IDL objects definitions within a source code TypeLib, which is compiled into an executable TypeLib that will be used by scripting languages for knowing about those new types at run time. The last part consists in implementing the new IDL interfaces in the underlying model. In addition to the methods defined in the interfaces themselves, the implementations must provide code for methods get_Name() and get_Parent(), that all automation objects must implement. Thanks to get_Parent(), the exposed automation model can appear as having a parent-child structure which is somehow different (and most often, simpler) than the one existing in the underlying model. [Top]
+In Short This article explains what has to be done in order to integrate a new feature added to a CATIA application to the automation exposed view for that application. As a result, the new feature can be manipulated as the native features from within scripting environments such as Visual Basic. The first step is to 'plug' the new feature and its associated factory as new automation interfaces in the application automation model. From there, where those new behaviors should be implemented in the underlying, actual application model can be deduced. Then, automation interfaces for the new feature and its factory are written using the IDL language, and appropriate dictionary declaration is produced. Some more additional IDL code gathers those new IDL objects definitions within a source code TypeLib, which is compiled into an executable TypeLib that will be used by scripting languages for knowing about those new types at run time. The last part consists in implementing the new IDL interfaces in the underlying model. In addition to the methods defined in the interfaces themselves, the implementations must provide code for methods get_Name(#) and get_Parent(#), that all automation objects must implement. Thanks to get_Parent(#), the exposed automation model can appear as having a parent-child structure which is somehow different (and most often, simpler) than the one existing in the underlying model. [Top]
 
 * * *
 

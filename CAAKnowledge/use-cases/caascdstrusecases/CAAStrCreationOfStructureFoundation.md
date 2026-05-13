@@ -3,7 +3,7 @@ title: "Untitled"
 category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CAAScrBase", "CAAStrCreationOfStructureFoundation", "CATIA", "CAAScrJavaScript", "CAAScdInfUseCases", "CAAStrCreationOfStructureFoundationSource", "CAAScdStrUseCases", "CAAInfLauchMacro", "CAAStrCreationOfStructureObjects"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfStructureFoundation.htm"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfStructureFoundation.htmmd"
 converted: "2026-05-11T11:27:02.593399"
 ---
 
@@ -38,7 +38,7 @@ The foundation is retreived thanks to the collection of foundations.
     
   
 
-![](../CAAScrBase/images/aendtask.gif)
+![image](../../assets/images/aendtask.gif)
 
 [Top]
 
@@ -58,10 +58,9 @@ This use case has shown how to create structure objects
 
 *Copyright  2001, Dassault Systmes. All rights reserved.*
 
-
-
 ```vbscript
 ...
+```vbscript
     Dim doc As Document
 
     Dim StrWorkbench As StrWorkbench
@@ -79,22 +78,28 @@ This use case has shown how to create structure objects
 
     Set strFactory = component.GetTechnologicalObject(&quot;StructureObjectFactory&quot;)
 
+```
+
   ...
 ```
 
 ```vbscript
 ...
+```vbscript
     Dim foundation As StrFoundation 
     Set foundation = strFactory.ExtendProductAsFoundation(&quot;&quot;)
   ...
 ```
+```
 
 ```vbscript
 ...
+```vbscript
     Dim foundations As StrFoundations
     Set foundations = rootProduct.GetTechnologicalObject(&quot;StructureFoundations&quot;)		
 	
     Set foundation = foundations.Item(1)
 
   ...
+```
 ```

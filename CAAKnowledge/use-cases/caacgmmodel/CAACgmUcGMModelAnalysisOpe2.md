@@ -1,10 +1,10 @@
 ---
 ```vbscript
 title: "Analyzing the Parameters of a Point on a Surface"
-category: "use case"
+category: use-case case"
 module: "CAACgmModel"
 tags: ["CAADoc", "CAAGMModelAnalysisOpe", "CAAGMModelGemBrowser", "CAAGMModelInterfaces", "CATICGMLocalAnalysis2D", "CATICGMLocalAnalysis1D"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelAnalysisOpe2.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelAnalysisOpe2.htmmd"
 converted: "2026-05-11T17:33:48.247650"
 ```
 
@@ -55,7 +55,7 @@ CAAGMModelAnalysisOpe `e/analysis2D.NCGM`
 This NCGM file can be displayed using the CAAGMModelGemBrowser use case [3].
 The CAAGMModelAnalysisOpe use case is made of a main named CAAGMModelAnalysisOpe.cpp located in the CAAGMModelAnalysisOpe .m module of the CAAGMModelInterfaces.edu framework:
 
-`InstallRootFolder\CAADoc\CAAGMModelInterfaces.edu\`CAAGMModelAnalysisOpe `.m\`
+`InstallRootFolder/CAADoc/CAAGMModelInterfaces.edu/`CAAGMModelAnalysisOpe `.m/`
 
 where `InstallRootFolder` [4] is the folder where the API CD-ROM is installed.
 ## Step-by-Step
@@ -103,36 +103,36 @@ The CATCGMCreateLocalAnalysis2D global function is used to create the operator. 
     // that the angle between them must be equal to PI/2
     //
 CATICGMLocalAnalysis1D * pAnalysisCircle =:: **CATCGMCreateLocalAnalysis1D**(pConfig,pCircle,paramcircle);
-    CATMathVector mainnormal = pAnalysisCircle->GetMainNormal();
-    CATMathVector binormal = pAnalysisCircle->GetBiNormal();
+    CATMathVector mainnormal = pAnalysisCircle->GetMainNormal(#);
+    CATMathVector binormal = pAnalysisCircle->GetBiNormal(#);
 
     ...
     // d - Retrieve the curvature and check that it is equal to 1
     //
-CATMathVector mainnormal = pAnalysisCircle->GetMainNormal();
-CATMathVector binormal = pAnalysisCircle->GetBiNormal();
-    double curvature = pAnalysisCircle->GetCurvature();
+CATMathVector mainnormal = pAnalysisCircle->GetMainNormal(#);
+CATMathVector binormal = pAnalysisCircle->GetBiNormal(#);
+    double curvature = pAnalysisCircle->GetCurvature(#);
     cout << "curvature " << fabs(curvature*radius) << endl;
 
     ...
     // e - Retrieve the torsion and check that it is equal to 0
     //
-double curvature = pAnalysisCircle->GetCurvature();
+double curvature = pAnalysisCircle->GetCurvature(#);
 cout << "curvature " << fabs(curvature*radius) << endl;
-    double torsion = pAnalysisCircle->GetTorsion();
+    double torsion = pAnalysisCircle->GetTorsion(#);
     cout << "torsion " << fabs(torsion) << endl;
 
     ...
     // f - Test whether the specified point is regular
     //
-double torsion = pAnalysisCircle->GetTorsion();
+double torsion = pAnalysisCircle->GetTorsion(#);
 cout << "torsion " << fabs(torsion) << endl;
-    CATLONG32 regular = pAnalysisCircle->IsARegularParam();
+    CATLONG32 regular = pAnalysisCircle->IsARegularParam(#);
     cout << "IsARegularParam " << regular << endl;
 
     ...
 
-CATLONG32 regular = pAnalysisCircle->IsARegularParam();
+CATLONG32 regular = pAnalysisCircle->IsARegularParam(#);
 cout << "IsARegularParam " << regular << endl;
 Here are the messages on the standard output:
 

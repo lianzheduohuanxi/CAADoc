@@ -4,13 +4,13 @@ title: "CAAArrCreateContourArea.CATScript"
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CAAArrCreateContourArea", "CATIA"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateContourAreaSource.htm"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateContourAreaSource.htmmd"
 converted: "2026-05-11T17:31:51.546099"
 ```
 
 ---
 tags: ["CAAArrCreateContourArea", "CATIA"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateContourAreaSource.htm"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateContourAreaSource.htmmd"
 converted: "2026-05-11T17:31:51.546099"
     Option Explicit
 
@@ -35,15 +35,20 @@ converted: "2026-05-11T17:31:51.546099"
 ```
 
 ```vbscript
-    Sub CATMain()
+```vbscript
+    Sub CATMain(#)
+
+```
 
 ```
 
 ```vbscript
 ```vbscript
 ```vbscript
+```vbscript
        ' On Error Resume Next
        '----------------------------------------------
+```
        'Create a new product document
 ```
 
@@ -52,12 +57,16 @@ converted: "2026-05-11T17:31:51.546099"
 ```
 
 ```vbscript
+```vbscript
        Dim objProdDoc        As ProductDocument
+```vbscript
+```
 ```vbscript
 ```vbscript
        Dim objRootProd       As Product
        Set objProdDoc      = CATIA.Documents.Add("Product")
        Set objRootProd     = objProdDoc.Product
+```
 ```
 
 ```
@@ -69,18 +78,24 @@ converted: "2026-05-11T17:31:51.546099"
 ```vbscript
        '----------------------------------------------
        'Retrieving Root Product's Relative Axis and Position Information
+```vbscript
        Dim objMove           As Move
        Dim objPosition       As Position
        Set objMove      = objRootProd.Move
        Set objPosition  = objRootProd.Position
        '----------------------------------------------
+```
        ' Get ArrangementProduct
+```vbscript
        Dim objArrProd        As ArrangementProduct
        Set objArrProd   = objRootProd.GetTechnologicalObject("ArrangementProduct")
        '----------------------------------------------
+```
        ' Create Area without a contour under the Root Product
+```vbscript
        Dim objArea         As ArrangementArea
        Dim dblAreaPos(11)  As Double
+```
 ```
 
 ```
@@ -89,7 +104,9 @@ converted: "2026-05-11T17:31:51.546099"
 
        objPosition.GetComponents dblAreaPos
 ```vbscript
+```vbscript
        Set objArea     = objArrProd.ArrangementAreas.AddArea(objMove, dblAreaPos, 50.0)
+```
 ```
 
 ```vbscript
@@ -97,6 +114,7 @@ converted: "2026-05-11T17:31:51.546099"
 ```vbscript
        '----------------------------------------------
        ' Create Rectangle
+```vbscript
        Dim objRectangle      As ArrangementRectangle
        Dim objArrProd1       As ArrangementProduct
        Dim objAreaProd1      As Product
@@ -108,6 +126,7 @@ converted: "2026-05-11T17:31:51.546099"
        Set objArrProd1   = objArea.GetTechnologicalObject("ArrangementProduct")
        Set objMove1      = objAreaProd1.Move
        Set objPosition1  = objAreaProd1.Position
+```
 ```
 
 ```
@@ -123,8 +142,10 @@ converted: "2026-05-11T17:31:51.546099"
 ```
 
 ```vbscript
+```vbscript
        Set objRectangle = objArrProd1.ArrangementRectangles.AddRectangle (objMove1,dblRectPos, 50.0, 50.0)
 ```vbscript
+```
 ```vbscript
        '---------------------------------------------
        ' Add Rectangular contour to Area
@@ -137,6 +158,8 @@ converted: "2026-05-11T17:31:51.546099"
 ```
 
 ```vbscript
+```vbscript
     End Sub
 
+```
 ```

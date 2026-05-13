@@ -4,13 +4,13 @@ title: "New Java Authorized APIs in CAA V5R20 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIA"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R20GANewJavaAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R20GANewJavaAPI.htmmd"
 converted: "2026-05-11T17:33:47.482592"
 ```
 
 ---
 tags: ["CATIA"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R20GANewJavaAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R20GANewJavaAPI.htmmd"
 converted: "2026-05-11T17:33:47.482592"
 CAA V5 Encyclopedia |  New Java Authorized APIs in CAA V5R20 GA
 
@@ -32,4 +32,7 @@ History Version: **1** [Aug 2009] | Document created
 * * *
 
 _Copyright © 1999-2009, Dassault Systèmes. All rights reserved._
+```vbscript
 Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.md) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.md) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.md)
+
+```
