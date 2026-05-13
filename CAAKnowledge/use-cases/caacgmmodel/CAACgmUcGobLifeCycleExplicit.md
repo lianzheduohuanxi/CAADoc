@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Explicit Objects"
-category: use-case case"
+category: "use-case case"
 module: "CAACgmModel"
-tags: ["CATICGMContainer", "CAADoc", "CATICGMObject", "CAAGMModelLifeCycleImplit", "CAAGMModelGemBrowser", "CAAGMModelLifeCycleImplicit", "CAAGMModelInterfaces", "CATIA", "CAAGMModelLifeCycleExplicit"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGobLifeCycleExplicit.htmmd"
+tags: "["CATICGMContainer", "CAADoc", "CATICGMObject", "CAAGMModelLifeCycleImplit", "CAAGMModelGemBrowser", "CAAGMModelLifeCycleImplicit", "CAAGMModelInterfaces", "CATIA", "CAAGMModelLifeCycleExplicit"]"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGobLifeCycleExplicit.htm"
 converted: "2026-05-11T17:33:48.395998"
-```
-
 ---
 # Creating Explicit Objects
 
@@ -150,7 +147,7 @@ if(1==toStore)
        ofstream filetowrite(pfileName, ios::binary ) ;
 
     #else
-```vbscript
+```cpp
 if(1==toStore)
 ofstream filetowrite(pfileName, ios::binary ) ;
        ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;

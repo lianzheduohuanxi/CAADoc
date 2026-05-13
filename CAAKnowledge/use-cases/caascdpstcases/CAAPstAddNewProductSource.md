@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAAPstAddNewProduct.CATScript"
 category: "use-case"
 module: "CAAScdPstUseCases"
-tags: ["CAAPstPad1_2", "CAAPstAddNewProduct", "CATIA", "CAAScdPstUseCases", "CAAPstPad1_1"]
-source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddNewProductSource.htmmd"
+tags: "["CAAPstPad1_2", "CAAPstAddNewProduct", "CATIA", "CAAScdPstUseCases", "CAAPstPad1_1"]"
+source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddNewProductSource.htm"
 converted: "2026-05-11T17:31:52.328946"
-```
-
 ---
 tags: ["CAAPstPad1_2", "CAAPstAddNewProduct", "CATIA", "CAAScdPstUseCases", "CAAPstPad1_1"]
 source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddNewProductSource.htmmd"
@@ -16,7 +13,7 @@ converted: "2026-05-11T17:31:52.328946"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGHT DASSAULT SYSTEMES 2000
     ' *****************************************************************************
     '   Purpose:       Create A Product Structure document containing
@@ -35,7 +32,7 @@ converted: "2026-05-11T17:31:52.328946"
 
 ```
 
-```vbscript
+```cpp
     Sub CATMain(#)
 ```vbscript
 ```
@@ -53,7 +50,7 @@ converted: "2026-05-11T17:31:52.328946"
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
         sDocPath=CATIA.SystemService.Environ("CATDocView")
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
           Err.Raise 9999,,"No Doc Path Defined"
@@ -67,11 +64,11 @@ converted: "2026-05-11T17:31:52.328946"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
         ' ------------------------------------------------------------------------------------------------
         'Create a new product document by adding a document with the Product type
         'to the document collection of the CATIA application.
-```vbscript
+```cpp
         Dim oProductDoc As Document
         Set oProductDoc = CATIA.Documents.Add("Product")
         'Retrieve the root product.
@@ -145,7 +142,7 @@ Set oChildProduct1 = oRootChildren.AddNewProduct("Child_1_Type")
 ```
 
         oChildProduct1.AddMasterShapeRepresentation sDocPath & "CAAPstPad1_1.CATPart"
-```vbscript
+```cpp
         CATIA.ActiveWindow.ActiveViewer.Reframe
 ```
 ```
@@ -200,7 +197,7 @@ oChildProduct2.Name = "2nd_Child"
 oChildProduct2.AddMasterShapeRepresentation sDocPath & _
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
         CATIA.ActiveWindow.ActiveViewer.Reframe(#)
 
 ```

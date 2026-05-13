@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Basic Report"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CATIA", "CAAAniPostProBasicReport", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPostProBasicReport.htmmd"
+tags: "["CATIA", "CAAAniPostProBasicReport", "CAAScdAniUseCases"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPostProBasicReport.htm"
 converted: "2026-05-11T17:31:51.741561"
-```
-
 ---
 ## Analysis Modeler
 
@@ -38,7 +35,7 @@ This use case shows you how to generate basic report using VB. The macro opens a
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
       sDocPath=CATIA.SystemService.Environ("CATDocView")
       sOut = CATIA.SystemService.Environ("CATTemp")
 ```
@@ -49,7 +46,7 @@ This use case shows you how to generate basic report using VB. The macro opens a
 ```
 
 ```vbscript
-```vbscript
+```cpp
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 ```
@@ -69,7 +66,7 @@ This use case shows you how to generate basic report using VB. The macro opens a
 ```vbscript
     ' -----------------------------------------------------------
     ' Open the Analysis document
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Cube_R13_Freq.CATAnalysis")
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```
@@ -93,7 +90,7 @@ Open the Analysis document. The Analysis document is retrieved in the documentat
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Set fileSystem1 = CATIA.FileSystem
 ```vbscript
 ```
@@ -197,7 +194,6 @@ Set oAnalysisCase = oAnalysisCases.Item(1)
 
 The sOut variable stores the path of the folder in which the report is generated. The Analysis post manager interface manages report creation.
 
-The sOut variable stores the path of the folder in which the report is generated. The Analysis post manager interface manages report creation.
 According to the general [ Analysis Document](../use-cases/caascdaniusecases/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Model**.
 
 The Analysis case is retrieved from list of cases by its index. The model contains only one analysis case hence we pass 1 to the method _Item._ Otherwise we pass the appropriate index of the desired case, if there are more Analysis cases. The analysis case is retrieved from the list of image by its name. The name is same as that appears in the tree in the interactive environment.
@@ -208,7 +204,6 @@ The Analysis case is retrieved from list of cases by its index. The model contai
 
     oAnalysisPostManager.AddExistingCaseForReport oAnalysisCase
 
-oAnalysisPostManager.AddExistingCaseForReport oAnalysisCase
 ```vbscript
     'basic report on frequency case saved in folder1, title=test1, no image added
 ```

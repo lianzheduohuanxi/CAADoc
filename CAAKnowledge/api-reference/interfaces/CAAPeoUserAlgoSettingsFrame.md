@@ -1,25 +1,15 @@
 ---
 title: "CAAPeoUserAlgoSettingsFrame"
-type: "interface"
+type: "LocalClass"
 module: "CAAOptimizationInterfaces"
-category: api-reference
 base: "CATDlgFrame"
-inheritance_chain: "CAAPeoUserAlgoSettingsFrame → CATDlgFrame"
-method_count: 1
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 3
+source_file: "CAAOptimizationInterfaces.edu/CAAPeoCreateUserAlgorithmUI.m/LocalInterfaces/CAAPeoUserAlgoSettingsFrame.h"
 ---
+
 # CAAPeoUserAlgoSettingsFrame
 
-**基类**: CATDlgFrame  
-**继承链**: CAAPeoUserAlgoSettingsFrame → CATDlgFrame  
-**模块**: CAAOptimizationInterfaces  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 1
-
-> Dialog
+**基类**: CATDlgFrame | **模块**: CAAOptimizationInterfaces | **方法数**: 3
 
 ## 依赖
 
@@ -31,28 +21,47 @@ verified: true
 - `CATDlgLabel.h`
 - `CATDlgCombo.h`
 
+## 虚方法
+
+### Build
+
+```cpp
+virtual HRESULT Build(CATIOptAlgorithm_var spiAlgo) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| spiAlgo | `CATIOptAlgorithm_var` |
+
+
+## 公共方法
+
+### OnChangeMaxEval
+
+```cpp
+void OnChangeMaxEval(CATCommand* cmd, CATNotification* evt, CATCommandClientData data) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| cmd | `CATCommand*` |
+| evt | `CATNotification*` |
+| data | `CATCommandClientData` |
+
+
+### OnChangeTime
+
+```cpp
+void OnChangeTime(CATCommand* cmd, CATNotification* evt, CATCommandClientData data) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| cmd | `CATCommand*` |
+| evt | `CATNotification*` |
+| data | `CATCommandClientData` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATDlgFrame**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAOptimizationInterfaces.edu/CAAPeoCreateUserAlgorithmUI.m/LocalInterfaces/CAAPeoUserAlgoSettingsFrame.h`

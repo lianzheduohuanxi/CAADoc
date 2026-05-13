@@ -1,29 +1,17 @@
 ---
 title: "CAAPeoUserAlgorithmNotif"
-type: "interface"
+type: "ProtectedInterface"
 module: "CAAOptimizationInterfaces"
-category: api-reference
 base: "CATNotification"
-inheritance_chain: "CAAPeoUserAlgorithmNotif → CATNotification"
-method_count: 0
-visibility: "protected"
-has_tie_binding: false
-verified: true
+method_count: 6
+source_file: "CAAOptimizationInterfaces.edu/ProtectedInterfaces/CAAPeoUserAlgorithmNotif.h"
 ---
+
 # CAAPeoUserAlgorithmNotif
 
-**基类**: CATNotification  
-**继承链**: CAAPeoUserAlgorithmNotif → CATNotification  
-**模块**: CAAOptimizationInterfaces  
-**分类**: framework  
-**可见性**: protected  
-**方法数**: 0
+> Class used to update the stop dialog while running algo in interactive mode. This notification is sent during the algorithm run each time an update is done.
 
-> algorithm run each time an update is done.
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATNotification | **模块**: CAAOptimizationInterfaces | **方法数**: 6
 
 ## 依赖
 
@@ -31,28 +19,62 @@ verified: true
 - `CATNotification.h`
 - `CATUnicodeString.h`
 
+## 公共方法
+
+### GetComment
+
+```cpp
+CATUnicodeString GetComment() ;
+```
+
+
+### SetComment
+
+```cpp
+HRESULT SetComment(const CATUnicodeString& iComment) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iComment | `const CATUnicodeString&` |
+
+
+### GetElapsedTime
+
+```cpp
+int GetElapsedTime() ;
+```
+
+
+### SetElapsedTime
+
+```cpp
+HRESULT SetElapsedTime(int iElapsedTime) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iElapsedTime | `int` |
+
+
+### GetCurrentUpdate
+
+```cpp
+int GetCurrentUpdate() ;
+```
+
+
+### SetCurrentUpdate
+
+```cpp
+HRESULT SetCurrentUpdate(int iCurrentUpdate) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iCurrentUpdate | `int` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATNotification**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAOptimizationInterfaces.edu/ProtectedInterfaces/CAAPeoUserAlgorithmNotif.h`

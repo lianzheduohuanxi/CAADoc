@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAADriDuplicateAView.CATScript"
 category: "use-case"
 module: "CAAScdDriUseCases"
-tags: ["CAADriDuplicateAView", "CATIA", "CAAScdDriUseCases"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriDuplicateAViewSource.htmmd"
+tags: "["CAADriDuplicateAView", "CATIA", "CAAScdDriUseCases"]"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriDuplicateAViewSource.htm"
 converted: "2026-05-11T17:31:51.074314"
-```
-
 ---
 tags: ["CAADriDuplicateAView", "CATIA", "CAAScdDriUseCases"]
 source_file: "Doc/online/CAAScdDriUseCases/CAADriDuplicateAViewSource.htmmd"
@@ -16,7 +13,7 @@ converted: "2026-05-11T17:31:51.074314"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGHT DASSAULT SYSTEMES 2003
     ' ***********************************************************************
     '   Purpose:      This macro allows you to copy a view from an
@@ -33,12 +30,12 @@ converted: "2026-05-11T17:31:51.074314"
 
 ```
 
-```vbscript
+```cpp
     Sub CATMain(#)
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
         ' Set the CATIA popup file alerts to False
         ' It prevents to stop the macro at each alert during its execution
 ```
@@ -48,7 +45,7 @@ converted: "2026-05-11T17:31:51.074314"
 ```
 
 ```vbscript
-```vbscript
+```cpp
         CATIA.DisplayFileAlerts = False
 ```
 ```
@@ -58,14 +55,14 @@ converted: "2026-05-11T17:31:51.074314"
 ```vbscript
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String
-```vbscript
+```cpp
         sDocPath=CATIA.SystemService.Environ("CATDocView")
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
           Err.Raise 9999,,"No Doc Path Defined"
         End If
 ```
         ' Open the Drawing document
-```vbscript
+```cpp
         Dim oDrawingSource As DrawingDocument
         Set oDrawingSource = CATIA.Documents.Open(sDocPath & _
 ```
@@ -80,7 +77,7 @@ converted: "2026-05-11T17:31:51.074314"
 ```vbscript
 ```vbscript
         ' Fit in window the opened document
-```vbscript
+```cpp
         CATIA.ActiveWindow.ActiveViewer.Reframe
         ' Retrieve the sheet containing the view to be duplicated
 ```
@@ -141,7 +138,7 @@ Set oSelectionSource = oDrawingSource.Selection
 ```vbscript
 ```vbscript
         ' Create the Drawing document where the view will be pasted
-```vbscript
+```cpp
         Dim oDrawingTarget As DrawingDocument
         Set oDrawingTarget = CATIA.Documents.Add("Drawing")
         ' Retrieve the where the view will be pasted
@@ -225,7 +222,7 @@ Set oSelectionTarget = oDrawingTarget.Selection
 ```vbscript
 ```vbscript
         ' Fit in window the active document
-```vbscript
+```cpp
         CATIA.ActiveWindow.ActiveViewer.Reframe
         ' Clear the variables
 ```

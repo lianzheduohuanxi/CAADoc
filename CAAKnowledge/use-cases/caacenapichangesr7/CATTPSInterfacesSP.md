@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "CATTPSInterfaces Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR7"
-version: "V5R7"
-tags: ["CATITPSDimensionLimits", "CATITPSTTRSServices", "CATITPSServices", "CATITPSDocument"]
-source_file: "Doc/online/CAACenAPIChangesR7/CATTPSInterfacesSP.htmmd"
+tags: "["CATITPSDimensionLimits", "CATITPSTTRSServices", "CATITPSServices", "CATITPSDocument"]"
+source_file: "Doc/online/CAACenAPIChangesR7/CATTPSInterfacesSP.htm"
 converted: "2026-05-11T17:33:51.976108"
-```
-
 ---
 tags: ["CATITPSDimensionLimits", "CATITPSTTRSServices", "CATITPSServices", "CATITPSDocument"]
 source_file: "Doc/online/CAACenAPIChangesR7/CATTPSInterfacesSP.htmmd"

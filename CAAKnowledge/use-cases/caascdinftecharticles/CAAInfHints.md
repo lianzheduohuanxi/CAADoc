@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "About VB, VBA, Debug, and Portability"
 category: "use-case"
 module: "CAAScdInfTechArticles"
-tags: ["CATIA"]
-source_file: "Doc/online/CAAScdInfTechArticles/CAAInfHints.htmmd"
+tags: "["CATIA"]"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfHints.htm"
 converted: "2026-05-11T17:31:52.415555"
-```
-
 ---
 ## Infrastructure
 
@@ -19,7 +16,6 @@ converted: "2026-05-11T17:31:52.415555"
 
  Since V5R7 Dassault Systemes products based on the V5 Platform don't use anymore the Basic Script scripting engine on Unix platforms. The `CATScript` language has been kept for compatibility and is processed by a vbscript scripting engine after removal of the typing information.
 
-Since V5R7 Dassault Systemes products based on the V5 Platform don't use anymore the Basic Script scripting engine on Unix platforms. The `CATScript` language has been kept for compatibility and is processed by a vbscript scripting engine after removal of the typing information.
  This has no impact on macros but you may still experience the following problem when recording macros in `CATScript` language and copy/pasting the result in a VB/VBA project .
 
  The typing requirement are incompatible for Basic Script code and VB code. When a **method returns an abstract object** like the **ActiveDocument** method that returns a **Document** ,**** Basic Script expects the variable in which the return value will be stored to be of the type declared by the signature of the method:
@@ -29,7 +25,7 @@ Since V5R7 Dassault Systemes products based on the V5 Platform don't use anymore
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
     Set oDoc = CATIA.ActiveDocument ' returns a Document
 
 ```
@@ -62,7 +58,7 @@ Since V5R7 Dassault Systemes products based on the V5 Platform don't use anymore
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
     Set oDoc = CATIA.ActiveDocument ' returns a Document
 
     Dim oPart As Part
@@ -82,7 +78,7 @@ Since V5R7 Dassault Systemes products based on the V5 Platform don't use anymore
 ```
 
 ```vbscript
-```vbscript
+```cpp
  For documentation examples, we choose as much as possible a VBScript/Basic Script portable syntax. So, when copy/pasting samples from the documentation in a VB project, you will have to proceed to take care of virtual objects.
 
 ```
@@ -309,7 +305,7 @@ By default, this folder is:
 
        4. This command is a silent command. Wait about for one minute to let it complete.
 
-```vbscript
+```cpp
      * Set the **3D** EXPERIENCER2017x scripting server:
 catstart -run "V5RegServer -unset CATIA"
 ```
@@ -398,7 +394,7 @@ Not(myBool) `
  Another very specific problem may occur when using a VBA class featuring a function that returns a boolean. In the following example:
 
 ```vbscript
-```vbscript
+```cpp
      Sub CATMain(#)
 
 ```
@@ -416,7 +412,7 @@ Not(myBool) `
          bReture = oClass.IsRetureBooleanFunction(#)
 ```
 
-```vbscript
+```cpp
          Dim RefreshDisp As Boolean
          CATIA.RefreshDisplay = False
 ```
@@ -424,11 +420,11 @@ Not(myBool) `
 
 ```
 
-```vbscript
+```cpp
          RefreshDisp = CATIA.RefreshDisplay
          Debug.Print " CASE FALSE : False expected=" & CInt(False) & " False returned=" & CInt(RefreshDisp)
 ```
-```vbscript
+```cpp
          CATIA.RefreshDisplay = True
          RefreshDisp = CATIA.RefreshDisplay
          Debug.Print " CASE TRUE : True expected=" & CInt(True) & " True returned= " & CInt(RefreshDisp)
@@ -455,7 +451,7 @@ Not(myBool) `
 ```
 ```
 
-```vbscript
+```cpp
  The execution of `CATMain` shows that the value returned by `CATIA.RefreshDisplay` is always invalid. A simple workaround consists in declaring the `IsRetureBooleanFunction` function this way:
 
      Function IsRetureBooleanFunction(#) As **Variant**

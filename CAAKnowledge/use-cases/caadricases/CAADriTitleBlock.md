@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Frames and Title Blocks in a CATDrawing Document"
-category: use-case case"
+category: "use-case case"
 module: "CAADriUseCases"
-tags: ["CATIDrwAnnotationFactory_var", "CATISheet_var", "CATIDftTextProperties", "CATIDftText", "CATIDrwAnnotationFactory", "CAADrwTitleBlock", "CATIDftDocumentServices", "CATI2DWFFactory", "CAA2", "CATIA", "CAADRWTitleBlock", "CATIDrawing", "CATIView_var", "CATIDrwAxisLine_var", "CATISpecObject_var", "CATIView", "CATIDrwSubString", "CATI2DWFFactory_var", "CATIDrwCenterLine_var", "CAADraftingInterfaces"]
-source_file: "Doc/online/CAADriUseCases/CAADriTitleBlock.htmmd"
+tags: "["CATIDrwAnnotationFactory_var", "CATISheet_var", "CATIDftTextProperties", "CATIDftText", "CATIDrwAnnotationFactory", "CAADrwTitleBlock", "CATIDftDocumentServices", "CATI2DWFFactory", "CAA2", "CATIA", "CAADRWTitleBlock", "CATIDrawing", "CATIView_var", "CATIDrwAxisLine_var", "CATISpecObject_var", "CATIView", "CATIDrwSubString", "CATI2DWFFactory_var", "CATIDrwCenterLine_var", "CAADraftingInterfaces"]"
+source_file: "Doc/online/CAADriUseCases/CAADriTitleBlock.htm"
 converted: "2026-05-11T17:31:51.027919"
-```
-
 ---
 # Mechanical Design
 
@@ -98,7 +95,6 @@ When you launch the use case, pass the full pathname of the file into which you 
 
 The CAADrwTitleBlock use case is made of a single source file named CAADrwTitleBlock.cpp located in the CAADrwTitleBlock.m module of the CAADraftingInterfaces.edu framework:
 
-The CAADrwTitleBlock use case is made of a single source file named CAADrwTitleBlock.cpp located in the CAADrwTitleBlock.m module of the CAADraftingInterfaces.edu framework:
 Windows | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwTitleBlock.m/`
 
 The CAADrwTitleBlock use case is made of a single source file named CAADrwTitleBlock.cpp located in the CAADrwTitleBlock.m module of the CAADraftingInterfaces.edu framework:
@@ -171,7 +167,7 @@ return 2;
 
       **CATIDftDocumentServices** *piDftDocServices = NULL;
 CATIDrawing *piDrawing = NULL;
-```vbscript
+```cpp
       if (SUCCEEDED(pDoc->QueryInterface(IID_CATIDftDocumentServices, (void **)&piDftDocServices)))
 
 ```
@@ -223,7 +219,6 @@ A drawing may contain several sheets, but only one is current at a time. The cur
       //   - Setting the view as the current one
       //   - Getting the view geometry factory interface
       spSheet->SetCurrentView(spBgView);
-spSheet->SetCurrentView(spBgView);
       CATI2DWFFactory_var spGeomFactory = spBgView;
 
       double X[8] = { 936.0, 949.0, 963.0, 1010.0, 1062.0, 1093.0, 1157.0, 1176.0};
@@ -434,7 +429,7 @@ CATIDrwAnnotationFactory_var spAnnFactory = spBgView;
 ```
 
       {
-```vbscript
+```cpp
         // Set String
 CATIDftText *piDftText = NULL;
 ```
@@ -568,7 +563,7 @@ if (SUCCEEDED(piDftText->GetTextProperties(&piDftTextProp)))
           piDftTextProp->SetItalic(TRUE);
 
           CATIDrwSubString *piDrwSubString = NULL;
-```vbscript
+```cpp
           if (SUCCEEDED(piDftText->QueryInterface(IID_CATIDrwSubString,(void **)&piDrwSubString)))
 
 ```
@@ -618,7 +613,7 @@ The _CATIDrwAnnotationFactory_ annotation factory is implemented by the view and
       // Ends session and drops document
 rc = CATDocumentServices::**SaveAs**(*pDoc, (char *)fileName);
 ```vbscript
-```vbscript
+```cpp
 rc = CATDocumentServices::**Remove** (*pDoc);
       rc = ::**Delete_Session**("SampleSession");
 

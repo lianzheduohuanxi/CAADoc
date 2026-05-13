@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Administrating Settings with Automation"
 category: "use-case"
 module: "CAAScdInfTechArticles"
-tags: ["CATIA"]
-source_file: "Doc/online/CAAScdInfTechArticles/CAAInfSettings.htmmd"
+tags: "["CATIA"]"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfSettings.htm"
 converted: "2026-05-11T17:31:52.445748"
-```
-
 ---
 ## Infrastructure
 
@@ -98,7 +95,7 @@ The example described below corresponds to the Dump of Parameters dialog box as 
      Language="VBSCRIPT"
 
 ```vbscript
-```vbscript
+```cpp
      Sub CATMain(#)
 
 ```
@@ -107,7 +104,7 @@ The example described below corresponds to the Dump of Parameters dialog box as 
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
      Set settingControllers1 = CATIA.SettingControllers
 
      Set generalSessionSettingAtt1 = settingControllers1.Item("CATCafGeneralSessionSettingCtrl")
@@ -115,13 +112,13 @@ The example described below corresponds to the Dump of Parameters dialog box as 
 ```
 ```
 
-```vbscript
+```cpp
  The first object retrieved is the  SettingControllers collection object in the `settingControllers1` variable. Since the setting controller collection is aggregated to the Application object, simply calling `CATIA.SettingControllers` returns this collection.
 
 ```
 ```
 
-```vbscript
+```cpp
 The first object retrieved is the  SettingControllers collection object in the `settingControllers1` variable. Since the setting controller collection is aggregated to the Application object, simply calling `CATIA.SettingControllers` returns this collection.
  The setting controller collection contains all the setting controller objects available in the current session. Each setting controller manages a setting repository stored in a CATSettings file. A setting controller gives you read and write access to the setting values contained in the setting repository, enables you to retrieve information about these settings, namely their default values and whether they are locked, and to lock or unlock them.
 ```
@@ -141,7 +138,7 @@ The first object retrieved is the  SettingControllers collection object in the `
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
      '--------------------------------------------------
      ' Returned value : (CATGenUIStyle) UIStyleP2
      '--------------------------------------------------
@@ -194,7 +191,7 @@ They deal with the User Interface Style setting that is displayed on top of the 
 
  These lines use the GetUIStyleInfo method that retrieves the following information displayed as comments:
 
-```vbscript
+```cpp
      * The first parameter is a character string. Its type is CATBSTR, shown in its name bSTR1. This argument indicates whether the setting value is the default value. In the example above, this is the case and the character string "Default value" is displayed. Otherwise, if the value were changed by an administrator, the character string "Set at Admin Level n", where n is the administration level where the change occurred, would be displayed.
      * The second parameter is also a character string named bSTR2. It indicates whether the setting is locked. In the example above, the value "Unlocked" informs you that the setting is not locked. Otherwise, if the value were locked by an administrator, the character string "Locked at Admin Level n", where n is the administration level where the lock occurred, would be displayed. If the setting were locked at the same administration level than the one using the Dump command, the character string "Locked" would be retrieved without any level indication.
 ```
@@ -258,7 +255,7 @@ They deal with the Drag & Drop setting, that is displayed almost at the bottom o
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
      Set disconnectionSettingAtt1 = settingControllers1.Item("CATSysDisconnectionSettingCtrl")
 
      Dim boolean4
@@ -394,7 +391,7 @@ Here a new setting controller is returned from the setting controller collection
      Language="VBSCRIPT"
 
 ```vbscript
-```vbscript
+```cpp
      Sub CATMain(#)
 
      Set settingControllers1 = CATIA.SettingControllers
@@ -404,10 +401,9 @@ Here a new setting controller is returned from the setting controller collection
 ```
 ```
 
-```vbscript
+```cpp
  The first object retrieved is the  SettingControllers collection object in the `settingControllers1` variable. Since the setting controller collection is aggregated to the Application object, simply calling `CATIA.SettingControllers` returns this collection.
 
-The first object retrieved is the  SettingControllers collection object in the `settingControllers1` variable. Since the setting controller collection is aggregated to the Application object, simply calling `CATIA.SettingControllers` returns this collection.
  The setting controller collection contains all the setting controller objects available in the current session. Each setting controller manages a setting repository stored in a CATSettings file. A setting controller gives you read and write access to the setting values contained in the setting repository, enables you to retrieve information about these settings, namely their default values and whether they are locked, and to lock or unlock them.
 ```
 
@@ -499,7 +495,7 @@ The first object retrieved is the  SettingControllers collection object in the `
  These lines use the GetAttrInfo method of the SettingRepository object that retrieves the following information about the StackFullWarning setting attribute, displayed as comments:
 
      * The first parameter is the setting attribute name: StackFullWarning
-```vbscript
+```cpp
      * The second parameter is a character string. Its type is CATBSTR, shown in its name bSTR1. This argument indicates whether the setting value is the default value. In the example above, this is the case and the character string "Default value" is displayed. Otherwise, if the value were changed by an administrator, the character string "Set at Admin Level n", where n is the administration level where the change occurred, would be displayed.
      * The third parameter is also a character string named bSTR2. It indicates whether the setting is locked. In the example above, the value "Unlocked" informs you that the setting is not locked. Otherwise, if the value were locked by an administrator, the character string "Locked at Admin Level n", where n is the administration level where the lock occurred, would be displayed. If the setting were locked at the same administration level than the one using the Dump command, the character string "Locked" would be retrieved without any level indication.
 ```
@@ -538,19 +534,18 @@ The macro continues, but you should now know enough to understand the remaining 
 
  The macro to retrieve this information is just a copy of the created macro.
 
-The macro to retrieve this information is just a copy of the created macro.
      1. First create a Sub.
 
             Option Explicit
 ```vbscript
-```vbscript
+```cpp
             Sub CATMain(#)
 
 ```
 ```
 
 Option Explicit
-```vbscript
+```cpp
 Sub CATMain(#)
  The explicit option enables the script compiler/interpreter to issue an error if a non declared or misspelled variable is found. Note that the `Language="VBSCRIPT"` is omitted. It is of no use but still output in recorded or dumped macros.
 ```
@@ -565,7 +560,7 @@ Sub CATMain(#)
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
             Set settingControllers1 = CATIA.SettingControllers
             Dim generalSessionSettingAtt1  As GeneralSessionSettingAtt
             Set generalSessionSettingAtt1 = settingControllers1.Item("CATCafGeneralSessionSettingCtrl")
@@ -582,7 +577,7 @@ Sub CATMain(#)
 Dim generalSessionSettingAtt1  As GeneralSessionSettingAtt
 ```vbscript
 ```
-```vbscript
+```cpp
 Set generalSessionSettingAtt1 = settingControllers1.Item("CATCafGeneralSessionSettingCtrl")
 ```
 ```
@@ -600,7 +595,7 @@ Set generalSessionSettingAtt1 = settingControllers1.Item("CATCafGeneralSessionSe
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
             '--------------------------------------------------
             '' Returned value : (CATGenUIStyle) UIStyleP2
             '--------------------------------------------------
@@ -666,14 +661,14 @@ Note that the setting value is returned to the integer 1 corresponding to the se
 
             Option Explicit
 ```vbscript
-```vbscript
+```cpp
             Sub CATMain(#)
 
 ```
 ```
 
 Option Explicit
-```vbscript
+```cpp
 Sub CATMain(#)
      2. Then retrieve the setting controller collection object from the application, and the setting controller object dealing with the User Interface Style setting. Just copy the third and fourth statements of the macro described above, and add the Dim statements. You can get this information in the Setting Controller Reference [1].
 
@@ -684,7 +679,7 @@ Sub CATMain(#)
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
             Set settingControllers1 = CATIA.SettingControllers
             Dim generalSessionSettingAtt1  As GeneralSessionSettingAtt
             Set generalSessionSettingAtt1 = settingControllers1.Item("CATCafGeneralSessionSettingCtrl")
@@ -701,7 +696,7 @@ Sub CATMain(#)
 Dim generalSessionSettingAtt1  As GeneralSessionSettingAtt
 ```vbscript
 ```
-```vbscript
+```cpp
 Set generalSessionSettingAtt1 = settingControllers1.Item("CATCafGeneralSessionSettingCtrl")
 ```
 ```
@@ -711,7 +706,7 @@ Set generalSessionSettingAtt1 = settingControllers1.Item("CATCafGeneralSessionSe
 ```
 
 ```vbscript
-```vbscript
+```cpp
             Dim myNewStyle = CATGenUIStyle.UIStyleP1
 ```vbscript
 ```
@@ -725,7 +720,7 @@ Set generalSessionSettingAtt1 = settingControllers1.Item("CATCafGeneralSessionSe
 ```
 
 ```vbscript
-```vbscript
+```cpp
 Dim myNewStyle = CATGenUIStyle.UIStyleP1
 ```
 ```
@@ -754,14 +749,14 @@ You can now run this short macro to change the User Interface Style to P1.
 
             Option Explicit
 ```vbscript
-```vbscript
+```cpp
             Sub CATMain(#)
 
 ```
 ```
 
 Option Explicit
-```vbscript
+```cpp
 Sub CATMain(#)
      2. Then retrieve the setting controller collection object from the application, and the setting controller object dealing with the User Interface Style setting. Just copy the third and fourth statements of the macro described above, and add the Dim statements. You can get this information in the Setting Controller Reference [1].
 
@@ -772,7 +767,7 @@ Sub CATMain(#)
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
             Set settingControllers1 = CATIA.SettingControllers
             Dim generalSessionSettingAtt1  As GeneralSessionSettingAtt
             Set generalSessionSettingAtt1 = settingControllers1.Item("CATCafGeneralSessionSettingCtrl")
@@ -789,7 +784,7 @@ Sub CATMain(#)
 Dim generalSessionSettingAtt1  As GeneralSessionSettingAtt
 ```vbscript
 ```
-```vbscript
+```cpp
 Set generalSessionSettingAtt1 = settingControllers1.Item("CATCafGeneralSessionSettingCtrl")
 ```
 ```
@@ -828,19 +823,18 @@ Set generalSessionSettingAtt1 = settingControllers1.Item("CATCafGeneralSessionSe
 
  The macro to retrieve this information is just a copy of the created macro.
 
-The macro to retrieve this information is just a copy of the created macro.
      1. First create a Sub.
 
             Option Explicit
 ```vbscript
-```vbscript
+```cpp
             Sub CATMain(#)
 
 ```
 ```
 
 Option Explicit
-```vbscript
+```cpp
 Sub CATMain(#)
  The explicit option enables the script compiler/interpreter to issue an error if a non declared or misspelled variable is found. Note that the `Language="VBSCRIPT"` is omitted. It is of no use but still output in recorded or dumped macros.
 ```
@@ -855,7 +849,7 @@ Sub CATMain(#)
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
             Set settingControllers1 = CATIA.SettingControllers
             Dim settingRepository1 As SettingRepository
             Set settingRepository1 = settingControllers1.Item("GeneralPCS")
@@ -981,14 +975,14 @@ From the Setting Repository Reference [3], you can access to the GeneralPCS sett
 
             Option Explicit
 ```vbscript
-```vbscript
+```cpp
             Sub CATMain(#)
 
 ```
 ```
 
 Option Explicit
-```vbscript
+```cpp
 Sub CATMain(#)
      2. Then retrieve the setting controller collection object from the application, and the setting repository object dealing with the PCS setting repository. Just copy the third and fourth statements of the macro described above, and add the Dim statements.
 
@@ -999,7 +993,7 @@ Sub CATMain(#)
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
             Set settingControllers1 = CATIA.SettingControllers
             Dim settingRepository1 As SettingRepository
 ```
@@ -1049,14 +1043,14 @@ You can now run this short macro to change the Stack Full to Easy warning.
 
             Option Explicit
 ```vbscript
-```vbscript
+```cpp
             Sub CATMain(#)
 
 ```
 ```
 
 Option Explicit
-```vbscript
+```cpp
 Sub CATMain(#)
      2. Then retrieve the setting controller collection object from the application, and the setting repository object dealing with the PCS setting repository. Just copy the third and fourth statements of the macro described above, and add the Dim statements.
 
@@ -1067,7 +1061,7 @@ Sub CATMain(#)
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
             Set settingControllers1 = CATIA.SettingControllers
             Dim settingRepository1 As SettingRepository
             Set settingRepository1 = settingControllers1.Item("GeneralPCS")

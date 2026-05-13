@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "About NURBS"
-category: use-case
+category: "use-case"
 module: "CAACgmModel"
-tags: ["CATIA"]
-source_file: "Doc/online/CAACgmModel/CAACgmTaGobAboutNurbs.htmmd"
+tags: "["CATIA"]"
+source_file: "Doc/online/CAACgmModel/CAACgmTaGobAboutNurbs.htm"
 converted: "2026-05-11T17:33:47.874094"
-```
-
 ---
 # About NURBS
 
@@ -39,7 +36,6 @@ The NURBS model is now widely used in the CAD word to define curves and surfaces
 
 The mathematical model of a curve is the description of the geometric form that the user wants to design in a way that can be handled by a CAD system. Ideally, a totally free curve in the 3D space has many infinitely degrees of freedom: it is the juxtaposition of an infinite number of points, and this is unusable for a CAD system. The mathematical model allows the CAD system to handle curves with a finite number of data. But it also put constraints on the objects it models: all the curves cannot be expressed with one model. We see here a key point of the mathematical model: it has to be judiciously chosen to be able to model as many types of curve representations as possible, with as less data as possible, in a as simple manner as possible.
 
-The mathematical model of a curve is the description of the geometric form that the user wants to design in a way that can be handled by a CAD system. Ideally, a totally free curve in the 3D space has many infinitely degrees of freedom: it is the juxtaposition of an infinite number of points, and this is unusable for a CAD system. The mathematical model allows the CAD system to handle curves with a finite number of data. But it also put constraints on the objects it models: all the curves cannot be expressed with one model. We see here a key point of the mathematical model: it has to be judiciously chosen to be able to model as many types of curve representations as possible, with as less data as possible, in a as simple manner as possible.
 A curve is a mono-parameterized element: the three Cartesian coordinates of a point of the curve are functions of one variable called parameter. The mathematical model for a line is simple: the coordinate functions are linear with the parameter. To model more complex curves, mathematical models use polynomial functions basis to expressed the coordinates functions. The way the polynomial function basis is chosen greatly influences the properties of the curves such as their continuity. The NURBS definition results of a continuous improvement of the development of these basis.
 
 What has been described on curves also applies to surfaces. It the reason why, for a matter of simplicity, we present here the case of the curves. A specific discussion on the surfaces is proposed, but the general scheme is not run again for them.
@@ -112,7 +108,6 @@ Fig. 1: Illustration of Example 1 ![Nurbs](images/CAACgmGobNurbs2.gif) | The gre
 
 **Example 2** :
 
-Non uniform knot vector, 3 arcs of degree 3, C2 continuity: 0 0 0 0 2 8 9 9 9 9
 Non uniform knot vector, 3 arcs of degree 3, C2 continuity: 0 0 0 0 2 8 9 9 9 9
 In this case, there are six control points
 

@@ -1,56 +1,33 @@
 ---
 title: "CAAPriEBuildShapeToPattern"
-type: "interface"
+type: "LocalClass"
 module: "CAAPartInterfaces"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAPriEBuildShapeToPattern → CATBaseUnknown"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 1
+source_file: "CAAPartInterfaces.edu/CAAPriPattern.m/LocalInterfaces/CAAPriEBuildShapeToPattern.h"
 ---
+
 # CAAPriEBuildShapeToPattern
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAPriEBuildShapeToPattern → CATBaseUnknown  
-**模块**: CAAPartInterfaces  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> In this sample we have enriched the CATIBuilShape implementation described in the CAAPriEBuildShape sample to allow the implemented feature to be patterned. The differents steps are : 1- Defines if the BuildShape method is called in pattern context 2- In pattern context, you do not delete the scope 3- Sets the list of operands 4- Transform geometries generated from specifications 5- Sets topological journal and the geometry performed. Return code of the BuildShape method: 0. Successful creation 1. Not closed profile 2. Problem on querying an Update Error interface on Pattern Pad
 
-> Return code of the BuildShape method:
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATBaseUnknown | **模块**: CAAPartInterfaces | **方法数**: 1
 
 ## 依赖
 
 - `CATBaseUnknown.h`
 
+## 公共方法
+
+### BuildShape
+
+```cpp
+int BuildShape() ;
+```
+
+Destructor
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAPartInterfaces.edu/CAAPriPattern.m/LocalInterfaces/CAAPriEBuildShapeToPattern.h`

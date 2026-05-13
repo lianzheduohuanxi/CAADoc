@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAAAsmCstOnPublish.CATScript"
 category: "use-case"
 module: "CAAScdAsmUseCases"
-tags: ["CAAScdAsmUseCases", "CAAAsmCstOnPublish", "CATIA", "CATIAConstraints"]
-source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmCstOnPublishSource.htmmd"
+tags: "["CAAScdAsmUseCases", "CAAAsmCstOnPublish", "CATIA", "CATIAConstraints"]"
+source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmCstOnPublishSource.htm"
 converted: "2026-05-11T17:31:50.854661"
-```
-
 ---
 tags: ["CAAScdAsmUseCases", "CAAAsmCstOnPublish", "CATIA", "CATIAConstraints"]
 source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmCstOnPublishSource.htmmd"
@@ -16,7 +13,7 @@ converted: "2026-05-11T17:31:50.854661"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGTH DASSAULT SYSTEMES 2001
     ' ***********************************************************************
     '   Purpose:      Creates constraints between assembly Parts using Publications
@@ -34,7 +31,7 @@ converted: "2026-05-11T17:31:50.854661"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -47,7 +44,7 @@ converted: "2026-05-11T17:31:50.854661"
         ' -----------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String
-```vbscript
+```cpp
         sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
 ```
@@ -57,7 +54,7 @@ converted: "2026-05-11T17:31:50.854661"
 ```
 
 ```vbscript
-```vbscript
+```cpp
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 ```
@@ -77,7 +74,7 @@ converted: "2026-05-11T17:31:50.854661"
 ```vbscript
         ' -----------------------------------------------------------
         ' Open the Product document
-```vbscript
+```cpp
         Dim sFilePath
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
@@ -90,12 +87,12 @@ converted: "2026-05-11T17:31:50.854661"
                      "online/CAAScdAsmUseCases/samples/CstOnPublish.CATProduct")
 
 ```vbscript
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
         Dim oDoc As Document
         set oDoc = CATIA.Documents.Open(sFilePath)
     '
@@ -112,7 +109,7 @@ sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
     ' --------------------------
     ' Get the different products
     ' --------------------------
-```vbscript
+```cpp
     Dim oRootProduct As Product
     Set oRootProduct=CATIA.ActiveDocument.Product
 
@@ -138,7 +135,7 @@ sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
     ' Get the Constraints collection
     ' --------------------------------------
-```vbscript
+```cpp
     Dim oConstraints0 As Collection
     Set oConstraints0 = oRootProduct.Connections  ( "CATIAConstraints" )
     ' --------------------------------------
@@ -330,7 +327,7 @@ Set oConstraint3 = oConstraints0.AddBiEltCst(catCstTypeOn, oPlateRef, oScrewRef 
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Set oScrew1 = CATIA.ActiveDocument.Product.Products.ReplaceComponent ( _
           oScrew1,                                                         _
 ```

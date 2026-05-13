@@ -1,56 +1,38 @@
 ---
 title: "CAACafElementPropertyPageDlg"
-type: "interface"
+type: "LocalClass"
 module: "CAACATIAApplicationFrm"
-category: api-reference
 base: "CATDlgFrame"
-inheritance_chain: "CAACafElementPropertyPageDlg → CATDlgFrame"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 2
+source_file: "CAACATIAApplicationFrm.edu/CAACafEltToolsOptions.m/LocalInterfaces/CAACafElementPropertyPageDlg.h"
 ---
+
 # CAACafElementPropertyPageDlg
 
-**基类**: CATDlgFrame  
-**继承链**: CAACafElementPropertyPageDlg → CATDlgFrame  
-**模块**: CAACATIAApplicationFrm  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> Class representing a Dialog object dedicated to a Tools/Options page.This page is managed by the  CAACafElementPropertyPageEdt editor. Who manages what ?: Options of your page are kept in a repository file CAACafElementPropertyPageDlg gets the controller repository in its constructor. The CAACafElementPropertyPageDlg class modifies at each interaction on the dialog objects of the page the repository file thanks to the CAAICafGeometryEltSettingAtt interface. The CAACafElementPropertyPageEdt class manages the repository for reset, cancel and close. When resetting, the dialog class can be called to restore, with the saved values, the dialog objects of the page. Usage: Launch CATIA V5, Tools/Options Inheritance: CATDlgFrame (Dialog Framework) CATDlgBox      (Dialog Framework) CATDialog    (Dialog Framework) CATCommand  ( System Framework) CATBaseUnknown (System Framework) Main Methods: Build         -> Construction of the dialog object ValueSettings -> Valuation of the dialog object from the setting file xxxxCB       -> All these methods modify the dialog object, and the setting file. With Repository mechanism, ( commit/rollback) it's easy to manage the save, no need to keep the old values from the last commit.
 
-> Class representing a Dialog object dedicated to a Tools/Options page.This
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATDlgFrame | **模块**: CAACATIAApplicationFrm | **方法数**: 2
 
 ## 依赖
 
 - `CATDlgFrame.h`
 
+## 公共方法
+
+### Build
+
+```cpp
+void Build() ;
+```
+
+
+### ValueSettings
+
+```cpp
+void ValueSettings() ;
+```
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATDlgFrame**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAACATIAApplicationFrm.edu/CAACafEltToolsOptions.m/LocalInterfaces/CAACafElementPropertyPageDlg.h`

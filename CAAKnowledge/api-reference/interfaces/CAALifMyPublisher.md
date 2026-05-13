@@ -1,25 +1,17 @@
 ---
 title: "CAALifMyPublisher"
-type: "interface"
+type: "LocalClass"
 module: "CAALiteralFeatures"
-category: api-reference
 base: "CATParmPublisherAdapter"
-inheritance_chain: "CAALifMyPublisher → CATParmPublisherAdapter"
-method_count: 5
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 6
+source_file: "CAALiteralFeatures.edu/CAALifBasis.m/LocalInterfaces/CAALifMyPublisher.h"
 ---
+
 # CAALifMyPublisher
 
-**基类**: CATParmPublisherAdapter  
-**继承链**: CAALifMyPublisher → CATParmPublisherAdapter  
-**模块**: CAALiteralFeatures  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 5
+> This class defines the CAAMyPublisher type which implements CATIParmPublisher It derives from CATCkeDescendants and redefine the GetDirectChildren and CompAttrKey methods. Any object intended to be added parameters and relations and benefit from the f(x) capabilities must implement the CATIParmPublisher interface. The LiteralFeatures framework provides you with the CATCkeDescendants adapter you can extend to redefine the GetDirectChildren and GetAllChildren methods. =========================================================================== Usage: Type  CAALifPublishMain Inheritance: CATParmPublisherAdapter Main Method: CAALifParametersVolatile
 
-> ------------
+**基类**: CATParmPublisherAdapter | **模块**: CAALiteralFeatures | **方法数**: 6
 
 ## 依赖
 
@@ -29,28 +21,75 @@ verified: true
 - `CATICkeType.h`
 - `CATIVisitor.h`
 
+## 虚方法
+
+### Append
+
+```cpp
+virtual void Append(const CATISpecObject_var & iKBwareObject) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iKBwareObject | `const CATISpecObject_var &` |
+
+
+### RemoveChild
+
+```cpp
+virtual void RemoveChild(const CATISpecObject_var & iKBwareObject) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iKBwareObject | `const CATISpecObject_var &` |
+
+
+### GetDirectChildren
+
+```cpp
+virtual void GetDirectChildren(CATClassId iIntfName, CATListValCATISpecObject_var &iList) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iIntfName | `CATClassId` |
+| &iList | `CATListValCATISpecObject_var` |
+
+
+### GetAllChildren
+
+```cpp
+virtual void GetAllChildren(CATClassId iIntfName, CATListValCATISpecObject_var &ListFound) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iIntfName | `CATClassId` |
+| &ListFound | `CATListValCATISpecObject_var` |
+
+
+### GetContainer
+
+```cpp
+virtual CATIContainer_var GetContainer() ;
+```
+
+
+## 公共方法
+
+### VisitChildren
+
+```cpp
+void VisitChildren(CATIVisitor* , const int iRecursively = 0) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+|  | `CATIVisitor*` |
+| 0 | `const int iRecursively =` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATParmPublisherAdapter**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAALiteralFeatures.edu/CAALifBasis.m/LocalInterfaces/CAALifMyPublisher.h`

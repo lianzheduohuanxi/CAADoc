@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "GM Operators"
 category: "use-case"
 module: "CAACgmOperators"
-tags: []
-source_file: "Doc/online/CAACgmOperators/CAACgmTcGMOperatorsToc.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAACgmOperators/CAACgmTcGMOperatorsToc.htm"
 converted: "2026-05-11T17:33:48.733162"
-```
-
 ---
 tags: []
 source_file: "Doc/online/CAACgmOperators/CAACgmTcGMOperatorsToc.htmmd"

@@ -1,29 +1,15 @@
 ---
 title: "CAAESmiUserOperationStrategyEditor"
-type: "interface"
+type: "LocalClass"
 module: "CAASurfaceMachiningItf"
-category: api-reference
 base: "CATIMfgStrategyActivity"
-inheritance_chain: "CAAESmiUserOperationStrategyEditor → CATIMfgStrategyActivity"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 1
+source_file: "CAASurfaceMachiningItf.edu/CAASmiUserOperationUI.m/LocalInterfaces/CAAESmiUserOperationStrategyEditor.h"
 ---
+
 # CAAESmiUserOperationStrategyEditor
 
-**基类**: CATIMfgStrategyActivity  
-**继承链**: CAAESmiUserOperationStrategyEditor → CATIMfgStrategyActivity  
-**模块**: CAASurfaceMachiningItf  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
-
-> CAAESmiUserOperationStrategyEditor.h
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATIMfgStrategyActivity | **模块**: CAASurfaceMachiningItf | **方法数**: 1
 
 ## 依赖
 
@@ -31,36 +17,23 @@ verified: true
 - `CATDialog.h`
 - `CATDlgFrame.h`
 
+## 公共方法
+
+### GetMainPanelEditor
+
+```cpp
+HRESULT GetMainPanelEditor(CATDialog * iFather, CATDlgFrame*& oFrame, CATDlgStyle iStyle=NULL) ;
+```
+
+Writes the strategy tabpage frame.
+
+| 参数 | 类型 |
+|------|------|
+| iFather | `CATDialog *` |
+| oFrame | `CATDlgFrame*&` |
+| iStyle=NULL | `CATDlgStyle` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATIMfgStrategyActivity**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-This interface is used in the following use cases:
-
-- [CAASmiUserOperationUI](../../use-cases/caasmicases/CAASmiUserOperationUI.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAASurfaceMachiningItf.edu/CAASmiUserOperationUI.m/LocalInterfaces/CAAESmiUserOperationStrategyEditor.h`

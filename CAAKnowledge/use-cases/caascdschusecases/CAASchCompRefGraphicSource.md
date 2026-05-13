@@ -17,7 +17,7 @@ Option Explicit
 '   CATIA Level:  V5R15 
 ' *****************************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ```
@@ -25,7 +25,7 @@ Sub CATMain(#)
     ' ------------------------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -34,13 +34,13 @@ Sub CATMain(#)
 ```
     ' ------------------------------------------------------------------------- 
     ' Open the schematic document 
-```vbscript
+```cpp
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
             "online/CAAScdSchUseCases/samples/CAASCH_Detail03.CATProduct")
 ```
 
-```vbscript
+```cpp
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
@@ -91,7 +91,7 @@ Sub CATMain(#)
           ' Get a SchCompGraphic interface handle from a reference
           ' component
           '--------------------------------------------------------------------
-```vbscript
+```cpp
           Set objCompRefGraphic = objLCompRefs.Item (1,"CATIASchCompGraphic")
 
           If ( Not ( objCompRefGraphic Is Nothing ) ) Then
@@ -159,7 +159,7 @@ Sub CATMain(#)
                  Set objGRR = Nothing
                  If (intNbGraphic > 1) Then
 ```
-```vbscript
+```cpp
                     Set objGRR = objLGraphic.Item(intNbGraphic,"CATIASchGRR")
                     If ( Not (objGRR Is Nothing ) ) Then
 ```
@@ -207,7 +207,7 @@ Private Function GetComponentSymbol (objSchRootArg As SchematicRoot) As AnyObjec
       Set objSchLSymbols = objSchRootArg.GetUnassociatedSymbols
       If ( Not ( objSchLSymbols Is Nothing ) ) Then
 ```
-```vbscript
+```cpp
          Set GetComponentSymbol = objSchLSymbols.Item (1,"CATIASchGRR")
       End If
 ```
@@ -217,7 +217,7 @@ End Function
 
 ```
 
-```vbscript
+```cpp
 Option Explicit
 ' COPYRIGHT DASSAULT SYSTEMES 2004
 
@@ -228,7 +228,7 @@ Option Explicit
 '   CATIA Level:  V5R15 
 ' *****************************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ```
@@ -236,7 +236,7 @@ Sub CATMain(#)
     ' ------------------------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -245,13 +245,13 @@ Sub CATMain(#)
 ```
     ' ------------------------------------------------------------------------- 
     ' Open the schematic document 
-```vbscript
+```cpp
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
             "online/CAAScdSchUseCases/samples/CAASCH_Detail03.CATProduct")
 ```
 
-```vbscript
+```cpp
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
@@ -302,7 +302,7 @@ Sub CATMain(#)
           ' Get a SchCompGraphic interface handle from a reference
           ' component
           '--------------------------------------------------------------------
-```vbscript
+```cpp
           Set objCompRefGraphic = objLCompRefs.Item (1,"CATIASchCompGraphic")
 
           If ( Not ( objCompRefGraphic Is Nothing ) ) Then
@@ -370,7 +370,7 @@ Sub CATMain(#)
                  Set objGRR = Nothing
                  If (intNbGraphic &gt; 1) Then
 ```
-```vbscript
+```cpp
                     Set objGRR = objLGraphic.Item(intNbGraphic,"CATIASchGRR")
                     If ( Not (objGRR Is Nothing ) ) Then
 ```
@@ -418,7 +418,7 @@ Private Function GetComponentSymbol (objSchRootArg As SchematicRoot) As AnyObjec
       Set objSchLSymbols = objSchRootArg.GetUnassociatedSymbols
       If ( Not ( objSchLSymbols Is Nothing ) ) Then
 ```
-```vbscript
+```cpp
          Set GetComponentSymbol = objSchLSymbols.Item (1,"CATIASchGRR")
       End If
 ```

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Getting Started with Automation"
 category: "use-case"
 module: "CAAScdInfUseCases"
-tags: ["CAAScdInfUseCases", "CATIA", "CAAInfGettingStarted", "CATIASketch3"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfGettingStarted.htmmd"
+tags: "["CAAScdInfUseCases", "CATIA", "CAAInfGettingStarted", "CATIASketch3"]"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfGettingStarted.htm"
 converted: "2026-05-11T17:31:52.374517"
-```
-
 ---
 |
 ## Infrastructure
@@ -19,7 +16,6 @@ converted: "2026-05-11T17:31:52.374517"
 
 This article will show you how to use a scripting language to access CAA V5 automation objects to capture your own know-how and to increase your productivity. You can customize V5 applications to automate repetitive tasks, and to make it fit your own process.
 
-This article will show you how to use a scripting language to access CAA V5 automation objects to capture your own know-how and to increase your productivity. You can customize V5 applications to automate repetitive tasks, and to make it fit your own process.
 The products that make up the CATIA and DELMIA applications share the same object model which can be accessed, as well as their own objects, by scripts written in Visual Basic with Windows, and scripts written in Basic Script for UNIX.
 
 You can write your scripts from scratch, but you can also use the journalling facility from the **Macros ...  ** command in the **Tools** menu that records end-user scenarios in scripts you can then use as is or modify.
@@ -102,13 +98,13 @@ We detail below, line by line, what has been recorded, following the interactive
 > >
 >>     Language="VBSCRIPT"
 >>
-```vbscript
+```cpp
 >>     Sub CATMain(#)
 
   1. Click on the**New** item of the **File** menu**,** or click on the ![](images/I_NewP2.gif) icon**,** and double-click Part to create a new part generates the following instructions:
 ```
 
-```vbscript
+```cpp
 > Dim documents1 As Documents
 >          Set documents1 = CATIA.Documents
 >
@@ -208,7 +204,6 @@ The `SetAbsoluteAxisData` method is used to define the orientation of the sketch
 
 When the sketch is created, an axis, that is the aggregation of a center point, and horizontal line and vertical line (directions), is created.
 
-When the sketch is created, an axis, that is the aggregation of a center point, and horizontal line and vertical line (directions), is created.
 The axis is retrieved in the _GeometricElements_ collection of the _Sketch_ object, the directions are retrieved as objects aggregated by the axis. The two lines are here assigned an identifier using their `ReportName` property that will be used by the 3D modeling services to retrieve those elements inside of the sketch. They have no end-user meaning.
 
   1. In the sketcher toolbar, select the circle icon ![](images/I_CircleCtrRadP2.gif) and click twice to indicate successively the center of the circle and a current point on the circle
@@ -233,7 +228,6 @@ The axis is retrieved in the _GeometricElements_ collection of the _Sketch_ obje
 
   1. Click on the sketcher exit icon ![](images/I_CloseP2.gif)
 
-1. Click on the sketcher exit icon ![](images/I_CloseP2.gif)
          CATIASketch3.CloseEdition
              part1.Update
 
@@ -298,8 +292,7 @@ This is all what you performed interactively in the previous chapter.
 
  You can choose your own text editor to edit the macro by  setting the **CATMacroEditor** environment variable prior to launching CATIA with the name of the editor program:
 
-You can choose your own text editor to edit the macro by  setting the **CATMacroEditor** environment variable prior to launching CATIA with the name of the editor program:
-```vbscript
+```cpp
         set CATMacroEditor=NOTEPAD
 
 ```
@@ -321,7 +314,7 @@ On Unix. This editor must be accessible through the **PATH** environment variabl
          **'My macro creates five cylinders**
 
 ```vbscript
-```vbscript
+```cpp
          Sub CATMain(#)
 
 ```

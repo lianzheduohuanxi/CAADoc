@@ -1,57 +1,31 @@
 ---
 title: "CAADlgObject"
-type: "interface"
+type: "LocalClass"
 module: "CAADialog"
-category: api-reference
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+base: "CATBaseUnknown"
+method_count: 1
+source_file: "CAADialog.edu/CAADlgOnIdle.m/LocalInterfaces/CAADlgObject.h"
 ---
+
 # CAADlgObject
 
-**模块**: CAADialog  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> Class which publishes an event ==================================================================================
 
-> ==================================================================================
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATBaseUnknown | **模块**: CAADialog | **方法数**: 1
 
 ## 依赖
 
----
+- `CATBaseUnknown.h`
 
-## Interface Overview
+## 公共方法
 
-**Inherited Methods**: Please refer to the base interface documentation above.
+### Modification
 
----
+```cpp
+void Modification() ;
+```
 
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
 
 ---
 
-## Related Use Cases
-
-- [3D PLM Enterprise Architecture](../../use-cases/caaafrcases/CAAAfrSampleCustomWindow2.md)
-- [3D PLM Enterprise Architecture](../../use-cases/caadlgtecharticles/CAADlgGridLayout.md)
-- [3D PLM Enterprise Architecture](../../use-cases/caadlgtecharticles/CAADlgObjectLayout.md)
-- [3D PLM Enterprise Architecture](../../use-cases/caadlgtecharticles/CAADlgOverview.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAADialog.edu/CAADlgOnIdle.m/LocalInterfaces/CAADlgObject.h`

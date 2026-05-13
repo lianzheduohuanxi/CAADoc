@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Associating a Dialog Box with a Dialog Agent - 2"
 category: "use case"
 module: "CAADegUseCases"
-tags: ["CAADegHstChartWndDlg", "CAAGeometry", "CAADegHistogramChartWindowCmdDo", "CAADialogEngine", "CAADegHistogramChartWindowCmd", "CAADegEditor1DeselectedNotification", "CAADegEditor1SelectedNotification", "CAADegGeoCommands"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleDialogWithAgent2.htmmd"
+tags: "["CAADegHstChartWndDlg", "CAAGeometry", "CAADegHistogramChartWindowCmdDo", "CAADialogEngine", "CAADegHistogramChartWindowCmd", "CAADegEditor1DeselectedNotification", "CAADegEditor1SelectedNotification", "CAADegGeoCommands"]"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleDialogWithAgent2.htm"
 converted: "2026-05-11T17:33:49.642672"
-```
-
 ---
 tags: ["CAADegHstChartWndDlg", "CAAGeometry", "CAADegHistogramChartWindowCmdDo", "CAADialogEngine", "CAADegHistogramChartWindowCmd", "CAADegEditor1DeselectedNotification", "CAADegEditor1SelectedNotification", "CAADegGeoCommands"]
 source_file: "Doc/online/CAADegUseCases/CAADegSampleDialogWithAgent2.htmmd"
@@ -214,7 +211,7 @@ stPanelState1,
          ...
 
 ---
-```vbscript
+```cpp
 Action( (ActionMethod) & CAADegHistogramChartWindowCmd::Editor1Selected)
 The `AddTransition` method creates a transition and adds it to the transitions managed by the dialog command. Pointers to the transition's source and target states are the first and second arguments respectively. This transition goes from the `PanelState` state to the `PanelState1` state (not explained). The transition trigger is defined in the guard condition as the condition to be checked using the `IsLastModifiedAgentCondition` method applied to the dialog agent. When the dialog agent prevalue is modified, the transition fire. In this case, the ` Editor1Selected` action method is executed. (method without interest for the use case, so not explained)
     3. Releasing the Agents and the Dialog Box
@@ -265,7 +262,6 @@ if ( NULL != _daEditor1Selected )
 ---
 [Top] Creating the CAADegEditor1SelectedNotification Notification This step can be divided in two parts:
     1. Creating the Notification Header file
-1. Creating the Notification Header file
 The _CAADegEditor1SelectedNotification_ class derives from the _CATNotification_ class.
 
     #include "CATNotification.h"
@@ -288,7 +284,7 @@ class CAADegEditor1SelectedNotification : public CATNotification
     };
 
 ---
-```vbscript
+```cpp
 CAADegEditor1SelectedNotification(const CAADegEditor1SelectedNotification
 The `CATDeclareClass` macro declares that the `CAADegEditor1SelectedNotification` class belongs to a component.
     2. Creating the Notification source file

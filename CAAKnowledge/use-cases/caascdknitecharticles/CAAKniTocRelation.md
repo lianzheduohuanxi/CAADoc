@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Relations Automation Objects"
-category: tech-article
+category: "tech-article"
 module: "CAAScdKniTechArticles"
-tags: []
-source_file: "Doc/online/CAAScdKniTechArticles/CAAKniTocRelation.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAAScdKniTechArticles/CAAKniTocRelation.htm"
 converted: "2026-05-11T17:31:52.009476"
-```
-
 ---
 # Relations Automation Objects
 

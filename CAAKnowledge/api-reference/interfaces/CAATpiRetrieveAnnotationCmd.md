@@ -1,44 +1,31 @@
 ---
 title: "CAATpiRetrieveAnnotationCmd"
-type: "interface"
+type: "LocalClass"
 module: "CAATPSInterfaces"
-category: api-reference
 base: "CATStateCommand"
-inheritance_chain: "CAATpiRetrieveAnnotationCmd → CATStateCommand"
 method_count: 1
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAATPSInterfaces.edu/CAATpiRetrieveAnnotation.m/LocalInterfaces/CAATpiRetrieveAnnotationCmd.h"
 ---
+
 # CAATpiRetrieveAnnotationCmd
 
-**基类**: CATStateCommand  
-**继承链**: CAATpiRetrieveAnnotationCmd → CATStateCommand  
-**模块**: CAATPSInterfaces  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 1
+> Interactive command Command to select a geometry and then retrieve and highlight all 3D annotations which are applied on selected geometry. Illustrates: Using TPS (Technological Product Specifications) interfaces to retrieve annotations and tolerances linked to a geometry. The main APIs used here are CATITPSRetrieveServices and CATIBuildPath. Usage: Build the fw containing that command and create run time view. Start CATIA V5 Menu Start + Mechanical Design + Functional Tolerancing & Annotation Menu : View + Toolbar + CAA Samples to make the toolbar appear. "Retrieve Annotation" command can be launched from the toolbar. Notice that the toolbar CAA Samples is also available in the following workbenches : Mechanical Design + Product Fonctionnal Tolerancing & Annotations DPM Powertrain + Process Tolerancing & Annotations
 
-> -----------------------------------------------------------------------------
+**基类**: CATStateCommand | **模块**: CAATPSInterfaces | **方法数**: 1
 
 ## 依赖
 
 - `CATStateCommand.h`
 
+## 虚方法
+
+### BuildGraph
+
+```cpp
+virtual void BuildGraph() ;
+```
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATStateCommand**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAATPSInterfaces.edu/CAATpiRetrieveAnnotation.m/LocalInterfaces/CAATpiRetrieveAnnotationCmd.h`

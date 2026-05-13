@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Overview of the Topological Operators"
-category: use-case case"
+category: "use-case case"
 module: "CAATopUseCases"
-tags: ["CAAGemBrowser", "CATICGMObject", "CAATopJournal", "CAATopSpline", "CAATopOverview", "CATIA", "CATIntersectionCrvCrv", "CAATopologicalOperators", "CATICGMContainer"]
-source_file: "Doc/online/CAATopUseCases/CAATopOverview.htmmd"
+tags: "["CAAGemBrowser", "CATICGMObject", "CAATopJournal", "CAATopSpline", "CAATopOverview", "CATIA", "CATIntersectionCrvCrv", "CAATopologicalOperators", "CATICGMContainer"]"
+source_file: "Doc/online/CAATopUseCases/CAATopOverview.htm"
 converted: "2026-05-11T17:31:50.750855"
-```
-
 ---
 # Geometric Modeler
 
@@ -111,7 +108,6 @@ Fig. 1: The Resulting Body ![](images/CAATopOverview1.gif)
 
 To launch CAATopOverview, you will need to set up the build time environment, then compile CAATopOverview.m along with its prerequisites, set up the run time environment, and then execute the use case [8].
 
-To launch CAATopOverview, you will need to set up the build time environment, then compile CAATopOverview.m along with its prerequisites, set up the run time environment, and then execute the use case [8].
 ```vbscript
 If you simply type CAATopOverview with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example:
 
@@ -128,7 +124,6 @@ This NCGM file can be displayed using the CAAGemBrowser use case.
 
 The CAATopOverview use case is made of a main named CAATopOverview.cpp located in the CAATopOverview.m module of the CAATopologicalOperators.edu framework:
 
-The CAATopOverview use case is made of a main named CAATopOverview.cpp located in the CAATopOverview.m module of the CAATopologicalOperators.edu framework:
 Windows | `InstallRootDirectory/CAATopologicalOperators.edu/CAATopOverview.m/`
 
 The CAATopOverview use case is made of a main named CAATopOverview.cpp located in the CAATopOverview.m module of the CAATopologicalOperators.edu framework:
@@ -185,7 +180,6 @@ This section illustrates the use of the type of topological operators that deriv
 
   1. _Creating the Surface_
 
-1. _Creating the Surface_
          CATPlane * piPlane = piGeomFactory->CreatePlane(**CATMathOIJ**);  _// xy plane_
 ```vbscript
              if (NULL == piPlane)
@@ -573,7 +567,6 @@ To create a box, use `CATSolidCuboid`:
   * Delete it.
 
     CATMathPoint vO( -2., 2., 28.),  vOI(-2., 15., 28.),
-CATMathPoint vO( -2., 2., 28.),  vOI(-2., 15., 28.),
                  vOJ(-15., 2., 28.),  vOK(-2., 2., 35.);
 
     CATSolidCuboid *pCuboidOp = **::CATCreateSolidCuboid**( piGeomFactory, &topdata, vO, vOI, vOJ, vOK);
@@ -635,7 +628,6 @@ To create a cylinder, use `CATSolidCylinder` :
   * Delete it.
 
     CATMathPoint axisStart ( -20,  10,  20 ),  axisEnd( -20,  10, 32 );
-CATMathPoint axisStart ( -20,  10,  20 ),  axisEnd( -20,  10, 32 );
     double       radius = 4.0;
 
     CATSolidCylinder *pCylinderOp = ::**CATCreateSolidCylinder**(piGeomFactory,
@@ -782,7 +774,7 @@ piGeomFactory->Remove(piMainBody1, CATICGMContainer::RemoveDependancies);
 piMainBody1 = NULL;
 The same is done for a Boolean subtract: the option `CATBoolRemoval` is used. `MainBody3` contains the result of all the operations, while the no-more used bodies (`MainBody`2 , `CylinderBody`) are removed.
 
-```vbscript
+```cpp
     pBoolOp = **::CATCreateDynBoolean** (piGeomFactory,
 
 ```
@@ -860,9 +852,9 @@ First define the edges to fillet. These edges are the external boundary of the u
   * Select the face with two holes (i.e. three domains) (use of `CATCell::GetNbDomains`)
   * For each domain of the selected face, count the number of edges: the loop with five edges is the external one. One can also ask for the location of the domain to directly have the external domain. Get the edges.
 
-```vbscript
+```cpp
     CATLISTP(CATCell) listC;
-```vbscript
+```cpp
     CATLISTP(CATCell) listFaces;
 ```
 
@@ -870,9 +862,9 @@ First define the edges to fillet. These edges are the external boundary of the u
 ```
 
                               **2** );        _// the dimension of the retrieved cells (2 for faces)_
-```vbscript
+```cpp
 CATLISTP(CATCell) listC;
-```vbscript
+```cpp
 CATLISTP(CATCell) listFaces;
 ```
 
@@ -913,7 +905,7 @@ if ( 3== (listFaces[i]->**GetNbDomains**(#)) ) piFace = listFaces[i];
 ```
 
     {
-```vbscript
+```cpp
 CATLISTP(CATEdge) listEdges;
 int numberOfEdges;
 if (NULL != piFace)
@@ -973,7 +965,6 @@ A filleting operation is defined by affecting (possibly variable) radius to edge
   * The definition of the edges to fillet according to a given radius law is called ribbon and managed by the `CATDynFilletRibbon` object: there can be several ribbons in one fillet operation, but in the use case, only one is defined.
 The `CATDynFilletRibbon::SetSegmentationMode` option indicates that the computed ribbon must be delimited on the main part.
 
-The `CATDynFilletRibbon::SetSegmentationMode` option indicates that the computed ribbon must be delimited on the main part.
     _// for a constant radius, only the first argument is useful_
     CATDynFilletRadius * pRadius = new
 
@@ -1001,7 +992,7 @@ if (NULL==pRadius)
     }
 
 return (1);
-```vbscript
+```cpp
     CATLISTP(CATDynFilletRadius)	listRadius;
 ```
 
@@ -1040,7 +1031,6 @@ The fillet operation can now be defined and run. To use it
 
 Also deletes the no more used object (radius, ribbon) and removes the old body (`MainBody3`).
 
-Also deletes the no more used object (radius, ribbon) and removes the old body (`MainBody3`).
     CATDynFillet * pFilletOp = **CATCreateDynFillet**(piGeomFactory,&topdata,piMainBody3);
 ```vbscript
     if (NULL==pFilletOp)
@@ -1105,7 +1095,6 @@ return (1);
 
 Take two offset bodies of one initial body. The shelling operation digs a volume by removing one offset body (internal) from the other one (external). Some faces can also be not offset: these faces are called openings. In the use case, the opening face is the bottom face of the prism: it is the unique face with five edges and one domain. The way to retrieve it is similar to the way used in the section Fillets. First void the list (`RemoveAll`), and remember that the list begins at 1!
 
-Take two offset bodies of one initial body. The shelling operation digs a volume by removing one offset body (internal) from the other one (external). Some faces can also be not offset: these faces are called openings. In the use case, the opening face is the bottom face of the prism: it is the unique face with five edges and one domain. The way to retrieve it is similar to the way used in the section Fillets. First void the list (`RemoveAll`), and remember that the list begins at 1!
     listEdges.**RemoveAll**(#);
     piFace = NULL;
 ```vbscript
@@ -1177,7 +1166,6 @@ The shelling operation can now be defined and run. To use it:
 
 Also removes the old body (`MainBody4`).
 
-Also removes the old body (`MainBody4`).
     CATDynShell* pShellOp = **CATCreateDynShell** (piGeomFactory,
 
                                                &topdata,      _// the configuration and the journal_
@@ -1262,7 +1250,6 @@ _// Deletes the operator_
   * Delete it.
 
     CATDynMassProperties3D *pPropOp = **CATDynCreateMassProperties3D** (piMainBody5);
-CATDynMassProperties3D *pPropOp = **CATDynCreateMassProperties3D** (piMainBody5);
 ```vbscript
     if (NULL != pPropOp)
 
@@ -1288,7 +1275,6 @@ cout << "Volume of the final object" << pPropOp->**GetVolume**(#) << endl;
 
 Before ending, we must first release the software configuration.
 
-Before ending, we must first release the software configuration.
     _// Releases the configuration_
         pConfig->Release(#);
 
@@ -1304,13 +1290,13 @@ The use case ends with the closure of the geometry factory, done by the `::CATCl
 
      {
     #ifdef _WINDOWS_SOURCE
-```vbscript
+```cpp
 if(1==toStore)
        ofstream filetowrite(pfileName, ios::binary ) ;
 ```
 
     #else
-```vbscript
+```cpp
 if(1==toStore)
 ofstream filetowrite(pfileName, ios::binary ) ;
        ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;

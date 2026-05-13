@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating and Transforming Geometry"
-category: use-case case"
+category: "use-case case"
 module: "CAACgmModel"
-tags: ["CAAGMModelForeignSurfaceData", "CATICGMContainer", "CAADoc", "CAAForeignSurfaceData", "CATICGMObject", "CATICGMProjectionPtSur", "CAAGMModelGemBrowser", "CAAGMModelCreation", "CAAGobCreation", "CAAGMModelInterfaces", "CAAGMModelForeign", "CATIA", "CATIForeignSurface"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGobCreation.htmmd"
+tags: "["CAAGMModelForeignSurfaceData", "CATICGMContainer", "CAADoc", "CAAForeignSurfaceData", "CATICGMObject", "CATICGMProjectionPtSur", "CAAGMModelGemBrowser", "CAAGMModelCreation", "CAAGobCreation", "CAAGMModelInterfaces", "CAAGMModelForeign", "CATIA", "CATIForeignSurface"]"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGobCreation.htm"
 converted: "2026-05-11T17:33:48.368669"
-```
-
 ---
 # Creating and Transforming Geometry
 
@@ -78,7 +75,6 @@ The main program peforms the following steps:
 
 The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject (and the curves and surfaces in particular) [3]. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
 
-The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject (and the curves and surfaces in particular) [3]. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
     CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**(#) ;
 ```vbscript
     if (NULL==piGeomFactory) return (1);
@@ -171,7 +167,6 @@ A CATPLine is a line in the space of a surface [4], whatever the surface is: dir
 
 Now, the CATPLine can be created by using the `CATGeoFactory::CreatePLine` method.
 
-Now, the CATPLine can be created by using the `CATGeoFactory::CreatePLine` method.
     _// Retrieves the limits of the surface_
     CATSurLimits surLimits;
     piEggBox ->**GetLimits**(surLimits);
@@ -326,7 +321,6 @@ The transfo manager can be used in three modes, defined at its creation:
 
 In the use case, the default mode is used: hence, the CATPLine is duplicated and the surface on which the CATPLine is lying is duplicated, because it is not invariant. This is tested by comparing the tags of the underlying surface of the CATPLine before and after transformation.
 
-In the use case, the default mode is used: hence, the CATPLine is duplicated and the surface on which the CATPLine is lying is duplicated, because it is not invariant. This is tested by comparing the tags of the underlying surface of the CATPLine before and after transformation.
 Notice that this process is independent from the type of surface.
 
     CATMathTransformation mathTransf(CATMathVector(20.,10.,40.));
@@ -459,7 +453,7 @@ if(1==toStore)
        ofstream filetowrite(pfileName, ios::binary ) ;
 
     #else
-```vbscript
+```cpp
 if(1==toStore)
 ofstream filetowrite(pfileName, ios::binary ) ;
        ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;

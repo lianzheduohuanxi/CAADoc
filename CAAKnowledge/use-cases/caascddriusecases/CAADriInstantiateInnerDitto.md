@@ -124,11 +124,11 @@ in a view using the *Add *method of the *Components* object.
 
 ```vbscript
 ...
-```vbscript
+```cpp
     ' Set the CATIA popup file alerts to False
     ' It prevents to stop the macro at each alert during its execution
 ```
-```vbscript
+```cpp
     CATIA.DisplayFileAlerts = False
   ...
 ```
@@ -137,7 +137,7 @@ in a view using the *Add *method of the *Components* object.
 ```vbscript
 ...
     ' Open the drawing document
-```vbscript
+```cpp
     Dim oDrawing As DrawingDocument
     Set oDrawing = CATIA.Documents.Open(sDocPath &amp; _
              &quot;/online/CAAScdDriUseCases/samples/CAADriInstantiateDittoSource.CATDrawing&quot;)    

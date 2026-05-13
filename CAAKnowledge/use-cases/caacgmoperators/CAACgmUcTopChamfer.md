@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Chamfer"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperatorsInterfaces", "CATICGMDynAdvancedChamfer", "CAAGMOperatorsChamfer"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopChamfer.htmmd"
+tags: "["CAAGMOperatorsInterfaces", "CATICGMDynAdvancedChamfer", "CAAGMOperatorsChamfer"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopChamfer.htm"
 converted: "2026-05-11T17:33:49.109308"
-```
-
 ---
 tags: ["CAAGMOperatorsInterfaces", "CATICGMDynAdvancedChamfer", "CAAGMOperatorsChamfer"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcTopChamfer.htmmd"
@@ -27,7 +24,6 @@ Abstract Chamfering consists in removing or adding a flat section from a selecte
 Abstract Chamfering consists in removing or adding a flat section from a selected edge to create a beveled surface between the two original faces common to that edge. A chamfer can be propagated along one or several edges.
 Operator to be Used To create a chamfer, use the CATICGMDynAdvancedChamfer operator in GMOperatorsInterfaces. This operator has to be created by the CATCGMCreateDynAdvancedChamfer global function. Use Case Description The CAAGMOperatorsChamfer.m module in CAAGMOperatorsInterfaces.edu illustrates how to create chamfers. This use case is to be run with the ChamferInputs.NCGM input file which is delivered in CAAGMOperatorsInterfaces.edu/FunctionTests/InputData. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md).  With the input data below in which there are six edges to be chamfered (five top edges, plus one lateral edge in pink on figures): Fig.1 Chamfer Operation: Input Data ![Chamfer0](images/CGM_chamfer_0.png)
 
-Operator to be Used To create a chamfer, use the CATICGMDynAdvancedChamfer operator in GMOperatorsInterfaces. This operator has to be created by the CATCGMCreateDynAdvancedChamfer global function. Use Case Description The CAAGMOperatorsChamfer.m module in CAAGMOperatorsInterfaces.edu illustrates how to create chamfers. This use case is to be run with the ChamferInputs.NCGM input file which is delivered in CAAGMOperatorsInterfaces.edu/FunctionTests/InputData. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md).  With the input data below in which there are six edges to be chamfered (five top edges, plus one lateral edge in pink on figures): Fig.1 Chamfer Operation: Input Data ![Chamfer0](images/CGM_chamfer_0.png)
 Front view | Rear view
 and the code below:
 
@@ -84,7 +80,6 @@ if (NULL != pRibbon)
 pRibbon = NULL;
 you get this result: Fig.2 Result of Chamfer Operation  ![Chamfer Result Cap Corner Front View ](images/CGM_chamfer_1.png)
 
-you get this result: Fig.2 Result of Chamfer Operation  ![Chamfer Result Cap Corner Front View ](images/CGM_chamfer_1.png)
 Front view: Chamfer result | Rear view: No corner cap setting | Rear view: SetCornerCap
 References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)
 

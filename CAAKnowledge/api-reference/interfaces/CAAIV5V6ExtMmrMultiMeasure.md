@@ -1,62 +1,83 @@
 ---
 title: "CAAIV5V6ExtMmrMultiMeasure"
-type: "interface"
+type: "PublicInterface"
 module: "CAAV5V6MechanicalModeler"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAIV5V6ExtMmrMultiMeasure → CATBaseUnknown"
 method_count: 5
-visibility: "public"
-has_tie_binding: true
-verified: true
+source_file: "CAAV5V6MechanicalModeler.edu/PublicInterfaces/CAAIV5V6ExtMmrMultiMeasure.h"
 ---
-> **TIE实现**: unknown
 
 # CAAIV5V6ExtMmrMultiMeasure
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAIV5V6ExtMmrMultiMeasure → CATBaseUnknown  
-**模块**: CAAV5V6MechanicalModeler  
-**分类**: framework  
-**可见性**: public  
-**方法数**: 5
+**基类**: CATBaseUnknown | **模块**: CAAV5V6MechanicalModeler | **方法数**: 5
 
 ## 依赖
 
 - `CAAV5V6ExtMmrMultiMeasure.h`
 - `CATBaseUnknown.h`
 
-## TIE实现
+## 纯虚方法 (接口契约)
 
-**实现文件**:
-- `CAAEV5V6ExtMmrMeasureSetVisu.cpp`
-- `CAAEV5V6ExtMmrMultiMeasure.cpp`
-- `CAAEV5V6ExtMmrMultiMeasureBehavior.cpp`
-- `CAAEV5V6ExtMmrMultiMeasureFactory.cpp`
-- `CAAEV5V6ExtMmrMultiMeasureNavigateObject.cpp`
+### SetInputGeomFeature
+
+```cpp
+virtual HRESULT SetInputGeomFeature(CATBaseUnknown * ipGeomFeature) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| ipGeomFeature | `CATBaseUnknown *` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetGeomFeature
+
+```cpp
+virtual HRESULT GetGeomFeature(CATBaseUnknown *& oGeomFeature) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oGeomFeature | `CATBaseUnknown *&` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetLengthParameter
+
+```cpp
+virtual HRESULT GetLengthParameter(CATICkeParm_var &oLengthParm) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| &oLengthParm | `CATICkeParm_var` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetWetAreaParameter
+
+```cpp
+virtual HRESULT GetWetAreaParameter(CATICkeParm_var &oWetAreaParm) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| &oWetAreaParm | `CATICkeParm_var` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetVolumeParameter
+
+```cpp
+virtual HRESULT GetVolumeParameter(CATICkeParm_var &oVolumeParm) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| &oVolumeParm | `CATICkeParm_var` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
 
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAV5V6MechanicalModeler.edu/PublicInterfaces/CAAIV5V6ExtMmrMultiMeasure.h`

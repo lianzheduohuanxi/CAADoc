@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Sending a Data Message to an Interactive Application"
-category: use-case case"
+category: "use-case case"
 module: "CAADlgUseCases"
-tags: ["CAADlgBBSender", "CAAIDlgDataRequest", "CATICommunicator", "CAADlgBBMessage", "CATIMessageReceiver", "CAADlgBBMessageNotification", "CATICommMsg", "CAADlgBBMessageManager", "CAADlgBBEditorMessageHandler", "CAADlgBBEditorMessage", "CAADlgBBReceiver", "CAADlgBBReceiverWindow", "CAADlgBBSenderWindow", "CAASystem", "CATInstantiateComponent", "CATInteractiveApplication", "CAADlgBBMessageInt", "CAADialog"]
-source_file: "Doc/online/CAADlgUseCases/CAADlgSampleBBMsg.htmmd"
+tags: "["CAADlgBBSender", "CAAIDlgDataRequest", "CATICommunicator", "CAADlgBBMessage", "CATIMessageReceiver", "CAADlgBBMessageNotification", "CATICommMsg", "CAADlgBBMessageManager", "CAADlgBBEditorMessageHandler", "CAADlgBBEditorMessage", "CAADlgBBReceiver", "CAADlgBBReceiverWindow", "CAADlgBBSenderWindow", "CAASystem", "CATInstantiateComponent", "CATInteractiveApplication", "CAADlgBBMessageInt", "CAADialog"]"
+source_file: "Doc/online/CAADlgUseCases/CAADlgSampleBBMsg.htm"
 converted: "2026-05-11T17:17:55.971235"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -52,7 +49,6 @@ CAADlgBBSender and CAADlgBBReceiver are use cases of the CAADialog.edu framework
 
 This use case illustrates two interactive applications. One behaves as a message sender, and the other as a message receiver. The message is a data message that conveys a text. The message sender displays an entry field in which the end user types the message text and clicks the Send button to send the message. The message receiver displays a field in which the text of the received message is printed.
 
-This use case illustrates two interactive applications. One behaves as a message sender, and the other as a message receiver. The message is a data message that conveys a text. The message sender displays an entry field in which the end user types the message text and clicks the Send button to send the message. The message receiver displays a field in which the text of the received message is printed.
 Both the message sender and the message receiver are interactive applications launched by instantiating a class that derives from _CATInteractiveApplication_. To send the message, the message sender connects to the backbone bus, declares itself, instantiates the message component using the text entered in the text field of its window, and sends it.
 
 The message receiver needs to instantiate a message handler to receive the message. Such a message handler is a component that implements the _CATIMessageReceiver_ interface. In addition, the message receiver subscribes to a notification that the message handler will request a message manager to dispatch along with the message text. To receive the message, the message receiver connects to the backbone bus, declares itself, declares the message to receive, instantiates the message handler, associates itself with the message to receive and with the message handler. As soon as the message is sent, it is retrieved by the message handler that requests the message manager to dispatch a notification that carries the message text, and to which the message receiver has subscribed. The message receiver called back method extract the message text from the notification and prints it in the window text field.
@@ -200,7 +196,7 @@ if ( SUCCEEDED(rc) )
         pIDataRequest->**SetData**(Line.CastToCharPtr(#));
 
         CATICommMsg * pICommMsg =NULL;
-```vbscript
+```cpp
         rc = pIDataRequest->QueryInterface(**IID_CATICommMsg** ,(void**)&pICommMsg);
 
         if ( SUCCEEDED(rcb) )
@@ -348,7 +344,7 @@ The message manager is a component that dispatches a notification that carries t
 
     CATImplementClass(CAADlgBBMessageManager,Implementation,CATBaseUnknown,CATNull);
 
-```vbscript
+```cpp
 CATImplementClass(CAADlgBBMessageManager,Implementation,CATBaseUnknown,CATNull);
     CAADlgBBMessageManager * CAADlgBBMessageManager::_Manager = NULL;
 
@@ -434,7 +430,6 @@ The message manager is created as a component and is unique. It is instantiated 
 
 The message receiver is an interactive application. It has a window, instance of the class _CAADlgBBReceiverWindow_ , that carries out the main tasks of connecting to the backbone bus and receiving the message. Below is the `Build` method of  _CAADlgBBReceiverWindow._
 
-The message receiver is an interactive application. It has a window, instance of the class _CAADlgBBReceiverWindow_ , that carries out the main tasks of connecting to the backbone bus and receiving the message. Below is the `Build` method of  _CAADlgBBReceiverWindow._
     void CAADlgBBReceiverWindow::**Build**(#)
 
     {
@@ -458,7 +453,7 @@ if ( SUCCEEDED(Init) )
          _pEditor = new CATDlgEditor(pFrame,"EditorId",CATDlgEdtReadOnly);
          _pEditor->SetGridConstraints(0,1,1,1,CATGRID_LEFT);
 
-```vbscript
+```cpp
          _pMessageManager = CAADlgBBMessageManager::**GetManager**(#);
 
 ```
@@ -502,7 +497,6 @@ The `Build` method first call the `BackboneInit` method, and if this method succ
 
 The `BackboneInit` method is as follows.
 
-The `BackboneInit` method is as follows.
     HRESULT CAADlgBBReceiverWindow::**BackboneInit**(#)
 
     {
@@ -573,7 +567,7 @@ else
 CAADlgBBEditorMessageHandler * pHandlerForMessage = NULL;
 pHandlerForMessage = new **CAADlgBBEditorMessageHandler**(#);
 ```vbscript
-```vbscript
+```cpp
 if ( NULL != pHandlerForMessage )
             rc = pHandlerForMessage->QueryInterface(**IID_CATIMessageReceiver** ,
 ```

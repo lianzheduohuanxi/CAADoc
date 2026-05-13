@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Rotation Mesh Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CATIA", "CAAAniMeshRotation", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshRotation.htmmd"
+tags: "["CATIA", "CAAAniMeshRotation", "CAAScdAniUseCases"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshRotation.htm"
 converted: "2026-05-11T17:31:51.683727"
-```
-
 ---
 ## Analysis Modeler
 
@@ -38,7 +35,7 @@ This use case shows how to create a rotation mesh part. Rotation transformation 
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
 ```
@@ -48,7 +45,7 @@ This use case shows how to create a rotation mesh part. Rotation transformation 
 ```
 
 ```vbscript
-```vbscript
+```cpp
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 ```
@@ -68,7 +65,7 @@ This use case shows how to create a rotation mesh part. Rotation transformation 
 ```vbscript
     ' -----------------------------------------------------------
     ' Open the Analysis document
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Surface.CATAnalysis")
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```

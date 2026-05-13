@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAAAniPreProExportImportLoads.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CAAAniPreProExportImportLoads", "CATIA", "CAAScdAniUseCases", "CATIAAnalysisManager"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProExportImportLoadsSource.htmmd"
+tags: "["CAAAniPreProExportImportLoads", "CATIA", "CAAScdAniUseCases", "CATIAAnalysisManager"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProExportImportLoadsSource.htm"
 converted: "2026-05-11T17:31:51.802920"
-```
-
 ---
 ```vbscript
 ```vbscript
@@ -31,7 +28,7 @@ converted: "2026-05-11T17:31:51.802920"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -43,7 +40,7 @@ converted: "2026-05-11T17:31:51.802920"
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     sOut = CATIA.SystemService.Environ("CATTemp")
 
@@ -67,10 +64,10 @@ converted: "2026-05-11T17:31:51.802920"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' -----------------------------------------------------------
     ' Open the CATAnalysis Document
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Assembled_Loads_Solutions.CATAnalysis")
     Set analysisDocument1 = CATIA.Documents.Open(sFilePath)
     'Retrieve the Analysis Manager from the analysis document
@@ -140,7 +137,7 @@ converted: "2026-05-11T17:31:51.802920"
     'The exported loads are transferred to their respective
     'sub-analysis with AnalysisImport interface
     For i =1 To selection1.Count
-```vbscript
+```cpp
               Set manager = selection1.FindObject("CATIAAnalysisManager")
              'Export the computed loads
 ```
@@ -152,7 +149,7 @@ converted: "2026-05-11T17:31:51.802920"
 ```
 
 ```vbscript
-```vbscript
+```cpp
 Set manager = selection1.FindObject("CATIAAnalysisManager")
 ```vbscript
 ```

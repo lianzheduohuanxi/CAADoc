@@ -1,50 +1,62 @@
 ---
 title: "CAAPstINFEditCmdPoint"
-type: "interface"
+type: "LocalClass"
 module: "CAAProductStructure"
-category: api-reference
 base: "CATCommand"
-inheritance_chain: "CAAPstINFEditCmdPoint → CATCommand"
 method_count: 3
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAProductStructure.edu/CAAPstINFCommands.m/LocalInterfaces/CAAPstINFEditCmdPoint.h"
 ---
+
 # CAAPstINFEditCmdPoint
 
-**基类**: CATCommand  
-**继承链**: CAAPstINFEditCmdPoint → CATCommand  
-**模块**: CAAProductStructure  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 3
+> Command which edits a point (an CAAPstINFPoint component). This command is returned by the CAAPstINFPoint implementation of the CATIEdit interface. Illustrates programming a command which edits an object. This command must manage its destruction itself. It must be deleted: when the end user closes the dialog box (Ok orCancel buttons): the command must subscribe to the corresponding notifications and request the command destruction in the callbacks. when another command is launched: the current command must take the focus in order to be called on the Cancel when it loses the focus. Cancel must request the command destruction as well. This command launches a dialog box to edit this object. Inheritance: CATDlgDialog ( Dialog Framework) CATDlgWindow ( Dialog Framework) CATDialog   (Dialog Framework) CATCommand  (System Framework) CATBaseUnknown (System Framework) Main Method: Constructor  -> Requests the focus. Cancel       -> End of the command. Desactivate  -> Dialog box is hidden. Activate     -> Creates and builds the dialog box if it does not already exist and displays it. CloseBox     -> End of the command
+
+**基类**: CATCommand | **模块**: CAAProductStructure | **方法数**: 3
 
 ## 依赖
 
 - `CATCommand.h`
 
+## 虚方法
+
+### Cancel
+
+```cpp
+virtual CATStatusChangeRC Cancel(CATCommand *ipPublisher, CATNotification *ipNotification) ;
+```
+
+Methods called by the command selector to manage the focus
+
+| 参数 | 类型 |
+|------|------|
+| *ipPublisher | `CATCommand` |
+| *ipNotification | `CATNotification` |
+
+
+### Desactivate
+
+```cpp
+virtual CATStatusChangeRC Desactivate(CATCommand *ipPublisher, CATNotification *ipNotification) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *ipPublisher | `CATCommand` |
+| *ipNotification | `CATNotification` |
+
+
+### Activate
+
+```cpp
+virtual CATStatusChangeRC Activate(CATCommand *ipPublisher, CATNotification *ipNotification) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *ipPublisher | `CATCommand` |
+| *ipNotification | `CATNotification` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATCommand**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAProductStructure.edu/CAAPstINFCommands.m/LocalInterfaces/CAAPstINFEditCmdPoint.h`

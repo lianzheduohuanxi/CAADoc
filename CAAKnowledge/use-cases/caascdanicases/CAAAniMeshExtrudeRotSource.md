@@ -1,17 +1,14 @@
 ---
-```vbscript
 title: "CAAAniMeshExtrudeRot.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CAAAniMeshExtrudeRot", "CATIA", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshExtrudeRotSource.htmmd"
+tags: "["CAAAniMeshExtrudeRot", "CATIA", "CAAScdAniUseCases"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshExtrudeRotSource.htm"
 converted: "2026-05-11T17:31:51.635968"
-```
-
 ---
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     'COPYRIGHT DASSAULT SYSTEMES 2000
     '***********************************************************************
     '  Purpose:      Open an analysis document
@@ -30,7 +27,7 @@ converted: "2026-05-11T17:31:51.635968"
 
 ```
 
-```vbscript
+```cpp
     Sub CATMain(#)
 ```vbscript
 ```
@@ -38,7 +35,7 @@ converted: "2026-05-11T17:31:51.635968"
     '-----------------------------------------------------------
     'Optional: allows to find the sample wherever it's installed
 
-```vbscript
+```cpp
       sDocPath=CATIA.SystemService.Environ("CATDocView")
       sSep=CATIA.SystemService.Environ("ADL_ODT_SLASH")
 
@@ -61,10 +58,10 @@ converted: "2026-05-11T17:31:51.635968"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     '-----------------------------------------------------------
     'Open the CATAnalysis Document
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Surface.CATAnalysis")
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```

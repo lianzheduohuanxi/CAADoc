@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Boundaries"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperatorsBoundaryCreation", "CAAGMOperatorsInterfaces", "CATICGMHybBoundary"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopBoundary.htmmd"
+tags: "["CAAGMOperatorsBoundaryCreation", "CAAGMOperatorsInterfaces", "CATICGMHybBoundary"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopBoundary.htm"
 converted: "2026-05-11T17:33:49.099805"
-```
-
 ---
 tags: ["CAAGMOperatorsBoundaryCreation", "CAAGMOperatorsInterfaces", "CATICGMHybBoundary"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcTopBoundary.htmmd"
@@ -61,7 +58,6 @@ pBoundOpe->Release(#);
 pBoundOpe = NULL;
 you get this result: Fig.2 Result of Boundary Operation  ![Boundary Result: Tangent Continuity ](images/CGM_boundary_tgcont.png)
 
-you get this result: Fig.2 Result of Boundary Operation  ![Boundary Result: Tangent Continuity ](images/CGM_boundary_tgcont.png)
 TANGENT_CONTINUITY |  NO_CONTINUITY
 References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)
 

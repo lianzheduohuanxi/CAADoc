@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Boolean Union"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperatorsInterfaces", "CATICGMTopCompatible", "CAAGMOperatorsCompatible", "CATICGMDynBoolean"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcBooleanUnion.htmmd"
+tags: "["CAAGMOperatorsInterfaces", "CATICGMTopCompatible", "CAAGMOperatorsCompatible", "CATICGMDynBoolean"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcBooleanUnion.htm"
 converted: "2026-05-11T17:33:48.886943"
-```
-
 ---
 tags: ["CAAGMOperatorsInterfaces", "CATICGMTopCompatible", "CAAGMOperatorsCompatible", "CATICGMDynBoolean"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcBooleanUnion.htmmd"

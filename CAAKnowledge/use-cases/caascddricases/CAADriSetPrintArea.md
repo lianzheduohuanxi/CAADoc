@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Setting the Print Area of a Drawing Sheet"
 category: "use-case"
 module: "CAAScdDriUseCases"
-tags: ["CAADriISetPrintArea", "CATIA", "CAADriSetPrintArea", "CAADriUseCases", "CATIADrawingView"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriSetPrintArea.htmmd"
+tags: "["CAADriISetPrintArea", "CATIA", "CAADriSetPrintArea", "CAADriUseCases", "CATIADrawingView"]"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriSetPrintArea.htm"
 converted: "2026-05-11T17:31:51.099755"
-```
-
 ---
 ## Interactive Drafting
 
@@ -17,7 +14,6 @@ converted: "2026-05-11T17:31:51.099755"
 * * *
 
  This macro shows you how to set the print area of the current sheet using the mouse selection. You select a couple of drawing points to define the print area rectangle. You can can select any drawing point into the sheet, including those into a view.
-This macro shows you how to set the print area of the current sheet using the mouse selection. You select a couple of drawing points to define the print area rectangle. You can can select any drawing point into the sheet, including those into a view.
 This macro is based on an active drawing document.
 
 This macro shows you how to set the print area of the current sheet using the mouse selection. You select a couple of drawing points to define the print area rectangle. You can can select any drawing point into the sheet, including those into a view.
@@ -48,7 +44,7 @@ This macro is based on an active drawing document.
     Dim oDocument As Document
 ```vbscript
 ```
-```vbscript
+```cpp
     Set oDocument = CATIA.ActiveDocument
 ```
 ```
@@ -240,7 +236,7 @@ According to the `ObjectSelected` boolean value retrieved:
 If ObjectSelected = True Then
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
 Set iFirstPoint = oSelection.Item(1).Value
         Set oView = oSelection.FindObject("CATIADrawingView")
 ```
@@ -256,7 +252,7 @@ Set iFirstPoint = oSelection.Item(1).Value
 Set iFirstPoint = oSelection.Item(1).Value
 ```vbscript
 ```
-```vbscript
+```cpp
 Set oView = oSelection.FindObject("CATIADrawingView")
 ```
 ```
@@ -266,7 +262,7 @@ Set oView = oSelection.FindObject("CATIADrawingView")
 
         ...
 ```vbscript
-```vbscript
+```cpp
 Set oView = oSelection.FindObject("CATIADrawingView")
 ```
 ```
@@ -290,7 +286,6 @@ According to the `ObjectSelected` boolean value retrieved as `True`:
 
 Otherwise, the `oFirstPointAbsolute` array already contains the location of the virtual point.
 
-Otherwise, the `oFirstPointAbsolute` array already contains the location of the virtual point.
   1. Select the first point. This point is located in the hidden view of the sheet and not in the `Front view`.
 
 ![](images/img021.gif)
@@ -414,7 +409,7 @@ The `oPrintArea` object is activated using the `ActivationState` property set to
     oSelection.Add oSheet
 
 ```vbscript
-```vbscript
+```cpp
     CATIA.StartCommand "CATDrwVisualizePrintAreaHdr"
     oSelection.Clear
 ```

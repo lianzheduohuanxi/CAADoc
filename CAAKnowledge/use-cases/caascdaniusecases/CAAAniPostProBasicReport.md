@@ -89,7 +89,7 @@ This use case has shown how to generate the report with different options.
 ```vbscript
 ' ----------------------------------------------------------- 
 ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
   sDocPath=CATIA.SystemService.Environ("CATDocView")
   sOut = CATIA.SystemService.Environ(&quot;CATTemp&quot;)
 
@@ -99,7 +99,7 @@ This use case has shown how to generate the report with different options.
 ```
 ' ----------------------------------------------------------- 
 ' Open the Analysis document 
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online/CAAScdAniUseCases/samples/Cube_R13_Freq.CATAnalysis&quot;)
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```
@@ -115,7 +115,7 @@ Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ```vbscript
 ' Retrieve the folder stored in sOut
-```vbscript
+```cpp
 Set fileSystem1 = CATIA.FileSystem
 Set folder1 = fileSystem1.GetFolder(sOut)
 ```

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Octree Triangle Mesh Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CATIA", "CAAAniMeshOctTriangle", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshOctTriangle.htmmd"
+tags: "["CATIA", "CAAAniMeshOctTriangle", "CAAScdAniUseCases"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshOctTriangle.htm"
 converted: "2026-05-11T17:31:51.677727"
-```
-
 ---
 ## Analysis Modeler
 
@@ -43,7 +40,7 @@ This use case shows how to create octree triangle mesh part in an existing analy
 ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
 
-```vbscript
+```cpp
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 
 ```
@@ -54,7 +51,7 @@ This use case shows how to create octree triangle mesh part in an existing analy
 ```
 
 ```vbscript
-```vbscript
+```cpp
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 ```
@@ -74,7 +71,7 @@ This use case shows how to create octree triangle mesh part in an existing analy
 ```vbscript
     ' -----------------------------------------------------------
     ' Open the Analysis document
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Surface.CATAnalysis")
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```

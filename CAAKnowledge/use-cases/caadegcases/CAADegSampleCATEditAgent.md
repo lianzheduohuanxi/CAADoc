@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Editing Object During a Command"
 category: "use case"
 module: "CAADegUseCases"
-tags: ["CAAPriPrtCfgAddin", "CAAPriEditSketchCmd", "CAAPriEditSketch", "CAAPriPrtCfgAdn", "CATISpecObject", "CATIBuildPath", "CATIWorkbenchAddin", "CATISketch", "CAAPriEditSketchNotification", "CATIPrtCfgAddin", "CAAPartInterfaces", "CAAPriCommands", "CAAPriEditSketchDlg", "CATIPad"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleCATEditAgent.htmmd"
+tags: "["CAAPriPrtCfgAddin", "CAAPriEditSketchCmd", "CAAPriEditSketch", "CAAPriPrtCfgAdn", "CATISpecObject", "CATIBuildPath", "CATIWorkbenchAddin", "CATISketch", "CAAPriEditSketchNotification", "CATIPrtCfgAddin", "CAAPartInterfaces", "CAAPriCommands", "CAAPriEditSketchDlg", "CATIPad"]"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleCATEditAgent.htm"
 converted: "2026-05-11T17:33:49.575815"
-```
-
 ---
 tags: ["CAAPriPrtCfgAddin", "CAAPriEditSketchCmd", "CAAPriEditSketch", "CAAPriPrtCfgAdn", "CATISpecObject", "CATIBuildPath", "CATIWorkbenchAddin", "CATISketch", "CAAPriEditSketchNotification", "CATIPrtCfgAddin", "CAAPartInterfaces", "CAAPriCommands", "CAAPriEditSketchDlg", "CATIPad"]
 source_file: "Doc/online/CAADegUseCases/CAADegSampleCATEditAgent.htmmd"
@@ -112,7 +109,7 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM
     ...
 4. Creating Transitions
 5. Providing the Object to Edit
-```vbscript
+```cpp
        _pEditAgent = new CATEditAgent("EditAgentId");
 
 ```
@@ -142,7 +139,7 @@ The name of the workbench should be set with the `SetWorkbench` method. But the 
 
     ...
 The name of the workbench should be set with the `SetWorkbench` method. But the Sketcher is a specific case because it has only one workbench, so the UI activation [5] of the Sketch launches the Sketcher workbench. It is not necessary to specify this information.
-```vbscript
+```cpp
            CATStackableCommandSet * pCommandSet = new **CATStackableCommandSet**(#);
             pCommandSet->**AddCommand**("2DConstraint");
 ```
@@ -160,7 +157,7 @@ The name of the workbench should be set with the `SetWorkbench` method. But the 
 
 ---
 pCommandSet->Release(#);
-```vbscript
+```cpp
 pCommandSet = NULL ;
 The _CATStackableCommandSet_ class is a set of _CATCommandHeader_ class instance identifiers. The default constructor creates a non-empty list of commands: Hide/Show, Exit, ...... You should add the available commands of the workbench.  The `2DConstraint`, `2DAutoCst` and `2DAnimateCst` (Fig.3) are commands of the Sketcher workbench. To be exact, they are identifiers of _CATCommandHeader_ class instances. Refer to "How to (Re-)Use Command Header Identifiers" section of the "The Command Headers" technical article [6] to retrieve the name of identifiers.   `pCommandSet` must be released, since the `SetCommandSet` method addref's the class pointer.
 ```
@@ -236,7 +233,7 @@ From DialogState to**** EditSketchState
 From DialogState to**** EditSketchState
                CATDialogTransition * pEditSketchTransition = AddTransition(pDialogState,pEditSketchState,
                         IsOutputSetCondition(_pTriggerAgent),
-```vbscript
+```cpp
                         Action((ActionMethod) & CAAPriEditSketchCmd::**TriggerEditSketch**));
 
 ```
@@ -267,7 +264,7 @@ _pDialogBox->SetVisibility(**CATDlgHide**) ;
     ...
                CATDialogTransition * pBackTransition = AddTransition(pEditSketchState,pDialogState,
                         IsOutputSetCondition(_pEditAgent),
-```vbscript
+```cpp
                         Action((ActionMethod) & CAAPriEditSketchCmd::**EditSketch**));
 
 ```
@@ -320,7 +317,7 @@ CATPathElement * CAAPriEditSketchCmd::**ProvideProfileToEdit**(CATClassId iDummy
 HRESULT rc = **FindProfile**(pSelectedElt,&pISpecObjectOnProfile) ;
 if ( SUCCEEDED(rc) && (NULL!=pISpecObjectOnProfile))
 ```vbscript
-```vbscript
+```cpp
           rc = pISpecObjectOnProfile->QueryInterface( IID_CATIBuildPath, (void**) &piBuildPath );
 
           if ( SUCCEEDED(rc) )

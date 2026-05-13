@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAADriCreateView.CATScript"
 category: "use-case"
 module: "CAAScdDriUseCases"
-tags: ["CATIA", "CAADriCreateView", "CAAScdDriUseCases"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriCreateViewSource.htmmd"
+tags: "["CATIA", "CAADriCreateView", "CAAScdDriUseCases"]"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriCreateViewSource.htm"
 converted: "2026-05-11T17:31:51.043880"
-```
-
 ---
 tags: ["CATIA", "CAADriCreateView", "CAAScdDriUseCases"]
 source_file: "Doc/online/CAAScdDriUseCases/CAADriCreateViewSource.htmmd"
@@ -16,7 +13,7 @@ converted: "2026-05-11T17:31:51.043880"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGTH DASSAULT SYSTEMES 2000
     ' ***********************************************************************
     '   Purpose:      Create A Drawing document with a front view and a projection view
@@ -34,7 +31,7 @@ converted: "2026-05-11T17:31:51.043880"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -47,7 +44,7 @@ converted: "2026-05-11T17:31:51.043880"
         ' -----------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String
-```vbscript
+```cpp
         sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
 ```
@@ -57,7 +54,7 @@ converted: "2026-05-11T17:31:51.043880"
 ```
 
 ```vbscript
-```vbscript
+```cpp
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 ```
@@ -77,7 +74,7 @@ converted: "2026-05-11T17:31:51.043880"
 ```vbscript
         ' -----------------------------------------------------------
         ' Open the Part document
-```vbscript
+```cpp
         Dim oPartToDraw As PartDocument
         Set oPartToDraw = CATIA.Documents.Open(sDocPath & _
 ```
@@ -92,7 +89,7 @@ converted: "2026-05-11T17:31:51.043880"
 ```vbscript
 ```vbscript
         ' Create a drawing document: it becomes the active document.
-```vbscript
+```cpp
         Dim oDrawing As DrawingDocument
         Set oDrawing = CATIA.Documents.Add("Drawing")
         ' Retrieve the active sheet

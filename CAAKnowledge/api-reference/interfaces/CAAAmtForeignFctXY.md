@@ -1,59 +1,83 @@
 ---
 title: "CAAAmtForeignFctXY"
-type: "interface"
+type: "PublicInterface"
 module: "CAAAdvancedMathematics"
-category: api-reference
-method_count: 0
-visibility: "public"
-has_tie_binding: false
-verified: true
+base: "CATMathFunctionXY"
+method_count: 4
+source_file: "CAAAdvancedMathematics.edu/PublicInterfaces/CAAAmtForeignFctXY.h"
 ---
+
 # CAAAmtForeignFctXY
 
-**模块**: CAAAdvancedMathematics  
-**分类**: framework  
-**可见性**: public  
-**方法数**: 0
-
-> -----------------------------------------------------------------
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATMathFunctionXY | **模块**: CAAAdvancedMathematics | **方法数**: 4
 
 ## 依赖
 
 - `CAAAmtForeignFct.h`
+- `CATMathFunctionXY.h`
+
+## 公共方法
+
+### IsAKindOf
+
+```cpp
+CATBoolean IsAKindOf(const CATMathClassId iClassId) const ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iClassId | `const CATMathClassId` |
+
+
+### IsOption
+
+```cpp
+CATBoolean IsOption(const CATMathOption iOption) const ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iOption | `const CATMathOption` |
+
+
+### Eval
+
+```cpp
+void Eval(const double iX, const double iY, const CATMathOption iOptions, double * ioF, double * ioFx =NULL, double * ioFy=NULL, double * ioFx2=NULL, double * ioFxy=NULL, double *ioFy2=NULL) const ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iX | `const double` |
+| iY | `const double` |
+| iOptions | `const CATMathOption` |
+| ioF | `double *` |
+| =NULL | `double * ioFx` |
+| ioFy=NULL | `double *` |
+| ioFx2=NULL | `double *` |
+| ioFxy=NULL | `double *` |
+| *ioFy2=NULL | `double` |
+
+
+### Eval
+
+```cpp
+void Eval(const CATMathIntervalND & iDomain, const CATLONG32 * iNbPoints, const CATMathOption iOptions, double * ioF, double * ioFx =NULL, double * ioFy=NULL, double * ioFx2=NULL, double * ioFxy=NULL, double *ioFy2=NULL) const ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iDomain | `const CATMathIntervalND &` |
+| iNbPoints | `const CATLONG32 *` |
+| iOptions | `const CATMathOption` |
+| ioF | `double *` |
+| =NULL | `double * ioFx` |
+| ioFy=NULL | `double *` |
+| ioFx2=NULL | `double *` |
+| ioFxy=NULL | `double *` |
+| *ioFy2=NULL | `double` |
+
 
 ---
 
-## Interface Overview
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-This interface is used in the following use cases:
-
-- [CAACgmUcAmtForeign](../../use-cases/caacgmmodel/CAACgmUcAmtForeign.md)
-- [CAACgmUcGobForeign](../../use-cases/caacgmmodel/CAACgmUcGobForeign.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAAdvancedMathematics.edu/PublicInterfaces/CAAAmtForeignFctXY.h`

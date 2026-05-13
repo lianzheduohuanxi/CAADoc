@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Intersecting Surfaces"
-category: use-case case"
+category: "use-case case"
 module: "CAACgmModel"
-tags: ["CAAGMModelInterfaces", "CAAGMModelGeometryCreation", "CATICGMIntersectionSurSur", "CAAGMModelIntersectionOpe"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcIntersectSurSur.htmmd"
+tags: "["CAAGMModelInterfaces", "CAAGMModelGeometryCreation", "CATICGMIntersectionSurSur", "CAAGMModelIntersectionOpe"]"
+source_file: "Doc/online/CAACgmModel/CAACgmUcIntersectSurSur.htm"
 converted: "2026-05-11T17:33:48.461523"
-```
-
 ---
 # Intersecting Surfaces
 
@@ -65,7 +62,7 @@ if(nbOfSurfaces)
     			// 4 Pcurves are expected as the second surface is immerged within the first one
 pPtSurSur->BeginningSurface(#);
 while(pPtSurSur->NextSurface(#))
-```vbscript
+```cpp
     			CATLISTP(CATPCurve) listPCurve;
 ```vbscript
     			listPCurve = pPtSurSur->GetSurfaceBoundaries(piTabulatedCyl2);
@@ -76,7 +73,7 @@ while(pPtSurSur->NextSurface(#))
 ```
 
     			{
-```vbscript
+```cpp
 CATLISTP(CATPCurve) listPCurve;
 ```vbscript
 ```vbscript

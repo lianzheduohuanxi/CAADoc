@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Check Button"
-category: use-case case"
+category: "use-case case"
 module: "CAAAfrUseCases"
-tags: ["CAACafViewerFeedbackCmd", "CAACafViewerFeedback", "CAAAfrGeneralWksAddinHeader", "CAAAfrViewerFeedbackHdr", "CAAViewerFeedback", "CATIWorkbenchAddin", "CAACafViewerFeedbackManager", "CATIAfrGeneralWksAddin", "CAACafViewerFeedbackCheckHdr", "CAACafViewerFeedbackUncheckHdr", "CAACafViewerFeedbackCmdId", "CAACafCATIAApplicationFrm", "CAAAfrGeneralWksAddin", "CAAAfrGeneralWksAdn", "CATIAApplicationFrm", "CAACATIAApplicationFrm", "CAAApplicationFrame"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrCheckHeader.htmmd"
+tags: "["CAACafViewerFeedbackCmd", "CAACafViewerFeedback", "CAAAfrGeneralWksAddinHeader", "CAAAfrViewerFeedbackHdr", "CAAViewerFeedback", "CATIWorkbenchAddin", "CAACafViewerFeedbackManager", "CATIAfrGeneralWksAddin", "CAACafViewerFeedbackCheckHdr", "CAACafViewerFeedbackUncheckHdr", "CAACafViewerFeedbackCmdId", "CAACafCATIAApplicationFrm", "CAAAfrGeneralWksAddin", "CAAAfrGeneralWksAdn", "CATIAApplicationFrm", "CAACATIAApplicationFrm", "CAAApplicationFrame"]"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrCheckHeader.htm"
 converted: "2026-05-11T17:17:55.585103"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -71,7 +68,6 @@ When the state is "checked", if there is a current viewer, some information, suc
 
 To launch CAAAfrViewerFeedbackHdr, you will need to set up the build time environment, then compile CAAAfrViewerFeedbackHdr along with its prerequisites, set up the run time environment, and then execute the use case [5].
 
-To launch CAAAfrViewerFeedbackHdr, you will need to set up the build time environment, then compile CAAAfrViewerFeedbackHdr along with its prerequisites, set up the run time environment, and then execute the use case [5].
 But just before launching the execution, edit the CAAApplicationFrame.edu.dico interface dictionary file located in the dictionary directory of the CAAApplicationFrame.edu framework:
 
 Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CNext/code/dictionary/`
@@ -101,7 +97,6 @@ The CAAAfrViewerFeedbackHdr use case is made of several classes located :
 The CAAAfrViewerFeedbackHdr use case is made of several classes located :
 Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeneralWksAddin.m/`
 
-Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeneralWksAddin.m/`
 Unix | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeneralWksAddin.m/`
 
 There is a single class, the _CAAAfrGeneralWksAdn_ class, which is an implementation of the _CATIAfrGeneralWksAddin_ interface [3]. If the "Making Your Document Independent Command Available in All Workbenches" use case explains the implementation of this interface, this article only details the check header instance creation and its integration in menu bar and tool bar.
@@ -111,7 +106,6 @@ There is a single class, the _CAAAfrGeneralWksAdn_ class, which is an implementa
 There is a single class, the _CAAAfrGeneralWksAdn_ class, which is an implementation of the _CATIAfrGeneralWksAddin_ interface [3]. If the "Making Your Document Independent Command Available in All Workbenches" use case explains the implementation of this interface, this article only details the check header instance creation and its integration in menu bar and tool bar.
 Windows | `InstallRootDirectory/CAACafCATIAApplicationFrm.edu/CAACafViewerFeedback.m/`
 
-Windows | `InstallRootDirectory/CAACafCATIAApplicationFrm.edu/CAACafViewerFeedback.m/`
 Unix | `InstallRootDirectory/CAACafCATIAApplicationFrm.edu/CAACafViewerFeedback.m/`
 
 There are the _CAACafViewerFeedbackCmd_ and the _CAACafViewerFeedbackManager_ classes. The first is a command which is described in this article. The second is an object to manage the viewer feedback which is only detailed in the Visualization use case [4].
@@ -197,7 +191,6 @@ The _CAAAfrGeneralWksAddinHeader_   class has been automatically created with t
 
 The `SetVisibility` method of the _CATCommandHeader_ class prohibits that the two instances, `CAACafViewerFeedbackCheckHdr and CAACafViewerFeedbackUncheckHdr` appear in the Customize command. The end user which do not known the identifier of command header cannot launch them in the power input, or drag and drop the command in a toolbar. See the technical article for more information about this method [1].
 
-The `SetVisibility` method of the _CATCommandHeader_ class prohibits that the two instances, `CAACafViewerFeedbackCheckHdr and CAACafViewerFeedbackUncheckHdr` appear in the Customize command. The end user which do not known the identifier of command header cannot launch them in the power input, or drag and drop the command in a toolbar. See the technical article for more information about this method [1].
 Associating the `CAACafViewerFeedbackCheckHdr `header instance with the "Check" state, thanks to the `SetCheckCommand` method, the _CAACafViewerFeedbackCmd_ with` 1` as argument will be finally launched when the end use will check the check button.
 
 Associating the `CAACafViewerFeedbackUncheckHdr `header instance with the "Uncheck" state, thanks to the `SetUncheckCommand` method, the _CAACafViewerFeedbackCmd_ with `2` as argument will be finally launched when the end use will uncheck the check button.
@@ -297,7 +290,6 @@ pCAACafViewerFeedbackManager->SetViewerFeedbackOn(#);
 
 The `CATCreateClassArg`**** macro**** enables any command header (a _CATCommandHeader_ class) to instantiate a _CATCommand_ by its name and with an argument.
 
-The `CATCreateClassArg`**** macro**** enables any command header (a _CATCommandHeader_ class) to instantiate a _CATCommand_ by its name and with an argument.
 The first argument, `NULL`, given to the _CATCommand_ class means that the parent of the command is the current command selector [6]. The second argument ("`CAACafViewerFeedbackCmdId`") is the internal name of the command. This _CATCommand_ is undefined [6] (the default behavior of a _CATCommand)_ because this command should not disturb the current active command.
 
 What it is necessary to retain in this class is the command's life cycle. The _CAACafViewerFeedbackCmd_ is instantiated by a command header but not deleted by this command header, therefore the _CAACafViewerFeedbackCmd_ should manage its deletion. But as the _CATCommand_ is undefined [6], it means that it is not seen by the focus manager and cannot be activated, deactivated or canceled as usual for commands launched from a command header. So a `RequestDelayedDestruction` instruction is done at the end of the constructor. The three mandatory rules to respect for such call in a command's constructor are :

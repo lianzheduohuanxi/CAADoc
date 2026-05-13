@@ -1,17 +1,14 @@
 ---
-```vbscript
 title: "CAAAniMeshExtrudeSymm.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CAAAniMeshExtrudeSymm", "CATIA", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshExtrudeSymmSource.htmmd"
+tags: "["CAAAniMeshExtrudeSymm", "CATIA", "CAAScdAniUseCases"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshExtrudeSymmSource.htm"
 converted: "2026-05-11T17:31:51.648574"
-```
-
 ---
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     'COPYRIGHT DASSAULT SYSTEMES 2000
     '***********************************************************************
     '  Purpose:      Open an analysis document
@@ -30,7 +27,7 @@ converted: "2026-05-11T17:31:51.648574"
 
 ```
 
-```vbscript
+```cpp
     Sub CATMain(#)
 ```vbscript
 ```
@@ -38,7 +35,7 @@ converted: "2026-05-11T17:31:51.648574"
     '-----------------------------------------------------------
     'Optional: allows to find the sample wherever it's installed
 
-```vbscript
+```cpp
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -66,10 +63,10 @@ converted: "2026-05-11T17:31:51.648574"
 ```vbscript
 End If
 ```vbscript
-```vbscript
+```cpp
 '-----------------------------------------------------------
     'Open the CATAnalysis Document
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Surface.CATAnalysis")
 ```
 ```
@@ -79,7 +76,7 @@ End If
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```
 ```

@@ -19,7 +19,7 @@ Option Explicit
 '   CATIA Level:  V5R7 
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
     Dim doc As Document
@@ -72,7 +72,7 @@ Option Explicit
 '   CATIA Level:  V5R7 
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
     Dim doc As Document

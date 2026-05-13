@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Launching CAA V5 Batch"
-category: use-case case"
+category: "use-case case"
 module: "CAABatUseCases"
-tags: ["CATIBatchElementCAA", "CAABatBatchInfrastructure", "CATIBatchCAA", "CATIBatchElementsCAA", "CAABatchInfrastructure", "CAABatBatchLauncherSample"]
-source_file: "Doc/online/CAABatUseCases/CAABatBatchLauncherSample.htmmd"
+tags: "["CATIBatchElementCAA", "CAABatBatchInfrastructure", "CATIBatchCAA", "CATIBatchElementsCAA", "CAABatchInfrastructure", "CAABatBatchLauncherSample"]"
+source_file: "Doc/online/CAABatUseCases/CAABatBatchLauncherSample.htm"
 converted: "2026-05-11T17:33:45.726629"
-```
-
 ---
 # Middleware
 
@@ -67,7 +64,6 @@ Unix |  InstallRootDirectory/CAABatchInfrastructure.edu/Data.d/
 
 The CAABatBatchLauncherSample use case is made of a single function named batchmain located in the CAABatBatchLauncherSample.m module of the CAABatchInfrastructure.edu framework:
 
-The CAABatBatchLauncherSample use case is made of a single function named batchmain located in the CAABatBatchLauncherSample.m module of the CAABatchInfrastructure.edu framework:
 Windows |  InstallRootDirectory/CAABatchInfrastructure.edu/ CAABatBatchLauncherSample.m/
 
 The CAABatBatchLauncherSample use case is made of a single function named batchmain located in the CAABatBatchLauncherSample.m module of the CAABatchInfrastructure.edu framework:
@@ -95,7 +91,6 @@ There are seven logical steps in CAABatBatchLauncherSample:
 
     ...
     CATBatchParameters input_param;
-CATBatchParameters input_param;
     input_param.BeginBuffer("BatchSample", "ParamTest.xml");
 
     input_param.BeginInput(#);
@@ -173,7 +168,6 @@ The CATBatchEventWatcher  class is defined in an other source of this sample (C
 
     ...
     	CATUnicodeString path_param;
-CATUnicodeString path_param;
     	input_param.GetFullPath(path_param);
 
 ```vbscript
@@ -201,7 +195,6 @@ At the end of the batch replay, a notification is received by the CATBatchEventW
     ...
 
     	CATIBatchCAA* outputParamfile =NULL;
-CATIBatchCAA* outputParamfile =NULL;
 ```vbscript
      	if (rc==0)
 
@@ -266,7 +259,6 @@ for ( int ii = 0; ii<fileCount; ii++ )
 
 The batch has ended. The Return Code is 0, so the batch ended with success. We now open the generated output file to analyze its content. We retrieve the generated file thanks to the batch uuid, its unique identifier.
 
-The batch has ended. The Return Code is 0, so the batch ended with success. We now open the generated output file to analyze its content. We retrieve the generated file thanks to the batch uuid, its unique identifier.
 We create an access to the CATIBatchCAA  interface to call the methods that will allow us to retrieves all the parameters of the output file. The list of rename file is retrieved, the number of item counted. In this example, the complete paths of renamed files are read with the _get_Path_ method and printed on the standard output so that the end user can check the sample has done its work correctly.
 
 To check if the sample has done its work correctly, open the $BATCH_HOME directory and check there are the 3 renamed files :

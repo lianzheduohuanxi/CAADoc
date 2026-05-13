@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAAPriChangeHoleForm.frm"
 category: "use-case"
 module: "CAAScdPriUseCases"
-tags: ["CAAScdPriUseCases", "CATIA", "CAAPriChangeHole", "CATIAHole", "CAAPriChangeHoleForm", "CAAPriChangeHoleVBA"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangeHoleFormSource.htmmd"
+tags: "["CAAScdPriUseCases", "CATIA", "CAAPriChangeHole", "CATIAHole", "CAAPriChangeHoleForm", "CAAPriChangeHoleVBA"]"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangeHoleFormSource.htm"
 converted: "2026-05-11T17:31:51.192048"
-```
-
 ---
 tags: ["CAAScdPriUseCases", "CATIA", "CAAPriChangeHole", "CATIAHole", "CAAPriChangeHoleForm", "CAAPriChangeHoleVBA"]
 source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangeHoleFormSource.htmmd"
@@ -16,7 +13,7 @@ converted: "2026-05-11T17:31:51.192048"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGHT DASSAULT SYSTEMES 2004
     ' ***********************************************************************
     '   Purpose:      Changes hole description
@@ -87,7 +84,7 @@ iRow = mfgDescription.RowSel
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' ------------
     ' Loop on the selection content, we expect to find a hole
     ' ------------
@@ -403,7 +400,7 @@ End Sub
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Dim oCATIAFileSys
 ```vbscript
 ```
@@ -435,17 +432,17 @@ End Sub
 
     iDelimiter = "//"
 ```vbscript
-```vbscript
+```cpp
     ' ------------
     ' Get the CATIA file system
     ' ------------
-```vbscript
+```cpp
     Set oCATIAFileSys = CATIA.FileSystem
     ' ------------
 ```
     ' Get the file containing the hole parameters
     ' ------------
-```vbscript
+```cpp
     Set oFile = oCATIAFileSys.GetFile(sDocPath & "/online/CAAScdPriUseCases/macros/CAAPriChangeHole.txt")
     ' ------------
 ```

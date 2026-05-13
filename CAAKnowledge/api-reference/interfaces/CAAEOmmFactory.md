@@ -1,60 +1,78 @@
 ---
 title: "CAAEOmmFactory"
-type: "interface"
+type: "LocalClass"
 module: "CAAOLE4MecMod"
-category: api-reference
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+base: "CATBaseUnknown"
+method_count: 4
+source_file: "CAAOLE4MecMod.edu/CAAOmmImpl.m/LocalInterfaces/CAAEOmmFactory.h"
 ---
+
 # CAAEOmmFactory
 
-**模块**: CAAOLE4MecMod  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
-
-> Local framework
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATBaseUnknown | **模块**: CAAOLE4MecMod | **方法数**: 4
 
 ## 依赖
 
+- `CATBaseUnknown.h`
 - `CATBSTR.h`
 - `CATIAApplication.h`
 - `CAAIAOmmVerticalLine.h`
 
+## 公共方法
+
+### get_Application
+
+```cpp
+HRESULT get_Application(CATIAApplication *& opiApplicationOnCATIA) ;
+```
+
+CATIABase interface methods Returns CATIA as an application
+
+| 参数 | 类型 |
+|------|------|
+| opiApplicationOnCATIA | `CATIAApplication *&` |
+
+
+### get_Name
+
+```cpp
+HRESULT get_Name(CATBSTR & oName) ;
+```
+
+Returns the entity name
+
+| 参数 | 类型 |
+|------|------|
+| oName | `CATBSTR &` |
+
+
+### put_Name
+
+```cpp
+HRESULT put_Name(const CATBSTR & iName) ;
+```
+
+Sets the entity name
+
+| 参数 | 类型 |
+|------|------|
+| iName | `const CATBSTR &` |
+
+
+### GetItem
+
+```cpp
+HRESULT GetItem(const CATBSTR & iName, CATBaseDispatch *& opiBaseOnChildObject) ;
+```
+
+Gives an child exposed object when this object is considered as a container
+
+| 参数 | 类型 |
+|------|------|
+| iName | `const CATBSTR &` |
+| opiBaseOnChildObject | `CATBaseDispatch *&` |
+
+
 ---
 
-## Interface Overview
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-This interface is used in the following use cases:
-
-- [CAAOmmIntegration](../../use-cases/caaommcases/CAAOmmIntegration.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAOLE4MecMod.edu/CAAOmmImpl.m/LocalInterfaces/CAAEOmmFactory.h`

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAAPriCreateEdgeFillet.CATScript"
 category: "use-case"
 module: "CAAScdPriUseCases"
-tags: ["CAAScdPriUseCases", "CATIA", "CAAPriCreateEdgeFillet"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriCreateEdgeFilletSource.htmmd"
+tags: "["CAAScdPriUseCases", "CATIA", "CAAPriCreateEdgeFillet"]"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriCreateEdgeFilletSource.htm"
 converted: "2026-05-11T17:31:51.219986"
-```
-
 ---
 tags: ["CAAScdPriUseCases", "CATIA", "CAAPriCreateEdgeFillet"]
 source_file: "Doc/online/CAAScdPriUseCases/CAAPriCreateEdgeFilletSource.htmmd"
@@ -30,7 +27,7 @@ converted: "2026-05-11T17:31:51.219986"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' ****************************************************************************
     '   Purpose     :  Create two EdgeFillet on the vertical edges of a pad
     '                  and on the top and bottom faces
@@ -47,7 +44,7 @@ converted: "2026-05-11T17:31:51.219986"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
         Dim oPartDocument As PartDocument
@@ -56,7 +53,7 @@ converted: "2026-05-11T17:31:51.219986"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
         Set oPartDocument = CATIA.Documents.Open(sDocPath & "/online/CAAScdPriUseCases/samples/Pad.CATPart")
 
         Dim oPart As Part

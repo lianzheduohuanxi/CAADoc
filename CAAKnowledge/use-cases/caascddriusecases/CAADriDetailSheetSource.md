@@ -19,7 +19,7 @@ Option Explicit
 '   CATIA Level:  V5R7 
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ```
@@ -27,7 +27,7 @@ Sub CATMain(#)
     ' ----------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,"No Doc Path Defined"
@@ -36,7 +36,7 @@ Sub CATMain(#)
     ' ----------------------------------------------------------- 
 
     ' Open the Drawing document 
-```vbscript
+```cpp
     Dim oDoc As Document
     set oDoc = CATIA.Documents.Open(sDocPath & _
                  "/online/CAAScdDriUseCases/samples/CAADriDetailSheet.CATDrawing")
@@ -74,7 +74,7 @@ End Sub
 
 ```
 
-```vbscript
+```cpp
 Option Explicit
 ' COPYRIGHT DASSAULT SYSTEMES 2001
 
@@ -87,7 +87,7 @@ Option Explicit
 '   CATIA Level:  V5R7 
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ```
@@ -95,7 +95,7 @@ Sub CATMain(#)
     ' ----------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,&quot;No Doc Path Defined&quot;
@@ -104,7 +104,7 @@ Sub CATMain(#)
     ' ----------------------------------------------------------- 
 
     ' Open the Drawing document 
-```vbscript
+```cpp
     Dim oDoc As Document
     set oDoc = CATIA.Documents.Open(sDocPath &amp; _
                  &quot;/online/CAAScdDriUseCases/samples/CAADriDetailSheet.CATDrawing&quot;)

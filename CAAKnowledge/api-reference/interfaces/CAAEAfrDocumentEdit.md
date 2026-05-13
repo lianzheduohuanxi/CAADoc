@@ -1,57 +1,39 @@
 ---
 title: "CAAEAfrDocumentEdit"
-type: "interface"
+type: "LocalClass"
 module: "CAAApplicationFrame"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAEAfrDocumentEdit → CATBaseUnknown"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 2
+source_file: "CAAApplicationFrame.edu/CAAAfrSampleDocument.m/LocalInterfaces/CAAEAfrDocumentEdit.h"
 ---
+
 # CAAEAfrDocumentEdit
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAEAfrDocumentEdit → CATBaseUnknown  
-**模块**: CAAApplicationFrame  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> Class which implements the CATIDocumentEdit interface of a new document type (CAASample) It is a data extension of a late type (CAADoc) which is the document suffix. Illustrates: implementation of the CATIDocumentEdit to define a new document type Creation of non standard main window composed of three viewers. Usage: Launch CATIA V5, File/New. In the Dialog Box the new document type appears. Inheritance: CATBaseUnknown (System Framework) Main Method: CreateDefaultWindow GetActiveObject System Framework
 
-> Visualization Framework
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATBaseUnknown | **模块**: CAAApplicationFrame | **方法数**: 2
 
 ## 依赖
 
 - `CATBaseUnknown.h`
 - `CATPathElement.h`
 
+## 公共方法
+
+### Activate
+
+```cpp
+void Activate() ;
+```
+
+
+### Deactivate
+
+```cpp
+void Deactivate() ;
+```
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAApplicationFrame.edu/CAAAfrSampleDocument.m/LocalInterfaces/CAAEAfrDocumentEdit.h`

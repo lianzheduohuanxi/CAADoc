@@ -1,56 +1,31 @@
 ---
 title: "CAAAfrGeoClippingAdn"
-type: "interface"
+type: "LocalClass"
 module: "CAAApplicationFrame"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAAfrGeoClippingAdn → CATBaseUnknown"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 1
+source_file: "CAAApplicationFrame.edu/CAAAfrGeoWksAddin.m/LocalInterfaces/CAAAfrGeoClippingAdn.h"
 ---
+
 # CAAAfrGeoClippingAdn
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAAfrGeoClippingAdn → CATBaseUnknown  
-**模块**: CAAApplicationFrame  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> Class which represents an addin of the CAAAfrGeometryWks Workshop. It implements the CAAIAfrGeometryWksAddin interface which is specified by the workshop as the interface to implement in its addins. Illustrates: creating a workshop addin instantiating command headers Inheritance: CATBaseUnknown (System Framework) Main Method: CreateCommands Instantiates the command headers CreateToolbars Creates toolbars and arranges the commands inside System Framework
 
-> CreateToolbars
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATBaseUnknown | **模块**: CAAApplicationFrame | **方法数**: 1
 
 ## 依赖
 
 - `CATBaseUnknown.h`
 
+## 公共方法
+
+### CreateCommands
+
+```cpp
+void CreateCommands() ;
+```
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAApplicationFrame.edu/CAAAfrGeoWksAddin.m/LocalInterfaces/CAAAfrGeoClippingAdn.h`

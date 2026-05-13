@@ -1,64 +1,82 @@
 ---
 title: "CAAISysCollection"
-type: "interface"
+type: "PublicInterface"
 module: "CAASystem"
-category: api-reference
+base: "CATBaseUnknown"
 method_count: 5
-visibility: "public"
-has_tie_binding: true
-verified: true
+source_file: "CAASystem.edu/PublicInterfaces/CAAISysCollection.h"
 ---
-> **TIE实现**: unknown
 
 # CAAISysCollection
 
-**模块**: CAASystem  
-**分类**: framework  
-**可见性**: public  
-**方法数**: 5
+> Interface which enables to manages the list of objects of the container in the CAAGeometry Document. Inheritance: CATBaseUnknown (System Framework) Main Method: GetNumberOfObjects GetObject AddObject RemoveObject
 
-> System Framework
+**基类**: CATBaseUnknown | **模块**: CAASystem | **方法数**: 5
 
 ## 依赖
 
+- `CATBaseUnknown.h`
 - `CAASysGeoModelInf.h`
 
-## TIE实现
+## 纯虚方法 (接口契约)
 
-**实现文件**:
-- `CAAISysAccess.cpp`
-- `CAAISysCircle.cpp`
-- `CAAISysCircleCenterProperties.cpp`
-- `CAAISysCollection.cpp`
-- `CAAISysColorProperties.cpp`
+### GetNumberOfObjects
+
+```cpp
+virtual HRESULT GetNumberOfObjects(int * oCount) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oCount | `int *` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetObject
+
+```cpp
+virtual HRESULT GetObject(int iRank, CATBaseUnknown ** oObject) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iRank | `int` |
+| oObject | `CATBaseUnknown **` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### AddObject
+
+```cpp
+virtual HRESULT AddObject(CATBaseUnknown * iObject) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iObject | `CATBaseUnknown *` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### RemoveObject
+
+```cpp
+virtual HRESULT RemoveObject(CATBaseUnknown * iObject) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iObject | `CATBaseUnknown *` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### Empty
+
+```cpp
+virtual HRESULT Empty() = 0 ;
+```
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
 
 ---
 
-## Interface Overview
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-- [3D PLM Enterprise Architecture](../../use-cases/caaafrcases/CAAAfrSampleCustomCommandHeader.md)
-- [3D PLM Enterprise Architecture](../../use-cases/caaafrcases/CAAAfrSampleEditorHdr.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAASystem.edu/PublicInterfaces/CAAISysCollection.h`

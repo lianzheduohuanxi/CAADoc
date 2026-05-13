@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Connecting Wires"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsConnectCurve", "CATICGMTopSimilarCurve"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopConnectCurve.htmmd"
+tags: "["CAAGMOperatorsInterfaces", "CAAGMOperatorsConnectCurve", "CATICGMTopSimilarCurve"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopConnectCurve.htm"
 converted: "2026-05-11T17:33:49.117320"
-```
-
 ---
 tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsConnectCurve", "CATICGMTopSimilarCurve"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcTopConnectCurve.htmmd"

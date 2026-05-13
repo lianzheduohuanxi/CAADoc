@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Simplified Camshaft"
 category: "use-case"
 module: "CAAScdPriUseCases"
-tags: ["CAAPriCamshaft", "CATIA", "CAAPriCreateCamshaft", "CAAscdPriUseCases"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriCamShaft.htmmd"
+tags: "["CAAPriCamshaft", "CATIA", "CAAPriCreateCamshaft", "CAAscdPriUseCases"]"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriCamShaft.htm"
 converted: "2026-05-11T17:31:51.170595"
-```
-
 ---
 |
 ## Part Interfaces
@@ -21,7 +18,7 @@ converted: "2026-05-11T17:31:51.170595"
   This macro shows you how to create a simplified camshaft using Part Design scripting functionnalities. It allows you to create a camshaft for a four cylinder engine. This macro uses the Pad, Pattern, Sketch, and Constraint object capabilities.It also shows how to organize a macro with a main program, and how to create Sub that can be called several times.The simplified camshaft created is as follows: ![](images/CAAScdPriCamShaft1.gif) The cam shaft is made of five bearings, four cam sets, and a driving wheel. ![](images/CAAScdPriCamShaftElements.gif) The bearings are made of a pad and a pattern that duplicates the pad. Each cam set is made of two identical cams separated by a pin. The cam sets are each rotated of 90 degrees about the camshaft axis. The driving wheel is a simple cylinder.
 ---|---
 ```
-```vbscript
+```cpp
 This macro shows you how to create a simplified camshaft using Part Design scripting functionnalities. It allows you to create a camshaft for a four cylinder engine. This macro uses the Pad, Pattern, Sketch, and Constraint object capabilities.It also shows how to organize a macro with a main program, and how to create Sub that can be called several times.The simplified camshaft created is as follows: ![](images/CAAScdPriCamShaft1.gif) The cam shaft is made of five bearings, four cam sets, and a driving wheel. ![](images/CAAScdPriCamShaftElements.gif) The bearings are made of a pad and a pattern that duplicates the pad. Each cam set is made of two identical cams separated by a pin. The cam sets are each rotated of 90 degrees about the camshaft axis. The driving wheel is a simple cylinder.
   CAAPriCreateCamshaft is launched in CATIA [1]. No open document is needed. [CAAPriCamshaft.CATScript](CAAPriCamShaftSource.md) is located in the CAAscdPriUseCases module. [Execute macro](macros/CAAPriCamShaft.CATScript).
 ```
@@ -161,7 +158,7 @@ The cam sketch profile is made of two circle arcs and two line segments. Constra
     ...
 The cam sketch profile is made of two circle arcs and two line segments. Constraints are set to fix the circles, to make the line segments tangent to the circles, and to make circle arc and line segment end points coincide.
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -195,7 +192,7 @@ The cam sketch profile is made of two circle arcs and two line segments. Constra
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
         Set oPartDocument = CATIA.Documents.Add ( "Part" )
         Set oPart         = oPartDocument.Part
         Set oPartBody     = oPart.MainBody
@@ -209,7 +206,7 @@ The cam sketch profile is made of two circle arcs and two line segments. Constra
 ```vbscript
 ```vbscript
         ' -- Shading view Mode
-```vbscript
+```cpp
         CATIA.ActiveWindow.ActiveViewer.RenderingMode = 1
 
 ```
@@ -223,7 +220,7 @@ The cam sketch profile is made of two circle arcs and two line segments. Constra
 ```vbscript
 ```vbscript
 ' -- Shading view Mode
-```vbscript
+```cpp
 CATIA.ActiveWindow.ActiveViewer.RenderingMode = 1
 ```
 ```
@@ -237,7 +234,7 @@ CATIA.ActiveWindow.ActiveViewer.RenderingMode = 1
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
         CATIA.ActiveWindow.ActiveViewer.Reframe
 
 ```
@@ -246,7 +243,7 @@ CATIA.ActiveWindow.ActiveViewer.RenderingMode = 1
 ```
 
 ```vbscript
-```vbscript
+```cpp
 CATIA.ActiveWindow.ActiveViewer.Reframe
         msgbox "Create First Cam Set"
 ```
@@ -258,7 +255,7 @@ CATIA.ActiveWindow.ActiveViewer.Reframe
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
         CATIA.ActiveWindow.ActiveViewer.Reframe
 
 ```
@@ -267,7 +264,7 @@ CATIA.ActiveWindow.ActiveViewer.Reframe
 ```
 
 ```vbscript
-```vbscript
+```cpp
 CATIA.ActiveWindow.ActiveViewer.Reframe
         msgbox "Create Second Cam Set"
 ```
@@ -279,7 +276,7 @@ CATIA.ActiveWindow.ActiveViewer.Reframe
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
         CATIA.ActiveWindow.ActiveViewer.Reframe
 
 ```
@@ -288,7 +285,7 @@ CATIA.ActiveWindow.ActiveViewer.Reframe
 ```
 
 ```vbscript
-```vbscript
+```cpp
 CATIA.ActiveWindow.ActiveViewer.Reframe
         msgbox "Create Third Cam Set"
 ```
@@ -300,7 +297,7 @@ CATIA.ActiveWindow.ActiveViewer.Reframe
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
         CATIA.ActiveWindow.ActiveViewer.Reframe
 
 ```
@@ -309,7 +306,7 @@ CATIA.ActiveWindow.ActiveViewer.Reframe
 ```
 
 ```vbscript
-```vbscript
+```cpp
 CATIA.ActiveWindow.ActiveViewer.Reframe
         msgbox "Create Fourth Cam Set"
 ```
@@ -321,7 +318,7 @@ CATIA.ActiveWindow.ActiveViewer.Reframe
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
         CATIA.ActiveWindow.ActiveViewer.Reframe
 
 ```
@@ -330,7 +327,7 @@ CATIA.ActiveWindow.ActiveViewer.Reframe
 ```
 
 ```vbscript
-```vbscript
+```cpp
 CATIA.ActiveWindow.ActiveViewer.Reframe
         msgbox "Create Driving Wheel"
 ```
@@ -493,10 +490,7 @@ The pad to be patterned is a cylinder defined using a sketch that is first added
                                                                 iCylinderSpacing,     _
                                                                 0.0,                  _
                                                                 1,                    _
-                                                                1,                    _
                                                                 oRefPlaneXY,          _
-                                                                oRefPlaneXY,          _
-                                                                True,                 _
                                                                 True,                 _
                                                                 0.0)
 ```vbscript

@@ -30,7 +30,7 @@ This use case has shown how to create coping between structure objects.
 *Copyright  1999-2010, Dassault Systmes. All rights reserved.*
 
 ```vbscript
-```vbscript
+```cpp
 Sub CATMain(#)
 Dim StrWorkbench As StrWorkbench
 Dim strFactory As StrObjectFactory
@@ -51,7 +51,7 @@ Set strMembers = rootProduct.GetTechnologicalObject("StructureMembers")
 
 ```vbscript
 'Get The Factory from Selection Method
-```vbscript
+```cpp
 Dim PlateToNibble As StrPlate
 Set PlateToNibble = strPlates.Item("Deck_014.2")
 
@@ -60,7 +60,7 @@ Set PlateSelection = CATIA.ActiveDocument.Selection
 PlateSelection.Add PlateToNibble
 ```
   
-```vbscript
+```cpp
 Dim FactoryForPlate As StrFeatureFactory
 Set FactoryForPlate = PlateSelection.FindObject("CATIAStrFeatureFactory")
 ```
@@ -102,7 +102,7 @@ NibblingFeature2.SubType = "CurrCurr"
 'Case2: When Member is limited by 2 Members and One Plate
 
 'Get the Factory from Selection Method
-```vbscript
+```cpp
 Dim MembertoNibble1 As StrMember
 Set MembertoNibble1 = strMembers.Item("BottShell_LStf_003.1")
 
@@ -111,7 +111,7 @@ Set MemberSelection = CATIA.ActiveDocument.Selection
 MemberSelection.Add MembertoNibble1
 ```
 
-```vbscript
+```cpp
 Dim FactoryForMember As StrFeatureFactory
 Set FactoryForMember = MemberSelection.FindObject("CATIAStrFeatureFactory")
 
@@ -153,7 +153,7 @@ Set NibblingFeature5 = FactoryForMember.AddNibbling(Listoflimits5, "Remove")
 'Case3: When Member is limited by Lateral Face of Plate
 
 'Get the Factory from Selection Method
-```vbscript
+```cpp
 Dim MembertoNibble2 As StrMember
 Set MembertoNibble2 = strMembers.Item("Deck_TStf_005.1")
 
@@ -162,7 +162,7 @@ Set Member2Sel = CATIA.ActiveDocument.Selection
 Member2Sel.Add MembertoNibble2
 ```
 
-```vbscript
+```cpp
 Dim FactoryForMember2 As StrFeatureFactory
 Set FactoryForMember2 = Member2Sel.FindObject ("CATIAStrFeatureFactory")
 

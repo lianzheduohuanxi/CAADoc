@@ -23,7 +23,7 @@ converted: "2026-05-11T11:27:02.519442"
 
 ' ----------------------------------------------------------- 
 ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
   sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -32,12 +32,12 @@ converted: "2026-05-11T11:27:02.519442"
 ```
 ' ----------------------------------------------------------- 
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 'Open the analysis document
 ```
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Surface.CATAnalysis")
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
@@ -117,7 +117,7 @@ End Sub
 
 ```
 
-```vbscript
+```cpp
 ' COPYRIGHT DASSAULT SYSTEMES 2000
 
 ' ***********************************************************************
@@ -134,7 +134,7 @@ End Sub
 
 ' ----------------------------------------------------------- 
 ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
   sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -143,12 +143,12 @@ End Sub
 ```
 ' ----------------------------------------------------------- 
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 'Open the analysis document
 ```
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online/CAAScdAniUseCases/samples/Surface.CATAnalysis&quot;)
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 

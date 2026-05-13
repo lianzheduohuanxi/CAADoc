@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Making a Component Displayable With CATI3DGeoVisu"
-category: use-case case"
+category: "use-case case"
 module: "CAAVisUseCases"
-tags: ["CATI3DGeoVisu", "CAASysLine", "CAASysPolyline", "CAAEVisVisuCircle", "CAAVisualization", "CAAVisGeoModel", "CAASysEllipse", "CATIA", "CAAEVisModelEvents", "CAAIModelEvents", "CAAGeometry", "CAAISysCircle", "CAAVisModelEvents", "CAASysPoint", "CAASysCircle", "CAASysSampRootObj", "CATIModelEvents", "CAASysPlane", "CAASysGeomRootObj"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleCATIVisu.htmmd"
+tags: "["CATI3DGeoVisu", "CAASysLine", "CAASysPolyline", "CAAEVisVisuCircle", "CAAVisualization", "CAAVisGeoModel", "CAASysEllipse", "CATIA", "CAAEVisModelEvents", "CAAIModelEvents", "CAAGeometry", "CAAISysCircle", "CAAVisModelEvents", "CAASysPoint", "CAASysCircle", "CAASysSampRootObj", "CATIModelEvents", "CAASysPlane", "CAASysGeomRootObj"]"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleCATIVisu.htm"
 converted: "2026-05-11T17:31:52.066701"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -58,7 +55,7 @@ CAAVisGeoModel contains a series of C++ classes, each of them being an extension
 CAAVisGeoModel contains a series of C++ classes, each of them being an extension of a component representing a geometric component, such as a point, a line, a circle, or an ellipse. Each extension implements the _CATI3DGeoVisu_ interface to make the corresponding component displayable in a 3D viewer. This article focuses on the way the circle component implements _CATI3DGeoVisu_. In addition, a single extension class implements the _CATIModelEvents_ interface for all the geometric components. It is also described.
 See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)" use case for a detailed description of how this use case should be launched. For the specific scenario :
 
-```vbscript
+```cpp
 Launch CATIA. When the application is ready, follow scenarios described below:
 
 ```
@@ -76,7 +73,6 @@ Launch CATIA. When the application is ready, follow scenarios described below:
 
 CAAVisGeoModel code is located in the CAAVisGeoModel.m use case module of the CAAVisualization.edu framework:
 
-CAAVisGeoModel code is located in the CAAVisGeoModel.m use case module of the CAAVisualization.edu framework:
 Windows | `InstallRootDirectory/CAAVisualization.edu/CAAVisGeoModel.m`
 
 CAAVisGeoModel code is located in the CAAVisGeoModel.m use case module of the CAAVisualization.edu framework:
@@ -174,7 +170,6 @@ The main points of this source file are:
 
 There are two possibilities for creating the representation of a circle, that is, using the _CAT3DArcCircleRep_ class, or using a custom representation. This latter is detailed here.
 
-There are two possibilities for creating the representation of a circle, that is, using the _CAT3DArcCircleRep_ class, or using a custom representation. This latter is detailed here.
   1. Declaring the representation to return
 
          CATRep * CAAEVisVisuCircle::**BuildRep**(#)
@@ -238,7 +233,7 @@ The circle graphic primitive is an instance of _CAT3DArcCircleGP_. Its construct
          ...
 The circle graphic primitive is an instance of _CAT3DArcCircleGP_. Its constructor needs the four parameters retrieved from the circle component.
 4. Creating and filling in the representation
-```vbscript
+```cpp
              pCircleRep = new **CAT3DCustomRep**(#);
 
 ```
@@ -305,7 +300,7 @@ class CAAEVisModelEvents : public **CATExtIModelEvents**
 
 ---
 
-```vbscript
+```cpp
 CAAEVisModelEvents(const CAAEVisModelEvents &iObjectToCopy);
 As any class that makes up a component [2], its header file includes the `CATDeclareClass` macro. None of the _CATIModelEvents_ methods needs to be redefined. Note that the copy constructor is declared as private, and is not implemented. This prevents the compiler from creating a public one without you know. This is to prevent clients from creating instances from an existing one, that they normally should not handle, except using interface pointers.
 
@@ -317,9 +312,9 @@ As any class that makes up a component [2], its header file includes the `CATDec
          **TIE_CATIModelEvents**(CAAEVisModelEvents);
 
          **CATBeginImplementClass**(CAAEVisModelEvents, DataExtension, CATBaseUnknown, CAASysPoint);
-```vbscript
+```cpp
          CATAddClassExtension(CAASysSampRootObj);
-```vbscript
+```cpp
          CATAddClassExtension(CAASysGeomRootObj);
          CATAddClassExtension(CAASysLine);
          CATAddClassExtension(CAASysEllipse);
@@ -329,9 +324,9 @@ As any class that makes up a component [2], its header file includes the `CATDec
 ```
 
          **CATAddClassExtension**(CAASysCircle);
-```vbscript
+```cpp
 CATAddClassExtension(CAASysGeomRootObj);
-```vbscript
+```cpp
 CATAddClassExtension(CAASysLine);
 CATAddClassExtension(CAASysEllipse);
 CATAddClassExtension(CAASysPlane);
@@ -342,9 +337,9 @@ CATAddClassExtension(CAASysPlane);
 
          **CATEndImplementClass**(CAAEVisModelEvents);
 
-```vbscript
+```cpp
 CATAddClassExtension(CAASysPlane);
-```vbscript
+```cpp
 CATAddClassExtension(CAASysPolyline);
 ```
 

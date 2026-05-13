@@ -89,29 +89,29 @@ Thus we saw how to read a CATProduct document, retrieve the objects we are
 
 ```vbscript
 ... 
-```vbscript
+```cpp
    Set objCATIAV5Document0 = CATIA.ActiveDocument
 
    '//---------- Get Arrworkbench from current document
 ```
-```vbscript
+```cpp
    Set objCATIAV5ArrWorkbench0 = objCATIAV5Document0.GetWorkbench(&quot;ArrWorkbench&quot;) 
 
    '//---------- Get current selection
 ```
-```vbscript
+```cpp
    Set objCATIAV5Selection = objCATIAV5Document0.Selection
    Dim objSysLineProduct As ArrSystemLineProduct
    Dim objBendableString As ArrBendableString
 
    ' Find from the selection list, objects that conform to the CATIAArrSystemLineProduct interface.
 ```
-```vbscript
+```cpp
    Set objSysLineProduct = objCATIAV5Selection.FindObject(&quot;CATIAArrSystemLineProduct&quot;)
 
    ' Get the count of subproducts, actual subproduct (methods of CATIArrSystemLineProduct interface)
 ```
-```vbscript
+```cpp
    Dim intNumOfSubProducts As integer
    intNumOfSubProducts = objSysLineProduct.GetSubProductsCount(&quot;CATIAArrBendableString&quot;) 
 ```

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Using the Basic Topological Operators"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperatorsInterfaces", "CATICGMContainer", "CAADoc", "CATICGMTopPointOperator", "CAATopSpline", "CATICGMObject", "CATICGMTopSplineOperator", "CAAGMModelGemBrowser", "CAATGMOperatorsInterfaces", "CATICGMTopLineOperator", "CAAGMOperatorsSpline", "CATICGMSplineBody", "CATICGMLengthFromBodyOnWire"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopSpline.htmmd"
+tags: "["CAAGMOperatorsInterfaces", "CATICGMContainer", "CAADoc", "CATICGMTopPointOperator", "CAATopSpline", "CATICGMObject", "CATICGMTopSplineOperator", "CAAGMModelGemBrowser", "CAATGMOperatorsInterfaces", "CATICGMTopLineOperator", "CAAGMOperatorsSpline", "CATICGMSplineBody", "CATICGMLengthFromBodyOnWire"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopSpline.htm"
 converted: "2026-05-11T17:33:49.328293"
-```
-
 ---
 tags: ["CAAGMOperatorsInterfaces", "CATICGMContainer", "CAADoc", "CATICGMTopPointOperator", "CAATopSpline", "CATICGMObject", "CATICGMTopSplineOperator", "CAAGMModelGemBrowser", "CAATGMOperatorsInterfaces", "CATICGMTopLineOperator", "CAAGMOperatorsSpline", "CATICGMSplineBody", "CATICGMLengthFromBodyOnWire"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcTopSpline.htmmd"
@@ -170,7 +167,7 @@ CATICGMTopSplineOperator *pSplineOp =
 NULL,   // no curvature imposition
 aImposition);
 if (NULL==pSplineOp)                    // in case of problem
-```vbscript
+```cpp
       CATCloseCGMContainer(piGeomFactory);  // close the factory and return
       return(2);
 
@@ -178,7 +175,7 @@ if (NULL==pSplineOp)                    // in case of problem
 
     }
     // b- run the operator
-```vbscript
+```cpp
 CATCloseCGMContainer(piGeomFactory);  // close the factory and return
 ```vbscript
 return(2);
@@ -212,7 +209,7 @@ for (int i=0;i <nbpts; i++)
       aTgtBody[i] = **::CATCGMCreateTopLineFromDirection**(piGeomFactory,
 
                                                     &topdata,
-```vbscript
+```cpp
 for (int i=0;i <nbpts; i++)
 double length = pComputedTangents[i].Norm(#);
 aTgtBody[i] = **::CATCGMCreateTopLineFromDirection**(piGeomFactory,
@@ -234,9 +231,7 @@ Computing the Length The `CATICGMLengthFromBodyOnWire` operator is constructed b
     // 5- length computation
     //
     // between two points on the first spline
-    // between two points on the first spline
     CATICGMLengthFromBodyOnWire* pLengthOp=
-CATICGMLengthFromBodyOnWire* pLengthOp=
     CATCGMCreateLengthFromBodyOnWire(piGeomFactory,
 
     &topdata,
@@ -272,7 +267,7 @@ if (NULL != pLengthOp)
     // between the same points on the second spline
 pLengthOp->Release(#);
 pLengthOp = NULL;
-```vbscript
+```cpp
     pLengthOp =CATCGMCreateLengthFromBodyOnWire(piGeomFactory,
 
 ```
@@ -333,7 +328,7 @@ Removing the Unused Bodies The point bodies have only been constructed to be use
       piGeomFactory->**Remove**(aPoints[i],CATICGMContainer::RemoveDependancies);
     }
 
-```vbscript
+```cpp
 for (i=0;i <nbpts; i++)
 piGeomFactory->**Remove**(aPoints[i],CATICGMContainer::RemoveDependancies);
     delete [] aPoints;
@@ -351,7 +346,7 @@ if(1==toStore)
        ofstream filetowrite(pfileName, ios::binary ) ;
 
     #else
-```vbscript
+```cpp
 if(1==toStore)
 ofstream filetowrite(pfileName, ios::binary ) ;
        ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;

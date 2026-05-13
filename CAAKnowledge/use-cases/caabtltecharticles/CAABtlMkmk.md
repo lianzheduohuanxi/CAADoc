@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "The Workbench Code Builder mkmk"
-category: tech-article
+category: "tech-article"
 module: "CAABtlTechArticles"
-tags: []
-source_file: "Doc/online/CAABtlTechArticles/CAABtlMkmk.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAABtlTechArticles/CAABtlMkmk.htm"
 converted: "2026-05-11T17:33:46.154216"
-```
-
 ---
 tags: []
 source_file: "Doc/online/CAABtlTechArticles/CAABtlMkmk.htmmd"

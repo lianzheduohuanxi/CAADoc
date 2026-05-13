@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Export/Import of Loads"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CAAAniPreProExportImportLoads", "CATIA", "CAAScdAniUseCases", "CATIAAnalysisManager"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProExportImportLoads.htmmd"
+tags: "["CAAAniPreProExportImportLoads", "CATIA", "CAAScdAniUseCases", "CATIAAnalysisManager"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProExportImportLoads.htm"
 converted: "2026-05-11T17:31:51.800927"
-```
-
 ---
 ## Analysis Modeler
 
@@ -39,7 +36,7 @@ This use case shows how to export computed loads from analysis assembly to the s
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     sOut = CATIA.SystemService.Environ("CATTemp")
 ```
@@ -50,7 +47,7 @@ This use case shows how to export computed loads from analysis assembly to the s
 ```
 
 ```vbscript
-```vbscript
+```cpp
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 ```
@@ -70,7 +67,7 @@ This use case shows how to export computed loads from analysis assembly to the s
 ```vbscript
     ' -----------------------------------------------------------
     ' Open the Analysis document
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Assembled_Loads_Solutions.CATAnalysis")
     Set analysisDocument1 = CATIA.Documents.Open(sFilePath)
 ```
@@ -205,11 +202,11 @@ According to the general [ Analysis Document](../use-cases/caascdaniusecases/CAA
 ```
 
 ```vbscript
-```vbscript
+```cpp
               Set manager = selection1.FindObject("CATIAAnalysisManager")
 ```vbscript
 ```
-```vbscript
+```cpp
              'Export the computed loads
               fullPath = sout + sSep + "ComputedLoads"+ CStr(i) + ".CATAnalysisExport"
 ```

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Basic Topological Operators"
-category: use-case case"
+category: "use-case case"
 module: "CAATopUseCases"
-tags: ["CAAATopSpline", "CAAGemBrowser", "CATICGMObject", "CAATopSpline", "CAABopSpine", "CAATopologicalOperators", "CATICGMContainer"]
-source_file: "Doc/online/CAATopUseCases/CAATopSpline.htmmd"
+tags: "["CAAATopSpline", "CAAGemBrowser", "CATICGMObject", "CAATopSpline", "CAABopSpine", "CAATopologicalOperators", "CATICGMContainer"]"
+source_file: "Doc/online/CAATopUseCases/CAATopSpline.htm"
 converted: "2026-05-11T17:31:50.766842"
-```
-
 ---
 # Geometric Modeler
 
@@ -96,7 +93,6 @@ Moreover, the use case shows an example of the curve length computation.
 
 To launch CAATopSpline, you will need to set up the build time environment, then compile CAATopSpline.m along with its prerequisites, set up the run time environment, and then execute the use case [1].
 
-To launch CAATopSpline, you will need to set up the build time environment, then compile CAATopSpline.m along with its prerequisites, set up the run time environment, and then execute the use case [1].
 ```vbscript
 If you simply type CAATopSpline with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example:
 
@@ -146,7 +142,6 @@ There are six steps in CAATopSpline.cpp:
 
 The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
 
-The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
     CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**(#) ;
 ```vbscript
     if (NULL==piGeomFactory) return (1);
@@ -160,7 +155,6 @@ The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject. 
 
 To operate in this way, you only have to call the global function `::CATCreateTopPoint` or `::CATCreateTopSpline`.
 
-To operate in this way, you only have to call the global function `::CATCreateTopPoint` or `::CATCreateTopSpline`.
 In case of the spline body creation, the created body is retrieved, but you cannot have access to the tangent or curvature at the passing points. To have them, you must use the operator, as in the next section.
 
 The non detailed steps created or loaded the geometric factory (`piGeomFactory`).
@@ -264,7 +258,7 @@ CATTopSplineOperator *pSplineOp =
 NULL,   _// no curvature imposition_
 aImposition);
 if (NULL==pSplineOp)  _// in case of problem_
-```vbscript
+```cpp
       CATCloseCGMContainer(piGeomFactory);  _// close the factory_ _and return_
       return(2);
 
@@ -273,7 +267,7 @@ if (NULL==pSplineOp)  _// in case of problem_
     }_// b- run the operator_
 ```vbscript
 if (NULL==pSplineOp)  _// in case of problem_
-```vbscript
+```cpp
 CATCloseCGMContainer(piGeomFactory);  _// close the factory_ _and return_
 return(2);
 ```
@@ -300,7 +294,7 @@ for (int i=0;i <nbpts; i++)
       aTgtBody[i] = **::CATCreateTopLineFromDirection**(piGeomFactory,
 
                                                     &topdata,
-```vbscript
+```cpp
 for (int i=0;i <nbpts; i++)
 double length = pComputedTangents[i].Norm(#);
 aTgtBody[i] = **::CATCreateTopLineFromDirection**(piGeomFactory,
@@ -444,7 +438,7 @@ _//
       piGeomFactory->**Remove**(aPoints[i],CATICGMContainer::RemoveDependancies);
     }
 
-```vbscript
+```cpp
 for (i=0;i <nbpts; i++)
 piGeomFactory->**Remove**(aPoints[i],CATICGMContainer::RemoveDependancies);
     delete [] aPoints;
@@ -467,13 +461,13 @@ The use case ends with the closure of the geometry factory, done by the `::CATCl
 
      {
     #ifdef _WINDOWS_SOURCE
-```vbscript
+```cpp
 if(1==toStore)
        ofstream filetowrite(pfileName, ios::binary ) ;
 ```
 
     #else
-```vbscript
+```cpp
 if(1==toStore)
 ofstream filetowrite(pfileName, ios::binary ) ;
        ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;

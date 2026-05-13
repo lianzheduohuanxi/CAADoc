@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Retrieving Weld Information on Member Objects"
 category: "use-case"
 module: "CAAScdStrUseCases"
-tags: ["CATIA", "CATIASfmMember", "CAAScdStrUseCases", "CAAStrWeldInfoOnMembers"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrWeldInfoOnMembers.htmmd"
+tags: "["CATIA", "CATIASfmMember", "CAAScdStrUseCases", "CAAStrWeldInfoOnMembers"]"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrWeldInfoOnMembers.htm"
 converted: "2026-05-11T17:31:50.908610"
-```
-
 ---
 |
 ## Structure Design
@@ -26,7 +23,6 @@ converted: "2026-05-11T17:31:50.908610"
 
   CAAStrWeldInfoOnMembers includes the following steps:
 
-CAAStrWeldInfoOnMembers includes the following steps:
   1. Prolog
   2. Retrieving Factory Object from Part Document
   3. Getting the Manager from Factory
@@ -43,12 +39,12 @@ CAAStrWeldInfoOnMembers includes the following steps:
 
 10. Retrieving Weld Features on the Member with No Operating Element (Weld Use Case 2)
 11. Retrieving Weld Attributes of Weld Use Case 2 Features
-```vbscript
+```cpp
 Opens the CAAStrWeldInfoOnMembers.CATPart in CATIA.
 
 ```vbscript
 ```
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -60,7 +56,7 @@ Opens the CAAStrWeldInfoOnMembers.CATPart in CATIA.
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
     Set ObjPart = CATIA.ActiveDocument.Part
 
 ```
@@ -73,7 +69,7 @@ Opens the CAAStrWeldInfoOnMembers.CATPart in CATIA.
 #### Retrieving Factory Object from Part Document
 
 ```vbscript
-```vbscript
+```cpp
 Set ObjPart = CATIA.ActiveDocument.Part
 ```
 ```
@@ -217,7 +213,7 @@ This step describes how to get the collection of Split Members and how to get on
 This step describes how to get the SfmStiffener object from Reference of split stiffener.****
 
 ```vbscript
-```vbscript
+```cpp
      Set SelctionObj = CATIA.ActiveDocument.Selection
 ```vbscript
 ```
@@ -230,7 +226,7 @@ This step describes how to get the SfmStiffener object from Reference of split s
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
     Set DeckMember1 = SelctionObj.FindObject("CATIASfmMember")
 
 ```
@@ -243,7 +239,7 @@ This step describes how to get the SfmStiffener object from Reference of split s
 #### Retrieving Super Plate which is Used as Support for Member
 
 ```vbscript
-```vbscript
+```cpp
 Set DeckMember1 = SelctionObj.FindObject("CATIASfmMember")
 ```
 ```
@@ -319,7 +315,6 @@ This step describes how to get the collection of Weld features with operating el
 
 This step describes how to get the weld information set on the Operated split Member with operating element.
 
-This step describes how to get the weld information set on the Operated split Member with operating element.
     ustrWeldTypeUC1 = WeldUC1.WeldType
     ustrAddedMaterialUC1 = WeldUC1.AddedMaterial
     ustrFitUpUC1 = WeldUC1.FitUp
@@ -358,7 +353,6 @@ This step describes how to get the collection of Weld features with no operating
 
 This step describes how to get the weld information set on the Operated split Member with no operating element.
 
-This step describes how to get the weld information set on the Operated split Member with no operating element.
     ustrWeldTypeUC2 = WeldUC2.WeldType
     ustrAddedMaterialUC2 = WeldUC2.AddedMaterial
     ustrFitUpUC2 = WeldUC2.FitUp

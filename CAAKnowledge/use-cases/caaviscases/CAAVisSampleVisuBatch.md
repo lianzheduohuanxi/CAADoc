@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Constructing Graphic Representations in Batch Mode"
-category: use-case case"
+category: "use-case case"
 module: "CAAVisUseCases"
-tags: ["CATI3DGeoVisu", "CATIPrtContainer", "CAAGviVisuBatchuse", "CAAGviVisuBatch", "CAAVisuBatch", "CAAGeometryVisualization"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleVisuBatch.htmmd"
+tags: "["CATI3DGeoVisu", "CATIPrtContainer", "CAAGviVisuBatchuse", "CAAGviVisuBatch", "CAAVisuBatch", "CAAGeometryVisualization"]"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleVisuBatch.htm"
 converted: "2026-05-11T17:31:52.235473"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -64,7 +61,6 @@ where `InputPart` is the complete path of a Part document. You can use the follo
 
 The CAAGviVisuBatch use case is made of a single file, _CAAGviVisuBatch.cpp_ , located in the CAAGviVisuBatch.m module of the CAAGeometryVisualization.edu framework:
 
-The CAAGviVisuBatch use case is made of a single file, _CAAGviVisuBatch.cpp_ , located in the CAAGviVisuBatch.m module of the CAAGeometryVisualization.edu framework:
 Windows | `InstallRootDirectory/CAAGeometryVisualization.edu/CAAGviVisuBatch.m/`
 
 The CAAGviVisuBatch use case is made of a single file, _CAAGviVisuBatch.cpp_ , located in the CAAGviVisuBatch.m module of the CAAGeometryVisualization.edu framework:
@@ -144,7 +140,7 @@ On the _CATVisManager_ you attach to the _CATVisManager_ :
     ...
         **CATI3DGeoVisu** * pIVisuOnRoot =NULL ;
         rc = spSpecObjectOnMechanicalPart->QueryInterface(IID_CATI3DGeoVisu,
-```vbscript
+```cpp
 rc = spSpecObjectOnMechanicalPart->QueryInterface(IID_CATI3DGeoVisu,
 ```
 
@@ -180,7 +176,6 @@ After the `AttachTo` method, it is possible to retrieve the graphic representati
 ```vbscript
      rc = pVisManager->**DetachFrom**(pVP,0) ;
 
-rc = pVisManager->**DetachFrom**(pVP,0) ;
 ```
 
      pVP->Release(#);

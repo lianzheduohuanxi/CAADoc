@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Inserting Commands in Contextual Menus"
-category: use-case case"
+category: "use-case case"
 module: "CAAAfrUseCases"
-tags: ["CAASysEllipse", "CAAAfrEllipseHdr", "CAACafContextualMenu", "CAA2", "CAAEMmrCombinedCurveContSubMenu", "CAAECafContextualMenuEllipse", "CAACafContextualMenuCircleStr", "CAAAfrCircleHdr", "CAAAfrGeometryWks", "CAAGeometry", "CAACafContextualMenuEllipseStr", "CAACafContextualMenuSep", "CATIContextualMenu", "CATIA", "CATIAApplicationFrm", "CAACATIAApplicationFrm", "CATIAApplicationFrame"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleContextualMenu.htmmd"
+tags: "["CAASysEllipse", "CAAAfrEllipseHdr", "CAACafContextualMenu", "CAA2", "CAAEMmrCombinedCurveContSubMenu", "CAAECafContextualMenuEllipse", "CAACafContextualMenuCircleStr", "CAAAfrCircleHdr", "CAAAfrGeometryWks", "CAAGeometry", "CAACafContextualMenuEllipseStr", "CAACafContextualMenuSep", "CATIContextualMenu", "CATIA", "CATIAApplicationFrm", "CAACATIAApplicationFrm", "CATIAApplicationFrame"]"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleContextualMenu.htm"
 converted: "2026-05-11T17:17:55.668604"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -94,7 +91,6 @@ See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The C
 
 The CAACafContextualMenu use case is made of one single class, the CAAECafContextualMenuEllipse class, located in the CAACafContextualMenu.m module of the CAACATIAApplicationFrm.edu framework:
 
-The CAACafContextualMenu use case is made of one single class, the CAAECafContextualMenuEllipse class, located in the CAACafContextualMenu.m module of the CAACATIAApplicationFrm.edu framework:
 Windows | `InstallRootDirectory/CAACATIAApplicationFrm.edu/CAACafContextualMenu.m/`
 
 The CAACafContextualMenu use case is made of one single class, the CAAECafContextualMenuEllipse class, located in the CAACafContextualMenu.m module of the CAACATIAApplicationFrm.edu framework:
@@ -173,7 +169,6 @@ The CAAECafContextualMenuEllipse class states that it implements the _CATIContex
 
 The constructor contains the main code, and the destructor is empty.
 
-The constructor contains the main code, and the destructor is empty.
   3. Updating the Interface Dictionary
 
 Update the interface dictionary, that is a file named, for example, CAACATIAApplicationFrm.dico, whose directory's pathname is concatenated at run time in the CATDictionaryPath environment variable, and containing the following declaration to state that the CAASysEllipse component implements the _CATIContextualMenu_ interface, and whose code is located in the libCAACafContextualMenu shared library or DLL.
@@ -196,16 +191,16 @@ In this use case, the contextual menu associated with the UIActive object is fir
           **NewAccess**(CATCmdStarter,pStEllipse,CAACafContextualMenuEllipseStr);
 CATExtIContextualMenu::**GetContextualMenu**(pMenu);
 if ( NULL != pMenu )
-```vbscript
+```cpp
           NewAccess(CATCmdStarter,pStCircle,CAACafContextualMenuCircleStr);
           NewAccess(CATCmdSeparator,pSep1,CAACafContextualMenuSep);
 
 ```
 
           **SetAccessCommand**(pStEllipse,"**CAAAfrEllipseHdr** ");
-```vbscript
+```cpp
 NewAccess(CATCmdStarter,pStCircle,CAACafContextualMenuCircleStr);
-```vbscript
+```cpp
 NewAccess(CATCmdSeparator,pSep1,CAACafContextualMenuSep);
           SetAccessCommand(pStCircle,"**CAAAfrCircleHdr** ");
 

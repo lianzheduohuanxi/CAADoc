@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Managing Transitions between Workbenches"
-category: use-case case"
+category: "use-case case"
 module: "CAAAfrUseCases"
-tags: ["CAAAfrGeometryWksTransition", "CAAAfrGeometryWks", "CAAAfrGeometryWks_trans", "CAAEAfrGeometryWksTransition", "CAAGeometry", "CATIWorkbenchTransition", "CAAApplicationFrame"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleWorkbenchTransitions.htmmd"
+tags: "["CAAAfrGeometryWksTransition", "CAAAfrGeometryWks", "CAAAfrGeometryWks_trans", "CAAEAfrGeometryWksTransition", "CAAGeometry", "CATIWorkbenchTransition", "CAAApplicationFrame"]"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleWorkbenchTransitions.htm"
 converted: "2026-05-11T17:17:55.847355"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -136,7 +133,7 @@ CAAAfrGeometryWks_trans);
          CAAEAfrGeometryWksTransition::CAAEAfrGeometryWksTransition(#)
 
          {
-```vbscript
+```cpp
 TIE_CATIWorkbenchTransition(CAAEAfrGeometryWksTransition);
 CAAEAfrGeometryWksTransition::CAAEAfrGeometryWksTransition(#)
            _newDoc = "CAAGeometry" ;
@@ -175,7 +172,7 @@ Update the interface dictionary, that is a file named, for example, CAAApplicati
 The CAA process-centric user interface implies that the application should know what to do when the end user selects a workbench in the Start menu. This knowledge is provided by the workshop, or possibly the workbench, supplier by implementing the _CATIWorkbenchTransition_ interface.
 
 ```vbscript
-```vbscript
+```cpp
 For standalone documents, that is, documents that do not contain or are not linked to, or that are not contained or linked by, other documents, the _CATIWorkbenchTransition_ interface is implemented once by the document's workshop supplier, and applies to all the document's workbenches.
 
 ```

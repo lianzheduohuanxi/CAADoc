@@ -1,64 +1,38 @@
 ---
 title: "CAAISmiUserMachFeature"
-type: "interface"
+type: "ProtectedInterface"
 module: "CAASurfaceMachiningItf"
-category: api-reference
+base: "CATBaseUnknown"
 method_count: 1
-visibility: "protected"
-has_tie_binding: true
-verified: true
+source_file: "CAASurfaceMachiningItf.edu/ProtectedInterfaces/CAAISmiUserMachFeature.h"
 ---
-> **TIE实现**: unknown
 
 # CAAISmiUserMachFeature
 
-**模块**: CAASurfaceMachiningItf  
-**分类**: framework  
-**可见性**: protected  
-**方法数**: 1
-
-> Allows you to access data of CAA Machining Feature.
+**基类**: CATBaseUnknown | **模块**: CAASurfaceMachiningItf | **方法数**: 1
 
 ## 依赖
 
 - `CAASmiUserMachFeatureEnv.h`
+- `CATBaseUnknown.h`
 - `CATListOfCATGeometries.h`
 
-## TIE实现
+## 纯虚方法 (接口契约)
 
-**实现文件**:
-- `CAAESmiUserMachFeature.cpp`
-- `CAAISmiUserMachFeature.cpp`
+### GetGuideParameter
 
----
+```cpp
+virtual HRESULT GetGuideParameter(CATBaseUnknown_var &oParameter) = 0 ;
+```
 
-## Interface Overview
+Gets parameter of the guide of our Machining Feature.
 
-**Inherited Methods**: Please refer to the base interface documentation above.
+| 参数 | 类型 |
+|------|------|
+| &oParameter | `CATBaseUnknown_var` |
 
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
 
 ---
 
-## Related Use Cases
-
-This interface is used in the following use cases:
-
-- [CAASmiUserOperationCatalog](../../use-cases/caasmicases/CAASmiUserOperationCatalog.md)
-- [CAASmiUserOperationWithUserMFToolPath](../../use-cases/caasmicases/CAASmiUserOperationWithUserMFToolPath.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAASurfaceMachiningItf.edu/ProtectedInterfaces/CAAISmiUserMachFeature.h`

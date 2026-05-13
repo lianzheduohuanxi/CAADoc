@@ -1,54 +1,66 @@
 ---
 title: "CAAEMmrCCDataExtension"
-type: "interface"
+type: "LocalClass"
 module: "CAAMechanicalModeler"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAEMmrCCDataExtension → CATBaseUnknown"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 4
+source_file: "CAAMechanicalModeler.edu/CAAMmrCCDataExtension.m/LocalInterfaces/CAAEMmrCCDataExtension.h"
 ---
+
 # CAAEMmrCCDataExtension
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAEMmrCCDataExtension → CATBaseUnknown  
-**模块**: CAAMechanicalModeler  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATBaseUnknown | **模块**: CAAMechanicalModeler | **方法数**: 4
 
 ## 依赖
 
 - `CATBaseUnknown.h`
 
+## 公共方法
+
+### SetGeomFeature
+
+```cpp
+HRESULT SetGeomFeature(const CATBaseUnknown * ipGeomFeature) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| ipGeomFeature | `const CATBaseUnknown *` |
+
+
+### GetGeomFeature
+
+```cpp
+HRESULT GetGeomFeature(CATISpecObject **ioGeomFeature) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| **ioGeomFeature | `CATISpecObject` |
+
+
+### AggregateParam
+
+```cpp
+HRESULT AggregateParam(CATICkeParm_var ispParmToAggregate) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| ispParmToAggregate | `CATICkeParm_var` |
+
+
+### GetValuatedParam
+
+```cpp
+HRESULT GetValuatedParam(CATICkeParm_var& iospValuatedParm) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iospValuatedParm | `CATICkeParm_var&` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAMechanicalModeler.edu/CAAMmrCCDataExtension.m/LocalInterfaces/CAAEMmrCCDataExtension.h`

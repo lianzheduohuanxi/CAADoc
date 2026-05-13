@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Draft: Untwist"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsDraftCreation", "CATICGMDynDraft", "CAATopDraftmain", "CAATopAdvancedDraft", "CATICGMDynAdvancedDraft"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcDraft2.htmmd"
+tags: "["CAAGMOperatorsInterfaces", "CAAGMOperatorsDraftCreation", "CATICGMDynDraft", "CAATopDraftmain", "CAATopAdvancedDraft", "CATICGMDynAdvancedDraft"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcDraft2.htm"
 converted: "2026-05-11T17:33:48.904800"
-```
-
 ---
 tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsDraftCreation", "CATICGMDynDraft", "CAATopDraftmain", "CAATopAdvancedDraft", "CATICGMDynAdvancedDraft"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcDraft2.htmmd"
@@ -41,7 +38,7 @@ If you are not already familiar with geometric modeler use cases, go to [About G
 With the code below:
 
     // (a) - Create a draft angle from the specified list of faces and an angle
-```vbscript
+```cpp
 If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md). Fig.1 Advanced Draft: Input data  ![Advanced Draft: Input Data](images/CGM_advanced_draft_0.png)
 With the code below:
     CATDynDraftAngle *pDraftAngle = new CATDynDraftAngle(iFaces, iDraftAngle);

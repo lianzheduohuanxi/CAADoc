@@ -1,54 +1,69 @@
 ---
 title: "CAAEVisWireBox"
-type: "interface"
+type: "LocalClass"
 module: "CAAVisualization"
-category: api-reference
+base: "CATBaseUnknown"
 method_count: 4
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAVisualization.edu/CAAVisWireBoxComp.m/LocalInterfaces/CAAEVisWireBox.h"
 ---
+
 # CAAEVisWireBox
 
-**模块**: CAAVisualization  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 4
+> Data extension ofd the CAAVisWireBox component and implementing the CAAIVisWireBox interface.
 
-> CAAIVisWireBox interface.
+**基类**: CATBaseUnknown | **模块**: CAAVisualization | **方法数**: 4
 
 ## 依赖
 
+- `CATBaseUnknown.h`
 - `CATMathPoint.h`
 
+## 虚方法
+
+### SetDimBox
+
+```cpp
+virtual HRESULT SetDimBox(const float iDimBox) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iDimBox | `const float` |
+
+
+### GetDimBox
+
+```cpp
+virtual HRESULT GetDimBox(float * oDimBox) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oDimBox | `float *` |
+
+
+### SetCenterBox
+
+```cpp
+virtual HRESULT SetCenterBox(const CATMathPoint & iCenter) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iCenter | `const CATMathPoint &` |
+
+
+### GetCenterBox
+
+```cpp
+virtual HRESULT GetCenterBox(CATMathPoint & oCenter) const ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oCenter | `CATMathPoint &` |
+
+
 ---
 
-## Interface Overview
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-This interface is used in the following use cases:
-
-- [CAAVisSampleTempObject](../../use-cases/caaviscases/CAAVisSampleTempObject.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAVisualization.edu/CAAVisWireBoxComp.m/LocalInterfaces/CAAEVisWireBox.h`

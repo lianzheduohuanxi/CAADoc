@@ -1,53 +1,101 @@
 ---
 title: "CAADegCreateRectangleCmd"
-type: "interface"
+type: "LocalClass"
 module: "CAADialogEngine"
-category: api-reference
-method_count: 1
-visibility: "local"
-has_tie_binding: false
-verified: true
+base: "CATStateCommand"
+method_count: 7
+source_file: "CAADialogEngine.edu/CAADegGeoCommands.m/LocalInterfaces/CAADegCreateRectangleCmd.h"
 ---
+
 # CAADegCreateRectangleCmd
 
-**模块**: CAADialogEngine  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 1
-
-> CAASystem.edu Framework
+**基类**: CATStateCommand | **模块**: CAADialogEngine | **方法数**: 7
 
 ## 依赖
 
+- `CATStateCommand.h`
 - `CATMathPoint.h`
 - `CATMathPlane.h`
 
+## 虚方法
+
+### BuildGraph
+
+```cpp
+virtual void BuildGraph() ;
+```
+
+BuildGraph ----------- Implements the statechart. It is called once, even if the command is in repeat mode 1- Creates the dialog agents 2- Creates states 3- Defines transitions
+
+
+## 公共方法
+
+### TestPoint1
+
+```cpp
+CATBoolean TestPoint1(void * iUsefulData) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iUsefulData | `void *` |
+
+
+### TestPoint2
+
+```cpp
+CATBoolean TestPoint2(void * iUsefulData) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iUsefulData | `void *` |
+
+
+### CreateCamera
+
+```cpp
+CATBoolean CreateCamera(void * iUsefulData) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iUsefulData | `void *` |
+
+
+### CreatePoint
+
+```cpp
+CATBoolean CreatePoint(void * iUsefulData) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iUsefulData | `void *` |
+
+
+### UpdateRectangle
+
+```cpp
+CATBoolean UpdateRectangle(void * iUsefulData) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iUsefulData | `void *` |
+
+
+### NewRectangle
+
+```cpp
+CATBoolean NewRectangle(void * iUsefulData) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iUsefulData | `void *` |
+
+
 ---
 
-## Interface Overview
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-- [CAADegSampleGraph](../../use-cases/caadegcases/CAADegSampleGraph.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAADialogEngine.edu/CAADegGeoCommands.m/LocalInterfaces/CAADegCreateRectangleCmd.h`

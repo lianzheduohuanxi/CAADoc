@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Preprocessing Data from Publications"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CATIA", "CATISamImportDefine", "CAAAniPreproOnPublish", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproPublish.htmmd"
+tags: "["CATIA", "CATISamImportDefine", "CAAAniPreproOnPublish", "CAAScdAniUseCases"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproPublish.htm"
 converted: "2026-05-11T17:31:51.848332"
-```
-
 ---
 ## Analysis Modeler
 
@@ -45,7 +42,7 @@ This macro shows you how to create an Analysis document for a generative structu
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
         sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
 ```
@@ -59,12 +56,12 @@ This macro shows you how to create an Analysis document for a generative structu
 ```vbscript
 ' -----------------------------------------------------------
 ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
 sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
 ```
 
-```vbscript
+```cpp
         If(Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 ```
@@ -99,14 +96,14 @@ End If
 ```
 
 ```vbscript
-```vbscript
+```cpp
         Set documents1 = CATIA.Documents
 ```
 ```
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' -----------------------------------------------------------
     ' Get the collection of documents in session
     ' Create the CATAnalysis Document
@@ -114,7 +111,7 @@ End If
        Set TheAnalysisDocument = documents1.Add("Analysis")
     ' if WB name already is "GPSCfg", not to use StartWorkbench
 ```
-```vbscript
+```cpp
        WBName = CATIA.GetWorkbenchId if (WBName <> "GPSCfg") Then
           CATIA.StartWorkbench("GPSCfg")
        End If
@@ -156,7 +153,7 @@ In order to import the document you have to give the path of this document, the 
 ```
 
 ```vbscript
-```vbscript
+```cpp
        Dim arrayOfVariantOfShort1(0)
        analysisManager1.ImportDefineFile (sDocPath & sSep & "online" & sSep & "CAAScdAniUseCases" & sSep & "samples" & sSep & "AnalysisMechfeat.CATPart"),
 ```
@@ -181,7 +178,7 @@ In order to import the document you have to give the path of this document, the 
 ```
 
 ```vbscript
-```vbscript
+```cpp
        Set specsAndGeomWindow1 = CATIA.ActiveWindow
 ```vbscript
 ```
@@ -198,7 +195,7 @@ In order to import the document you have to give the path of this document, the 
 ```vbscript
     ' _____________________________________________________________________________________
     ' Scan the analysis document: Retrieve the Pointed documents to extract the reference for preprocessing
-```vbscript
+```cpp
        Set analysisLinkedDocuments1 = analysisManager1.LinkedDocuments
        CATIA.SystemService.Print analysisLinkedDocuments1.Name
        If (analysisLinkedDocuments1.Count <> 1 ) Then
@@ -209,7 +206,7 @@ In order to import the document you have to give the path of this document, the 
 ```
     ' _____________________________________________________________________________________
     ' Retrieve the CATPart Document and associated publications for preprocessing.
-```vbscript
+```cpp
        Set TheDoc = analysisLinkedDocuments1.Item(1)
        CATIA.SystemService.Print TheDoc.FullName
        Set product1 = TheDoc.Product
@@ -425,7 +422,7 @@ The load is defined as the boundaries. For more information about the physical t
 ```
 
 ```vbscript
-```vbscript
+```cpp
        CATIA.SystemService.Print " Mises Max Computed " & dimension1.ValueAsString
 ```
 ```
@@ -491,7 +488,7 @@ The image is created based on the solution of the case. For this use the Analysi
 ```
 
 ```vbscript
-```vbscript
+```cpp
        Set fileSystem1 = CATIA.FileSystem
 ```vbscript
 ```

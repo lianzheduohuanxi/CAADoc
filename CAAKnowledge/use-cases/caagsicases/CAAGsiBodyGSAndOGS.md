@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Inserting Shape Design Features in Different Geometrical Feature Sets"
-category: use-case case"
+category: "use-case case"
 module: "CAAGsiUseCases"
-tags: ["CAAGsiCreateGeometricFeatureSets", "CATIMmiOrderedGeometricalSet_var", "CATIPrtBooleanFactory", "CATIPrtContainer", "CATIGSMSweepUnspec_var", "CAAGSMInterfaces", "CAAGsiUserTools", "CATIMechanicalTool_var", "CAAGsiServices", "CATIGSMProceduralViwe", "CATIGSMFactory", "CATIPrtFactory", "CATIGSMExtrude_var", "CATIPrtFactory_var", "CATIPrtPart_var", "CAAGsiObjectUpdate", "CATIDescendants_var", "CATIBasicTool_var", "CATISpecObject_var", "CATIMmiNonOrderedGeometricalSet_var"]
-source_file: "Doc/online/CAAGsiUseCases/CAAGsiBodyGSAndOGS.htmmd"
+tags: "["CAAGsiCreateGeometricFeatureSets", "CATIMmiOrderedGeometricalSet_var", "CATIPrtBooleanFactory", "CATIPrtContainer", "CATIGSMSweepUnspec_var", "CAAGSMInterfaces", "CAAGsiUserTools", "CATIMechanicalTool_var", "CAAGsiServices", "CATIGSMProceduralViwe", "CATIGSMFactory", "CATIPrtFactory", "CATIGSMExtrude_var", "CATIPrtFactory_var", "CATIPrtPart_var", "CAAGsiObjectUpdate", "CATIDescendants_var", "CATIBasicTool_var", "CATISpecObject_var", "CATIMmiNonOrderedGeometricalSet_var"]"
+source_file: "Doc/online/CAAGsiUseCases/CAAGsiBodyGSAndOGS.htm"
 converted: "2026-05-11T17:31:50.621208"
-```
-
 ---
 # Shape Design & Styling
 
@@ -91,7 +88,6 @@ where:
 
 The CAAGsiBodyGSAndOGS use case is made of main program located in the CAAGsiBodyGSAndOGS.m module of the CAAGSMInterfaces.edu framework:
 
-The CAAGsiBodyGSAndOGS use case is made of main program located in the CAAGsiBodyGSAndOGS.m module of the CAAGSMInterfaces.edu framework:
 Windows | `InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiBodyGSAndOGS.m/`
 
 The CAAGsiBodyGSAndOGS use case is made of main program located in the CAAGsiBodyGSAndOGS.m module of the CAAGSMInterfaces.edu framework:
@@ -142,7 +138,7 @@ cout<<" (CAAGsiBodyGSAndOGS) ERROR: Create_Session" << endl ;
 TestCaseError = 1 ;
     cout<<"The input document " << InputName << " is opened" << endl ;
     CATDocument *pDoc = NULL;
-```vbscript
+```cpp
     rc =CATDocumentServices::OpenDocument(InputName, pDoc) ;
 
     if (NULL == pDoc ) {
@@ -260,7 +256,7 @@ The Type of working tool is given as input in the sample
 Three type of Geometric Feature set can be used for shape design features
 
 >   * Body = Mechanical Tool that allow to aggregate Solid part design feature and  Shape Design features =  Points, Wires and Surfaces
-```vbscript
+```cpp
 >   * Geometrical Set = Shape Design features, Points, Wires, Surfaces and Volumes can be inserted , non ordered set , not rules of creation order in the set is imposed
 >   * Ordered Geometrical Set := Shape Design features, Points, Wires, Surfaces and Volumes can be inserted , elements are ordered and if needed absorbed depending on related defined rule on the feature (implement of CATIInputDescription interface of MecmodInterfaces frameework - for exemple "Split" feature is a modification feature thus its main input is absorbed)
 >
@@ -268,7 +264,6 @@ Three type of Geometric Feature set can be used for shape design features
 
 In the use case, we use a generic tool CAAGsiCreateGeometricFeatureSets to create Sets provided in
 
-In the use case, we use a generic tool CAAGsiCreateGeometricFeatureSets to create Sets provided in
 Windows | `InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiServices.m/`
 
 In the use case, we use a generic tool CAAGsiCreateGeometricFeatureSets to create Sets provided in
@@ -336,7 +331,7 @@ CATISpecObject_var spParentForTool ;
     }
 
     // Tool is about to create under a defined Parent Tool
-```vbscript
+```cpp
 if (iTopLevel==1 ) {
 spParentForTool = spPart ;
     else if (iTopLevel==0 && spInputParentTool != NULL_var ) {
@@ -376,7 +371,7 @@ CATISpecObject_var spCurrentFeat = spPart->GetCurrentFeature(#);
 ```
 
           // Read position of Current Feature in Tool
-```vbscript
+```cpp
 if ( spCurrentFeat != spCurrentTool) {
           CATIDescendants_var spRoot = spCurrentTool;
           Position = spRoot -> GetPosition( spCurrentFeat);
@@ -402,7 +397,7 @@ Note :When parent is the Part (TopLevel == 1) we are sure to be able to create w
 
 ```vbscript
 if (iTopLevel==0) {
-```vbscript
+```cpp
        CATIMmiNonOrderedGeometricalSet_var spNonOrderedGeomSet = spParentForTool ;
        CATIMmiOrderedGeometricalSet_var spOrderedGeomSet = spParentForTool ;
        CATIMechanicalTool_var spMechanicalSet = spParentForTool ;
@@ -418,7 +413,7 @@ if (iTopLevel==0) {
 ```
 
           }
-```vbscript
+```cpp
 CATIMechanicalTool_var spMechanicalSet = spParentForTool ;
 if (iType == 0 ) {
 ```
@@ -567,7 +562,6 @@ Ex: If the set is a Body , only surfacic extrude can be insert in a Body
     // --- Volume Features / Only to be insert in GS or OGS = Surfacic Set
     CATGSMFeatureContextType GSDCreationContext ;
 
-CATGSMFeatureContextType GSDCreationContext ;
 ```vbscript
     if ( TYPE_GeometricalSet == iTypeOfTool || TYPE_OrderedGeometricalSet == iTypeOfTool ) {
            cout<<" (CAAGsiBodyGSAndOGS) Create volumes / set is GS or OGS " << endl ;
@@ -608,7 +602,7 @@ GSDCreationContext= CATGSMSurfaceCtxt;
     CATIGSMExtrude_var spExtrude1 = spGsmFact -> CreateExtrude ( spSpecPLine , Dir1 , spCkeStart, spCkeEnd, TRUE) ;
 
     //Init of the context
-```vbscript
+```cpp
 spCkeEnd = CreateLength ( spCkeFact, "End" , 100.0);
 CATIGSMDirection_var Dir1 =spGsmFact -> CreateDirection ( spListPlane[1]);
 CATIGSMExtrude_var spExtrude1 = spGsmFact -> CreateExtrude ( spSpecPLine , Dir1 , spCkeStart, spCkeEnd, TRUE) ;
@@ -637,7 +631,7 @@ Save part and close the session
 Save part and close the session
     if (NULL != OutputName )      {
 ```vbscript
-```vbscript
+```cpp
         rc = CATDocumentServices::SaveAs  (*pDoc, OutputName );
         if (SUCCEEDED(rc))   {
 ```
@@ -650,7 +644,7 @@ Save part and close the session
 ```vbscript
 if (NULL != OutputName )      {
 ```vbscript
-```vbscript
+```cpp
 rc = CATDocumentServices::SaveAs  (*pDoc, OutputName );
 if (SUCCEEDED(rc))   {
 ```

@@ -118,11 +118,11 @@ This use case has shown how to get dimension pointed by a Text leader.
 
 ```vbscript
 ...
-```vbscript
+```cpp
     ' Set the CATIA popup file alerts to False
     ' It prevents to stop the macro at each alert during its execution
 ```
-```vbscript
+```cpp
     CATIA.DisplayFileAlerts = False
   ...
 ```
@@ -131,7 +131,7 @@ This use case has shown how to get dimension pointed by a Text leader.
 ```vbscript
 ...
 ' Get the drawing document
-```vbscript
+```cpp
     Set DrwDoc= CATIA.ActiveDocument
   ...
 ```

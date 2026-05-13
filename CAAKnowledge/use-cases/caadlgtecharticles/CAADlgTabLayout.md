@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Arranging Dialog Objects Using Tabulations"
-category: tech-article
+category: "tech-article"
 module: "CAADlgTechArticles"
-tags: []
-source_file: "Doc/online/CAADlgTechArticles/CAADlgTabLayout.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAADlgTechArticles/CAADlgTabLayout.htm"
 converted: "2026-05-11T17:17:56.095914"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -47,7 +44,6 @@ Arranging dialog objects in a dialog window, a dialog box, a frame or a tab page
 
 By default, each object you create has its own size which depends on its contents. Let's take the example of a dialog window that derives from the CATDlgDialog class, and that contains a combo, a push button, a spinner, and a check button.
 
-By default, each object you create has its own size which depends on its contents. Let's take the example of a dialog window that derives from the CATDlgDialog class, and that contains a combo, a push button, a spinner, and a check button.
  These controls are arranged horizontally side by side in their instantiation order and attached by their top side to an implicit horizontal tabulation line if nothing particular is specified since the `SetDefaultOrientation(Horizontal)` method is the default for any container.
 
 By default, each object you create has its own size which depends on its contents. Let's take the example of a dialog window that derives from the CATDlgDialog class, and that contains a combo, a push button, a spinner, and a check button.
@@ -128,7 +124,6 @@ To create tabulation lines and attachment modes, you can use the methods `Attach
 
 The `Attach4Sides` method is used to insert one object in a container. If you intend to use this method for a given container, you must use it for all the objects of this container. Objects are laid out horizontally and attached left and top to fixed tabulation lines and right and bottom to movable tabulation lines. You do not explicitly declare these tabulation lines.This makes the container and the objects it contains resizable. Use this method as follows:
 
-The `Attach4Sides` method is used to insert one object in a container. If you intend to use this method for a given container, you must use it for all the objects of this container. Objects are laid out horizontally and attached left and top to fixed tabulation lines and right and bottom to movable tabulation lines. You do not explicitly declare these tabulation lines.This makes the container and the objects it contains resizable. Use this method as follows:
     Container->Attach4Sides(PushButton);
     Container->Attach4Sides(Spinner);
 
@@ -139,7 +134,7 @@ Container->Attach4Sides(Spinner);
 where `Container` is a pointer to a container instance, which contains two controls: `PushButton` and `Spinner` which are pointers to a push button instance and a spinner instance respectively.
 
 ```vbscript
-```vbscript
+```cpp
 For example, the following container, instance of the class CATDlgWindow ![](images/dialaa10.gif)
 
 ```
@@ -152,7 +147,7 @@ contains a spinner, a vertical slider, an editor, and a tabcontainer. It is code
 contains a spinner, a vertical slider, an editor, and a tabcontainer. It is coded as follows:
     Slider  = new CATDlgSlider(this, "Sl", CATDlgCtrVertical);
 ```vbscript
-```vbscript
+```cpp
     TabContainer = new CATDlgTabContainer(this, "TC");
     Editor  = new CATDlgEditor(this, "E");
     Spinner = new CATDlgSpinner(this, "Sp");
@@ -164,7 +159,7 @@ contains a spinner, a vertical slider, an editor, and a tabcontainer. It is code
     ...
 Slider  = new CATDlgSlider(this, "Sl", CATDlgCtrVertical);
 ```vbscript
-```vbscript
+```cpp
 TabContainer = new CATDlgTabContainer(this, "TC");
 Editor  = new CATDlgEditor(this, "E");
 Spinner = new CATDlgSpinner(this, "Sp");
@@ -194,7 +189,6 @@ The methods `SetVerticalAttachment` and `SetHorizontalAttachment` are the two me
 
 They are to be applied to containers. For example:
 
-They are to be applied to containers. For example:
     Container->SetVerticalAttachment(5, CATDlgTopOrLeft,
                   Frame, PushButton, Editor, NULL);
 
@@ -236,7 +230,7 @@ The code to achieve that is as follows:
 
 ---
 
-```vbscript
+```cpp
 SetHorizontalAttachment(n, CATDlgTopOrLeft,
 TabContainer, PB, NULL);
 Note that neither the radio buttons nor the check buttons appear as parameters in these methods which apply to the main container. As we said previously, they are arranged horizontally by default in their respective containers Frame1 and Frame2. Note also that the TabContainer layout can not be customized, even if it uses tabulation lines.
@@ -263,14 +257,14 @@ Another way for more simple containers in which all the objects are laid out alo
 Movable tabulation lines are set by means of the suffix `Relative` to the tabulation line keywords. Use `CATDlgTopOrLeftRelative`, `CATDlgCenterRelative`, and `CATDlgRightOrBottomRelative` in place of the previous `CATDlgTopOrLeft`, `CATDlgCenter`, and `CATDlgRightOrBottom`. This allows for moving the tabulation lines proportionally with the window resize.
 
 ```vbscript
-```vbscript
+```cpp
 For example, to make Spinner and Frame2 resize vertically with the window, you simply need to attach them to an additional horizontal tabulation line with the keyword `CATDlgRightOrBottomRelative` as follows:
 
 ```
 
 ```
 
-```vbscript
+```cpp
 For example, to make Spinner and Frame2 resize vertically with the window, you simply need to attach them to an additional horizontal tabulation line with the keyword `CATDlgRightOrBottomRelative` as follows:
     n += 1;                                             // added
     SetHorizontalAttachment(n, CATDlgRightOrBottomRelative,  // statements
@@ -322,7 +316,7 @@ This is coded as follows:
 
 ---
 
-```vbscript
+```cpp
 SetHorizontalAttachment(n, CATDlgRightOrBottomRelative,
 TabContainer, PB, NULL);
 The resized windows is as follows:
@@ -533,7 +527,6 @@ pControlToRemove);
 
 The dialog object sizes are determined using their contents, and arranging the layout of your objects in a container means either leaving the framework do it for you for containers with few objects which are placed horizontally one after the other in the order they are instantiated, or add code to attach objects to vertical tabulation lines using their left or right side and/or horizontal tabulation lines using their top or bottom side. The center of an object can be used in both cases.
 
-The dialog object sizes are determined using their contents, and arranging the layout of your objects in a container means either leaving the framework do it for you for containers with few objects which are placed horizontally one after the other in the order they are instantiated, or add code to attach objects to vertical tabulation lines using their left or right side and/or horizontal tabulation lines using their top or bottom side. The center of an object can be used in both cases.
 Movable tabulation lines allow to make objects resize when the container is resized.
 
 The keys to object layout are:

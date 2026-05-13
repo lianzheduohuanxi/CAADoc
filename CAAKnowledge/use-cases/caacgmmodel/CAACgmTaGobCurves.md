@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "The Curves of CATIA Geometric Modeler"
-category: use-case
+category: "use-case"
 module: "CAACgmModel"
-tags: ["CATIA"]
-source_file: "Doc/online/CAACgmModel/CAACgmTaGobCurves.htmmd"
+tags: "["CATIA"]"
+source_file: "Doc/online/CAACgmModel/CAACgmTaGobCurves.htm"
 converted: "2026-05-11T17:33:47.920606"
-```
-
 ---
 # The Curves of CATIA Geometric Modeler
 

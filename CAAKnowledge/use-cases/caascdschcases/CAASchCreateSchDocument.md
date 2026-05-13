@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Schematic Document from an Existing Document"
 category: "use-case"
 module: "CAAScdSchUseCases"
-tags: ["CAAScdSchUseCases", "CATIA", "CAASchCreateSchDocument", "CAASchSCH_Detail01", "CAASCH_Detail01"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchCreateSchDocument.htmmd"
+tags: "["CAAScdSchUseCases", "CATIA", "CAASchCreateSchDocument", "CAASchSCH_Detail01", "CAASCH_Detail01"]"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchCreateSchDocument.htm"
 converted: "2026-05-11T17:31:51.340196"
-```
-
 ---
 ## Schematics Platform Modeler
 
@@ -32,7 +29,7 @@ This macro shows you how to create a new schematic document from an opened docum
 ```
 
 3. Create a new schematic document
-```vbscript
+```cpp
 4. Set the drawing standard
 The macro first loads CAASCH_Detail01.CATProduct. |     ...
 ```
@@ -49,7 +46,7 @@ The macro first loads CAASCH_Detail01.CATProduct. |     ...
     Dim sFilePath
 ```vbscript
 ```
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
 ```
@@ -64,7 +61,7 @@ Dim sFilePath
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)

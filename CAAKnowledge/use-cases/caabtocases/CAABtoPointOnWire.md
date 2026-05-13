@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Point on a Wire"
 category: "use case"
 module: "CAABtoUseCases"
-tags: ["CAATopComputePointOnWire", "CATICGMObject", "CAABasicTopoOpe", "CAAGemBrowser"]
-source_file: "Doc/online/CAABtoUseCases/CAABtoPointOnWire.htmmd"
+tags: "["CAATopComputePointOnWire", "CATICGMObject", "CAABasicTopoOpe", "CAAGemBrowser"]"
+source_file: "Doc/online/CAABtoUseCases/CAABtoPointOnWire.htm"
 converted: "2026-05-11T17:33:46.169729"
-```
-
 ---
 tags: ["CAATopComputePointOnWire", "CATICGMObject", "CAABasicTopoOpe", "CAAGemBrowser"]
 source_file: "Doc/online/CAABtoUseCases/CAABtoPointOnWire.htmmd"
@@ -38,7 +35,6 @@ Abstract You can create a point on a wire by using the CATComputePointOnWire ope
 
 What You Will Learn With This Use Case This use case is intended to help you use the basic topological operators. It particularly details the creation of a point on a wire. [Top] The CATTopComputePointOnWire Operator The CATTopComputePointOnWire operator is to be used according to the following scheme:
 
-What You Will Learn With This Use Case This use case is intended to help you use the basic topological operators. It particularly details the creation of a point on a wire. [Top] The CATTopComputePointOnWire Operator The CATTopComputePointOnWire operator is to be used according to the following scheme:
   1. creation of an operator instance from a global function
   2. run of the operator
   3. retrieve of the CATMathPoint which has been created.
@@ -69,7 +65,6 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 [Top] Creating the CATWire A wire is made up of a list of curves. To simplify the example, a CATCircle is created in the YZ plane. This CATCircle is created by the geometry factory by using the CreateCircle method. Then the wire is created:
 
     _// Define an open configuration for the operator_
-_// Define an open configuration for the operator_
     CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration(#);
 
     /_/ Define the data of the operator: configuration - no journal_
@@ -122,13 +117,13 @@ To visualize the created CATMathPoint, a cartesian point is created. [Top] Writi
 
      {
     #ifdef _WINDOWS_SOURCE
-```vbscript
+```cpp
 if(1==toStore)
        ofstream filetowrite(pfileName, ios::binary ) ;
 ```
 
     #else
-```vbscript
+```cpp
 if(1==toStore)
 ofstream filetowrite(pfileName, ios::binary ) ;
        ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;

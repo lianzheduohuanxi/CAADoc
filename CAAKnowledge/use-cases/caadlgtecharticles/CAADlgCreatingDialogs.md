@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Dialog Objects"
-category: tech-article
+category: "tech-article"
 module: "CAADlgTechArticles"
-tags: ["CATInteractiveApplication"]
-source_file: "Doc/online/CAADlgTechArticles/CAADlgCreatingDialogs.htmmd"
+tags: "["CATInteractiveApplication"]"
+source_file: "Doc/online/CAADlgTechArticles/CAADlgCreatingDialogs.htm"
 converted: "2026-05-11T17:17:56.030157"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -53,7 +50,7 @@ This parent must of course be an instance of a class that derives from _CATComma
 As an example, the construction of a _[CATDlgCombo](../CAADlgQuickRefs/CAADlgCATDlgCombo.md)_ instance could be as follows:
 
     CATDlgCombo * pMyCombo;
-```vbscript
+```cpp
     pMyCombo = new CATDlgCombo(this,                  // parent
 
 ```
@@ -67,9 +64,8 @@ pMyCombo = new CATDlgCombo(this,                  // parent
 
 When the style can be composite, use the pipe | to concatenate the style attributes. For example, if you want to create a combo with the drop down style and with an editable field, construct it as follows:
 
-When the style can be composite, use the pipe | to concatenate the style attributes. For example, if you want to create a combo with the drop down style and with an editable field, construct it as follows:
     CATDlgCombo * pMyCombo;
-```vbscript
+```cpp
     pMyCombo = new CATDlgCombo(this,
 
 ```
@@ -95,7 +91,7 @@ A given dialog object can be set visible or invisible by means of its visibility
 
 ---
 
-```vbscript
+```cpp
 SetVisibility(CATDlgShow);
 By default, all the dialog objects contained in this main container are also shown.
 

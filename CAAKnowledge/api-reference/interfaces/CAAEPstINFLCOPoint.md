@@ -1,56 +1,35 @@
 ---
 title: "CAAEPstINFLCOPoint"
-type: "interface"
+type: "LocalClass"
 module: "CAAProductStructure"
-category: api-reference
 base: "CATSpecLifeCycleObjectExt"
-inheritance_chain: "CAAEPstINFLCOPoint → CATSpecLifeCycleObjectExt"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 1
+source_file: "CAAProductStructure.edu/CAAPstINFModeler.m/LocalInterfaces/CAAEPstINFLCOPoint.h"
 ---
+
 # CAAEPstINFLCOPoint
 
-**基类**: CATSpecLifeCycleObjectExt  
-**继承链**: CAAEPstINFLCOPoint → CATSpecLifeCycleObjectExt  
-**模块**: CAAProductStructure  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> Data extension of the CAAPstINFPoint component, implementing the LifeCycleObject interface to allow specific treatments to be performed in the remove method. This class derives from the CATSpecLifeCycleObjectExt adapter. Illustrates programming the remove method for an object by implementing the LifeCycleObject interface of the ObjectModelerBase framework. Inheritance: CATSpecLifeCycleObjectExt (ObjectSpecsModeler Framework) CATBaseUnknown (System Framework)
 
-> ------------
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATSpecLifeCycleObjectExt | **模块**: CAAProductStructure | **方法数**: 1
 
 ## 依赖
 
 - `CATSpecLifeCycleObjectExt.h`
 
+## 公共方法
+
+### remove
+
+```cpp
+void remove(int iForCloseContext=0) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iForCloseContext=0 | `int` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATSpecLifeCycleObjectExt**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAProductStructure.edu/CAAPstINFModeler.m/LocalInterfaces/CAAEPstINFLCOPoint.h`

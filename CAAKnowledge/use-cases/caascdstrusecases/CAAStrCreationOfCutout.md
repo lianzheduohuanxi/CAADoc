@@ -30,7 +30,7 @@ This use case has shown how to create cutout on structure objects.
 *Copyright  1999-2010, Dassault Systmes. All rights reserved.*
 
 ```vbscript
-```vbscript
+```cpp
 Dim doc As Document
 
 Dim StrWorkbench As StrWorkbench
@@ -50,7 +50,7 @@ Set strPlates = rootProduct.GetTechnologicalObject(&quot;StructurePlates&quot;)
 
 ```vbscript
 &#39;Get the Factory from Selection Method
-```vbscript
+```cpp
 Dim PlateToCut1 As StrPlate
 Set PlateToCut1 = strPlates.Item(&quot;Plate_052&quot;)
 
@@ -59,7 +59,7 @@ Set Selection1 = CATIA.ActiveDocument.Selection
 Selection1.Add PlateToCut1
 ```
   
-```vbscript
+```cpp
 Dim Factory1 As StrFeatureFactory
 Set Factory1 = Selection1.FindObject(&quot;CATIAStrFeatureFactory&quot;)
 ```

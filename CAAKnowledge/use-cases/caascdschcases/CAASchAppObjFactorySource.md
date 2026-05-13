@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAASchAppObjFactory.CATScript"
 category: "use-case"
 module: "CAAScdSchUseCases"
-tags: ["CAASCHEDUCompressFunc", "CAAScdSchUseCases", "CAASCH_Detail01", "CATIASchCompGraphic", "CAASCHEDU_SamplePID", "CATIA", "CAASCHEDUFuncString", "CATIASchListOfBSTRs", "CATIASchCompatible", "CATIASchAppConnectable", "CATIASchCntrLocation", "CAASchAppObjFactory", "CATIASchCompConnector", "CATIASchRouteGraphic", "CATIASchGRRComp", "CAASCHEDUConnector", "CATIASchGRR", "CATIASchAppConnector", "CATIASchComponent2"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchAppObjFactorySource.htmmd"
+tags: "["CAASCHEDUCompressFunc", "CAAScdSchUseCases", "CAASCH_Detail01", "CATIASchCompGraphic", "CAASCHEDU_SamplePID", "CATIA", "CAASCHEDUFuncString", "CATIASchListOfBSTRs", "CATIASchCompatible", "CATIASchAppConnectable", "CATIASchCntrLocation", "CAASchAppObjFactory", "CATIASchCompConnector", "CATIASchRouteGraphic", "CATIASchGRRComp", "CAASCHEDUConnector", "CATIASchGRR", "CATIASchAppConnector", "CATIASchComponent2"]"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchAppObjFactorySource.htm"
 converted: "2026-05-11T17:31:51.321739"
-```
-
 ---
 tags: ["CAASCHEDUCompressFunc", "CAAScdSchUseCases", "CAASCH_Detail01", "CATIASchCompGraphic", "CAASCHEDU_SamplePID", "CATIA", "CAASCHEDUFuncString", "CATIASchListOfBSTRs", "CATIASchCompatible", "CATIASchAppConnectable", "CATIASchCntrLocation", "CAASchAppObjFactory", "CATIASchCompConnector", "CATIASchRouteGraphic", "CATIASchGRRComp", "CAASCHEDUConnector", "CATIASchGRR", "CATIASchAppConnector", "CATIASchComponent2"]
 source_file: "Doc/online/CAAScdSchUseCases/CAASchAppObjFactorySource.htmmd"
@@ -16,7 +13,7 @@ converted: "2026-05-11T17:31:51.321739"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGHT DASSAULT SYSTEMES 2004
     ' *****************************************************************************
     '   Purpose:      Create an application reference and add connectors. Also
@@ -33,7 +30,7 @@ converted: "2026-05-11T17:31:51.321739"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -46,7 +43,7 @@ converted: "2026-05-11T17:31:51.321739"
         ' -------------------------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String
-```vbscript
+```cpp
         sDocPath=CATIA.SystemService.Environ("CATDocView")
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -72,7 +69,7 @@ converted: "2026-05-11T17:31:51.321739"
 ```vbscript
         ' -------------------------------------------------------------------------
         ' Open the schematic document
-```vbscript
+```cpp
         Dim sFilePath
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
@@ -85,12 +82,12 @@ converted: "2026-05-11T17:31:51.321739"
                 "online/CAAScdSchUseCases/samples/CAASCH_Detail01.CATProduct")
 
 ```vbscript
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
         Dim objSchDoc As Document
         Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
@@ -302,7 +299,7 @@ If ( Not ( objSchListGRR Is Nothing ) ) Then
                '---------------------------------------------------------------------
                ' Add two connectors to the reference component
                '---------------------------------------------------------------------
-```vbscript
+```cpp
                Dim objSchCntr As SchCompConnector
                Dim objSchAppCntr As SchAppConnector
                Dim objSchCntrLoc As SchCntrLocation
@@ -320,7 +317,7 @@ If ( Not ( objSchListGRR Is Nothing ) ) Then
 Dim objSchCntrLoc As SchCntrLocation
 ```vbscript
 ```
-```vbscript
+```cpp
 Set objSchCntr = objSchRoot.GetInterface ("CATIASchCompConnector", _
 ```
 ```
@@ -340,7 +337,7 @@ Set objSchCntr = objSchRoot.GetInterface ("CATIASchCompConnector", _
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
                   Dim db2CntrPos (2) As CATSafeArrayVariant
                   Dim db2CntrVec (2) As CATSafeArrayVariant
 
@@ -503,7 +500,7 @@ If ( Not ( objSchCntrLoc Is Nothing ) ) Then
 ```
 
 ```vbscript
-```vbscript
+```cpp
                Dim db6Matrix(6) As CATSafeArrayVariant
 ```vbscript
 ```
@@ -668,7 +665,7 @@ Not ( objSchGRRCompInst Is Nothing ) ) Then
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
                    Dim objAppCntrCompBest As SchAppConnector
                    Dim objLDbOut As SchListOfDoubles
                    Dim db2SelectPt(2) As CATSafeArrayVariant
@@ -685,7 +682,7 @@ Not ( objSchGRRCompInst Is Nothing ) ) Then
 Dim objLDbOut As SchListOfDoubles
 ```vbscript
 ```
-```vbscript
+```cpp
 Dim db2SelectPt(2) As CATSafeArrayVariant
                    db2SelectPt(0) = 130.0
 ```
@@ -743,7 +740,7 @@ Dim db2SelectPt(2) As CATSafeArrayVariant
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
                       Dim objSchRoute As AnyObject
                       Dim strLogLineID As String
                       Dim dbPtArray(6) As CATSafeArrayVariant
@@ -1034,7 +1031,7 @@ End If '--- If ( Not ( objSchRoot Is Nothing )...
           Set objSchLSymbols = objSchRootArg.GetUnassociatedSymbols
           If ( Not ( objSchLSymbols Is Nothing ) ) Then
 ```
-```vbscript
+```cpp
              Set GetComponentSymbol = objSchLSymbols.Item (1,"CATIASchGRR")
           End If
 ```
@@ -1050,7 +1047,7 @@ End If '--- If ( Not ( objSchRoot Is Nothing )...
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' -----------------------------------------------------------------------------
     ' | Find the first symbol used for the input schematic component.
     ' | Input: objSchCompGraph:  the schematic component
@@ -1077,7 +1074,7 @@ End If '--- If ( Not ( objSchRoot Is Nothing )...
           Set objSchLSymbols = objSchCompGraphArg.ListGraphicalImages
           If ( Not ( objSchLSymbols Is Nothing ) ) Then
 ```
-```vbscript
+```cpp
              Set GetComponentImage = objSchLSymbols.Item (1,"CATIASchGRRComp")
           End If
 ```
@@ -1093,7 +1090,7 @@ End If '--- If ( Not ( objSchRoot Is Nothing )...
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' -----------------------------------------------------------------------------
     ' | Find the first graphical primitives of an input route.
     ' | Input: objSchRouteGraph:  the schematic route
@@ -1133,7 +1130,7 @@ Private Function GetRoutePrimitives (objSchRouteGraphArg As SchRouteGraphic) _
           Set objSchLGRR = objSchRouteGraphArg.ListGraphicalPrimitives
           If ( Not ( objSchLGRR Is Nothing ) ) Then
 ```
-```vbscript
+```cpp
              Set GetRoutePrimitives = objSchLGRR.Item (1,"CATIASchGRR")
           End If
 ```
@@ -1193,7 +1190,7 @@ Private Function FindConnectorAtPosition ( dbXArg As Double, dbYArg As Double, _
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
        Dim objLFilter As CATIASchListOfBSTRs
        Dim objSchRouteGraphic As SchRouteGraphic
        Dim objGRR As SchGRR
@@ -1286,7 +1283,7 @@ Dim dbYOut As Double
 ```vbscript
 ```vbscript
              For iCntr = 1 To intNbCntr
-```vbscript
+```cpp
                Set objCntrLoc = Nothing
                Set objLDbOut = Nothing
 

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Modifying Copings"
 category: "use-case"
 module: "CAAScdStrUseCases"
-tags: ["CATIA", "CAAStrEditCoping", "CAAScdStrUseCases"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfCoping.htmmd"
+tags: "["CATIA", "CAAStrEditCoping", "CAAScdStrUseCases"]"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfCoping.htm"
 converted: "2026-05-11T17:31:50.892078"
-```
-
 ---
 |
 ## Structure Design
@@ -26,14 +23,13 @@ converted: "2026-05-11T17:31:50.892078"
 
   CAAStrEditCoping includes two steps:
 
-CAAStrEditCoping includes two steps:
   1. Prolog
   2. Retrieving Existing Coping and Modifying its SubType
 
 #### Prolog
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -45,7 +41,7 @@ CAAStrEditCoping includes two steps:
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
       Dim strFactory As StrObjectFactory
 
       Set doc = CATIA.ActiveDocument

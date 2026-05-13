@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAAAniMesh1D.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CATIA", "CAAScdAniUseCases", "CAAAniMesh1D"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMesh1DSource.htmmd"
+tags: "["CATIA", "CAAScdAniUseCases", "CAAAniMesh1D"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMesh1DSource.htm"
 converted: "2026-05-11T17:31:51.604045"
-```
-
 ---
 ```vbscript
 ```vbscript
@@ -31,7 +28,7 @@ converted: "2026-05-11T17:31:51.604045"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -43,7 +40,7 @@ converted: "2026-05-11T17:31:51.604045"
 ```vbscript
     '-----------------------------------------------------------
     'Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
@@ -71,10 +68,10 @@ converted: "2026-05-11T17:31:51.604045"
 ```vbscript
 End If
 ```vbscript
-```vbscript
+```cpp
 '-----------------------------------------------------------
     'Open the CATAnalysis Document
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Beam.CATAnalysis")
 ```
 ```
@@ -85,7 +82,7 @@ End If
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ```
@@ -94,7 +91,7 @@ End If
 ```
 
 ```vbscript
-```vbscript
+```cpp
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```vbscript
 ```

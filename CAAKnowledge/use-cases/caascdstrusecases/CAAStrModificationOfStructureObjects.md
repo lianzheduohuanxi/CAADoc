@@ -71,7 +71,7 @@ This use case has shown how to modify structure objects.
 
 ```vbscript
 ...
-```vbscript
+```cpp
     Dim doc As Document
 
     Dim StrWorkbench As StrWorkbench

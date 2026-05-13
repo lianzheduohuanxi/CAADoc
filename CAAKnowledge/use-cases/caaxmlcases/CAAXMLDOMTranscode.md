@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Reading and writing XML documents with DOM"
-category: use-case case"
+category: "use-case case"
 module: "CAAXmlUseCases"
-tags: ["CAAXMLParser", "CATIXMLDOMDocumentBuilder", "CATIXMLDOMDocumentBuilder_var", "CATIDOMDocument_var", "CAAXMLDOMTranscode_utf16", "CAAXMLDOMTranscode"]
-source_file: "Doc/online/CAAXmlUseCases/CAAXMLDOMTranscode.htmmd"
+tags: "["CAAXMLParser", "CATIXMLDOMDocumentBuilder", "CATIXMLDOMDocumentBuilder_var", "CATIDOMDocument_var", "CAAXMLDOMTranscode_utf16", "CAAXMLDOMTranscode"]"
+source_file: "Doc/online/CAAXmlUseCases/CAAXMLDOMTranscode.htm"
 converted: "2026-05-11T17:33:45.623063"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -70,7 +67,6 @@ where:
 
 A sample XML file is provided with the use case. To use it, launch the following command from the command line:
 
-A sample XML file is provided with the use case. To use it, launch the following command from the command line:
 Windows | `CAAXMLDOMTranscode -utf16 InstallRoot/OS/resources/xml/CAAXMLDOMTranscode/CAAXMLDOMTranscode.xml C/TEMP/CAAXMLDOMTranscode_utf16.xml`
 
 A sample XML file is provided with the use case. To use it, launch the following command from the command line:
@@ -92,7 +88,6 @@ where:
 
 The CAAXMLDOMTranscode use case is made of one file located in the CAAXMLDOMTranscode.m module of the CAAXMLParser.edu framework:
 
-The CAAXMLDOMTranscode use case is made of one file located in the CAAXMLDOMTranscode.m module of the CAAXMLParser.edu framework:
 Windows | `InstallRootDirectory/CAAXMLParser.edu/CAAXMLDOMTranscode.m/`
 
 The CAAXMLDOMTranscode use case is made of one file located in the CAAXMLDOMTranscode.m module of the CAAXMLParser.edu framework:
@@ -177,7 +172,7 @@ writeOptionValues.Append(**"UTF-16"**);
 hr = builder->**WriteToFile**(document, outputFile, writeOptions, writeOptionValues);
 To create the XML document, which corresponds to the DOM tree, call the `WriteToFile` method. It takes as a parameter the path of the XML document to be created. The `WriteToFile` method also accepts the `CATEncoding` option to control the encoding used in the resulting file. Options are passed to the parser using two _CATListOfCATUnicodeStrings_. The first one contains the option names, the second one contains the option values.
 
-```vbscript
+```cpp
 If the `CATEncoding` option is not specified, the resulting document will use the default (UTF-8) encoding. Note that the "encoding" attribute will not be specified in the XML declaration. However, the XML specification indicates that if the encoding attribute is not specified, XML parsers should consider that the document uses the UTF-8 encoding. Not all encodings are supported by the parser. For a discussion of supported encodings and write options, see [3] and [4].
 
 ```

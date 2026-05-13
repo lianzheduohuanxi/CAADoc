@@ -1,66 +1,73 @@
 ---
 title: "CAAIVisWireBox"
-type: "interface"
+type: "PublicInterface"
 module: "CAAVisualization"
-category: api-reference
+base: "CATBaseUnknown"
 method_count: 4
-visibility: "public"
-has_tie_binding: true
-verified: true
+source_file: "CAAVisualization.edu/PublicInterfaces/CAAIVisWireBox.h"
 ---
-> **TIE实现**: unknown
 
 # CAAIVisWireBox
 
-**模块**: CAAVisualization  
-**分类**: framework  
-**可见性**: public  
-**方法数**: 4
+> Interface which characterizes a wire box. This interface and the wire box is used in the CAADegClippingByBoxCmd class in the CAADialogEngine.edu framework. System Framework
 
-> Local Framework
+**基类**: CATBaseUnknown | **模块**: CAAVisualization | **方法数**: 4
 
 ## 依赖
 
+- `CATBaseUnknown.h`
 - `CAAVisWireBoxComp.h`
 
-## TIE实现
+## 纯虚方法 (接口契约)
 
-**实现文件**:
-- `CAAEVisCreateInstanceForWireBox.cpp`
-- `CAAEVisVisuWireBox.cpp`
-- `CAAEVisWireBox.cpp`
-- `CAAIVisWireBox.cpp`
-- `CAAVisWireBox.cpp`
+### SetDimBox
+
+```cpp
+virtual HRESULT SetDimBox(const float iDimBox) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iDimBox | `const float` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetDimBox
+
+```cpp
+virtual HRESULT GetDimBox(float * oDimBox) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oDimBox | `float *` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### SetCenterBox
+
+```cpp
+virtual HRESULT SetCenterBox(const CATMathPoint & iCenter) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iCenter | `const CATMathPoint &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetCenterBox
+
+```cpp
+virtual HRESULT GetCenterBox(CATMathPoint & oCenter) const = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oCenter | `CATMathPoint &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
 
 ---
 
-## Interface Overview
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-This interface is used in the following use cases:
-
-- [CAAVisSampleISO](../../use-cases/caaviscases/CAAVisSampleISO.md)
-- [CAAVisSampleTempObject](../../use-cases/caaviscases/CAAVisSampleTempObject.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAVisualization.edu/PublicInterfaces/CAAIVisWireBox.h`

@@ -1,29 +1,15 @@
 ---
 title: "CAAPbiUECreate"
-type: "interface"
+type: "LocalClass"
 module: "CAAPSNInteroperability"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAPbiUECreate → CATBaseUnknown"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 7
+source_file: "CAAPSNInteroperability.edu/CAAPbiUECreate.m/LocalInterfaces/CAAPbiUECreate.h"
 ---
+
 # CAAPbiUECreate
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAPbiUECreate → CATBaseUnknown  
-**模块**: CAAPSNInteroperability  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
-
-> -----------------------------------------------------------------------
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATBaseUnknown | **模块**: CAAPSNInteroperability | **方法数**: 7
 
 ## 依赖
 
@@ -32,28 +18,110 @@ verified: true
 - `CATBoolean.h`
 - `CATUnicodeString.h`
 
+## 公共方法
+
+### GetProductEnvironment
+
+```cpp
+HRESULT GetProductEnvironment(const CATBaseUnknown* iObj, CATUnicodeString& oEnv, CATUnicodeString& oType) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iObj | `const CATBaseUnknown*` |
+| oEnv | `CATUnicodeString&` |
+| oType | `CATUnicodeString&` |
+
+
+### GetDocumentEnvironment
+
+```cpp
+HRESULT GetDocumentEnvironment(const CATDocument* iDoc, CATUnicodeString& oEnv, CATUnicodeString& oTable) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iDoc | `const CATDocument*` |
+| oEnv | `CATUnicodeString&` |
+| oTable | `CATUnicodeString&` |
+
+
+### GetDocumentEnvironment
+
+```cpp
+HRESULT GetDocumentEnvironment(const char* Filepath, CATUnicodeString& oEnv, CATUnicodeString& oTable) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| Filepath | `const char*` |
+| oEnv | `CATUnicodeString&` |
+| oTable | `CATUnicodeString&` |
+
+
+### GetProductAttributesValue
+
+```cpp
+HRESULT GetProductAttributesValue(const CATBaseUnknown* iObj, const CATUnicodeString& iType, int& oNbAttr, CATListOfCATUnicodeString& oAttrName, CATListOfCATUnicodeString& oAttrType, void**& oAttrValues, CATBoolean& oCreateOrUpdate) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iObj | `const CATBaseUnknown*` |
+| iType | `const CATUnicodeString&` |
+| oNbAttr | `int&` |
+| oAttrName | `CATListOfCATUnicodeString&` |
+| oAttrType | `CATListOfCATUnicodeString&` |
+| oAttrValues | `void**&` |
+| oCreateOrUpdate | `CATBoolean&` |
+
+
+### GetDocumentAttributesValue
+
+```cpp
+HRESULT GetDocumentAttributesValue(const CATDocument* iDoc, int& oNbAttr, CATListOfCATUnicodeString& oAttrName, CATListOfCATUnicodeString& oAttrType, void**& oAttrValues, CATBoolean& oCreateOrUpdate) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iDoc | `const CATDocument*` |
+| oNbAttr | `int&` |
+| oAttrName | `CATListOfCATUnicodeString&` |
+| oAttrType | `CATListOfCATUnicodeString&` |
+| oAttrValues | `void**&` |
+| oCreateOrUpdate | `CATBoolean&` |
+
+
+### GetDocumentAttributesValue
+
+```cpp
+HRESULT GetDocumentAttributesValue(const char* Filepath, int& oNbAttr, CATListOfCATUnicodeString& oAttrName, CATListOfCATUnicodeString& oAttrType, void**& oAttrValues) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| Filepath | `const char*` |
+| oNbAttr | `int&` |
+| oAttrName | `CATListOfCATUnicodeString&` |
+| oAttrType | `CATListOfCATUnicodeString&` |
+| oAttrValues | `void**&` |
+
+
+### GetProductAttributesValue
+
+```cpp
+HRESULT GetProductAttributesValue(const char* Filepath, int& oNbAttr, CATListOfCATUnicodeString& oAttrName, CATListOfCATUnicodeString& oAttrType, void**& oAttrValues) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| Filepath | `const char*` |
+| oNbAttr | `int&` |
+| oAttrName | `CATListOfCATUnicodeString&` |
+| oAttrType | `CATListOfCATUnicodeString&` |
+| oAttrValues | `void**&` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAPSNInteroperability.edu/CAAPbiUECreate.m/LocalInterfaces/CAAPbiUECreate.h`

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Temporary Components"
-category: use-case case"
+category: "use-case case"
 module: "CAAVisUseCases"
-tags: ["CATInstantiateComponent", "CATI3DGeoVisu", "CAAVisWireBoxComp", "CAAVisualization", "CAAVisTemporaryObjects", "CAADegGeoCommands", "CAAEVisCreateInstanceForWireBox", "CAAVisModelForRep", "CATIA", "CAAIVisTextModel", "CAAGeometry", "CAAIVisWireBox", "CAAEVisWireBox", "CAAEVisVisuWireBox", "CAAVisWireBox", "CAAVisTextModel", "CAADialogEngine", "CATICreateInstance", "CAADegClippingByBoxCmd"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleTempObject.htmmd"
+tags: "["CATInstantiateComponent", "CATI3DGeoVisu", "CAAVisWireBoxComp", "CAAVisualization", "CAAVisTemporaryObjects", "CAADegGeoCommands", "CAAEVisCreateInstanceForWireBox", "CAAVisModelForRep", "CATIA", "CAAIVisTextModel", "CAAGeometry", "CAAIVisWireBox", "CAAEVisWireBox", "CAAEVisVisuWireBox", "CAAVisWireBox", "CAAVisTextModel", "CAADialogEngine", "CATICreateInstance", "CAADegClippingByBoxCmd"]"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleTempObject.htm"
 converted: "2026-05-11T17:31:52.178221"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -92,7 +89,6 @@ The trihedral is an instance of the CATModelForRep3D component. This component i
 
 The trihedral is an instance of the CAAVisTextModel component. This component Object Modeler and C++ derives from the CATModelForRep3D component. Consequently, implementing the _CATI3DGeoVisu_ interface, any instance of the CAAVisTextModel component can be visualized in the ISO.
 
-The trihedral is an instance of the CAAVisTextModel component. This component Object Modeler and C++ derives from the CATModelForRep3D component. Consequently, implementing the _CATI3DGeoVisu_ interface, any instance of the CAAVisTextModel component can be visualized in the ISO.
 The CAAVisTextModel component implements the _CAAIVisTextModel_ interface to enable us selecting without ambiguity an instance of this component. This interface will be the filter of the agent of selection, a _CATPathElementAgent_ class [4]. However, without this interface, the trihedral is nevertheless selectable, but the only one interface you can use is _CATI3DGeoVisu_. This interface being implemented by all visualized components, it is not a discriminant interface.
 
 At last, the CAAVisTextModel component implements the _CATICreateInstance_ interface to avoid to export the component implementation class.
@@ -104,7 +100,6 @@ At last, the CAAVisTextModel component implements the _CATICreateInstance_ inter
 
 The wire box is an instance of the CAAVisWireBox component. Unlike the first two components, the CAAVisWireBox is not a CATModelForRep3D component. The reason comes from that the graphic representation will change during the life time of the state command. To sump up, once a component is into the ISO, you should not use/modify its graphic representation. The construction must be controlled by the _CATVisManager_. Refer to the technical article [1] for details about the life cycle of the graphic representation.
 
-The wire box is an instance of the CAAVisWireBox component. Unlike the first two components, the CAAVisWireBox is not a CATModelForRep3D component. The reason comes from that the graphic representation will change during the life time of the state command. To sump up, once a component is into the ISO, you should not use/modify its graphic representation. The construction must be controlled by the _CATVisManager_. Refer to the technical article [1] for details about the life cycle of the graphic representation.
 The CAAVisWireBox component implements the _CAAIVisWireBox_ to set and retrieve the size and location of the wire box.
 
 The CAAVisWireBox component implements the _CATI3DGeoVisu_ to build the graphic representation in taken into account the values returned by the _CAAIVisWireBox_ interface.
@@ -117,7 +112,7 @@ At last, the CAAVisWireBox component implements the _CATICreateInstance_ interfa
 At last, the CAAVisWireBox component implements the _CATICreateInstance_ interface to avoid to export the component implementation class.
 See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)" use case for a detailed description of how this use case should be launched. For the specific scenario:
 
-```vbscript
+```cpp
 Launch CATIA. When the application is ready:
 
 ```
@@ -293,7 +288,6 @@ class ExportedByCAAVisModelForRep **CAAIVisTextModel** : public CATBaseUnknown
 
 This interface will be used in the _CAADegClippingByBoxCmd_   state command as filter for an agent of selection. Refer to the "Defining the State Chart Diagram" step of the referenced article [2].
 
-This interface will be used in the _CAADegClippingByBoxCmd_   state command as filter for an agent of selection. Refer to the "Defining the State Chart Diagram" step of the referenced article [2].
 This interface contains the `SetGraphicRepresentation` method to associate the graphic representation with the component. The next section, Creating the CAAVisTextModel Component and Implementing the CAAIVisTextModel Interface details the reason of this method.
 
   2. **Creating the CAAVisTextModel Component and Implementing the CAAIVisTextModel Interface**
@@ -374,7 +368,6 @@ Refer to "Creating a Component" article [6] for details about the creation of th
 ```vbscript
 Do not forget to update the interface dictionary, here it is an extract of the CAAVisualization.edu.dico file located in the CAAVisualization.edu/CNext/code/dictionary directory.
 
-Do not forget to update the interface dictionary, here it is an extract of the CAAVisualization.edu.dico file located in the CAAVisualization.edu/CNext/code/dictionary directory.
 ```
 
     CAAVisTextModel        CAAIVisTextModel         libCAAVisModelForRep
@@ -398,7 +391,6 @@ It is an extract of the _CAADegClippingByBoxCmd_   state command. The CAAVisTex
 
   6. **Creating the Graphic Representation**
 
-6. **Creating the Graphic Representation**
 Once an instance of the CAAVisTextModel component is created, to visualize it, its graphic representation must be created and associated with the component.
 
 Here it is an extract of the _CAADegClippingByBoxCmd_   state command.
@@ -415,7 +407,6 @@ Here it is an extract of the _CAADegClippingByBoxCmd_   state command.
 
        CATMathPointf  TextPos(0.f,0.f,0.f);
 
-CATMathPointf  TextPos(0.f,0.f,0.f);
        CATUnicodeString TextValue ="ISO Selection" ;
        CAT3DAnnotationTextGP   *pTextGP = new **CAT3DAnnotationTextGP**(TextPos,TextValue);
 
@@ -436,7 +427,6 @@ The graphic representation of the CAAVisTextModel component, `pRepForText,` is a
 
 The "Wire box" component is named CAAVisWireBox. There are six sub-steps to define it:
 
-The "Wire box" component is named CAAVisWireBox. There are six sub-steps to define it:
   1. Creating the CAAVisWireBox Component
   2. Creating CAAIVisWireBox Interface
   3. Implementing CATICreateInstance Interface
@@ -575,7 +565,7 @@ Here it is the CAAEVisVisuWireBox.cpp file:
 
     CATImplementClass(CAAEVisVisuWireBox, DataExtension, CATBaseUnknown, **CAAVisWireBox**);
 
-```vbscript
+```cpp
 CATImplementClass(CAAEVisVisuWireBox, DataExtension, CATBaseUnknown, **CAAVisWireBox**);
     CAAEVisVisuWireBox::CAAEVisVisuWireBox(#) {}
 
@@ -621,12 +611,12 @@ if (SUCCEEDED(rc))
            piVisWireBox->Release(#);
            piVisWireBox = NULL ;
 
-```vbscript
+```cpp
            pWireBoxRep = new **CAT3DCustomRep**(#);
 
 ```
 
-```vbscript
+```cpp
            CATGraphicAttributeSet   BoxGa ;
 
 ```
@@ -692,7 +682,6 @@ The CAAIVisWireBox enables us to retrieve the size and the location of the wire 
 ```vbscript
 Do not forget to update the interface dictionary, here it is an extract of the CAAVisualization.edu.dico file located in the CAAVisualization.edu/CNext/code/dictionary directory.
 
-Do not forget to update the interface dictionary, here it is an extract of the CAAVisualization.edu.dico file located in the CAAVisualization.edu/CNext/code/dictionary directory.
 ```
 
     CAAVisWireBox CAAIVisWireBox         libCAAVisModelForRep

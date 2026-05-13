@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Virtual Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CATIA", "CAAAniPreproOnVirtual", "CATISamImportDefine", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproOnVirtual.htmmd"
+tags: "["CATIA", "CAAAniPreproOnVirtual", "CATISamImportDefine", "CAAScdAniUseCases"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproOnVirtual.htm"
 converted: "2026-05-11T17:31:51.835848"
-```
-
 ---
 ## Analysis Modeler
 
@@ -38,7 +35,7 @@ This macro shows you how to create an Analysis document for a generative structu
     ...
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' -----------------------------------------------------------
     ' Get the collection of documents in session
     ' Create the CATAnalysis Document
@@ -59,13 +56,13 @@ This macro shows you how to create an Analysis document for a generative structu
     ' if WB name already is "GPSCfg", not to use StartWorkbench
 ```
 
-```vbscript
+```cpp
        WBName = CATIA.GetWorkbenchId
        if (WBName <> "GPSCfg") Then
 ```
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
           CATIA.StartWorkbench("GPSCfg")
        End If
 ```
@@ -106,7 +103,7 @@ In order to import the document you have to give the path of this document, the 
 ```
 
 ```vbscript
-```vbscript
+```cpp
        Dim arrayOfVariantOfShort1(0)
        analysisManager1.ImportDefineFile (sDocPath & "/online/CAAScdAniUseCases/samples/AnalysisMechfeat.CATPart"),
 ```
@@ -130,7 +127,7 @@ In order to import the document you have to give the path of this document, the 
 ```
 
 ```vbscript
-```vbscript
+```cpp
        Set specsAndGeomWindow1 = CATIA.ActiveWindow
 ```vbscript
 ```
@@ -147,7 +144,7 @@ In order to import the document you have to give the path of this document, the 
 ```vbscript
     ' _____________________________________________________________________________________
     ' Scan the analysis document: Retrieve the Pointed documents to extract the reference for preprocessing
-```vbscript
+```cpp
        Set analysisLinkedDocuments1 = analysisManager1.LinkedDocuments
        CATIA.SystemService.Print analysisLinkedDocuments1.Name
        If (analysisLinkedDocuments1.Count <> 1 ) Then
@@ -158,7 +155,7 @@ In order to import the document you have to give the path of this document, the 
 ```
     ' _____________________________________________________________________________________
     ' Retrieve the CATPart Document and associated publications for preprocessing.
-```vbscript
+```cpp
        Set TheDoc = analysisLinkedDocuments1.Item(1)
        CATIA.SystemService.Print TheDoc.FullName
        Set product1 = TheDoc.Product
@@ -361,7 +358,7 @@ basicComponent1.SetValue "", 0, 0, 0, 25.000000
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
       CATIA.SystemService.Print " Mass Applied of the Part: " & basicComponent1.GetValue ("",0,0,0)
 
 ```

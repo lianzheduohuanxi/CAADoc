@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Overview of the Topological Operators"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperatorsInterfaces", "CATICGMSolidCuboid", "CATICGMDynSolidCylinder", "CATICGMGeoOperator", "CATICGMDynSolidCuboid", "CATICGMIntersectionCrvCrv", "CATICGMContainer", "CAADoc", "CATICGMDynMassProperties3D", "CAAGMModelGemBrowser", "CAAGMOperatorsTopSpline", "CATICGMDynShell", "CAATopJournal", "CAAGMOperatorsOverview", "CATICGMTopSkin", "CATIA", "CATICGMTopOperator", "CATICGMSolidCylinder", "CATICGMSolidPrimitive", "CATICGMObject"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopOverview.htmmd"
+tags: "["CAAGMOperatorsInterfaces", "CATICGMSolidCuboid", "CATICGMDynSolidCylinder", "CATICGMGeoOperator", "CATICGMDynSolidCuboid", "CATICGMIntersectionCrvCrv", "CATICGMContainer", "CAADoc", "CATICGMDynMassProperties3D", "CAAGMModelGemBrowser", "CAAGMOperatorsTopSpline", "CATICGMDynShell", "CAATopJournal", "CAAGMOperatorsOverview", "CATICGMTopSkin", "CATIA", "CATICGMTopOperator", "CATICGMSolidCylinder", "CATICGMSolidPrimitive", "CATICGMObject"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopOverview.htm"
 converted: "2026-05-11T17:33:49.256937"
-```
-
 ---
 tags: ["CAAGMOperatorsInterfaces", "CATICGMSolidCuboid", "CATICGMDynSolidCylinder", "CATICGMGeoOperator", "CATICGMDynSolidCuboid", "CATICGMIntersectionCrvCrv", "CATICGMContainer", "CAADoc", "CATICGMDynMassProperties3D", "CAAGMModelGemBrowser", "CAAGMOperatorsTopSpline", "CATICGMDynShell", "CAATopJournal", "CAAGMOperatorsOverview", "CATICGMTopSkin", "CATIA", "CATICGMTopOperator", "CATICGMSolidCylinder", "CATICGMSolidPrimitive", "CATICGMObject"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcTopOverview.htmmd"
@@ -92,7 +89,6 @@ Creating a Skin Body This section illustrates the use of the type of topological
       * Using `CATICGMTopSkin`.
     1. Creating the Surface
 
-1. Creating the Surface
            CATPlane * piPlane = piGeomFactory->CreatePlane(**CATMathOIJ**);  // xy plane
 ```vbscript
                if (NULL == piPlane)
@@ -654,7 +650,7 @@ pBoolOp = NULL;
 
 The same is done for a Boolean subtract: the option `CATBoolRemoval` is used. `MainBody3` contains the result of all the operations, while the no-more used bodies (`MainBody`2 , `CylinderBody`) are removed.
 
-```vbscript
+```cpp
     pBoolOp = **::CATCGMCreateDynBoolean** (piGeomFactory,
 
 ```
@@ -727,16 +723,16 @@ Filleting First define the edges to fillet. These edges are the external boundar
 
 Filleting First define the edges to fillet. These edges are the external boundary of the upper face of the prism after the two Boolean operations, in other words in our case, the face with 2 holes (the paths of the cylinder and the box). To retrieve them:
     CATLISTP(CATCell) listC;
-```vbscript
+```cpp
     CATLISTP(CATCell) listFaces;
 ```
 
     piMainBody3 ->**GetAllCells**(listFaces,  // the output list of cells
 
                               **2** );        // the dimension of the retrieved cells (2 for faces)
-```vbscript
+```cpp
 CATLISTP(CATCell) listC;
-```vbscript
+```cpp
 CATLISTP(CATCell) listFaces;
 ```
 
@@ -768,7 +764,7 @@ for ( i=1;i<=nbFaces;i++)
     }
 
     // ---------- and the loop with 5 edges
-```vbscript
+```cpp
 if ( 3== (listFaces[i]->**GetNbDomains**(#)) ) piFace = listFaces[i];
     CATDomain * piLoop = NULL;
     CATLISTP(CATEdge) listEdges;
@@ -778,7 +774,7 @@ if ( 3== (listFaces[i]->**GetNbDomains**(#)) ) piFace = listFaces[i];
 ```
 
     {
-```vbscript
+```cpp
 CATLISTP(CATEdge) listEdges;
 int numberOfEdges;
 if (NULL != piFace)
@@ -863,7 +859,7 @@ if (NULL==pRadius)
     }
 
 return (1);
-```vbscript
+```cpp
     CATLISTP(CATDynFilletRadius)	listRadius;
 ```
 
@@ -900,7 +896,6 @@ The fillet operation can now be defined and run. To use it:
     * Delete it.
 Also deletes the no more used object (radius, ribbon) and removes the old body (`MainBody3`).
 
-Also deletes the no more used object (radius, ribbon) and removes the old body (`MainBody3`).
     CATICGMDynFillet * pFilletOp = **CATCGMCreateDynFillet**(piGeomFactory,&topdata,piMainBody3);
 ```vbscript
     if (NULL==pFilletOp)
@@ -1029,7 +1024,6 @@ The shelling operation can now be defined and run. To use it:
     * Delete it.
 Also removes the old body (`MainBody4`).
 
-Also removes the old body (`MainBody4`).
     CATICGMDynShell* pShellOp = **CATCGMCreateDynShell** (piGeomFactory,
 
                                                &topdata,      // the configuration and the journal
@@ -1058,7 +1052,7 @@ if (NULL==pShellOp)
     }
     // Sets the opening faces
 return (1);
-```vbscript
+```cpp
     CATLISTP(CATFace) openings;
 ```
 
@@ -1066,7 +1060,7 @@ return (1);
     pShellOp-> **Append**(openings);
 
     // Runs
-```vbscript
+```cpp
 CATLISTP(CATFace) openings;
 openings.Append((CATFace*)piFace);
 pShellOp-> **Append**(openings);
@@ -1147,7 +1141,7 @@ if(1==toStore)
        ofstream filetowrite(pfileName, ios::binary ) ;
 
     #else
-```vbscript
+```cpp
 if(1==toStore)
 ofstream filetowrite(pfileName, ios::binary ) ;
        ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;

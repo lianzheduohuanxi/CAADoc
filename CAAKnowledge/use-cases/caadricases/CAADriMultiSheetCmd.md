@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Multi Sheet Interactive Command"
-category: use-case case"
+category: "use-case case"
 module: "CAADriUseCases"
-tags: ["CATIADocument", "CATIModelEvents_var", "CAADrwMultiSheetCmd", "CAADrwAddin", "CAAUseCaseCommands", "CATIADrawingDocument", "CAADraftingInterfaces", "CATIA", "CATIDftMultiSheetCmd", "CATIDrwText", "CATIDftMultiSheetMode", "CATIAApplication"]
-source_file: "Doc/online/CAADriUseCases/CAADriMultiSheetCmd.htmmd"
+tags: "["CATIADocument", "CATIModelEvents_var", "CAADrwMultiSheetCmd", "CAADrwAddin", "CAAUseCaseCommands", "CATIADrawingDocument", "CAADraftingInterfaces", "CATIA", "CATIDftMultiSheetCmd", "CATIDrwText", "CATIDftMultiSheetMode", "CATIAApplication"]"
+source_file: "Doc/online/CAADriUseCases/CAADriMultiSheetCmd.htm"
 converted: "2026-05-11T17:31:51.012436"
-```
-
 ---
 # Mechanical Design
 
@@ -92,7 +89,6 @@ Fig 3: Sheet.2 is the current sheet ![](images/CAADrwMultiSheet3.jpg)
 
 The CAADrwMultiSheetCmd use case is made of two source files named CAADrwMultiSheetCmd.h and CAADrwMultiSheetCmd.cpp located in the CAADrwMultiSheetCmd.m module of the CAADraftingInterfaces.edu framework:
 
-The CAADrwMultiSheetCmd use case is made of two source files named CAADrwMultiSheetCmd.h and CAADrwMultiSheetCmd.cpp located in the CAADrwMultiSheetCmd.m module of the CAADraftingInterfaces.edu framework:
 Windows | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwMultiSheetCmd.m/`
 
 The CAADrwMultiSheetCmd use case is made of two source files named CAADrwMultiSheetCmd.h and CAADrwMultiSheetCmd.cpp located in the CAADrwMultiSheetCmd.m module of the CAADraftingInterfaces.edu framework:
@@ -129,7 +125,7 @@ _pObjectAgent(NULL)
       __piSheetsOnDrawing = NULL;
       CATApplicationFrame *appFrame = CATApplicationFrame::GetFrame(#);
       CATIAApplication *ptApp = NULL;
-```vbscript
+```cpp
       if (SUCCEEDED(appFrame->QueryInterface(IID_CATIAApplication, (void**) &ptApp)))
 
 ```
@@ -146,7 +142,7 @@ if (SUCCEEDED(appFrame->QueryInterface(IID_CATIAApplication, (void**) &ptApp)))
 ```
 
         {
-```vbscript
+```cpp
 if (SUCCEEDED(appFrame->QueryInterface(IID_CATIAApplication, (void**) &ptApp)))
 CATIADocument *ptDoc = NULL;
 if (SUCCEEDED(ptApp->get_ActiveDocument(ptDoc)))
@@ -155,7 +151,7 @@ if (SUCCEEDED(ptApp->get_ActiveDocument(ptDoc)))
 ```
 
           {
-```vbscript
+```cpp
 if (SUCCEEDED(ptApp->get_ActiveDocument(ptDoc)))
 CATIADrawingDocument *piDrawing = NULL;
 if (SUCCEEDED(ptDoc->QueryInterface(IID_CATIADrawingDocument, (void**) &piDrawing)))
@@ -164,7 +160,7 @@ if (SUCCEEDED(ptDoc->QueryInterface(IID_CATIADrawingDocument, (void**) &piDrawin
 ```
 
           }
-```vbscript
+```cpp
 if (SUCCEEDED(ptDoc->QueryInterface(IID_CATIADrawingDocument, (void**) &piDrawing)))
 piDrawing->get_Sheets(__piSheetsOnDrawing);
 piDrawing->Release(#);
@@ -211,7 +207,7 @@ GetMultiSheetMode(_PreviousMode);
     //
     ...
     // This internal method is used to manage CATIDftMultiSheetCmd Interfaces.
-```vbscript
+```cpp
 GetMultiSheetMode(_PreviousMode);
     void  CAADrwMultiSheetCmd::GetMultiSheetMode(boolean  &oMode)
 ```
@@ -229,13 +225,13 @@ void  CAADrwMultiSheetCmd::GetMultiSheetMode(boolean  &oMode)
 oMode = FALSE;
 if (!!__piSheetsOnDrawing)
         CATIDftMultiSheetMode *multiSheetManager=NULL;
-```vbscript
+```cpp
         if (SUCCEEDED(__piSheetsOnDrawing->QueryInterface(IID_CATIDftMultiSheetMode, (void **) &multiSheetManager)))
 
 ```
 
         {
-```vbscript
+```cpp
 if (!!__piSheetsOnDrawing)
 CATIDftMultiSheetMode *multiSheetManager=NULL;
 if (SUCCEEDED(__piSheetsOnDrawing->QueryInterface(IID_CATIDftMultiSheetMode, (void **) &multiSheetManager)))
@@ -256,13 +252,13 @@ if (SUCCEEDED(__piSheetsOnDrawing->QueryInterface(IID_CATIDftMultiSheetMode, (vo
     if (!_PreviousMode) SetMultiSheetMode(TRUE);
     ...
     //This internal method is used to manage CATIDftMultiSheetCmd Interfaces.
-```vbscript
+```cpp
 if (!_PreviousMode) SetMultiSheetMode(TRUE);
     void  CAADrwMultiSheetCmd::SetMultiSheetMode(boolean  iMode)
 ```
 
     {
-```vbscript
+```cpp
 if (!_PreviousMode) SetMultiSheetMode(TRUE);
 void  CAADrwMultiSheetCmd::SetMultiSheetMode(boolean  iMode)
       if (!!__piSheetsOnDrawing)
@@ -272,13 +268,13 @@ void  CAADrwMultiSheetCmd::SetMultiSheetMode(boolean  iMode)
 void  CAADrwMultiSheetCmd::SetMultiSheetMode(boolean  iMode)
 if (!!__piSheetsOnDrawing)
         CATIDftMultiSheetMode *multiSheetManager=NULL;
-```vbscript
+```cpp
         if (SUCCEEDED(__piSheetsOnDrawing->QueryInterface(IID_CATIDftMultiSheetMode, (void **) &multiSheetManager)))
 
 ```
 
         {
-```vbscript
+```cpp
 if (!!__piSheetsOnDrawing)
 CATIDftMultiSheetMode *multiSheetManager=NULL;
 if (SUCCEEDED(__piSheetsOnDrawing->QueryInterface(IID_CATIDftMultiSheetMode, (void **) &multiSheetManager)))
@@ -328,7 +324,7 @@ CATDialogState* state2 = AddDialogState("Sel text to align");
 state1->AddDialogAgent(_pObjectAgent);
 state2->AddDialogAgent(_pObjectAgent);
       AddTransition(state1, state2, IsOutputSetCondition(_pObjectAgent),
-```vbscript
+```cpp
                     Action((ActionMethod)&CAADrwMultiSheetCmd::CheckText, NULL, NULL));
 
 ```
@@ -336,7 +332,7 @@ state2->AddDialogAgent(_pObjectAgent);
       // Transition definition
 ```vbscript
 AddTransition(state1, state2, IsOutputSetCondition(_pObjectAgent),
-```vbscript
+```cpp
 Action((ActionMethod)&CAADrwMultiSheetCmd::CheckText, NULL, NULL));
       AddTransition(state2, NULL, IsOutputSetCondition(_pObjectAgent),
                     Action((ActionMethod)&CAADrwMultiSheetCmd::MoveText, NULL, NULL));
@@ -368,7 +364,7 @@ boolean CAADrwMultiSheetCmd::CheckText(void *)
 
       {
         // There is a selection, we will scan it from the beginning
-```vbscript
+```cpp
 if (NULL != pObjSO)
         pObjSO->InitElementList(#);
         while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement(#)))
@@ -431,7 +427,7 @@ boolean CAADrwMultiSheetCmd::MoveText(void *)
 CATPathElement *pElemPath = NULL;
 if (NULL != pObjSO)
         pObjSO->InitElementList(#);
-```vbscript
+```cpp
         while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement(#)))
 
 ```
@@ -465,7 +461,7 @@ if (event !=NULL_var)
               event->Dispatch(info);
 
             }
-```vbscript
+```cpp
 if (event !=NULL_var)
 CATModify info((CATBaseUnknown *)piText);
 event->Dispatch(info);

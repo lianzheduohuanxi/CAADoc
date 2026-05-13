@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "GeometricObjects Framework Modifications in V5R15"
-category: use-case
+category: "use-case"
 module: "CAACenAPIChangesR21"
-version: "V5R21"
-tags: []
-source_file: "Doc/online/CAACenAPIChangesR21/GeometricObjects.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAACenAPIChangesR21/GeometricObjects.htm"
 converted: "2026-05-11T17:33:51.672167"
-```
-
 ---
 # CAA C++ API Modifications
 

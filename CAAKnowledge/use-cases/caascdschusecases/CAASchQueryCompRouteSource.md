@@ -20,7 +20,7 @@ Option Explicit
 '   CATIA Level:  V5R15 
 ' *****************************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ```
@@ -28,7 +28,7 @@ Sub CATMain(#)
     ' ------------------------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -37,13 +37,13 @@ Sub CATMain(#)
 ```
     ' ------------------------------------------------------------------------- 
     ' Open the schematic document 
-```vbscript
+```cpp
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
             "online/CAAScdSchUseCases/samples/CAASCH_CompRoute01.CATProduct")
 ```
 
-```vbscript
+```cpp
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
@@ -130,7 +130,7 @@ Sub CATMain(#)
             Set objPrd = Nothing
             strName = ""
 ```
-```vbscript
+```cpp
             Set objPrd = objSchLCompRefs.Item (intIndex,"CATIAProduct")
             If ( Not ( objPrd Is Nothing ) ) Then
 ```
@@ -193,14 +193,14 @@ Sub CATMain(#)
 
             strName = ""
 ```
-```vbscript
+```cpp
             Set objPrd = objSchLComps.Item (intIndex,"CATIAProduct")
             If ( Not ( objPrd Is Nothing ) ) Then
 ```
                strName = objPrd.Name
                strMessage = strMessage &  "  member " & intIndex _
                  & "= " & strName & vbCr
-```vbscript
+```cpp
                Set objCompGraphInst = objSchRoot.GetInterface  ("CATIASchCompGraphic", _
                  objPrd)                
 ```
@@ -241,11 +241,11 @@ Sub CATMain(#)
                   End If    
                End If '--- If ( Not ( objGRRComp Is Nothing )...
 
-```vbscript
+```cpp
                Set objCntbl = objSchRoot.GetInterface ("CATIASchAppConnectable",_
                  objCompGraphInst)
 ```
-```vbscript
+```cpp
                Set objGRR = objSchRoot.GetInterface ("CATIASchGRR", objGRRCompInst)
 
 ```
@@ -263,7 +263,7 @@ Sub CATMain(#)
                   intNbCntr = objLCntrs.Count
                   If ( intNbCntr > 0) Then
                      For iCntr = 1 To intNbCntr
-```vbscript
+```cpp
                         Set objLDbCntr = Nothing
                         Set objCntr = Nothing
                         Set objCntr = objLCntrs.Item (iCntr,"CATIASchCntrLocation")
@@ -318,7 +318,7 @@ Sub CATMain(#)
 
             strName = ""
 ```
-```vbscript
+```cpp
             Set objPrd = objSchLRoutes.Item (intIndex,"CATIAProduct")
             If ( Not ( objPrd Is Nothing ) ) Then
 ```
@@ -326,7 +326,7 @@ Sub CATMain(#)
                strName = objPrd.PartNumber
                strMessage = strMessage &  "  member " & _
                  intIndex & "= " & strName & vbCr
-```vbscript
+```cpp
                Set objSchRouteGraph = objSchRoot.GetInterface  ("CATIASchRouteGraphic", _
                  objPrd) 
 ```
@@ -404,7 +404,7 @@ Private Function GetComponentImage (objSchCompGraphArg As SchCompGraphic) As Sch
       Set objSchLSymbols = objSchCompGraphArg.ListGraphicalImages
       If ( Not ( objSchLSymbols Is Nothing ) ) Then
 ```
-```vbscript
+```cpp
          Set GetComponentImage = objSchLSymbols.Item (1,"CATIASchGRRComp")
       End If
 ```
@@ -435,11 +435,11 @@ Private Function GetRoutePrimitives (objSchRouteGraphArg As SchRouteGraphic, _
       Set objSchLGRR = objSchRouteGraphArg.ListGraphicalPrimitives
       If ( Not ( objSchLGRR Is Nothing ) ) Then
 ```
-```vbscript
+```cpp
          Set objSchGRR = objSchLGRR.Item (1,"CATIASchGRR")
          If ( Not ( objSchGRR Is Nothing ) ) Then
 ```
-```vbscript
+```cpp
             Set GetRoutePrimitives = objSchRootArg.GetInterface ("CATIASchGRRRoute", _
               objSchGRR)
 ```
@@ -465,7 +465,7 @@ Option Explicit
 '   CATIA Level:  V5R15 
 ' *****************************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ```
@@ -473,7 +473,7 @@ Sub CATMain(#)
     ' ------------------------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -482,13 +482,13 @@ Sub CATMain(#)
 ```
     ' ------------------------------------------------------------------------- 
     ' Open the schematic document 
-```vbscript
+```cpp
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
             "online/CAAScdSchUseCases/samples/CAASCH_CompRoute01.CATProduct")
 ```
 
-```vbscript
+```cpp
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
@@ -575,7 +575,7 @@ Sub CATMain(#)
             Set objPrd = Nothing
             strName = ""
 ```
-```vbscript
+```cpp
             Set objPrd = objSchLCompRefs.Item (intIndex,"CATIAProduct")
             If ( Not ( objPrd Is Nothing ) ) Then
 ```
@@ -638,14 +638,14 @@ Sub CATMain(#)
 
             strName = ""
 ```
-```vbscript
+```cpp
             Set objPrd = objSchLComps.Item (intIndex,"CATIAProduct")
             If ( Not ( objPrd Is Nothing ) ) Then
 ```
                strName = objPrd.Name
                strMessage = strMessage &  "  member " & intIndex _
                  & "= " & strName & vbCr
-```vbscript
+```cpp
                Set objCompGraphInst = objSchRoot.GetInterface  ("CATIASchCompGraphic", _
                  objPrd)                
 ```
@@ -686,11 +686,11 @@ Sub CATMain(#)
                   End If    
                End If '--- If ( Not ( objGRRComp Is Nothing )...
 
-```vbscript
+```cpp
                Set objCntbl = objSchRoot.GetInterface ("CATIASchAppConnectable",_
                  objCompGraphInst)
 ```
-```vbscript
+```cpp
                Set objGRR = objSchRoot.GetInterface ("CATIASchGRR", objGRRCompInst)
 
 ```
@@ -708,7 +708,7 @@ Sub CATMain(#)
                   intNbCntr = objLCntrs.Count
                   If ( intNbCntr &gt; 0) Then
                      For iCntr = 1 To intNbCntr
-```vbscript
+```cpp
                         Set objLDbCntr = Nothing
                         Set objCntr = Nothing
                         Set objCntr = objLCntrs.Item (iCntr,"CATIASchCntrLocation")
@@ -763,7 +763,7 @@ Sub CATMain(#)
 
             strName = ""
 ```
-```vbscript
+```cpp
             Set objPrd = objSchLRoutes.Item (intIndex,"CATIAProduct")
             If ( Not ( objPrd Is Nothing ) ) Then
 ```
@@ -771,7 +771,7 @@ Sub CATMain(#)
                strName = objPrd.PartNumber
                strMessage = strMessage &  "  member " & _
                  intIndex & "= " & strName & vbCr
-```vbscript
+```cpp
                Set objSchRouteGraph = objSchRoot.GetInterface  ("CATIASchRouteGraphic", _
                  objPrd) 
 ```
@@ -849,7 +849,7 @@ Private Function GetComponentImage (objSchCompGraphArg As SchCompGraphic) As Sch
       Set objSchLSymbols = objSchCompGraphArg.ListGraphicalImages
       If ( Not ( objSchLSymbols Is Nothing ) ) Then
 ```
-```vbscript
+```cpp
          Set GetComponentImage = objSchLSymbols.Item (1,"CATIASchGRRComp")
       End If
 ```
@@ -880,11 +880,11 @@ Private Function GetRoutePrimitives (objSchRouteGraphArg As SchRouteGraphic, _
       Set objSchLGRR = objSchRouteGraphArg.ListGraphicalPrimitives
       If ( Not ( objSchLGRR Is Nothing ) ) Then
 ```
-```vbscript
+```cpp
          Set objSchGRR = objSchLGRR.Item (1,"CATIASchGRR")
          If ( Not ( objSchGRR Is Nothing ) ) Then
 ```
-```vbscript
+```cpp
             Set GetRoutePrimitives = objSchRootArg.GetInterface ("CATIASchGRRRoute", _
               objSchGRR)
 ```

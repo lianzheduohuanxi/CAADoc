@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Command with Options in the "Tools Palette" Toolbar"
-category: use-case case"
+category: "use-case case"
 module: "CAAAfrUseCases"
-tags: ["CAADegTwoPointsBoxUncheckHdr", "CAADegGeoCommands", "CAADegOriginBoxHdr", "CAADegTwoPointsBoxCheckHdr", "CAADialogEngine", "CATIAfrPaletteOptions", "CAAAfrViewerFeedbackHdr", "CAASysCuboid", "CAADegBoxCreationChoiceNotification", "CAADegFourPointsBoxHdr", "CAAGeometry", "CAADegBoxPaletteChoiceCmd", "CAADegCreateBoxPaletteHeader", "CAADegTwoPointsBoxHdr", "CAADegThreePointsBoxHdr", "CAADegCreateBoxCmd", "CATIAfrCmdPaletteOptions"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrCmdPalette.htmmd"
+tags: "["CAADegTwoPointsBoxUncheckHdr", "CAADegGeoCommands", "CAADegOriginBoxHdr", "CAADegTwoPointsBoxCheckHdr", "CAADialogEngine", "CATIAfrPaletteOptions", "CAAAfrViewerFeedbackHdr", "CAASysCuboid", "CAADegBoxCreationChoiceNotification", "CAADegFourPointsBoxHdr", "CAAGeometry", "CAADegBoxPaletteChoiceCmd", "CAADegCreateBoxPaletteHeader", "CAADegTwoPointsBoxHdr", "CAADegThreePointsBoxHdr", "CAADegCreateBoxCmd", "CATIAfrCmdPaletteOptions"]"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrCmdPalette.htm"
 converted: "2026-05-11T17:17:55.606549"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -272,7 +269,6 @@ and the following data:
 
 The class contains other methods and data, refer to the code for more details.
 
-The class contains other methods and data, refer to the code for more details.
   2. Defining the CAADegCreateBoxCmd.cpp
 
 The beginning of the source file is such as:
@@ -324,7 +320,7 @@ Note, that there is also the CAAAfrViewerFeedbackHdr use case [7] which describe
       ::**CATAfrGetCommandHeader**("CAADegTwoPointsBoxHdr",pCmd);
 
 CATCommandHeader * pCmd = NULL ;
-```vbscript
+```cpp
       _pTwoPointsCmdHdr = new **CATAfrCheckHeaderAccessor**("CAADegTwoPointsBoxHdr");
 
       if ( NULL == pCmd )
@@ -397,7 +393,7 @@ You can note that this initialization is done only for the first creation. When 
       ::**CATAfrGetCommandHeader**("CAADegOriginBoxHdr",pCmd);
 
 pCmd = NULL ;
-```vbscript
+```cpp
       _pOriginCheckHdr = new **CATAfrCheckHeaderAccessor**("CAADegOriginBoxHdr");
 
       if ( NULL == pCmd)
@@ -567,7 +563,6 @@ The _CAADegCreateBoxCmd_ class states that it implements the _CATIAfrCmdPaletteO
 
 This interface has two methods:
 
-This interface has two methods:
   1. GetPaletteOptions
   2. GetPaletteStateOptions
 
@@ -585,7 +580,7 @@ In the use case, the option to add in the Palette is the command header represen
     {
 In the use case, the option to add in the Palette is the command header represented by this icon: ![](images/CAACreateBoxSwitchOrigin.jpg).
 CATLISTP(CATCommandHeader) CAADegCreateBoxCmd::GetPaletteOptions(#)
-```vbscript
+```cpp
        CATLISTP(CATCommandHeader) PaletteOptions;
 
 ```
@@ -594,7 +589,7 @@ CATLISTP(CATCommandHeader) CAADegCreateBoxCmd::GetPaletteOptions(#)
 
        ::**CATAfrGetCommandHeader**("CAADegOriginBoxHdr",pCmd);
 
-```vbscript
+```cpp
 CATLISTP(CATCommandHeader) PaletteOptions;
 CATCommandHeader * pCmd = NULL ;
        if ( NULL != pCmd )
@@ -623,7 +618,6 @@ pCmd = NULL ;
 
 The `CAADegOriginBoxHdr` command header instance is a check header to specify if the newly box should be created at the origin of the model . Refer to the Defining Options section for details about the header creation.
 
-The `CAADegOriginBoxHdr` command header instance is a check header to specify if the newly box should be created at the origin of the model . Refer to the Defining Options section for details about the header creation.
   2. GetPaletteStateOptions
 
 This method is called each time the state command enters in a state. In most cases, the goal of this method is to retrieve the name of the current state, and whether the state's name, add the specific command header instance pointers in the returned list.
@@ -636,7 +630,7 @@ This method is called each time the state command enters in a state. In most cas
     {
 This method is called each time the state command enters in a state. In most cases, the goal of this method is to retrieve the name of the current state, and whether the state's name, add the specific command header instance pointers in the returned list.
 CATLISTP(CATCommandHeader) CAADegCreateBoxCmd::GetPaletteStateOptions(#)
-```vbscript
+```cpp
        CATLISTP(CATCommandHeader) PaletteStateOptions;
 
 ```
@@ -648,7 +642,7 @@ CATLISTP(CATCommandHeader) CAADegCreateBoxCmd::GetPaletteStateOptions(#)
 ```
 
        {
-```vbscript
+```cpp
 CATLISTP(CATCommandHeader) PaletteStateOptions;
 CATDialogState * pCurrentState = **GetCurrentState**(#);
 if ( NULL != pCurrentState )
@@ -803,7 +797,6 @@ CATMathPoint BoxOrigin ;
 ```vbscript
 if ( NULL == _pOriginCheckHdr )
 BoxOrigin = CornerPoint ;
-             BoxOrigin = CornerPoint ;
 ```
 
           }
@@ -832,7 +825,7 @@ CATDialogTransition * **pState2Transition1** = AddTransition
          stWidthPoint,
          stDepthPoint,
          AndCondition(IsOutputSetCondition(_daPathElementWidthPoint),
-```vbscript
+```cpp
     	              Condition((ConditionMethod) & CAADegCreateBoxCmd::**CheckChoice** ,(void*)**4**)),
          Action((ActionMethod) & CAADegCreateBoxCmd::AcquisitionWidth)
 
@@ -842,7 +835,7 @@ CATDialogTransition * **pState2Transition1** = AddTransition
 
 ```vbscript
 AndCondition(IsOutputSetCondition(_daPathElementWidthPoint),
-```vbscript
+```cpp
 Condition((ConditionMethod) & CAADegCreateBoxCmd::**CheckChoice** ,(void*)**4**)),
 Action((ActionMethod) & CAADegCreateBoxCmd::AcquisitionWidth)
 ```
@@ -851,13 +844,13 @@ Action((ActionMethod) & CAADegCreateBoxCmd::AcquisitionWidth)
 ```
 
       (
-```vbscript
+```cpp
 Action((ActionMethod) & CAADegCreateBoxCmd::AcquisitionWidth)
 CATDialogTransition * **pState2Transition3** = AddTransition
          stWidthPoint,
          NULL,
          AndCondition(IsOutputSetCondition(_daPathElementWidthPoint),
-```vbscript
+```cpp
     	              Condition((ConditionMethod) & CAADegCreateBoxCmd::**CheckChoice** ,(void*)**1**)),
          Action((ActionMethod) & CAADegCreateBoxCmd::CreateBox)
 ```
@@ -867,7 +860,7 @@ CATDialogTransition * **pState2Transition3** = AddTransition
       ) ;
 NULL,
 AndCondition(IsOutputSetCondition(_daPathElementWidthPoint),
-```vbscript
+```cpp
 Condition((ConditionMethod) & CAADegCreateBoxCmd::**CheckChoice** ,(void*)**1**)),
 Action((ActionMethod) & CAADegCreateBoxCmd::CreateBox)
 ```
@@ -875,9 +868,9 @@ Action((ActionMethod) & CAADegCreateBoxCmd::CreateBox)
     CATDialogTransition * **pState3Transition1** = AddTransition
 
       (
-```vbscript
+```cpp
 Condition((ConditionMethod) & CAADegCreateBoxCmd::**CheckChoice** ,(void*)**1**)),
-```vbscript
+```cpp
 Action((ActionMethod) & CAADegCreateBoxCmd::CreateBox)
 ```
 
@@ -885,7 +878,7 @@ CATDialogTransition * **pState3Transition1** = AddTransition
          stDepthPoint,
          stHeightPoint,
          AndCondition(IsOutputSetCondition(_daIndicationDepthPoint),
-```vbscript
+```cpp
     	              Condition((ConditionMethod) & CAADegCreateBoxCmd::**CheckChoice** ,(void*)**3**)),
          Action((ActionMethod) & CAADegCreateBoxCmd::AcquisitionDepth)
 ```
@@ -895,7 +888,7 @@ CATDialogTransition * **pState3Transition1** = AddTransition
       ) ;
 stHeightPoint,
 AndCondition(IsOutputSetCondition(_daIndicationDepthPoint),
-```vbscript
+```cpp
 Condition((ConditionMethod) & CAADegCreateBoxCmd::**CheckChoice** ,(void*)**3**)),
 Action((ActionMethod) & CAADegCreateBoxCmd::AcquisitionDepth)
 ```
@@ -903,9 +896,9 @@ Action((ActionMethod) & CAADegCreateBoxCmd::AcquisitionDepth)
     CATDialogTransition * **pState3Transition3** = AddTransition
 
       (
-```vbscript
+```cpp
 Condition((ConditionMethod) & CAADegCreateBoxCmd::**CheckChoice** ,(void*)**3**)),
-```vbscript
+```cpp
 Action((ActionMethod) & CAADegCreateBoxCmd::AcquisitionDepth)
 ```
 
@@ -913,7 +906,7 @@ CATDialogTransition * **pState3Transition3** = AddTransition
          stDepthPoint,
          NULL,
          AndCondition(IsOutputSetCondition(_daIndicationDepthPoint),
-```vbscript
+```cpp
     	              Condition((ConditionMethod) & CAADegCreateBoxCmd::**CheckChoice** ,(void*)**2**)),
          Action((ActionMethod) & CAADegCreateBoxCmd::CreateBox)
 ```

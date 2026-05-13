@@ -1,63 +1,67 @@
 ---
 title: "CAAICafGeometryViewSettingAtt"
-type: "interface"
+type: "ProtectedInterface"
 module: "CAACATIAApplicationFrm"
-category: api-reference
 base: "IUnknown"
-inheritance_chain: "CAAICafGeometryViewSettingAtt → IUnknown"
 method_count: 4
-visibility: "protected"
-has_tie_binding: true
-verified: true
+source_file: "CAACATIAApplicationFrm.edu/ProtectedInterfaces/CAAICafGeometryViewSettingAtt.h"
 ---
-> **TIE实现**: unknown
 
 # CAAICafGeometryViewSettingAtt
 
-**基类**: IUnknown  
-**继承链**: CAAICafGeometryViewSettingAtt → IUnknown  
-**模块**: CAACATIAApplicationFrm  
-**分类**: framework  
-**可见性**: protected  
-**方法数**: 4
-
-> Global Unique IDentifier defined in .cpp
+**基类**: IUnknown | **模块**: CAACATIAApplicationFrm | **方法数**: 4
 
 ## 依赖
 
+- `IUnknown.h`
 - `CAACafCtrlToolsOptions.h`
 
-## TIE实现
+## 纯虚方法 (接口契约)
 
-**实现文件**:
-- `CAACafGeometryEltSettingCtrl.cpp`
-- `CAACafGeometryViewSettingCtrl.cpp`
-- `CAAECafGeometryEltSettingAtt.cpp`
-- `CAAECafGeometryViewSettingAtt.cpp`
-- `CAAECafSettingManagmentForGeometryElt.cpp`
+### Initialize
+
+```cpp
+virtual HRESULT Initialize() = 0 ;
+```
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### Get3DRepresentationMode
+
+```cpp
+virtual HRESULT Get3DRepresentationMode(CATString & oIdMode) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oIdMode | `CATString &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### Set3DRepresentationMode
+
+```cpp
+virtual HRESULT Set3DRepresentationMode(const CATString & iIdMode) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iIdMode | `const CATString &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetInfo3DRepresentationMode
+
+```cpp
+virtual HRESULT GetInfo3DRepresentationMode(CATSettingInfo * oInfo) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oInfo | `CATSettingInfo *` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
 
 ---
 
-## Interface Overview
-
-This interface inherits from **IUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAACATIAApplicationFrm.edu/ProtectedInterfaces/CAAICafGeometryViewSettingAtt.h`

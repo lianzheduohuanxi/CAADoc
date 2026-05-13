@@ -1,64 +1,49 @@
 ---
 title: "CAAISysName"
-type: "interface"
+type: "PublicInterface"
 module: "CAASystem"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAISysName → CATBaseUnknown"
 method_count: 2
-visibility: "public"
-has_tie_binding: true
-verified: true
+source_file: "CAASystem.edu/PublicInterfaces/CAAISysName.h"
 ---
-> **TIE实现**: unknown
 
 # CAAISysName
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAISysName → CATBaseUnknown  
-**模块**: CAASystem  
-**分类**: framework  
-**可见性**: public  
-**方法数**: 2
+> Interface which manages the name of the CAAGeometry's object. Inheritance: CATBaseUnknown (System Framework) Main Methods: SetName: Sets the name of the component Getname: Retrieves the name of the component
 
-> System Framework
+**基类**: CATBaseUnknown | **模块**: CAASystem | **方法数**: 2
 
 ## 依赖
 
 - `CATBaseUnknown.h`
 - `CAASysGeoModelInf.h`
 
-## TIE实现
+## 纯虚方法 (接口契约)
 
-**实现文件**:
-- `CAAISysAccess.cpp`
-- `CAAISysCircle.cpp`
-- `CAAISysCircleCenterProperties.cpp`
-- `CAAISysCollection.cpp`
-- `CAAISysColorProperties.cpp`
+### SetName
+
+```cpp
+virtual HRESULT SetName(const CATUnicodeString & iName) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iName | `const CATUnicodeString &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetName
+
+```cpp
+virtual HRESULT GetName(CATUnicodeString & ioName) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| ioName | `CATUnicodeString &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
 
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAASystem.edu/PublicInterfaces/CAAISysName.h`

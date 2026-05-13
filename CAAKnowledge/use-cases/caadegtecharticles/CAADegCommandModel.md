@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "The CAA Command Model"
 category: "use-case"
 module: "CAADegTechArticles"
-tags: []
-source_file: "Doc/online/CAADegTechArticles/CAADegCommandModel.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAADegTechArticles/CAADegCommandModel.htm"
 converted: "2026-05-11T17:33:49.754845"
-```
-
 ---
 tags: []
 source_file: "Doc/online/CAADegTechArticles/CAADegCommandModel.htmmd"
@@ -91,7 +88,6 @@ A dialog command known by the command selector, that is created either as exclus
 3. The command restarts at the state that was current when a shared command took the focus from it.
 The following table shows a summary of when these methods are called, and what they should contain, depending on the command type and running mode. Command Type | Possible Running Modes | Activate | Desactivate | Cancel
 
-The following table shows a summary of when these methods are called, and what they should contain, depending on the command type and running mode. Command Type | Possible Running Modes | Activate | Desactivate | Cancel
 One shot | Exclusive | Called when the end user selects the command. Should contain the body of the command and should request the command destruction (*) when the job completes | Called when a shared command takes the focus. Should never be called if `Activate` includes a request to delete the command, since in this case, the command completes before the end user can select another command. Otherwise, should hide its temporary objects. | Called when an exclusive command takes the focus. Never called if `Activate` includes a request to delete the command. Otherwise, should do a clean up of  the command temporary objects ans request the command destruction (*)
 Undefined | Never called | Never called | Never called
 Dialog box | Exclusive or Shared | Called when the end user selects the command or when the command takes the focus again after being put on the command stack by a shared command. Shows the dialog box by default. The dialog box creation should be made in the constructor. | Called when a shared command takes the focus. Hides the dialog box by default | Called when an exclusive command takes the focus. Hides the dialog box box by default. Should request its destruction (*)

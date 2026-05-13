@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Schematic Route between two Schematic Equipments"
 category: "use-case"
 module: "CAAScdSchUseCases"
-tags: ["CAASCH_RouteBetween2Equip", "CAADoc", "CAASchRouteBetween2Equip", "CATIAProduct", "CAAScdSchUseCases", "CATIASchGRRComp", "CATIA", "CAASchAppBase", "CAASCHEDUApp", "CAASCHEDUConnector", "CATIASchGRR", "CAASCHEDUFuncString", "CATIASchCompatible", "CAASchPlatformModeler", "CATIASchCompGraphic", "CAASchAppUtilities"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchRouteBetween2Equip.htmmd"
+tags: "["CAASCH_RouteBetween2Equip", "CAADoc", "CAASchRouteBetween2Equip", "CATIAProduct", "CAAScdSchUseCases", "CATIASchGRRComp", "CATIA", "CAASchAppBase", "CAASCHEDUApp", "CAASCHEDUConnector", "CATIASchGRR", "CAASCHEDUFuncString", "CATIASchCompatible", "CAASchPlatformModeler", "CATIASchCompGraphic", "CAASchAppUtilities"]"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchRouteBetween2Equip.htm"
 converted: "2026-05-11T17:31:51.486843"
-```
-
 ---
 ## Schematics Platform Modeler
 
@@ -37,7 +34,6 @@ converted: "2026-05-11T17:31:51.486843"
 [ CAASchRouteBetween2Equip.CATScript ](CAASchRouteBetween2EquipSource.md)is located in the CAAScdSchUseCases module. [Execute macro](macros/CAASchRouteBetween2Equip.CATScript) (Windows only).
  CAASchRouteBetween2Equip includes the following steps:
 
-CAASchRouteBetween2Equip includes the following steps:
   1. Prolog
   2. Find the two Schematic component instances to route between.
   3. Create a Schematic Route connecting to the two Schematic Component instances.
@@ -60,7 +56,7 @@ The macro first loads the CAASCH_RouteBetween2Equip.CATProduct document. |   �
     Dim sFilePath
 ```vbscript
 ```
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
 ```
@@ -75,7 +71,7 @@ Dim sFilePath
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
@@ -172,7 +168,6 @@ Private Sub Find2ComponentInst (objSchRootArg As SchematicRoot)
 
 Then it searches for two components that match the name requirement. Notice that when looping through each member in the component instance list, the macro uses the method GetInterface to get two specific interface on the same member object.
 
-Then it searches for two components that match the name requirement. Notice that when looping through each member in the component instance list, the macro uses the method GetInterface to get two specific interface on the same member object.
   1. SchCompatible - to be use latter in the route.
   2. Product - for the Name method. The macro uses this method to obtain the name of the current instance so that it can match it with "_Routeto" and "_Routetrom"
 
@@ -194,7 +189,7 @@ For intIndex = 1 To intNbComp
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
         Set objCompCompat = objLCompInst.Item (intIndex,"CATIASchCompatible")
 
 ```
@@ -350,7 +345,6 @@ Set objSchCompGraph = objSchRootArg.GetInterface ( _
 
 The local varaibles are stored in two global lists which are accessible to the main subroutine.
 
-The local varaibles are stored in two global lists which are accessible to the main subroutine.
   1. objLCompat_g - for the list of SchCompat handles of the "RouteFrom" and the "RouteTo" component instances.
   2. objLGRRComp_g - for the list of GRRComp handles for the corresponding members in the objLCompat_g list.
 
@@ -407,7 +401,6 @@ Not ( objGRRCompTo Is Nothing ) ) Then
 
 This macro provides the internal RouteLineBetween2Component subroutine to create the Schematic route. Two global lists populated in previous steps are accessible to this subroutine. They are the objLCompat_g and the objLGRRComp_g lists. Each member is that list is used for calling the following methods.
 
-This macro provides the internal RouteLineBetween2Component subroutine to create the Schematic route. Two global lists populated in previous steps are accessible to this subroutine. They are the objLCompat_g and the objLGRRComp_g lists. Each member is that list is used for calling the following methods.
   1. IsTargetOKForRoute - checks whether the component instance is compatible with the type of Schematic route to make a connection. In type is specified by the connector type at the end of the route. In this case, it the "CAASCHEDUConnector".
   2. GetBestCntrForRoute - returns the x-y coordinates of the position of a connector that the route can connect to. The position is used as the start or the end point of the Schematic route. This position is based on an input point. The position of the connector closest to the input point will be returned.
 
@@ -421,12 +414,12 @@ This macro provides the internal RouteLineBetween2Component subroutine to create
 ```
 
 ```vbscript
-```vbscript
+```cpp
       Set objCompCompat = objLCompat_g.Item (intIndex,"CATIASchCompatible")
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
       Set objGRRComp = objLGRRComp_g.Item (intIndex,"CATIASchGRRComp")
 
 ```
@@ -474,7 +467,7 @@ This macro provides the internal RouteLineBetween2Component subroutine to create
            objGRRComp, objLCntrs, bCompatible
 
 ```vbscript
-```vbscript
+```cpp
          Set objSchGRR = objSchRootArg.GetInterface ("CATIASchGRR",objGRRComp)
 
 ```

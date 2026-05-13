@@ -138,13 +138,13 @@ This use case shows two ways to insert a Schematic object into a Schematic
 ...
     ' ------------------------------------------------------------------------- 
     ' Open the catalog document 
-```vbscript
+```cpp
     Dim sCtlgFilePath
     sCtlgFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
             "online/CAAScdSchUseCases/samples/CAASCH_Sample.catalog")
 ```
 
-```vbscript
+```cpp
     Dim objSchCtlgDoc As Document
     Set objSchCtlgDoc = CATIA.Documents.Open(sCtlgFilePath)
 ```
@@ -152,13 +152,13 @@ This use case shows two ways to insert a Schematic object into a Schematic
 
 ```vbscript
 ' Open main schematic design document (for new component instances created here)
-```vbscript
+```cpp
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
             "online/CAAScdSchUseCases/samples/CAASCH_RouteForPlacement.CATProduct")
 ```
 
-```vbscript
+```cpp
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
     ...

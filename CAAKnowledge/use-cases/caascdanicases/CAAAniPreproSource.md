@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Untitled"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CATIA", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproSource.htmmd"
+tags: "["CATIA", "CAAScdAniUseCases"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproSource.htm"
 converted: "2026-05-11T17:31:51.851825"
-```
-
 ---
 tags: ["CATIA", "CAAScdAniUseCases"]
 source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproSource.htmmd"
@@ -16,7 +13,7 @@ converted: "2026-05-11T17:31:51.851825"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGTH DASSAULT SYSTEMES 2000
     ' ***********************************************************************
     '   Purpose:      Read an Analysis document already linked to a CATPart Document
@@ -37,7 +34,7 @@ converted: "2026-05-11T17:31:51.851825"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -50,7 +47,7 @@ converted: "2026-05-11T17:31:51.851825"
         ' -----------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String
-```vbscript
+```cpp
         sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
 ```
@@ -60,7 +57,7 @@ converted: "2026-05-11T17:31:51.851825"
 ```
 
 ```vbscript
-```vbscript
+```cpp
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 ```
@@ -80,12 +77,12 @@ converted: "2026-05-11T17:31:51.851825"
 ```vbscript
         ' -----------------------------------------------------------
         ' Get the collection of documents in session
-```vbscript
+```cpp
         Dim documents1 As Documents
         Set documents1 = CATIA.Documents
         ' Open the CATAnalysis Document
 ```
-```vbscript
+```cpp
         Dim oAnalysisDocument As Document
         Set oAnalysisDocument = documents1.Open(sDocPath & "/online/CAAScdAniUseCases/samples/AnalysisCrank.CATAnalysis")
         '_____________________________________________________________________________________

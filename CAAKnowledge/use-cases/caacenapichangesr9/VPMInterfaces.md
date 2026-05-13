@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "VPMInterfaces Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR9"
-version: "V5R9"
-tags: ["CATIConfigurable", "CATIVpmObjectRules", "CATIVpmGraphPredicat", "CATIVpmAttribute", "CATICfgManager", "CATIVpmAggrAttribute", "CATIVpmServices", "CATIVpmAFLLink", "CATIVpmAFLAffectedObject", "CATIVpmAFLAttachement", "CATICfgModification", "CATIVpmAFLAction", "CATIVpmGraphAdministrator", "CATIVpmGraphStatus", "CATIVpmGraphMng", "CATIVpmAFLResp"]
-source_file: "Doc/online/CAACenAPIChangesR9/VPMInterfaces.htmmd"
+tags: "["CATIConfigurable", "CATIVpmObjectRules", "CATIVpmGraphPredicat", "CATIVpmAttribute", "CATICfgManager", "CATIVpmAggrAttribute", "CATIVpmServices", "CATIVpmAFLLink", "CATIVpmAFLAffectedObject", "CATIVpmAFLAttachement", "CATICfgModification", "CATIVpmAFLAction", "CATIVpmGraphAdministrator", "CATIVpmGraphStatus", "CATIVpmGraphMng", "CATIVpmAFLResp"]"
+source_file: "Doc/online/CAACenAPIChangesR9/VPMInterfaces.htm"
 converted: "2026-05-11T17:33:53.009876"
-```
-
 ---
 tags: ["CATIConfigurable", "CATIVpmObjectRules", "CATIVpmGraphPredicat", "CATIVpmAttribute", "CATICfgManager", "CATIVpmAggrAttribute", "CATIVpmServices", "CATIVpmAFLLink", "CATIVpmAFLAffectedObject", "CATIVpmAFLAttachement", "CATICfgModification", "CATIVpmAFLAction", "CATIVpmGraphAdministrator", "CATIVpmGraphStatus", "CATIVpmGraphMng", "CATIVpmAFLResp"]
 source_file: "Doc/online/CAACenAPIChangesR9/VPMInterfaces.htmmd"
@@ -40,7 +36,6 @@ VPMInterfaces/Protected/CATIVpmAggrAttribute.h/CATIVpmAggrAttribute/GetValue| GA
 VPMInterfaces/Protected/CATIVpmAggrAttribute.h/CATIVpmAggrAttribute/Prepend| GA| NPVM| Implement it when entity is implemented or inherited
 VPMInterfaces/Protected/CATIVpmAggrAttribute.h/CATIVpmAggrAttribute/Append| GA| NPVM| Implement it when entity is implemented or inherited
 VPMInterfaces/Protected/CATIVpmAggrAttribute.h/CATIVpmAggrAttribute/AddValue| GA| NPVM| Implement it when entity is implemented or inherited
-VPMInterfaces/Protected/CATIVpmAggrAttribute.h/CATIVpmAggrAttribute/RemoveValue| GA| NPVM| Implement it when entity is implemented or inherited
 VPMInterfaces/Protected/CATIVpmAggrAttribute.h/CATIVpmAggrAttribute/RemoveValue| GA| NPVM| Implement it when entity is implemented or inherited
 VPMInterfaces/Protected/CATIVpmAttribute.h/CATIVpmAttribute/GetValue| GA| NPVM| Implement it when entity is implemented or inherited
 VPMInterfaces/Protected/CATIVpmAttribute.h/CATIVpmAttribute/SetValue| GA| NPVM| Implement it when entity is implemented or inherited

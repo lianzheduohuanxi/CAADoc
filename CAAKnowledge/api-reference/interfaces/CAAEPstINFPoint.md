@@ -1,56 +1,102 @@
 ---
 title: "CAAEPstINFPoint"
-type: "interface"
+type: "LocalClass"
 module: "CAAProductStructure"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAEPstINFPoint → CATBaseUnknown"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 6
+source_file: "CAAProductStructure.edu/CAAPstINFModeler.m/LocalInterfaces/CAAEPstINFPoint.h"
 ---
+
 # CAAEPstINFPoint
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAEPstINFPoint → CATBaseUnknown  
-**模块**: CAAProductStructure  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> Data extension of the CAAPstINFPoint component, implementing the CAAIPstINFPoint interface defined in the CAAProductStructure.edu framework, allowing the setting and retrieval of point coordinate values defining a CAAPstINFPoint feature. Illustrates programming the setting and retrieval methods necessary for the definition of a CAAPstINFPoint feature. Inheritance: CATBaseUnknown (System Framework)
 
-> CATBaseUnknown (System Framework)
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATBaseUnknown | **模块**: CAAProductStructure | **方法数**: 6
 
 ## 依赖
 
 - `CATBaseUnknown.h`
 
+## 公共方法
+
+### GetX
+
+```cpp
+HRESULT GetX(double *opX) ;
+```
+
+Retrieves the value of the X coordinate of the point.
+
+| 参数 | 类型 |
+|------|------|
+| *opX | `double` |
+
+
+### GetY
+
+```cpp
+HRESULT GetY(double *opY) ;
+```
+
+Retrieves the value of the Y coordinate of the point.
+
+| 参数 | 类型 |
+|------|------|
+| *opY | `double` |
+
+
+### GetZ
+
+```cpp
+HRESULT GetZ(double *opZ) ;
+```
+
+Retrieves the value of the Z coordinate of the point.
+
+| 参数 | 类型 |
+|------|------|
+| *opZ | `double` |
+
+
+### SetX
+
+```cpp
+HRESULT SetX(double iX) ;
+```
+
+Valuates the X coordinate of the point.
+
+| 参数 | 类型 |
+|------|------|
+| iX | `double` |
+
+
+### SetY
+
+```cpp
+HRESULT SetY(double iY) ;
+```
+
+Valuates the Y coordinate of the point.
+
+| 参数 | 类型 |
+|------|------|
+| iY | `double` |
+
+
+### SetZ
+
+```cpp
+HRESULT SetZ(double iZ) ;
+```
+
+Valuates the Z coordinate of the point.
+
+| 参数 | 类型 |
+|------|------|
+| iZ | `double` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAProductStructure.edu/CAAPstINFModeler.m/LocalInterfaces/CAAEPstINFPoint.h`

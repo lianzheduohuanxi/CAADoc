@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "The Burger Order Dialog Box"
-category: use-case case"
+category: "use-case case"
 module: "CAADlgUseCases"
-tags: ["CAABurgerApplication", "CAABurgerApplication_h", "CAABurgerDialogBox_h", "CATInteractiveApplication", "CATIA", "CAADlgBurger", "CAADialog", "CAABurgerDialogBox"]
-source_file: "Doc/online/CAADlgUseCases/CAADlgBurger.htmmd"
+tags: "["CAABurgerApplication", "CAABurgerApplication_h", "CAABurgerDialogBox_h", "CATInteractiveApplication", "CATIA", "CAADlgBurger", "CAADialog", "CAABurgerDialogBox"]"
+source_file: "Doc/online/CAADlgUseCases/CAADlgBurger.htm"
 converted: "2026-05-11T17:17:55.961678"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -123,7 +120,6 @@ Thanks to an interactive application, the Burger dialog box can be displayed and
 
     class CAABurgerDialogBox;  _// Forward declaration to the burger dialog box class_
 
-class CAABurgerDialogBox;  _// Forward declaration to the burger dialog box class_
     class CAABurgerApplication : public CATInteractiveApplication
 
     {
@@ -186,7 +182,6 @@ int CAABurgerApplication::EndApplication(#)
 
 Note that the dialog box class is first instantiated, then initialized using its `Build` method, and finally set as visible. The constructor parameters are:
 
-Note that the dialog box class is first instantiated, then initialized using its `Build` method, and finally set as visible. The constructor parameters are:
   1. The dialog box parent in the command tree structure, set as the application itself
   2. The identifier used to set its resources from the resource files
   3. The style, set here to enable the dialog window children objects to be arranged using the grid layout.
@@ -256,7 +251,6 @@ CATDlgCheckButton     * _pKetchup, * _pMustard, * _pPickle,
 
 The `DeclareResource` macro enables the class and all its dialog objects to use the automatic resource assignment. The first parameter is the class name, and the resource files must use this class name as file name, such as CAADlgBurger.CATNls for the file containing the texts and messages.
 
-The `DeclareResource` macro enables the class and all its dialog objects to use the automatic resource assignment. The first parameter is the class name, and the resource files must use this class name as file name, such as CAADlgBurger.CATNls for the file containing the texts and messages.
 The class has a constructor, a destructor, and a `Build` method. Pointers to the different dialog objects and controls are then declared as data members.
 
 The remaining part of this file deals with the callback method declaration, the message window, the message catalog, and a pointer to the interactive application stored as a data member:
@@ -352,7 +346,7 @@ CATString BurgerMsgCatalogName("CAABurgerDialogBox");
 _pMsgCat = new CATMsgCatalog(#);
 int rc = _pMsgCat->LoadMsgCatalog(BurgerMsgCatalogName);
 if(!rc) cout << "The message catalog is not found" << endl;
-```vbscript
+```cpp
       _pHamburgerLabel = new CATDlgLabel(this, "HamburgerLabelId");
 ```
 
@@ -361,14 +355,14 @@ if(!rc) cout << "The message catalog is not found" << endl;
       _pHamburgerLabel->SetGridConstraints(GC1);
 
       _pFriesLabel = new CATDlgLabel(this, "FriesLabelId");
-```vbscript
+```cpp
       GC1.Row = 0; GC1.Column = 2; GC1.H_Span = 1; GC1.V_Span = 1; GC1.Justification = CATGRID_CENTER;
 ```
 
       _pFriesLabel->SetGridConstraints(GC1);
 
       _pDrinkLabel = new CATDlgLabel(this, "DrinkLabelId");
-```vbscript
+```cpp
       GC1.Row = 0; GC1.Column = 4; GC1.H_Span = 1; GC1.V_Span = 1; GC1.Justification = CATGRID_CENTER;
 ```
 
@@ -386,7 +380,7 @@ Three rows and five columns are necessary to accommodate the labels for the titl
 
     ...
 Three rows and five columns are necessary to accommodate the labels for the titles, the frames and separators, and the three push buttons. This is coded using instances of the _CATDlgGridConstraints_ class for the three frames and the two separators as follows:
-```vbscript
+```cpp
       _pHamburgerFrame = new CATDlgFrame(this, "HamburgerFrameId", CATDlgFraNoTitle | CATDlgGridLayout);
 
 ```
@@ -457,7 +451,7 @@ _// Instantiate and arrange the cooking radio buttons
       _pMayonnaise->SetGridConstraints(4,1,1,1,CATGRID_LEFT);
 
     _// Instantiate and arrange the hamburger count slider_
-```vbscript
+```cpp
       _pHamburgerQuantity = new CATDlgSlider(_pHamburgerFrame,
 
 ```
@@ -506,14 +500,14 @@ We will now set the callbacks to trigger the appropriate method when a specific 
 ---
 
 ```vbscript
-```vbscript
+```cpp
 For example, if the Rare radio button is clicked, or if another radio button is clicked while Rare was checked, Rare creates and sends a radio button modification notification that is an instance of the class CATDlgRadBModifyNotification. The `AddAnalyseNotificationCB` method sets a callback to enable a parent class of the radio button, that is in this case the dialog box itself, to be called to execute a method whenever the radio button is checked or unchecked. This callback associates the method `Rare` of the dialog box class with the Rare button sending a CATDlgRadBModifyNotification. `Rare` is triggered when the Rare button is clicked, that is when the `GetRadBModifyNotification` method returns a radio button modification notification. We now need to code `Rare`:
 
 ```
 
 ```
 
-```vbscript
+```cpp
 For example, if the Rare radio button is clicked, or if another radio button is clicked while Rare was checked, Rare creates and sends a radio button modification notification that is an instance of the class CATDlgRadBModifyNotification. The `AddAnalyseNotificationCB` method sets a callback to enable a parent class of the radio button, that is in this case the dialog box itself, to be called to execute a method whenever the radio button is checked or unchecked. This callback associates the method `Rare` of the dialog box class with the Rare button sending a CATDlgRadBModifyNotification. `Rare` is triggered when the Rare button is clicked, that is when the `GetRadBModifyNotification` method returns a radio button modification notification. We now need to code `Rare`:
     void CAABurgerDialogBox::Rare(CATCommand           * pSendingCommand,
                                   CATNotification      * pSentNotification,
@@ -544,7 +538,6 @@ This method simply writes a trace in the command window. It retrieves from the o
 
 The file that contains texts and messages is named CAADlgBurger.CATNls and is stored in CNext/resources/msgcatalog directory.
 
-The file that contains texts and messages is named CAADlgBurger.CATNls and is stored in CNext/resources/msgcatalog directory.
     Title                     = "Burger Order-Entry Box";
 
     ...

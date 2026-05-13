@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "GeometricOperators Changed Classes or Interfaces"
 category: "use-case"
 module: "CAACenQuickRefs"
-tags: ["CATICGMDynMassProperties1D", "CATICGMProjectionCrvSur", "CATICGMConvertCurveToCanonic", "CATICGMConfusionPtOnSurPtOnSur", "CATICGMProjectionPtSur", "CATICGMDistanceMinPtSur", "CATICGMGeoOperator", "CATICGMIntersectionSurSur", "CATICGMDistanceMinPtCrv", "CATICGMProjectionPtCrv", "CATICGMCurveUserParameterization", "CATICGMIntersectionCrvCrv", "CATICGMInclusionPtCrv", "CATIntersectionCrvCrv", "CATICGMCurveCurvilinearParameterization", "CATICGMDistanceTool", "CATICGMNurbsCurveTools", "CATICGMDistanceMinCrvCrv", "CATICGMLocalAnalysis1D", "CATICGMNurbsSurfaceTools"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenBUGeometricOperators.htmmd"
+tags: "["CATICGMDynMassProperties1D", "CATICGMProjectionCrvSur", "CATICGMConvertCurveToCanonic", "CATICGMConfusionPtOnSurPtOnSur", "CATICGMProjectionPtSur", "CATICGMDistanceMinPtSur", "CATICGMGeoOperator", "CATICGMIntersectionSurSur", "CATICGMDistanceMinPtCrv", "CATICGMProjectionPtCrv", "CATICGMCurveUserParameterization", "CATICGMIntersectionCrvCrv", "CATICGMInclusionPtCrv", "CATIntersectionCrvCrv", "CATICGMCurveCurvilinearParameterization", "CATICGMDistanceTool", "CATICGMNurbsCurveTools", "CATICGMDistanceMinCrvCrv", "CATICGMLocalAnalysis1D", "CATICGMNurbsSurfaceTools"]"
+source_file: "Doc/online/CAACenQuickRefs/CAACenBUGeometricOperators.htm"
 converted: "2026-05-11T17:33:46.392224"
-```
-
 ---
 tags: ["CATICGMDynMassProperties1D", "CATICGMProjectionCrvSur", "CATICGMConvertCurveToCanonic", "CATICGMConfusionPtOnSurPtOnSur", "CATICGMProjectionPtSur", "CATICGMDistanceMinPtSur", "CATICGMGeoOperator", "CATICGMIntersectionSurSur", "CATICGMDistanceMinPtCrv", "CATICGMProjectionPtCrv", "CATICGMCurveUserParameterization", "CATICGMIntersectionCrvCrv", "CATICGMInclusionPtCrv", "CATIntersectionCrvCrv", "CATICGMCurveCurvilinearParameterization", "CATICGMDistanceTool", "CATICGMNurbsCurveTools", "CATICGMDistanceMinCrvCrv", "CATICGMLocalAnalysis1D", "CATICGMNurbsSurfaceTools"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenBUGeometricOperators.htmmd"
@@ -286,8 +283,6 @@ CATCrvParam* iEndParam,
 CATSurface* iSupport=NULL,
 CATSkillValue iMode = BASIC) |  Not supported any longer.
 GMModelInterfaces | Global function | CATCGMCreateConvertCurveToCanonic
-GMModelInterfaces | Global function | CATCGMCreateConvertCurveToCanonic
-GMModelInterfaces | Global function | CATCGMCreateConvertCurveToCanonic
 CATCreateConvertCurveToCanonic | CATConvertCurveToCanonic* CATCreateConvertCurveToCanonic(CATGeoFactory* iFactory,
 CATCurve* iCurve,
 CATCrvLimits & iLimits,
@@ -299,8 +294,6 @@ CATSkillValue iMode = BASIC) |  Not supported any longer.
 CATCrvLimits & iLimits,
 CATSurface* iSupport=NULL,
 CATSkillValue iMode = BASIC) |  Not supported any longer.
-GMModelInterfaces | Global function | CATCGMCreateConvertCurveToCanonic
-GMModelInterfaces | Global function | CATCGMCreateConvertCurveToCanonic
 GMModelInterfaces | Global function | CATCGMCreateConvertCurveToCanonic
 CATCreateConvertCurveToCanonic | CATConvertCurveToCanonic* CATCreateConvertCurveToCanonic(CATGeoFactory* iFactory,
 CATEdgeCurve* iEdgeCurve,
@@ -315,8 +308,6 @@ CATPointOnEdgeCurve* iEndPOEC,
 CATSurface* iSupport=NULL,
 CATSkillValue iMode = BASIC) |  Not supported any longer.
 GMModelInterfaces | Global function | CATCGMCreateConvertCurveToCanonic
-GMModelInterfaces | Global function | CATCGMCreateConvertCurveToCanonic
-GMModelInterfaces | Global function | CATCGMCreateConvertCurveToCanonic
 CATCreateConfusion | CATConfusionPtOnCrvPtOnCrv* CATCreateConfusion(CATGeoFactory* iWhere,
 CATSoftwareConfiguration*iConfig,
 const CATPointOnCurve* iPoint1,
@@ -329,8 +320,6 @@ CATSkillValue iMode=BASIC) |  Not supported any longer.
 const CATPointOnCurve* iPoint2,
 const double & iTol,
 CATSkillValue iMode=BASIC) |  Not supported any longer.
-GMModelInterfaces | Global function | CATCGMCreateConfusion
-GMModelInterfaces | Global function | CATCGMCreateConfusion
 GMModelInterfaces | Global function | CATCGMCreateConfusion
 CATCreateConfusion | CATConfusionPtOnSurPtOnSur* CATCreateConfusion(CATGeoFactory* iFactory,
 CATSoftwareConfiguration*iConfig,
@@ -346,8 +335,6 @@ const CATSurface* iSurface,
 const double iTol,
 CATSkillValue iMode=BASIC) |  Not supported any longer.
 GMModelInterfaces | Global function | CATCGMCreateConfusion
-GMModelInterfaces | Global function | CATCGMCreateConfusion
-GMModelInterfaces | Global function | CATCGMCreateConfusion
 CATCreateConfusion | CATConfusionPtOnSurPtOnSur* CATCreateConfusion(CATGeoFactory* iFactory,
 CATSoftwareConfiguration*iConfig,
 const CATPointOnSurface* iPoint1,
@@ -360,8 +347,6 @@ CATSkillValue iMode=BASIC) |  Not supported any longer.
 const CATPointOnSurface* iPoint2,
 const double iTol,
 CATSkillValue iMode=BASIC) |  Not supported any longer.
-GMModelInterfaces | Global function | CATCGMCreateConfusion
-GMModelInterfaces | Global function | CATCGMCreateConfusion
 GMModelInterfaces | Global function | CATCGMCreateConfusion
 CATCreateConvertCurveToCanonic | CATConvertCurveToCanonic* CATCreateConvertCurveToCanonic(CATGeoFactory* iFactory,
 CATSoftwareConfiguration* iConfig,
@@ -378,8 +363,6 @@ CATCrvParam* iEndParam,
 CATSurface* iSupport=NULL,
 CATSkillValue iMode = BASIC) |  Not supported any longer.
 GMModelInterfaces | Global function | CATCGMCreateConvertCurveToCanonic
-GMModelInterfaces | Global function | CATCGMCreateConvertCurveToCanonic
-GMModelInterfaces | Global function | CATCGMCreateConvertCurveToCanonic
 CATCreateConvertCurveToCanonic | CATConvertCurveToCanonic* CATCreateConvertCurveToCanonic(CATGeoFactory* iFactory,
 CATSoftwareConfiguration* iConfig,
 CATCurve* iCurve,
@@ -392,8 +375,6 @@ CATSkillValue iMode = BASIC) |  Not supported any longer.
 CATCrvLimits & iLimits,
 CATSurface* iSupport=NULL,
 CATSkillValue iMode = BASIC) |  Not supported any longer.
-GMModelInterfaces | Global function | CATCGMCreateConvertCurveToCanonic
-GMModelInterfaces | Global function | CATCGMCreateConvertCurveToCanonic
 GMModelInterfaces | Global function | CATCGMCreateConvertCurveToCanonic
 CATCreateConvertCurveToCanonic | CATConvertCurveToCanonic* CATCreateConvertCurveToCanonic(CATGeoFactory* iFactory,
 CATSoftwareConfiguration* iConfig,
@@ -409,8 +390,6 @@ CATPointOnEdgeCurve* iEndPOEC,
 CATSurface* iSupport=NULL,
 CATSkillValue iMode = BASIC) |  Not supported any longer.
 GMModelInterfaces | Global function | CATCGMCreateConvertCurveToCanonic
-GMModelInterfaces | Global function | CATCGMCreateConvertCurveToCanonic
-GMModelInterfaces | Global function | CATCGMCreateConvertCurveToCanonic
 CATCreateDistanceMin | CATDistanceMinCrvCrv* CATCreateDistanceMin(CATGeoFactory* iWhere,
 CATSoftwareConfiguration* iConfig,
 CATCurve* iCrv1,
@@ -423,11 +402,6 @@ CATCurve* iCrv1,
 CATCurve* iCrv2,
 CATSkillValue iMode = BASIC) |  Not supported any longer.
 GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
 CATCreateDistanceMin | CATDistanceMinPtCrv* CATCreateDistanceMin(CATGeoFactory* iWhere,
 CATSoftwareConfiguration*Config,
 const CATMathPoint & iPt,
@@ -440,11 +414,6 @@ const CATMathPoint & iPt,
 CATMathNurbsMultiForm* iCrv,
 CATSkillValue iMode=BASIC) |  Not supported any longer.
 GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
 CATCreateDistanceMin | CATDistanceMinPtCrv* CATCreateDistanceMin(CATGeoFactory* iWhere,
 CATSoftwareConfiguration*Config,
 const CATMathPoint & iPt,
@@ -457,11 +426,6 @@ const CATMathPoint & iPt,
 CATCurve* iCrv,
 CATSkillValue iMode=BASIC) |  Not supported any longer.
 GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
 CATCreateDistanceMin | CATDistanceMinPtCrv* CATCreateDistanceMin(CATGeoFactory* iWhere,
 CATSoftwareConfiguration*Config,
 CATPoint* iPt,
@@ -473,11 +437,6 @@ CATSkillValue iMode=BASIC) |  Not supported any longer.
 CATPoint* iPt,
 CATCurve* iCrv,
 CATSkillValue iMode=BASIC) |  Not supported any longer.
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
 GMModelInterfaces | Global function | CATCGMCreateDistanceMin
 CATCreateDistanceMin | CATDistanceMinPtSur* CATCreateDistanceMin(CATGeoFactory* iWhere,
 CATSoftwareConfiguration*Config,
@@ -491,11 +450,6 @@ CATSkillValue iMode = BASIC) |  Not supported any longer.
 const CATSurface*iSur,
 CATBoolean iSearchOnBoundary = TRUE,
 CATSkillValue iMode = BASIC) |  Not supported any longer.
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
 GMModelInterfaces | Global function | CATCGMCreateDistanceMin
 CATCreateDistanceMin | CATDistanceMinPtSur* CATCreateDistanceMin(CATGeoFactory* iWhere,
 CATSoftwareConfiguration*Config,
@@ -509,11 +463,6 @@ CATSkillValue iMode = BASIC) |  Not supported any longer.
 const CATSurface*iSur,
 CATBoolean iSearchOnBoundary = TRUE,
 CATSkillValue iMode = BASIC) |  Not supported any longer.
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
 GMModelInterfaces | Global function | CATCGMCreateDistanceMin
 CATCreateEdgeCurveComputation | CATEdgeCurveComputation* CATCreateEdgeCurveComputation(CATGeoFactory* iWhere,
 CATSoftwareConfiguration* iConfig,
@@ -539,8 +488,6 @@ const CATCurve* iCrv,
 const double iTol,
 CATSkillValue iMode=BASIC) |  Not supported any longer.
 GMModelInterfaces | Global function | CATCGMCreateInclusion
-GMModelInterfaces | Global function | CATCGMCreateInclusion
-GMModelInterfaces | Global function | CATCGMCreateInclusion
 CATCreateInclusion | CATInclusionPtSur* CATCreateInclusion(CATGeoFactory* iFactory,
 CATSoftwareConfiguration*Config,
 const CATMathPoint & iPt,
@@ -554,8 +501,6 @@ CATSkillValue iMode = BASIC) |  Not supported any longer.
 const double & iTol,
 const CATBoolean iSearchOnBoundary = TRUE,
 CATSkillValue iMode = BASIC) |  Not supported any longer.
-GMModelInterfaces | Global function | CATCGMCreateInclusion
-GMModelInterfaces | Global function | CATCGMCreateInclusion
 GMModelInterfaces | Global function | CATCGMCreateInclusion
 CATCreateInclusion | CATInclusionPtSur* CATCreateInclusion(CATGeoFactory* iFactory,
 CATSoftwareConfiguration*Config,
@@ -571,8 +516,6 @@ const double & iTol,
 const CATBoolean iSearchOnBoundary = TRUE,
 CATSkillValue iMode = BASIC) |  Not supported any longer.
 GMModelInterfaces | Global function | CATCGMCreateInclusion
-GMModelInterfaces | Global function | CATCGMCreateInclusion
-GMModelInterfaces | Global function | CATCGMCreateInclusion
 CATCreateIntersection | CATIntersectionSurSur* CATCreateIntersection(CATGeoFactory*iWhere,
 CATSoftwareConfiguration* iConfig,
 CATSurface*iSurface1,
@@ -584,8 +527,6 @@ CATSkillValue iMode=BASIC) |  Not supported any longer.
 CATSurface*iSurface1,
 CATSurface*iSurface2,
 CATSkillValue iMode=BASIC) |  Not supported any longer.
-GMModelInterfaces | Global function | CATCGMCreateIntersection
-GMModelInterfaces | Global function | CATCGMCreateIntersection
 GMModelInterfaces | Global function | CATCGMCreateIntersection
 CATCreateIntersection | CATIntersectionCrvSur* CATCreateIntersection(CATGeoFactory*iWhere,
 CATSoftwareConfiguration* iConfig,
@@ -599,8 +540,6 @@ CATCurve*iCurve,
 CATSurface*iSurface,
 CATSkillValue iMode=BASIC) |  Not supported any longer.
 GMModelInterfaces | Global function | CATCGMCreateIntersection
-GMModelInterfaces | Global function | CATCGMCreateIntersection
-GMModelInterfaces | Global function | CATCGMCreateIntersection
 CATCreateIntersection | CATIntersectionCrvCrv* CATCreateIntersection(CATGeoFactory*iWhere,
 CATSoftwareConfiguration* iConfig,
 CATCurve*iCurve1,
@@ -613,18 +552,12 @@ CATCurve*iCurve1,
 CATCurve*iCurve2,
 CATSkillValue iMode=BASIC) |  Not supported any longer.
 GMModelInterfaces | Global function | CATCGMCreateIntersection
-GMModelInterfaces | Global function | CATCGMCreateIntersection
-GMModelInterfaces | Global function | CATCGMCreateIntersection
 CATCreateLocalAnalysis | CATLocalAnalysis2D* CATCreateLocalAnalysis(const CATLocalAnalysis2D* iAnalysisToCopy) |  Not supported any longer.
 
 **4 replacing methods** | Frameworks | Classes or Interfaces | Methods
 ---|---|---
 GMModelInterfaces | Global function | CATCGMCreateIntersection
-GMModelInterfaces | Global function | CATCGMCreateIntersection
 CATCreateLocalAnalysis | CATLocalAnalysis2D* CATCreateLocalAnalysis(const CATLocalAnalysis2D* iAnalysisToCopy) |  Not supported any longer.
-GMModelInterfaces | Global function | CATCGMCreateLocalAnalysis
-GMModelInterfaces | Global function | CATCGMCreateLocalAnalysis
-GMModelInterfaces | Global function | CATCGMCreateLocalAnalysis
 GMModelInterfaces | Global function | CATCGMCreateLocalAnalysis
 CATCreateLocalAnalysis | CATLocalAnalysis2D* CATCreateLocalAnalysis(CATSoftwareConfiguration* iConfig,
 const CATSurface*iSurface,
@@ -636,19 +569,12 @@ CATCreateLocalAnalysis | CATLocalAnalysis2D* CATCreateLocalAnalysis(CATSoftwareC
 const CATSurface*iSurface,
 const CATSurParam &iPointToAnalyze;) |  Not supported any longer.
 GMModelInterfaces | Global function | CATCGMCreateLocalAnalysis
-GMModelInterfaces | Global function | CATCGMCreateLocalAnalysis
-GMModelInterfaces | Global function | CATCGMCreateLocalAnalysis
-GMModelInterfaces | Global function | CATCGMCreateLocalAnalysis
 CATCreateLocalAnalysis | CATLocalAnalysis1D* CATCreateLocalAnalysis(const CATLocalAnalysis1D* iAnalysisToCopy) |  Not supported any longer.
 
 **4 replacing methods** | Frameworks | Classes or Interfaces | Methods
 ---|---|---
 GMModelInterfaces | Global function | CATCGMCreateLocalAnalysis
-GMModelInterfaces | Global function | CATCGMCreateLocalAnalysis
 CATCreateLocalAnalysis | CATLocalAnalysis1D* CATCreateLocalAnalysis(const CATLocalAnalysis1D* iAnalysisToCopy) |  Not supported any longer.
-GMModelInterfaces | Global function | CATCGMCreateLocalAnalysis
-GMModelInterfaces | Global function | CATCGMCreateLocalAnalysis
-GMModelInterfaces | Global function | CATCGMCreateLocalAnalysis
 GMModelInterfaces | Global function | CATCGMCreateLocalAnalysis
 CATCreateLocalAnalysis | CATLocalAnalysis1D* CATCreateLocalAnalysis(CATSoftwareConfiguration* iConfig,
 const CATCurve*iSupport,
@@ -659,9 +585,6 @@ const CATCrvParam &iPointToAnalyze;) |  Not supported any longer.
 CATCreateLocalAnalysis | CATLocalAnalysis1D* CATCreateLocalAnalysis(CATSoftwareConfiguration* iConfig,
 const CATCurve*iSupport,
 const CATCrvParam &iPointToAnalyze;) |  Not supported any longer.
-GMModelInterfaces | Global function | CATCGMCreateLocalAnalysis
-GMModelInterfaces | Global function | CATCGMCreateLocalAnalysis
-GMModelInterfaces | Global function | CATCGMCreateLocalAnalysis
 GMModelInterfaces | Global function | CATCGMCreateLocalAnalysis
 CATCreateProjection | CATListOfProjectionCrvSur* CATCreateProjection(CATGeoFactory*iWhere,
 CATSoftwareConfiguration*iConfig,
@@ -678,8 +601,6 @@ CATLONG32 iNPatchV,
 const CATMathDirection* iDirection =(const CATMathDirection*)0,
 CATSkillValue iMode = BASIC) |  Not supported any longer.
 GMModelInterfaces | Global function | CATCGMCreateProjection
-GMModelInterfaces | Global function | CATCGMCreateProjection
-GMModelInterfaces | Global function | CATCGMCreateProjection
 CATCreateProjection | CATProjectionCrvSur* CATCreateProjection(CATGeoFactory*iWhere,
 CATSoftwareConfiguration*iConfig,
 const CATCurve*iCurve,
@@ -695,8 +616,6 @@ const CATSurLimits*iSurLim,
 const CATMathDirection*iDirection =(const CATMathDirection*)0,
 CATSkillValue iMode = BASIC) |  Not supported any longer.
 GMModelInterfaces | Global function | CATCGMCreateProjection
-GMModelInterfaces | Global function | CATCGMCreateProjection
-GMModelInterfaces | Global function | CATCGMCreateProjection
 CATCreateProjection | CATProjectionPtSur* CATCreateProjection(CATGeoFactory*iWhere,
 CATSoftwareConfiguration*iConfig,
 const CATPoint*iPoint,
@@ -710,8 +629,6 @@ const CATSurface*iSurface,
 const CATMathDirection*iDirection =(const CATMathDirection*)0,
 CATSkillValue iMode = BASIC) |  Not supported any longer.
 GMModelInterfaces | Global function | CATCGMCreateProjection
-GMModelInterfaces | Global function | CATCGMCreateProjection
-GMModelInterfaces | Global function | CATCGMCreateProjection
 CATCreateProjection | CATProjectionPtCrv* CATCreateProjection(CATGeoFactory*iWhere,
 CATSoftwareConfiguration*iConfig,
 const CATPoint*iPoint,
@@ -724,8 +641,6 @@ CATSkillValue iMode = BASIC) |  Not supported any longer.
 const CATCurve*iCurve,
 const CATMathDirection*iDirection =(const CATMathDirection*)0,
 CATSkillValue iMode = BASIC) |  Not supported any longer.
-GMModelInterfaces | Global function | CATCGMCreateProjection
-GMModelInterfaces | Global function | CATCGMCreateProjection
 GMModelInterfaces | Global function | CATCGMCreateProjection
 CATCreateReflectCurve | CATReflectCurve* CATCreateReflectCurve(CATGeoFactory* iFactory,
 CATSoftwareConfiguration*iConfig,
@@ -749,7 +664,6 @@ const CATMathAxis iAxis) |  Not supported any longer.
 CATCreatePlanarMapping | CATSurTo2DGlobalPlanarMapping* CATCreatePlanarMapping(CATGeoFactory*iFactory,
 CATSoftwareConfiguration*iConfig,
 const CATMathAxis iAxis) |  Not supported any longer.
-GMModelInterfaces | Global function | CATCGMCreatePlanarMapping
 GMModelInterfaces | Global function | CATCGMCreatePlanarMapping
 CATCreateCurveCurvilinearParameterization | CATCurveCurvilinearParameterization* CATCreateCurveCurvilinearParameterization(CATGeoFactory* iFactory,
 CATSoftwareConfiguration* iSoftwareConfiguration,
@@ -864,8 +778,6 @@ const CATCurve* iCrv,
 const double & tol,
 CATSkillValue iMode=BASIC) |  Not supported any longer.
 GMModelInterfaces | Global function | CATCGMCreateConfusion
-GMModelInterfaces | Global function | CATCGMCreateConfusion
-GMModelInterfaces | Global function | CATCGMCreateConfusion
 CreateConfusion | CATConfusionPtOnCrvPtOnCrv* CreateConfusion(CATGeoFactory* iFactory,
 const CATPointOnEdgeCurve* iPECrv1,
 const CATPointOnEdgeCurve* iPECrv2,
@@ -879,8 +791,6 @@ const CATCurve* iCrv,
 double iTol,
 CATSkillValue iMode=BASIC) |  Not supported any longer.
 GMModelInterfaces | Global function | CATCGMCreateConfusion
-GMModelInterfaces | Global function | CATCGMCreateConfusion
-GMModelInterfaces | Global function | CATCGMCreateConfusion
 CreateConfusion | CATConfusionPtOnCrvPtOnCrv* CreateConfusion(CATGeoFactory* iWhere,
 const CATPointOnCurve* iPoint1,
 const CATPointOnCurve* iPoint2,
@@ -892,8 +802,6 @@ CATSkillValue iMode=BASIC) |  Not supported any longer.
 const CATPointOnCurve* iPoint2,
 const double & iTol,
 CATSkillValue iMode=BASIC) |  Not supported any longer.
-GMModelInterfaces | Global function | CATCGMCreateConfusion
-GMModelInterfaces | Global function | CATCGMCreateConfusion
 GMModelInterfaces | Global function | CATCGMCreateConfusion
 CreateConfusion | CATConfusionPtOnSurPtOnSur* CreateConfusion(CATGeoFactory* iFactory,
 const CATSurParam & iParam1,
@@ -908,8 +816,6 @@ const CATSurface* iSurface,
 const double iTol,
 CATSkillValue iMode=BASIC) |  Not supported any longer.
 GMModelInterfaces | Global function | CATCGMCreateConfusion
-GMModelInterfaces | Global function | CATCGMCreateConfusion
-GMModelInterfaces | Global function | CATCGMCreateConfusion
 CreateConfusion | CATConfusionPtOnSurPtOnSur* CreateConfusion(CATGeoFactory* iFactory,
 const CATPointOnSurface* iPoint1,
 const CATPointOnSurface* iPoint2,
@@ -922,8 +828,6 @@ const CATPointOnSurface* iPoint2,
 const double iTol,
 CATSkillValue iMode=BASIC) |  Not supported any longer.
 GMModelInterfaces | Global function | CATCGMCreateConfusion
-GMModelInterfaces | Global function | CATCGMCreateConfusion
-GMModelInterfaces | Global function | CATCGMCreateConfusion
 CreateDistanceMin | CATDistanceMinCrvCrv* CreateDistanceMin(CATGeoFactory* iWhere,
 CATCurve* iCrv1,
 CATCurve* iCrv2,
@@ -935,11 +839,6 @@ CATCurve* iCrv1,
 CATCurve* iCrv2,
 CATSkillValue iMode = BASIC) |  Not supported any longer.
 GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
 CreateDistanceMin | CATDistanceMinPtCrv* CreateDistanceMin(CATGeoFactory* iWhere,
 const CATMathPoint & iPt,
 CATMathNurbsMultiForm* iCrv,
@@ -951,11 +850,6 @@ const CATMathPoint & iPt,
 CATMathNurbsMultiForm* iCrv,
 CATSkillValue iMode=BASIC) |  Not supported any longer.
 GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
 CreateDistanceMin | CATDistanceMinPtCrv* CreateDistanceMin(CATGeoFactory* iWhere,
 const CATMathPoint & iPt,
 CATCurve* iCrv,
@@ -967,11 +861,6 @@ const CATMathPoint & iPt,
 CATCurve* iCrv,
 CATSkillValue iMode=BASIC) |  Not supported any longer.
 GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
 CreateDistanceMin | CATDistanceMinPtCrv* CreateDistanceMin(CATGeoFactory* iWhere,
 CATPoint* iPt,
 CATCurve* iCrv,
@@ -982,11 +871,6 @@ CATSkillValue iMode=BASIC) |  Not supported any longer.
 CATPoint* iPt,
 CATCurve* iCrv,
 CATSkillValue iMode=BASIC) |  Not supported any longer.
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
 GMModelInterfaces | Global function | CATCGMCreateDistanceMin
 CreateDistanceMin | CATDistanceMinPtSur* CreateDistanceMin(CATGeoFactory* iWhere,
 const CATMathPoint & iPt,
@@ -999,11 +883,6 @@ CATSkillValue iMode = BASIC) |  Not supported any longer.
 const CATSurface*iSur,
 CATBoolean iSearchOnBoundary = TRUE,
 CATSkillValue iMode = BASIC) |  Not supported any longer.
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
 GMModelInterfaces | Global function | CATCGMCreateDistanceMin
 CreateDistanceMin | CATDistanceMinPtSur* CreateDistanceMin(CATGeoFactory* iWhere,
 const CATPoint* iPt,
@@ -1016,11 +895,6 @@ CATSkillValue iMode = BASIC) |  Not supported any longer.
 const CATSurface*iSur,
 CATBoolean iSearchOnBoundary = TRUE,
 CATSkillValue iMode = BASIC) |  Not supported any longer.
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
-GMModelInterfaces | Global function | CATCGMCreateDistanceMin
 GMModelInterfaces | Global function | CATCGMCreateDistanceMin
 CreateEdgeCurveComputation | CATEdgeCurveComputation* CreateEdgeCurveComputation(CATGeoFactory* iWhere,
 CATCurve*iCurve1,
@@ -1046,8 +920,6 @@ const CATCurve* iCrv,
 const double iTol,
 CATSkillValue iMode=BASIC) |  Not supported any longer.
 GMModelInterfaces | Global function | CATCGMCreateInclusion
-GMModelInterfaces | Global function | CATCGMCreateInclusion
-GMModelInterfaces | Global function | CATCGMCreateInclusion
 CreateInclusion | CATInclusionPtCrv* CreateInclusion(CATGeoFactory* iWhere,
 const CATPoint* iPoint,
 const CATCurve* iCrv,
@@ -1059,8 +931,6 @@ CATSkillValue iMode=BASIC) |  Not supported any longer.
 const CATCurve* iCrv,
 const double iTol,
 CATSkillValue iMode=BASIC) |  Not supported any longer.
-GMModelInterfaces | Global function | CATCGMCreateInclusion
-GMModelInterfaces | Global function | CATCGMCreateInclusion
 GMModelInterfaces | Global function | CATCGMCreateInclusion
 CreateInclusion | CATInclusionPtSur* CreateInclusion(CATGeoFactory* iFactory,
 const CATMathPoint & iPt,
@@ -1075,8 +945,6 @@ const double & iTol,
 const CATBoolean iSearchOnBoundary = TRUE,
 CATSkillValue iMode = BASIC) |  Not supported any longer.
 GMModelInterfaces | Global function | CATCGMCreateInclusion
-GMModelInterfaces | Global function | CATCGMCreateInclusion
-GMModelInterfaces | Global function | CATCGMCreateInclusion
 CreateInclusion | CATInclusionPtSur* CreateInclusion(CATGeoFactory* iFactory,
 const CATPoint* iPt,
 const CATSurface*iSur,
@@ -1090,8 +958,6 @@ const double & iTol,
 const CATBoolean iSearchOnBoundary = TRUE,
 CATSkillValue iMode = BASIC) |  Not supported any longer.
 GMModelInterfaces | Global function | CATCGMCreateInclusion
-GMModelInterfaces | Global function | CATCGMCreateInclusion
-GMModelInterfaces | Global function | CATCGMCreateInclusion
 CreateIntersection | CATIntersectionSurSur* CreateIntersection(CATGeoFactory*iWhere,
 CATSurface*iSurface1,
 CATSurface*iSurface2,
@@ -1104,8 +970,6 @@ CATSurface*iSurface2,
 CATSkillValue iMode=BASIC,
 CATBoolean iRelimitation=FALSE) |  Not supported any longer.
 GMModelInterfaces | Global function | CATCGMCreateIntersection
-GMModelInterfaces | Global function | CATCGMCreateIntersection
-GMModelInterfaces | Global function | CATCGMCreateIntersection
 CreateIntersection | CATIntersectionCrvSur* CreateIntersection(CATGeoFactory*iWhere,
 CATCurve*iCurve,
 CATSurface*iSurface,
@@ -1117,8 +981,6 @@ CATCurve*iCurve,
 CATSurface*iSurface,
 CATSkillValue iMode=BASIC) |  Not supported any longer.
 GMModelInterfaces | Global function | CATCGMCreateIntersection
-GMModelInterfaces | Global function | CATCGMCreateIntersection
-GMModelInterfaces | Global function | CATCGMCreateIntersection
 CreateIntersection | CATIntersectionCrvCrv* CreateIntersection(CATGeoFactory*iWhere,
 CATCurve*iCurve1,
 CATCurve*iCurve2,
@@ -1129,8 +991,6 @@ CATSkillValue iMode=BASIC) |  Not supported any longer.
 CATCurve*iCurve1,
 CATCurve*iCurve2,
 CATSkillValue iMode=BASIC) |  Not supported any longer.
-GMModelInterfaces | Global function | CATCGMCreateIntersection
-GMModelInterfaces | Global function | CATCGMCreateIntersection
 GMModelInterfaces | Global function | CATCGMCreateIntersection
 CreateProjection | CATListOfProjectionCrvSur* CreateProjection(CATGeoFactory*iWhere,
 const CATLISTP_CATCurve_*iCrvList,
@@ -1146,8 +1006,6 @@ CATLONG32 iNPatchV,
 const CATMathDirection* iDirection =(const CATMathDirection*)0,
 CATSkillValue iMode = BASIC) |  Not supported any longer.
 GMModelInterfaces | Global function | CATCGMCreateProjection
-GMModelInterfaces | Global function | CATCGMCreateProjection
-GMModelInterfaces | Global function | CATCGMCreateProjection
 CreateProjection | CATProjectionCrvSur* CreateProjection(CATGeoFactory*iWhere,
 const CATCurve*iCurve,
 const CATCrvLimits*iCrvLim,
@@ -1162,8 +1020,6 @@ const CATSurLimits*iSurLim,
 const CATMathDirection*iDirection =(const CATMathDirection*)0,
 CATSkillValue iMode = BASIC) |  Not supported any longer.
 GMModelInterfaces | Global function | CATCGMCreateProjection
-GMModelInterfaces | Global function | CATCGMCreateProjection
-GMModelInterfaces | Global function | CATCGMCreateProjection
 CreateProjection | CATProjectionPtSur* CreateProjection(CATGeoFactory*iWhere,
 const CATPoint*iPoint,
 const CATSurface*iSurface,
@@ -1176,8 +1032,6 @@ const CATSurface*iSurface,
 const CATMathDirection*iDirection =(const CATMathDirection*)0,
 CATSkillValue iMode = BASIC) |  Not supported any longer.
 GMModelInterfaces | Global function | CATCGMCreateProjection
-GMModelInterfaces | Global function | CATCGMCreateProjection
-GMModelInterfaces | Global function | CATCGMCreateProjection
 CreateProjection | CATProjectionPtCrv* CreateProjection(CATGeoFactory*iWhere,
 const CATPoint*iPoint,
 const CATCurve*iCurve,
@@ -1189,8 +1043,6 @@ CATSkillValue iMode = BASIC) |  Not supported any longer.
 const CATCurve*iCurve,
 const CATMathDirection*iDirection =(const CATMathDirection*)0,
 CATSkillValue iMode = BASIC) |  Not supported any longer.
-GMModelInterfaces | Global function | CATCGMCreateProjection
-GMModelInterfaces | Global function | CATCGMCreateProjection
 GMModelInterfaces | Global function | CATCGMCreateProjection
 CreateReflectCurve | CATReflectCurve* CreateReflectCurve(CATGeoFactory* iFactory,
 CATSurface*iSur,
@@ -1212,5 +1064,4 @@ const CATMathAxis iAxis) |  Not supported any longer.
 GMModelInterfaces | Global function | CATCGMCreateReflectCurve
 CreatePlanarMapping | CATSurTo2DGlobalPlanarMapping* CreatePlanarMapping(CATGeoFactory*iFactory,
 const CATMathAxis iAxis) |  Not supported any longer.
-GMModelInterfaces | Global function | CATCGMCreatePlanarMapping
 GMModelInterfaces | Global function | CATCGMCreatePlanarMapping

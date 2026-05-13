@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Schematics Modeler"
-category: use-case cases"
+category: "use-case cases"
 module: "CAASchBase"
-tags: []
-source_file: "Doc/online/CAASchBase/CAASchHome.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAASchBase/CAASchHome.htm"
 converted: "2026-05-11T17:31:51.532130"
-```
-
 ---
 # Equipement & System
 

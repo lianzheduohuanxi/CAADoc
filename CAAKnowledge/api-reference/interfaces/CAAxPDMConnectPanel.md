@@ -1,49 +1,37 @@
 ---
 title: "CAAxPDMConnectPanel"
-type: "interface"
+type: "LocalClass"
 module: "CAAxPDMInterfaces"
-category: api-reference
 base: "CATDlgDialog"
-inheritance_chain: "CAAxPDMConnectPanel → CATDlgDialog"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 2
+source_file: "CAAxPDMInterfaces.edu/CAAxPDMUICommands.m/LocalInterfaces/CAAxPDMConnectPanel.h"
 ---
+
 # CAAxPDMConnectPanel
 
-**基类**: CATDlgDialog  
-**继承链**: CAAxPDMConnectPanel → CATDlgDialog  
-**模块**: CAAxPDMInterfaces  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
-
-> COPYRIGHT DASSAULT SYSTEMES 2006
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATDlgDialog | **模块**: CAAxPDMInterfaces | **方法数**: 2
 
 ## 依赖
 
 - `CATDlgDialog.h`
 - `CATDlgEditor.h`
 
+## 公共方法
+
+### BuildPanel
+
+```cpp
+void BuildPanel() ;
+```
+
+
+### GetRole
+
+```cpp
+int GetRole() ;
+```
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATDlgDialog**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAxPDMInterfaces.edu/CAAxPDMUICommands.m/LocalInterfaces/CAAxPDMConnectPanel.h`

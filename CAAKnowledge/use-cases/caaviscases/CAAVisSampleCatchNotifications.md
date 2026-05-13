@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Catching the Visualization Notifications"
-category: use-case case"
+category: "use-case case"
 module: "CAAVisUseCases"
-tags: ["CAAVisManager", "CAAVisManagerDefaultDocument", "CAAVisManagerAppli", "CATI3DGeoVisu", "CAAVisManagerInt", "CAAVisManagerCxtMenu", "CAAVisManagerCmdSelector", "CAAVisManagerComp", "CAAIVisManagerCmdSelector", "CAAVisManagerImp", "CAAVisualization"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleCatchNotifications.htmmd"
+tags: "["CAAVisManager", "CAAVisManagerDefaultDocument", "CAAVisManagerAppli", "CATI3DGeoVisu", "CAAVisManagerInt", "CAAVisManagerCxtMenu", "CAAVisManagerCmdSelector", "CAAVisManagerComp", "CAAIVisManagerCmdSelector", "CAAVisManagerImp", "CAAVisualization"]"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleCatchNotifications.htm"
 converted: "2026-05-11T17:31:52.051717"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -112,7 +109,7 @@ CATCommand * iFromClient,
 CATNotification * iNotification)
       CATNotifPropagationMode propMode = **CATNotifTransmitToFather** ;
 
-```vbscript
+```cpp
       if ( iNotification->IsAKindOf(**CATManipulatorNotification::ClassName**(#)) )
 
 ```
@@ -124,7 +121,7 @@ if ( iNotification->IsAKindOf(**CATManipulatorNotification::ClassName**(#)) )
         propMode = **CATNotifDontTransmitToFather** ;
 
       }
-```vbscript
+```cpp
 if ( iNotification->IsAKindOf(**CATManipulatorNotification::ClassName**(#)) )
 propMode = **CATNotifDontTransmitToFather** ;
       else  if ( iNotification->IsAKindOf(**CATMultiSel::ClassName**(#)) )
@@ -153,7 +150,7 @@ if  (NULL != pSetOfObjects)
 ```
 
           {
-```vbscript
+```cpp
 if  (NULL != pSetOfObjects)
 CATBaseUnknown *pComp = NULL;
 for (int ii=0; pComp=(*pSetOfObjects)[ii]; ii++)
@@ -193,7 +190,7 @@ In this case, a multiselection occurred. Several components are selected, and ca
         ...
         if  ( iNotification->IsAKindOf(CATManipulator::**GetCATPreactivate**(#)) )
         {
-```vbscript
+```cpp
 if  ( iNotification->IsAKindOf(CATManipulator::**GetCATPreactivate**(#)) )
           CATPathElement * pPath =
            (CATPathElement *)iFromClient->**SendCommandSpecificObject**(
@@ -408,7 +405,7 @@ if (NULL != pPath)
 ```
 
             {
-```vbscript
+```cpp
 if (NULL != pPath)
 CATBaseUnknown *lastobj_of_path = (*pPath)[pPath->GetSize(#)-1];
 if (NULL != lastobj_of_path)

@@ -1,65 +1,73 @@
 ---
 title: "CAAISysLine"
-type: "interface"
+type: "PublicInterface"
 module: "CAASystem"
-category: api-reference
+base: "CATBaseUnknown"
 method_count: 4
-visibility: "public"
-has_tie_binding: true
-verified: true
+source_file: "CAASystem.edu/PublicInterfaces/CAAISysLine.h"
 ---
-> **TIE实现**: unknown
 
 # CAAISysLine
 
-**模块**: CAASystem  
-**分类**: framework  
-**可见性**: public  
-**方法数**: 4
+> Interface which characterizes a line object. Inheritance: CATBaseUnknown (System Framework) Main Method: SetStartPoint/GetStartPoint SetEndPoint/GetEndPoint
 
-> Mathematics Framework
+**基类**: CATBaseUnknown | **模块**: CAASystem | **方法数**: 4
 
 ## 依赖
 
+- `CATBaseUnknown.h`
 - `CAASysGeoModelInf.h`
 
-## TIE实现
+## 纯虚方法 (接口契约)
 
-**实现文件**:
-- `CAAISysAccess.cpp`
-- `CAAISysCircle.cpp`
-- `CAAISysCircleCenterProperties.cpp`
-- `CAAISysCollection.cpp`
-- `CAAISysColorProperties.cpp`
+### SetStartPoint
+
+```cpp
+virtual HRESULT SetStartPoint(const CATMathPoint & iStartPoint) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iStartPoint | `const CATMathPoint &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### SetEndPoint
+
+```cpp
+virtual HRESULT SetEndPoint(const CATMathPoint & iEndPoint) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iEndPoint | `const CATMathPoint &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetStartPoint
+
+```cpp
+virtual HRESULT GetStartPoint(CATMathPoint & oStartPoint) const = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oStartPoint | `CATMathPoint &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetEndPoint
+
+```cpp
+virtual HRESULT GetEndPoint(CATMathPoint & oEndPoint) const = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oEndPoint | `CATMathPoint &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
 
 ---
 
-## Interface Overview
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-- [3D PLM Enterprise Architecture](../../use-cases/caaafrcases/CAAAfrSampleEditorHdr.md)
-- [CAADegSampleCtxMenu](../../use-cases/caadegcases/CAADegSampleCtxMenu.md)
-- [CAADegSampleMultiSelection](../../use-cases/caadegcases/CAADegSampleMultiSelection.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAASystem.edu/PublicInterfaces/CAAISysLine.h`

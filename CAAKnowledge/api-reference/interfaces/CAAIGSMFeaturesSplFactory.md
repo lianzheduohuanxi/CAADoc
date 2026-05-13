@@ -1,62 +1,50 @@
 ---
 title: "CAAIGSMFeaturesSplFactory"
-type: "interface"
+type: "ProtectedInterface"
 module: "CAAGSMInterfaces"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAIGSMFeaturesSplFactory → CATBaseUnknown"
 method_count: 2
-visibility: "protected"
-has_tie_binding: true
-verified: true
+source_file: "CAAGSMInterfaces.edu/ProtectedInterfaces/CAAIGSMFeaturesSplFactory.h"
 ---
-> **TIE实现**: unknown
 
 # CAAIGSMFeaturesSplFactory
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAIGSMFeaturesSplFactory → CATBaseUnknown  
-**模块**: CAAGSMInterfaces  
-**分类**: framework  
-**可见性**: protected  
-**方法数**: 2
+**基类**: CATBaseUnknown | **模块**: CAAGSMInterfaces | **方法数**: 2
 
 ## 依赖
 
 - `CAAGsiFeaturesSplModel.h`
 - `CATBaseUnknown.h`
 
-## TIE实现
+## 纯虚方法 (接口契约)
 
-**实现文件**:
-- `CAAEGSMCircleSweepTg.cpp`
-- `CAAEGSMCircleSweepTgAttrBehavior.cpp`
-- `CAAEGSMCircleSweepTgBuild.cpp`
-- `CAAEGSMCircleSweepTgMf3DBehavior.cpp`
-- `CAAEGSMCircleSweepTgReplaceUI.cpp`
+### CreateSewSkinBasic
+
+```cpp
+virtual CAAIGSMSewSkinBasic * CreateSewSkinBasic(CATISpecObject *ipSurfaceToSew, CATISpecObject *ipSurfaceSupport) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *ipSurfaceToSew | `CATISpecObject` |
+| *ipSurfaceSupport | `CATISpecObject` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### CreateCircleSweepTg
+
+```cpp
+virtual CAAIGSMCircleSweepTg * CreateCircleSweepTg(CATISpecObject *ipCurveRef, CATISpecObject *ipSurfaceSupport, double radius) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *ipCurveRef | `CATISpecObject` |
+| *ipSurfaceSupport | `CATISpecObject` |
+| radius | `double` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
 
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAGSMInterfaces.edu/ProtectedInterfaces/CAAIGSMFeaturesSplFactory.h`

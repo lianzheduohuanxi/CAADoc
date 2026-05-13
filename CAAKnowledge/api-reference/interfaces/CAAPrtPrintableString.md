@@ -1,58 +1,23 @@
 ---
 title: "CAAPrtPrintableString"
-type: "interface"
+type: "LocalClass"
 module: "CAAPrint"
-category: api-reference
+base: "CATBaseUnknown"
 method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAPrint.edu/CAAPrtPrintableObjects.m/LocalInterfaces/CAAPrtPrintableString.h"
 ---
+
 # CAAPrtPrintableString
 
-**模块**: CAAPrint  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> Printable object whose image is composed of a frame surrounding a string specified as an argument of the object's constructor. The print dialog needs a printable object as an argument of its constructor, that is to say an object which implements the CATIPrintable interface. The only method of this interface is CreatePrintableImage which returns the image to print. The image could have implementes the CATIPrintable interface itself as it is done in the "test image" sample in the same module. But the current solution is useful when an existing component needs to become printable. In this case, the component implements the CATIPrintable interface in its implementation or in a data extension. For example, if CATUnicodeString had been a component (CATUnicodeString does not derive from CATBaseUnknown), CATIPrintable could have been implemented in a data extension. Inheritance: CATBaseUnknown (System Framework) Main Method: CreatePrintableImage: returns the image representing the string given as an  argument of the constructor.
 
-> =============================================================================
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATBaseUnknown | **模块**: CAAPrint | **方法数**: 0
 
 ## 依赖
 
+- `CATBaseUnknown.h`
 - `CATUnicodeString.h`
 
 ---
 
-## Interface Overview
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-This interface is used in the following use cases:
-
-- [CAAPrtSamplePrintableObjects](../../use-cases/caaprtcases/CAAPrtSamplePrintableObjects.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAPrint.edu/CAAPrtPrintableObjects.m/LocalInterfaces/CAAPrtPrintableString.h`

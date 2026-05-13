@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Fillets"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CAATopVariableFillets", "CAATopConstantFillets", "CATICGMObject", "CAAGMModelGemBrowser", "CATICGMDynFillet", "CAATopRollingEdges", "CAATopFilletsMain", "CAAGMOperatorsAllFillets"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopAllFillets.htmmd"
+tags: "["CAAGMOperatorsInterfaces", "CAADoc", "CAATopVariableFillets", "CAATopConstantFillets", "CATICGMObject", "CAAGMModelGemBrowser", "CATICGMDynFillet", "CAATopRollingEdges", "CAATopFilletsMain", "CAAGMOperatorsAllFillets"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopAllFillets.htm"
 converted: "2026-05-11T17:33:49.071438"
-```
-
 ---
 tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CAATopVariableFillets", "CAATopConstantFillets", "CATICGMObject", "CAAGMModelGemBrowser", "CATICGMDynFillet", "CAATopRollingEdges", "CAATopFilletsMain", "CAAGMOperatorsAllFillets"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcTopAllFillets.htmmd"
@@ -150,7 +147,7 @@ if(1==toStore)
        ofstream filetowrite(pfileName, ios::binary ) ;
 
     #else
-```vbscript
+```cpp
 if(1==toStore)
 ofstream filetowrite(pfileName, ios::binary ) ;
        ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Describing State Dialog Commands Using UML"
 category: "use-case"
 module: "CAADegTechArticles"
-tags: []
-source_file: "Doc/online/CAADegTechArticles/CAADegUMLDescription.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAADegTechArticles/CAADegUMLDescription.htm"
 converted: "2026-05-11T17:33:49.888146"
-```
-
 ---
 tags: []
 source_file: "Doc/online/CAADegTechArticles/CAADegUMLDescription.htmmd"

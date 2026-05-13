@@ -1,25 +1,17 @@
 ---
 title: "CAALifMyVisitor"
-type: "interface"
+type: "ProtectedInterface"
 module: "CAALiteralFeatures"
-category: api-reference
 base: "CATVisitorAdapter"
-inheritance_chain: "CAALifMyVisitor → CATVisitorAdapter"
 method_count: 1
-visibility: "protected"
-has_tie_binding: false
-verified: true
+source_file: "CAALiteralFeatures.edu/ProtectedInterfaces/CAALifMyVisitor.h"
 ---
+
 # CAALifMyVisitor
 
-**基类**: CATVisitorAdapter  
-**继承链**: CAALifMyVisitor → CATVisitorAdapter  
-**模块**: CAALiteralFeatures  
-**分类**: framework  
-**可见性**: protected  
-**方法数**: 1
+> This class defines the CAALifMyVisitor implementation. =========================================================================== Usage: Use in CAALifPublishMain Inheritance: None Main Method:
 
-> ================================================================
+**基类**: CATVisitorAdapter | **模块**: CAALiteralFeatures | **方法数**: 1
 
 ## 依赖
 
@@ -28,28 +20,21 @@ verified: true
 - `CATVisitorAdapter.h`
 - `CAALifBasis.h`
 
+## 虚方法
+
+### Visit
+
+```cpp
+virtual HRESULT Visit(CATBaseUnknown* iInstance) ;
+```
+
+Destructor
+
+| 参数 | 类型 |
+|------|------|
+| iInstance | `CATBaseUnknown*` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATVisitorAdapter**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAALiteralFeatures.edu/ProtectedInterfaces/CAALifMyVisitor.h`

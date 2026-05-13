@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Object Life Cycle: Rules"
-category: use-case
+category: "use-case"
 module: "CAACgmModel"
-tags: ["CATICGMContainer", "CATICGMTopWire"]
-source_file: "Doc/online/CAACgmModel/CAACgmTaLifeCycleRules.htmmd"
+tags: "["CATICGMContainer", "CATICGMTopWire"]"
+source_file: "Doc/online/CAACgmModel/CAACgmTaLifeCycleRules.htm"
 converted: "2026-05-11T17:33:47.987993"
-```
-
 ---
 # Object Life Cycle: Rules
 
@@ -26,7 +23,6 @@ Object life cycle of CGM objects is managed through the implicit/explicit status
 
 CGM objects can be created:
 
-CGM objects can be created:
     1. Either by the geometry factory
 
 `CATPlane * piPlane = _theFactory_ ->CreatePlane(CATMathOIJ);`

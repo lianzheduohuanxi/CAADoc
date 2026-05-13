@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Center Lines in a CATDrawing Document"
-category: use-case case"
+category: "use-case case"
 module: "CAADriUseCases"
-tags: ["CATIDrwDimDimension", "CATIUnknownListImpl", "CAADrwAddin", "CATIDrwStackedDimSystem", "CAAUseCaseCommands", "CATIDrwDimSystem", "CAADraftingInterfaces", "CATIA", "CAADrwCreateDimSystCmd", "CATISpecObject_var", "CAADrwCreateDimSyst", "CATIDrwAnnotationFactory", "CATIUnknownList"]
-source_file: "Doc/online/CAADriUseCases/CAADriCreateDimSyst.htmmd"
+tags: "["CATIDrwDimDimension", "CATIUnknownListImpl", "CAADrwAddin", "CATIDrwStackedDimSystem", "CAAUseCaseCommands", "CATIDrwDimSystem", "CAADraftingInterfaces", "CATIA", "CAADrwCreateDimSystCmd", "CATISpecObject_var", "CAADrwCreateDimSyst", "CATIDrwAnnotationFactory", "CATIUnknownList"]"
+source_file: "Doc/online/CAADriUseCases/CAADriCreateDimSyst.htm"
 converted: "2026-05-11T17:31:50.955484"
-```
-
 ---
 # Mechanical Design
 
@@ -138,7 +135,7 @@ AddCSOClient(_pObjectAgent);
 CATDialogState* pState1 = GetInitialState("Sel points");
 pState1->AddDialogAgent(_pObjectAgent);
       AddTransition(pState1, NULL, IsOutputSetCondition(_pObjectAgent),
-```vbscript
+```cpp
       Action((ActionMethod)&CAADrwCreateDimSystCmd::CreateDimSyst, NULL, NULL));
 
 ```
@@ -169,7 +166,7 @@ CATPathElement *pElemPath = NULL;
 
       {
         // We will scan the CSO from the begining
-```vbscript
+```cpp
 if (NULL != pObjSO)
         pObjSO->InitElementList(#);
         CATIDrwAnnotationFactory *piDrwFact = NULL;
@@ -177,7 +174,7 @@ if (NULL != pObjSO)
         IDMPoint2D *piSecondElem = NULL;
         IDMPoint2D *piNextElem = NULL;
         CATIDrwDimSystem *piDimSyst = NULL;
-```vbscript
+```cpp
         CATIDrwDimDimension *piDim = NULL;
         CATDimSystemDefinition sysDef;
 ```
@@ -205,7 +202,7 @@ while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement(#)) )
 sysDef.SetValueOffset(100.0);
 while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement(#)) )
 ```vbscript
-```vbscript
+```cpp
 if (NULL == piFirstElem)
             piFirstElem = (IDMPoint2D *)pElemPath->FindElement(IID_IDMPoint2D);
             piDrwFact = (CATIDrwAnnotationFactory *)pElemPath->FindElement(IID_CATIDrwAnnotationFactory);
@@ -218,7 +215,7 @@ if (NULL == piFirstElem)
 ```vbscript
 if (NULL == piFirstElem)
 ```vbscript
-```vbscript
+```cpp
 piFirstElem = (IDMPoint2D *)pElemPath->FindElement(IID_IDMPoint2D);
 piDrwFact = (CATIDrwAnnotationFactory *)pElemPath->FindElement(IID_CATIDrwAnnotationFactory);
 ```
@@ -230,7 +227,7 @@ piDrwFact = (CATIDrwAnnotationFactory *)pElemPath->FindElement(IID_CATIDrwAnnota
 
           {
 piFirstElem = (IDMPoint2D *)pElemPath->FindElement(IID_IDMPoint2D);
-```vbscript
+```cpp
 piDrwFact = (CATIDrwAnnotationFactory *)pElemPath->FindElement(IID_CATIDrwAnnotationFactory);
 ```
 
@@ -407,7 +404,7 @@ The acquisition agent did put the selected points into the CSO. So we get the SO
     if (piDimSyst)
     {
       // Get the master dimension for dimension system moving
-```vbscript
+```cpp
 if (piDimSyst)
       CATIDrwDimDimension *piMasterDim=NULL;
       CATMathPoint2D ptPos(150.0,230);
@@ -428,7 +425,7 @@ if (piMasterDim)
 
       }
       // Dimension system properties modification
-```vbscript
+```cpp
 if (!!spDimSpec)
 spDimSpec->Update(#);
 piMasterDim->Release(#);piMasterDim=NULL;

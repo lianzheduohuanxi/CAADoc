@@ -1,23 +1,17 @@
 ---
 title: "CAAVisBaseDefaultDocument"
-type: "interface"
+type: "LocalClass"
 module: "CAAVisualization"
-category: api-reference
 base: "CAAVisBaseDocument"
-method_count: 1
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 0
+source_file: "CAAVisualization.edu/CAAVisBasics.m/LocalInterfaces/CAAVisBaseDefaultDocument.h"
 ---
+
 # CAAVisBaseDefaultDocument
 
-**基类**: CAAVisBaseDocument  
-**模块**: CAAVisualization  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 1
+> Default document class. At the launching of the application, a default document containing the representation of a torus is opened. This class represents this document. Its CreateModel method illustrates the way to build a graphical representation and to deal with the corresponding Level Of Details creation. Inheritance: CAAVisBaseDefaultDocument CAAVisBaseDocument CATCommand (System Framework) Main Method: CreateModel   : Creates the torus model. AddLod        : Adding of a Level Of Detail to the model.
 
-> AddLod        : Adding of a Level Of Detail to the model.
+**基类**: CAAVisBaseDocument | **模块**: CAAVisualization | **方法数**: 0
 
 ## 依赖
 
@@ -25,25 +19,4 @@ verified: true
 
 ---
 
-## Interface Overview
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-This interface is used in the following use cases:
-
-- [CAAVisSampleCAT3DFaceGP](../../use-cases/caaviscases/CAAVisSampleCAT3DFaceGP.md)
-- [CAAVisSampleLOD](../../use-cases/caaviscases/CAAVisSampleLOD.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAVisualization.edu/CAAVisBasics.m/LocalInterfaces/CAAVisBaseDefaultDocument.h`

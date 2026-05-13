@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "How to Associate Topology With Geometry"
 category: "tutorial"
 module: "CAATobTechArticles"
-tags: ["CATIntCurve"]
-source_file: "Doc/online/CAATobTechArticles/TopoCreate.htmmd"
+tags: "["CATIntCurve"]"
+source_file: "Doc/online/CAATobTechArticles/TopoCreate.htm"
 converted: "2026-05-11T17:33:45.903936"
-```
-
 ---
 tags: ["CATIntCurve"]
 source_file: "Doc/online/CAATobTechArticles/TopoCreate.htmmd"

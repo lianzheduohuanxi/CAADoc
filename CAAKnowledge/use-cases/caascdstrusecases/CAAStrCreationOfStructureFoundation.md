@@ -60,7 +60,7 @@ This use case has shown how to create structure objects
 
 ```vbscript
 ...
-```vbscript
+```cpp
     Dim doc As Document
 
     Dim StrWorkbench As StrWorkbench

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Integrating a New Mechanical Feature in the CAA Exposed Model"
 category: "use case"
 module: "CAAOmmUseCases"
-tags: ["CATIContainer_var", "CAAOmmverticalLine", "CATISpecObject", "CATIAReferences", "CAAOllTypeLib", "CAAEOmmBuildVerticalLine", "CAAOmmVerticalLine", "CATIAReference", "CAAOmmCatalog", "CATIAHybriShape", "CATIPartRequest", "CATIAPart", "CATIAHybridShape", "CAAIOmmFactory", "CAAIAOmmFactory", "CATIBuild", "CAAIA", "CAAIOmmVerticalLine", "CAAOmm", "CATIAlias"]
-source_file: "Doc/online/CAAOmmUseCases/CAAOmmIntegration.htmmd"
+tags: "["CATIContainer_var", "CAAOmmverticalLine", "CATISpecObject", "CATIAReferences", "CAAOllTypeLib", "CAAEOmmBuildVerticalLine", "CAAOmmVerticalLine", "CATIAReference", "CAAOmmCatalog", "CATIAHybriShape", "CATIPartRequest", "CATIAPart", "CATIAHybridShape", "CAAIOmmFactory", "CAAIAOmmFactory", "CATIBuild", "CAAIA", "CAAIOmmVerticalLine", "CAAOmm", "CATIAlias"]"
+source_file: "Doc/online/CAAOmmUseCases/CAAOmmIntegration.htm"
 converted: "2026-05-11T17:33:46.031570"
-```
-
 ---
 tags: ["CATIContainer_var", "CAAOmmverticalLine", "CATISpecObject", "CATIAReferences", "CAAOllTypeLib", "CAAEOmmBuildVerticalLine", "CAAOmmVerticalLine", "CATIAReference", "CAAOmmCatalog", "CATIAHybriShape", "CATIPartRequest", "CATIAPart", "CATIAHybridShape", "CAAIOmmFactory", "CAAIAOmmFactory", "CATIBuild", "CAAIA", "CAAIOmmVerticalLine", "CAAOmm", "CATIAlias"]
 source_file: "Doc/online/CAAOmmUseCases/CAAOmmIntegration.htmmd"
@@ -45,7 +42,7 @@ Once all the modules contained in CAAOLE4MecMod.edu have been compiled, you have
     Language="VBSCRIPT"
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -57,7 +54,7 @@ Once all the modules contained in CAAOLE4MecMod.edu have been compiled, you have
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
       Set doc0 = CATIA.Documents.Add("Part")
 
       Dim body1 As HybridBody
@@ -141,7 +138,6 @@ body1.AppendHybridShape line1
 ---
 [Top] Where to Find the CAAOmm Code The CAAOmm use case is made of several modules located in the CAAOLE4MecMod.edu framework: Windows | `InstallRootDirectory/CAAOLE4MecMod.edu/`
 ---|---
-Unix | `InstallRootDirectory/CAAOLE4MecMod.edu/`
 Unix | `InstallRootDirectory/CAAOLE4MecMod.edu/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed. Modules Repartition
 
@@ -309,7 +305,6 @@ So, the next step is to compile our two interfaces into a typelib. Creating a ne
 ---
 The REPID #pragma names our typelib and assign it a GUID, just like we did previously for interfaces and for the same reasons. The CAAOmm typelib code itself is comprised between the delimiting #pragmas REPBEGIN and REPEND. It includes two sections:
 
-The REPID #pragma names our typelib and assign it a GUID, just like we did previously for interfaces and for the same reasons. The CAAOmm typelib code itself is comprised between the delimiting #pragmas REPBEGIN and REPEND. It includes two sections:
   1. REPREQ #pragmas indicate that the newly defined typelib uses interfaces previously defined in other typelibs ("InfTypeLib" and "MecModTypeLib"). That way, definition of interfaces like CATIAReference can be used within CAAOmm while being defined elsewhere.
   2. #include directives import in that typelib definition file the IDL definition for the newly defined interfaces.
 
@@ -509,7 +504,7 @@ HRESULT CAAEOmmVerticalLine::get_Name(CATBSTR & oName)
              str.ConvertToBSTR (&oName);
 
            }
-```vbscript
+```cpp
 if (SUCCEEDED(rc)) {
 CATUnicodeString str = ipAliasOnThis->**GetAlias**(#);
 ipAliasOnThis->Release(#);
@@ -551,7 +546,7 @@ ipSpecObjectOnThis->Release(#);
 ipSpecObjectOnThis = NULL ;
 while ((NULL != pParent) && (NULL == opiBaseOnOLEParent))
                   CATISpecObject * pParentCurrent = pParent ;
-```vbscript
+```cpp
                   rc =  pParentCurrent->QueryInterface(IID_**CATIAHybridShapes** , (void**) &opiBaseOnOLEParent);
 
                   pParent =  pParentCurrent -> GetFather(#);
@@ -588,7 +583,7 @@ HRESULT __stdcall CAAEOmmVerticalLine::put_Point1(CATIAReference * ipiReferenceO
             **CATISpecAttrAccess** * piSpecAttrAccessOnThis=NULL;
 HRESULT __stdcall CAAEOmmVerticalLine::put_Point1(CATIAReference * ipiReferenceOnPoint1)
 HRESULT rc=E_FAIL;
-```vbscript
+```cpp
             rc=QueryInterface(IID_CATISpecAttrAccess, (void**) &piSpecAttrAccessOnThis);
 
 ```

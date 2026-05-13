@@ -1,17 +1,14 @@
 ---
-```vbscript
 title: "CAADriSetPrintArea.CATScript"
 category: "use-case"
 module: "CAAScdDriUseCases"
-tags: ["CATIADrawingView", "CATIA", "CAADriSetPrintArea"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriSetPrintAreaSource.htmmd"
+tags: "["CATIADrawingView", "CATIA", "CAADriSetPrintArea"]"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriSetPrintAreaSource.htm"
 converted: "2026-05-11T17:31:51.102250"
-```
-
 ---
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGHT DASSAULT SYSTEMES 2004
     ' ***********************************************************************
     '   Purpose     : This macro allows you to set the drafting print area
@@ -27,7 +24,7 @@ converted: "2026-05-11T17:31:51.102250"
 
 ```
 
-```vbscript
+```cpp
     Sub CATMain(#)
 ```vbscript
 ```
@@ -43,7 +40,7 @@ converted: "2026-05-11T17:31:51.102250"
     Dim oDocument As Document
 ```vbscript
 ```
-```vbscript
+```cpp
     Set oDocument = CATIA.ActiveDocument
 ```
 ```
@@ -158,7 +155,7 @@ Set oSelection = oDrawingDocument.Selection
         Set iFirstPoint = oSelection.Item(1).Value
         ' Retrieve the drawing point's view form the FindObject method of the selection
 ```
-```vbscript
+```cpp
         Set oView = oSelection.FindObject("CATIADrawingView")
         ' Retrieve the drawing point's coordinates,
 ```
@@ -170,7 +167,7 @@ Set oSelection = oDrawingDocument.Selection
 ```
 
 ```vbscript
-```vbscript
+```cpp
 Set oView = oSelection.FindObject("CATIADrawingView")
 ```vbscript
 ```
@@ -232,7 +229,7 @@ ReturnStatus = oSelection.IndicateOrSelectElement2D("Select the second point", I
 ```vbscript
 ```vbscript
         ' Retrieve the drawing point's view form the FindObject method of the selection
-```vbscript
+```cpp
         Set oView = oSelection.FindObject("CATIADrawingView")
         ' Retrieve the drawing point's coordinates,
 ```
@@ -244,7 +241,7 @@ ReturnStatus = oSelection.IndicateOrSelectElement2D("Select the second point", I
 ```
 
 ```vbscript
-```vbscript
+```cpp
 Set oView = oSelection.FindObject("CATIADrawingView")
 ```vbscript
 ```
@@ -351,7 +348,7 @@ End If
     oSelection.Add oSheet
 
 ```vbscript
-```vbscript
+```cpp
     CATIA.StartCommand "CATDrwVisualizePrintAreaHdr"
     oSelection.Clear
 ```

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Torus"
 category: "use case"
 module: "CAACgmModel"
-tags: ["CAAGMModelInterfaces", "CAAGMModelTorusCreation"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcTorusCreation.htmmd"
+tags: "["CAAGMModelInterfaces", "CAAGMModelTorusCreation"]"
+source_file: "Doc/online/CAACgmModel/CAACgmUcTorusCreation.htm"
 converted: "2026-05-11T17:33:48.614089"
-```
-
 ---
 Creating a Torus
 
@@ -135,7 +132,6 @@ Case 2: The surface self-intersects With the code below:
 if (!pTorusSI) return 1;
 you get this result: Fig.2 Self-intersecting tori  ![Apple Torus](images/CGM_torus_apple.png)
 
-you get this result: Fig.2 Self-intersecting tori  ![Apple Torus](images/CGM_torus_apple.png)
 Internal part removed
 (CATBoolean argument =1) |  External part removed
 (CATBoolean argument =0)

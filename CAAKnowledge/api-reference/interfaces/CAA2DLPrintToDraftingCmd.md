@@ -1,52 +1,36 @@
 ---
 title: "CAA2DLPrintToDraftingCmd"
-type: "interface"
+type: "LocalClass"
 module: "CAADrafting2DLInterfaces"
-category: api-reference
 base: "CATCommand"
-inheritance_chain: "CAA2DLPrintToDraftingCmd → CATCommand"
 method_count: 1
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAADrafting2DLInterfaces.edu/CAA2DLPrintToDrafting.m/LocalInterfaces/CAA2DLPrintToDraftingCmd.h"
 ---
+
 # CAA2DLPrintToDraftingCmd
 
-**基类**: CATCommand  
-**继承链**: CAA2DLPrintToDraftingCmd → CATCommand  
-**模块**: CAADrafting2DLInterfaces  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 1
+> Interactive command This command launches a batch to create a Drawing from 2DLayout and print the active sheet of the drawing
 
-> =============================================================================
+**基类**: CATCommand | **模块**: CAADrafting2DLInterfaces | **方法数**: 1
 
 ## 依赖
 
 - `CATCommand.h`
 
+## 虚方法
+
+### Activate
+
+```cpp
+virtual CATStatusChangeRC Activate(CATCommand* FromClient, CATNotification* EvtDat) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| FromClient | `CATCommand*` |
+| EvtDat | `CATNotification*` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATCommand**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAADrafting2DLInterfaces.edu/CAA2DLPrintToDrafting.m/LocalInterfaces/CAA2DLPrintToDraftingCmd.h`

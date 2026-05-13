@@ -1,53 +1,104 @@
 ---
 title: "CAAEVisModelObject"
-type: "interface"
+type: "LocalClass"
 module: "CAAVisualization"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAEVisModelObject → CATBaseUnknown"
-method_count: 2
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 6
+source_file: "CAAVisualization.edu/CAAVisManagerImpl.m/LocalInterfaces/CAAEVisModelObject.h"
 ---
+
 # CAAEVisModelObject
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAEVisModelObject → CATBaseUnknown  
-**模块**: CAAVisualization  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 2
+> Data extension of the CAAVisModelObject component, implementing the CAAIVisModelObject interface.
 
-> System Framework
+**基类**: CATBaseUnknown | **模块**: CAAVisualization | **方法数**: 6
 
 ## 依赖
 
 - `CATBaseUnknown.h`
+- `list.h`
 - `CATMathPointf.h`
 
+## 虚方法
+
+### GetType
+
+```cpp
+virtual HRESULT GetType(char ** oType) ;
+```
+
+Get the type of object
+
+| 参数 | 类型 |
+|------|------|
+| oType | `char **` |
+
+
+### SetType
+
+```cpp
+virtual HRESULT SetType(const char * iType) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iType | `const char *` |
+
+
+## 公共方法
+
+### AddChild
+
+```cpp
+HRESULT AddChild(CATBaseUnknown *iObject) ;
+```
+
+--------------------------------------------------------------- +++  Methods of the CAAIVisModelObject interface ++++++++++++++ --------------------------------------------------------------- Adds an object to the current model
+
+| 参数 | 类型 |
+|------|------|
+| *iObject | `CATBaseUnknown` |
+
+
+### RemChild
+
+```cpp
+HRESULT RemChild(CATBaseUnknown *iObject) ;
+```
+
+Remove an object to the current model
+
+| 参数 | 类型 |
+|------|------|
+| *iObject | `CATBaseUnknown` |
+
+
+### AddParent
+
+```cpp
+HRESULT AddParent(CATBaseUnknown *iObject) ;
+```
+
+Add a parent to the current object
+
+| 参数 | 类型 |
+|------|------|
+| *iObject | `CATBaseUnknown` |
+
+
+### RemParent
+
+```cpp
+HRESULT RemParent(CATBaseUnknown *iObject) ;
+```
+
+Remove a parent from the current object.
+
+| 参数 | 类型 |
+|------|------|
+| *iObject | `CATBaseUnknown` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAVisualization.edu/CAAVisManagerImpl.m/LocalInterfaces/CAAEVisModelObject.h`

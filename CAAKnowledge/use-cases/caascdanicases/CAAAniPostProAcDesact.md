@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Activating - Deactivating Images"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CAAAniPostProAcDesact", "CATIA", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPostProAcDesact.htmmd"
+tags: "["CAAAniPostProAcDesact", "CATIA", "CAAScdAniUseCases"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPostProAcDesact.htm"
 converted: "2026-05-11T17:31:51.736569"
-```
-
 ---
 ## Analysis Modeler
 
@@ -38,7 +35,7 @@ This use case shows you how to change activation status of image. The macro open
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
 ```
@@ -48,7 +45,7 @@ This use case shows you how to change activation status of image. The macro open
 ```
 
 ```vbscript
-```vbscript
+```cpp
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 ```
@@ -68,7 +65,7 @@ This use case shows you how to change activation status of image. The macro open
 ```vbscript
     ' -----------------------------------------------------------
     ' Open the Analysis document
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Cube_R13_Freq.CATAnalysis")
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```

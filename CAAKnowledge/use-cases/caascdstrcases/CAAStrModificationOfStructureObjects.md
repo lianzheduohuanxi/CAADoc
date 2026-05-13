@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Modifying Structure Objects"
 category: "use-case"
 module: "CAAScdStrUseCases"
-tags: ["CAAStrCreationOfStructureObjects", "CAAStrCreateOfStructureObject", "CAAStrModificationOfStructureObjects", "CAAScdStrUseCases", "CATIA"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfStructureObjects.htmmd"
+tags: "["CAAStrCreationOfStructureObjects", "CAAStrCreateOfStructureObject", "CAAStrModificationOfStructureObjects", "CAAScdStrUseCases", "CATIA"]"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfStructureObjects.htm"
 converted: "2026-05-11T17:31:50.901137"
-```
-
 ---
 ## Structure Design
 
@@ -45,7 +42,7 @@ This macro shows you how to modify structure objects. This macro modifies some m
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
         Dim strFactory As StrObjectFactory
 
         Set doc = CATIA.ActiveDocument

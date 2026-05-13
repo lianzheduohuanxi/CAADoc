@@ -1,52 +1,50 @@
 ---
 title: "CAAESysRevolAxis"
-type: "interface"
+type: "LocalClass"
 module: "CAASystem"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAESysRevolAxis → CATBaseUnknown"
 method_count: 2
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAASystem.edu/CAASysDerivationOM.m/LocalInterfaces/CAAESysRevolAxis.h"
 ---
+
 # CAAESysRevolAxis
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAESysRevolAxis → CATBaseUnknown  
-**模块**: CAASystem  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 2
+> Data extension of the CAASysRevolSurface component, implementing the CAAISysRevolAxis interface.
 
-> Data extension of the CAASysRevolSurface component, implementing the
+**基类**: CATBaseUnknown | **模块**: CAASystem | **方法数**: 2
 
 ## 依赖
 
 - `CATBaseUnknown.h`
 
+## 虚方法
+
+### GetAxis
+
+```cpp
+virtual HRESULT GetAxis(float &oX, float &oY, float &oZ) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| &oX | `float` |
+| &oY | `float` |
+| &oZ | `float` |
+
+
+### SetAxis
+
+```cpp
+virtual HRESULT SetAxis(const float iX, const float iY, const float iZ) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iX | `const float` |
+| iY | `const float` |
+| iZ | `const float` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAASystem.edu/CAASysDerivationOM.m/LocalInterfaces/CAAESysRevolAxis.h`

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Associating a Dialog Box with a Dialog Agent - 1"
 category: "use case"
 module: "CAADegUseCases"
-tags: ["CAADegCreatePolylineCmd", "CAADegPointEditor", "CAADialogEngine", "CAAGeometry", "CAADegCreatePointCmd", "CAADegGeoCommands"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleDialogWithAgent.htmmd"
+tags: "["CAADegCreatePolylineCmd", "CAADegPointEditor", "CAADialogEngine", "CAAGeometry", "CAADegCreatePointCmd", "CAADegGeoCommands"]"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleDialogWithAgent.htm"
 converted: "2026-05-11T17:33:49.626183"
-```
-
 ---
 tags: ["CAADegCreatePolylineCmd", "CAADegPointEditor", "CAADialogEngine", "CAAGeometry", "CAADegCreatePointCmd", "CAADegGeoCommands"]
 source_file: "Doc/online/CAADegUseCases/CAADegSampleDialogWithAgent.htmmd"
@@ -48,7 +45,6 @@ Indicating a point [2] means clicking on the screen at the desired location with
     * Click to create the points that make up the polyline, and right click to end.
 [Top] Where to Find the Polyline Command Code The Polyline command is made of a single class named _CAADegCreatePolylineCmd_ located in the CAADegGeoCommands.m module of the CAADialogEngine.edu framework: Windows | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 ---|---
-Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed. [Top] Step-by-Step To create the CreatePoint, there are seven steps: # | Step | Where
 
@@ -187,7 +183,6 @@ AndCondition(**IsLastModifiedAgentCondition**(_daEditor),
 ---
 The `AddTransition` method creates a transition and adds it to the transitions managed by the dialog command. Pointers to the transition's source and target states are the first and second arguments respectively. This self transition goes from/to the same RepeatState. The transition trigger is defined in the guard condition as the first condition to be checked using the `IsLastModifiedAgentCondition` method applied to the indication agent. This method returns True when the dialog agent is valued or if its value is modified. Modifying the value of the dialog agent is made possible because the dialog agent behavior is set to CATDlgEngRepeat. Using `IsLastModifiedAgentCondition` doesn't require to reinitialize the dialog agent. A second condition uses the `CheckPointByBox` method. Because we use `AndCondition` to create the guard condition, both condition methods must return True to fire the transition. In this case, the `CreateLineByBox` action method is executed. The two other action methods are dedicated to respectively undo and redo the action. [Top] Releasing the Indication Agent and the Dialog Box A pointer to the dialog agent was created in the command `BuildGraph` method as a data member to be accessed and used in different methods. It should be released (`RequestDelayedDestruction`) when it becomes useless. This can be done in the command destructor, as shown here. This could also be done in the `Cancel` method called just before the destructor. In the same way, the dialog box should be destructed by using the `RequestDelayedDestruction` method.
 
-The `AddTransition` method creates a transition and adds it to the transitions managed by the dialog command. Pointers to the transition's source and target states are the first and second arguments respectively. This self transition goes from/to the same RepeatState. The transition trigger is defined in the guard condition as the first condition to be checked using the `IsLastModifiedAgentCondition` method applied to the indication agent. This method returns True when the dialog agent is valued or if its value is modified. Modifying the value of the dialog agent is made possible because the dialog agent behavior is set to CATDlgEngRepeat. Using `IsLastModifiedAgentCondition` doesn't require to reinitialize the dialog agent. A second condition uses the `CheckPointByBox` method. Because we use `AndCondition` to create the guard condition, both condition methods must return True to fire the transition. In this case, the `CreateLineByBox` action method is executed. The two other action methods are dedicated to respectively undo and redo the action. [Top] Releasing the Indication Agent and the Dialog Box A pointer to the dialog agent was created in the command `BuildGraph` method as a data member to be accessed and used in different methods. It should be released (`RequestDelayedDestruction`) when it becomes useless. This can be done in the command destructor, as shown here. This could also be done in the `Cancel` method called just before the destructor. In the same way, the dialog box should be destructed by using the `RequestDelayedDestruction` method.
     CAADegCreatePolylineCmd::~CAADegCreatePointCmd(#)
 
     {

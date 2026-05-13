@@ -1,57 +1,133 @@
 ---
 title: "CAAEGSMCircleSweepTg"
-type: "interface"
+type: "LocalClass"
 module: "CAAGSMInterfaces"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAEGSMCircleSweepTg → CATBaseUnknown"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 10
+source_file: "CAAGSMInterfaces.edu/CAAGsiFeaturesSplModel.m/LocalInterfaces/CAAEGSMCircleSweepTg.h"
 ---
+
 # CAAEGSMCircleSweepTg
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAEGSMCircleSweepTg → CATBaseUnknown  
-**模块**: CAAGSMInterfaces  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
-
-> -----------------------------------------------------------------------
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATBaseUnknown | **模块**: CAAGSMInterfaces | **方法数**: 10
 
 ## 依赖
 
 - `CATBaseUnknown.h`
 - `CATISpecObject.h`
 
+## 公共方法
+
+### SetCurveRef
+
+```cpp
+HRESULT SetCurveRef(const CATISpecObject_var ipCurveRef) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| ipCurveRef | `const CATISpecObject_var` |
+
+
+### GetCurveRef
+
+```cpp
+HRESULT GetCurveRef(CATISpecObject_var & ipCurveRef) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| ipCurveRef | `CATISpecObject_var &` |
+
+
+### SetSurfaceSupport
+
+```cpp
+HRESULT SetSurfaceSupport(const CATISpecObject_var ipSupport) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| ipSupport | `const CATISpecObject_var` |
+
+
+### GetSurfaceSupport
+
+```cpp
+HRESULT GetSurfaceSupport(CATISpecObject_var & ipSupport) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| ipSupport | `CATISpecObject_var &` |
+
+
+### SetRadius
+
+```cpp
+HRESULT SetRadius(const double iRadius) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iRadius | `const double` |
+
+
+### GetRadius
+
+```cpp
+HRESULT GetRadius(double & oRadius) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oRadius | `double &` |
+
+
+### SetSolution
+
+```cpp
+HRESULT SetSolution(const int iSolution) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iSolution | `const int` |
+
+
+### GetSolution
+
+```cpp
+HRESULT GetSolution(int & oSolution) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oSolution | `int &` |
+
+
+### SetTrimMode
+
+```cpp
+HRESULT SetTrimMode(const int iTrimMode) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iTrimMode | `const int` |
+
+
+### GetTrimMode
+
+```cpp
+HRESULT GetTrimMode(int & oTrimMode) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oTrimMode | `int &` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAGSMInterfaces.edu/CAAGsiFeaturesSplModel.m/LocalInterfaces/CAAEGSMCircleSweepTg.h`

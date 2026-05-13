@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAAStrWeldInfoOnMembers.CATScript"
 category: "use-case"
 module: "CAAScdStrUseCases"
-tags: ["CATIA", "CATIASfmMember", "CAAStrWeldInfoOnMembers"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrWeldInfoOnMembersSource.htmmd"
+tags: "["CATIA", "CATIASfmMember", "CAAStrWeldInfoOnMembers"]"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrWeldInfoOnMembersSource.htm"
 converted: "2026-05-11T17:31:50.911084"
-```
-
 ---
 ```vbscript
 ```vbscript
@@ -27,7 +24,7 @@ converted: "2026-05-11T17:31:50.911084"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -39,7 +36,7 @@ converted: "2026-05-11T17:31:50.911084"
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
     Set ObjPart = CATIA.ActiveDocument.Part
 
     Dim FactoryObj As SfmFactory
@@ -66,7 +63,7 @@ converted: "2026-05-11T17:31:50.911084"
     Set SuperMember1 = SuperMembers.Item(1)
     'Retrieving The Split Members
 ```
-```vbscript
+```cpp
     Dim SplitMembers As References
     Set SplitMembers = SuperMember1.SplitProfiles
 
@@ -83,7 +80,7 @@ converted: "2026-05-11T17:31:50.911084"
 ```
 
 ```vbscript
-```vbscript
+```cpp
 Set SelctionObj = CATIA.ActiveDocument.Selection
 ```vbscript
 ```
@@ -95,7 +92,7 @@ Set SelctionObj = CATIA.ActiveDocument.Selection
     Dim DeckMember1 As SfmMember
 ```vbscript
 ```
-```vbscript
+```cpp
     Set DeckMember1 = SelctionObj.FindObject("CATIASfmMember")
 ```
 ```

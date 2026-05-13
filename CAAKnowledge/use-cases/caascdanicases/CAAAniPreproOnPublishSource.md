@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAAAniPreproOnPublish.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CATIA", "CATISamImportDefine", "CAAAniPreproOnPublish", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproOnPublishSource.htmmd"
+tags: "["CATIA", "CATISamImportDefine", "CAAAniPreproOnPublish", "CAAScdAniUseCases"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproOnPublishSource.htm"
 converted: "2026-05-11T17:31:51.829358"
-```
-
 ---
 tags: ["CATIA", "CATISamImportDefine", "CAAAniPreproOnPublish", "CAAScdAniUseCases"]
 source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproOnPublishSource.htmmd"
@@ -16,7 +13,7 @@ converted: "2026-05-11T17:31:51.829358"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGTH DASSAULT SYSTEMES 2000
     ' ***********************************************************************
     '   Purpose:      Create a New Analysis document.
@@ -38,7 +35,7 @@ converted: "2026-05-11T17:31:51.829358"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -50,7 +47,7 @@ converted: "2026-05-11T17:31:51.829358"
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
         sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
 ```
@@ -64,12 +61,12 @@ converted: "2026-05-11T17:31:51.829358"
 ```vbscript
 ' -----------------------------------------------------------
 ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
 sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
 ```
 
-```vbscript
+```cpp
         If(Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 ```
@@ -91,7 +88,7 @@ sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```vbscript
     ' -----------------------------------------------------------
     ' Get the collection of documents in session
-```vbscript
+```cpp
         Set documents1 = CATIA.Documents
     ' Create the CATAnalysis Document
 ```
@@ -104,13 +101,13 @@ sDocPath=CATIA.SystemService.Environ("CATDocView")
 
 ```
 
-```vbscript
+```cpp
         WBName = CATIA.GetWorkbenchId
         if (WBName <> "GPSCfg") Then
 ```
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     	CATIA.StartWorkbench("GPSCfg")
         End If
 ```
@@ -134,7 +131,7 @@ sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
 
 ```vbscript
-```vbscript
+```cpp
         Dim arrayOfVariantOfShort1(0)
         analysisManager1.ImportDefineFile (sDocPath & sSep & "online" & sSep & "CAAScdAniUseCases" & sSep & "samples" & sSep & "AnalysisMechfeat.CATPart"),
 ```
@@ -158,7 +155,7 @@ sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
 
 ```vbscript
-```vbscript
+```cpp
       Set specsAndGeomWindow1 = CATIA.ActiveWindow
 ```vbscript
 ```
@@ -175,7 +172,7 @@ sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```vbscript
     ' _____________________________________________________________________________________
     ' Scan the analysis document:  Retrieve the Pointed documents to extract the reference for pre-processing
-```vbscript
+```cpp
         Set analysisLinkedDocuments1 = analysisManager1.LinkedDocuments
         CATIA.SystemService.Print analysisLinkedDocuments1.Name
 ```
@@ -201,10 +198,10 @@ sDocPath=CATIA.SystemService.Environ("CATDocView")
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' _____________________________________________________________________________________
     ' Retrieve the CATPart Document and associated publications for pre-processing.
-```vbscript
+```cpp
        Set TheDoc = analysisLinkedDocuments1.Item(1)
        CATIA.SystemService.Print TheDoc.FullName
 
@@ -329,7 +326,7 @@ Set analysisEntity2 = analysisEntities1.Add("SAMSurfaceSlider")
 
       analysisCase1.Compute
 
-```vbscript
+```cpp
       CATIA.SystemService.Print " Mises Max Computed " & dimension1.ValueAsString
 ```
 ```
@@ -345,7 +342,7 @@ Set analysisEntity2 = analysisEntities1.Add("SAMSurfaceSlider")
     ' _____________________________________________________________________________________
 ```
     ' Export data from image.
-```vbscript
+```cpp
       outputPath=CATIA.SystemService.Environ("CATTemp")
 ```
 ```
@@ -359,12 +356,12 @@ Set analysisEntity2 = analysisEntities1.Add("SAMSurfaceSlider")
 ```vbscript
 ' _____________________________________________________________________________________
 ' Export data from image.
-```vbscript
+```cpp
 outputPath=CATIA.SystemService.Environ("CATTemp")
 ```
 ```
 
-```vbscript
+```cpp
         If(Not CATIA.FileSystem.FolderExists(outputPath)) Then
 ```vbscript
 ```
@@ -372,7 +369,7 @@ outputPath=CATIA.SystemService.Environ("CATTemp")
         Err.Raise 9999,,"No Output Path Defined"
         End If
 ```
-```vbscript
+```cpp
       Set fileSystem1 = CATIA.FileSystem
       Set folder1 = fileSystem1.GetFolder(outputPath)
 ```
@@ -403,7 +400,7 @@ outputPath=CATIA.SystemService.Environ("CATTemp")
 ```vbscript
 ```vbscript
     '------------------------------- END   END   END   ----------------------------
-```vbscript
+```cpp
       CATIA.DisplayFileAlerts = False
 
 ```

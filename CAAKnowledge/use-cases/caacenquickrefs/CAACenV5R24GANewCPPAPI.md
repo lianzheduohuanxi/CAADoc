@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "New C++ Authorized APIs in CAA V5-6R2014 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
-tags: ["CATICGMPersistentOperator", "CATICGMAdvancedRemoveFaceOpe", "CATISpecObject", "CATIMmiMechanicalSet", "CATIOsmExtensionFactory", "CATIProviders", "CATISpecAttribute", "CATIWflUserExit", "CATIDescendants", "CATIReplace", "CATITPSSetGlobalCopy", "CATITPSOrientedLinearDimension", "CATIVpmLightNavigationServices", "CATIMmiViewServices", "CATIConnector", "CATIMfgLatheMultiTurSpiMachineMgt", "CATISpecUpdate", "CATIClientContainer", "CATISpecAttribute_var", "CATIUpdateProvider"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R24GANewCPPAPI.htmmd"
+tags: "["CATICGMPersistentOperator", "CATICGMAdvancedRemoveFaceOpe", "CATISpecObject", "CATIMmiMechanicalSet", "CATIOsmExtensionFactory", "CATIProviders", "CATISpecAttribute", "CATIWflUserExit", "CATIDescendants", "CATIReplace", "CATITPSSetGlobalCopy", "CATITPSOrientedLinearDimension", "CATIVpmLightNavigationServices", "CATIMmiViewServices", "CATIConnector", "CATIMfgLatheMultiTurSpiMachineMgt", "CATISpecUpdate", "CATIClientContainer", "CATISpecAttribute_var", "CATIUpdateProvider"]"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R24GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.553018"
-```
-
 ---
 tags: ["CATICGMPersistentOperator", "CATICGMAdvancedRemoveFaceOpe", "CATISpecObject", "CATIMmiMechanicalSet", "CATIOsmExtensionFactory", "CATIProviders", "CATISpecAttribute", "CATIWflUserExit", "CATIDescendants", "CATIReplace", "CATITPSSetGlobalCopy", "CATITPSOrientedLinearDimension", "CATIVpmLightNavigationServices", "CATIMmiViewServices", "CATIConnector", "CATIMfgLatheMultiTurSpiMachineMgt", "CATISpecUpdate", "CATIClientContainer", "CATISpecAttribute_var", "CATIUpdateProvider"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R24GANewCPPAPI.htmmd"
@@ -23,13 +20,13 @@ The following are the new CAA V5-6R2014 GA C++ Authorized APIs, compared with CA
     * Class CATCmdHeaderSensitivityMngt
     * Interface CATIHeaderSpecialize
   * BasicTopologicalOpe framework
-```vbscript
+```cpp
     * Global Function CATCreateTopGeodesicLineOperatorAngledTangentToWire
   * CATAnalysisInterfaces framework
 ```
     * Interface CATISamElementGroup
   * CATIAV4Interfaces framework
-```vbscript
+```cpp
     * Global Function CATV4iGetBaseObject
     * Global Function CATV4iGetDraft
     * Global Function CATV4iGetView
@@ -76,12 +73,10 @@ The following are the new CAA V5-6R2014 GA C++ Authorized APIs, compared with CA
     * Enumeration CATHybSegmentationMode
     * Enumeration CATHybSelectionMode
     * Enumeration CATHybSimplifyMode
-```vbscript
-    * Global Function CATCGMCreate2DBoxComputation
+```cpp
     * Global Function CATCGMCreate2DBoxComputation
     * Global Function CATCGMCreateAdvancedRemoveFaceOpe
     * Global Function CATCGMCreateDynSplit
-    * Global Function CATCGMCreatePowerFill
     * Global Function CATCGMCreatePowerFill
     * Global Function CATCGMCreateTopGeodesicLineOperatorAngledTangentToWire
     * Interface CATICGM2DBoxComputation
@@ -141,7 +136,7 @@ The following are the new CAA V5-6R2014 GA C++ Authorized APIs, compared with CA
     * Enumeration CATAttrInOut
     * Enumeration CATFlavorParam
     * Enumeration CATParentKind
-```vbscript
+```cpp
     * Global Function AccessCatalog
     * Global Function CATAddPublicAttributeToFile
     * Global Function CATCreatePublicSpecsInFile
@@ -175,7 +170,7 @@ The following are the new CAA V5-6R2014 GA C++ Authorized APIs, compared with CA
     * Typedef CATOldTimeStamp
     * Typedef CATOldUpdateStamp
   * PSNInteroperability framework
-```vbscript
+```cpp
     * Global Function CATAddInstanceOfNotLoadedDocumentFromVPM
   * PartInterfaces framework
 ```
@@ -192,8 +187,7 @@ The following are the new CAA V5-6R2014 GA C++ Authorized APIs, compared with CA
     * Typedef OMFactoryFunctionType
   * TopologicalOperators framework
     * Class CAT2DBoxComputation
-```vbscript
-    * Global Function CATCreate2DBoxComputation
+```cpp
     * Global Function CATCreate2DBoxComputation
   * TopologicalOperatorsLight framework
 ```
@@ -211,7 +205,7 @@ The following are the new CAA V5-6R2014 GA C++ Authorized APIs, compared with CA
     * Enumeration LightExpandTreeType
     * Enumeration vpmOutOfSync
     * Enumeration vpmTypeNames
-```vbscript
+```cpp
     * Global Function schema
     * Interface CATIVpmLightExpandObject
 ```
@@ -230,7 +224,7 @@ History Version: **1** [Dec 2013] | Document created
 * * *
 
 _Copyright © 1999-2013, Dassault Systèmes. All rights reserved._
-```vbscript
+```cpp
 Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.md) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.md) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.md)
 
 ```

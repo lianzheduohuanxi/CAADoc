@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Blend"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsBlendWithCouplingModes", "CATICGMTopBlend", "CAAGMOperatorsBlendWithCouplingLines"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopBlend.htmmd"
+tags: "["CAAGMOperatorsInterfaces", "CAAGMOperatorsBlendWithCouplingModes", "CATICGMTopBlend", "CAAGMOperatorsBlendWithCouplingLines"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopBlend.htm"
 converted: "2026-05-11T17:33:49.079944"
-```
-
 ---
 tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsBlendWithCouplingModes", "CATICGMTopBlend", "CAAGMOperatorsBlendWithCouplingLines"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcTopBlend.htmmd"

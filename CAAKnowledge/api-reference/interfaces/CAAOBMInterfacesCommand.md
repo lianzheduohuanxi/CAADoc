@@ -1,56 +1,32 @@
 ---
 title: "CAAOBMInterfacesCommand"
-type: "interface"
+type: "LocalClass"
 module: "CAAOBMInterfaces"
-category: api-reference
+base: "CATStateCommand"
 method_count: 1
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAOBMInterfaces.edu/CAAOBMInterfacesCmd.m/LocalInterfaces/CAAOBMInterfacesCommand.h"
 ---
+
 # CAAOBMInterfacesCommand
 
-**模块**: CAAOBMInterfaces  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 1
-
-> ----------------------------------------------------------------------
+**基类**: CATStateCommand | **模块**: CAAOBMInterfaces | **方法数**: 1
 
 ## 依赖
 
+- `CATStateCommand.h`
 - `CATBoolean.h`
 - `CAAOBMInterfacesDlg.h`
 - `CATDialogAgent.h`
 
----
+## 虚方法
 
-## Interface Overview
+### BuildGraph
 
-**Inherited Methods**: Please refer to the base interface documentation above.
+```cpp
+virtual void BuildGraph() ;
+```
 
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
 
 ---
 
-## Related Use Cases
-
-This interface is used in the following use cases:
-
-- [CAABehOpAndVarMgt](../../use-cases/caabehcases/CAABehOpAndVarMgt.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAOBMInterfaces.edu/CAAOBMInterfacesCmd.m/LocalInterfaces/CAAOBMInterfacesCommand.h`

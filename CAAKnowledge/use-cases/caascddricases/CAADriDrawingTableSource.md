@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAADriDrawingTable.CATScript"
 category: "use-case"
 module: "CAAScdDriUseCases"
-tags: ["CATIA", "CAADriDrawingTable"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriDrawingTableSource.htmmd"
+tags: "["CATIA", "CAADriDrawingTable"]"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriDrawingTableSource.htm"
 converted: "2026-05-11T17:31:51.067330"
-```
-
 ---
 tags: ["CATIA", "CAADriDrawingTable"]
 source_file: "Doc/online/CAAScdDriUseCases/CAADriDrawingTableSource.htmmd"
@@ -16,7 +13,7 @@ converted: "2026-05-11T17:31:51.067330"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGHT DASSAULT SYSTEMES 2002
     ' ***********************************************************************
     '   Purpose:      This macro allows you to create a title block
@@ -32,12 +29,12 @@ converted: "2026-05-11T17:31:51.067330"
 
 ```
 
-```vbscript
+```cpp
     Sub CATMain(#)
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
         ' Set the CATIA popup file alerts to False
         ' It prevents to stop the macro at each alert during its execution
 ```
@@ -47,7 +44,7 @@ converted: "2026-05-11T17:31:51.067330"
 ```
 
 ```vbscript
-```vbscript
+```cpp
         CATIA.DisplayFileAlerts = False
 ```
 ```
@@ -57,7 +54,7 @@ converted: "2026-05-11T17:31:51.067330"
 ```vbscript
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String
-```vbscript
+```cpp
         sDocPath=CATIA.SystemService.Environ("CATDocView")
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
           Err.Raise 9999,,"No Doc Path Defined"
@@ -73,7 +70,7 @@ converted: "2026-05-11T17:31:51.067330"
         Dim oDrwTable As DrawingTable
         ' Create a new drawing document
 ```
-```vbscript
+```cpp
         Set oDrwDocument = CATIA.Documents.Add("Drawing")
         ' Set the drawing document standard
 ```
@@ -87,7 +84,7 @@ converted: "2026-05-11T17:31:51.067330"
 ```vbscript
 ```vbscript
 ' Create a new drawing document
-```vbscript
+```cpp
 Set oDrwDocument = CATIA.Documents.Add("Drawing")
 ' Set the drawing document standard
         oDrwDocument.Standard = catISO
@@ -223,7 +220,7 @@ Set oDrwTable = oDrwTables.Add(107, 70, 9, 9, 5, 20)
         ' Update drawing table modifications
         oDrwTable.ComputeMode = CatTableComputeON
 
-```vbscript
+```cpp
         CATIA.ActiveWindow.ActiveViewer.Reframe
 
 ```

@@ -84,7 +84,7 @@ how to assign values to its global attributes.
 ```vbscript
 ' ----------------------------------------------------------- 
 ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
   sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -93,7 +93,7 @@ how to assign values to its global attributes.
 ```
 ' ----------------------------------------------------------- 
 ' Open the Analysis document 
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online/CAAScdAniUseCases/samples/WeldConnections.CATAnalysis&quot;)
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```

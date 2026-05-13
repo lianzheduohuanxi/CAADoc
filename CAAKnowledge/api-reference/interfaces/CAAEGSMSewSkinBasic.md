@@ -1,29 +1,15 @@
 ---
 title: "CAAEGSMSewSkinBasic"
-type: "interface"
+type: "LocalClass"
 module: "CAAGSMInterfaces"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAEGSMSewSkinBasic → CATBaseUnknown"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 7
+source_file: "CAAGSMInterfaces.edu/CAAGsiFeaturesSplModel.m/LocalInterfaces/CAAEGSMSewSkinBasic.h"
 ---
+
 # CAAEGSMSewSkinBasic
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAEGSMSewSkinBasic → CATBaseUnknown  
-**模块**: CAAGSMInterfaces  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
-
-> -----------------------------------------------------------------------
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATBaseUnknown | **模块**: CAAGSMInterfaces | **方法数**: 7
 
 ## 依赖
 
@@ -31,28 +17,81 @@ verified: true
 - `CATGSMOrientation.h`
 - `CATGSMContextDef.h`
 
+## 公共方法
+
+### SetSurfaceToSew
+
+```cpp
+HRESULT SetSurfaceToSew(CATISpecObject_var ispSurfaceToSew) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| ispSurfaceToSew | `CATISpecObject_var` |
+
+
+### GetSurfaceToSew
+
+```cpp
+HRESULT GetSurfaceToSew(CATISpecObject_var & ospSurfaceToSew) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| ospSurfaceToSew | `CATISpecObject_var &` |
+
+
+### SetSurfaceSupport
+
+```cpp
+HRESULT SetSurfaceSupport(CATISpecObject_var ispSupport) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| ispSupport | `CATISpecObject_var` |
+
+
+### GetSurfaceSupport
+
+```cpp
+HRESULT GetSurfaceSupport(CATISpecObject_var & ospSupport) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| ospSupport | `CATISpecObject_var &` |
+
+
+### SetOrientation
+
+```cpp
+HRESULT SetOrientation(CATGSMOrientation iOrientation) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iOrientation | `CATGSMOrientation` |
+
+
+### GetOrientation
+
+```cpp
+HRESULT GetOrientation(CATGSMOrientation & oOrientation) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oOrientation | `CATGSMOrientation &` |
+
+
+### InvertOrientation
+
+```cpp
+HRESULT InvertOrientation() ;
+```
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAGSMInterfaces.edu/CAAGsiFeaturesSplModel.m/LocalInterfaces/CAAEGSMSewSkinBasic.h`

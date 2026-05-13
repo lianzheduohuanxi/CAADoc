@@ -1,29 +1,17 @@
 ---
 title: "CAAEVisModelEvents"
-type: "interface"
+type: "LocalClass"
 module: "CAAVisualization"
-category: api-reference
 base: "CATExtIModelEvents"
-inheritance_chain: "CAAEVisModelEvents → CATExtIModelEvents"
 method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAVisualization.edu/CAAVisGeoModel.m/LocalInterfaces/CAAEVisModelEvents.h"
 ---
+
 # CAAEVisModelEvents
 
-**基类**: CATExtIModelEvents  
-**继承链**: CAAEVisModelEvents → CATExtIModelEvents  
-**模块**: CAAVisualization  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> Data extension of the document objects, implementing the CATIModelEvents interface to enable the revisualization of the objects after a modification. This class derives from the CATExtIModelEvents adapter which implements all the interface services. Inheritance: CATExtIModelEvents ( Visualization Framework) CATBaseUnknown (System Framework).
 
-> Inheritance:
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATExtIModelEvents | **模块**: CAAVisualization | **方法数**: 0
 
 ## 依赖
 
@@ -31,35 +19,4 @@ verified: true
 
 ---
 
-## Interface Overview
-
-This interface inherits from **CATExtIModelEvents**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-This interface is used in the following use cases:
-
-- [CAAVisSampleCATIVisu](../../use-cases/caaviscases/CAAVisSampleCATIVisu.md)
-- [CAAVisSampleNewCATIVisu](../../use-cases/caaviscases/CAAVisSampleNewCATIVisu.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAVisualization.edu/CAAVisGeoModel.m/LocalInterfaces/CAAEVisModelEvents.h`

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Computing a Tool Path with Machining Areas"
-category: use-case case"
+category: "use-case case"
 module: "CAASmiUseCases"
-tags: ["CATISmgMachiningAreaGuidingCurves", "CAASmiConnectUserOperationWithMA", "CATIMfgToolPathComponents", "CATIMfgComputeToolPathCustom", "CATISmgMachiningAreaParts", "CATIMfgTPSaveData", "CAASmiUserOperationWithMA", "CAAESmiUserOperationWithMATPComputation", "CAASmiUserOperationWithMAToolPath", "CATISmgMachiningAreaxxx", "CATIMfgCompoundTraject", "CATISmgMachiningAreaChecks", "CAASurfaceMachiningItf", "CAAOffset", "CATIMfgToolPathFactory", "CAASmgOperationWithMA"]
-source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationWithMAToolPath.htmmd"
+tags: "["CATISmgMachiningAreaGuidingCurves", "CAASmiConnectUserOperationWithMA", "CATIMfgToolPathComponents", "CATIMfgComputeToolPathCustom", "CATISmgMachiningAreaParts", "CATIMfgTPSaveData", "CAASmiUserOperationWithMA", "CAAESmiUserOperationWithMATPComputation", "CAASmiUserOperationWithMAToolPath", "CATISmgMachiningAreaxxx", "CATIMfgCompoundTraject", "CATISmgMachiningAreaChecks", "CAASurfaceMachiningItf", "CAAOffset", "CATIMfgToolPathFactory", "CAASmgOperationWithMA"]"
+source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationWithMAToolPath.htm"
 converted: "2026-05-11T17:31:51.272858"
-```
-
 ---
 # Machining
 
@@ -70,7 +67,6 @@ The tool path is created from the boundaries of geometrical elements of the conn
 
 This use case is a part of _Surface Machining Operation Sample_ [1]. You should build all the modules of this sample at a time to be able to launch it [2].
 
-This use case is a part of _Surface Machining Operation Sample_ [1]. You should build all the modules of this sample at a time to be able to launch it [2].
 Don't forget to edit the interface dictionary located in:
 
 Windows | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CNext/code/dictionary/`
@@ -140,7 +136,7 @@ To retrieve geometry of a machining area, we use the _CATISmgMachiningAreaxxx_ i
 CATBaseUnknown_var spBaseFeature = pActivity->GetFeature(#);
 if (!!spBaseFeature)
 ```vbscript
-```vbscript
+```cpp
         RC = spBaseFeature->QueryInterface(IID_CATISmgMachiningAreaParts, (void**) &pParts);
         if (SUCCEEDED(RC))
 
@@ -151,7 +147,7 @@ if (!!spBaseFeature)
         {
           // Gets geometry of parts
 RC = spBaseFeature->QueryInterface(IID_CATISmgMachiningAreaParts, (void**) &pParts);
-```vbscript
+```cpp
 if (SUCCEEDED(RC))
           CATLISTP(CATGeometry) ListOfGeometries;
 ```vbscript
@@ -162,7 +158,7 @@ if (SUCCEEDED(RC))
 ```
 
           // Gets the bounding box of the geometry of the part body
-```vbscript
+```cpp
 CATLISTP(CATGeometry) ListOfGeometries;
 ```vbscript
 RC = pParts->**GetGeometricElements**(ListOfGeometries);
@@ -191,7 +187,7 @@ pParts = NULL;
         {
           // Gets geometry of checks
 RC = spBaseFeature->QueryInterface(IID_CATISmgMachiningAreaChecks, (void**) &pChecks);
-```vbscript
+```cpp
 if (SUCCEEDED(RC))
           CATLISTP(CATGeometry) ListOfGeometries;
 ```vbscript
@@ -202,7 +198,7 @@ if (SUCCEEDED(RC))
 ```
 
           // Gets the bounding box of the geometry of the checks
-```vbscript
+```cpp
 CATLISTP(CATGeometry) ListOfGeometries;
 ```vbscript
 RC = pChecks->**GetGeometricElements**(ListOfGeometries);
@@ -231,10 +227,10 @@ pChecks = NULL;
         {
           // Gets geometry of Limiting Curves
 RC = spBaseFeature->QueryInterface(IID_CATISmgMachiningAreaGuidingCurves, (void**) &pGuidingCurves);
-```vbscript
+```cpp
 if (SUCCEEDED(RC))
           CATLISTP(CATCurve) ListOfCurves;
-```vbscript
+```cpp
           RC = pGuidingCurves->**GetResultingCATCurves**(ListOfCurves);
 
 ```
@@ -242,9 +238,9 @@ if (SUCCEEDED(RC))
 ```
 
           // Fill a list of CATGeometry from CATCurve
-```vbscript
+```cpp
 CATLISTP(CATCurve) ListOfCurves;
-```vbscript
+```cpp
 RC = pGuidingCurves->**GetResultingCATCurves**(ListOfCurves);
           CATLISTP(CATGeometry) ListOfGeometries;
 ```
@@ -254,7 +250,7 @@ RC = pGuidingCurves->**GetResultingCATCurves**(ListOfCurves);
 ```
 
           {
-```vbscript
+```cpp
 CATLISTP(CATGeometry) ListOfGeometries;
 int NbCurves = ListOfCurves.Size(#);
 for (int ic=1;ic<=NbCurves;ic++)
@@ -281,7 +277,6 @@ ListOfGeometries.Append(ListOfCurves[ic]);
 
 The tool path is created and returned as a _CATIMfgCompoundTraject_ smart pointer using the CreateMfgCompoundTraject of the _CATIMfgToolPathFactory_ interface implemented by the Process document manufacturing container passed as input parameter. Then, a pointer to _CATIMfgToolPathComponents_ is retrieved from the tool path and the tool path is initialized from the activity using the Init method of _CATIMfgCompoundTraject_.
 
-The tool path is created and returned as a _CATIMfgCompoundTraject_ smart pointer using the CreateMfgCompoundTraject of the _CATIMfgToolPathFactory_ interface implemented by the Process document manufacturing container passed as input parameter. Then, a pointer to _CATIMfgToolPathComponents_ is retrieved from the tool path and the tool path is initialized from the activity using the Init method of _CATIMfgCompoundTraject_.
 The tool path data is created from the boundaries of the machining area (computed with GetBoundingBox).
 
 The CreateMfgTPMultipleMotion method of _CATIMfgToolPathFactory_ creates the object which contains the motions. This object is added to the tool path thanks to the AddElement method of _CATIMfgToolPathComponents_.

@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "Dialog Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR9"
-version: "V5R9"
-tags: []
-source_file: "Doc/online/CAACenAPIChangesR9/Dialog.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAACenAPIChangesR9/Dialog.htm"
 converted: "2026-05-11T17:33:52.851677"
-```
-
 ---
 tags: []
 source_file: "Doc/online/CAACenAPIChangesR9/Dialog.htmmd"

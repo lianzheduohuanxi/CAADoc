@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Using the Visualization Manager"
-category: use-case case"
+category: "use-case case"
 module: "CAAVisUseCases"
-tags: ["CAAVisManager", "CAAVisManagerDefaultDocument", "CAAVisManagerAppli", "CATI3DGeoVisu", "CAAVisManagerInt", "CAAVisManagerDocument", "CAAVisManagerCGRDocument", "CAAIVis2DGraphVisu", "CAAVisManagerCmdSelector", "CATIA", "CAAVisManagerComp", "CAAVisManagerApplicationFrame", "CAAVisManagerImp", "CAAVisManagerApplication", "CAAVisManagerWindow", "CAAVisualization", "CAAVisManagerEditor"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleVisManager.htmmd"
+tags: "["CAAVisManager", "CAAVisManagerDefaultDocument", "CAAVisManagerAppli", "CATI3DGeoVisu", "CAAVisManagerInt", "CAAVisManagerDocument", "CAAVisManagerCGRDocument", "CAAIVis2DGraphVisu", "CAAVisManagerCmdSelector", "CATIA", "CAAVisManagerComp", "CAAVisManagerApplicationFrame", "CAAVisManagerImp", "CAAVisManagerApplication", "CAAVisManagerWindow", "CAAVisualization", "CAAVisManagerEditor"]"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleVisManager.htm"
 converted: "2026-05-11T17:31:52.224318"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -40,7 +37,7 @@ This article discusses the CAAVisManager use case. This use case explains how to
 * * *
 ### What You Will Learn With This Use Case
 
-```vbscript
+```cpp
 The visualization manager is the unique instance of the _CATVisManager_ class that manages the display of all the documents in all their windows. It is a key object in the visualization process that needs information about the documents to display, such as the document root object, the visualization interfaces that the document implements for 3D and 2D viewpoints, the selector to which visualization notifications must be sent, and the PSO (Prehighlighted Set of Objects) and HSO (Highlighted Set of Objects) associated with the document. With this use case, you will learn how to make the visualization manager aware of this information when a document is created or opened, and how to inform it to forget this information when a document is closed. Companion articles of this use case deal with the implementation of a visualization interface of your own [1], and with catching visualization notifications [2].
 
 ```
@@ -141,7 +138,6 @@ The `CATVisManager::GetVisManager` static method retrieves a pointer to the visu
 
       ...
       CAAVisManagerDocument    *pDocument = _pEditor->GetDocument(#);
-CAAVisManagerDocument    *pDocument = _pEditor->GetDocument(#);
       CAAVisManagerCmdSelector *pSelector = _pEditor->GetSelector(#);
 
 ```vbscript
@@ -154,7 +150,7 @@ CAAVisManagerDocument    *pDocument = _pEditor->GetDocument(#);
 CAAVisManagerCmdSelector *pSelector = _pEditor->GetSelector(#);
 if ( (NULL != pDocument) && (NULL != pDocument->GetRootContainer(#)) )
         CATBaseUnknown * pRootObject = pDocument->GetRootContainer(#);
-```vbscript
+```cpp
         _pRootObjectPath = new CATPathElement(pRootObject);
 
 ```
@@ -208,7 +204,6 @@ Then the visualization manager is attached for highlighted components to the edi
         ...
         CAT2DViewpoint * pMain2DViewpoint = &(_pViewer->GetMain2DViewpoint(#));
 
-CAT2DViewpoint * pMain2DViewpoint = &(_pViewer->GetMain2DViewpoint(#));
         list<IID> liste_iid_2D;
         liste_iid_2D += new IID(IID_CAAIVis2DGraphVisu);
         pVisuMgr->**AttachTo**  (_pRootObjectPath,

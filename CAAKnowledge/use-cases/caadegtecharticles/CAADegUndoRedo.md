@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Managing Undo/Redo"
 category: "use-case"
 module: "CAADegTechArticles"
-tags: ["CAACreateTriangleCmd", "CAACreateTriangleCmdGlobalUndo", "CATIUndoTransaction", "CAAIPolyline"]
-source_file: "Doc/online/CAADegTechArticles/CAADegUndoRedo.htmmd"
+tags: "["CAACreateTriangleCmd", "CAACreateTriangleCmdGlobalUndo", "CATIUndoTransaction", "CAAIPolyline"]"
+source_file: "Doc/online/CAADegTechArticles/CAADegUndoRedo.htm"
 converted: "2026-05-11T17:33:49.900168"
-```
-
 ---
 tags: ["CAACreateTriangleCmd", "CAACreateTriangleCmdGlobalUndo", "CATIUndoTransaction", "CAAIPolyline"]
 source_file: "Doc/online/CAADegTechArticles/CAADegUndoRedo.htmmd"
@@ -43,7 +40,7 @@ Input undo/redo is available for the current state dialog command only. It enabl
     AddTransition(stStartState,
                   stSecondState,
                   AndCondition(
-```vbscript
+```cpp
                      IsOutputSetCondition(_daPathElement),
                      Condition((ConditionMethod) & CAACreateTriangleCmd::CheckPoint1)),
                   Action(
@@ -70,7 +67,7 @@ MyAction->SetBeforeRedo((ActionMethod) & CAACreateTriangleCmd::BeforeRedoCreateP
     AddTransition(stStartState,
                   stSecondState,__              AndCondition(
                      IsOutputSetCondition(_daPathElement),
-```vbscript
+```cpp
                      Condition((ConditionMethod) & CAACreateTriangleCmd::CheckPoint1)),
 ```
 
@@ -79,7 +76,7 @@ MyAction->SetBeforeRedo((ActionMethod) & CAACreateTriangleCmd::BeforeRedoCreateP
     ...
 
 ---
-```vbscript
+```cpp
 Condition((ConditionMethod) & CAACreateTriangleCmd::CheckPoint1)),
 MyAction);
 Since the action is created using the `Action` method, it is automatically deleted by the state dialog command. Additional undo and redo methods can be executed after the undo/redo methods of the _CATIUndoTransaction_ interface. They are declared using the `SetAfterUndo` and `SetAfterRedo` methods.
@@ -109,7 +106,7 @@ CATCommandGlobalUndo * CAACreateTriangleCmd::GetGlobalUndo(#)
       {
 CATCommandGlobalUndo * CAACreateTriangleCmdGlobalUndo = NULL;
 if ( _EltTriangle )
-```vbscript
+```cpp
         CAACreateTriangleCmdGlobalUndo = new CATCommandGlobalUndo(
 ```
 
@@ -189,7 +186,7 @@ CATCommandGlobalUndo * CAACreateTriangleCmd::GetGlobalUndo(#)
       {
 CATCommandGlobalUndo * CAACreateTriangleCmdGlobalUndo = NULL;
 if ( _EltTriangle )
-```vbscript
+```cpp
         CAACreateTriangleCmdGlobalUndo = new CATCommandGlobalUndo(
 ```
 
@@ -218,7 +215,7 @@ You can also declare methods to execute after the object undo/redo. This is poss
     ...
 You can also declare methods to execute after the object undo/redo. This is possible using the `SetAfterUndoMeth` and `SetAfterRedoMeth` methods.
     SetAfterUndoMeth((CATGlobalUndoMethod) & CAACreateTriangleCmd::AfterUndoCreateTriangle);
-```vbscript
+```cpp
     SetAfterRedoMeth((CATGlobalUndoMethod) & CAACreateTriangleCmd::AfterRedoCreateTriangle);
 
 ```

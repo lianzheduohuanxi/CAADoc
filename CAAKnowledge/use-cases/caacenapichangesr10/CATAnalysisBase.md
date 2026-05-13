@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "CATAnalysisBase Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR10"
-version: "V5R10"
-tags: ["CATICharacCollector"]
-source_file: "Doc/online/CAACenAPIChangesR10/CATAnalysisBase.htmmd"
+tags: "["CATICharacCollector"]"
+source_file: "Doc/online/CAACenAPIChangesR10/CATAnalysisBase.htm"
 converted: "2026-05-11T17:33:50.108419"
-```
-
 ---
 tags: ["CATICharacCollector"]
 source_file: "Doc/online/CAACenAPIChangesR10/CATAnalysisBase.htmmd"

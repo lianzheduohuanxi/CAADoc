@@ -1,23 +1,15 @@
 ---
 title: "CAAV5V6ExtMmrCCDataExtensionStCmd"
-type: "interface"
+type: "LocalClass"
 module: "CAAV5V6MechanicalModeler"
-category: api-reference
 base: "CATMmrStateCommand"
-inheritance_chain: "CAAV5V6ExtMmrCCDataExtensionStCmd → CATMmrStateCommand"
-method_count: 3
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 0
+source_file: "CAAV5V6MechanicalModeler.edu/CAAV5V6ExtMmrCCDataExtensionUI.m/LocalInterfaces/CAAV5V6ExtMmrCCDataExtensionStCmd.h"
 ---
+
 # CAAV5V6ExtMmrCCDataExtensionStCmd
 
-**基类**: CATMmrStateCommand  
-**继承链**: CAAV5V6ExtMmrCCDataExtensionStCmd → CATMmrStateCommand  
-**模块**: CAAV5V6MechanicalModeler  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 3
+**基类**: CATMmrStateCommand | **模块**: CAAV5V6MechanicalModeler | **方法数**: 0
 
 ## 依赖
 
@@ -27,18 +19,4 @@ verified: true
 
 ---
 
-## Interface Overview
-
-This interface inherits from **CATMmrStateCommand**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAV5V6MechanicalModeler.edu/CAAV5V6ExtMmrCCDataExtensionUI.m/LocalInterfaces/CAAV5V6ExtMmrCCDataExtensionStCmd.h`

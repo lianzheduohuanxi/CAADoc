@@ -147,7 +147,7 @@ We will see now how to compute the tool path of our operation [3].
 
 *Copyright  2002, Dassault Systmes. All rights reserved.*
 
-```vbscript
+```cpp
 ...
 // Tie the implementation to its interface
 #include &quot;TIE_CATIMfgGeometryActivity.h&quot;
@@ -155,7 +155,7 @@ TIE_CATIMfgGeometryActivity( CAAESmiUserOperationWithMAGeometryEditor);
 ...
 ```
 
-```vbscript
+```cpp
 ...
   if (!!spFeatCont)
   {
@@ -181,7 +181,7 @@ TIE_CATIMfgGeometryActivity( CAAESmiUserOperationWithMAGeometryEditor);
   ...
 ```
 
-```vbscript
+```cpp
 ...
   // Creates a combo box
   _pDlgCombo = new CATDlgCombo(this,&quot;DlgCombo&quot;,CATDlgCmbDropDown);
@@ -239,7 +239,7 @@ TIE_CATIMfgGeometryActivity( CAAESmiUserOperationWithMAGeometryEditor);
   ...
 ```
 
-```vbscript
+```cpp
 ...
   // Refresh Machining Area Editor
   CATIEdit * pEdit = NULL;

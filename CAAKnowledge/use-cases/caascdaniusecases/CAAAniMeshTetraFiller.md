@@ -85,7 +85,7 @@ parts as supports.
 ```vbscript
 ' ----------------------------------------------------------- 
 ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
   sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -94,7 +94,7 @@ parts as supports.
 ```
 ' ----------------------------------------------------------- 
 ' Open the Analysis document 
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online/CAAScdAniUseCases/samples/Cube_R13_Freq.CATAnalysis&quot;)
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 

@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "MechanicalModeler Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR7"
-version: "V5R7"
-tags: ["CATIMfBRep", "CATIMechanicalFeature"]
-source_file: "Doc/online/CAACenAPIChangesR7/MechanicalModeler.htmmd"
+tags: "["CATIMfBRep", "CATIMechanicalFeature"]"
+source_file: "Doc/online/CAACenAPIChangesR7/MechanicalModeler.htm"
 converted: "2026-05-11T17:33:52.147992"
-```
-
 ---
 tags: ["CATIMfBRep", "CATIMechanicalFeature"]
 source_file: "Doc/online/CAACenAPIChangesR7/MechanicalModeler.htmmd"

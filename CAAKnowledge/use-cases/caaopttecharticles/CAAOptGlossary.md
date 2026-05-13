@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "KnowledgeOptimizer Glossary"
 category: "use-case"
 module: "CAAOptTechArticles"
-tags: []
-source_file: "Doc/online/CAAOptTechArticles/CAAOptGlossary.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAAOptTechArticles/CAAOptGlossary.htm"
 converted: "2026-05-11T17:33:46.040567"
-```
-
 ---
 tags: []
 source_file: "Doc/online/CAAOptTechArticles/CAAOptGlossary.htmmd"

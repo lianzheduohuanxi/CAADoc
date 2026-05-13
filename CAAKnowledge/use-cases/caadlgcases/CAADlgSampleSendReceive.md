@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "The Send/Receive Mechanism"
-category: use-case case"
+category: "use-case case"
 module: "CAADlgUseCases"
-tags: ["CAADlgErrorNotification", "CAADlgViewScreen", "CAADlgElement", "CAADlgNotifError", "CAADlgAddNotification", "CAADlgNotifRemove", "CAADlgModel", "CATIA", "CAADlgNotifAdd", "CAADlgRemoveNotification", "CAADlgSendReceive", "CAADialog", "CAADlgContainer"]
-source_file: "Doc/online/CAADlgUseCases/CAADlgSampleSendReceive.htmmd"
+tags: "["CAADlgErrorNotification", "CAADlgViewScreen", "CAADlgElement", "CAADlgNotifError", "CAADlgAddNotification", "CAADlgNotifRemove", "CAADlgModel", "CATIA", "CAADlgNotifAdd", "CAADlgRemoveNotification", "CAADlgSendReceive", "CAADialog", "CAADlgContainer"]"
+source_file: "Doc/online/CAADlgUseCases/CAADlgSampleSendReceive.htm"
 converted: "2026-05-11T17:17:55.987209"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -129,7 +126,7 @@ A notification is a CAA V5 component. Its class C++-derives from the notificatio
     CAADlgAddNotification::CAADlgAddNotification(#): CATNotification(**CATNotificationDeleteOn**)
 
     {}
-```vbscript
+```cpp
 CATImplementClass(CAADlgAddNotification, **Implementation** , CATBaseUnknown,CATNull);
 CAADlgAddNotification::CAADlgAddNotification(#): CATNotification(**CATNotificationDeleteOn**)
     CAADlgAddNotification::CAADlgAddNotification(#)
@@ -149,7 +146,6 @@ The _CAADlgAddNotification_ __ class constructor use `CATNotificationDeleteOn `a
 
 The model sends notifications whenever an element is added to it, or removed from it. Let's take the adding example.
 
-The model sends notifications whenever an element is added to it, or removed from it. Let's take the adding example.
     void CAADlgModel::Add(CAADlgElement * iNewElement)
 
     {
@@ -198,7 +194,6 @@ When an element is successfully added, a _CAADlgAddNotification_ class instance 
 #### Filtering Notifications
 
     CATNotifPropagationMode CAADlgContainer::**AnalyseNotification**(CATCommand      *iSending,
-CATNotifPropagationMode CAADlgContainer::**AnalyseNotification**(CATCommand      *iSending,
                                                                  CATNotification *iReceive)
 
     {
@@ -213,7 +208,7 @@ CATNotification *iReceive)
 CATNotifPropagationMode CAADlgContainer::**AnalyseNotification**(CATCommand      *iSending,
 CATNotification *iReceive)
 if (iReceive->IsAKindOf("CAADlgNotifError"))
-```vbscript
+```cpp
           printf("The Command Container catches an error /n");
           return(**CATNotifDontTransmitToFather**);
 
@@ -222,7 +217,7 @@ if (iReceive->IsAKindOf("CAADlgNotifError"))
       }
 ```vbscript
 if (iReceive->IsAKindOf("CAADlgNotifError"))
-```vbscript
+```cpp
 printf("The Command Container catches an error /n");
 return(**CATNotifDontTransmitToFather**);
 ```
@@ -233,7 +228,7 @@ return(**CATNotifDontTransmitToFather**);
       {
 ```vbscript
 printf("The Command Container catches an error /n");
-```vbscript
+```cpp
 return(**CATNotifDontTransmitToFather**);
 ```
 
@@ -253,7 +248,6 @@ The container traps only the notifications that are instances of _CAADlgNotifErr
 
 The screen view command is taken as an example.
 
-The screen view command is taken as an example.
     void CAADlgViewScreen::WantedFocus(#)
 
     {
@@ -272,7 +266,6 @@ The `WantedFocus` method requests that the _CAADlgViewScreen_ instance be set as
 
 The active command also redefines the `AnalyseNotification` method. Here is the one of the screen view class.
 
-The active command also redefines the `AnalyseNotification` method. Here is the one of the screen view class.
     CATNotifPropagationMode CAADlgViewScreen::**AnalyseNotification**(CATCommand      *iSending,
                                                                   CATNotification *iReceive)
 
@@ -287,7 +280,7 @@ CATNotification *iReceive)
 if ( iReceive->IsAKindOf("CAADlgAddNotification") ||
 iReceive->IsAKindOf("CAADlgRemoveNotification") )
         CAADlgElement *pElement= NULL;
-```vbscript
+```cpp
         pElement = (CAADlgElement *)iSending->**SendObject**(CAADlgElement::ClassName(#), iReceive);
 
         if ( NULL != pElement)
@@ -313,7 +306,7 @@ return(CATNotifDontTransmitToFather);
           return(CATNotifTransmitToFather);
 
       }
-```vbscript
+```cpp
 return(CATNotifDontTransmitToFather);
 else
 return(CATNotifTransmitToFather);
@@ -335,7 +328,6 @@ If the notification is of one of the expected types, the `SendObject` method is 
 
 Any command that sends notifications to state a model change can be asked to send a pointer to the object that changes the model. This is the role of `SendCommandSpecificObject`.
 
-Any command that sends notifications to state a model change can be asked to send a pointer to the object that changes the model. This is the role of `SendCommandSpecificObject`.
     void *CAADlgModel::**SendCommandSpecificObject**(const char      *iObjectClassNeeded,
                                                  CATNotification *iReceived)
 

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Distributive Systemes"
 category: "use case"
 module: "CAACloUseCases"
-tags: ["CAACommonLayoutItf", "CAACloECVPercentFill", "CATIEcvPercentFill", "CAAEPFforNetworkArc", "CAACommonLayoutInterfaces", "CAAEPFforNetworkNode"]
-source_file: "Doc/online/CAACloUseCases/CAACloECVPercentFill.htmmd"
+tags: "["CAACommonLayoutItf", "CAACloECVPercentFill", "CATIEcvPercentFill", "CAAEPFforNetworkArc", "CAACommonLayoutInterfaces", "CAAEPFforNetworkNode"]"
+source_file: "Doc/online/CAACloUseCases/CAACloECVPercentFill.htm"
 converted: "2026-05-11T17:33:49.355969"
-```
-
 ---
 tags: ["CAACommonLayoutItf", "CAACloECVPercentFill", "CATIEcvPercentFill", "CAAEPFforNetworkArc", "CAACommonLayoutInterfaces", "CAAEPFforNetworkNode"]
 source_file: "Doc/online/CAACloUseCases/CAACloECVPercentFill.htmmd"
@@ -40,7 +37,6 @@ What You Will Learn With This Use Case This ECV product use case is intended to 
 What You Will Learn With This Use Case This ECV product use case is intended to show how to invoke user implementation for determining Node percent fill for Hanger and Node & Arc percent fill for Raceway/Conduit cableways using the CATIEcvPercentFill interface. [Top] The CAACloECVPercentFill Use Case CAACloECVPercentFill is a use case of the CAACommonLayoutInterfaces.edu framework that illustrates Electrical Cable Routing capabilities using custom percent fill. [Top] What Does CAACloECVPercentFill Do This use case:           Illustrates a capability to have a user implementation automatically invoked when CATIEcvPercentFill interface from CATCommonLayoutInterfaces is implemented on CATEcwLightNwkNodeForPercentFill and / or CATEcwLightNwkArcForPercentFill objects
 How to Launch CAACloECVPercentFill  To launch CAACloECVPercentFill, you will need to set up the build time environment, then compile CAACloECVPercentFill.m along with its prerequisites, set up the run time Enovia environment, and then follow the detailed sample steps.                                                                                                                                                                      [Top] Where to Find the CAACloECVPercentFill Code CAACloECVPercentFill code is located in the CAACloECVPercentFill.m use case module of the CAACommonLayoutItf.edu framework: Windows |  InstallRootDirectory/ CACommonLayoutItf.edu/CAACloECVPercentFill.m
 
-How to Launch CAACloECVPercentFill  To launch CAACloECVPercentFill, you will need to set up the build time environment, then compile CAACloECVPercentFill.m along with its prerequisites, set up the run time Enovia environment, and then follow the detailed sample steps.                                                                                                                                                                      [Top] Where to Find the CAACloECVPercentFill Code CAACloECVPercentFill code is located in the CAACloECVPercentFill.m use case module of the CAACommonLayoutItf.edu framework: Windows |  InstallRootDirectory/ CACommonLayoutItf.edu/CAACloECVPercentFill.m
 Unix |  InstallRootDirectory/ CAACommonLayoutItf.edu/CAACloECVPercentFill.m
 CAACommonLayoutItf.edu framework contains dictionary file: Windows |  InstallRootDirectory/CAACommonLayoutItf.edu/CNext/code/dictionary/CAACommonLayoutItf.edu.dico
 
@@ -59,7 +55,6 @@ where InstallRootDirectory is the root directory of your CAA V5 installation.  C
       * Sample 2 (Raceway/Conduit Cableway Network)
                                                                                                                                                                                                                                                 [Top] Prolog Prior to implementation of this Use case, user should have knowledge about ECV product. Refer V5 documentation.  The user will have to provide implementation depending on type of cableway network:          1. Hanger Network: CATIEcvPercentFill on CATEcwLightNwkNodeForPercentFill
         2. Raceway / Conduit Network: CATIEcvPercentFill on CATEcwLightNwkNodeForPercentFill and CATEcwLightNwkArcForPercentFill
-2. Raceway / Conduit Network: CATIEcvPercentFill on CATEcwLightNwkNodeForPercentFill and CATEcwLightNwkArcForPercentFill
 ```vbscript
 If no user implementation exists, then default implementation will get invoked.
 

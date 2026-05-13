@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Updating Shape Design Features"
-category: tech-article article"
+category: "tech-article article"
 module: "CAAGsiTechArticles"
-tags: ["CAAGSMInterfaces", "CATIPrtPart", "CAAGsiNozzle", "CATIGSMTool", "CAAAGsiService", "CAAGsiService", "CAAGsiServices", "CATIAV5", "CAAGsiObjectUpdate", "CATISpecObject_var"]
-source_file: "Doc/online/CAAGsiTechArticles/CAAGsiUpdateShapeDesign.htmmd"
+tags: "["CAAGSMInterfaces", "CATIPrtPart", "CAAGsiNozzle", "CATIGSMTool", "CAAAGsiService", "CAAGsiService", "CAAGsiServices", "CATIAV5", "CAAGsiObjectUpdate", "CATISpecObject_var"]"
+source_file: "Doc/online/CAAGsiTechArticles/CAAGsiUpdateShapeDesign.htm"
 converted: "2026-05-11T17:31:50.677519"
-```
-
 ---
 # Shape Design& Styling
 
@@ -102,7 +99,7 @@ CAAGsiObjectUpdate(const CATISpecObject_var & ispSpec)
        // This block is specific for Update Errors
 CATTry {
 iStat = ispSpec -> Update(#);
-```vbscript
+```cpp
        CATCatch(CATMfErrUpdate,error) {
 ```
 
@@ -111,7 +108,7 @@ iStat = ispSpec -> Update(#);
 
        }
        // This block treats every other exception
-```vbscript
+```cpp
 CATCatch(CATMfErrUpdate,error) {
 cerr << " Update Error: " << (error-> GetDiagnostic(#)).ConvertToChar(#) << endl;
 return E_FAIL;
@@ -121,7 +118,7 @@ return E_FAIL;
 ```
 
        }
-```vbscript
+```cpp
 CATCatch(CATError,error) {
 cerr << " Error: " << (error->GetMessageText(#)).ConvertToChar(#) << endl;
 return E_FAIL;
@@ -159,18 +156,18 @@ if ( NULL_var != spFather )
          int IsAnAbsorbantSet = -1 ;
          piGSMToolFather->GetType(IsAnbsorbantSet) ;
 ```
-```vbscript
+```cpp
          if ( 1 == IsAnAbsorbantSet ) {
             CATBaseUnknown_var spUnkwnSpec = ispSpec;
 ```
-```vbscript
+```cpp
             rc = CATMmrLinearBodyServices::Insert(spUnkwnSpec) ;
 
 ```
 
         }
 piGSMToolFather->GetType(IsAnbsorbantSet) ;
-```vbscript
+```cpp
 if ( 1 == IsAnAbsorbantSet ) {
 CATBaseUnknown_var spUnkwnSpec = ispSpec;
 ```

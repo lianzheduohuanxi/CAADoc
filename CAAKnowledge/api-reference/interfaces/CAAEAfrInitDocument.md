@@ -1,53 +1,49 @@
 ---
 title: "CAAEAfrInitDocument"
-type: "interface"
+type: "LocalClass"
 module: "CAAApplicationFrame"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAEAfrInitDocument → CATBaseUnknown"
-method_count: 1
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 2
+source_file: "CAAApplicationFrame.edu/CAAAfrGeoDocument.m/LocalInterfaces/CAAEAfrInitDocument.h"
 ---
+
 # CAAEAfrInitDocument
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAEAfrInitDocument → CATBaseUnknown  
-**模块**: CAAApplicationFrame  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 1
+> Data extension of the CAAGeom Late Type. Usage: Launch CATIA V5, File/New In the Dialog Box the new document type appears. Inheritance: CATBaseUnknown (System Framework) Main Method: Init GetRootContainer
 
-> Init
+**基类**: CATBaseUnknown | **模块**: CAAApplicationFrame | **方法数**: 2
 
 ## 依赖
 
 - `CATBaseUnknown.h`
 - `CATBoolean.h`
 
+## 虚方法
+
+### GetRootContainer
+
+```cpp
+virtual CATBaseUnknown * GetRootContainer(const CATIdent interfaceID) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| interfaceID | `const CATIdent` |
+
+
+## 公共方法
+
+### Init
+
+```cpp
+void Init(CATBoolean iDestroyExistingData) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iDestroyExistingData | `CATBoolean` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAApplicationFrame.edu/CAAAfrGeoDocument.m/LocalInterfaces/CAAEAfrInitDocument.h`

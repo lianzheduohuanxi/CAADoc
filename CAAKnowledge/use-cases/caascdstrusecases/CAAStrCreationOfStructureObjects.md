@@ -72,7 +72,7 @@ This use case has shown how to create structure objects
 
 ```vbscript
 ...
-```vbscript
+```cpp
     Dim doc As Document
 
     Dim StrWorkbench As StrWorkbench
@@ -147,7 +147,7 @@ This use case has shown how to create structure objects
 ```
 ```
 
-```vbscript
+```cpp
 ...
     dim sectionName as string
     sectionName = InputBox(&quot;Section path&quot;,&quot;Parameters&quot;, &quot;.../HEA120.CATPart&quot;)

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Subscribing to Mouse Move Events"
 category: "use case"
 module: "CAADegUseCases"
-tags: ["CAAISysCircle", "CAADegCreateCircleCmd", "CAAISysPoint", "CATISO", "CATI3DGoVisu", "CATI3DGeoVisu", "CAADialogEngine", "CAAGeometry", "CATIndicationAgent", "CAADegGeoCommands"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleMouseMove.htmmd"
+tags: "["CAAISysCircle", "CAADegCreateCircleCmd", "CAAISysPoint", "CATISO", "CATI3DGoVisu", "CATI3DGeoVisu", "CAADialogEngine", "CAAGeometry", "CATIndicationAgent", "CAADegGeoCommands"]"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleMouseMove.htm"
 converted: "2026-05-11T17:33:49.711451"
-```
-
 ---
 tags: ["CAAISysCircle", "CAADegCreateCircleCmd", "CAAISysPoint", "CATISO", "CATI3DGoVisu", "CATI3DGeoVisu", "CAADialogEngine", "CAAGeometry", "CATIndicationAgent", "CAADegGeoCommands"]
 source_file: "Doc/online/CAADegUseCases/CAADegSampleMouseMove.htmmd"
@@ -33,11 +30,11 @@ Abstract This article shows how to subscribe, in a state dialog command to mouse
 
 * * *
 
-```vbscript
+```cpp
 What You Will Learn With This Use Case This use case is intended to show how to subscribe to mouse move events to retrieve, in a state dialog command, a 3D point using its coordinates in the 3D space from the mouse current location on the screen, and to create from the retrieved point a temporary object to display that is updated at each mouse move event detection to follow the mouse move as if it were attached to the mouse. This object is a temporary circle in this example that helps the end user to see which circle would be created when clicking at the current mouse location. Temporary objects do not usually belong to the displayed document, and are displayed using the ISO (Interactive Set of Objects). Adding an object to the ISO automatically displays it, providing this object implements the CATI3DGeoVisu interface. [Top] The Circle Command Use Case The Circle command is a use case of the CAADialogEngine.edu framework that illustrates the DialogEngine framework capabilities. [Top] What Does the Circle Command Do CAADegCreateCircleCmd is a state dialog command that creates a circle in the 3D space according to the following UML statechart diagram [1]. ![CAACreateCircleStatechart.jpg /(21192 bytes/)](images/CAACreateCircleStatechart.jpg) The dialog is as follows: ![CAACreateCircle1.jpg /(19420 bytes/)](images/CAACreateCircle1.jpg) | Select an existing plane that will be used as the circle plane. The active state becomes GetPlane.
 ---|---
 ```
-```vbscript
+```cpp
 What You Will Learn With This Use Case This use case is intended to show how to subscribe to mouse move events to retrieve, in a state dialog command, a 3D point using its coordinates in the 3D space from the mouse current location on the screen, and to create from the retrieved point a temporary object to display that is updated at each mouse move event detection to follow the mouse move as if it were attached to the mouse. This object is a temporary circle in this example that helps the end user to see which circle would be created when clicking at the current mouse location. Temporary objects do not usually belong to the displayed document, and are displayed using the ISO (Interactive Set of Objects). Adding an object to the ISO automatically displays it, providing this object implements the CATI3DGeoVisu interface. [Top] The Circle Command Use Case The Circle command is a use case of the CAADialogEngine.edu framework that illustrates the DialogEngine framework capabilities. [Top] What Does the Circle Command Do CAADegCreateCircleCmd is a state dialog command that creates a circle in the 3D space according to the following UML statechart diagram [1]. ![CAACreateCircleStatechart.jpg /(21192 bytes/)](images/CAACreateCircleStatechart.jpg) The dialog is as follows: ![CAACreateCircle1.jpg /(19420 bytes/)](images/CAACreateCircle1.jpg) | Select an existing plane that will be used as the circle plane. The active state becomes GetPlane.
  The viewpoint changes to make the selected plane and the screen plane coincide. The active state is GetCircle.
 ```
@@ -57,7 +54,6 @@ Indicating a point means clicking on the screen at the desired location with the
     * Left-click to create the circle.
 [Top] Where to Find the Circle Command Code The Circle command is made of a single class named _CAADegCreateCircleCmd_ located in the CAADegGeoCommands.m module of the CAADialogEngine.edu framework: Windows | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 ---|---
-Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed. [Top] Step-by-Step To create the circle center, there are seven steps: # | Step | Where
 

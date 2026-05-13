@@ -1,13 +1,10 @@
 ---
-```vbscript
-title: "Topological Journal: Writing a Validation Tool "
+title: "Topological Journal: Writing a Validation Tool"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMCheckForPart", "CAAGMOperatorsInterfaces", "CAAGMOperatorsCheckGnOK", "CAAGMOperatorsJournalThreadOpMain", "CAAGMTopCheckForPart", "CAATopCheckNoCopy", "CAAAddInputBody", "CAAGMOperatorsCheckGnKO", "CAAGMOperatorsCheckForPart", "CAACheck"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcJournalChecking3.htmmd"
+tags: "["CAAGMCheckForPart", "CAAGMOperatorsInterfaces", "CAAGMOperatorsCheckGnOK", "CAAGMOperatorsJournalThreadOpMain", "CAAGMTopCheckForPart", "CAATopCheckNoCopy", "CAAAddInputBody", "CAAGMOperatorsCheckGnKO", "CAAGMOperatorsCheckForPart", "CAACheck"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcJournalChecking3.htm"
 converted: "2026-05-11T17:33:48.983062"
-```
-
 ---
 tags: ["CAAGMCheckForPart", "CAAGMOperatorsInterfaces", "CAAGMOperatorsCheckGnOK", "CAAGMOperatorsJournalThreadOpMain", "CAAGMTopCheckForPart", "CAATopCheckNoCopy", "CAAAddInputBody", "CAAGMOperatorsCheckGnKO", "CAAGMOperatorsCheckForPart", "CAACheck"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcJournalChecking3.htmmd"

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Managing Variables and Operation States for Behavior Command"
 category: "use case"
 module: "CAABehUseCases"
-tags: ["CAAOBMInterfaces", "CAAOBMInterfacesCommand", "CATIType_var", "CAAOBMInterfacesProduct", "CATIDocRoots", "CATICkeParm", "CATIValue", "CATIConnector_var", "CATIVariableManagement", "CATIBehOperationManagement_var", "CATICkeParm_var", "CATIBehOperationManagement", "CATICkeParmFactory_var", "CATIPrdObjectPublisher_var", "CATILinkableObject_var", "CAAOBMInterfacesDlg", "CATIVariableManagement_var", "CAAOBMInterfacesCmd", "CAAOBMInterfacesPart", "CATIProduct_var"]
-source_file: "Doc/online/CAABehUseCases/CAABehOpAndVarMgt.htmmd"
+tags: "["CAAOBMInterfaces", "CAAOBMInterfacesCommand", "CATIType_var", "CAAOBMInterfacesProduct", "CATIDocRoots", "CATICkeParm", "CATIValue", "CATIConnector_var", "CATIVariableManagement", "CATIBehOperationManagement_var", "CATICkeParm_var", "CATIBehOperationManagement", "CATICkeParmFactory_var", "CATIPrdObjectPublisher_var", "CATILinkableObject_var", "CAAOBMInterfacesDlg", "CATIVariableManagement_var", "CAAOBMInterfacesCmd", "CAAOBMInterfacesPart", "CATIProduct_var"]"
+source_file: "Doc/online/CAABehUseCases/CAABehOpAndVarMgt.htm"
 converted: "2026-05-11T17:33:49.917165"
-```
-
 ---
 tags: ["CAAOBMInterfaces", "CAAOBMInterfacesCommand", "CATIType_var", "CAAOBMInterfacesProduct", "CATIDocRoots", "CATICkeParm", "CATIValue", "CATIConnector_var", "CATIVariableManagement", "CATIBehOperationManagement_var", "CATICkeParm_var", "CATIBehOperationManagement", "CATICkeParmFactory_var", "CATIPrdObjectPublisher_var", "CATILinkableObject_var", "CAAOBMInterfacesDlg", "CATIVariableManagement_var", "CAAOBMInterfacesCmd", "CAAOBMInterfacesPart", "CATIProduct_var"]
 source_file: "Doc/online/CAABehUseCases/CAABehOpAndVarMgt.htmmd"
@@ -68,7 +65,7 @@ class CAAOBMInterfacesCommand: public CATStateCommand
 
     public:
     CAAOBMInterfacesCommand(#);
-```vbscript
+```cpp
     CAAOBMInterfacesCommand(CATBaseUnknown *iBehavior);
 ```
 
@@ -82,7 +79,6 @@ class CAAOBMInterfacesCommand: public CATStateCommand
 [Top] Manage the States of the Command Behavior from the CAA Command Most of the time, the behaviors  of a technological object are executed sequentially. In this Use Case, one of the behaviors is a behavior command launching a CAA command. If we don't take the control of the execution of the behavior command during the execution of the CAA command, the behavior engine will continue to execute the sequence of behaviors. This can be problematic if one of the behavior following the behavior command is waiting as an input, an output of the CAA command. That's why we strongly advise you to control the operations thanks to the _CATIBehOperationManagement_ interface. First, the constructor of the CAA command has to look like this:
 
     CAAOBMInterfacesCommand::CAAOBMInterfacesCommand(CATBaseUnknown *iBehavior) :
-CAAOBMInterfacesCommand::CAAOBMInterfacesCommand(CATBaseUnknown *iBehavior) :
     CATStateCommand ("CAAOBMInterfacesCommand", CATCommandMsgRequestSharedMode)
 
     {
@@ -270,13 +266,13 @@ First we get the root product as done before (root_product). And then we get the
 CATILinkableObject_var **LinkObj** = Connector->GiveReferenceObject(#);
 We get the object in the publication. CATICkeParmFactory_var CkeParmFactory = CATCkeGlobalFunctions::GetVolatileFactory(#);
 
-```vbscript
+```cpp
 CATICkeParm_var PubRef = CkeParmFactory->CreateObjectReference(**LinkObj**);
 
 ---
 ```
 We get the object in the publication. CATICkeParmFactory_var CkeParmFactory = CATCkeGlobalFunctions::GetVolatileFactory(#);
-```vbscript
+```cpp
 CATICkeParm_var PubRef = CkeParmFactory->CreateObjectReference(**LinkObj**);
 We get the volatile factory to create a parameter feature reference from the published object.
 ```

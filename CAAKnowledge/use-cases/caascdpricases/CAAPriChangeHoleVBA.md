@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Changing the Hole Parameters (catvba Version)"
 category: "use-case"
 module: "CAAScdPriUseCases"
-tags: ["CAAScdPriUseCases", "CATIA", "CAAPriChangeHole", "CAAPriChangeHoleModule", "CATIAHole", "CAAPriChangeHoleForm"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangeHoleVBA.htmmd"
+tags: "["CAAScdPriUseCases", "CATIA", "CAAPriChangeHole", "CAAPriChangeHoleModule", "CATIAHole", "CAAPriChangeHoleForm"]"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangeHoleVBA.htm"
 converted: "2026-05-11T17:31:51.207011"
-```
-
 ---
 ## Part Design
 
@@ -36,7 +33,6 @@ It modifies the _Hole_ object from its methods and properties, and updates the p
 
  CAAPriChangeHole includes the following steps:
 
-CAAPriChangeHole includes the following steps:
   1. Prolog
   2. Reading the Hole Parameters
   3. Looking for the Hole Object in the Selection
@@ -62,7 +58,7 @@ Load the CAAPriChangeHole.CATPart that contains three holes. ![](images/CAAPriCh
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Set oPartDocument = CATIA.ActiveDocument
 ```
 ```
@@ -164,7 +160,7 @@ Otherwise, the macro shows the dialog box.
 
     iDelimiter = "//"
 ```vbscript
-```vbscript
+```cpp
     ' ------------
     ' Get the CATIA file system
     ' ------------
@@ -175,7 +171,7 @@ Otherwise, the macro shows the dialog box.
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Set oCATIAFileSys = CATIA.FileSystem
 ```
 ```
@@ -186,7 +182,7 @@ Otherwise, the macro shows the dialog box.
     ' ------------
     ' Get the file containing the hole parameters
     ' ------------
-```vbscript
+```cpp
     Set oFile = oCATIAFileSys.GetFile(sDocPath & "/online/CAAScdPriUseCases/macros/CAAPriChangeHole.txt")
     ' ------------
 ```
@@ -324,7 +320,7 @@ When the OK button is clicked, the selected row description is retrieved in `iRo
 
     Do While iHoleInSelection = True
 ```vbscript
-```vbscript
+```cpp
         iHoleInSelection = CatObjectExistsInSelection(oPartDocument.Selection, "CATIAHole", oHole)
         If iHoleInSelection = True Then
 

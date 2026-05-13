@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAAAniPreproOnVirtual.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CATIA", "CAAAniPreproOnVirtual", "CATISamImportDefine", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproOnVirtualSource.htmmd"
+tags: "["CATIA", "CAAAniPreproOnVirtual", "CATISamImportDefine", "CAAScdAniUseCases"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproOnVirtualSource.htm"
 converted: "2026-05-11T17:31:51.840341"
-```
-
 ---
 tags: ["CATIA", "CAAAniPreproOnVirtual", "CATISamImportDefine", "CAAScdAniUseCases"]
 source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproOnVirtualSource.htmmd"
@@ -16,7 +13,7 @@ converted: "2026-05-11T17:31:51.840341"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGTH DASSAULT SYSTEMES 2000
     ' ***********************************************************************
     '   Purpose:      Create a New Analysis document.
@@ -36,7 +33,7 @@ converted: "2026-05-11T17:31:51.840341"
 
 ```
 
-```vbscript
+```cpp
     Sub CATMain(#)
 ```vbscript
 ```
@@ -44,7 +41,7 @@ converted: "2026-05-11T17:31:51.840341"
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
 
-```vbscript
+```cpp
       sDocPath=CATIA.SystemService.Environ("CATDocView")
       sSep=CATIA.SystemService.Environ("ADL_ODT_SLASH")
 
@@ -70,7 +67,7 @@ converted: "2026-05-11T17:31:51.840341"
 ```vbscript
     ' -----------------------------------------------------------
     ' Get the collection of documents in session
-```vbscript
+```cpp
         Set documents1 = CATIA.Documents
     ' Only one Analysis Document is required
 ```
@@ -83,13 +80,13 @@ converted: "2026-05-11T17:31:51.840341"
 
 ```
 
-```vbscript
+```cpp
         WBName = CATIA.GetWorkbenchId
         if (WBName <> "GPSCfg") Then
 ```
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     	CATIA.StartWorkbench("GPSCfg")
         End If
 ```
@@ -103,7 +100,7 @@ converted: "2026-05-11T17:31:51.840341"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     ' We call the Import on CATAnalysisImport which implements CATISamImportDefine
 
 ```
@@ -121,7 +118,7 @@ converted: "2026-05-11T17:31:51.840341"
 ```
 
 ```vbscript
-```vbscript
+```cpp
         Dim arrayOfVariantOfShort1(0)
         analysisManager1.ImportDefineFile (sDocPath & sSep  & "online" & sSep & "CAAScdAniUseCases" & sSep & "samples" & sSep  & "FlangeForVirtualUsage.CATPart"),
 ```
@@ -145,7 +142,7 @@ converted: "2026-05-11T17:31:51.840341"
 ```
 
 ```vbscript
-```vbscript
+```cpp
       Set specsAndGeomWindow1 = CATIA.ActiveWindow
 ```vbscript
 ```
@@ -162,7 +159,7 @@ converted: "2026-05-11T17:31:51.840341"
 ```vbscript
     ' _____________________________________________________________________________________
     ' Scan the analysis document:  Retrieve the Pointed documents to extract the reference for preprocessing
-```vbscript
+```cpp
         Set analysisLinkedDocuments1 = analysisManager1.LinkedDocuments
         CATIA.SystemService.Print analysisLinkedDocuments1.Name
 ```
@@ -188,10 +185,10 @@ converted: "2026-05-11T17:31:51.840341"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' _____________________________________________________________________________________
     ' Retrieve the CATPart Document and associated collection of publications for preprocessing.
-```vbscript
+```cpp
        Set TheDoc = analysisLinkedDocuments1.Item(1)
        CATIA.SystemService.Print TheDoc.FullName
 
@@ -368,7 +365,7 @@ basicComponent1.SetValue "", 0, 0, 0, 25.000000
 ```
 
 ```vbscript
-```vbscript
+```cpp
       CATIA.SystemService.Print " Mass Applied of the Part: " & basicComponent1.GetValue ("",0,0,0)
 ```vbscript
 ```
@@ -386,7 +383,7 @@ basicComponent1.SetValue "", 0, 0, 0, 25.000000
 ```vbscript
 ```vbscript
     '------------------------------- END   END   END   ----------------------------
-```vbscript
+```cpp
       CATIA.DisplayFileAlerts = False
     '  TheAnalysisDocument.Close
 ```

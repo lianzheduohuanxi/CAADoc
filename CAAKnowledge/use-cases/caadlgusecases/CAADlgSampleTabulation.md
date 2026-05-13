@@ -809,7 +809,7 @@ dialog boxes, such as a more and less dialog box.
 
 *Copyright  2003, Dassault Systmes. All rights reserved.*
 
-```vbscript
+```cpp
 CAADlgMoreButtonDlg::CAADlgMoreButtonDlg(CATDialog * pParentDlg) :
   CATDlgDialog (pParentDlg,&quot;CAADlgMoreButtonDlg&quot;, CATDlgWndBtnOKCancel |
                                                   CATDlgWndAutoResize |
@@ -820,7 +820,7 @@ CAADlgMoreButtonDlg::CAADlgMoreButtonDlg(CATDialog * pParentDlg) :
 }
 ```
 
-```vbscript
+```cpp
 void CAADlgMoreButtonDlg::Build(#)
 {
    a/ Creating Dialog Objects
@@ -832,7 +832,7 @@ void CAADlgMoreButtonDlg::Build(#)
 ...
 ```
 
-```vbscript
+```cpp
 ...
    CATDlgFrame * pFrameLeftMore = new CATDlgFrame(this, &quot;FrameLeftMore&quot;, 
                                                         CATDlgGridLayout );
@@ -857,7 +857,7 @@ void CAADlgMoreButtonDlg::Build(#)
 ...
 ```
 
-```vbscript
+```cpp
 ...
    SetVerticalAttachment(0, CATDlgTopOrLeft, pFrameLeftMore,NULL);
    pFrameBase -&gt; SetGridConstraints(0, 0, 1, 1, CATGRID_4SIDES);
@@ -866,7 +866,7 @@ void CAADlgMoreButtonDlg::Build(#)
 ...
 ```
 
-```vbscript
+```cpp
 ...
    AddAnalyseNotificationCB  (pPushButtonMore, 
                               pPushButtonMore-&gt;GetPushBActivateNotification(#),
@@ -875,7 +875,7 @@ void CAADlgMoreButtonDlg::Build(#)
 ...
 ```
 
-```vbscript
+```cpp
 ...
 void CAADlgMoreRadioDlg::Build(#)
 {
@@ -888,7 +888,7 @@ void CAADlgMoreRadioDlg::Build(#)
 ...
 ```
 
-```vbscript
+```cpp
 ... 
   CATDlgFrame * pFrameMain = new CATDlgFrame(this, &quot;FrameMain&quot;, CATDlgGridLayout );
   
@@ -904,7 +904,7 @@ void CAADlgMoreRadioDlg::Build(#)
 ...
 ```
 
-```vbscript
+```cpp
 ...
   SetVerticalAttachment(0, CATDlgTopOrLeft,pFrameMain,NULL);
   _pFrameDetailB-&gt;SetVisibility(CATDlgHide); 
@@ -912,7 +912,7 @@ void CAADlgMoreRadioDlg::Build(#)
 ...
 ```
 
-```vbscript
+```cpp
 ...
    AddAnalyseNotificationCB (pRadioButtonND, 
                                pRadioButtonND-&gt;GetRadBModifyNotification(#),
@@ -930,7 +930,7 @@ void CAADlgMoreRadioDlg::Build(#)
 ...
 ```
 
-```vbscript
+```cpp
 ...
 void CAADlgFrameReplaceDlg::Build(#)
 {
@@ -942,7 +942,7 @@ void CAADlgFrameReplaceDlg::Build(#)
 }
 ```
 
-```vbscript
+```cpp
 ...
    CATDlgFrame * pFrameCombo = new CATDlgFrame(this, &quot;FrameCombo&quot;,
                                                      CATDlgGridLayout );                                        
@@ -966,7 +966,7 @@ void CAADlgFrameReplaceDlg::Build(#)
 ...
 ```
 
-```vbscript
+```cpp
 ...   
    SetHorizontalAttachment(0,CATDlgTopOrLeft,pFrameCombo,NULL);
    _CurrentSelection = 0 ;
@@ -980,7 +980,7 @@ void CAADlgFrameReplaceDlg::Build(#)
 ...
 ```
 
-```vbscript
+```cpp
 ...
    AddAnalyseNotificationCB (_pComboPointType, 
                  _pComboPointType-&gt;GetComboSelectNotification(#),
@@ -989,7 +989,7 @@ void CAADlgFrameReplaceDlg::Build(#)
 ...
 ```
 
-```vbscript
+```cpp
 ...
 void CAADlgMoreButtonDlg::OnPushButtonMorePushBActivateNotification(CATCommand* cmd, 
                                    CATNotification* evt, CATCommandClientData data)
@@ -1019,7 +1019,7 @@ void CAADlgMoreButtonDlg::OnPushButtonMorePushBActivateNotification(CATCommand* 
 ...
 ```
 
-```vbscript
+```cpp
 ...
 void CAADlgMoreRadioDlg::OnRadioButtonDARadBModifyNotification(CATCommand* cmd, 
                                 CATNotification* evt, CATCommandClientData data)
@@ -1042,7 +1042,7 @@ void CAADlgMoreRadioDlg::OnRadioButtonDARadBModifyNotification(CATCommand* cmd,
 ...
 ```
 
-```vbscript
+```cpp
 ...
 void CAADlgFrameReplaceDlg::OnComboSelectNotification(CATCommand* cmd, CATNotification* evt, CATCommandClientData data)
 {

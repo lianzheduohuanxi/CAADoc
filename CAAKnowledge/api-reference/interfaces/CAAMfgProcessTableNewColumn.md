@@ -1,27 +1,15 @@
 ---
 title: "CAAMfgProcessTableNewColumn"
-type: "interface"
+type: "LocalClass"
 module: "CAAManufacturingItf"
-category: api-reference
 base: "CATIMfgTabularViewColumn"
-inheritance_chain: "CAAMfgProcessTableNewColumn → CATIMfgTabularViewColumn"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 5
+source_file: "CAAManufacturingItf.edu/CAAMaiProcessTableNewColumn.m/LocalInterfaces/CAAMfgProcessTableNewColumn.h"
 ---
+
 # CAAMfgProcessTableNewColumn
 
-**基类**: CATIMfgTabularViewColumn  
-**继承链**: CAAMfgProcessTableNewColumn → CATIMfgTabularViewColumn  
-**模块**: CAAManufacturingItf  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATIMfgTabularViewColumn | **模块**: CAAManufacturingItf | **方法数**: 5
 
 ## 依赖
 
@@ -31,36 +19,68 @@ verified: true
 - `CATListOfCATString.h`
 - `CATListOfCATUnicodeString.h`
 
+## 公共方法
+
+### GetListColumnId
+
+```cpp
+HRESULT GetListColumnId(CATListOfCATString& oListColumnId) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oListColumnId | `CATListOfCATString&` |
+
+
+### GetListTitleColumn
+
+```cpp
+HRESULT GetListTitleColumn(CATListOfCATUnicodeString& oListTitle) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oListTitle | `CATListOfCATUnicodeString&` |
+
+
+### GetParamCke
+
+```cpp
+HRESULT GetParamCke(const CATBaseUnknown_var& ispBUActivity, const CATString& iColumnId, CATBaseUnknown_var& ospBUCkeParm, int& MultiMod) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| ispBUActivity | `const CATBaseUnknown_var&` |
+| iColumnId | `const CATString&` |
+| ospBUCkeParm | `CATBaseUnknown_var&` |
+| MultiMod | `int&` |
+
+
+### GetValue
+
+```cpp
+HRESULT GetValue(const CATBaseUnknown_var& ispBUActivity, const CATString& iColumnId, CATUnicodeString& ostrValue) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| ispBUActivity | `const CATBaseUnknown_var&` |
+| iColumnId | `const CATString&` |
+| ostrValue | `CATUnicodeString&` |
+
+
+### ResetCache
+
+```cpp
+HRESULT ResetCache(const int iCacheID) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iCacheID | `const int` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATIMfgTabularViewColumn**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-This interface is used in the following use cases:
-
-- [CAACenWhatsNew](../../use-cases/caacenquickrefs/CAACenWhatsNew.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAManufacturingItf.edu/CAAMaiProcessTableNewColumn.m/LocalInterfaces/CAAMfgProcessTableNewColumn.h`

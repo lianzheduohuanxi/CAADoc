@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Dimensions Checking"
 category: "use-case"
 module: "CAAScdDriUseCases"
-tags: ["CATIA", "CAADriUseCases", "CAADriDimension"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriDimension.htmmd"
+tags: "["CATIA", "CAADriUseCases", "CAADriDimension"]"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriDimension.htm"
 converted: "2026-05-11T17:31:51.055354"
-```
-
 ---
 |
 ## Interactive Drafting
@@ -39,7 +36,7 @@ This macro shows you how to find dimensions pointed by text leader in Drawing do
 
       ...
 ```vbscript
-```vbscript
+```cpp
         ' Set the CATIA popup file alerts to False
 ```
 ```
@@ -47,7 +44,7 @@ This macro shows you how to find dimensions pointed by text leader in Drawing do
 ```vbscript
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
 ' Set the CATIA popup file alerts to False
         ' It prevents to stop the macro at each alert during its execution
 ```
@@ -58,7 +55,7 @@ This macro shows you how to find dimensions pointed by text leader in Drawing do
 ```
 
 ```vbscript
-```vbscript
+```cpp
         CATIA.DisplayFileAlerts = False
 ```
 ```
@@ -81,7 +78,7 @@ The CATIA prompts are disabled thanks to the `DisplayFileAlerts` property of the
 ```
 
 ```vbscript
-```vbscript
+```cpp
         Set DrwDoc= CATIA.ActiveDocument
 ```
 ```

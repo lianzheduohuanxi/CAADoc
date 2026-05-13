@@ -150,11 +150,11 @@ method of the *DrawingTables* collection.
 
 ```vbscript
 ...
-```vbscript
+```cpp
     ' Set the CATIA popup file alerts to False
     ' It prevents to stop the macro at each alert during its execution
 ```
-```vbscript
+```cpp
     CATIA.DisplayFileAlerts = False
   ...
 ```
@@ -163,7 +163,7 @@ method of the *DrawingTables* collection.
 ```vbscript
 ...
     ' Create a new drawing document
-```vbscript
+```cpp
     Set oDrwDocument = CATIA.Documents.Add(&quot;Drawing&quot;)
 
     ' Set the drawing document standard

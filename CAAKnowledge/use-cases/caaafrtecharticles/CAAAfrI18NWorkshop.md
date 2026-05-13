@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Resources for Workshops or Workbenches"
-category: tech-article
+category: "tech-article"
 module: "CAAAfrTechArticles"
-tags: ["CAAAfrSubmenuId", "CAAAfrWorkbenchId", "CAAAfrIconBoxId", "CAAAfrWorkBenchPointer", "CAAAfrMenuId", "CAAAfrWorkbenchPointer", "CAAAfrToolbarId"]
-source_file: "Doc/online/CAAAfrTechArticles/CAAAfrI18NWorkshop.htmmd"
+tags: "["CAAAfrSubmenuId", "CAAAfrWorkbenchId", "CAAAfrIconBoxId", "CAAAfrWorkBenchPointer", "CAAAfrMenuId", "CAAAfrWorkbenchPointer", "CAAAfrToolbarId"]"
+source_file: "Doc/online/CAAAfrTechArticles/CAAAfrI18NWorkshop.htm"
 converted: "2026-05-11T17:17:55.896732"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -52,7 +49,6 @@ where:
 
 There are two workbench resource files:
 
-There are two workbench resource files:
   1. The resource file containing the title and help messages in the English language, and that can be translated into other languages. It is suffixed using CATNls
   2. The resource file containing the icons and other resources that should not be translated. It suffixed by CATRsc. This file is required to make the workshop or the workbench appear in the Start menu. If a workshop has workbenches, these workbenches are displayed in place of the workshop in the **Start** menu, and this workshop resource file is unused and can be omitted.
 
@@ -209,7 +205,6 @@ In this case, you have to create 2 resources files for the subcategory to specif
 
 This is valid if the workshop doesn't not include any workbench. Otherwise, those of the workbenches are used and the workshop does not appear in the **Start** menu, in the Welcome window, and has no toolbar.
 
-This is valid if the workshop doesn't not include any workbench. Otherwise, those of the workbenches are used and the workshop does not appear in the **Start** menu, in the Welcome window, and has no toolbar.
 The files containing the icon bit maps are named, for example, I_CtxGeometry.bmp for the icon to be displayed in the Start menu, usually located in the CNext/resources/graphic/icons/normal.
 
 Below is a reminder of the keywords used in the resource keys that can be found in the CATRsc resource file.

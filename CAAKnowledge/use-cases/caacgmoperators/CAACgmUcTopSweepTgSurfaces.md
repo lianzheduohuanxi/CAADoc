@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Sweep from a Spine and Two Tangency Surfaces"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CATICGMTopSweepSkinSkinSegment", "CAAGMOperatorsInterfaces", "CAAGMOperatorsSweepTangentSkinSkin"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopSweepTgSurfaces.htmmd"
+tags: "["CATICGMTopSweepSkinSkinSegment", "CAAGMOperatorsInterfaces", "CAAGMOperatorsSweepTangentSkinSkin"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopSweepTgSurfaces.htm"
 converted: "2026-05-11T17:33:49.337299"
-```
-
 ---
 tags: ["CATICGMTopSweepSkinSkinSegment", "CAAGMOperatorsInterfaces", "CAAGMOperatorsSweepTangentSkinSkin"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcTopSweepTgSurfaces.htmmd"

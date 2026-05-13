@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Nodes to Nodes Connection Mesh Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CATIA", "CAAAniMeshNodesToNodesConnection", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshNodesToNodesConnection.htmmd"
+tags: "["CATIA", "CAAAniMeshNodesToNodesConnection", "CAAScdAniUseCases"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshNodesToNodesConnection.htm"
 converted: "2026-05-11T17:31:51.666256"
-```
-
 ---
 ## Analysis Modeler
 
@@ -38,7 +35,7 @@ This use case shows how to create nodes to nodes connection mesh parts. This sce
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
 ```
@@ -48,7 +45,7 @@ This use case shows how to create nodes to nodes connection mesh parts. This sce
 ```
 
 ```vbscript
-```vbscript
+```cpp
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 ```
@@ -68,7 +65,7 @@ This use case shows how to create nodes to nodes connection mesh parts. This sce
 ```vbscript
     ' -----------------------------------------------------------
     ' Open the Analysis document
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/WeldConnections.CATAnalysis")
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```

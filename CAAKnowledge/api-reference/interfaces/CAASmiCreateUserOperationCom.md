@@ -1,25 +1,15 @@
 ---
 title: "CAASmiCreateUserOperationCom"
-type: "interface"
+type: "ProtectedInterface"
 module: "CAASurfaceMachiningItf"
-category: api-reference
 base: "CATStateCommand"
-inheritance_chain: "CAASmiCreateUserOperationCom → CATStateCommand"
-method_count: 1
-visibility: "protected"
-has_tie_binding: false
-verified: true
+method_count: 5
+source_file: "CAASurfaceMachiningItf.edu/ProtectedInterfaces/CAASmiCreateUserOperationCom.h"
 ---
+
 # CAASmiCreateUserOperationCom
 
-**基类**: CATStateCommand  
-**继承链**: CAASmiCreateUserOperationCom → CATStateCommand  
-**模块**: CAASurfaceMachiningItf  
-**分类**: framework  
-**可见性**: protected  
-**方法数**: 1
-
-> ===================================================================
+**基类**: CATStateCommand | **模块**: CAASurfaceMachiningItf | **方法数**: 5
 
 ## 依赖
 
@@ -27,28 +17,58 @@ verified: true
 - `CATStateCommand.h`
 - `CATBoolean.h`
 
+## 虚方法
+
+### BuildGraph
+
+```cpp
+virtual void BuildGraph() ;
+```
+
+Builds the command statechart.
+
+
+## 公共方法
+
+### CreateActivity
+
+```cpp
+CATBoolean CreateActivity(void *) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| * | `void` |
+
+
+### SetLinksAndDataOnActivity
+
+```cpp
+HRESULT SetLinksAndDataOnActivity() ;
+```
+
+To Initialize the activity
+
+
+### InitTool
+
+```cpp
+HRESULT InitTool() ;
+```
+
+
+### SetCompatibleToolingFromDocument
+
+```cpp
+HRESULT SetCompatibleToolingFromDocument(const CATListOfCATUnicodeString &iToolTypeList, CATBaseUnknown_var& oTool) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| &iToolTypeList | `const CATListOfCATUnicodeString` |
+| oTool | `CATBaseUnknown_var&` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATStateCommand**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAASurfaceMachiningItf.edu/ProtectedInterfaces/CAASmiCreateUserOperationCom.h`

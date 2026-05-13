@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "The Management of Tolerances"
-category: use-case
+category: "use-case"
 module: "CAACgmModel"
-tags: ["CATIA"]
-source_file: "Doc/online/CAACgmModel/CAACgmTaGobTolerances.htmmd"
+tags: "["CATIA"]"
+source_file: "Doc/online/CAACgmModel/CAACgmTaGobTolerances.htm"
 converted: "2026-05-11T17:33:47.977985"
-```
-
 ---
 # The Management of Tolerances
 
@@ -29,7 +26,6 @@ The topology is a way to logically describe connections between objects. And it 
 
 The _resolution_ , defined at the level of the geometric factory you are working with, is the _tolerance of creation_ of the geometric objects: it defines the lowest admissible length of a geometric object. Hence, curves or edges of length less than the factory resolution are not created, for example.
 
-The _resolution_ , defined at the level of the geometric factory you are working with, is the _tolerance of creation_ of the geometric objects: it defines the lowest admissible length of a geometric object. Hence, curves or edges of length less than the factory resolution are not created, for example.
 But the geometric operators, such as intersection or projection, run until the numerical precision, much more precise than the resolution of the factory.
 
 To stay inside the limits of the relative numerical tolerance, the resolution fixes the maximum size of the model, called _ModelSize_.

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAAPriChangeHole.CATScript"
 category: "use-case"
 module: "CAAScdPriUseCases"
-tags: ["CAAScdPriUseCases", "CATIA", "CATIAHole", "CAAPriChangeHole"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangeHoleSource.htmmd"
+tags: "["CAAScdPriUseCases", "CATIA", "CATIAHole", "CAAPriChangeHole"]"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangeHoleSource.htm"
 converted: "2026-05-11T17:31:51.200028"
-```
-
 ---
 tags: ["CAAScdPriUseCases", "CATIA", "CATIAHole", "CAAPriChangeHole"]
 source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangeHoleSource.htmmd"
@@ -16,7 +13,7 @@ converted: "2026-05-11T17:31:51.200028"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGHT DASSAULT SYSTEMES 2004
     ' ***********************************************************************
     '   Purpose:      Changes hole description
@@ -33,7 +30,7 @@ converted: "2026-05-11T17:31:51.200028"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -45,7 +42,7 @@ converted: "2026-05-11T17:31:51.200028"
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
     Dim oCATIAFileSys
     Dim oFile As File
     Dim oTextSteam As TextStream
@@ -75,7 +72,7 @@ converted: "2026-05-11T17:31:51.200028"
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
 ```
@@ -85,7 +82,7 @@ converted: "2026-05-11T17:31:51.200028"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```vbscript
 ```
@@ -113,17 +110,17 @@ converted: "2026-05-11T17:31:51.200028"
 
     iDelimiter = "//"
 ```vbscript
-```vbscript
+```cpp
     ' ------------
     ' Get the CATIA file system
     ' ------------
-```vbscript
+```cpp
     Set oCATIAFileSys = CATIA.FileSystem
     ' ------------
 ```
     ' Get the file containing the hole parameters
     ' ------------
-```vbscript
+```cpp
     Set oFile = oCATIAFileSys.GetFile(sDocPath & "/online/CAAScdPriUseCases/macros/CAAPriChangeHole.txt")
     ' ------------
 ```
@@ -135,7 +132,7 @@ converted: "2026-05-11T17:31:51.200028"
 ```
     ' Get the part document
     ' ------------
-```vbscript
+```cpp
     Set oPartDocument = CATIA.ActiveDocument
     ' ------------
 ```
@@ -337,7 +334,7 @@ If InStr(oLine, iDelimiter) > 0 Then
             iHoleInSelection = True
             Do While iHoleInSelection = True
 ```vbscript
-```vbscript
+```cpp
                 iHoleInSelection = CatObjectExistsInSelection(oPartDocument.Selection, "CATIAHole", oHole)
                 If iHoleInSelection = True Then
                     ' ------------

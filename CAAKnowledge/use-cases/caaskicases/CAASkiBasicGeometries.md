@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Sketching Elements in a Part Document"
-category: use-case case"
+category: "use-case case"
 module: "CAASkiUseCases"
-tags: ["CATIPrtContainer", "CATI2DConstraintFactory_var", "CATI2DTopologicalOperators_var", "CATISketch_var", "CATI2DPoint_var", "CATISketchFactory_var", "CATI2DLine_var", "CATI2DWFGeometry_var", "CATIContainerOfDocument_var", "CATIPrtPart_var", "CATIContainer", "CATInit_var", "CATISpecObject_var", "CAASketcherInterfaces", "CAASkiBasicGeometries", "CATI2DWFFactory_var", "CATI2DConstraintFactory", "CATISketch", "CATI2DCurve_var", "CATI2DAxis_var"]
-source_file: "Doc/online/CAASkiUseCases/CAASkiBasicGeometries.htmmd"
+tags: "["CATIPrtContainer", "CATI2DConstraintFactory_var", "CATI2DTopologicalOperators_var", "CATISketch_var", "CATI2DPoint_var", "CATISketchFactory_var", "CATI2DLine_var", "CATI2DWFGeometry_var", "CATIContainerOfDocument_var", "CATIPrtPart_var", "CATIContainer", "CATInit_var", "CATISpecObject_var", "CAASketcherInterfaces", "CAASkiBasicGeometries", "CATI2DWFFactory_var", "CATI2DConstraintFactory", "CATISketch", "CATI2DCurve_var", "CATI2DAxis_var"]"
+source_file: "Doc/online/CAASkiUseCases/CAASkiBasicGeometries.htm"
 converted: "2026-05-11T17:31:50.823243"
-```
-
 ---
 # Mechanical Modeler
 
@@ -86,7 +83,6 @@ When you launch the use case, pass the full pathname of the file into which you 
 
 The CAASkiBasicGeometries use case is made of a main program located in the CAASkiBasicGeometries.m module of the CAASketcherInterfaces.edu framework:
 
-The CAASkiBasicGeometries use case is made of a main program located in the CAASkiBasicGeometries.m module of the CAASketcherInterfaces.edu framework:
 Windows | `InstallRootDirectory/CAASketcherInterfaces.edu/CAASkiBasicGeometries.m/`
 
 The CAASkiBasicGeometries use case is made of a main program located in the CAASkiBasicGeometries.m module of the CAASketcherInterfaces.edu framework:
@@ -116,7 +112,6 @@ There are ten steps in CAASkiBasicGeometries:
 #### Creating and Initializing the Document
 
     int main(int    iArgc,   // Number of arguments (1)
-int main(int    iArgc,   // Number of arguments (1)
              char** iArgv)   // Path to the new *.CATPart document
 
     {
@@ -159,7 +154,7 @@ This section represents the usual sequence for creating a Part document (CATPart
       //------------------------------------------------------------------------------------------
       // SKETCH CREATION and EDIT:Instantiates the sketch with the plane XY (refPlanes[1])
       //------------------------------------------------------------------------------------------
-```vbscript
+```cpp
 CATLISTV(CATISpecObject_var) spRefPlanes = spPart->GetReferencePlanes(#);
       CATISketchFactory_var spSketchFactory(piContainer);
       if ( NULL_var == spSketchFactory ) return 6;
@@ -272,7 +267,7 @@ We change the coordinates of the first point created.
 #### Solving (Evaluating) Dimension System and Geometry
 
     ...
-```vbscript
+```cpp
       CATLISTV(CATI2DWFGeometry_var) spSoftReferences(1);
       spSoftReferences.Append(spPt_bottom_left);
       spSketch->Evaluate(spSoftReferences);

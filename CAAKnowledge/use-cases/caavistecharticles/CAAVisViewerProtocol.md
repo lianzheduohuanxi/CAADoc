@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Conveying End User Intent from Mouse to Controller"
-category: tech-article
+category: "tech-article"
 module: "CAAVisTechArticles"
-tags: ["CATIA"]
-source_file: "Doc/online/CAAVisTechArticles/CAAVisViewerProtocol.htmmd"
+tags: "["CATIA"]"
+source_file: "Doc/online/CAAVisTechArticles/CAAVisViewerProtocol.htm"
 converted: "2026-05-11T17:31:52.306819"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -24,7 +21,7 @@ Technical Article
 * * *
 ### Abstract
 
-```vbscript
+```cpp
 The mouse is the main device used to interact with CATIA. The end user should be able to perform many kinds of actions with only three buttons and mouse moves. The mouse quickly delegates the end user intended actions to manipulators set onto the representations of the model objects. Here we present the notification protocol used to standardize the end user intents.
 
 ```
@@ -51,7 +48,6 @@ A representation is then controlled by the manipulator. It's the way to define w
 
 The different end user actions introduced above set the manipulator in different states that we can define using a finite state machine.
 
-The different end user actions introduced above set the manipulator in different states that we can define using a finite state machine.
 The state of a manipulator is composite and made of three parts:
 
   1. The _interactive_ part describes the action of the end user on the manipulator at a given time. It is encoded using the MState member data of the class CATManipulator

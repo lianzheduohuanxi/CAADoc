@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAAAniPreproOnProduct.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CATISamImportDefine", "CATIAParameter", "CATIAConstraints", "CAAScdAniUseCases", "CATIA", "CAAAniPreproOnProduct"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproOnProductSource.htmmd"
+tags: "["CATISamImportDefine", "CATIAParameter", "CATIAConstraints", "CAAScdAniUseCases", "CATIA", "CAAAniPreproOnProduct"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproOnProductSource.htm"
 converted: "2026-05-11T17:31:51.826370"
-```
-
 ---
 tags: ["CATISamImportDefine", "CATIAParameter", "CATIAConstraints", "CAAScdAniUseCases", "CATIA", "CAAAniPreproOnProduct"]
 source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproOnProductSource.htmmd"
@@ -16,7 +13,7 @@ converted: "2026-05-11T17:31:51.826370"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGTH DASSAULT SYSTEMES 2000
     ' ***********************************************************************
     '   Purpose:      Create a New Analysis document.
@@ -36,7 +33,7 @@ converted: "2026-05-11T17:31:51.826370"
 
 ```
 
-```vbscript
+```cpp
     Sub CATMain(#)
 ```vbscript
 ```
@@ -44,7 +41,7 @@ converted: "2026-05-11T17:31:51.826370"
     '_____________________________________________________________________________________
     ' Optional: allows to find the sample wherever it's installed
 
-```vbscript
+```cpp
       sDocPath=CATIA.SystemService.Environ("CATDocView")
       sSep=CATIA.SystemService.Environ("ADL_ODT_SLASH")
 
@@ -70,7 +67,7 @@ converted: "2026-05-11T17:31:51.826370"
 ```vbscript
     '_____________________________________________________________________________________
     ' Get the collection of documents in session
-```vbscript
+```cpp
       Set documents1 = CATIA.Documents
     ' Create the CATAnalysis Document
 ```
@@ -83,13 +80,13 @@ converted: "2026-05-11T17:31:51.826370"
 
 ```
 
-```vbscript
+```cpp
       WBName = CATIA.GetWorkbenchId
       if (WBName <> "GPSCfg") Then
 ```
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
          CATIA.StartWorkbench("GPSCfg")
       End If
 ```
@@ -113,7 +110,7 @@ converted: "2026-05-11T17:31:51.826370"
 ```
 
 ```vbscript
-```vbscript
+```cpp
       Dim arrayOfVariantOfShort1(0)
       analysisManager1.ImportDefineFile (sDocPath & sSep  & "online" & sSep & "CAAScdAniUseCases" & sSep & "samples" & sSep & "basic_assembly.CATProduct"),				     "
 ```
@@ -137,7 +134,7 @@ converted: "2026-05-11T17:31:51.826370"
 ```
 
 ```vbscript
-```vbscript
+```cpp
       Set specsAndGeomWindow2 = CATIA.ActiveWindow
 ```vbscript
 ```
@@ -172,7 +169,7 @@ viewer3D1.Reframe
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
       CATIA.SystemService.Print analysisLinkedDocuments1.Name
       If (analysisLinkedDocuments1.Count <> 1 ) Then
 ```
@@ -183,7 +180,7 @@ viewer3D1.Reframe
     ' _____________________________________________________________________________________
     ' Retrieve the CATProduct Document and associated publications and constraints collection.
 
-```vbscript
+```cpp
       Set productDocument1 = analysisLinkedDocuments1.Item(1)
 
       Set product1 = productDocument1.Product
@@ -336,7 +333,7 @@ Set constraint1 = constraints1.Item("Surface contact.2")
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' _____________________________________________________________________________________
     ' Create load boundary. Associated to the virtual part
 ```vbscript
@@ -363,7 +360,7 @@ Set reference2 = analysisManager1.CreateReferenceFromObject(analysisEntity1)
 
     analysisEntity4.AddSupportFromReference reference2, reference2
 ```vbscript
-```vbscript
+```cpp
     CATIA.SystemService.Print "Name of the Reference" & reference2.DisplayName
 
 ```
@@ -397,7 +394,7 @@ Set reference2 = analysisManager1.CreateReferenceFromObject(analysisEntity1)
     ' _____________________________________________________________________________________
     ' Some examples to read the data on the basic componenent
     'In this case, direct read
-```vbscript
+```cpp
     CATIA.SystemService.Print " ForceVector " & basicComponent3.GetValue("", 1, 1, 1)
     CATIA.SystemService.Print " ForceVector " & basicComponent3.GetValue("", 2, 1, 1)
     CATIA.SystemService.Print " ForceVector " & basicComponent3.GetValue("", 3, 1, 1)
@@ -422,7 +419,7 @@ Set reference2 = analysisManager1.CreateReferenceFromObject(analysisEntity1)
     For i = 1 to SubList.Count
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     	Set Parameter = SubList.Item(i)
     	CATIA.SystemService.Print Parameter.Name
     	CATIA.SystemService.Print Parameter.ValueAsString
@@ -452,7 +449,7 @@ analysisCase1.ComputeMeshOnly
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
       CATIA.DisplayFileAlerts = False
 
 ```

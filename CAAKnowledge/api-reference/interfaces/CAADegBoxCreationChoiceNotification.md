@@ -1,54 +1,50 @@
 ---
 title: "CAADegBoxCreationChoiceNotification"
-type: "interface"
+type: "LocalClass"
 module: "CAADialogEngine"
-category: api-reference
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+base: "CATNotification"
+method_count: 2
+source_file: "CAADialogEngine.edu/CAADegGeoCommands.m/LocalInterfaces/CAADegBoxCreationChoiceNotification.h"
 ---
+
 # CAADegBoxCreationChoiceNotification
 
-**模块**: CAADialogEngine  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> This kind of notification are sent by the CAADegBoxPaletteChoiceCmd command when the end user clicks on a check header displayed in the Palette. Each check header defines a way to create a box. The box creation is defined by the CAADegCreateBoxCmd state command. It is this command which adds the check headers in the Palette.
 
-> command when the end user clicks on a check header displayed in the Palette.
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATNotification | **模块**: CAADialogEngine | **方法数**: 2
 
 ## 依赖
 
+- `CATNotification.h`
+
+## 公共方法
+
+### GetChoice
+
+```cpp
+HRESULT GetChoice(int & oChoiceValue) ;
+```
+
+This method will be used by the CAADegCreateBoxCmd command to know which check header has been pushed by the end user.
+
+| 参数 | 类型 |
+|------|------|
+| oChoiceValue | `int &` |
+
+
+### SetChoice
+
+```cpp
+HRESULT SetChoice(int iChoiceValue) ;
+```
+
+This method is used by the command which sends the notification. This command is CAADegBoxPaletteChoiceCmd
+
+| 参数 | 类型 |
+|------|------|
+| iChoiceValue | `int` |
+
+
 ---
 
-## Interface Overview
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-- [3D PLM Enterprise Architecture](../../use-cases/caaafrcases/CAAAfrCmdPalette.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAADialogEngine.edu/CAADegGeoCommands.m/LocalInterfaces/CAADegBoxCreationChoiceNotification.h`

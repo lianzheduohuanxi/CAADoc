@@ -7,7 +7,7 @@ source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfCutoutSource.htmmd"
 converted: "2026-05-11T11:27:02.589968"
 ---
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 Dim doc As Document
@@ -29,7 +29,7 @@ Dim doc As Document
 
   '*************************First Cutout**************************************************
 ```
-```vbscript
+```cpp
   Dim PlateToCut1 As StrPlate
   Set PlateToCut1 = strPlates.Item("Plate_052")
 
@@ -38,7 +38,7 @@ Dim doc As Document
   Selection1.Add PlateToCut1
 ```
   
-```vbscript
+```cpp
   Dim Factory1 As StrFeatureFactory
   Set Factory1 = Selection1.FindObject("CATIAStrFeatureFactory")
 
@@ -50,7 +50,7 @@ Dim doc As Document
  
   '*************************Second  Cutout**************************************************
 ```
-```vbscript
+```cpp
   Dim PlateToCut2 As StrPlate
   Set PlateToCut2 = strPlates.Item("Plate_053")
 
@@ -59,7 +59,7 @@ Dim doc As Document
   Selection2.Add PlateToCut2
 ```
 
-```vbscript
+```cpp
   Dim Factory2 As StrFeatureFactory
   Set Factory2 = Selection2.FindObject("CATIAStrFeatureFactory")
 
@@ -73,7 +73,7 @@ End Sub
 
 ```vbscript
 ```
-```vbscript
+```cpp
 Sub CATMain(#)
 
 Dim doc As Document
@@ -95,7 +95,7 @@ Dim doc As Document
 
   '*************************First Cutout**************************************************
 ```
-```vbscript
+```cpp
   Dim PlateToCut1 As StrPlate
   Set PlateToCut1 = strPlates.Item(&quot;Plate_052&quot;)
 
@@ -104,7 +104,7 @@ Dim doc As Document
   Selection1.Add PlateToCut1
 ```
   
-```vbscript
+```cpp
   Dim Factory1 As StrFeatureFactory
   Set Factory1 = Selection1.FindObject(&quot;CATIAStrFeatureFactory&quot;)
 
@@ -116,7 +116,7 @@ Dim doc As Document
  
   '*************************Second  Cutout**************************************************
 ```
-```vbscript
+```cpp
   Dim PlateToCut2 As StrPlate
   Set PlateToCut2 = strPlates.Item(&quot;Plate_053&quot;)
 
@@ -125,7 +125,7 @@ Dim doc As Document
   Selection2.Add PlateToCut2
 ```
 
-```vbscript
+```cpp
   Dim Factory2 As StrFeatureFactory
   Set Factory2 = Selection2.FindObject(&quot;CATIAStrFeatureFactory&quot;)
 

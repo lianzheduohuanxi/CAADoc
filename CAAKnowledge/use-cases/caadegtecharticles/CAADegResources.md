@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Assigning Resources to a State Dialog Command"
 category: "use-case"
 module: "CAADegTechArticles"
-tags: ["CAAGeometry", "CAADegCreateTriangleCmd"]
-source_file: "Doc/online/CAADegTechArticles/CAADegResources.htmmd"
+tags: "["CAAGeometry", "CAADegCreateTriangleCmd"]"
+source_file: "Doc/online/CAADegTechArticles/CAADegResources.htm"
 converted: "2026-05-11T17:33:49.875645"
-```
-
 ---
 tags: ["CAAGeometry", "CAADegCreateTriangleCmd"]
 source_file: "Doc/online/CAADegTechArticles/CAADegResources.htmmd"
@@ -104,14 +101,14 @@ The parameters `stFirstPointId` and `stSecondPointId` of the methods `GetInitial
 
 ---
 ```vbscript
-```vbscript
+```cpp
 For example, the prompts associated with these two states in the message file for _CAADegCreateTriangleCmd_ , that is `CAADegCreateTriangleCmd.CATNls`, are as follows:
 
 ```
 
 ```
 
-```vbscript
+```cpp
 For example, the prompts associated with these two states in the message file for _CAADegCreateTriangleCmd_ , that is `CAADegCreateTriangleCmd.CATNls`, are as follows:
     CAADegCreateTriangleCmd.stFirstPointId.Message   = "Select the first point";
     CAADegCreateTriangleCmd.stSecondPointId.Message  = "Select the second point";
@@ -121,7 +118,7 @@ For example, the prompts associated with these two states in the message file fo
 ---
 CAADegCreateTriangleCmd.stFirstPointId.Message   = "Select the first point";
 CAADegCreateTriangleCmd.stSecondPointId.Message  = "Select the second point";
-```vbscript
+```cpp
 If not any message is assigned to a state, the displayed prompt is the identifier of the state. [Top] Undo/Redo Prompts Undo/redo is managed at both the command level and inside the command. At the command level, undo or redo applies to what you did with the command until the command completed. Inside the command, undo or redo applies to the last acquisition managed by a dialog agent, or to the last transition.  [Top] Command Undo/Redo Prompts The prompt keys are built in the message file using the dialog command class name and the keywords `UndoTitle` and `RedoTitle` respectively.
 
 ```
@@ -185,7 +182,7 @@ CATDialogTransition *pSecondTransition = **AddTransition**
          stSecondState,
          stEndState,
          AndCondition(IsOutputSetCondition(_daPathElement),
-```vbscript
+```cpp
                       Condition((ConditionMethod) & CAADegCreateTriangleCmd::CheckPoint2)),
          Action((ActionMethod) & CAADegCreateTriangleCmd::CreateLine,
 ```
@@ -195,7 +192,7 @@ CATDialogTransition *pSecondTransition = **AddTransition**
 
       ) ;
 
-```vbscript
+```cpp
 Action((ActionMethod) & CAADegCreateTriangleCmd::CreateLine,
 (ActionMethod) & CAADegCreateTriangleCmd::UndoCreateLine,
 (ActionMethod) & CAADegCreateTriangleCmd::RedoCreateLine)

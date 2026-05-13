@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Changes to ENOVIA LCA Metadata in V5R15 Compared with V5R14"
 category: "use-case"
 module: "CAACenQuickRefs"
-tags: []
-source_file: "Doc/online/CAACenQuickRefs/CAACenMetaExpR15vsR14.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAACenQuickRefs/CAACenMetaExpR15vsR14.htm"
 converted: "2026-05-11T17:33:46.992768"
-```
-
 ---
 tags: []
 source_file: "Doc/online/CAACenQuickRefs/CAACenMetaExpR15vsR14.htmmd"
@@ -19,7 +16,6 @@ CAA V5 Encyclopedia |  Changes to ENOVIA LCA Metadata in V5R15 Compared with V5R
 CAA V5 Encyclopedia |  Changes to ENOVIA LCA Metadata in V5R15 Compared with V5R14
 Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Object Inheritance | Attribute | Type | Inherited | Alias | Short role | Role
 
-Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Object Inheritance | Attribute | Type | Inherited | Alias | Short role | Role
 2 | 2 | 1 | New object | APLAFL | ACTION | Action_Simulation | Class | AFLBaseAction |  |  |  | Action_Simulation |  |
 3 | 2 | 1 | New object | APLAFL | ACTION | Action_Simulation | Class | AFLBaseAction | V_execute | Simple of String |  | V_execute | The executable to run to perform the analysis or simulation |
 3 | 2 | 1 | New object | APLAFL | ACTION | Action_Simulation | Class | AFLBaseAction | V_applName | Simple of String |  | V_applName | The analysis or simulation software name |

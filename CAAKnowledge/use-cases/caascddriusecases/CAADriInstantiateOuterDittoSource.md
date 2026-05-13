@@ -19,19 +19,19 @@ Option Explicit
 '   CATIA Level: V5R11
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
     ' Set the CATIA popup file alerts to False
     ' It prevents to stop the macro at each alert during its execution
 ```
-```vbscript
+```cpp
     CATIA.DisplayFileAlerts = False
 
     ' Optional: allows to find the sample wherever it's installed
 ```
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,"No Doc Path Defined"
@@ -39,7 +39,7 @@ Sub CATMain(#)
 ```
 
     ' Open the drawing document containing the existing ditto
-```vbscript
+```cpp
     Dim oDrawingSource As DrawingDocument
     Set oDrawingSource = CATIA.Documents.Open(sDocPath & _
              "/online/CAAScdDriUseCases/samples/CAADriInstantiateDittoSource.CATDrawing")
@@ -80,12 +80,12 @@ Sub CATMain(#)
     oSelectionSource.Clear
     
     ' Open the drawing document where the ditto will be instantiated
-```vbscript
+```cpp
     Dim oDrawingTarget As DrawingDocument
     Set oDrawingTarget = CATIA.Documents.Open(sDocPath & _
              "/online/CAAScdDriUseCases/samples/CAADriInstantiateDittoTarget.CATDrawing")
 ```
-```vbscript
+```cpp
     CATIA.ActiveWindow.ActiveViewer.Reframe
     
     ' Retrieve the sheet where the ditto will be instantiated
@@ -186,19 +186,19 @@ Option Explicit
 '   CATIA Level: V5R11
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
     ' Set the CATIA popup file alerts to False
     ' It prevents to stop the macro at each alert during its execution
 ```
-```vbscript
+```cpp
     CATIA.DisplayFileAlerts = False
 
     ' Optional: allows to find the sample wherever it's installed
 ```
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,&quot;No Doc Path Defined&quot;
@@ -206,7 +206,7 @@ Sub CATMain(#)
 ```
 
     ' Open the drawing document containing the existing ditto
-```vbscript
+```cpp
     Dim oDrawingSource As DrawingDocument
     Set oDrawingSource = CATIA.Documents.Open(sDocPath &amp; _
              &quot;/online/CAAScdDriUseCases/samples/CAADriInstantiateDittoSource.CATDrawing&quot;)
@@ -247,12 +247,12 @@ Sub CATMain(#)
     oSelectionSource.Clear
     
     ' Open the drawing document where the ditto will be instantiated
-```vbscript
+```cpp
     Dim oDrawingTarget As DrawingDocument
     Set oDrawingTarget = CATIA.Documents.Open(sDocPath &amp; _
              &quot;/online/CAAScdDriUseCases/samples/CAADriInstantiateDittoTarget.CATDrawing&quot;)
 ```
-```vbscript
+```cpp
     CATIA.ActiveWindow.ActiveViewer.Reframe
     
     ' Retrieve the sheet where the ditto will be instantiated

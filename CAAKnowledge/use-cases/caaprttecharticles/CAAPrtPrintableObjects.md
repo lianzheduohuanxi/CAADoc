@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Making Your Components Printable"
-category: tech-article
+category: "tech-article"
 module: "CAAPrtTechArticles"
-tags: ["CAACmp", "CAAECmpPrintable", "CAACmpInstanceToPrint", "CATIPrintable", "CAACmpImage"]
-source_file: "Doc/online/CAAPrtTechArticles/CAAPrtPrintableObjects.htmmd"
+tags: "["CAACmp", "CAAECmpPrintable", "CAACmpInstanceToPrint", "CATIPrintable", "CAACmpImage"]"
+source_file: "Doc/online/CAAPrtTechArticles/CAAPrtPrintableObjects.htm"
 converted: "2026-05-11T17:17:56.147286"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -37,7 +34,6 @@ This article explains how you can make your own components printable.
 
 An component becomes printable when you can build a printable image of it. As an example, a _CATViewer_ instance is a printable component because you can build from it its printable image companion, that is a _CATPrintViewerImage_ instance able to decode the contents of the viewer and to perform rendering not on the screen but on the paper. The Print framework provides the following classes to make printable the main CAA V5 components:
 
-An component becomes printable when you can build a printable image of it. As an example, a _CATViewer_ instance is a printable component because you can build from it its printable image companion, that is a _CATPrintViewerImage_ instance able to decode the contents of the viewer and to perform rendering not on the screen but on the paper. The Print framework provides the following classes to make printable the main CAA V5 components:
 CAA V5 Printable Components | Corresponding Printable Images
 
 An component becomes printable when you can build a printable image of it. As an example, a _CATViewer_ instance is a printable component because you can build from it its printable image companion, that is a _CATPrintViewerImage_ instance able to decode the contents of the viewer and to perform rendering not on the screen but on the paper. The Print framework provides the following classes to make printable the main CAA V5 components:
@@ -90,7 +86,7 @@ class CAAECmpPrintable : public CATBaseUnknown
 ```
 
         **CAAECmpPrintable(const CAAECmpPrintable & printableObjectToCopy);
-```vbscript
+```cpp
 CAAECmpPrintable(#);
 virtual ~CAAECmpPrintable(#);
 virtual CATPrintImage * **CreatePrintableImage**(void);
@@ -111,7 +107,7 @@ The _CAAECmpPrintable_ source file is as follows:
     #include "CAACmpImage.h"
     #include "CAAECmpPrintable.h"
 
-```vbscript
+```cpp
     CATImplementClass(CAAECmpPrintable,  // Extension class name
                       CodeExtension,     // Code extension
                       CATBaseUnknown,    // Always OM-derive extensions from CATBaseUnknown
@@ -119,7 +115,7 @@ The _CAAECmpPrintable_ source file is as follows:
 ```
 
     #include "TIE_CATIPrintable.h"       // Declares that CAAECmpPrintable implements
-```vbscript
+```cpp
 CATImplementClass(CAAECmpPrintable,  // Extension class name
 CodeExtension,     // Code extension
 CATBaseUnknown,    // Always OM-derive extensions from CATBaseUnknown
@@ -176,7 +172,6 @@ Note that:
 
 The constructor and the destructor of this class should be as follows:
 
-The constructor and the destructor of this class should be as follows:
     CAACmpImage::CAACmpImage(CAACmp *pCAACmpInstanceToPrint)
 
     {

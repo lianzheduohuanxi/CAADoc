@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "mkmk"
 category: "use-case"
 module: "CAABtlQuickRefs"
-tags: []
-source_file: "Doc/online/CAABtlQuickRefs/CAABtlMANMkmk.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAABtlQuickRefs/CAABtlMANMkmk.htm"
 converted: "2026-05-11T17:33:49.944363"
-```
-
 ---
 tags: []
 source_file: "Doc/online/CAABtlQuickRefs/CAABtlMANMkmk.htmmd"

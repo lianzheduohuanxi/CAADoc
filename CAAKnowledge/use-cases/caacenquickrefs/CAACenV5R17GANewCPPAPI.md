@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "New C++ Authorized APIs in CAA V5R17 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
-tags: ["CATIMfgCopyOperation", "CATIPrdTransactionalEventMgt", "CATITPSConsumable", "CATI2DLMainWkbAddin", "CATInstantCollabDesignCAAItf", "CATIMfgUndoManager", "CATI2DLBackWkbAddin", "CATIColMergeContextRole", "CATIAVPMVDAAlternatePart", "CATImmIdentifierAcquisitionAgent", "CATIColMergeable", "CATIImmNavAddin", "CATISamAnalysisGeneralSettingAtt", "CATIMfgMultiAxisAlgorithm", "CATIAApplicationFrame", "CATIPDMUEDocumentName", "CATIColSharable", "CATIPrtUIFactory", "CATIAV4Interfaces", "CATIEhfUIPArrangeJunction"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R17GANewCPPAPI.htmmd"
+tags: "["CATIMfgCopyOperation", "CATIPrdTransactionalEventMgt", "CATITPSConsumable", "CATI2DLMainWkbAddin", "CATInstantCollabDesignCAAItf", "CATIMfgUndoManager", "CATI2DLBackWkbAddin", "CATIColMergeContextRole", "CATIAVPMVDAAlternatePart", "CATImmIdentifierAcquisitionAgent", "CATIColMergeable", "CATIImmNavAddin", "CATISamAnalysisGeneralSettingAtt", "CATIMfgMultiAxisAlgorithm", "CATIAApplicationFrame", "CATIPDMUEDocumentName", "CATIColSharable", "CATIPrtUIFactory", "CATIAV4Interfaces", "CATIEhfUIPArrangeJunction"]"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R17GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.294353"
-```
-
 ---
 tags: ["CATIMfgCopyOperation", "CATIPrdTransactionalEventMgt", "CATITPSConsumable", "CATI2DLMainWkbAddin", "CATInstantCollabDesignCAAItf", "CATIMfgUndoManager", "CATI2DLBackWkbAddin", "CATIColMergeContextRole", "CATIAVPMVDAAlternatePart", "CATImmIdentifierAcquisitionAgent", "CATIColMergeable", "CATIImmNavAddin", "CATISamAnalysisGeneralSettingAtt", "CATIMfgMultiAxisAlgorithm", "CATIAApplicationFrame", "CATIPDMUEDocumentName", "CATIColSharable", "CATIPrtUIFactory", "CATIAV4Interfaces", "CATIEhfUIPArrangeJunction"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R17GANewCPPAPI.htmmd"
@@ -22,7 +19,7 @@ The following are the new CAA V5R17 GA C++ Authorized APIs, compared with CAA V5
     * Macro or #define CATMUTABLE
   * AdvancedTopologicalOpe framework
     * Class CATTopExtrapolWireOpe
-```vbscript
+```cpp
     * Global Function CATCreateTopExtrapolWireOpe
   * AnalysisMeshingToolsItf framework
 ```
@@ -31,7 +28,7 @@ The following are the new CAA V5R17 GA C++ Authorized APIs, compared with CAA V5
   * BasicTopologicalOpe framework
     * Class CATTopEdgePropagation
     * Enumeration CATTopEdgePropagationDiagnosis
-```vbscript
+```cpp
     * Global Function CATCreateTopEdgePropagation
   * CATAnalysisInterfaces framework
 ```
@@ -39,7 +36,7 @@ The following are the new CAA V5R17 GA C++ Authorized APIs, compared with CAA V5
   * CATIAApplicationFrame framework
     * Class CATCafCenterGraph
   * CATIAV4Interfaces framework
-```vbscript
+```cpp
     * Global Function CATV4iGetV4ElementFromJele
     * Global Function CATV4iGirad1
     * Global Function CATV4iGircom
@@ -57,7 +54,7 @@ The following are the new CAA V5R17 GA C++ Authorized APIs, compared with CAA V5
     * Macro or #define SizeCollabUUID
     * Enumeration CATIColMergeContextFlag
     * Enumeration CATIColMergeContextRole
-```vbscript
+```cpp
     * Global Function CATColAfterMerge
     * Global Function CATColBeforeMerge
     * Global Function CATColCanBeSharedAs
@@ -123,7 +120,7 @@ The following are the new CAA V5R17 GA C++ Authorized APIs, compared with CAA V5
     * Enumeration CATGSMUnfoldSurfaceType
     * Enumeration CATGSMUnfoldTargetOrientationMode
   * GeometricOperators framework
-```vbscript
+```cpp
     * Global Function CATConcatenateNurbsCurves
     * Global Function CATConcatenateNurbsSurfaces
   * ManufacturingInterfaces framework
@@ -135,12 +132,12 @@ The following are the new CAA V5R17 GA C++ Authorized APIs, compared with CAA V5
   * Mathematics framework
     * Class CATLISTP(CATMathBox2D)
     * Class CATTolerance
-```vbscript
+```cpp
     * Global Function CATGetDefaultTolerance
     * Global Function Intersect
   * MechanicalModeler framework
 ```
-```vbscript
+```cpp
     * Global Function CATBRepDecodeCellInBody
   * PLMSecuritySSOCClient framework
 ```
@@ -148,11 +145,11 @@ The following are the new CAA V5R17 GA C++ Authorized APIs, compared with CAA V5
     * Class PLMSSOCredential
     * Class PLMSSOCredentialSet
   * PSNInteroperability framework
-```vbscript
+```cpp
     * Global Function CATSimpleQueryToVPM
   * PartInterfaces framework
 ```
-```vbscript
+```cpp
     * Global Function CATCreateCATIPrtUIFactory
     * Interface CATIPrtUIFactory
 ```
@@ -164,7 +161,7 @@ The following are the new CAA V5R17 GA C++ Authorized APIs, compared with CAA V5
     * Typedef CATLONG
   * TopologicalOperators framework
     * Class CATTopReflectLine
-```vbscript
+```cpp
     * Global Function CATCreateTopReflectLine
   * VPMDesktopObjects framework
 ```
@@ -193,7 +190,7 @@ History Version: **1** [Apr 2006] | Document created
 * * *
 
 _Copyright © 1999-2006, Dassault Systèmes. All rights reserved._
-```vbscript
+```cpp
 Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.md) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.md) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.md)
 
 ```

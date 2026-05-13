@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Topological Journal: Creation and Validation (1)"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMCheckForPart", "CAAGMOperatorsInterfaces", "CAAGMTopDumpJournal", "CAATopCheckNoCopy", "CAAAddInputBody", "CAAGMOperatorsCheckGnKO", "CAACheck"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcJournalChecking1.htmmd"
+tags: "["CAAGMCheckForPart", "CAAGMOperatorsInterfaces", "CAAGMTopDumpJournal", "CAATopCheckNoCopy", "CAAAddInputBody", "CAAGMOperatorsCheckGnKO", "CAACheck"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcJournalChecking1.htm"
 converted: "2026-05-11T17:33:48.964948"
-```
-
 ---
 tags: ["CAAGMCheckForPart", "CAAGMOperatorsInterfaces", "CAAGMTopDumpJournal", "CAATopCheckNoCopy", "CAAAddInputBody", "CAAGMOperatorsCheckGnKO", "CAACheck"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcJournalChecking1.htmmd"
@@ -27,7 +24,6 @@ Abstract If you create your own operator, you have generally to create also the 
 Abstract If you create your own operator, you have generally to create also the associated topological journal. The journal plays a prominent role in the naming mechanism which is used by applications to differentiate cells.  Any user journal is to be checked by the appropriate tool. This use case creates and validates a journal. The created journal is basically valid and most applications can successfully use it. However a warning is issued concerning a naming rule (it is recommended to fix it).
 Operator to be Used To check the validity of a topological journal, you can use the CAAGMCheckForPart operator in CAAGMOperatorsInterfaces.edu/PublicInterfaces. There is no creation function, the operator has to be created by using the provided constructor. Use Case Description The CAAGMOperatorsCheckGnKO.m module in CAAGMOperatorsInterfaces.edu creates a new journal which is valid but contains some defects. This use case creates its input topological data, a prism. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md). Note: Unlike most Geometric Modeler use cases, CAAGMOperatorsCheckGnKO is to be launched with three arguments:  `       CAAGMOperatorsCheckGnKO outputfile.NCGM verdictFile.NCGM DetailedErrorFile.NCGM` With the input and output cells below: Fig.1 Journal Checking: Extrusion of a Wire ![Journal Checking: Input Wire](images/CGM_journal_checking_0.png)
 
-Operator to be Used To check the validity of a topological journal, you can use the CAAGMCheckForPart operator in CAAGMOperatorsInterfaces.edu/PublicInterfaces. There is no creation function, the operator has to be created by using the provided constructor. Use Case Description The CAAGMOperatorsCheckGnKO.m module in CAAGMOperatorsInterfaces.edu creates a new journal which is valid but contains some defects. This use case creates its input topological data, a prism. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md). Note: Unlike most Geometric Modeler use cases, CAAGMOperatorsCheckGnKO is to be launched with three arguments:  `       CAAGMOperatorsCheckGnKO outputfile.NCGM verdictFile.NCGM DetailedErrorFile.NCGM` With the input and output cells below: Fig.1 Journal Checking: Extrusion of a Wire ![Journal Checking: Input Wire](images/CGM_journal_checking_0.png)
 Input Wire |  Output Surface
 and the code below:
 

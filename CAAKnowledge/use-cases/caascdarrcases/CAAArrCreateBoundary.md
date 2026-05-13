@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating an ArrangementBoundary Object"
 category: "use-case"
 module: "CAAScdArrUseCases"
-tags: ["CAAArrCreateBoundary", "CATIA", "CAAScdArrUseCases"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateBoundary.htmmd"
+tags: "["CAAArrCreateBoundary", "CATIA", "CAAScdArrUseCases"]"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateBoundary.htm"
 converted: "2026-05-11T17:31:51.537121"
-```
-
 ---
 ## Arrangement
 
@@ -54,7 +51,7 @@ This macro shows you how to create an ArrangementBoundary object under a Product
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
        Dim objRootProd       As Product
        Set objProdDoc      = CATIA.Documents.Add("Product")
        Set objRootProd     = objProdDoc.Product

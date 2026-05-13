@@ -30,7 +30,7 @@ This use case has shown how to get weld information set on SDD Split Member.
 *Copyright  1999-2013, Dassault Syst&#232;mes. All rights reserved.*
 
 ```vbscript
-```vbscript
+```cpp
 Sub CATMain(#)
 
 Dim ObjPart As Part
@@ -77,12 +77,12 @@ Set SplitMember1 = SplitMembers.Item(1)
 ```
 
 ```vbscript
-```vbscript
+```cpp
 Set SelctionObj = CATIA.ActiveDocument.Selection
 'DECK Member
 ```
 SelctionObj.Add SplitMember1
-```vbscript
+```cpp
 Dim DeckMember1 As SfmMember
 Set DeckMember1 = SelctionObj.FindObject("CATIASfmMember")
 ```

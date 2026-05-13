@@ -40,7 +40,7 @@ Language="VBScript"
 '   Revision : V5R13
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ```
@@ -48,7 +48,7 @@ Sub CATMain(#)
     ' ----------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,"No Doc Path Defined"
@@ -57,18 +57,18 @@ Sub CATMain(#)
     ' ----------------------------------------------------------- 
 
     ' Open the Part document 
-```vbscript
+```cpp
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 		"online/CAAScdKniUseCases/samples/KwrMacro0.CATPart")
 ```
-```vbscript
+```cpp
     Dim oDoc As Document
     set oDoc = CATIA.Documents.Open(sFilePath)
  ' Set the CATIA popup file alerts to False
  ' It prevents to stop the macro at each alert during its execution
 ```
-```vbscript
+```cpp
  CATIA.DisplayFileAlerts = False
 
 ```
@@ -76,7 +76,7 @@ Sub CATMain(#)
  ' Retrieve your active document - CATIA is your application 
  ' You get the active document by using the ActiveDocument property
  ' on your application object
-```vbscript
+```cpp
  Dim oActiveDoc As Document 
  Set oActiveDoc = CATIA.ActiveDocument 
   
@@ -86,14 +86,14 @@ Sub CATMain(#)
 ' InStr is a standard VB function
 If (InStr(oActiveDoc.Name,".CATPart")) <> 0  Then 
 
-```vbscript
+```cpp
     ' Set the file system object containing the folder
     Dim oFileSys As FileSystem
     Set oFileSys = CATIA.FileSystem 
 
     ' Define the design table path
 ```
-```vbscript
+```cpp
     Dim sFolderPath As String
     sFolderPath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
     "online/CAAScdKniUseCases/samples/KwrMacTable.xls")
@@ -165,7 +165,7 @@ If (InStr(oActiveDoc.Name,".CATPart")) <> 0  Then
 ```
           if oBodies.Item(j).Name  = "PartBody" then 
              ' Retrieve the "PartBody" item from the Bodies collection
-```vbscript
+```cpp
              Dim oPartBody As AnyObject
              Set oPartBody = CATIA.ActiveDocument.Part.Bodies.Item("PartBody") 
 
@@ -210,13 +210,13 @@ If (InStr(oActiveDoc.Name,".CATPart")) <> 0  Then
        Next
 
       ' Update the document
-```vbscript
+```cpp
       CATIA.ActiveDocument.Part.Update 
 
     End If
 ```
 else 
-```vbscript
+```cpp
     MsgBox "The active document must be a CATPart"
 End If
 ```
@@ -260,7 +260,7 @@ Language="VBScript"
 '   Revision : V5R13
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ```
@@ -268,7 +268,7 @@ Sub CATMain(#)
     ' ----------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,"No Doc Path Defined"
@@ -277,18 +277,18 @@ Sub CATMain(#)
     ' ----------------------------------------------------------- 
 
     ' Open the Part document 
-```vbscript
+```cpp
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 		"online/CAAScdKniUseCases/samples/KwrMacro0.CATPart")
 ```
-```vbscript
+```cpp
     Dim oDoc As Document
     set oDoc = CATIA.Documents.Open(sFilePath)
  ' Set the CATIA popup file alerts to False
  ' It prevents to stop the macro at each alert during its execution
 ```
-```vbscript
+```cpp
  CATIA.DisplayFileAlerts = False
 
 ```
@@ -296,7 +296,7 @@ Sub CATMain(#)
  ' Retrieve your active document - CATIA is your application 
  ' You get the active document by using the ActiveDocument property
  ' on your application object
-```vbscript
+```cpp
  Dim oActiveDoc As Document 
  Set oActiveDoc = CATIA.ActiveDocument 
   
@@ -306,14 +306,14 @@ Sub CATMain(#)
 ' InStr is a standard VB function
 If (InStr(oActiveDoc.Name,".CATPart")) &lt;&gt; 0  Then 
 
-```vbscript
+```cpp
     ' Set the file system object containing the folder
     Dim oFileSys As FileSystem
     Set oFileSys = CATIA.FileSystem 
 
     ' Define the design table path
 ```
-```vbscript
+```cpp
     Dim sFolderPath As String
     sFolderPath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
     "online/CAAScdKniUseCases/samples/KwrMacTable.xls")
@@ -385,7 +385,7 @@ If (InStr(oActiveDoc.Name,".CATPart")) &lt;&gt; 0  Then
 ```
           if oBodies.Item(j).Name  = "PartBody" then 
              ' Retrieve the "PartBody" item from the Bodies collection
-```vbscript
+```cpp
              Dim oPartBody As AnyObject
              Set oPartBody = CATIA.ActiveDocument.Part.Bodies.Item("PartBody") 
 
@@ -430,13 +430,13 @@ If (InStr(oActiveDoc.Name,".CATPart")) &lt;&gt; 0  Then
        Next
 
       ' Update the document
-```vbscript
+```cpp
       CATIA.ActiveDocument.Part.Update 
 
     End If
 ```
 else 
-```vbscript
+```cpp
     MsgBox "The active document must be a CATPart"
 End If
 ```

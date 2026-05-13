@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAAAniPreProAsmbldSol.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CATIA", "CAAAniPreProAsmbldSol", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProAsmbldSolSource.htmmd"
+tags: "["CATIA", "CAAAniPreProAsmbldSol", "CAAScdAniUseCases"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProAsmbldSolSource.htm"
 converted: "2026-05-11T17:31:51.789455"
-```
-
 ---
 ```vbscript
 ```vbscript
@@ -32,7 +29,7 @@ converted: "2026-05-11T17:31:51.789455"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -44,7 +41,7 @@ converted: "2026-05-11T17:31:51.789455"
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     sSep=CATIA.SystemService.Environ("ADL_ODT_SLASH")
 
@@ -74,7 +71,7 @@ converted: "2026-05-11T17:31:51.789455"
 ```vbscript
 End If
 ```vbscript
-```vbscript
+```cpp
 ' -----------------------------------------------------------
     ' Open the CATAnalysis Document
 ```
@@ -84,7 +81,7 @@ End If
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Set analysisDocument1 = CATIA.Documents.Open(sDocPath & sSep & "online" & sSep & "CAAScdAniUseCases" & sSep & "samples" & sSep & "Assembled_Loads_Slutions.CATAnalysis")
 ```
 ```
@@ -176,7 +173,7 @@ End If
 ```vbscript
 ```vbscript
     'Retrieve the analysis manager object from the analysis document
-```vbscript
+```cpp
     Set documents1 = CATIA.Documents
     Set analysisDocument2 = documents1.Item("Analysis1.CATAnalysis")
     Set analysisManager2 = analysisDocument2.Analysis

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Managing Undo/Redo of Input and Actions"
 category: "use case"
 module: "CAADegUseCases"
-tags: ["CAADegCreatePolylineCmd", "CATIUndoTransaction", "CAADialogEngine", "CAAGeometry", "CAADegGeoCommands"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleInputAndActionUndoRedo.htmmd"
+tags: "["CAADegCreatePolylineCmd", "CATIUndoTransaction", "CAADialogEngine", "CAAGeometry", "CAADegGeoCommands"]"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleInputAndActionUndoRedo.htm"
 converted: "2026-05-11T17:33:49.696437"
-```
-
 ---
 tags: ["CAADegCreatePolylineCmd", "CATIUndoTransaction", "CAADialogEngine", "CAAGeometry", "CAADegGeoCommands"]
 source_file: "Doc/online/CAADegUseCases/CAADegSampleInputAndActionUndoRedo.htmmd"
@@ -47,7 +44,6 @@ Any created point and line segment of the polyline can be undone as long as the 
     * Click to create the points that make up the polyline, and right click to end.
 [Top] Where to Find the Polyline Command Code The Polyline command is made of a single class named _CAADegCreatePolylineCmd_ located in the CAADegGeoCommands.m module of the CAADialogEngine.edu framework: Windows | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 ---|---
-Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed. [Top] Step-by-Step To create the CreatePoint, there are three steps: # | Step | Where
 
@@ -90,7 +86,7 @@ CATDialogTransition *pRepeatTransitionBox = **AddTransition**
         stRepeatState,
         stRepeatState,
         AndCondition(IsLastModifiedAgentCondition(_daEditor),
-```vbscript
+```cpp
                      Condition((ConditionMethod) & CAADegCreatePolylineCmd::CheckPointByBox)),
 
 ```
@@ -99,7 +95,7 @@ CATDialogTransition *pRepeatTransitionBox = **AddTransition**
 stRepeatState,
 stRepeatState,
 AndCondition(IsLastModifiedAgentCondition(_daEditor),
-```vbscript
+```cpp
 Condition((ConditionMethod) & CAADegCreatePolylineCmd::CheckPointByBox)),
 ```
 

@@ -24,12 +24,12 @@ Language="VBSCRIPT"
 '   CATIA Level:  V5R10
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 ' ----------------------------------------------------------- 
 ```
 ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If(Not CATIA.FileSystem.FolderExists(sDocPath)) Then
     Err.Raise 9999,,"No Doc Path Defined"
@@ -37,7 +37,7 @@ Sub CATMain(#)
 ```
 ' ----------------------------------------------------------- 
 ' Get the collection of documents in session
-```vbscript
+```cpp
     Set documents1 = CATIA.Documents
 
 ' Create the CATAnalysis Document 
@@ -48,11 +48,11 @@ Sub CATMain(#)
 ' Only one Analysis Document is required
 ```
 ' if WB name already is "GPSCfg", not to use StartWorkbench
-```vbscript
+```cpp
     WBName = CATIA.GetWorkbenchId
     if (WBName <> "GPSCfg") Then
 ```
-```vbscript
+```cpp
 	CATIA.StartWorkbench("GPSCfg")
     End If
 ```
@@ -61,7 +61,7 @@ Sub CATMain(#)
 ' Start to scan the existing structure of analysis document:  Retrieve the AnalysisManager
 ' We call the Import on CATAnalysisImport which implements CATISamImportDefine
 
-```vbscript
+```cpp
     Set analysisManager1 = TheAnalysisDocument.Analysis
 
     Dim arrayOfVariantOfShort1(0)
@@ -72,7 +72,7 @@ Sub CATMain(#)
 
 ' _____________________________________________________________________________________
 ' Reframe All.
-```vbscript
+```cpp
   Set specsAndGeomWindow1 = CATIA.ActiveWindow
   Set viewer3D1 = specsAndGeomWindow1.ActiveViewer
   viewer3D1.Reframe 
@@ -80,7 +80,7 @@ Sub CATMain(#)
 
 ' _____________________________________________________________________________________
 ' Scan the analysis document:  Retrieve the Pointed documents to extract the reference for pre-processing
-```vbscript
+```cpp
     Set analysisLinkedDocuments1 = analysisManager1.LinkedDocuments
     CATIA.SystemService.Print analysisLinkedDocuments1.Name
 
@@ -93,7 +93,7 @@ Sub CATMain(#)
 
 ' _____________________________________________________________________________________
 ' Retrieve the CATPart Document and associated publications for pre-processing.
-```vbscript
+```cpp
    Set TheDoc = analysisLinkedDocuments1.Item(1)
    CATIA.SystemService.Print TheDoc.FullName
 
@@ -159,7 +159,7 @@ Sub CATMain(#)
 ' Launch Computation.
   analysisCase1.Compute
 
-```vbscript
+```cpp
   CATIA.SystemService.Print " Mises Max Computed " & dimension1.ValueAsString
 
 ' _____________________________________________________________________________________
@@ -172,13 +172,13 @@ Sub CATMain(#)
 ' _____________________________________________________________________________________
 ```
 ' Export data from image.
-```vbscript
+```cpp
   outputPath=CATIA.SystemService.Environ("CATTemp")
     If(Not CATIA.FileSystem.FolderExists(outputPath)) Then
     Err.Raise 9999,,"No Output Path Defined"
     End If
 ```
-```vbscript
+```cpp
   Set fileSystem1 = CATIA.FileSystem
   Set folder1 = fileSystem1.GetFolder(outputPath)
   analysisImage1.ExportData folder1, "VonMises", "txt"
@@ -194,14 +194,14 @@ Sub CATMain(#)
   analysisImage1.Update
 
 '------------------------------- END   END   END   ----------------------------
-```vbscript
+```cpp
   CATIA.DisplayFileAlerts = False
 
 End Sub
 
 ```
 
-```vbscript
+```cpp
 Language=&quot;VBSCRIPT&quot;
 &#39; COPYRIGTH DASSAULT SYSTEMES 2000
 
@@ -219,12 +219,12 @@ Language=&quot;VBSCRIPT&quot;
 &#39;   CATIA Level:  V5R10
 &#39; ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 &#39; ----------------------------------------------------------- 
 ```
 &#39; Optional: allows to find the sample wherever it&#39;s installed
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
     If(Not CATIA.FileSystem.FolderExists(sDocPath)) Then
     Err.Raise 9999,,&quot;No Doc Path Defined&quot;
@@ -232,7 +232,7 @@ Sub CATMain(#)
 ```
 &#39; ----------------------------------------------------------- 
 &#39; Get the collection of documents in session
-```vbscript
+```cpp
     Set documents1 = CATIA.Documents
 
 &#39; Create the CATAnalysis Document 
@@ -243,11 +243,11 @@ Sub CATMain(#)
 &#39; Only one Analysis Document is required
 ```
 &#39; if WB name already is &quot;GPSCfg&quot;, not to use StartWorkbench
-```vbscript
+```cpp
     WBName = CATIA.GetWorkbenchId
     if (WBName &lt;&gt; &quot;GPSCfg&quot;) Then
 ```
-```vbscript
+```cpp
 	CATIA.StartWorkbench(&quot;GPSCfg&quot;)
     End If
 ```
@@ -264,18 +264,18 @@ Set analysisManager1 = TheAnalysisDocument.Analysis
 ```
 
 ```vbscript
-```vbscript
+```cpp
 Dim arrayOfVariantOfShort1(0)
     analysisManager1.ImportDefineFile (sDocPath &amp; sSep &amp; &quot;online&quot; &amp; sSep &amp; &quot;CAAScdAniUseCases&quot; &amp; sSep &amp; &quot;samples&quot; &amp; sSep &amp; &quot;AnalysisMechfeat.CATPart&quot;),
 ```
 ```
 
-```vbscript
+```cpp
 &quot;CATAnalysisImport&quot;, arrayOfVariantOfShort1
 
 &#39; _____________________________________________________________________________________
 &#39; Reframe All.
-```vbscript
+```cpp
   Set specsAndGeomWindow1 = CATIA.ActiveWindow
   Set viewer3D1 = specsAndGeomWindow1.ActiveViewer
   viewer3D1.Reframe 
@@ -283,7 +283,7 @@ Dim arrayOfVariantOfShort1(0)
 
 &#39; _____________________________________________________________________________________
 &#39; Scan the analysis document:  Retrieve the Pointed documents to extract the reference for pre-processing
-```vbscript
+```cpp
     Set analysisLinkedDocuments1 = analysisManager1.LinkedDocuments
     CATIA.SystemService.Print analysisLinkedDocuments1.Name
 
@@ -296,7 +296,7 @@ Dim arrayOfVariantOfShort1(0)
 
 &#39; _____________________________________________________________________________________
 &#39; Retrieve the CATPart Document and associated publications for pre-processing.
-```vbscript
+```cpp
    Set TheDoc = analysisLinkedDocuments1.Item(1)
    CATIA.SystemService.Print TheDoc.FullName
 
@@ -362,7 +362,7 @@ Dim arrayOfVariantOfShort1(0)
 &#39; Launch Computation.
   analysisCase1.Compute
 
-```vbscript
+```cpp
   CATIA.SystemService.Print &quot; Mises Max Computed &quot; &amp; dimension1.ValueAsString
 
 &#39; _____________________________________________________________________________________
@@ -375,13 +375,13 @@ Dim arrayOfVariantOfShort1(0)
 &#39; _____________________________________________________________________________________
 ```
 &#39; Export data from image.
-```vbscript
+```cpp
   outputPath=CATIA.SystemService.Environ(&quot;CATTemp&quot;)
     If(Not CATIA.FileSystem.FolderExists(outputPath)) Then
     Err.Raise 9999,,&quot;No Output Path Defined&quot;
     End If
 ```
-```vbscript
+```cpp
   Set fileSystem1 = CATIA.FileSystem
   Set folder1 = fileSystem1.GetFolder(outputPath)
   analysisImage1.ExportData folder1, &quot;VonMises&quot;, &quot;txt&quot;
@@ -397,7 +397,7 @@ Dim arrayOfVariantOfShort1(0)
   analysisImage1.Update
 
 &#39;------------------------------- END   END   END   ----------------------------
-```vbscript
+```cpp
   CATIA.DisplayFileAlerts = False
 
 End Sub

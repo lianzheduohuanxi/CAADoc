@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Structure Foundations"
 category: "use-case"
 module: "CAAScdStrUseCases"
-tags: ["CATIA", "CAAStrCreationOfStructureFoundation", "CAAScdStrUseCases"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfStructureFoundation.htmmd"
+tags: "["CATIA", "CAAStrCreationOfStructureFoundation", "CAAScdStrUseCases"]"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfStructureFoundation.htm"
 converted: "2026-05-11T17:31:50.877607"
-```
-
 ---
 ## Structure Design
 
@@ -25,7 +22,6 @@ converted: "2026-05-11T17:31:50.877607"
 
   CAAStrCreationOfStructureFoundation includes five steps:
 
-CAAStrCreationOfStructureFoundation includes five steps:
   1. Prolog
   2. Creating Foundation
   3. Retreiving the created Foundation in the assembly
@@ -47,7 +43,7 @@ CAAStrCreationOfStructureFoundation includes five steps:
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
         Dim strFactory As StrObjectFactory
 
         Set doc = CATIA.ActiveDocument

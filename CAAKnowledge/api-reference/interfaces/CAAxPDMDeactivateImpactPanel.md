@@ -1,49 +1,83 @@
 ---
 title: "CAAxPDMDeactivateImpactPanel"
-type: "interface"
+type: "LocalClass"
 module: "CAAxPDMInterfaces"
-category: api-reference
 base: "CATDlgDialog"
-inheritance_chain: "CAAxPDMDeactivateImpactPanel → CATDlgDialog"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 5
+source_file: "CAAxPDMInterfaces.edu/CAAxPDMUICommands.m/LocalInterfaces/CAAxPDMDeactivateImpactPanel.h"
 ---
+
 # CAAxPDMDeactivateImpactPanel
 
-**基类**: CATDlgDialog  
-**继承链**: CAAxPDMDeactivateImpactPanel → CATDlgDialog  
-**模块**: CAAxPDMInterfaces  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
-
-> ========================================================================
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATDlgDialog | **模块**: CAAxPDMInterfaces | **方法数**: 5
 
 ## 依赖
 
 - `CATDlgDialog.h`
 - `CATListOfCATString.h`
 
+## 公共方法
+
+### BuildPanel
+
+```cpp
+void BuildPanel() ;
+```
+
+
+### SetListInfo
+
+```cpp
+void SetListInfo(const CATListOfCATUnicodeString& ListName, const CATListOfCATUnicodeString& ListError, const CATListOfCATUnicodeString& ListStatus, CATListValCATIxPDMItem_var* _oItemsWithError) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| ListName | `const CATListOfCATUnicodeString&` |
+| ListError | `const CATListOfCATUnicodeString&` |
+| ListStatus | `const CATListOfCATUnicodeString&` |
+| _oItemsWithError | `CATListValCATIxPDMItem_var*` |
+
+
+### SelectLineCB
+
+```cpp
+void SelectLineCB(CATCommand* iCmd, CATNotification* iNotif, CATCommandClientData iData) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iCmd | `CATCommand*` |
+| iNotif | `CATNotification*` |
+| iData | `CATCommandClientData` |
+
+
+### ActivateLineCB
+
+```cpp
+void ActivateLineCB(CATCommand* iCmd, CATNotification* iNotif, CATCommandClientData iData) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iCmd | `CATCommand*` |
+| iNotif | `CATNotification*` |
+| iData | `CATCommandClientData` |
+
+
+### Quit
+
+```cpp
+void Quit(CATCommand* iCmd, CATNotification* iNotif, CATCommandClientData iData) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iCmd | `CATCommand*` |
+| iNotif | `CATNotification*` |
+| iData | `CATCommandClientData` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATDlgDialog**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAxPDMInterfaces.edu/CAAxPDMUICommands.m/LocalInterfaces/CAAxPDMDeactivateImpactPanel.h`

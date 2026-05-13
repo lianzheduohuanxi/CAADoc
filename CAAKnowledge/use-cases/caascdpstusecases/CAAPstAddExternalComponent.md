@@ -113,11 +113,11 @@ illustrated using:
 
 *Copyright  2001, Dassault Systmes. All rights reserved.*
 
-```vbscript
+```cpp
 ...
       'Create a new product document object by adding a document with the Product
       'type to the document collection of the CATIA application. 
-```vbscript
+```cpp
       Dim oProductDoc As Document
       Set oProductDoc = CATIA.Documents.Add(&quot;Product&quot;) 
 
@@ -139,7 +139,7 @@ illustrated using:
 ```vbscript
 ...
       'Open the Part Document
-```vbscript
+```cpp
       Dim oPartDoc As Document
       Set oPartDoc = CATIA.Documents.Open(sDocPath &amp; &quot;CAAPstHull.CATPart&quot;)
   ...

@@ -1,15 +1,10 @@
 ---
-```vbscript
-```vbscript
 title: "Analysis Set Automation Objects"
-category: tech-article
-```
+category: "tech-article"
 module: "CAAScdAniTechArticles"
-tags: []
-source_file: "Doc/online/CAAScdAniTechArticles/CAAAniTocAnalysisSet.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAAScdAniTechArticles/CAAAniTocAnalysisSet.htm"
 converted: "2026-05-11T17:31:51.975342"
-```
-
 ---
 ```vbscript
 # Analysis Set Automation Objects

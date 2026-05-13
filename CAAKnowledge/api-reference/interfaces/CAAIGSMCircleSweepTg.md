@@ -1,64 +1,143 @@
 ---
 title: "CAAIGSMCircleSweepTg"
-type: "interface"
+type: "ProtectedInterface"
 module: "CAAGSMInterfaces"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAIGSMCircleSweepTg → CATBaseUnknown"
 method_count: 10
-visibility: "protected"
-has_tie_binding: true
-verified: true
+source_file: "CAAGSMInterfaces.edu/ProtectedInterfaces/CAAIGSMCircleSweepTg.h"
 ---
-> **TIE实现**: unknown
 
 # CAAIGSMCircleSweepTg
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAIGSMCircleSweepTg → CATBaseUnknown  
-**模块**: CAAGSMInterfaces  
-**分类**: framework  
-**可见性**: protected  
-**方法数**: 10
-
-> ------------------------------------------------------------------
+**基类**: CATBaseUnknown | **模块**: CAAGSMInterfaces | **方法数**: 10
 
 ## 依赖
 
 - `CAAGsiFeaturesSplModel.h`
 - `CATBaseUnknown.h`
 
-## TIE实现
+## 纯虚方法 (接口契约)
 
-**实现文件**:
-- `CAAEGSMCircleSweepTg.cpp`
-- `CAAEGSMCircleSweepTgAttrBehavior.cpp`
-- `CAAEGSMCircleSweepTgBuild.cpp`
-- `CAAEGSMCircleSweepTgMf3DBehavior.cpp`
-- `CAAEGSMCircleSweepTgReplaceUI.cpp`
+### SetCurveRef
+
+```cpp
+virtual HRESULT SetCurveRef(const CATISpecObject_var ipCurveRef) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| ipCurveRef | `const CATISpecObject_var` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetCurveRef
+
+```cpp
+virtual HRESULT GetCurveRef(CATISpecObject_var &ipCurveRef) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| &ipCurveRef | `CATISpecObject_var` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### SetSurfaceSupport
+
+```cpp
+virtual HRESULT SetSurfaceSupport(const CATISpecObject_var ipSupport) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| ipSupport | `const CATISpecObject_var` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetSurfaceSupport
+
+```cpp
+virtual HRESULT GetSurfaceSupport(CATISpecObject_var &ipSupport) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| &ipSupport | `CATISpecObject_var` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### SetTrimMode
+
+```cpp
+virtual HRESULT SetTrimMode(const int iTrimMode) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iTrimMode | `const int` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetTrimMode
+
+```cpp
+virtual HRESULT GetTrimMode(int & oTrimMode) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oTrimMode | `int &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### SetRadius
+
+```cpp
+virtual HRESULT SetRadius(const double iRadius) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iRadius | `const double` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetRadius
+
+```cpp
+virtual HRESULT GetRadius(double & oRadius) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oRadius | `double &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### SetSolution
+
+```cpp
+virtual HRESULT SetSolution(const int iSolution) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iSolution | `const int` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetSolution
+
+```cpp
+virtual HRESULT GetSolution(int & oSolution) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oSolution | `int &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
 
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAGSMInterfaces.edu/ProtectedInterfaces/CAAIGSMCircleSweepTg.h`

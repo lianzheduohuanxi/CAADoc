@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Pocket"
 category: "use-case"
 module: "CAAScdPriUseCases"
-tags: ["CAAScdPriUseCases", "CATIA", "CAAPriPocket"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriPocket.htmmd"
+tags: "["CAAScdPriUseCases", "CATIA", "CAAPriPocket"]"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriPocket.htm"
 converted: "2026-05-11T17:31:51.231457"
-```
-
 ---
 |
 ## Part Design
@@ -18,7 +15,6 @@ converted: "2026-05-11T17:31:51.231457"
 * * *
 
   This macro shows you how to create a pocket from a sketch. This macro opens the [CAAPriPocket.CATPart](samples/CAAPriPocket.CATPart) document that contains a pad with a sketch on one of its faces.
-This macro shows you how to create a pocket from a sketch. This macro opens the [CAAPriPocket.CATPart](samples/CAAPriPocket.CATPart) document that contains a pad with a sketch on one of its faces.
  It creates _Pocket_ object from a _Sketch_ __ object with a _ShapeFactory_ method and a update it.
 
 This macro shows you how to create a pocket from a sketch. This macro opens the [CAAPriPocket.CATPart](samples/CAAPriPocket.CATPart) document that contains a pad with a sketch on one of its faces.
@@ -54,7 +50,7 @@ The macro first loads CAAPriPocket.CATPart that contains a sketch: Sketch.2  Th
     Dim oPart As Part
 ```vbscript
 ```
-```vbscript
+```cpp
     Set oPart = CATIA.ActiveDocument.Part
 ```
 ```

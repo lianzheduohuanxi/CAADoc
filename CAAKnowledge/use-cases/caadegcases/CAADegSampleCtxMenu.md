@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Contextual Menus in a State Dialog Command"
 category: "use case"
 module: "CAADegUseCases"
-tags: ["CAADegAnalysisLogCmd", "CAAISysGeomFactory", "CAAISysLine", "CAAISysPoint", "CATISO", "CAADialogEngine", "CAAGeometry", "CAADegGeoCommands"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleCtxMenu.htmmd"
+tags: "["CAADegAnalysisLogCmd", "CAAISysGeomFactory", "CAAISysLine", "CAAISysPoint", "CATISO", "CAADialogEngine", "CAAGeometry", "CAADegGeoCommands"]"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleCtxMenu.htm"
 converted: "2026-05-11T17:33:49.611686"
-```
-
 ---
 tags: ["CAADegAnalysisLogCmd", "CAAISysGeomFactory", "CAAISysLine", "CAAISysPoint", "CATISO", "CAADialogEngine", "CAAGeometry", "CAADegGeoCommands"]
 source_file: "Doc/online/CAADegUseCases/CAADegSampleCtxMenu.htmmd"
@@ -44,7 +41,6 @@ What You Will Learn With This Use Case This use case is intended to show how to 
     * Right click the line, and click one of the proposed item. The corresponding point is displayed.
 [Top] Where to Find the Use Case Code The Logical command is made of a single class named _CAADegAnalysisLogCmd_ located in the CAADegGeoCommands.m module of the CAADialogEngine.edu framework: Windows | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 ---|---
-Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed. [Top] Step-by-Step To create the CAADegAnalysisLogCmd `BuildGraph` method, there are seven steps: # | Step | Where
 
@@ -160,7 +156,7 @@ CATDialogTransition *pCntxMenuTransition =    AddTransition
     		   stGetEltState,
     		   stGetEltState,
     		   IsLastModifiedAgentCondition(_daPathElement)  ,
-```vbscript
+```cpp
     		   Action((ActionMethod) & CAADegAnalysisLogCmd::CreateCntxMenu)
 
 ```
@@ -212,7 +208,7 @@ pLine = (*pLinePath)[pLinePath->GetSize(#)-1];
 
       {
         // Retrieves the contextual menu
-```vbscript
+```cpp
 if ( pLine)
         CATNotification *pNotif = GetLastNotification(#);
         CATDlgContextualMenu *pCntxMenu = ((CATContext*)pNotif)->GetContextualMenu(#);
@@ -268,7 +264,7 @@ EndPoint->SetTitle(CATMsgCatalog::BuildMessage(
     			  (void*) pLine );
 
       }
-```vbscript
+```cpp
 AddAnalyseNotificationCB(StartPoint,
 StartPoint->GetMenuIActivateNotification(#),
 (CATCommandMethod) & CAADegAnalysisLogCmd::StartPoint,
@@ -332,18 +328,18 @@ if (SUCCEEDED(rc))
     ...
 
 ---
-```vbscript
+```cpp
 The `ShowPoint` method creates a point instance, if it doesn't already exist, that implements the _CAAISysPoint_ interface, and the point factory returns a pointer to this interface, and adds it to the Interactive Set of Objects. This makes it possible to display it. Then ` ShowPoint `assigns to that instance the coordinates of the _CATMathPoint_ instance passed from the called back method and updates the ISO with this point..
 
     ...
 ```
-```vbscript
+```cpp
 The `ShowPoint` method creates a point instance, if it doesn't already exist, that implements the _CAAISysPoint_ interface, and the point factory returns a pointer to this interface, and adds it to the Interactive Set of Objects. This makes it possible to display it. Then ` ShowPoint `assigns to that instance the coordinates of the _CATMathPoint_ instance passed from the called back method and updates the ISO with this point..
     void CAADegAnalysisLogCmd::ShowPoint(CATMathPoint & iPoint)
 ```
 
     {
-```vbscript
+```cpp
 The `ShowPoint` method creates a point instance, if it doesn't already exist, that implements the _CAAISysPoint_ interface, and the point factory returns a pointer to this interface, and adds it to the Interactive Set of Objects. This makes it possible to display it. Then ` ShowPoint `assigns to that instance the coordinates of the _CATMathPoint_ instance passed from the called back method and updates the ISO with this point..
 void CAADegAnalysisLogCmd::ShowPoint(CATMathPoint & iPoint)
 ```

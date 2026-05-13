@@ -1,54 +1,31 @@
 ---
 title: "CAADlgBurgerWindow"
-type: "interface"
+type: "LocalClass"
 module: "CAADialog"
-category: api-reference
 base: "CATDlgDocument"
-inheritance_chain: "CAADlgBurgerWindow → CATDlgDocument"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 1
+source_file: "CAADialog.edu/CAADlgBurger.m/LocalInterfaces/CAADlgBurgerWindow.h"
 ---
+
 # CAADlgBurgerWindow
 
-**基类**: CATDlgDocument  
-**继承链**: CAADlgBurgerWindow → CATDlgDocument  
-**模块**: CAADialog  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> Window of the application which contains alls Dialog's object. Inheritance: CATDlgDocument (Dialog Framework) CATDlgWindow (Dialog Framework) CATDialog (Dialog Framework) CATCommand (System Framework) CATEventSubscriber (System Framework) CATBaseUnknown (System Framework)
 
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATDlgDocument | **模块**: CAADialog | **方法数**: 1
 
 ## 依赖
 
 - `CATDlgDocument.h`
 
+## 公共方法
+
+### Build
+
+```cpp
+void Build() ;
+```
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATDlgDocument**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAADialog.edu/CAADlgBurger.m/LocalInterfaces/CAADlgBurgerWindow.h`

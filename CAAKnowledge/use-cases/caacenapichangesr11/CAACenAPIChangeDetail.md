@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "Detail Of C++ API Changes"
 category: "api-changes"
 module: "CAACenAPIChangesR11"
-version: "V5R11"
-tags: ["CAA2Usage", "CAA2Level"]
-source_file: "Doc/online/CAACenAPIChangesR11/CAACenAPIChangeDetail.htmmd"
+tags: "["CAA2Usage", "CAA2Level"]"
+source_file: "Doc/online/CAACenAPIChangesR11/CAACenAPIChangeDetail.htm"
 converted: "2026-05-11T17:33:50.315021"
-```
-
 ---
 |  |  Detail Of V5R11 C++ API Changes _What changes in the API compared with CAA V5R10_
 ---|---|---
@@ -35,7 +31,6 @@ INDM | Method is no more documented. It does not break your code in any way but 
 INDM | Method is no more documented. It does not break your code in any way but means that you are not supposed to use it anymore. Check that you don't use it or look for replacement informations.
 AnalysisMeshingModel | [R11GA vs R10GA](AnalysisMeshingModel.md) |
 
-AnalysisMeshingModel | [R11GA vs R10GA](AnalysisMeshingModel.md) |
 CATAnalysisBase | [R11GA vs R10GA](CATAnalysisBase.md) |
 CATAssemblyInterfaces | [R11GA vs R10GA](CATAssemblyInterfaces.md) |
 CATSchPlatformInterfaces | [R11GA vs R10GA](CATSchPlatformInterfaces.md) |

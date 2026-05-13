@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAASchInternalFlow.CATScript"
 category: "use-case"
 module: "CAAScdSchUseCases"
-tags: ["CATIASchCompFlow", "CATIASchAppConnectable", "CAASchInternalFlow", "CAAScdSchUseCases", "CATIA", "CATIASchComponent", "CATIASchAppConnector", "CAASCH_Detail02"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchInternalFlowSource.htmmd"
+tags: "["CATIASchCompFlow", "CATIASchAppConnectable", "CAASchInternalFlow", "CAAScdSchUseCases", "CATIA", "CATIASchComponent", "CATIASchAppConnector", "CAASCH_Detail02"]"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchInternalFlowSource.htm"
 converted: "2026-05-11T17:31:51.394565"
-```
-
 ---
 tags: ["CATIASchCompFlow", "CATIASchAppConnectable", "CAASchInternalFlow", "CAAScdSchUseCases", "CATIA", "CATIASchComponent", "CATIASchAppConnector", "CAASCH_Detail02"]
 source_file: "Doc/online/CAAScdSchUseCases/CAASchInternalFlowSource.htmmd"
@@ -16,7 +13,7 @@ converted: "2026-05-11T17:31:51.394565"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGHT DASSAULT SYSTEMES 2004
     ' *****************************************************************************
     '   Purpose:      Add/List/Remove internal flows to reference component.
@@ -31,7 +28,7 @@ converted: "2026-05-11T17:31:51.394565"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -44,7 +41,7 @@ converted: "2026-05-11T17:31:51.394565"
         ' -------------------------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String
-```vbscript
+```cpp
         sDocPath=CATIA.SystemService.Environ("CATDocView")
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -70,7 +67,7 @@ converted: "2026-05-11T17:31:51.394565"
 ```vbscript
         ' -------------------------------------------------------------------------
         ' Open the schematic document
-```vbscript
+```cpp
         Dim sFilePath
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
@@ -83,12 +80,12 @@ converted: "2026-05-11T17:31:51.394565"
                 "online/CAAScdSchUseCases/samples/CAASCH_Detail02.CATProduct")
 
 ```vbscript
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
         Dim objSchDoc As Document
         Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
@@ -205,7 +202,7 @@ strMessage = strMessage & _
 ```vbscript
            If ( Not ( objLCompRefs Is Nothing ) ) Then
 
-```vbscript
+```cpp
               Set objCompRef = objLCompRefs.Item (1,"CATIASchComponent")
 
 ```
@@ -323,12 +320,12 @@ Set objCntbl = objSchRoot.GetInterface ( _
 ```
 
 ```vbscript
-```vbscript
+```cpp
                  If ( intNbCntr > 0 ) Then Set objCntr1 = objLCntr.Item(1,"CATIASchAppConnector")
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
                  If ( intNbCntr > 1 ) Then Set objCntr2 = objLCntr.Item(2,"CATIASchAppConnector")
                  If ( intNbCntr > 2 ) Then Set objCntr3 = objLCntr.Item(3,"CATIASchAppConnector")
 

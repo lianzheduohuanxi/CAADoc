@@ -18,12 +18,12 @@ converted: "2026-05-11T11:27:02.754165"
 '   CATIA Level : V5R14
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ' Retrieve the active document
 ```
-```vbscript
+```cpp
 Dim oDocument As Document
 Set oDocument = CATIA.ActiveDocument
 
@@ -82,7 +82,7 @@ If ObjectSelected  Then
     Set iFirstPoint = oSelection.Item(1).Value
     ' Retrieve the drawing point's view form the FindObject method of the selection
 ```
-```vbscript
+```cpp
     Set oView = oSelection.FindObject("CATIADrawingView")
     ' Retrieve the drawing point's coordinates,
 ```
@@ -110,7 +110,7 @@ If ObjectSelected  Then
     Set iSecondPoint = oSelection.Item(1).Value
     ' Retrieve the drawing point's view form the FindObject method of the selection
 ```
-```vbscript
+```cpp
     Set oView = oSelection.FindObject("CATIADrawingView")
     ' Retrieve the drawing point's coordinates,
 ```
@@ -162,7 +162,7 @@ oPrintArea.ActivationState = True
 
 ' Run the "Visualize Print Area" command from its id, the sheet must be selected before !
 oSelection.Add oSheet
-```vbscript
+```cpp
 CATIA.StartCommand "CATDrwVisualizePrintAreaHdr"
 oSelection.Clear
 ```
@@ -184,7 +184,7 @@ End Sub
 
 ```
 
-```vbscript
+```cpp
 ' COPYRIGHT DASSAULT SYSTEMES 2004
 
 ' ***********************************************************************
@@ -196,12 +196,12 @@ End Sub
 '   CATIA Level : V5R14
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ' Retrieve the active document
 ```
-```vbscript
+```cpp
 Dim oDocument As Document
 Set oDocument = CATIA.ActiveDocument
 
@@ -260,7 +260,7 @@ If ObjectSelected  Then
     Set iFirstPoint = oSelection.Item(1).Value
     ' Retrieve the drawing point's view form the FindObject method of the selection
 ```
-```vbscript
+```cpp
     Set oView = oSelection.FindObject(&quot;CATIADrawingView&quot;)
     ' Retrieve the drawing point's coordinates,
 ```
@@ -288,7 +288,7 @@ If ObjectSelected  Then
     Set iSecondPoint = oSelection.Item(1).Value
     ' Retrieve the drawing point's view form the FindObject method of the selection
 ```
-```vbscript
+```cpp
     Set oView = oSelection.FindObject(&quot;CATIADrawingView&quot;)
     ' Retrieve the drawing point's coordinates,
 ```
@@ -340,7 +340,7 @@ oPrintArea.ActivationState = True
 
 ' Run the &quot;Visualize Print Area&quot; command from its id, the sheet must be selected before !
 oSelection.Add oSheet
-```vbscript
+```cpp
 CATIA.StartCommand &quot;CATDrwVisualizePrintAreaHdr&quot;
 oSelection.Clear
 ```

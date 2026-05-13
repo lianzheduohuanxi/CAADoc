@@ -19,7 +19,7 @@ Option Explicit
 '   CATIA Level:  V5R6 
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
     Dim sLF As String
@@ -33,14 +33,14 @@ Sub CATMain(#)
 
     ' ------------------------------------------
     ' Get the file system object
-```vbscript
+```cpp
     Dim oFileSys As FileSystem
     Set oFileSys = CATIA.FileSystem
 
     ' ------------------------------------------
 ```
     ' Retrieve a folder for temporary files
-```vbscript
+```cpp
     Dim sTmpPath As String 
     sTmpPath=CATIA.SystemService.Environ("CATTemp")
     If (Not oFileSys.FolderExists(sTmpPath)) Then
@@ -52,7 +52,7 @@ Sub CATMain(#)
 
     ' ------------------------------------------
     ' Delete possibly existing input and output files
-```vbscript
+```cpp
     Dim sFilOu As String ' Output file full path
     sFilOu = CATIA.FileSystem.ConcatenatePaths(sTmpPath, "caatmpfilou.txt")
     If (oFileSys.FileExists(sFilou)) Then 
@@ -60,7 +60,7 @@ Sub CATMain(#)
         oFileSys.DeleteFile sFilOu
     End If
 
-```vbscript
+```cpp
     Dim sFilIn As String ' Intput file full path
     sFilIn = CATIA.FileSystem.ConcatenatePaths(sTmpPath, "caatmpfilin.txt")
     If (oFileSys.FileExists(sFilIn)) Then 
@@ -125,7 +125,7 @@ Option Explicit
 '   CATIA Level:  V5R6 
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
     Dim sLF As String
@@ -139,14 +139,14 @@ Sub CATMain(#)
 
     ' ------------------------------------------
     ' Get the file system object
-```vbscript
+```cpp
     Dim oFileSys As FileSystem
     Set oFileSys = CATIA.FileSystem
 
     ' ------------------------------------------
 ```
     ' Retrieve a folder for temporary files
-```vbscript
+```cpp
     Dim sTmpPath As String 
     sTmpPath=CATIA.SystemService.Environ("CATTemp")
     If (Not oFileSys.FolderExists(sTmpPath)) Then
@@ -158,7 +158,7 @@ Sub CATMain(#)
 
     ' ------------------------------------------
     ' Delete possibly existing input and output files
-```vbscript
+```cpp
     Dim sFilOu As String ' Output file full path
     sFilOu = CATIA.FileSystem.ConcatenatePaths(sTmpPath, "caatmpfilou.txt")
     If (oFileSys.FileExists(sFilou)) Then 
@@ -166,7 +166,7 @@ Sub CATMain(#)
         oFileSys.DeleteFile sFilOu
     End If
 
-```vbscript
+```cpp
     Dim sFilIn As String ' Intput file full path
     sFilIn = CATIA.FileSystem.ConcatenatePaths(sTmpPath, "caatmpfilin.txt")
     If (oFileSys.FileExists(sFilIn)) Then 

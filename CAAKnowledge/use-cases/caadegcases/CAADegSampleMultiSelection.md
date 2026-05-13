@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Managing Multi-Selection"
 category: "use case"
 module: "CAADegUseCases"
-tags: ["CAADegCreateNumericCmd", "CAADegAnalysisNumericCmd", "CAADegChoiceBehaviorDlg", "CAADialogEngine", "CAAGeometry", "CAADegAnalysisNumericDlg", "CAADegGeoCommands"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleMultiSelection.htmmd"
+tags: "["CAADegCreateNumericCmd", "CAADegAnalysisNumericCmd", "CAADegChoiceBehaviorDlg", "CAADialogEngine", "CAAGeometry", "CAADegAnalysisNumericDlg", "CAADegGeoCommands"]"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleMultiSelection.htm"
 converted: "2026-05-11T17:33:49.728334"
-```
-
 ---
 tags: ["CAADegCreateNumericCmd", "CAADegAnalysisNumericCmd", "CAADegChoiceBehaviorDlg", "CAADialogEngine", "CAAGeometry", "CAADegAnalysisNumericDlg", "CAADegGeoCommands"]
 source_file: "Doc/online/CAADegUseCases/CAADegSampleMultiSelection.htmmd"
@@ -173,7 +170,7 @@ A pointer for each selection agent is declared as a private data member. Selecti
     {
       ...
 void CAADegCreateNumericCmd::BuildGraph(#)
-```vbscript
+```cpp
        _daMultiAcquisitionSelModes = new **CATPathElementAgent**("PathEltMultiAcquisitionSelModes");
 
 ```
@@ -199,7 +196,7 @@ The character string `PathEltMultiAcquisitionSelModes` defined as the argument o
 
     ...
 The character string `PathEltMultiAcquisitionSelModes` defined as the argument of the _CATPathElementAgent_ constructor is the selection agent identifier. This identifier can be used to assign undo/redo prompts replacing the Undo and Redo items in the Edit menu. To affect a specific behavior to the _CATPathElementAgent_ object, use the `SetBehavior `method. The `CATDlgEngWithPSOHSO` and `CATDlgEngWithPrevaluation`  styles enables to pre-highlight the available elements and to highlight the selected elements. The `CATDlgEngMultiAcquisitionSelModes` indicates a multi-selection. At last, thanks to the `AddElementType` method, the selection agent is valued only when an object that implements one of these five interfaces is selected. The selection agent remains impassive when any object that doesn't implement this interface is selected. For the `_daMultiAcquisitionCtrl` agent, only the behavior changes:
-```vbscript
+```cpp
        _daMultiAcquisitionCtrl = new CATPathElementAgent("PathEltMultiAcquisitionCtrl");
 
 ```
@@ -225,7 +222,7 @@ And for the `_daMultiAcquisitionUserCtrl` agent :
 
     ...
 And for the `_daMultiAcquisitionUserCtrl` agent :
-```vbscript
+```cpp
        _daMultiAcquisitionUserCtrl = new CATPathElementAgent("PathEltMultiAcquisitionUserCtrl");
 
 ```
@@ -294,7 +291,7 @@ stEndState,
        ) ;
        ...
 
-```vbscript
+```cpp
 Action((ActionMethod) &
 CAADegAnalysisNumericCmd::**DisplaySelectedElement** ,NULL,NULL,(void*)**1**)
     CATDialogTransition *pTransition42 =    AddTransition
@@ -315,7 +312,7 @@ stEndState,
        ) ;
 
     ...
-```vbscript
+```cpp
 Action((ActionMethod) &
 CAADegAnalysisNumericCmd::**DisplaySelectedElement** ,NULL,NULL,(void*)**2**)
        CATDialogTransition *pTransition52 =    AddTransition

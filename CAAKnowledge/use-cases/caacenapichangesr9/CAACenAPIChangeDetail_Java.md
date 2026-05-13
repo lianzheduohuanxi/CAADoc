@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "Detail Of API Changes"
 category: "api-changes"
 module: "CAACenAPIChangesR9"
-version: "V5R9"
-tags: []
-source_file: "Doc/online/CAACenAPIChangesR9/CAACenAPIChangeDetail_Java.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAACenAPIChangesR9/CAACenAPIChangeDetail_Java.htm"
 converted: "2026-05-11T17:33:52.828206"
-```
-
 ---
 |  |  Detail Of V5R9 Java API Changes _What changes in the API compared with CAA V5R8_
 ---|---|---

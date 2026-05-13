@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "GM Operators"
 category: "use-case"
 module: "CAACgmBase"
-tags: ["CAAGMOperatorsInterfaces"]
-source_file: "Doc/online/CAACgmBase/CAACgmGMOperatorsHome.htmmd"
+tags: "["CAAGMOperatorsInterfaces"]"
+source_file: "Doc/online/CAACgmBase/CAACgmGMOperatorsHome.htm"
 converted: "2026-05-11T17:33:47.820915"
-```
-
 ---
 tags: ["CAAGMOperatorsInterfaces"]
 source_file: "Doc/online/CAACgmBase/CAACgmGMOperatorsHome.htmmd"

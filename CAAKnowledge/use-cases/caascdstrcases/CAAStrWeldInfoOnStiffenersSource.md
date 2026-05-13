@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAAStrWeldInfoOnStiffener.CATScript"
 category: "use-case"
 module: "CAAScdStrUseCases"
-tags: ["CATIA", "CAAStrWeldInfoOnStiffener", "CATIASfmStiffener"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrWeldInfoOnStiffenersSource.htmmd"
+tags: "["CATIA", "CAAStrWeldInfoOnStiffener", "CATIASfmStiffener"]"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrWeldInfoOnStiffenersSource.htm"
 converted: "2026-05-11T17:31:50.924560"
-```
-
 ---
 ```vbscript
 ```vbscript
@@ -27,7 +24,7 @@ converted: "2026-05-11T17:31:50.924560"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -39,7 +36,7 @@ converted: "2026-05-11T17:31:50.924560"
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
     Set ObjPart = CATIA.ActiveDocument.Part
 
     Dim FactoryObj As SfmFactory
@@ -66,7 +63,7 @@ converted: "2026-05-11T17:31:50.924560"
     Set SuperStiffener1 = SuperStiffeners.Item(1)
     'Retrieving The Seamed Stiffeners on Deck
 ```
-```vbscript
+```cpp
     Dim SplitStiffeners As References
     Set SplitStiffeners = SuperStiffener1.SplitProfiles
 
@@ -83,7 +80,7 @@ converted: "2026-05-11T17:31:50.924560"
 ```
 
 ```vbscript
-```vbscript
+```cpp
 Set SelctionObj = CATIA.ActiveDocument.Selection
 ```vbscript
 ```
@@ -95,7 +92,7 @@ Set SelctionObj = CATIA.ActiveDocument.Selection
     Dim DeckStiffener1 As SfmStiffener
 ```vbscript
 ```
-```vbscript
+```cpp
     Set DeckStiffener1 = SelctionObj.FindObject("CATIASfmStiffener")
 ```
 ```

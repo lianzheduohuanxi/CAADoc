@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "How to Use the Topological Journal"
-category: use-case case"
+category: "use-case case"
 module: "CAATopUseCases"
-tags: ["CAAErrorTopStif7", "CAATopJournal", "CAAErrorTopStif6", "CAAErrorTopStif2", "CAAErrorTopStif5", "CAATopOperator", "CATICGMObject", "CAATopOverview", "CATIntersectionCrvCrv", "CAAErrorTopStif3", "CAAErrorTopStifx", "CAATopStifferner", "CAATopologicalOperators", "CATICGMContainer", "CAAGemBrowser", "CAATopStiffener", "CAAErrorTopStif1", "CAATopStiffner", "CAATeopJournal"]
-source_file: "Doc/online/CAATopUseCases/CAATopJournal.htmmd"
+tags: "["CAAErrorTopStif7", "CAATopJournal", "CAAErrorTopStif6", "CAAErrorTopStif2", "CAAErrorTopStif5", "CAATopOperator", "CATICGMObject", "CAATopOverview", "CATIntersectionCrvCrv", "CAAErrorTopStif3", "CAAErrorTopStifx", "CAATopStifferner", "CAATopologicalOperators", "CATICGMContainer", "CAAGemBrowser", "CAATopStiffener", "CAAErrorTopStif1", "CAATopStiffner", "CAATeopJournal"]"
+source_file: "Doc/online/CAATopUseCases/CAATopJournal.htm"
 converted: "2026-05-11T17:31:50.719384"
-```
-
 ---
 # Geometric Modeler
 
@@ -97,7 +94,6 @@ Fig. 1: The Resulting Body ![](images/CAATopJournal1.gif)
 
 To launch CAATopJournal, you will need to set up the build time environment, then compile CAATopJournal.m and CAATopOperator.m along with its prerequisites, set up the run time environment, and then execute the use case [5].
 
-To launch CAATopJournal, you will need to set up the build time environment, then compile CAATopJournal.m and CAATopOperator.m along with its prerequisites, set up the run time environment, and then execute the use case [5].
 ```vbscript
 If you simply type CAATopJournal with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example:
 
@@ -114,7 +110,6 @@ This NCGM file can be displayed using the CAAGemBrowser use case.
 
 The CAATopJournal use case is made of a main named CAATopJournal.cpp located in the CAATopJournal.m module of the CAATopologicalOperators.edu framework:
 
-The CAATopJournal use case is made of a main named CAATopJournal.cpp located in the CAATopJournal.m module of the CAATopologicalOperators.edu framework:
 Windows | `InstallRootDirectory/CAATopologicalOperators.edu/CAATopJournal.m/`
 
 The CAATopJournal use case is made of a main named CAATopJournal.cpp located in the CAATopJournal.m module of the CAATopologicalOperators.edu framework:
@@ -160,7 +155,6 @@ The use case is divided into the following steps:
 
 We first look at the header of the new class.
 
-We first look at the header of the new class.
      class ExportedByCAATopOperator **CAATopStiffener**
 
     {
@@ -211,7 +205,6 @@ CATBody * **GetResult**(#) ;
 
 The private data contains the necessary data to run the operator such as the direction of the extrusion, the pointer to the limiting bodies, the pointer to the journal or the pointer to the resulting body.
 
-The private data contains the necessary data to run the operator such as the direction of the extrusion, the pointer to the limiting bodies, the pointer to the journal or the pointer to the resulting body.
 In the use case, the operator does not have any `SetXxxx` method that tunes it. But one can easily imagine a `SetMeanDirection` method, that computes the normal to the mean plane of `SkinBody` to define the extrusion direction for example.
 
 The constructor simply fills in the private data of the class, except the resulting body, that will be created in the `Run` method.
@@ -243,7 +236,6 @@ CATCGMJournalList * iJournal)
 
 The `GetResult` method returns the pointer to the created body.
 
-The `GetResult` method returns the pointer to the created body.
     CATBody * CAATopStiffener::**GetResult**(#)
 
     {
@@ -346,7 +338,7 @@ _// ---------- First limit <> Second Limit
 
       //
       // The skin body to extrude _
-```vbscript
+```cpp
 if (piFirstLimitBody == piSecondLimitBody) return (3);
 _// ---------- Tests whether theinput profile body has one domain, containing one face
       CATBody * piSkinBody = _piSkinBody;
@@ -377,7 +369,6 @@ _// ---------- Tests whether theinput profile body has one domain, containing on
 
   2. _Creating a Prism With "Until" Limits_
 
-2. _Creating a Prism With "Until" Limits_
 A prism operator is first created with the `::CATCreateTopPrism` global function.
 
          _// --------- Creates the operator
@@ -501,7 +492,7 @@ rc = 20;
            _// --------- Gets the resulting body
 
            //_
-```vbscript
+```cpp
 if (rc!=0) **CAAErrorTopStif1**(rc,pJournal)
 _// --------- Gets the resulting body
            CATBody * piMainBody1=NULL;
@@ -556,7 +547,7 @@ if (NULL==pBoundaryIt)
              CAAErrorTopStif2(...)
 
            }
-```vbscript
+```cpp
 if (NULL==pBoundaryIt)
 rc =1;
 CAAErrorTopStif2(...)
@@ -575,7 +566,7 @@ if (NULL==piE1)
              CAAErrorTopStif3(...)
 
            }
-```vbscript
+```cpp
 if (NULL==piE1)
 rc =1;
 CAAErrorTopStif3(...)
@@ -594,7 +585,7 @@ if (NULL==piE2)
              CAAErrorTopStif3(...)
 
            }
-```vbscript
+```cpp
 if (NULL==piE2)
 rc =1;
 CAAErrorTopStif3(...)
@@ -717,7 +708,7 @@ int nbresult = pFaces.Size(#);
 _// Retrieves the object that is a face._
 for (int i=1 ; (i <= nbresult) && (piFromHeight1 == NULL) ; i++)
 ```vbscript
-```vbscript
+```cpp
     	 if (pFaces[i]->IsATypeOf(CATFaceType)) { piFromHeight1=(CATFace *)pFaces[i];}
 
 ```
@@ -728,7 +719,7 @@ for (int i=1 ; (i <= nbresult) && (piFromHeight1 == NULL) ; i++)
 
 ```vbscript
 for (int i=1 ; (i <= nbresult) && (piFromHeight1 == NULL) ; i++)
-```vbscript
+```cpp
 if (pFaces[i]->IsATypeOf(CATFaceType)) { piFromHeight1=(CATFace *)pFaces[i];}
 ```
 
@@ -750,7 +741,7 @@ if (pFaces[i]->IsATypeOf(CATFaceType)) { piFromHeight1=(CATFace *)pFaces[i];}
 nbresult = pFaces.Size(#);
 _// Retrieves the object that is a face._
 for (i=1 ; (i <= nbresult) && (piBooleanFromHeight1 == NULL) ; i++)
-```vbscript
+```cpp
     	 if (pFaces[i]->IsATypeOf(CATFaceType))	 { piBooleanFromHeight1=(CATFace *)pFaces[i];}
 ```
 
@@ -761,7 +752,7 @@ for (i=1 ; (i <= nbresult) && (piBooleanFromHeight1 == NULL) ; i++)
 ```vbscript
 for (i=1 ; (i <= nbresult) && (piBooleanFromHeight1 == NULL) ; i++)
 ```vbscript
-```vbscript
+```cpp
 if (pFaces[i]->IsATypeOf(CATFaceType))	 { piBooleanFromHeight1=(CATFace *)pFaces[i];}
       if (NULL==piBooleanFromHeight1)
 ```
@@ -771,7 +762,7 @@ if (pFaces[i]->IsATypeOf(CATFaceType))	 { piBooleanFromHeight1=(CATFace *)pFaces
 ```
 
       {
-```vbscript
+```cpp
 if (pFaces[i]->IsATypeOf(CATFaceType))	 { piBooleanFromHeight1=(CATFace *)pFaces[i];}
 ```vbscript
 if (NULL==piBooleanFromHeight1)
@@ -796,7 +787,6 @@ Fig. 2: The Journal and Boolean Journal of CATTopPrism ![](images/CAATopJournal2
 
   5. _Creating a Circle on the Underlying Surface of the Face_
 
-5. _Creating a Circle on the Underlying Surface of the Face_
          _// Gets the surface of the face_
            CATOrientation orientation;
            CATSurface * piSurfaceFromHeight = piBooleanFromHeight1->**GetSurface**(&orientation);
@@ -842,7 +832,7 @@ if (NULL==piPCircle1)
 
 ---
 
-```vbscript
+```cpp
 CAAErrorTopStif3(...)
 The surface is retrieved with the `CATFace::GetSurface` method. The center of the circle is put at the "center" of the face, which is only an approximate point. The created circle is a `CATPCircle`, because it is a circle in the space of the surface.
 
@@ -868,7 +858,6 @@ On must first define one journal of the two operations: the prism creation (`pJo
 
 Now, the face of the wing is searched for: this face has been modified by the Boolean operation: a hole is created. The word "modified" is a shorter way to tell that in the resulting body, a new face is created with a hole corresponding to the trace of the prism.
 
-Now, the face of the wing is searched for: this face has been modified by the Boolean operation: a hole is created. The word "modified" is a shorter way to tell that in the resulting body, a new face is created with a hole corresponding to the trace of the prism.
          __ CATLISTP(CATCell) listCells;
            piFirstLimitBody->GetAllCells(listCells,2);  _// gets all the faces of FirstlimitBody_
 ```vbscript
@@ -902,7 +891,7 @@ for (i=1;(i <= nbCells)  ;i++)
 pBooleanJournal -> **FindLasts** (listCells[i],pFaces,ThroughModify);
 nbresult = pFaces.Size(#);
 ```vbscript
-```vbscript
+```cpp
 for (int j=1; (j <= nbresult) && (piFromBody1 == NULL) ; j++)
                if (pFaces[j]->IsATypeOf(CATFaceType)     _// searches for a face_
 
@@ -912,7 +901,7 @@ for (int j=1; (j <= nbresult) && (piFromBody1 == NULL) ; j++)
 
                    && **pFaces[j] != listCells[i]** )        _// different from the initial one_
                {
-```vbscript
+```cpp
 if (pFaces[j]->IsATypeOf(CATFaceType)     _// searches for a face_
                  piFromBody1=(CATFace *)pFaces[j];
                  iok = iok + 1;
@@ -985,7 +974,7 @@ if (NULL==pRadius)
 
 rc=1;
 CAAErrorTopStif5(...)
-```vbscript
+```cpp
       CATLISTP(CATDynFilletRadius)	listRadius;
 ```
 
@@ -993,7 +982,7 @@ CAAErrorTopStif5(...)
 
 ---
 
-```vbscript
+```cpp
 CATLISTP(CATDynFilletRadius)	listRadius;
 listRadius.Append(pRadius);
 Now, the ribbon is defined.
@@ -1020,7 +1009,7 @@ if (1!=listCells.Size(#) )
 if (1!=listCells.Size(#) )
 rc=10;
 CAAErrorTopStif6(...)
-```vbscript
+```cpp
       CATLISTP(CATEdge) listEdges;
 ```
 
@@ -1044,7 +1033,7 @@ if (1!=listCells.Size(#) )
         CAAErrorTopStif6(...)
 
       }
-```vbscript
+```cpp
 if (1!=listCells.Size(#) )
 rc=10;
 CAAErrorTopStif6(...)
@@ -1182,7 +1171,6 @@ Notice the general scheme of the operator. To use it:
 
   8. _Returning the Journal of the Operator_
 
-8. _Returning the Journal of the Operator_
          _// Fills the output journal if needed_
            CATCGMJournalList * pDataJournal = NULL;
            pDataJournal=_pData->GetJournal(#);
@@ -1232,7 +1220,6 @@ To use the new operator, one must go through the following steps:
 
   1. _Creating the Geometry Factory_
 
-1. _Creating the Geometry Factory_
 The geometry factory (`CATGeoFactory`) creates and manages all the `CATICGMObject`: it creates the points, curves, surfaces, and bodies, and removes them [7].
 
 The `CATGeoFactory` creation itself is done by the global function `::CATCreateCGMContainer`.
@@ -1364,7 +1351,6 @@ The operator configuration is the level of software you want to use to run this 
 
 The created `SkinBody` is now extruded to create a prism with `CATTopPrism`.
 
-The created `SkinBody` is now extruded to create a prism with `CATTopPrism`.
     CATCGMJournalList * pJournal = NULL;
 
     CATTopPrism  *pPrismOp = **::CATCreateTopPrism** (piGeomFactory,
@@ -1543,8 +1529,7 @@ No assumption can be done on the parameterization of the geometric objects. The 
      * The orientation of each curve in the profile: the curve must be taken in its natural orientation (increasing parameter, +1 value) or in the opposite orientation (decreasing parameter, -1 value), such that the end (after orientation) of a curve must be linked to the beginning (after orientation) of the next curve. As defined here, all the curves must be taken in their natural orientation. It would not be the case if circles or other curves were used. See an example in the `CAATopOverview` use case [3].
 
     _// Creates the operator_
-_// Creates the operator_
-```vbscript
+```cpp
     pSkinOp = **CATCreateTopSkin** (piGeomFactory,
 
 ```
@@ -1607,7 +1592,6 @@ return (1);
 
   4. _Running the New Operator_
 
-4. _Running the New Operator_
          _//--- Creates the operator_
          CAATopStiffener *pStiffOp = new **CAATopStiffener** (piGeomFactory,
 
@@ -1721,7 +1705,7 @@ if(1==toStore)
             ofstream filetowrite(pfileName, ios::binary ) ;
 
          #else
-```vbscript
+```cpp
 if(1==toStore)
 ofstream filetowrite(pfileName, ios::binary ) ;
             ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;

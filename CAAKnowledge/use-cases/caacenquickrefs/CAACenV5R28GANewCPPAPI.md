@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "New C++ Authorized APIs in CAA V5-6R2018 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
-tags: ["CATICGMTopDefeature", "CATIABFExport", "CATIGSMPlaneBetween", "CATIPrtCDSHoleManagement", "CATICGMTopWireContinuity", "CATIGSMUseSurfaceSimplification", "CATIGSMSurfaceSimplification", "CATICGMTopExtractCells", "CATIA", "CATIGSMUsePlaneBetween", "CATITPSManageAssociativity"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R28GANewCPPAPI.htmmd"
+tags: "["CATICGMTopDefeature", "CATIABFExport", "CATIGSMPlaneBetween", "CATIPrtCDSHoleManagement", "CATICGMTopWireContinuity", "CATIGSMUseSurfaceSimplification", "CATIGSMSurfaceSimplification", "CATICGMTopExtractCells", "CATIA", "CATIGSMUsePlaneBetween", "CATITPSManageAssociativity"]"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R28GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.595481"
-```
-
 ---
 tags: ["CATICGMTopDefeature", "CATIABFExport", "CATIGSMPlaneBetween", "CATIPrtCDSHoleManagement", "CATICGMTopWireContinuity", "CATIGSMUseSurfaceSimplification", "CATIGSMSurfaceSimplification", "CATICGMTopExtractCells", "CATIA", "CATIGSMUsePlaneBetween", "CATITPSManageAssociativity"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R28GANewCPPAPI.htmmd"
@@ -26,7 +23,7 @@ The following are the new CAA V5-6R2018 GA C++ Authorized APIs, compared with CA
   * CATGbfModelInterfaces framework
     * Interface CATIABFExport
   * CATPDMBase framework
-```vbscript
+```cpp
     * Global Function GetIIsFromPVS
   * CATTPSInterfaces framework
 ```
@@ -36,7 +33,7 @@ The following are the new CAA V5-6R2018 GA C++ Authorized APIs, compared with CA
     * Macro or #define bool_type
     * Enumeration CATExtractCellsFaceOrientation
     * Enumeration EndWallType
-```vbscript
+```cpp
     * Global Function CATCGMCreateDefeature
     * Global Function CATCGMCreateTopExtractCells
     * Interface CATICGMTopDefeature
@@ -46,13 +43,12 @@ The following are the new CAA V5-6R2018 GA C++ Authorized APIs, compared with CA
     * Enumeration CATBodyFromLengthOnWireMeasureType
     * Enumeration CATDynExtrapolationLimit
     * Enumeration CATDynExtrapolationMode
-```vbscript
-    * Global Function CATCGMCreateBodyFromLengthOnWire
+```cpp
     * Global Function CATCGMCreateBodyFromLengthOnWire
     * Interface CATCGMTessellateParam
 ```
   * GMOperatorsInterfaces framework
-```vbscript
+```cpp
     * Global Function CATCGMCreateCoordSystemBody
     * Global Function CATCGMCreateTopWireContinuity
     * Interface CATICGMTopWireContinuity
@@ -79,7 +75,7 @@ History Version: **1** [Aug 2017] | Document created
 * * *
 
 _Copyright © 1999-2017, Dassault Systèmes. All rights reserved._
-```vbscript
+```cpp
 Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.md) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.md) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.md)
 
 ```

@@ -1,27 +1,17 @@
 ---
 title: "CAASysDRMILB"
-type: "interface"
+type: "LocalClass"
 module: "CAAxPDMInterfaces"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAASysDRMILB → CATBaseUnknown"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 9
+source_file: "CAAxPDMInterfaces.edu/CAAxPDMDRMILB.m/LocalInterfaces/CAASysDRMILB.h"
 ---
+
 # CAASysDRMILB
 
-**基类**: CATBaseUnknown  
-**继承链**: CAASysDRMILB → CATBaseUnknown  
-**模块**: CAAxPDMInterfaces  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> Data extension of the CATSysDRMDocument component and implementing the CATIUExitDRMILockBytes, CATIUExitDRMDocument and CATIUExitDRMAuthorization
 
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATBaseUnknown | **模块**: CAAxPDMInterfaces | **方法数**: 9
 
 ## 依赖
 
@@ -29,20 +19,112 @@ verified: true
 - `CATIUExitDRMILockBytes.h`
 - `CATILockBytes.h`
 
+## 公共方法
+
+### ReadAt
+
+```cpp
+HRESULT ReadAt(ULARGE_INTEGER iOffset, void *iBuff, ULONG iLengthToRead, ULONG *oLengthRead) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iOffset | `ULARGE_INTEGER` |
+| *iBuff | `void` |
+| iLengthToRead | `ULONG` |
+| *oLengthRead | `ULONG` |
+
+
+### WriteAt
+
+```cpp
+HRESULT WriteAt(ULARGE_INTEGER iOffset, const void *iDataSource, ULONG iLengthToWrite, ULONG *LengthWritten) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iOffset | `ULARGE_INTEGER` |
+| *iDataSource | `const void` |
+| iLengthToWrite | `ULONG` |
+| *LengthWritten | `ULONG` |
+
+
+### Flush
+
+```cpp
+HRESULT Flush() ;
+```
+
+
+### SetSize
+
+```cpp
+HRESULT SetSize(ULARGE_INTEGER iLength) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iLength | `ULARGE_INTEGER` |
+
+
+### LockRegion
+
+```cpp
+HRESULT LockRegion(ULARGE_INTEGER iOffset, ULARGE_INTEGER iLegnth, DWORD dwLockType) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iOffset | `ULARGE_INTEGER` |
+| iLegnth | `ULARGE_INTEGER` |
+| dwLockType | `DWORD` |
+
+
+### UnlockRegion
+
+```cpp
+HRESULT UnlockRegion(ULARGE_INTEGER iOffset, ULARGE_INTEGER iLength, DWORD dwLockType) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iOffset | `ULARGE_INTEGER` |
+| iLength | `ULARGE_INTEGER` |
+| dwLockType | `DWORD` |
+
+
+### Stat
+
+```cpp
+HRESULT Stat(STATSTG FAR *oStat, DWORD iStatFlag) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *oStat | `STATSTG FAR` |
+| iStatFlag | `DWORD` |
+
+
+### OpenOnILockBytes
+
+```cpp
+HRESULT OpenOnILockBytes(CATILockBytes *iILB) ;
+```
+
+CATIUExitDRMILockBytes
+
+| 参数 | 类型 |
+|------|------|
+| *iILB | `CATILockBytes` |
+
+
+### Close
+
+```cpp
+HRESULT Close() ;
+```
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAxPDMInterfaces.edu/CAAxPDMDRMILB.m/LocalInterfaces/CAASysDRMILB.h`

@@ -55,7 +55,7 @@ interactive session.
     'Add the new document to the end of the collection of documents.
     'Create and display a new window for the new document.
     'Activate the new document and the window.
-```vbscript
+```cpp
      Dim oNewPartDoc As Document
      Set oNewPartDoc = CATIA.Documents.Add(&quot;Part&quot;)
   ...

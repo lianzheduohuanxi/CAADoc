@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Multi-axis Machining Algorithms"
-category: use-case case"
+category: "use-case case"
 module: "CAASmaUseCases"
-tags: ["CATInstantiateComponent", "CATIGeometricalElement", "CATIGSMPoint_var", "CATIVisProperties_var", "CATIVisProperties", "CATIMfgTPMultipleMotion_var", "CATIMfgTPMultipleMotion", "CAAMultiAxisAlgorithms", "CATIContainer_var", "CATIPartRequest", "CATIGeometricalElement_var", "CATIMfgMachiningContainer", "CATIMfgManufacturingFactories", "CATIGSMFactory", "CAASmaMultiAxisAlgorithms", "CAASurfaceMachiningAlgoItf", "CATIDescendants_var", "CATIMfgMultiAxisAlgorithm", "CATISpecObject_var", "CATIPartRequest_var"]
-source_file: "Doc/online/CAASmaUseCases/CAASmaMultiAxisAlgorithms.htmmd"
+tags: "["CATInstantiateComponent", "CATIGeometricalElement", "CATIGSMPoint_var", "CATIVisProperties_var", "CATIVisProperties", "CATIMfgTPMultipleMotion_var", "CATIMfgTPMultipleMotion", "CAAMultiAxisAlgorithms", "CATIContainer_var", "CATIPartRequest", "CATIGeometricalElement_var", "CATIMfgMachiningContainer", "CATIMfgManufacturingFactories", "CATIGSMFactory", "CAASmaMultiAxisAlgorithms", "CAASurfaceMachiningAlgoItf", "CATIDescendants_var", "CATIMfgMultiAxisAlgorithm", "CATISpecObject_var", "CATIPartRequest_var"]"
+source_file: "Doc/online/CAASmaUseCases/CAASmaMultiAxisAlgorithms.htm"
 converted: "2026-05-11T17:31:50.835710"
-```
-
 ---
 # Machining
 
@@ -114,9 +111,8 @@ We will now comment each of those sections by looking at the code.
 
 First, we need to get geometries used by machining algorithms.
 
-First, we need to get geometries used by machining algorithms.
        CATDocument *pPartDoc = NULL;
-```vbscript
+```cpp
        rc = **CATDocumentServices::OpenDocument**(InputPathName, pPartDoc);
 
 ```
@@ -143,8 +139,7 @@ if (NULL_var != spPartRequest)
 
 The `CATDocumentServices::OpenDocument` static method opens the part document from the location given as first argument of the main program. From the root container of the part, we get the _CATIPartRequest_ interface and use it to access to the first geometrical set of the part.
 
-The `CATDocumentServices::OpenDocument` static method opens the part document from the location given as first argument of the main program. From the root container of the part, we get the _CATIPartRequest_ interface and use it to access to the first geometrical set of the part.
-```vbscript
+```cpp
           CATIDescendants_var spDescOnSurfacicSet = ListOfSurfacicSets[1];
 ```vbscript
 ```
@@ -153,7 +148,7 @@ The `CATDocumentServices::OpenDocument` static method opens the part document fr
 ```
 
           {
-```vbscript
+```cpp
 CATIDescendants_var spDescOnSurfacicSet = ListOfSurfacicSets[1];
 if (NULL_var != spDescOnSurfacicSet)
 ```
@@ -161,7 +156,7 @@ if (NULL_var != spDescOnSurfacicSet)
              spDescOnSurfacicSet->**GetDirectChildren**(CATIGeometricalElement::ClassName(#), ListOfGeometricalElts);
 
              ...
-```vbscript
+```cpp
 if (NULL_var != spDescOnSurfacicSet)
 CATListValCATISpecObject_var ListOfGeometricalElts;
 spDescOnSurfacicSet->**GetDirectChildren**(CATIGeometricalElement::ClassName(#), ListOfGeometricalElts);
@@ -179,7 +174,7 @@ for (int ig=1;ig<=NbGeometricalElts;ig++)
 ```
 
                 {
-```vbscript
+```cpp
 for (int ig=1;ig<=NbGeometricalElts;ig++)
 CATIGeometricalElement_var spGeomElement = ListOfGeometricalElts[ig];
 if (NULL_var != spGeomElement)
@@ -192,7 +187,6 @@ if (NULL_var != spGeomElement)
 
 We scan its children features thanks to `GetDirectChildren`, and get the topological result with `GetBodyResult`.
 
-We scan its children features thanks to `GetDirectChildren`, and get the topological result with `GetBodyResult`.
                       spBody->GetAllCells(ListOfCells,2);
 ```vbscript
                       for (int i=1;i<=NbCells;i++)
@@ -209,7 +203,7 @@ for (int i=1;i<=NbCells;i++)
 ```
 
                          {
-```vbscript
+```cpp
 for (int i=1;i<=NbCells;i++)
 CATFace_var spFace = ListOfCells[i];
 if (NULL_var != spFace)
@@ -226,7 +220,6 @@ if (NULL_var != spFace)
 
 From features called PARTS1 and PARTS2, we get the faces and fill the according lists `ListOfParts1` and `ListOfParts2`.
 
-From features called PARTS1 and PARTS2, we get the faces and fill the according lists `ListOfParts1` and `ListOfParts2`.
                       spBody->GetAllCells(ListOfCells,1);
 ```vbscript
                       for (int i=1;i<=NbCells;i++)
@@ -243,7 +236,7 @@ for (int i=1;i<=NbCells;i++)
 ```
 
                          {
-```vbscript
+```cpp
 for (int i=1;i<=NbCells;i++)
 CATEdge_var spEdge = ListOfCells[i];
 if (NULL_var != spEdge)
@@ -273,9 +266,8 @@ From features called GUIDE1 and GUIDE2, we get the curves and fill the according
 
 To store algorithms results, we need to get a machining tool path container.
 
-To store algorithms results, we need to get a machining tool path container.
        CATDocument *pProcessDoc = NULL;
-```vbscript
+```cpp
        rc = **CATDocumentServices::New**("Process", pProcessDoc );
 
 ```
@@ -298,7 +290,7 @@ if (piMfgEnvt)
 
          ...
        }
-```vbscript
+```cpp
 if (piMfgEnvt)
 piMfgEnvt->**InitContainer**(FALSE,0);
        CATIContainer_var spTPContainer;
@@ -545,7 +537,7 @@ if (NULL_var != spMultipleMotion)
 ```
 
           {
-```vbscript
+```cpp
 if (NULL_var != spMultipleMotion)
 spMultipleMotion->GetNumberOfSubTrajects(NbSubTrajects);
 for (int ia=1;ia<=NbSubTrajects;ia++)
@@ -610,7 +602,7 @@ if (1 == GreenColor) _// Points lying on parts will be green_
 ```
 
                       {
-```vbscript
+```cpp
 if (1 == GreenColor) _// Points lying on parts will be green_
 CATIVisProperties_var spGraphicsPoint = spGSMPoint;
 if (NULL_var != spGraphicsPoint)

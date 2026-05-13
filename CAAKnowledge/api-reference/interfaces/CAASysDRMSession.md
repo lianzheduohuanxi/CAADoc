@@ -1,43 +1,110 @@
 ---
 title: "CAASysDRMSession"
-type: "interface"
+type: "LocalClass"
 module: "CAAxPDMInterfaces"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAASysDRMSession → CATBaseUnknown"
-method_count: 6
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 8
+source_file: "CAAxPDMInterfaces.edu/CAAxPDMDRMILB.m/LocalInterfaces/CAASysDRMSession.h"
 ---
+
 # CAASysDRMSession
 
-**基类**: CATBaseUnknown  
-**继承链**: CAASysDRMSession → CATBaseUnknown  
-**模块**: CAAxPDMInterfaces  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 6
+**基类**: CATBaseUnknown | **模块**: CAAxPDMInterfaces | **方法数**: 8
 
 ## 依赖
 
 - `CATBaseUnknown.h`
 - `CATUnicodeString.h`
 
+## 虚方法
+
+### DRMInitSession
+
+```cpp
+virtual HRESULT DRMInitSession() ;
+```
+
+
+### DRMGetPolicy
+
+```cpp
+virtual HRESULT DRMGetPolicy(DWORD iPolicy) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iPolicy | `DWORD` |
+
+
+### DRMCloseSession
+
+```cpp
+virtual HRESULT DRMCloseSession() ;
+```
+
+
+### DRMGetProviderName
+
+```cpp
+virtual HRESULT DRMGetProviderName(CATUnicodeString &oName) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| &oName | `CATUnicodeString` |
+
+
+### BuildAboutFrame
+
+```cpp
+virtual HRESULT BuildAboutFrame(CATDlgFrame *iParentFrame) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iParentFrame | `CATDlgFrame` |
+
+
+### BuildEditRightFrame
+
+```cpp
+virtual HRESULT BuildEditRightFrame(CATDlgFrame *iParentFrame, const void *iDRMAuthorization, size_t iDRMAuthorizationSize, CATDlgFrame **oCreatedFrame) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iParentFrame | `CATDlgFrame` |
+| *iDRMAuthorization | `const void` |
+| iDRMAuthorizationSize | `size_t` |
+| **oCreatedFrame | `CATDlgFrame` |
+
+
+## 公共方法
+
+### FillAdditionalInformationFrame
+
+```cpp
+HRESULT FillAdditionalInformationFrame(CATDlgFrame *iParentFrame, CATBaseUnknown *iCurrentDoc) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iParentFrame | `CATDlgFrame` |
+| *iCurrentDoc | `CATBaseUnknown` |
+
+
+### IsAbletoShow
+
+```cpp
+HRESULT IsAbletoShow(int iFrameDescriptor, CATBoolean& iIsAble) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iFrameDescriptor | `int` |
+| iIsAble | `CATBoolean&` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAxPDMInterfaces.edu/CAAxPDMDRMILB.m/LocalInterfaces/CAASysDRMSession.h`

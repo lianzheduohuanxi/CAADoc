@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Arrangement Automation Objects"
-category: tech-article
+category: "tech-article"
 module: "CAAScdArrTechArticles"
-tags: ["CATIA"]
-source_file: "Doc/online/CAAScdArrTechArticles/CAAArrTocArrProduct.htmmd"
+tags: "["CATIA"]"
+source_file: "Doc/online/CAAScdArrTechArticles/CAAArrTocArrProduct.htm"
 converted: "2026-05-11T17:31:51.588556"
-```
-
 ---
 # Arrangement Automation Objects
 
@@ -68,7 +65,7 @@ For example, to retrieve the **ArrangementProduct** object from the root product
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -80,7 +77,7 @@ For example, to retrieve the **ArrangementProduct** object from the root product
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
       Set pro=CATIA.ActiveDocument.Product
 
       Dim arrPrd As **ArrangementProduct**
@@ -110,7 +107,7 @@ For example, to retrieve the **ArrWorkbench** object in the active Product docum
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
     Dim doc As Document
@@ -119,7 +116,7 @@ For example, to retrieve the **ArrWorkbench** object in the active Product docum
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     Set doc=CATIA.ActiveDocument
 
     Dim wkb As ArrWorkbench

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Managing Selection"
 category: "use case"
 module: "CAADegUseCases"
-tags: ["CAADegCreatePlaneCmd", "CAAISysPoint", "CAADialogEngine", "CAAGeometry", "CAADegGeoCommands"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleSelection.htmmd"
+tags: "["CAADegCreatePlaneCmd", "CAAISysPoint", "CAADialogEngine", "CAAGeometry", "CAADegGeoCommands"]"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleSelection.htm"
 converted: "2026-05-11T17:33:49.741834"
-```
-
 ---
 tags: ["CAADegCreatePlaneCmd", "CAAISysPoint", "CAADialogEngine", "CAAGeometry", "CAADegGeoCommands"]
 source_file: "Doc/online/CAADegUseCases/CAADegSampleSelection.htmmd"
@@ -49,7 +46,6 @@ The CreatePoint command is a straightforward state dialog command with three seq
     * Click the three points to create a plane.
 [Top] Where to Find the Plane Command Code The Plane command is made of a single class named _CAADegCreatePlaneCmd_ located in the CAADegGeoCommands.m module of the CAADialogEngine.edu framework: Windows | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 ---|---
-Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed. [Top] Step-by-Step To select the second point, there are six steps: # | Step | Where
 

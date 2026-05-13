@@ -1,52 +1,31 @@
 ---
 title: "CAAEV5V6OsmBehaviorCustomizationSquare"
-type: "interface"
+type: "LocalClass"
 module: "CAAV5V6ObjectSpecsModeler"
-category: api-reference
 base: "CATFmFeatureCustomizationAdaptor"
-inheritance_chain: "CAAEV5V6OsmBehaviorCustomizationSquare → CATFmFeatureCustomizationAdaptor"
 method_count: 1
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAV5V6ObjectSpecsModeler.edu/CAAV5V6OsmBuildUpdate.m/LocalInterfaces/CAAEV5V6OsmBehaviorCustomizationSquare.h"
 ---
+
 # CAAEV5V6OsmBehaviorCustomizationSquare
 
-**基类**: CATFmFeatureCustomizationAdaptor  
-**继承链**: CAAEV5V6OsmBehaviorCustomizationSquare → CATFmFeatureCustomizationAdaptor  
-**模块**: CAAV5V6ObjectSpecsModeler  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 1
+> This is the implementation of the CATIFmFeatureBehaviorCustomization interface for the "CAAOsmSquare" feature. A "Build" operation calculates the values of attributes according to their pre-defined function.  Its execution is triggered by the execution of an "Update" operation so as to update all current values.  To perform this "Build" operation, the two attributes of the "CAAOsmSquare" feature are retrieved, the value of the first, "Num", is squared and the result stored as the value of the second, "Square" attribute.  Thus, the attribute "Square" will have an updated value whenever an "Update" operation is requested on this feature.
 
-> second, "Square" attribute.  Thus, the attribute "Square" will have an updated
+**基类**: CATFmFeatureCustomizationAdaptor | **模块**: CAAV5V6ObjectSpecsModeler | **方法数**: 1
 
 ## 依赖
 
 - `CATFmFeatureCustomizationAdaptor.h`
 
+## 虚方法
+
+### Build
+
+```cpp
+virtual HRESULT Build() ;
+```
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATFmFeatureCustomizationAdaptor**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAV5V6ObjectSpecsModeler.edu/CAAV5V6OsmBuildUpdate.m/LocalInterfaces/CAAEV5V6OsmBehaviorCustomizationSquare.h`

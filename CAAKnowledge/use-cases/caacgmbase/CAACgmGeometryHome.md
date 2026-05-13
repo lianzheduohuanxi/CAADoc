@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Geometry"
 category: "use cases"
 module: "CAACgmBase"
-tags: ["CATIA", "CAAGMModelInterfaces"]
-source_file: "Doc/online/CAACgmBase/CAACgmGeometryHome.htmmd"
+tags: "["CATIA", "CAAGMModelInterfaces"]"
+source_file: "Doc/online/CAACgmBase/CAACgmGeometryHome.htm"
 converted: "2026-05-11T17:33:47.799971"
-```
-
 ---
 tags: ["CATIA", "CAAGMModelInterfaces"]
 source_file: "Doc/online/CAACgmBase/CAACgmGeometryHome.htmmd"

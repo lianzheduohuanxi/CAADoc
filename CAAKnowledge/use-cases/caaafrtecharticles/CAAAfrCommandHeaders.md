@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "The Command Headers"
-category: tech-article
+category: "tech-article"
 module: "CAAAfrTechArticles"
-tags: ["CAAAfrNormalZHdr", "CATIAfrPaletteOptions", "CAAAfrMRUHeader", "CATIA", "CAAAfrNormalXHdr", "CAAAfrCommandHeader", "CAADegGeoCommands", "CATIAfrCommandHeaderRep", "CATINT32ToPtr", "CAAAfrMyCommandHdr", "CAAAfrGeometryWks", "CATImplementHeaderResources", "CAAAfrGeoCommands", "CAAAfrCommandClass", "CATIAfrCmdPaletteOptions", "CAAAfrPointHdr", "CAA2", "CAAAfrChangeViewNormalCmd", "CAAAfrGeometryWksHeader"]
-source_file: "Doc/online/CAAAfrTechArticles/CAAAfrCommandHeaders.htmmd"
+tags: "["CAAAfrNormalZHdr", "CATIAfrPaletteOptions", "CAAAfrMRUHeader", "CATIA", "CAAAfrNormalXHdr", "CAAAfrCommandHeader", "CAADegGeoCommands", "CATIAfrCommandHeaderRep", "CATINT32ToPtr", "CAAAfrMyCommandHdr", "CAAAfrGeometryWks", "CATImplementHeaderResources", "CAAAfrGeoCommands", "CAAAfrCommandClass", "CATIAfrCmdPaletteOptions", "CAAAfrPointHdr", "CAA2", "CAAAfrChangeViewNormalCmd", "CAAAfrGeometryWksHeader"]"
+source_file: "Doc/online/CAAAfrTechArticles/CAAAfrCommandHeaders.htm"
 converted: "2026-05-11T17:17:55.868797"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -51,7 +48,6 @@ Command headers stand for commands in workshops and workbenches, and are loaded 
 
 Each command you want to make available in your workshop or workbench must have a command header. The command header plays the role of your business card, which holds information such as your name, your company, your function within the company, the address where your company is located, your phone and fax numbers, and your e-mail id. This card is very useful to contact you when you are out the office, and requires a very small space. Like a business card, the **command header holds the necessary information** to load the command, such as the name of the shared library in which the command's executable code is located, the name of the command class, and the data to pass to the command code when this command becomes the current one.
 
-Each command you want to make available in your workshop or workbench must have a command header. The command header plays the role of your business card, which holds information such as your name, your company, your function within the company, the address where your company is located, your phone and fax numbers, and your e-mail id. This card is very useful to contact you when you are out the office, and requires a very small space. Like a business card, the **command header holds the necessary information** to load the command, such as the name of the shared library in which the command's executable code is located, the name of the command class, and the data to pass to the command code when this command becomes the current one.
 The **command header has resources** for each command to display, such as the command name shown to the end user, its ToolTip displayed in a balloon, its help message, and its icon. This enables the workshop or workbench to be displayed, that is loaded in memory, without any of its commands being itself loaded, except the default one, spares memory space, and improves performance. The end user can see the icons in the toolbars, the items in the menu bar, can ask for help on a given command, without loading any of its commands. It's only when the user clicks on the menu item or on the icon that the command code is actually loaded. The "Creating Resources for Command Headers" article [2] explains in details what are the command header resources and how to assign them to command headers.
 
 Before taking up the sections detailing how to create a command header class, it is important to understand how the command header instances are **managed by the frame**. This is the main goal of the "Command Header's Management" section.
@@ -88,7 +84,7 @@ To avoid filling up uselessly the list of _CATCommandHeader_ instances, it is re
 (*) There is an exception for Add-ins of the CATAfrGeneralWks workshop. In this specific case, the `CreateCommands` method is called once during the life time of the session. Refer to the General Command Headers **** section which goes deeper for this specific case.
 
 ```vbscript
-```vbscript
+```cpp
 For commands implementing _CATIAfrCmdPaletteOptions_ [6] or workbenches implementing _CATIAfrPaletteOptions  _[7], the code creating command header instances should first verify that the header instance does not already exist into the list of the current editor. A call to the _CATAfrGetCommandHeader_ ` `global function, which retrieves a command header instance from its identifier, enables you check this. Keep in mind that these two interfaces enables you to set command header instances into the "Tools Palette" toolbar. But even if these headers are not created in a workbench or an add-in implementation, once created, they are kept, like the others, in the current list of the current editor.
 
 ```
@@ -97,7 +93,7 @@ For commands implementing _CATIAfrCmdPaletteOptions_ [6] or workbenches implemen
 
 #### Workbench Loading Order
 
-```vbscript
+```cpp
 For commands implementing _CATIAfrCmdPaletteOptions_ [6] or workbenches implementing _CATIAfrPaletteOptions  _[7], the code creating command header instances should first verify that the header instance does not already exist into the list of the current editor. A call to the _CATAfrGetCommandHeader_ ` `global function, which retrieves a command header instance from its identifier, enables you check this. Keep in mind that these two interfaces enables you to set command header instances into the "Tools Palette" toolbar. But even if these headers are not created in a workbench or an add-in implementation, once created, they are kept, like the others, in the current list of the current editor.
 ```
 
@@ -311,7 +307,6 @@ Here is an example of implementation of the _MyCustomizedCommandHeader_ class.
 
 The `CATImplementClass` macro states that the _MyCustomizedCommandHeader_ class OM-derives [11] from `HdrBaseClass``,`**** the base class, and is a component main class thanks to the `Implementation` keyword.
 
-The `CATImplementClass` macro states that the _MyCustomizedCommandHeader_ class OM-derives [11] from `HdrBaseClass``,`**** the base class, and is a component main class thanks to the `Implementation` keyword.
 The `CATImplementHeaderResources` macro is used in conjunction with the `CATDeclareHeaderResources` macro in the header file. It defines the command header resource file name [2]. The base class name set as second argument helps you use resource concatenation [12]. The third argument could be set to the name of another class associated with resource files using its class name, or to the name, without suffix, of an already existing resource file pair. Here it states that its associated resource file names use the class name: MyCustomizedCommandHeader.CATNls and MyCustomizedCommandHeader.CATRsc, respectively.
 
 The constructor must call one of the constructors of the base class, and the destructor is empty.
@@ -587,7 +582,6 @@ It gives the following advices:
 
 The _CATIAfrGeneralWksAddin_ interface enables you to define an add-in of the General (CATAfrGeneralWks) workshop [14], in other words to define command headers and starters always available whatever the open document, or even if no document is open.
 
-The _CATIAfrGeneralWksAddin_ interface enables you to define an add-in of the General (CATAfrGeneralWks) workshop [14], in other words to define command headers and starters always available whatever the open document, or even if no document is open.
 The `CreateCommands` and `CreateToolbars` methods, the two methods of any Add-in interface, are called once during the session, when it starts. The command header instances created in the `CreateCommands` method are kept in a list (named `GeneralHdrList` on the Fig.6 ). This list is written in each list associated with an editor, and the headers are duplicated thanks to the `Clone` method.
 
 _Fig.6_ ![](images/CAAAfrCommandHeaderGeneralAddin.jpg)
@@ -640,7 +634,6 @@ Before using this class,  you should be aware of this behavior: if the check he
 
 A command header stands for a command and avoids loading the command when the end user does not require it. A command header is an instance of a command header class. This class can be used for several commands, and can be created either using a macro or explicitly if the command header should manage availability information or customize its representation.
 
-A command header stands for a command and avoids loading the command when the end user does not require it. A command header is an instance of a command header class. This class can be used for several commands, and can be created either using a macro or explicitly if the command header should manage availability information or customize its representation.
 It is possible to re-use command header identifiers, but there are two rules to respect:
 
   1. In a workbench or in an add-in (workshop/workbench) avoid using an identifier coming from another workbench or workbench's Add-in.

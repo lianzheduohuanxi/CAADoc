@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Business Process Knowledge Template Modeler"
 category: "use cases"
 module: "CAABehBase"
-tags: []
-source_file: "Doc/online/CAABehBase/CAABehHome.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAABehBase/CAABehHome.htm"
 converted: "2026-05-11T17:33:49.926688"
-```
-
 ---
 tags: []
 source_file: "Doc/online/CAABehBase/CAABehHome.htmmd"

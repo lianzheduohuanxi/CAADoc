@@ -20,13 +20,13 @@ converted: "2026-05-11T11:27:02.528621"
 '  CATIA Level:  V5R21
 '***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 '----------------------------------------------------------- 
 ```
 'Optional: allows to find the sample wherever it's installed
 
-```vbscript
+```cpp
   sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -36,7 +36,7 @@ Sub CATMain(#)
 '----------------------------------------------------------- 
 
 'Open the Analysis document 
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/AllElementsAndNode.CATAnalysis")
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
@@ -93,7 +93,7 @@ End Sub
 
 ```
 
-```vbscript
+```cpp
 &#39;COPYRIGHT DASSAULT SYSTEMES 2000
 
 &#39;***********************************************************************
@@ -107,13 +107,13 @@ End Sub
 &#39;  CATIA Level:  V5R21
 &#39;***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 &#39;----------------------------------------------------------- 
 ```
 &#39;Optional: allows to find the sample wherever it&#39;s installed
 
-```vbscript
+```cpp
   sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -123,7 +123,7 @@ Sub CATMain(#)
 &#39;----------------------------------------------------------- 
 
 &#39;Open the Analysis document 
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online/CAAScdAniUseCases/samples/AllElementsAndNode.CATAnalysis&quot;)
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 

@@ -90,7 +90,7 @@ pattern.
 ' ------------
 ' Get the part document
 ' ------------
-```vbscript
+```cpp
 Set oPartDocument = CATIA.ActiveDocument
 ' ------------
 ```

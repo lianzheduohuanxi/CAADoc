@@ -7,7 +7,7 @@ source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfCopingSource.htmm
 converted: "2026-05-11T11:27:02.603030"
 ---
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 Dim StrWorkbench As StrWorkbench
@@ -46,7 +46,7 @@ End Sub
 
 ```vbscript
 ```
-```vbscript
+```cpp
 Sub CATMain(#)
 
 Dim StrWorkbench As StrWorkbench

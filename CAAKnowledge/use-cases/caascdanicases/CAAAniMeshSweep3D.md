@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Sweep 3D Mesh Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CATIA", "CAAAniMeshSweep3D", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSweep3D.htmmd"
+tags: "["CATIA", "CAAAniMeshSweep3D", "CAAScdAniUseCases"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSweep3D.htm"
 converted: "2026-05-11T17:31:51.713621"
-```
-
 ---
 ## Analysis Modeler
 
@@ -38,7 +35,7 @@ This use case shows you how to create sweep 3D mesh parts.  The macro opens an A
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
 ```
@@ -48,7 +45,7 @@ This use case shows you how to create sweep 3D mesh parts.  The macro opens an A
 ```
 
 ```vbscript
-```vbscript
+```cpp
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 ```
@@ -68,7 +65,7 @@ This use case shows you how to create sweep 3D mesh parts.  The macro opens an A
 ```vbscript
     ' -----------------------------------------------------------
     ' Open the Analysis document
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/WeldConnections.CATAnalysis")
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```

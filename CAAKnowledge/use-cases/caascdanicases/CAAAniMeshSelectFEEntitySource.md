@@ -1,17 +1,14 @@
 ---
-```vbscript
 title: "CAAAniMeshSelectFEEntity.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CATIA", "CAAAniMeshSelectFEEntity", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSelectFEEntitySource.htmmd"
+tags: "["CATIA", "CAAAniMeshSelectFEEntity", "CAAScdAniUseCases"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSelectFEEntitySource.htm"
 converted: "2026-05-11T17:31:51.697182"
-```
-
 ---
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     'COPYRIGHT DASSAULT SYSTEMES 2000
     '***********************************************************************
     '  Purpose:      Open an analysis document
@@ -29,7 +26,7 @@ converted: "2026-05-11T17:31:51.697182"
 
 ```
 
-```vbscript
+```cpp
     Sub CATMain(#)
 ```vbscript
 ```
@@ -37,7 +34,7 @@ converted: "2026-05-11T17:31:51.697182"
     '-----------------------------------------------------------
     'Optional: allows to find the sample wherever it's installed
 
-```vbscript
+```cpp
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -62,7 +59,7 @@ converted: "2026-05-11T17:31:51.697182"
 ```vbscript
     '-----------------------------------------------------------
     'Open the Analysis document
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/AllElementsAndNode.CATAnalysis")
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
     'Retrieve the Selection object

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Cutouts"
 category: "use-case"
 module: "CAAScdStrUseCases"
-tags: ["CATIA", "CATIAStrFeatureFactory", "CAAStrCreateCutout", "CAAScdStrUseCases"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfCutout.htmmd"
+tags: "["CATIA", "CATIAStrFeatureFactory", "CAAStrCreateCutout", "CAAScdStrUseCases"]"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfCutout.htm"
 converted: "2026-05-11T17:31:50.872122"
-```
-
 ---
 ## Structure Design
 
@@ -26,7 +23,6 @@ converted: "2026-05-11T17:31:50.872122"
 
   CAAStrCreateCutout includes four steps:
 
-CAAStrCreateCutout includes four steps:
   1. Prolog
   2. Retrieving the Factory from Object on which Cutout Is to Be Placed
   3. Defining Sketch and Direction (After Forming Mode)
@@ -45,7 +41,7 @@ CAAStrCreateCutout includes four steps:
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     Dim strFactory As StrObjectFactory
 
     Set doc = CATIA.ActiveDocument
@@ -89,7 +85,7 @@ This step describes how to get Structure Feature Factory. The Factory object is 
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
     Set PlateToCut1 = strPlates.Item("Plate_052")
 
     Dim Selection1 As Selection
@@ -106,7 +102,7 @@ This step describes how to get Structure Feature Factory. The Factory object is 
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
     Set Factory1 = Selection1.FindObject("CATIAStrFeatureFactory")
 
 ```

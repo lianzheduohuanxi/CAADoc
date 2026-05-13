@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "CATIAApplicationFrame Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR10"
-version: "V5R10"
-tags: ["CATIAApplicationFrame"]
-source_file: "Doc/online/CAACenAPIChangesR10/CATIAApplicationFrame.htmmd"
+tags: "["CATIAApplicationFrame"]"
+source_file: "Doc/online/CAACenAPIChangesR10/CATIAApplicationFrame.htm"
 converted: "2026-05-11T17:33:50.125665"
-```
-
 ---
 tags: ["CATIAApplicationFrame"]
 source_file: "Doc/online/CAACenAPIChangesR10/CATIAApplicationFrame.htmmd"

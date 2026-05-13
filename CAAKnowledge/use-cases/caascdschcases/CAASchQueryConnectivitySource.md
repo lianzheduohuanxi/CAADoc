@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAASchQueryConnectivity.CATScript"
 category: "use-case"
 module: "CAAScdSchUseCases"
-tags: ["CAASCH_CompRoute01", "CATIAProduct", "CATIASchRouteGraphic", "CAAScdSchUseCases", "CATIA", "CATIASchCntrLocation", "CATIASchGRR", "CAASchQueryConnectivity", "CATIASchCompGraphic", "CATIASchAppConnectable"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchQueryConnectivitySource.htmmd"
+tags: "["CAASCH_CompRoute01", "CATIAProduct", "CATIASchRouteGraphic", "CAAScdSchUseCases", "CATIA", "CATIASchCntrLocation", "CATIASchGRR", "CAASchQueryConnectivity", "CATIASchCompGraphic", "CATIASchAppConnectable"]"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchQueryConnectivitySource.htm"
 converted: "2026-05-11T17:31:51.471879"
-```
-
 ---
 tags: ["CAASCH_CompRoute01", "CATIAProduct", "CATIASchRouteGraphic", "CAAScdSchUseCases", "CATIA", "CATIASchCntrLocation", "CATIASchGRR", "CAASchQueryConnectivity", "CATIASchCompGraphic", "CATIASchAppConnectable"]
 source_file: "Doc/online/CAAScdSchUseCases/CAASchQueryConnectivitySource.htmmd"
@@ -16,7 +13,7 @@ converted: "2026-05-11T17:31:51.471879"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGHT DASSAULT SYSTEMES 2004
     ' *****************************************************************************
     '   Purpose:      Query the connectivity of components and routes in a network.
@@ -42,7 +39,7 @@ converted: "2026-05-11T17:31:51.471879"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -55,7 +52,7 @@ converted: "2026-05-11T17:31:51.471879"
         ' -------------------------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String
-```vbscript
+```cpp
         sDocPath=CATIA.SystemService.Environ("CATDocView")
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -64,7 +61,7 @@ converted: "2026-05-11T17:31:51.471879"
 ```
         ' -------------------------------------------------------------------------
         ' Open the schematic document
-```vbscript
+```cpp
         Dim sFilePath
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
@@ -77,12 +74,12 @@ converted: "2026-05-11T17:31:51.471879"
                 "online/CAAScdSchUseCases/samples/CAASCH_CompRoute01.CATProduct")
 
 ```vbscript
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
         Dim objSchDoc As Document
         Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
@@ -98,7 +95,7 @@ sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 Dim objSchDoc As Document
 ```vbscript
 ```
-```vbscript
+```cpp
 Set objSchDoc = CATIA.Documents.Open(sFilePath)
 ```
 ```
@@ -241,7 +238,7 @@ Not ( objSchRoot Is Nothing ) ) Then
 ```
 
                 strName = ""
-```vbscript
+```cpp
                 Set objPrd = objSchLComps.Item (intIndex,"CATIAProduct")
 ```vbscript
 ```
@@ -254,7 +251,7 @@ Not ( objSchRoot Is Nothing ) ) Then
 
                      "= " & strName & vbCr
 ```vbscript
-```vbscript
+```cpp
 Set objPrd = objSchLComps.Item (intIndex,"CATIAProduct")
 ```
 ```
@@ -266,7 +263,7 @@ strMessage_g = strMessage_g &  " member " & intIndex & _
 ```vbscript
                 End If
 
-```vbscript
+```cpp
                 Set objAppCntbl = objSchRoot.GetInterface ("CATIASchAppConnectable",objPrd)
 
 ```
@@ -412,7 +409,7 @@ Not ( objSchRoot Is Nothing ) ) Then
 ```
 
                 strName = ""
-```vbscript
+```cpp
                 Set objPrd = objSchLRoutes.Item (intIndex,"CATIAProduct")
 ```vbscript
 ```
@@ -425,7 +422,7 @@ Not ( objSchRoot Is Nothing ) ) Then
 
                      "= " & strName & vbCr
 ```vbscript
-```vbscript
+```cpp
 Set objPrd = objSchLRoutes.Item (intIndex,"CATIAProduct")
 ```
 ```
@@ -437,7 +434,7 @@ strMessage_g = strMessage_g &  " member " & intIndex & _
 ```vbscript
                 End If
 
-```vbscript
+```cpp
                 Set objAppCntbl = objSchRoot.GetInterface ("CATIASchAppConnectable",objPrd)
 
 ```
@@ -590,7 +587,7 @@ Not ( objLCntrArg Is Nothing ) ) Then
               strName = ""
 
 ```vbscript
-```vbscript
+```cpp
               Set objPrd = objLCntblArg.Item (intIndex,"CATIAProduct")
 
               Set objCntbl = objSchRootArg.GetInterface ("CATIASchAppConnectable",objPrd)
@@ -642,7 +639,7 @@ strMessage_g = strMessage_g &  "    connected to  " & intIndex  _
 ```vbscript
               If ( Not ( objGRR Is Nothing ) ) Then
 
-```vbscript
+```cpp
                  Set objCntr = objLCntrArg.Item (intIndex,"CATIASchCntrLocation")
 
 ```
@@ -731,7 +728,7 @@ strMessage_g = strMessage_g &  "    connected to  " & intIndex  _
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' -----------------------------------------------------------------------------
     ' | Find the first symbol used for the input schematic component.
     ' | Input: objSchCompGraph:  the schematic component
@@ -796,7 +793,7 @@ Private Function GetImage (objSchRootArg As SchematicRoot, _
          '-------------------------------------------------------------------------
          ' Input objSchCntblArg could be a route or a component.  If
          ' objSchCntblArg is a component, we expect
-```vbscript
+```cpp
          ' Set objSchRouteGraph = objSchRootArg.GetInterface ( _
          '  "CATIASchRouteGraphic",objSchCntblArg) to fail
 ```
@@ -811,7 +808,7 @@ Private Function GetImage (objSchRootArg As SchematicRoot, _
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
 ' Error handling is to call GetInterface again with "CATIASchCompGraphic"
 ' as input argument.
 '-------------------------------------------------------------------------
@@ -903,7 +900,7 @@ Set objSchRouteGraph = objSchRootArg.GetInterface ( _
       If ( Not ( objSchLImages Is Nothing ) ) Then
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
          Set GetImage = objSchLImages.Item (1,"CATIASchGRR")
       End If
 ```

@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "Detail Of C++ API Changes"
 category: "api-changes"
 module: "CAACenAPIChangesR27"
-version: "V5R27"
-tags: ["CAA2Usage", "CAA2Level", "CATIMciMultiCADSettingAtt"]
-source_file: "Doc/online/CAACenAPIChangesR27/CAACenAPIChangeDetail.htmmd"
+tags: "["CAA2Usage", "CAA2Level", "CATIMciMultiCADSettingAtt"]"
+source_file: "Doc/online/CAACenAPIChangesR27/CAACenAPIChangeDetail.htm"
 converted: "2026-05-11T17:33:51.873433"
-```
-
 ---
 |  |  Detail Of V5-6R2017 C++ API Changes _What changes in the API compared with CAA V5-6R2016_
 ---|---|---
@@ -36,7 +32,6 @@ MINMV | Method is no more virtual. If occurs on a U1 class, may require modifica
 MINMV | Method is no more virtual. If occurs on a U1 class, may require modifications in Imakefile.mk of client code. If occurs on a U2 class, see details on the documentation of the concerned resource modification.
 Framework | Header | Class | Method | Signature | Modification | To Do
 
-Framework | Header | Class | Method | Signature | Modification | To Do
 CATMultiCADInterfaces | CATIMciMultiCADSettingAtt.h | CATIMciMultiCADSettingAtt | GetIdeasComponentName| virtual HRESULT GetIdeasComponentName(CATUnicodeString amp; oIdeasComponentName)= 0 | MHBDM | The corresponding settings do not exist anymore, so the API have been modified accordingly.
 GetIdeasComponentNameInfo| virtual HRESULT GetIdeasComponentNameInfo(CATSettingInfo* oInfo)= 0
 GetIdeasComponentType| virtual HRESULT GetIdeasComponentType(int amp; oIdeasComponentType)= 0

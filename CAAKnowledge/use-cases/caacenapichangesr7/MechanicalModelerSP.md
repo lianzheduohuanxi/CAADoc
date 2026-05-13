@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "MechanicalModeler Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR7"
-version: "V5R7"
-tags: ["CATIMfBRep", "CATIMechanicalImport", "CATIMfPointOnEdge", "CATIMfRsur", "CATIMfScopeAccess", "CATIShapeFeatureBody", "CATIMfBRepFactory", "CATInterfaceObject"]
-source_file: "Doc/online/CAACenAPIChangesR7/MechanicalModelerSP.htmmd"
+tags: "["CATIMfBRep", "CATIMechanicalImport", "CATIMfPointOnEdge", "CATIMfRsur", "CATIMfScopeAccess", "CATIShapeFeatureBody", "CATIMfBRepFactory", "CATInterfaceObject"]"
+source_file: "Doc/online/CAACenAPIChangesR7/MechanicalModelerSP.htm"
 converted: "2026-05-11T17:33:52.156957"
-```
-
 ---
 tags: ["CATIMfBRep", "CATIMechanicalImport", "CATIMfPointOnEdge", "CATIMfRsur", "CATIMfScopeAccess", "CATIShapeFeatureBody", "CATIMfBRepFactory", "CATInterfaceObject"]
 source_file: "Doc/online/CAACenAPIChangesR7/MechanicalModelerSP.htmmd"

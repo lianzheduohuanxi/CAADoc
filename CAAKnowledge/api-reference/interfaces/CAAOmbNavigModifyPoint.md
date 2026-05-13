@@ -1,52 +1,37 @@
 ---
 title: "CAAOmbNavigModifyPoint"
-type: "interface"
+type: "LocalClass"
 module: "CAAObjectModelerBase"
-category: api-reference
 base: "CATNodeExtension"
-inheritance_chain: "CAAOmbNavigModifyPoint → CATNodeExtension"
 method_count: 1
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAObjectModelerBase.edu/CAAOmbGeoNavigate.m/LocalInterfaces/CAAOmbNavigModifyPoint.h"
 ---
+
 # CAAOmbNavigModifyPoint
 
-**基类**: CATNodeExtension  
-**继承链**: CAAOmbNavigModifyPoint → CATNodeExtension  
-**模块**: CAAObjectModelerBase  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 1
+> This is an implementation of the CATINavigModify interface. to illustrate how to set a specific short help text. This implementation is done on the CAASysPoint object. It is an element of a CAAGeometry's document. ******************************************************************************
 
-> of a CAAGeometry's document.
+**基类**: CATNodeExtension | **模块**: CAAObjectModelerBase | **方法数**: 1
 
 ## 依赖
 
 - `CATNodeExtension.h`
 
+## 虚方法
+
+### ModifyShortHelp
+
+```cpp
+virtual HRESULT ModifyShortHelp(CATUnicodeString & ioText) ;
+```
+
+ModifyShortHelp --------------- To set the point' coordinates in the short help
+
+| 参数 | 类型 |
+|------|------|
+| ioText | `CATUnicodeString &` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATNodeExtension**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAObjectModelerBase.edu/CAAOmbGeoNavigate.m/LocalInterfaces/CAAOmbNavigModifyPoint.h`

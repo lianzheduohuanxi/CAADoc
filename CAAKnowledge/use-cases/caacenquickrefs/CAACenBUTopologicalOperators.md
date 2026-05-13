@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "TopologicalOperators Changed Classes or Interfaces"
 category: "use-case"
 module: "CAACenQuickRefs"
-tags: ["CATICGMHybDisconnect", "CATICGMHybTrim", "CATICGMTopBodyExtremum", "CATICGMHybIntersect", "CATICGMSolidCuboid", "CATICGMDynChamfer", "CATICGMTopParallel", "CATICGMDynTransformation", "CATICGMTopWire", "CATICGMTopExtrude", "CATICGMDynThickness", "CATICGMTopSimplify", "CATICGMTopReflectLine", "CATICGMDynMassProperties3D", "CATICGMDynDraft", "CATICGMDistanceMinBodyBody", "CATICGMSolidTorus", "CATICGMTopExtrapolWireOnShell", "CATICGMWireExtrapolationOp", "CATICGMTopVertex"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenBUTopologicalOperators.htmmd"
+tags: "["CATICGMHybDisconnect", "CATICGMHybTrim", "CATICGMTopBodyExtremum", "CATICGMHybIntersect", "CATICGMSolidCuboid", "CATICGMDynChamfer", "CATICGMTopParallel", "CATICGMDynTransformation", "CATICGMTopWire", "CATICGMTopExtrude", "CATICGMDynThickness", "CATICGMTopSimplify", "CATICGMTopReflectLine", "CATICGMDynMassProperties3D", "CATICGMDynDraft", "CATICGMDistanceMinBodyBody", "CATICGMSolidTorus", "CATICGMTopExtrapolWireOnShell", "CATICGMWireExtrapolationOp", "CATICGMTopVertex"]"
+source_file: "Doc/online/CAACenQuickRefs/CAACenBUTopologicalOperators.htm"
 converted: "2026-05-11T17:33:46.502758"
-```
-
 ---
 tags: ["CATICGMHybDisconnect", "CATICGMHybTrim", "CATICGMTopBodyExtremum", "CATICGMHybIntersect", "CATICGMSolidCuboid", "CATICGMDynChamfer", "CATICGMTopParallel", "CATICGMDynTransformation", "CATICGMTopWire", "CATICGMTopExtrude", "CATICGMDynThickness", "CATICGMTopSimplify", "CATICGMTopReflectLine", "CATICGMDynMassProperties3D", "CATICGMDynDraft", "CATICGMDistanceMinBodyBody", "CATICGMSolidTorus", "CATICGMTopExtrapolWireOnShell", "CATICGMWireExtrapolationOp", "CATICGMTopVertex"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenBUTopologicalOperators.htmmd"
@@ -564,7 +561,6 @@ CATBody*iBodyToTrim,
 CATBody*iTrimmingBody,
 CATHybExtrapolationMode iExtrapolMode) |  Not supported any longer.
 GMOperatorsInterfaces | Global function | CATCGMCreateTopTrimShellWithKeepRemove
-GMOperatorsInterfaces | Global function | CATCGMCreateTopTrimShellWithKeepRemove
 CATCreateTopTrimShellWithKeepRemove | CATHybTrim* CATCreateTopTrimShellWithKeepRemove(CATGeoFactory*iFactory,
 CATTopData*iData,
 CATBody*iBodyToTrim,
@@ -576,7 +572,6 @@ CATTopData*iData,
 CATBody*iBodyToTrim,
 CATBody*iTrimmingBody) |  Not supported any longer.
 GMOperatorsInterfaces | Global function | CATCGMCreateTopTrimShellWithKeepRemove
-GMOperatorsInterfaces | Global function | CATCGMCreateTopTrimShellWithKeepRemove
 CATCreateTopSplitShellWithKeepRemove | CATHybSplit* CATCreateTopSplitShellWithKeepRemove(CATGeoFactory*iFactory,
 CATTopData*iData,
 CATBody*iBodyToCut,
@@ -590,8 +585,6 @@ CATBody*iCuttingBody,
 CATHybExtrapolationMode iExtrapolMode,
 double iTol) |  Not supported any longer.
 GMOperatorsInterfaces | Global function | CATCGMCreateTopSplitShellWithKeepRemove
-GMOperatorsInterfaces | Global function | CATCGMCreateTopSplitShellWithKeepRemove
-GMOperatorsInterfaces | Global function | CATCGMCreateTopSplitShellWithKeepRemove
 CATCreateTopSplitShellWithKeepRemove | CATHybSplit* CATCreateTopSplitShellWithKeepRemove(CATGeoFactory*iFactory,
 CATTopData*iData,
 CATBody*iBodyToCut,
@@ -604,8 +597,6 @@ CATBody*iBodyToCut,
 CATBody*iCuttingBody,
 CATHybExtrapolationMode iExtrapolMode) |  Not supported any longer.
 GMOperatorsInterfaces | Global function | CATCGMCreateTopSplitShellWithKeepRemove
-GMOperatorsInterfaces | Global function | CATCGMCreateTopSplitShellWithKeepRemove
-GMOperatorsInterfaces | Global function | CATCGMCreateTopSplitShellWithKeepRemove
 CATCreateTopSplitShellWithKeepRemove | CATHybSplit* CATCreateTopSplitShellWithKeepRemove(CATGeoFactory*iFactory,
 CATTopData*iData,
 CATBody*iBodyToCut,
@@ -616,8 +607,6 @@ CATBody*iCuttingBody) |  Not supported any longer.
 CATTopData*iData,
 CATBody*iBodyToCut,
 CATBody*iCuttingBody) |  Not supported any longer.
-GMOperatorsInterfaces | Global function | CATCGMCreateTopSplitShellWithKeepRemove
-GMOperatorsInterfaces | Global function | CATCGMCreateTopSplitShellWithKeepRemove
 GMOperatorsInterfaces | Global function | CATCGMCreateTopSplitShellWithKeepRemove
 CATCreateTopDisconnectShell | CATHybDisconnect* CATCreateTopDisconnectShell(CATGeoFactory*iFactory,
 CATTopData*iData,
@@ -692,7 +681,6 @@ CATHybSelectionMode iSelectMode,
 CATHybExtrapolationMode iExtrapolMode,
 double iTol) |  Not supported any longer.
 GMOperatorsInterfaces | Global function | CATCGMCreateTopSplitShell
-GMOperatorsInterfaces | Global function | CATCGMCreateTopSplitShell
 CATCreateTopSplitShell | CATHybSplit* CATCreateTopSplitShell(CATGeoFactory*iFactory,
 CATTopData*iData,
 CATBody*iBodyToCut,
@@ -705,7 +693,6 @@ CATHybExtrapolationMode iExtrapolMode = TANGENT_DIRECTION) |  Not supported any 
 CATBody*iCuttingBody,
 CATHybSelectionMode iSelectMode = POSITIVE_POSITIVE_SIDE,
 CATHybExtrapolationMode iExtrapolMode = TANGENT_DIRECTION) |  Not supported any longer.
-GMOperatorsInterfaces | Global function | CATCGMCreateTopSplitShell
 GMOperatorsInterfaces | Global function | CATCGMCreateTopSplitShell
 CATCreateTopBoundary | CATHybBoundary* CATCreateTopBoundary(CATGeoFactory* iFactory,
 CATTopData* iData,
@@ -883,8 +870,6 @@ GMOperatorsInterfaces | Global function | CATCGMCreateDynFillet
 CATDynCreateMassProperties3D | CATDynMassProperties3D*CATDynCreateMassProperties3D(class CATTopData* iTopData,
 const CATEdge* iEdgeToAnalyze) |  Not supported any longer.
 GMOperatorsInterfaces | Global function | CATCGMDynCreateMassProperties3D
-GMOperatorsInterfaces | Global function | CATCGMDynCreateMassProperties3D
-GMOperatorsInterfaces | Global function | CATCGMDynCreateMassProperties3D
 CATDynCreateMassProperties3D | CATDynMassProperties3D*CATDynCreateMassProperties3D(class CATTopData* iTopData,
 const CATFace* iFaceToAnalyze) |  Not supported any longer.
 
@@ -893,8 +878,6 @@ const CATFace* iFaceToAnalyze) |  Not supported any longer.
 GMOperatorsInterfaces | Global function | CATCGMDynCreateMassProperties3D
 CATDynCreateMassProperties3D | CATDynMassProperties3D*CATDynCreateMassProperties3D(class CATTopData* iTopData,
 const CATFace* iFaceToAnalyze) |  Not supported any longer.
-GMOperatorsInterfaces | Global function | CATCGMDynCreateMassProperties3D
-GMOperatorsInterfaces | Global function | CATCGMDynCreateMassProperties3D
 GMOperatorsInterfaces | Global function | CATCGMDynCreateMassProperties3D
 CATDynCreateMassProperties3D | CATDynMassProperties3D*CATDynCreateMassProperties3D(class CATTopData* iTopData,
 const CATBody* iToAnalyze) |  Not supported any longer.
@@ -905,37 +888,26 @@ GMOperatorsInterfaces | Global function | CATCGMDynCreateMassProperties3D
 CATDynCreateMassProperties3D | CATDynMassProperties3D*CATDynCreateMassProperties3D(class CATTopData* iTopData,
 const CATBody* iToAnalyze) |  Not supported any longer.
 GMOperatorsInterfaces | Global function | CATCGMDynCreateMassProperties3D
-GMOperatorsInterfaces | Global function | CATCGMDynCreateMassProperties3D
-GMOperatorsInterfaces | Global function | CATCGMDynCreateMassProperties3D
 CATDynCreateMassProperties3D | CATDynMassProperties3D*CATDynCreateMassProperties3D(const CATEdge* iEdgeToAnalyze) |  Not supported any longer.
 
 **3 replacing methods** | Frameworks | Classes or Interfaces | Methods
 ---|---|---
 GMOperatorsInterfaces | Global function | CATCGMDynCreateMassProperties3D
-GMOperatorsInterfaces | Global function | CATCGMDynCreateMassProperties3D
 CATDynCreateMassProperties3D | CATDynMassProperties3D*CATDynCreateMassProperties3D(const CATEdge* iEdgeToAnalyze) |  Not supported any longer.
-GMOperatorsInterfaces | Global function | CATCGMDynCreateMassProperties3D
-GMOperatorsInterfaces | Global function | CATCGMDynCreateMassProperties3D
 GMOperatorsInterfaces | Global function | CATCGMDynCreateMassProperties3D
 CATDynCreateMassProperties3D | CATDynMassProperties3D*CATDynCreateMassProperties3D(const CATFace* iFaceToAnalyze) |  Not supported any longer.
 
 **3 replacing methods** | Frameworks | Classes or Interfaces | Methods
 ---|---|---
 GMOperatorsInterfaces | Global function | CATCGMDynCreateMassProperties3D
-GMOperatorsInterfaces | Global function | CATCGMDynCreateMassProperties3D
 CATDynCreateMassProperties3D | CATDynMassProperties3D*CATDynCreateMassProperties3D(const CATFace* iFaceToAnalyze) |  Not supported any longer.
-GMOperatorsInterfaces | Global function | CATCGMDynCreateMassProperties3D
-GMOperatorsInterfaces | Global function | CATCGMDynCreateMassProperties3D
 GMOperatorsInterfaces | Global function | CATCGMDynCreateMassProperties3D
 CATDynCreateMassProperties3D | CATDynMassProperties3D*CATDynCreateMassProperties3D(const CATBody* iToAnalyze) |  Not supported any longer.
 
 **3 replacing methods** | Frameworks | Classes or Interfaces | Methods
 ---|---|---
 GMOperatorsInterfaces | Global function | CATCGMDynCreateMassProperties3D
-GMOperatorsInterfaces | Global function | CATCGMDynCreateMassProperties3D
 CATDynCreateMassProperties3D | CATDynMassProperties3D*CATDynCreateMassProperties3D(const CATBody* iToAnalyze) |  Not supported any longer.
-GMOperatorsInterfaces | Global function | CATCGMDynCreateMassProperties3D
-GMOperatorsInterfaces | Global function | CATCGMDynCreateMassProperties3D
 GMOperatorsInterfaces | Global function | CATCGMDynCreateMassProperties3D
 CATCreateDynShell | CATDynShell* CATCreateDynShell(CATGeoFactory* iFactory,
 CATTopData* iTopData,
@@ -1039,7 +1011,6 @@ const CATMathPoint & iFirstPointOnAxis,
 const CATMathPoint & iSecondPointOnAxis,
 double iRadius) |  Not supported any longer.
 GMOperatorsInterfaces | Global function | CATCGMCreateSolidCylinder
-GMOperatorsInterfaces | Global function | CATCGMCreateSolidCylinder
 CATCreateSolidCylinder | CATSolidCylinder* CATCreateSolidCylinder(CATGeoFactory* iFactory,
 CATTopData*iData,
 const CATMathPoint & iFirstPointOnAxis,
@@ -1052,7 +1023,6 @@ const CATMathPoint & iFirstPointOnAxis,
 const CATMathPoint & iSecondPointOnAxis,
 const CATMathPoint & iPointOnSurface) |  Not supported any longer.
 GMOperatorsInterfaces | Global function | CATCGMCreateSolidCylinder
-GMOperatorsInterfaces | Global function | CATCGMCreateSolidCylinder
 CATCreateSolidPyramid | CATSolidPyramid* CATCreateSolidPyramid(CATGeoFactory* iFactory,
 CATTopData*iData,
 CATFace* iBase,
@@ -1063,7 +1033,6 @@ const CATMathPoint& iTop) |  Not supported any longer.
 CATTopData*iData,
 CATFace* iBase,
 const CATMathPoint& iTop) |  Not supported any longer.
-GMOperatorsInterfaces | Global function | CATCGMCreateSolidPyramid
 GMOperatorsInterfaces | Global function | CATCGMCreateSolidPyramid
 CATCreateSolidPyramid | CATSolidPyramid* CATCreateSolidPyramid(CATGeoFactory* iFactory,
 CATTopData*iData,
@@ -1077,7 +1046,6 @@ const CATMathPoint& iTop) |  Not supported any longer.
 const CATMathPoint& iPt2,
 const CATMathPoint& iPt3,
 const CATMathPoint& iTop) |  Not supported any longer.
-GMOperatorsInterfaces | Global function | CATCGMCreateSolidPyramid
 GMOperatorsInterfaces | Global function | CATCGMCreateSolidPyramid
 CATCreateSolidSphere | CATSolidSphere* CATCreateSolidSphere(CATGeoFactory*iFactory,
 CATTopData*iData,
@@ -1212,7 +1180,6 @@ CATPCurve**iPcurves,
 CATCrvLimits*iLimits,
 short*iOrientations) |  Not supported any longer.
 GMOperatorsInterfaces | Global function | CATCGMCreateTopSkin
-GMOperatorsInterfaces | Global function | CATCGMCreateTopSkin
 CATCreateTopSkin | CATTopSkin* CATCreateTopSkin(CATGeoFactory*iFactory,
 CATTopData* iData,
 CATSurface*iSurface,
@@ -1223,7 +1190,6 @@ const CATSurLimits* iLims) |  Not supported any longer.
 CATTopData* iData,
 CATSurface*iSurface,
 const CATSurLimits* iLims) |  Not supported any longer.
-GMOperatorsInterfaces | Global function | CATCGMCreateTopSkin
 GMOperatorsInterfaces | Global function | CATCGMCreateTopSkin
 CATCreateTopSweepSkinSkinSegment | CATTopSweepSkinSkinSegment* CATCreateTopSweepSkinSkinSegment(CATGeoFactory* iFactory,
 CATTopData* iData,
@@ -1356,7 +1322,6 @@ CATAngle iAngle) |  Not supported any longer.
 CATBody* iInputSkin,
 CATBody* iOriginPoint,
 CATAngle iAngle) |  Not supported any longer.
-GMOperatorsInterfaces | Global function | CATCGMCreateTopReflectLine
 GMOperatorsInterfaces | Global function | CATCGMCreateTopReflectLine
 CATCreateTopReflectLine | CATTopReflectLine* CATCreateTopReflectLine(CATGeoFactory* iFactory,
 CATBody* iInputSkin,

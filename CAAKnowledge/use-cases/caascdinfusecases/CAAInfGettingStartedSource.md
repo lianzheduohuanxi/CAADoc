@@ -11,7 +11,7 @@ Language="VBSCRIPT"
 
 'My macro creates five cylinders
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 Dim documents1 As Documents
@@ -120,7 +120,7 @@ Language="VBSCRIPT"
 
 'My macro creates five cylinders
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 Dim documents1 As Documents

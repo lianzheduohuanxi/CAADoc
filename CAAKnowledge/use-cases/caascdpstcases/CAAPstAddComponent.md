@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Adding Components"
 category: "use-case"
 module: "CAAScdPstUseCases"
-tags: ["CAAPstAddComponent", "CAAPstHull", "CATIA", "CAAScdPstUseCases", "CAAPstFunnel"]
-source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddComponent.htmmd"
+tags: "["CAAPstAddComponent", "CAAPstHull", "CATIA", "CAAScdPstUseCases", "CAAPstFunnel"]"
+source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddComponent.htm"
 converted: "2026-05-11T17:31:52.313802"
-```
-
 ---
 ## Product Structure
 
@@ -43,7 +40,7 @@ This macro shows you how to create a product structure composed of four differen
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
 'Create a new product document object by adding a document with the Product
           'type to the document collection of the CATIA application.
 ```
@@ -57,7 +54,7 @@ This macro shows you how to create a product structure composed of four differen
           Dim oProductDoc As Document
 ```vbscript
 ```
-```vbscript
+```cpp
           Set oProductDoc = CATIA.Documents.**Add**("Product")
 ```
 ```
@@ -166,7 +163,7 @@ A new product, the Hull,  is added to the collection using the `AddNewProduct` 
           oHull.**AddMasterShapeRepresentation** sDocPath & "CAAPstHull.CATPart"
 
 ```vbscript
-```vbscript
+```cpp
           CATIA.ActiveWindow.ActiveViewer.**Reframe**
 ```
 ```

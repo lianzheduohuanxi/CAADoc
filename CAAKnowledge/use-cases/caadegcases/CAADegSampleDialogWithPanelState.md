@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Associating a Dialog Box with a State"
 category: "use case"
 module: "CAADegUseCases"
-tags: ["CAADegGeoCommands", "CAADegPointEditor", "CATIndicationAgent", "CAADialogEngine", "CAAGeometry", "CAADegCreatePointCmd", "CAADegFileCmd"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleDialogWithPanelState.htmmd"
+tags: "["CAADegGeoCommands", "CAADegPointEditor", "CATIndicationAgent", "CAADialogEngine", "CAAGeometry", "CAADegCreatePointCmd", "CAADegFileCmd"]"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleDialogWithPanelState.htm"
 converted: "2026-05-11T17:33:49.657183"
-```
-
 ---
 tags: ["CAADegGeoCommands", "CAADegPointEditor", "CATIndicationAgent", "CAADialogEngine", "CAAGeometry", "CAADegCreatePointCmd", "CAADegFileCmd"]
 source_file: "Doc/online/CAADegUseCases/CAADegSampleDialogWithPanelState.htmmd"
@@ -46,7 +43,6 @@ Indicating a point [2] means clicking on the screen at the desired location with
     * Click in the window background to create points, or enter the point coordinates in the dialog box and click OK or Apply.
 [Top] Where to Find the Point Command Code The Point command is made of a single class named _CAADegCreatePointCmd_ located in the CAADegGeoCommands.m module of the CAADialogEngine.edu framework: Windows | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 ---|---
-Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed. [Top] Step-by-Step To create the Point command, there are three steps: # | Step | Where
 

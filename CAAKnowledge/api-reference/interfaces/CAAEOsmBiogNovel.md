@@ -1,57 +1,69 @@
 ---
 title: "CAAEOsmBiogNovel"
-type: "interface"
+type: "LocalClass"
 module: "CAAObjectSpecsModeler"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAEOsmBiogNovel → CATBaseUnknown"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 4
+source_file: "CAAObjectSpecsModeler.edu/CAAOsmManageExtensions.m/LocalInterfaces/CAAEOsmBiogNovel.h"
 ---
+
 # CAAEOsmBiogNovel
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAEOsmBiogNovel → CATBaseUnknown  
-**模块**: CAAObjectSpecsModeler  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> This class is an implementation of the CAAIBiogNovel interface for the "CAAOsmBiographicalNovel" extension late-type. It essentially retrieves and valuates the values of the attributes of this extension.This implementation is included in Use Case CAAOsmMainExtensions.m. Main Methods: GetEpoch:  Returns the value of the "Epoch" attribute. SetEpoch:  Valuates the "Epoch" attribute. GetDomain: Returns the value of the "Domain" attribute. SetDomain: Valuates the "Domain" attribute.
 
-> GetDomain: Returns the value of the "Domain" attribute.
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATBaseUnknown | **模块**: CAAObjectSpecsModeler | **方法数**: 4
 
 ## 依赖
 
 - `CATBaseUnknown.h`
 - `CATUnicodeString.h`
 
+## 公共方法
+
+### GetEpoch
+
+```cpp
+HRESULT GetEpoch(CATUnicodeString *opEpoch) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *opEpoch | `CATUnicodeString` |
+
+
+### SetEpoch
+
+```cpp
+HRESULT SetEpoch(const CATUnicodeString iEpoch) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iEpoch | `const CATUnicodeString` |
+
+
+### GetDomain
+
+```cpp
+HRESULT GetDomain(CATUnicodeString *opDomain) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *opDomain | `CATUnicodeString` |
+
+
+### SetDomain
+
+```cpp
+HRESULT SetDomain(const CATUnicodeString iDomain) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iDomain | `const CATUnicodeString` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAObjectSpecsModeler.edu/CAAOsmManageExtensions.m/LocalInterfaces/CAAEOsmBiogNovel.h`

@@ -1,52 +1,40 @@
 ---
 title: "CAAIDDBurgerApplication"
-type: "interface"
+type: "LocalClass"
 module: "CAACodeGenTools"
-category: api-reference
 base: "CATInteractiveApplication"
-inheritance_chain: "CAAIDDBurgerApplication → CATInteractiveApplication"
 method_count: 2
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAACodeGenTools.edu/CAAIDDBurger.m/LocalInterfaces/CAAIDDBurgerApplication.h"
 ---
+
 # CAAIDDBurgerApplication
 
-**基类**: CATInteractiveApplication  
-**继承链**: CAAIDDBurgerApplication → CATInteractiveApplication  
-**模块**: CAACodeGenTools  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 2
+> Application class. This is the main object in the process. It avoids writing a main function. Event loop is managed automatically by deriving from CATInteractiveApplication. CAADlgBurgerApplication only creates the main window and subscribes to the window closing to terminate the application. Inheritance: CATInteractiveApplication (Dialog Framework) CATApplication (System Framework) Main Method: BeginApplication: Contains the whole application code. Dialog Framework
 
-> Main Method:
+**基类**: CATInteractiveApplication | **模块**: CAACodeGenTools | **方法数**: 2
 
 ## 依赖
 
 - `CATInteractiveApplication.h`
 
+## 虚方法
+
+### BeginApplication
+
+```cpp
+virtual void BeginApplication() ;
+```
+
+
+### EndApplication
+
+```cpp
+virtual int EndApplication() ;
+```
+
+Returns the application return code.
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATInteractiveApplication**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAACodeGenTools.edu/CAAIDDBurger.m/LocalInterfaces/CAAIDDBurgerApplication.h`

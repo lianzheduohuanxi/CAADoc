@@ -1,52 +1,54 @@
 ---
 title: "CAAEPstINFVisuWire"
-type: "interface"
+type: "LocalClass"
 module: "CAAProductStructure"
-category: api-reference
 base: "CATExtIVisu"
-inheritance_chain: "CAAEPstINFVisuWire → CATExtIVisu"
 method_count: 2
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAProductStructure.edu/CAAPstINFModeler.m/LocalInterfaces/CAAEPstINFVisuWire.h"
 ---
+
 # CAAEPstINFVisuWire
 
-**基类**: CATExtIVisu  
-**继承链**: CAAEPstINFVisuWire → CATExtIVisu  
-**模块**: CAAProductStructure  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 2
+> Data extension of the CAAPstINFWire component, implementing the CATI3DGeoVisu interface to enable the visualization of a line. This class derives from the CATExtIVisu adapter. Illustrates programming the visualization of an object by implementing the CATI3DGeoVisu interface of the Visualization framework. Inheritance: CATExtIVisu (Visualization) CATBaseUnknown (System Framework)
 
-> Visualization Framework
+**基类**: CATExtIVisu | **模块**: CAAProductStructure | **方法数**: 2
 
 ## 依赖
 
 - `CATExtIVisu.h`
 
+## 虚方法
+
+### SetPointGraphicAttribute
+
+```cpp
+virtual void SetPointGraphicAttribute(CATRep * iRep, CATVisPropertyType iPropertyType, CATVisPropertiesValues & iPropertyValue) ;
+```
+
+Modify the point graphic properties
+
+| 参数 | 类型 |
+|------|------|
+| iRep | `CATRep *` |
+| iPropertyType | `CATVisPropertyType` |
+| iPropertyValue | `CATVisPropertiesValues &` |
+
+
+### SetLineGraphicAttribute
+
+```cpp
+virtual void SetLineGraphicAttribute(CATRep * iRep, CATVisPropertyType iPropertyType, CATVisPropertiesValues & iPropertyValue) ;
+```
+
+Modify the lineic graphic properties
+
+| 参数 | 类型 |
+|------|------|
+| iRep | `CATRep *` |
+| iPropertyType | `CATVisPropertyType` |
+| iPropertyValue | `CATVisPropertiesValues &` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATExtIVisu**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAProductStructure.edu/CAAPstINFModeler.m/LocalInterfaces/CAAEPstINFVisuWire.h`

@@ -1,51 +1,67 @@
 ---
 title: "CAAECafGeometryViewSettingAtt"
-type: "interface"
+type: "LocalClass"
 module: "CAACATIAApplicationFrm"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAECafGeometryViewSettingAtt → CATBaseUnknown"
 method_count: 4
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAACATIAApplicationFrm.edu/CAACafCtrlToolsOptions.m/LocalInterfaces/CAAECafGeometryViewSettingAtt.h"
 ---
+
 # CAAECafGeometryViewSettingAtt
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAECafGeometryViewSettingAtt → CATBaseUnknown  
-**模块**: CAACATIAApplicationFrm  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 4
+> Data Extension of CAACafGeometryViewSettingCtrl to implement the CAAICafGeometryViewSettingAtt. This interface enables to handle each attribut of the setting repository CAACafGeometryView
+
+**基类**: CATBaseUnknown | **模块**: CAACATIAApplicationFrm | **方法数**: 4
 
 ## 依赖
 
 - `CATBaseUnknown.h`
 - `CAAICafGeometryViewSettingAtt.h`
 
+## 虚方法
+
+### Initialize
+
+```cpp
+virtual HRESULT Initialize() ;
+```
+
+This method calls all Getxxx methods.
+
+
+### Get3DRepresentationMode
+
+```cpp
+virtual HRESULT Get3DRepresentationMode(CATString & oIdVisibility) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oIdVisibility | `CATString &` |
+
+
+### Set3DRepresentationMode
+
+```cpp
+virtual HRESULT Set3DRepresentationMode(const CATString & iIdVisibility) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iIdVisibility | `const CATString &` |
+
+
+### GetInfo3DRepresentationMode
+
+```cpp
+virtual HRESULT GetInfo3DRepresentationMode(CATSettingInfo * oInfo) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oInfo | `CATSettingInfo *` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAACATIAApplicationFrm.edu/CAACafCtrlToolsOptions.m/LocalInterfaces/CAAECafGeometryViewSettingAtt.h`

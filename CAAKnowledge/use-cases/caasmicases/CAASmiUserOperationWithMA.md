@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Managing Geometry with Machining Areas"
-category: use-case case"
+category: "use-case case"
 module: "CAASmiUseCases"
-tags: ["CAASmiConnectUserOperationWithMA", "CATIM3xFeature", "CAASmiUserOperationWithMAGeometryPanel", "CATISmgFactory", "CAASmiUserOperationWithMA", "CATIMfgGeometryActivity", "CAASurfaceMachiningItf", "CATIAlias", "CAAESmiUserOperationWithMAGeometryEditor", "CATIEdit", "CAASmgOperationWithMA"]
-source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationWithMA.htmmd"
+tags: "["CAASmiConnectUserOperationWithMA", "CATIM3xFeature", "CAASmiUserOperationWithMAGeometryPanel", "CATISmgFactory", "CAASmiUserOperationWithMA", "CATIMfgGeometryActivity", "CAASurfaceMachiningItf", "CATIAlias", "CAAESmiUserOperationWithMAGeometryEditor", "CATIEdit", "CAASmgOperationWithMA"]"
+source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationWithMA.htm"
 converted: "2026-05-11T17:31:51.267374"
-```
-
 ---
 # Machining
 
@@ -42,7 +39,6 @@ This article discusses the CAASmiUserOperationWithMA use case. It explains how t
 
 Machining areas are V5 SMG native features used to define different zones on a part.
 
-Machining areas are V5 SMG native features used to define different zones on a part.
 This use case is intended to help you to manage geometry of a machining area assigned to a surface machining operation.
 
 More specifically, the CAASmiUserOperationWithMA Use Case shows how to:
@@ -71,7 +67,6 @@ In the geometry tab page of CAASmgOperationWithMA**,** you can select a existing
 
 This use case is a part of _Surface Machining Operation Sample_ [1]. You should build all the modules of this sample at a time to be able to launch it [2].
 
-This use case is a part of _Surface Machining Operation Sample_ [1]. You should build all the modules of this sample at a time to be able to launch it [2].
 Don't forget to edit the interface dictionary located in:
 
 Windows | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CNext/code/dictionary/`
@@ -129,7 +124,7 @@ In _GetMainPanelEditor,_ we create a machining area (with _CATISmgFactory_) and 
 ```
 
       {
-```vbscript
+```cpp
 if (!!spFeatCont)
         CATISmgFactory * pSmgFactory = NULL;
         oRC = spFeatCont->QueryInterface(IID_CATISmgFactory, (void**) &pSmgFactory);
@@ -216,7 +211,7 @@ if (_pDlgCombo)
           // Finds all machining areas inside the model
 ```vbscript
 if (!!spFeatCont)
-```vbscript
+```cpp
           _pListOfMAs = spFeatCont->ListMembers("CATIM3xFeature");
 ```
 
@@ -271,7 +266,7 @@ pAlias = NULL;
         }
 
         // Adds a callback
-```vbscript
+```cpp
         AddAnalyseNotificationCB(
           _pDlgCombo,
           _pDlgCombo->GetComboSelectNotification(#),

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Retrieving Weld Information on Plate Objects"
 category: "use-case"
 module: "CAAScdStrUseCases"
-tags: ["CATIA", "CAAStrWeldInfoOnPlate", "CAAScdStrUseCases"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrWeldInfoOnPlate.htmmd"
+tags: "["CATIA", "CAAStrWeldInfoOnPlate", "CAAScdStrUseCases"]"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrWeldInfoOnPlate.htm"
 converted: "2026-05-11T17:31:50.915079"
-```
-
 ---
 ## Structure Design
 
@@ -25,7 +22,6 @@ converted: "2026-05-11T17:31:50.915079"
 
   CAAStrWeldInfoOnPlate includes the following steps:
 
-CAAStrWeldInfoOnPlate includes the following steps:
   1. Prolog
   2. Retrieving Factory Object from Part Document
   3. Getting the Manager from Factory
@@ -40,12 +36,12 @@ CAAStrWeldInfoOnPlate includes the following steps:
 
 8. Retrieving Weld Features on the OperatedSplitPlate with No Operating Element (Weld Use Case 2)
 9. Retrieving Weld Attributes of Weld Use Case 2 Features
-```vbscript
+```cpp
 Opens the CAAStrWeldInfoOnPlate.CATPart in CATIA.
 
 ```vbscript
 ```
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -57,7 +53,7 @@ Opens the CAAStrWeldInfoOnPlate.CATPart in CATIA.
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
     Set ObjPart = CATIA.ActiveDocument.Part
 
 ```
@@ -70,7 +66,7 @@ Opens the CAAStrWeldInfoOnPlate.CATPart in CATIA.
 #### Retrieving Factory Object from Part Document
 
 ```vbscript
-```vbscript
+```cpp
 Set ObjPart = CATIA.ActiveDocument.Part
 ```
 ```
@@ -188,7 +184,6 @@ This step describes how to get the collection of Super Plates and how to get one
 
 This step describes how to get the collection of Split Plates and how to get one specific element in it.
 
-This step describes how to get the collection of Split Plates and how to get one specific element in it.
 ```vbscript
 ```vbscript
     'Retrieving the SplitPlates of SuperPlate1
@@ -266,7 +261,6 @@ This step describes how to get the collection of Weld features with operating el
 
 This step describes how to get the weld information set on the Operated split plate.
 
-This step describes how to get the weld information set on the Operated split plate.
     ustrWeldTypeUC1 = WeldUC1Feature.WeldType
     ustrAddedMaterialUC1 = WeldUC1Feature.AddedMaterial
     ustrFitUpUC1 = WeldUC1Feature.FitUp
@@ -309,7 +303,6 @@ This step describes how to get the collection of Weld features with operating el
 
 This step describes how to get the weld information set on the Operated split plate with no operating element.
 
-This step describes how to get the weld information set on the Operated split plate with no operating element.
     ustrWeldTypeUC2 = WeldUC2Feature.WeldType
     ustrAddedMaterialUC2 = WeldUC2Feature.AddedMaterial
     ustrFitUpUC2 = WeldUC2Feature.FitUp

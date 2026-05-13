@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Using Cameras"
-category: use-case case"
+category: "use-case case"
 module: "CAAAfrUseCases"
-tags: ["CATI3DCamera", "CAAAfrChangeViewNormalCmd", "CAAAfrGeometryWshop", "CAAAfrGeoCommands", "CAAGeometry", "CAAAfrGeoCommand", "CAAApplicationFrame"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleCamera.htmmd"
+tags: "["CATI3DCamera", "CAAAfrChangeViewNormalCmd", "CAAAfrGeometryWshop", "CAAAfrGeoCommands", "CAAGeometry", "CAAAfrGeoCommand", "CAAApplicationFrame"]"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleCamera.htm"
 converted: "2026-05-11T17:17:55.631615"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -82,7 +79,6 @@ Do not type the module name on the command line, but type CNEXT instead. When th
 
 The CAAAfrGeoCommand use case is made of a single class named _CAAAfrChangeViewNormalCmd_ located in the CAAAfrGeoCommands.m module of the CAAApplicationFrame.edu framework:
 
-The CAAAfrGeoCommand use case is made of a single class named _CAAAfrChangeViewNormalCmd_ located in the CAAAfrGeoCommands.m module of the CAAApplicationFrame.edu framework:
 Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeoCommands.m/`
 
 The CAAAfrGeoCommand use case is made of a single class named _CAAAfrChangeViewNormalCmd_ located in the CAAAfrGeoCommands.m module of the CAAApplicationFrame.edu framework:
@@ -134,7 +130,6 @@ The command is set as exclusive thanks to `CATCommandModeExclusive`. Since it do
 
 The `Activate` method first sets the camera axes depending on the argument value.
 
-The `Activate` method first sets the camera axes depending on the argument value.
     CATStatusChangeRC CAAAfrChangeViewNormalCmd::**Activate**(CATCommand * iFromClient,
                                                           CATNotification * iEvtData)
 
@@ -178,7 +173,6 @@ These direction as set as _CATMathDirection_ instances is the switch.
 
       ...
       CATFrmLayout *pCurrentLayout = **CATFrmLayout::GetCurrentLayout**(#);
-CATFrmLayout *pCurrentLayout = **CATFrmLayout::GetCurrentLayout**(#);
 ```vbscript
       if ( pCurrentLayout )
 
@@ -194,7 +188,7 @@ if ( pCurrentLayout )
 ```
 
         {
-```vbscript
+```cpp
 if ( pCurrentLayout )
 CATFrmWindow *pCurrentWindow = pCurrentLayout->**GetCurrentWindow**(#);
 if ( pCurrentWindow )

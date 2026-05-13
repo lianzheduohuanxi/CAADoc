@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Connection Properties on a Product"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CATISamImportDefine", "CATIAParameter", "CATIAConstraints", "CAAScdAniUseCases", "CATIA", "CAAAniPreproOnProduct"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproOnProduct.htmmd"
+tags: "["CATISamImportDefine", "CATIAParameter", "CATIAConstraints", "CAAScdAniUseCases", "CATIA", "CAAAniPreproOnProduct"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproOnProduct.htm"
 converted: "2026-05-11T17:31:51.820883"
-```
-
 ---
 ## Analysis Modeler
 
@@ -17,7 +14,6 @@ converted: "2026-05-11T17:31:51.820883"
 
 This macro shows you how to create an Analysis document for a generative structural analysis. With this scenario, you will cover all the steps of a generative analysis application. This scenario will require a "CATIA - GENERATIVE ASSEMBLY STRUCTURAL ANALYSIS 2 Product" license. It creates an Analysis document, imports a Product document provided with the sample. An Analysis Case is created as for static linear analysis. Some preprocessing data are defined by using the publication defined on the product. We will focus on the creation of connection properties based on assembly constraints and creation of loading conditions based on rigid virtual part.
 
-This macro shows you how to create an Analysis document for a generative structural analysis. With this scenario, you will cover all the steps of a generative analysis application. This scenario will require a "CATIA - GENERATIVE ASSEMBLY STRUCTURAL ANALYSIS 2 Product" license. It creates an Analysis document, imports a Product document provided with the sample. An Analysis Case is created as for static linear analysis. Some preprocessing data are defined by using the publication defined on the product. We will focus on the creation of connection properties based on assembly constraints and creation of loading conditions based on rigid virtual part.
 CAAAniPreproOnProduct is launched in CATIA [1]. No open document is needed. [CAAAniPreproOnProduct.catvbs](CAAAniPreproOnProductSource.md) is located in the CAAScdAniUseCases module. [Execute macro](macros/CAAAniPreproOnProduct.catvbs) (Windows only).
 
 CAAAniPreproOnProduct includes the following steps:
@@ -38,7 +34,7 @@ CAAAniPreproOnProduct includes the following steps:
 ```vbscript
 ```vbscript
 ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
 sDocPath=CATIA.SystemService.Environ("CATDocView")
 sSep=CATIA.SystemService.Environ("ADL_ODT_SLASH")
 
@@ -61,11 +57,11 @@ End If
 ```
 
 ```vbscript
-```vbscript
+```cpp
 Set documents1 = CATIA.Documents
 ```vbscript
 ```
-```vbscript
+```cpp
 ' -----------------------------------------------------------
 ' Get the collection of documents in session
 ' Create the CATAnalysis Document
@@ -79,14 +75,14 @@ Set TheAnalysisDocument = documents1.Add("Analysis")
 
 ```
 
-```vbscript
+```cpp
 WBName = CATIA.GetWorkbenchId
 ```
 ```
 
 If (WBName <> "GPSCfg") Then
 ```vbscript
-```vbscript
+```cpp
   CATIA.StartWorkbench("GPSCfg")
 ```
 ```
@@ -99,7 +95,7 @@ End If
 ```vbscript
 If (WBName <> "GPSCfg") Then
 ```vbscript
-```vbscript
+```cpp
 CATIA.StartWorkbench("GPSCfg")
 ```
 ```
@@ -135,7 +131,7 @@ analysisManager1.ImportDefineFile sDocPath & sSep & "online" & sSep & "CAAScdAni
 ```
 
 ```vbscript
-```vbscript
+```cpp
 Set specsAndGeomWindow2 = CATIA.ActiveWindow
 ```vbscript
 ```
@@ -157,7 +153,7 @@ viewer3D1.Reframe
 Set analysisLinkedDocuments1 = analysisManager1.LinkedDocuments
 ```vbscript
 ```
-```vbscript
+```cpp
 CATIA.SystemService.Print analysisLinkedDocuments1.Name
 ```
 ```
@@ -176,7 +172,7 @@ End If
 
 ```
 
-```vbscript
+```cpp
 ' Retrieve the CATProduct Document and associated publications and constraints collection.
 ```
 
@@ -186,7 +182,7 @@ Set productDocument1 = analysisLinkedDocuments1.Item(1)
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
 Set product1 = productDocument1.Product
 Set products1 = product1.Products
 Set publications1 = product1.Publications
@@ -204,7 +200,7 @@ Set products1 = product1.Products
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
 Set publications1 = product1.Publications
 Set constraints1 = product1.Connections("CATIAConstraints")
 ```
@@ -365,7 +361,7 @@ From the restraint set defined on the analysis case, we retrieve the collection 
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
 ' Create load boundary. Associated to the virtual part
 ```vbscript
 Set analysisEntities3 = analysisSet3.AnalysisEntities
@@ -419,7 +415,7 @@ The load is defined as the boundaries. In this case the support is the virtual p
 ```vbscript
 ' Some examples to read the data on the basic component
 ' In this case, direct read
-```vbscript
+```cpp
 CATIA.SystemService.Print " ForceVector " & basicComponent3.GetValue("", 1, 1, 1)
 CATIA.SystemService.Print " ForceVector " & basicComponent3.GetValue("", 2, 1, 1)
 
@@ -445,7 +441,7 @@ Set SubList = ParametersList.SubList(basicComponent3, FALSE)
 For i = 1 to SubList.Count
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
   Set Parameter = SubList.Item(i)
   CATIA.SystemService.Print Parameter.Name
   CATIA.SystemService.Print Parameter.ValueAsString

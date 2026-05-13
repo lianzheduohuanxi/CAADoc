@@ -300,7 +300,7 @@ CAADlgBBSender &amp;
 CAADlgBBReceiver &amp;
 ```
 
-```vbscript
+```cpp
 ...
 HRESULT CAADlgBBSenderWindow::BackboneInit(#)
 {
@@ -318,7 +318,7 @@ HRESULT CAADlgBBSenderWindow::BackboneInit(#)
 ...
 ```
 
-```vbscript
+```cpp
 ...
 void CAADlgBBSenderWindow::PushSend(CATCommand         * iSendingCommand, 
                                     CATNotification    * iSentNotification, 
@@ -351,7 +351,7 @@ void CAADlgBBSenderWindow::PushSend(CATCommand         * iSendingCommand,
 ...
 ```
 
-```vbscript
+```cpp
 #include &quot;CATBaseUnknown.h&quot;   //Needed to derive from CATBaseUnknown
 
 class CATICommMsg;
@@ -371,7 +371,7 @@ class  CAADlgBBEditorMessageHandler : public CATBaseUnknown
 };
 ```
 
-```vbscript
+```cpp
 #include &quot;CAADlgBBEditorMessageHandler.h&quot;
 #include &lt;CATErrorDef.h&gt; // for the SUCCEEDED macro 
 #include &quot;CAAIDlgDataRequest.h&quot;
@@ -415,13 +415,13 @@ void CAADlgBBEditorMessageHandler::HandleMessage(CATICommMsg* iMessage)
 }
 ```
 
-```vbscript
+```cpp
 ...
 CAADlgBBEditorMessageHandler CATIMessageReceiver  libCAADlgBBReceiver
 ...
 ```
 
-```vbscript
+```cpp
 #include &lt;CAADlgBBMessageManager.h&gt;
 #include &lt;CAADlgBBMessageNotification.h&gt;
 #include &quot;CATCallbackManager.h&quot;
@@ -462,7 +462,7 @@ CAADlgBBMessageManager * CAADlgBBMessageManager::GetManager(#)
 ...
 ```
 
-```vbscript
+```cpp
 void CAADlgBBReceiverWindow::Build(#)
 {
   HRESULT Init = BackboneInit(#);
@@ -491,7 +491,7 @@ void CAADlgBBReceiverWindow::Build(#)
 ...
 ```
 
-```vbscript
+```cpp
 HRESULT CAADlgBBReceiverWindow::BackboneInit(#)
 {
   HRESULT rc = E_FAIL;
@@ -531,7 +531,7 @@ HRESULT CAADlgBBReceiverWindow::BackboneInit(#)
 ...
 ```
 
-```vbscript
+```cpp
 ...
 void CAADlgBBReceiverWindow::ModifyEditor(CATCallbackEvent  ievent,
                                           void             *ipublisher,
@@ -550,7 +550,7 @@ void CAADlgBBReceiverWindow::ModifyEditor(CATCallbackEvent  ievent,
 ...
 ```
 
-```vbscript
+```cpp
 ...
 CAADlgBBReceiverWindow::~CAADlgBBReceiverWindow(#)
 { 

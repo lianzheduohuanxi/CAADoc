@@ -136,7 +136,7 @@ an object.
 ' ------------
 ' Get the part document
 ' ------------
-```vbscript
+```cpp
 Set oPartDocument = CATIA.ActiveDocument
 ...
 ```
@@ -166,7 +166,7 @@ End If
 ...
 ```
 
-```vbscript
+```cpp
 ...
 ' ------------
 ' The string as delimiter between input in the text file
@@ -175,13 +175,13 @@ iDelimiter = &quot;//&quot;
 ' ------------
 ' Get the CATIA file system
 ' ------------
-```vbscript
+```cpp
 Set oCATIAFileSys = CATIA.FileSystem
 ' ------------
 ```
 ' Get the file containing the hole parameters
 ' ------------
-```vbscript
+```cpp
 Set oFile = oCATIAFileSys.GetFile(sDocPath &amp; &quot;/online/CAAScdPriUseCases/macros/CAAPriChangeHole.txt&quot;)
 ' ------------
 ```
@@ -224,7 +224,7 @@ CAAPriChangeHoleForm.Hide
 ...
 ```
 
-```vbscript
+```cpp
 ...
 iHoleInSelection = True
 ' ------------

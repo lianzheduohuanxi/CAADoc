@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Defining the Activated Workbench"
-category: use-case case"
+category: "use-case case"
 module: "CAAAfrUseCases"
-tags: ["CAAEAfrActivateWorkbenchOnPart", "CATIAfrActivateWorkbench", "CAAAfrInitialWorkbench", "CATIAApplicationFrm", "CAACATIAApplicationFrm", "CAAAfrProduct", "CAAApplicationFrame"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrInitialWorkbench.htmmd"
+tags: "["CAAEAfrActivateWorkbenchOnPart", "CATIAfrActivateWorkbench", "CAAAfrInitialWorkbench", "CATIAApplicationFrm", "CAACATIAApplicationFrm", "CAAAfrProduct", "CAAApplicationFrame"]"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrInitialWorkbench.htm"
 converted: "2026-05-11T17:17:55.614529"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -84,7 +81,6 @@ In this file, remove the "**#** " character before the following line,
 
 and run mkCreateRuntimeView.
 
-and run mkCreateRuntimeView.
 Then, in the window where you run the mkrun command, do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following:
 
   1. On the **Start** menu, select **Shape** and click **FreeStyle**
@@ -122,7 +118,6 @@ Without the _CATIAfrActivateWorkbench_ implementation, the current workbench wou
 Without the _CATIAfrActivateWorkbench_ implementation, the current workbench would have been **Wireframe and Surface Design,** the last used workbench for a Part.
 Windows | `InstallRootDirectory/CAACATIAApplicationFrm.edu/InputData/`
 
-Windows | `InstallRootDirectory/CAACATIAApplicationFrm.edu/InputData/`
 Unix | `InstallRootDirectory/CAACATIAApplicationFrm.edu/InputData/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
@@ -191,9 +186,9 @@ The _CAAEAfrActivateWorkbenchOnPart_ class derives from _CATBaseUnkown_. The `Ge
     #include "TIE_CATIAfrActivateWorkbench.h"
     TIE_CATIAfrActivateWorkbench(CAAEAfrActivateWorkbenchOnPart);
 
-```vbscript
+```cpp
 TIE_CATIAfrActivateWorkbench(CAAEAfrActivateWorkbenchOnPart);
-```vbscript
+```cpp
     CATImplementClass (CAAEAfrActivateWorkbenchOnPart,**DataExtension** ,
 ```
 

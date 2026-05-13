@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Corner"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperatorsCornerCreation", "CATICGMTopCorner", "CAAGMOperatorsInterfaces"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopCorner.htmmd"
+tags: "["CAAGMOperatorsCornerCreation", "CATICGMTopCorner", "CAAGMOperatorsInterfaces"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopCorner.htm"
 converted: "2026-05-11T17:33:49.126240"
-```
-
 ---
 Corner
 
@@ -79,7 +76,6 @@ pCornerOpe->Release(#);
 pCornerOpe = NULL;
 you get this result: Fig.2 Result of Corner Operation  ![Corner-SetOffsetOrientation/(-1,-1/)](images/CGM_corner_minus1_minus1.png)
 
-you get this result: Fig.2 Result of Corner Operation  ![Corner-SetOffsetOrientation/(-1,-1/)](images/CGM_corner_minus1_minus1.png)
 SetOffsetOrientation(-1,-1) | SetOffsetOrientation(1,-1)  | SetOffsetOrientation(1,-1)
 ```vbscript
 SetCircleMode(Direct) | SetCircleMode(Direct) | SetCircleMode(Complementary)

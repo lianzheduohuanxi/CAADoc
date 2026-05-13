@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Using the CATSurfacicRep class"
-category: use-case case"
+category: "use-case case"
 module: "CAAVisUseCases"
-tags: ["CAAVisBaseView", "CAAVisBaseDocument", "CAAVisBasics", "CATInternalSharpeEdge", "CATInternalSharpePoint", "CAAVisBaseApplication", "CAAVisBaseVisuObjectDocument", "CATInternalSmoothPoint", "CAAVisualization", "CATInternalSmoothEdge"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleCATSurfacicRep.htmmd"
+tags: "["CAAVisBaseView", "CAAVisBaseDocument", "CAAVisBasics", "CATInternalSharpeEdge", "CATInternalSharpePoint", "CAAVisBaseApplication", "CAAVisBaseVisuObjectDocument", "CATInternalSmoothPoint", "CAAVisualization", "CATInternalSmoothEdge"]"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleCATSurfacicRep.htm"
 converted: "2026-05-11T17:31:52.081159"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -65,10 +62,9 @@ _Fig 1: The Cylinder_ ![](images/CAAVisSampleCylinder.jpg)
 
 To launch CAAVisBasics, you will need to set up the build time environment, then compile CAAVisBasics along with its prerequisites, set up the run time environment, and then execute the use case [1].
 
-To launch CAAVisBasics, you will need to set up the build time environment, then compile CAAVisBasics along with its prerequisites, set up the run time environment, and then execute the use case [1].
 A torus is displayed in a 3D navigation viewer as soon as the application is launched.
 
-```vbscript
+```cpp
 Select in menu bar: VisuObject->CATSurfacicRep,  the cylinder is displayed.
 
 ```
@@ -108,7 +104,7 @@ This article does not focus on the details of tesselating a cylinder. A good sam
 ---|---|---
 1 | Create the graphic primitive and its associated bounding box | `CreateSurfacicRep` method of _CAAVisBaseVisuObjectDocument_
 2 | Associate topological information to the graphic primitives | `CreateSurfacicRep` method of _CAAVisBaseVisuObjectDocument_
-```vbscript
+```cpp
 3 | Set graphic attributes to the graphic primitive | `CreateSurfacicRep` method of _CAAVisBaseVisuObjectDocument_
 4 | Creating the CATSurfacicRep representation | `CreateSurfacicRep` method of _CAAVisBaseVisuObjectDocument_
 ```
@@ -175,7 +171,6 @@ nbFanVertices);
 
 The `CAT3DPlanarFaceGP` graphic primitive used for the top and bottom faces of the cylinder allows to create a planar face that only needs one normal definition instead of one normal for each vertex. This allows for less memory consumption when creating planar faces.
 
-The `CAT3DPlanarFaceGP` graphic primitive used for the top and bottom faces of the cylinder allows to create a planar face that only needs one normal definition instead of one normal for each vertex. This allows for less memory consumption when creating planar faces.
 The `CAT3DLineGP` graphic primitive used for the lines that bounds the top, bottom, and body faces of the cylinder allows to create a line using an input set of vertices.
 
 The bounding box and bounding sphere are generated automatically when a _CAT3DFaceGP_ or _CAT3DPlanarFaceGP_ is instancianted based on it's input set of vertices. Both classes inherit _CAT3DBoundingGP_ which provides the following methods to retrieve the bounding element on such classes:
@@ -302,12 +297,12 @@ sRep->AddGeomFace(bodyFace,	 new CATGraphicAttributeSet(tmpAtt));
 
 The main methods used for adding/retrieving graphic primitives to a CATSurfacicRep are the following (Please see the CAA documentation for the full list of methods available) :
 
-```vbscript
+```cpp
 `HRESULT AddGeomFace(CAT3DFaceGP *face,CATGraphicAttributeSet *att)` | Adds a CAT3DFaceGP / CAT3DPlanarFaceGP and it corresponding graphic attribute to the surfacic rep.
 ---|---
 ```
 `int GeomNumberOfFaces(#)` | Retrieves the number of faces owned by the surfacic rep.
-```vbscript
+```cpp
 `HRESULT AddGeomElt(const CATGeomType iType, CATGraphicPrimitive *iGP, CATGraphicAttributeSet *iAtt)` | Adds a graphic primitive iGP of type iType and it corresponding graphic attribute to the surfacic rep.
 `CATGraphicPrimitive * GeomElt(const CATGeomType iType, const int i)` | Retrieves the graphic primitive of type iType
 ```
@@ -351,7 +346,6 @@ Here, the global bounding sphere is computed using the bounding sphere of all th
 
 The `AddRepToViewer` method displays the created representation.
 
-The `AddRepToViewer` method displays the created representation.
     void CAAVisBaseDocument::AddRepToViewer(#)
 
     {

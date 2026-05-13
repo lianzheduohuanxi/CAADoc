@@ -1,23 +1,15 @@
 ---
 title: "CAAPspDefineUserAttributes"
-type: "interface"
+type: "LocalClass"
 module: "CAAPlantShipInterfaces"
-category: api-reference
 base: "CATPspKweUserAttrAdapter"
-inheritance_chain: "CAAPspDefineUserAttributes → CATPspKweUserAttrAdapter"
 method_count: 2
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAPlantShipInterfaces.edu/CAAPspDefineUserProperties.m/LocalInterfaces/CAAPspDefineUserAttributes.h"
 ---
+
 # CAAPspDefineUserAttributes
 
-**基类**: CATPspKweUserAttrAdapter  
-**继承链**: CAAPspDefineUserAttributes → CATPspKweUserAttrAdapter  
-**模块**: CAAPlantShipInterfaces  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 2
+**基类**: CATPspKweUserAttrAdapter | **模块**: CAAPlantShipInterfaces | **方法数**: 2
 
 ## 依赖
 
@@ -26,28 +18,32 @@ verified: true
 - `CATICkeParm.h`
 - `CATIProduct.h`
 
+## 虚方法
+
+### DefineKweUserAttr
+
+```cpp
+virtual HRESULT DefineKweUserAttr(const CATString &isTypeName, CATListValCATAttributeInfos &olAttrInfos) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| &isTypeName | `const CATString` |
+| &olAttrInfos | `CATListValCATAttributeInfos` |
+
+
+### GetValue
+
+```cpp
+virtual CATIValue* GetValue(CATIInstance* ipiObject, const CATUnicodeString& iKey) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| ipiObject | `CATIInstance*` |
+| iKey | `const CATUnicodeString&` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATPspKweUserAttrAdapter**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAPlantShipInterfaces.edu/CAAPspDefineUserProperties.m/LocalInterfaces/CAAPspDefineUserAttributes.h`

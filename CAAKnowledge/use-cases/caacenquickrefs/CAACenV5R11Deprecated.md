@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Deprecated CAA V5R9 APIs Removed from CAA V5R11"
 category: "use-case"
 module: "CAACenQuickRefs"
-tags: ["CATITPSReferenceFrame", "CATIGSMAssemble", "CATITTRS", "CATIVpmAFLAffectedObject", "CATIVpmAFLAction", "CATIDrwAnnotationFactory", "CATIMechanicalPartProperties"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R11Deprecated.htmmd"
+tags: "["CATITPSReferenceFrame", "CATIGSMAssemble", "CATITTRS", "CATIVpmAFLAffectedObject", "CATIVpmAFLAction", "CATIDrwAnnotationFactory", "CATIMechanicalPartProperties"]"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R11Deprecated.htm"
 converted: "2026-05-11T17:33:47.051543"
-```
-
 ---
 tags: ["CATITPSReferenceFrame", "CATIGSMAssemble", "CATITTRS", "CATIVpmAFLAffectedObject", "CATIVpmAFLAction", "CATIDrwAnnotationFactory", "CATIMechanicalPartProperties"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R11Deprecated.htmmd"
@@ -21,7 +18,6 @@ The following deprecated classes, interfaces, methods, or global functions in V5
   * **Add** method in interface CATIGSMAssemble
   * **AddConstructedRGE** method in interface CATITTRS
   * **AddProductView** method in interface CATIVpmAFLAction
-  * **AddProductView** method in interface CATIVpmAFLAction
   * **CATIMechanicalPartProperties** interface in MechanicalModeler
   * **CATListOfCATIVpmAFLXeff.** collection in VPMInterfaces
   * **CATMmrGeoElement3D** global function in MechanicalModeler
@@ -31,7 +27,7 @@ The following deprecated classes, interfaces, methods, or global functions in V5
   * **GetElementAtPosition** method in interface CATIGSMAssemble
   * **GetFeatureOfSize** method in interface CATITTRS
   * **GetMRGE** method in interface CATITTRS
-```vbscript
+```cpp
   * **GetObjectFromParameter** method in class CATCkeEvalContext
   * **GetPosition** method in interface CATIGSMAssemble
 ```
@@ -47,7 +43,6 @@ The following deprecated classes, interfaces, methods, or global functions in V5
   * **RemoveElementAtPosition** method in interface CATIGSMAssemble
   * **SetDocType** method in interface CATIVpmAFLAffectedObject
   * **SetFeatureOfSize** method in interface CATITTRS
-  * **SetId** method in interface CATIVpmAFLAffectedObject
   * **SetId** method in interface CATIVpmAFLAffectedObject
   * **SetName** method in interface CATIVpmAFLAffectedObject
   * **SetValue** method in interface CATIVpmAFLAction

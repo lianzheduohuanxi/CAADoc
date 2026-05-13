@@ -1,52 +1,37 @@
 ---
 title: "CAAEPstINFEditPoint"
-type: "interface"
+type: "LocalClass"
 module: "CAAProductStructure"
-category: api-reference
 base: "CATExtIEdit"
-inheritance_chain: "CAAEPstINFEditPoint → CATExtIEdit"
 method_count: 1
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAProductStructure.edu/CAAPstINFCommands.m/LocalInterfaces/CAAEPstINFEditPoint.h"
 ---
+
 # CAAEPstINFEditPoint
 
-**基类**: CATExtIEdit  
-**继承链**: CAAEPstINFEditPoint → CATExtIEdit  
-**模块**: CAAProductStructure  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 1
+> Data extension of the CAAPstINFPoint component, implementing the CATIEdit interface to enable the edition of the points. This class derives from the CATExtIEdit adapter. Illustrates programming the edition of an object by implementing the CATIEdit interface of the ApplicationFrame framework. The CATIEdit interface has 2 methods: Activate and GetPanelItem. Only Activate needs to be redefined. Its aim is to return a command that edits the object. Inheritance: CATExtIEdit (ApplicationFrame Framework) CATBaseUnknown (System Framework) Main Method: Activate: Returns a CATCommand to edit the selected point.
 
-> Main Method:
+**基类**: CATExtIEdit | **模块**: CAAProductStructure | **方法数**: 1
 
 ## 依赖
 
 - `CATExtIEdit.h`
 
+## 虚方法
+
+### Activate
+
+```cpp
+virtual CATCommand * Activate(CATPathElement *ipPath) ;
+```
+
+Activate -------- Returns a CATCommand to edit the selected point. iPath is the path from the root object to the selected object
+
+| 参数 | 类型 |
+|------|------|
+| *ipPath | `CATPathElement` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATExtIEdit**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAProductStructure.edu/CAAPstINFCommands.m/LocalInterfaces/CAAEPstINFEditPoint.h`

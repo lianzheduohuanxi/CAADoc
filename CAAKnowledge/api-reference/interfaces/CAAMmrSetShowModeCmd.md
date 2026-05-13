@@ -1,54 +1,43 @@
 ---
 title: "CAAMmrSetShowModeCmd"
-type: "interface"
+type: "LocalClass"
 module: "CAAMechanicalModeler"
-category: api-reference
-method_count: 1
-visibility: "local"
-has_tie_binding: false
-verified: true
+base: "CATStateCommand"
+method_count: 2
+source_file: "CAAMechanicalModeler.edu/CAAMmrCommands.m/LocalInterfaces/CAAMmrSetShowModeCmd.h"
 ---
+
 # CAAMmrSetShowModeCmd
 
-**模块**: CAAMechanicalModeler  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 1
-
-> ----------------------------------------------------------------------
+**基类**: CATStateCommand | **模块**: CAAMechanicalModeler | **方法数**: 2
 
 ## 依赖
 
+- `CATStateCommand.h`
 - `CATBoolean.h`
 
+## 虚方法
+
+### BuildGraph
+
+```cpp
+virtual void BuildGraph() ;
+```
+
+
+## 公共方法
+
+### SwapShowMode
+
+```cpp
+CATBoolean SwapShowMode(void* iData) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iData | `void*` |
+
+
 ---
 
-## Interface Overview
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-This interface is used in the following use cases:
-
-- [CAACenWhatsNew](../../use-cases/caacenquickrefs/CAACenWhatsNew.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAMechanicalModeler.edu/CAAMmrCommands.m/LocalInterfaces/CAAMmrSetShowModeCmd.h`

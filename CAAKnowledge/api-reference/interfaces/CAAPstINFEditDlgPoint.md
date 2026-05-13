@@ -1,56 +1,31 @@
 ---
 title: "CAAPstINFEditDlgPoint"
-type: "interface"
+type: "LocalClass"
 module: "CAAProductStructure"
-category: api-reference
 base: "CATDlgDialog"
-inheritance_chain: "CAAPstINFEditDlgPoint → CATDlgDialog"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 1
+source_file: "CAAProductStructure.edu/CAAPstINFCommands.m/LocalInterfaces/CAAPstINFEditDlgPoint.h"
 ---
+
 # CAAPstINFEditDlgPoint
 
-**基类**: CATDlgDialog  
-**继承链**: CAAPstINFEditDlgPoint → CATDlgDialog  
-**模块**: CAAProductStructure  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> Dialog box which edits a point (an CAAPstINFPoint component). This dialog box is called by the CAAPstINFEditCmdPoint command which is the Edit command of the CAAPstINFPoint component, that is to say the command returned by the CAAPstINFPoint implementation of the CATIEdit interface. Illustrates programming a dialog which edits an object. The dialog box does not manage its life cycle. The calling command must request its destruction. Inheritance: CATDlgDialog ( Dialog Framework) CATDlgWindow ( Dialog Framework) CATDialog   (Dialog Framework) CATCommand  (System Framework) CATBaseUnknown (System Framework). Main Method: Build        -> Construction of the dialog objects. ClickPreview -> Modifies the object and sends a notification to update the display. ClickOk      -> Modifies the object, sends a notification to update the display and closes the dialog box. ClickCancel  -> Restores the initial values, sends a notification to update the display and closes the dialog box. CloseBox     -> Hides the dialog box and sends a close notification. ******************************************************************************
 
-> Dialog Framework
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATDlgDialog | **模块**: CAAProductStructure | **方法数**: 1
 
 ## 依赖
 
 - `CATDlgDialog.h`
 
+## 公共方法
+
+### Build
+
+```cpp
+void Build() ;
+```
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATDlgDialog**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAProductStructure.edu/CAAPstINFCommands.m/LocalInterfaces/CAAPstINFEditDlgPoint.h`

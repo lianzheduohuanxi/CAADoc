@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "The CGM Topological Model"
 category: "use-case"
 module: "CAATobTechArticles"
-tags: []
-source_file: "Doc/online/CAATobTechArticles/TopoModel.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAATobTechArticles/TopoModel.htm"
 converted: "2026-05-11T17:33:45.920949"
-```
-
 ---
 tags: []
 source_file: "Doc/online/CAATobTechArticles/TopoModel.htmmd"
@@ -57,7 +54,7 @@ The building up of a CATBody takes several steps
   * Attach the first level of domain(s) defining the CATBody.
   * Declare the completion of the CATBody and freeze it (this will be possible only if it satisfies to all the validity criteria, see Validity of the Topological Objects). It now can be used for topological operations, but cannot be modified anymore. It is necessary to make a copy of a frozen CATBody into a non-frozen one, in order to be able to perform modifications. Hence, topological operators do never modify input bodies, but retrieve the result into a new body.
 
-```vbscript
+```cpp
 [Top] CATDomain and CATCell CATDomain and CATCell interfaces implement the concept of topological domains and cells [2]. They offer navigation methods, and all Get and Set methods on their attributes. The following arrays present the mapping between the concepts and the CGM interfaces. Space Dimension | Cell (concepts) | CATCell | Associated CATGeometry | Bounded by
 ---|---|---|---|---
 ```
@@ -163,7 +160,7 @@ Notice the CATSide attributes associated with the CATEdges. A boundary cell oper
 
   * Define the `CATOrientation` of the CATCell with regards to the geometry orientation (choose the orientation of the underlying geometry as much as possible)
   * Define the CATDomain that bounds the CATCell: set the type of boundary (`CATLocation`). For a CATFace, give the list of the CATEdges by letting the matter on the left when you stand along the face direction.
-```vbscript
+```cpp
   * Set the matter side `CATSide` for each CATCell, with regards to its own orientation or define the `CATOrientation` of the CATCell with regards to the CATDomain it belongs to
 
 ```

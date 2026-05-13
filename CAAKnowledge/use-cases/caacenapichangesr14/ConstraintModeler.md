@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "ConstraintModeler Framework Modifications in V5R14"
 category: "use-case"
 module: "CAACenAPIChangesR14"
-version: "V5R14"
-tags: []
-source_file: "Doc/online/CAACenAPIChangesR14/ConstraintModeler.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAACenAPIChangesR14/ConstraintModeler.htm"
 converted: "2026-05-11T17:33:50.877769"
-```
-
 ---
 tags: []
 source_file: "Doc/online/CAACenAPIChangesR14/ConstraintModeler.htmmd"

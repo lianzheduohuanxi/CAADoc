@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Printing Files"
-category: use-case case"
+category: "use-case case"
 module: "CAAPrtUseCases"
-tags: ["CAAPrtPrintFile", "CAAPrint"]
-source_file: "Doc/online/CAAPrtUseCases/CAAPrtSamplePrintFile.htmmd"
+tags: "["CAAPrtPrintFile", "CAAPrint"]"
+source_file: "Doc/online/CAAPrtUseCases/CAAPrtSamplePrintFile.htm"
 converted: "2026-05-11T17:17:56.141802"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -84,7 +81,6 @@ _The CAAPrtPrintFile.jpg File_ ![](images/CAASamplePrtPrintFile.jpg)
 
 The CAAPrtPrintFile use case is made of a several classes located in the CAAPrtPrintFile.m module of the CAAPrint.edu framework:
 
-The CAAPrtPrintFile use case is made of a several classes located in the CAAPrtPrintFile.m module of the CAAPrint.edu framework:
 Windows | `InstallRootDirectory/CAAPrint.edu/CAAPrtPrintFile.m/`
 
 The CAAPrtPrintFile use case is made of a several classes located in the CAAPrtPrintFile.m module of the CAAPrint.edu framework:
@@ -132,8 +128,7 @@ As soon as the input file is retrieved, the list of available printers is displ
       // Retrieves and displays the list of printers
       cout << "Available printers: " << endl << endl;
 
-cout << "Available printers: " << endl << endl;
-```vbscript
+```cpp
       for (int i=0; i<**CATPrinterManager::GetPrinterCount(#)** ; i++)
 
 ```

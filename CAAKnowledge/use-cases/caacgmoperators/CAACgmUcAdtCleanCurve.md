@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Achieving a Given Continuity along a Wire"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CATICGMTopCleanCrvOperator", "CAAGMModelGemBrowser", "CATICGMTopWire", "CAAGMOperatorsCleanCrv", "CAAAdtCleanCrv"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtCleanCurve.htmmd"
+tags: "["CAAGMOperatorsInterfaces", "CAADoc", "CATICGMTopCleanCrvOperator", "CAAGMModelGemBrowser", "CATICGMTopWire", "CAAGMOperatorsCleanCrv", "CAAAdtCleanCrv"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtCleanCurve.htm"
 converted: "2026-05-11T17:33:48.844279"
-```
-
 ---
 tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CATICGMTopCleanCrvOperator", "CAAGMModelGemBrowser", "CATICGMTopWire", "CAAGMOperatorsCleanCrv", "CAAAdtCleanCrv"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtCleanCurve.htmmd"
@@ -55,7 +52,6 @@ Maximum deformation of 0.2 specified.
     * Running the operator and retrieving the resulting body (common to all operators - not discussed below).
 Creating the Curves Making up the Wire The curves to be used in the wire are CATLine that are simply created from the geometry factory.
 
-Creating the Curves Making up the Wire The curves to be used in the wire are CATLine that are simply created from the geometry factory.
     CATMathPoint P0(0,0,0);
     CATMathPoint P1(10,7.5,0);
     CATMathPoint P2(20,15,-2);
@@ -100,7 +96,7 @@ Creating a CATICGMTopCleanCrvOperator Operator Instance The CATICGMTopCleanCrvOp
     //
 CATICGMTopCleanCrvOperator * pCleanCrvOpe0 = NULL;
 CATBody * piCleanBody = NULL;
-```vbscript
+```cpp
     pCleanCrvOpe0 =::CATCGMCreateTopCleanCrvOperator(piGeomFactory,
 
 ```

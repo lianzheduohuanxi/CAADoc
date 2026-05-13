@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Nozzle Shape Thanks to Shape Design Features"
-category: use-case case"
+category: "use-case case"
 module: "CAAGsiUseCases"
-tags: ["CAAGSMInterfaces", "CAAGsiNozzle", "CATIGSMFactory", "CATISpecObject", "CAAGsiUserTools", "CAA2SampleSession", "CATIGSMTool_var", "CAAGsiObjTool", "CATISpecObject_var"]
-source_file: "Doc/online/CAAGsiUseCases/CAAGsiNozzleSample.htmmd"
+tags: "["CAAGSMInterfaces", "CAAGsiNozzle", "CATIGSMFactory", "CATISpecObject", "CAAGsiUserTools", "CAA2SampleSession", "CATIGSMTool_var", "CAAGsiObjTool", "CATISpecObject_var"]"
+source_file: "Doc/online/CAAGsiUseCases/CAAGsiNozzleSample.htm"
 converted: "2026-05-11T17:31:50.638182"
-```
-
 ---
 # Shape Design & Styling
 
@@ -73,7 +70,6 @@ We have decided to split the creation of the Nozzle Shape in different steps: fi
 
 To launch CAAGsiNozzle, you will need to set up the build time environment, then compile CAAGsiNozzle along with its prerequisites, and set up the run time environment, and then execute the use case [1].
 
-To launch CAAGsiNozzle, you will need to set up the build time environment, then compile CAAGsiNozzle along with its prerequisites, and set up the run time environment, and then execute the use case [1].
 CAAGsiUserTools API is used in CAAGsiNozzle use Case
 
 Launch the use case as follows:
@@ -100,7 +96,6 @@ where:
 
 The CAAGsiNozzle use case is made of main program located in the CAAGsiNozzle.m module of the CAAGSMInterfaces.edu framework:
 
-The CAAGsiNozzle use case is made of main program located in the CAAGsiNozzle.m module of the CAAGSMInterfaces.edu framework:
 Windows | `InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiNozzle.m/`
 
 The CAAGsiNozzle use case is made of main program located in the CAAGsiNozzle.m module of the CAAGSMInterfaces.edu framework:
@@ -129,7 +124,6 @@ We will now comment each of those sections by looking at the code of the main me
 
 In CAAGsiNozzle, we use an instance (named CAAGsiObjTool) of the class _CAAGsiUserTools_ to create shape design features. We call the `Init` method to create a session and a Part document.
 
-In CAAGsiNozzle, we use an instance (named CAAGsiObjTool) of the class _CAAGsiUserTools_ to create shape design features. We call the `Init` method to create a session and a Part document.
     int **main**(int argc, char **argv, char **envp)
 
     {
@@ -166,7 +160,7 @@ How to create a point coordinate feature:
       CATLISTV(CATISpecObject_var) aObjectParameters;
 
       ...
-```vbscript
+```cpp
 CATLISTV(CATISpecObject_var) aObjectParameters;
       CATISpecObject_var spCurrent = NULL_var;
 

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Changes to ENOVIA LCA Metadata in V5R12 Compared with V5R11"
 category: "use-case"
 module: "CAACenQuickRefs"
-tags: []
-source_file: "Doc/online/CAACenQuickRefs/CAACenMetaExpR12vsR11.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAACenQuickRefs/CAACenMetaExpR12vsR11.htm"
 converted: "2026-05-11T17:33:46.625755"
-```
-
 ---
 tags: []
 source_file: "Doc/online/CAACenQuickRefs/CAACenMetaExpR12vsR11.htmmd"
@@ -19,7 +16,6 @@ CAA V5 Encyclopedia |  Changes to ENOVIA LCA Metadata in V5R12 Compared with V5R
 CAA V5 Encyclopedia |  Changes to ENOVIA LCA Metadata in V5R12 Compared with V5R11
 Status | Domain | Domain Inheritance | Object | Type | Object Inheritance | Attribute | Type
 
-Status | Domain | Domain Inheritance | Object | Type | Object Inheritance | Attribute | Type
 Attribute length change | PRODUCT | TEMPLAT | VPMProductClass | Class |   | V_user | from 10 to 32 (Simple)
 Attribute length change | PRODUCT | TEMPLAT | VPMProductClass | Class |   | V_organization | from 20 to 32 (Simple)
 Attribute length change | PRODUCT | TEMPLAT | VPMProductRootClass | Class |   | V_user | from 10 to 32 (Simple)

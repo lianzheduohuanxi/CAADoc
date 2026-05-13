@@ -1,48 +1,44 @@
 ---
 title: "CAAxPDMTSTCommandHeader"
-type: "interface"
+type: "LocalClass"
 module: "CAAxPDMInterfaces"
-category: api-reference
 base: "CATCommandHeader"
-inheritance_chain: "CAAxPDMTSTCommandHeader → CATCommandHeader"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 2
+source_file: "CAAxPDMInterfaces.edu/CAAxPDMToolbar.m/LocalInterfaces/CAAxPDMTSTCommandHeader.h"
 ---
+
 # CAAxPDMTSTCommandHeader
 
-**基类**: CATCommandHeader  
-**继承链**: CAAxPDMTSTCommandHeader → CATCommandHeader  
-**模块**: CAAxPDMInterfaces  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
-
-> COPYRIGHT DASSAULT SYSTEMES 2006
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATCommandHeader | **模块**: CAAxPDMInterfaces | **方法数**: 2
 
 ## 依赖
 
 - `CATCommandHeader.h`
 
+## 公共方法
+
+### OnSettingsChange
+
+```cpp
+void OnSettingsChange(CATCallbackEvent iEvt, void * iSrv, CATNotification * iNotif, CATSubscriberData iData, CATCallback iCB) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iEvt | `CATCallbackEvent` |
+| iSrv | `void *` |
+| iNotif | `CATNotification *` |
+| iData | `CATSubscriberData` |
+| iCB | `CATCallback` |
+
+
+### UpdateHeader
+
+```cpp
+void UpdateHeader() ;
+```
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATCommandHeader**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAxPDMInterfaces.edu/CAAxPDMToolbar.m/LocalInterfaces/CAAxPDMTSTCommandHeader.h`

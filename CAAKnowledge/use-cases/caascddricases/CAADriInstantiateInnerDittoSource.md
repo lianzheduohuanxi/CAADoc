@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAADriInstantiateInnerDitto.CATScript"
 category: "use-case"
 module: "CAAScdDriUseCases"
-tags: ["CAADriInstantiateInnerDitto", "CATIA", "CAADriInstantiateDittoSource", "CAAScdDriUseCases"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriInstantiateInnerDittoSource.htmmd"
+tags: "["CAADriInstantiateInnerDitto", "CATIA", "CAADriInstantiateDittoSource", "CAAScdDriUseCases"]"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriInstantiateInnerDittoSource.htm"
 converted: "2026-05-11T17:31:51.082294"
-```
-
 ---
 tags: ["CAADriInstantiateInnerDitto", "CATIA", "CAADriInstantiateDittoSource", "CAAScdDriUseCases"]
 source_file: "Doc/online/CAAScdDriUseCases/CAADriInstantiateInnerDittoSource.htmmd"
@@ -16,7 +13,7 @@ converted: "2026-05-11T17:31:51.082294"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGHT DASSAULT SYSTEMES 2003
     ' ***********************************************************************
     '   Purpose:      This macro allows you to instantiate a ditto in
@@ -32,12 +29,12 @@ converted: "2026-05-11T17:31:51.082294"
 
 ```
 
-```vbscript
+```cpp
     Sub CATMain(#)
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
         ' Set the CATIA popup file alerts to False
         ' It prevents to stop the macro at each alert during its execution
 ```
@@ -47,7 +44,7 @@ converted: "2026-05-11T17:31:51.082294"
 ```
 
 ```vbscript
-```vbscript
+```cpp
         CATIA.DisplayFileAlerts = False
 ```
 ```
@@ -57,14 +54,14 @@ converted: "2026-05-11T17:31:51.082294"
 ```vbscript
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String
-```vbscript
+```cpp
         sDocPath=CATIA.SystemService.Environ("CATDocView")
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
           Err.Raise 9999,,"No Doc Path Defined"
         End If
 ```
         ' Open the drawing document
-```vbscript
+```cpp
         Dim oDrawing As DrawingDocument
         Set oDrawing = CATIA.Documents.Open(sDocPath & _
 ```

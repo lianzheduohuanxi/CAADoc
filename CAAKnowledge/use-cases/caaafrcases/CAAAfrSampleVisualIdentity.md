@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Product Line Visual Identity"
-category: use-case case"
+category: "use-case case"
 module: "CAAAfrUseCases"
-tags: ["CAADecorationP1", "CAADecorationP2", "CAAProductLine", "CAABackgroundNT", "CAAProduct", "CAALogoP1IX", "CAALogoP1NT", "CAAAfrProductLine", "CAABackgroundIX", "CAALogoP2NT", "CAALogoP2IX", "CAASplash", "CAAApplicationFrame"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleVisualIdentity.htmmd"
+tags: "["CAADecorationP1", "CAADecorationP2", "CAAProductLine", "CAABackgroundNT", "CAAProduct", "CAALogoP1IX", "CAALogoP1NT", "CAAAfrProductLine", "CAABackgroundIX", "CAALogoP2NT", "CAALogoP2IX", "CAASplash", "CAAApplicationFrame"]"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleVisualIdentity.htm"
 converted: "2026-05-11T17:17:55.820891"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -67,7 +64,6 @@ Do not type the module name on the command line, but type the **product name**.
 
 The CAAAfrProductLine use case is made of a single source file named _CAAAfrProductLine.cpp_ located in the CAAAfrProductLine.m module of the CAAApplicationFrame.edu framework:
 
-The CAAAfrProductLine use case is made of a single source file named _CAAAfrProductLine.cpp_ located in the CAAAfrProductLine.m module of the CAAApplicationFrame.edu framework:
 Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrProductLine.m/`
 
 The CAAAfrProductLine use case is made of a single source file named _CAAAfrProductLine.cpp_ located in the CAAAfrProductLine.m module of the CAAApplicationFrame.edu framework:
@@ -161,7 +157,6 @@ When the icon is created, use Save As to save the icon in the src directory of y
            //
 
            1 TEXTINCLUDE DISCARDABLE
-1 TEXTINCLUDE DISCARDABLE
            BEGIN
 
                "resource.h/0"

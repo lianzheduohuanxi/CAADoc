@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Resources for Command Headers"
-category: tech-article
+category: "tech-article"
 module: "CAAAfrTechArticles"
-tags: ["CAAAfrPointHdr", "CAAGeometryWksHeader", "CAAAfrGeometryWksHeader", "CAAAfrCircleHdr", "CAAPoint", "CATImplementHeaderResources", "CAAAfrQueryExploreHdr", "CAACircle"]
-source_file: "Doc/online/CAAAfrTechArticles/CAAAfrI18NHeader.htmmd"
+tags: "["CAAAfrPointHdr", "CAAGeometryWksHeader", "CAAAfrGeometryWksHeader", "CAAAfrCircleHdr", "CAAPoint", "CATImplementHeaderResources", "CAAAfrQueryExploreHdr", "CAACircle"]"
+source_file: "Doc/online/CAAAfrTechArticles/CAAAfrI18NHeader.htm"
 converted: "2026-05-11T17:17:55.887253"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -38,7 +35,7 @@ This article shows how to create the resource files, and fill them in with the r
 * * *
 ### Declaring the Command Header Resource Files
 
-```vbscript
+```cpp
 If you use the macros `MacDefineHeader` and `MacImplementHeader`, or `MacDeclareHeader`, the resource files searched for at run time should have the same name than you command header class. This is the case of the CAAGeometryWksHeader [1].
 
 If you create the command header class by yourself, you need to declare the resource file to use. Assume the command header class is named MyHeaderClass. You should insert the `CATDeclareHeaderResources` macro in MyHeaderClass.h:
@@ -46,7 +43,7 @@ If you create the command header class by yourself, you need to declare the reso
 ```
 
     ...
-```vbscript
+```cpp
 If you create the command header class by yourself, you need to declare the resource file to use. Assume the command header class is named MyHeaderClass. You should insert the `CATDeclareHeaderResources` macro in MyHeaderClass.h:
     class MyHeaderClass : public CATCommandHeader
 ```
@@ -84,7 +81,6 @@ where:
 
 There are two command header resource files:
 
-There are two command header resource files:
   1. The resource file containing the title and help messages in the English language, and that can be translated into other languages. It is suffixed using CATNls
   2. The resource file containing the icons and other resources that should not be translated. It suffixed by CATRsc
 
@@ -148,7 +144,6 @@ CAAAfrGeometryWksHeader.CAAAfrPointHdr.Category  = "Element" ;
 
 Below is a reminder of the keywords used in the resource keys that can be found in the CATNls resource file:
 
-Below is a reminder of the keywords used in the resource keys that can be found in the CATNls resource file:
 Title | Text displayed in the menu or submenu, and in the toolbar if no icon is provided
 
 Below is a reminder of the keywords used in the resource keys that can be found in the CATNls resource file:

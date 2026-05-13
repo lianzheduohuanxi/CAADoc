@@ -1,29 +1,17 @@
 ---
 title: "CAAPriEShapeFeatProp"
-type: "interface"
+type: "LocalClass"
 module: "CAAPartInterfaces"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAPriEShapeFeatProp → CATBaseUnknown"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 6
+source_file: "CAAPartInterfaces.edu/CAAPriPattern.m/LocalInterfaces/CAAPriEShapeFeatProp.h"
 ---
+
 # CAAPriEShapeFeatProp
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAPriEShapeFeatProp → CATBaseUnknown  
-**模块**: CAAPartInterfaces  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> In this sample we have implemented the mandatory methods to define the properties of the PatternPad feature: Return code of IsAFreeFormFeature   : 1 Return code of IsAContextualFeature : 0 Return code of CanBePatterned       : 1
 
-> ==========================================================================
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATBaseUnknown | **模块**: CAAPartInterfaces | **方法数**: 6
 
 ## 依赖
 
@@ -31,28 +19,54 @@ verified: true
 - `CATUnicodeString.h`
 - `CATMathPlane.h`
 
+## 公共方法
+
+### IsAFreeFormFeature
+
+```cpp
+int IsAFreeFormFeature() ;
+```
+
+
+### IsAContextualFeature
+
+```cpp
+int IsAContextualFeature() ;
+```
+
+
+### GetPolarity
+
+```cpp
+CATUnicodeString GetPolarity() ;
+```
+
+
+### HasAnAxis
+
+```cpp
+int HasAnAxis() ;
+```
+
+
+### HasAnAxis
+
+```cpp
+int HasAnAxis(CATBaseUnknown_var Elt) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| Elt | `CATBaseUnknown_var` |
+
+
+### CanBePatterned
+
+```cpp
+int CanBePatterned() ;
+```
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAPartInterfaces.edu/CAAPriPattern.m/LocalInterfaces/CAAPriEShapeFeatProp.h`

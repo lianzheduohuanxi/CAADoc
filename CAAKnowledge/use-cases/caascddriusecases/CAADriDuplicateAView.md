@@ -119,11 +119,11 @@ Paste* methods of the *Selection* object.
 
 ```vbscript
 ...
-```vbscript
+```cpp
     ' Set the CATIA popup file alerts to False
     ' It prevents to stop the macro at each alert during its execution
 ```
-```vbscript
+```cpp
     CATIA.DisplayFileAlerts = False
   ...
 ```
@@ -132,14 +132,14 @@ Paste* methods of the *Selection* object.
 ```vbscript
 ...
     ' Open the Drawing document
-```vbscript
+```cpp
     Dim oDrawingSource As DrawingDocument
     Set oDrawingSource = CATIA.Documents.Open(sDocPath &amp; _
              &quot;/online/CAAScdDriUseCases/samples/CAADriDuplicateAView.CATDrawing&quot;)
 ```
     
     ' Fit in window the opened document
-```vbscript
+```cpp
     CATIA.ActiveWindow.ActiveViewer.Reframe
   ...
 ```
@@ -188,7 +188,7 @@ Paste* methods of the *Selection* object.
 ```vbscript
 ...
     ' Create the Drawing document where the view will be pasted
-```vbscript
+```cpp
     Dim oDrawingTarget As DrawingDocument
     Set oDrawingTarget = CATIA.Documents.Add(&quot;Drawing&quot;)
     

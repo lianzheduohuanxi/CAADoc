@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Extracting Isoparametric Curves"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsExtractIsoPar", "CATICGMTopWire", "CATIsoParameter", "CATIsoParamU"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopExtractIsoParam.htmmd"
+tags: "["CAAGMOperatorsInterfaces", "CAAGMOperatorsExtractIsoPar", "CATICGMTopWire", "CATIsoParameter", "CATIsoParamU"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopExtractIsoParam.htm"
 converted: "2026-05-11T17:33:49.157864"
-```
-
 ---
 tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsExtractIsoPar", "CATICGMTopWire", "CATIsoParameter", "CATIsoParamU"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcTopExtractIsoParam.htmmd"

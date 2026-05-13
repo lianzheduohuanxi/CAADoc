@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Schematic Network Object"
 category: "use-case"
 module: "CAAScdSchUseCases"
-tags: ["CAADoc", "CATIAProduct", "CATIASchNetworkAnalysis", "CAAScdSchUseCases", "CATIA", "CAASchAppBase", "CAASCHEDUApp", "CAASchNetwork", "CAASchPlatformModeler", "CAASCH_Network01", "CAASchAppUtilities"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchNetwork.htmmd"
+tags: "["CAADoc", "CATIAProduct", "CATIASchNetworkAnalysis", "CAAScdSchUseCases", "CATIA", "CAASchAppBase", "CAASCHEDUApp", "CAASchNetwork", "CAASchPlatformModeler", "CAASCH_Network01", "CAASchAppUtilities"]"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchNetwork.htm"
 converted: "2026-05-11T17:31:51.405039"
-```
-
 ---
 ## Schematics Platform Modeler
 
@@ -18,7 +15,6 @@ converted: "2026-05-11T17:31:51.405039"
 
  This macro shows you how to create a schematic network object.Given a list of independent objects, this macros shows how to create a Schematic network for each member in the list. The network will include the member itself and all the objects that are connected to it. This macro opens the CAASCH_Network01.CATProduct document. ![](images/CAASchNetwork_01.jpg) Through special naming convention (i.e. the word "network" embedded in the instance name), the macro knows to include the following Schematic component instances in the input list.
 
-This macro shows you how to create a schematic network object.Given a list of independent objects, this macros shows how to create a Schematic network for each member in the list. The network will include the member itself and all the objects that are connected to it. This macro opens the CAASCH_Network01.CATProduct document. ![](images/CAASchNetwork_01.jpg) Through special naming convention (i.e. the word "network" embedded in the instance name), the macro knows to include the following Schematic component instances in the input list.
   1. V-082_network_scale_instance.
   2. V_084_network instance (the control valve in the screen shot).
 
@@ -41,7 +37,6 @@ This macro shows you how to create a schematic network object.Given a list of in
 [ CAASchNetwork.CATScript ](CAASchNetworkSource.md)is located in the CAAScdSchUseCases module. [Execute macro](macros/CAASchNetwork.CATScript) (Windows only).
  CAASchNetwork includes the following steps:
 
-CAASchNetwork includes the following steps:
   1. Prolog
   2. Create a list of network objects using the SchBaseFactory interface
   3. Query the member of the list of network objects
@@ -65,7 +60,7 @@ The macro first loads CAASCH_Network01.CATProduct. |     ...
     Dim sFilePath
 ```vbscript
 ```
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
 ```
@@ -80,7 +75,7 @@ Dim sFilePath
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
@@ -231,7 +226,6 @@ This macro provides a private Find2ComponentInst function which searches for 2 c
 
 Each network object in the list contains the following information.
 
-Each network object in the list contains the following information.
   1. The input object itself.
   2. A list of Schematic component instances that are directly or indirectly connected to the input object. This list of connected component instances can be retrieved using the ListNetworkObjects method.
   3. The listing procedure is recursive, and it will stop when the connected object is a Schematic route. This Schematic route (known as the "extremity") will be stored in a separate list. This list of "extremity" objects can be retrieved using the ListExtremityObjects method.
@@ -314,7 +308,7 @@ For intNetIndex = 1 To intNbNet
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
          Set objLNetMember = Nothing
 
          Set objSchNet = objLNetWork.Item (intNetIndex,"CATIASchNetworkAnalysis")
@@ -364,7 +358,7 @@ For intNetIndex = 1 To intNbNet
 ```vbscript
             For intMemIndex = 1 To intNbMember
 
-```vbscript
+```cpp
               Set objMemPrd = objLNetMember.Item (intMemIndex,"CATIAProduct")
 ```
 ```
@@ -430,7 +424,7 @@ For intNetIndex = 1 To intNbNet
 ```vbscript
             For intMemIndex = 1 To intNbMember
 
-```vbscript
+```cpp
               Set objMemPrd = objLNetMember.Item (intMemIndex,"CATIAProduct")
 ```
 ```

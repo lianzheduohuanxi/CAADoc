@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Topology Concepts"
-category: use-case
+category: "use-case"
 module: "CAACgmModel"
-tags: ["CATIA"]
-source_file: "Doc/online/CAACgmModel/CAACgmTaTobTopoConcepts.htmmd"
+tags: "["CATIA"]"
+source_file: "Doc/online/CAACgmModel/CAACgmTaTobTopoConcepts.htm"
 converted: "2026-05-11T17:33:48.021377"
-```
-
 ---
 # Topology Concepts
 
@@ -112,7 +109,6 @@ Fig 4: Examples of Domains ![Domain Examples](images/CAACgmTobTopoDomain.gif)
 
 Domains can define outer, inner, or immersed frontiers: vertex in face or vertex in volume are typical immersed boundaries. Notice that loops (resp. shell) can also be immersed into a face (resp. volume), but this type of domain is always called a loop (resp. shell) and not a "edge in face" (resp. "face in volume").
 
-Domains can define outer, inner, or immersed frontiers: vertex in face or vertex in volume are typical immersed boundaries. Notice that loops (resp. shell) can also be immersed into a face (resp. volume), but this type of domain is always called a loop (resp. shell) and not a "edge in face" (resp. "face in volume").
 Reading the different definitions of the domains, you can see that two faces (resp. two volumes) cannot be connected only by a vertex (resp. by an edge or a vertex). In this case, it will be necessary to have two shells (resp. two lumps). Domains define manifold components inside non-manifold objects.
 
 Fig 5: Domains Define Manifold Components Inside Non-manifold Objects ![Domains](images/CAACgmTobTopoConcepts3.gif) | The cubes C1 and C2 have the face F in common. They can be grouped in the same lump.
@@ -174,7 +170,6 @@ The non-manifold topology offers several benefits:
 
 When a body contains non connected cells, or non-manifold configurations, it will be necessary to divide it into several manifold domains. The following steps insure the unique decomposition of a body into domains:
 
-When a body contains non connected cells, or non-manifold configurations, it will be necessary to divide it into several manifold domains. The following steps insure the unique decomposition of a body into domains:
     1. If there are non connected sets of cells, put them in different domains.
     2. Separate domains of different dimensions.  Fig 9: Decomposition of an Heterogeneous Body into Domains and Cells ![Heterogeneous Body Decomposition](images/CAACgmTobTopoConceptsDivide1.gif) | The body references two domains:
 
@@ -203,7 +198,7 @@ The face F6 (resp. F7) has two loops: one for the external boundary, the other f
 2. In three parts otherwise.  Fig12: Decomposition of a General Body into Domains and Cells (Second Case) ![General Body Decomposition](images/CAACgmTobTopoConceptsDivide4.gif) | The edge E is no more immersed: it is part of the external boundaries of the three faces. In this case, the body has three shells. If the body only contains the two faces F1 and F2, it would only have a one shell made of the two faces. (In order to keep things clear, some relations have not been displayed.)
 Most operations can be performed on non-manifold bodies, but not all. The trend is to allow the user to check whether he accepts to generate a non-manifold result. For example, you won't be able to extrude or fill a profile which has a closed portion but exhibits a free edge and unless you uncheck the "Manifold" check box, you won't be able to join a non-manifold body to another body.
 
-```vbscript
+```cpp
 If you try to manipulate non-manifold bodies by using a CATIA interactive command, you will get a message warning you that the body is non-manifold. Usually, you won't be able to complete the intended operation unless you make your initial body manifold. CATIA dialogs allow you to remove sub-elements in order to obtain appropriate manifold bodies. But the operation which consists in removing sub-elements can only be applied to manifold domains. If your body is not made up of correct manifold domains, you won't be able to clean or transform your initial body. This is why "Dividing a Body into Domains" is of importance.
 
 ```

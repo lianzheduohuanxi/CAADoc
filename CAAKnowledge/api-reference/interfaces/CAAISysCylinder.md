@@ -1,64 +1,101 @@
 ---
 title: "CAAISysCylinder"
-type: "interface"
+type: "PublicInterface"
 module: "CAASystem"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAISysCylinder → CATBaseUnknown"
 method_count: 6
-visibility: "public"
-has_tie_binding: true
-verified: true
+source_file: "CAASystem.edu/PublicInterfaces/CAAISysCylinder.h"
 ---
-> **TIE实现**: unknown
 
 # CAAISysCylinder
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAISysCylinder → CATBaseUnknown  
-**模块**: CAASystem  
-**分类**: framework  
-**可见性**: public  
-**方法数**: 6
+> Interface which characterizes a Cylinder object. Inheritance: CATBaseUnknown (System Framework) Syteme Framework
 
-> Mathematics Framework
+**基类**: CATBaseUnknown | **模块**: CAASystem | **方法数**: 6
 
 ## 依赖
 
 - `CATBaseUnknown.h`
 - `CAASysGeoModelInf.h`
 
-## TIE实现
+## 纯虚方法 (接口契约)
 
-**实现文件**:
-- `CAAISysAccess.cpp`
-- `CAAISysCircle.cpp`
-- `CAAISysCircleCenterProperties.cpp`
-- `CAAISysCollection.cpp`
-- `CAAISysColorProperties.cpp`
+### SetRadius
+
+```cpp
+virtual HRESULT SetRadius(const float iRadius) = 0 ;
+```
+
+The Cylinder is defined by: ------------------------ It's radius in the space -------------------------
+
+| 参数 | 类型 |
+|------|------|
+| iRadius | `const float` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetRadius
+
+```cpp
+virtual HRESULT GetRadius(float & oRadius) const = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oRadius | `float &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### SetBasePoint
+
+```cpp
+virtual HRESULT SetBasePoint(const CATMathPoint & iBasePoint) = 0 ;
+```
+
+The extrusion line is defined between the base and the top point ----------------------------------------------------------------
+
+| 参数 | 类型 |
+|------|------|
+| iBasePoint | `const CATMathPoint &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetBasePoint
+
+```cpp
+virtual HRESULT GetBasePoint(CATMathPoint & oBasePoint) const = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oBasePoint | `CATMathPoint &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### SetTopPoint
+
+```cpp
+virtual HRESULT SetTopPoint(const CATMathPoint & iTopPoint) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iTopPoint | `const CATMathPoint &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetTopPoint
+
+```cpp
+virtual HRESULT GetTopPoint(CATMathPoint & oTopPoint) const = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oTopPoint | `CATMathPoint &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
 
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAASystem.edu/PublicInterfaces/CAAISysCylinder.h`

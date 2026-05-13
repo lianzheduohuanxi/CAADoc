@@ -148,7 +148,7 @@ interfaces.
 
 *Copyright  2002, Dassault Systmes. All rights reserved.*
 
-```vbscript
+```cpp
 ...
 // Tie the implementation to its interface
 #include &quot;TIE_CATIMfgComputeToolPathCustom.h&quot;
@@ -156,7 +156,7 @@ TIE_CATIMfgComputeToolPathCustom( CAAESmiUserOperationWithMATPComputation);
 ...
 ```
 
-```vbscript
+```cpp
 ...
   // Gets Machining Area
   CATBaseUnknown_var spBaseFeature = pActivity-&gt;GetFeature(#);	

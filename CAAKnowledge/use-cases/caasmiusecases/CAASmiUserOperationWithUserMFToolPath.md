@@ -171,7 +171,7 @@ of the *Surface Machining Operation Sample.*
 
 *Copyright  2002, Dassault Systmes. All rights reserved.*
 
-```vbscript
+```cpp
 ...
 // Tie the implementation to its interface
 #include &quot;TIE_CATIMfgComputeToolPathCustom.h&quot;
@@ -179,7 +179,7 @@ TIE_CATIMfgComputeToolPathCustom( CAAESmiUserOperationTPComputation);
 ...
 ```
 
-```vbscript
+```cpp
 ...
   // Reads Activity Parameters 	
   double Step = 0.;
@@ -204,7 +204,7 @@ TIE_CATIMfgComputeToolPathCustom( CAAESmiUserOperationTPComputation);
   ...
 ```
 
-```vbscript
+```cpp
 ...
   // Retrieves Machining Feature from Activity
   CATBaseUnknown_var spBaseFeature = pActivity-&gt;GetFeature(#);
@@ -222,7 +222,7 @@ TIE_CATIMfgComputeToolPathCustom( CAAESmiUserOperationTPComputation);
   ...
 ```
 
-```vbscript
+```cpp
 ...
   // Gets CAAGuide parameter
   CATBaseUnknown_var spParameter = NULL_var;

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Editing Dimension Dress-Up"
-category: use-case case"
+category: "use-case case"
 module: "CAADriUseCases"
-tags: ["CAADrwDimDressupCmduse", "CAAUseCaseCommands", "CATIDrwDimDimension", "CATIDrwDimFormat", "CAADrwAddin", "CATIDrwDimValueComponent_var", "CATIDrwDimText_var", "CATIDrwDimExtensionLine", "CATIDrwDimExtensionLine_var", "CATIA", "CATIDrwDimExtensionLineLinear", "CATIDrwDimDimensionLine_var", "CATIDrwDimDimensionLine", "CATIDrwDimText", "CATIDrwDimValue_var", "CATIDrwDimValue", "CAADrwDimDressupCmd", "CATIDrwDimExtensionLineLinear_var", "CATISpecObject_var", "CAADrwDimDressup"]
-source_file: "Doc/online/CAADriUseCases/CAADriDimDressup.htmmd"
+tags: "["CAADrwDimDressupCmduse", "CAAUseCaseCommands", "CATIDrwDimDimension", "CATIDrwDimFormat", "CAADrwAddin", "CATIDrwDimValueComponent_var", "CATIDrwDimText_var", "CATIDrwDimExtensionLine", "CATIDrwDimExtensionLine_var", "CATIA", "CATIDrwDimExtensionLineLinear", "CATIDrwDimDimensionLine_var", "CATIDrwDimDimensionLine", "CATIDrwDimText", "CATIDrwDimValue_var", "CATIDrwDimValue", "CAADrwDimDressupCmd", "CATIDrwDimExtensionLineLinear_var", "CATISpecObject_var", "CAADrwDimDressup"]"
+source_file: "Doc/online/CAADriUseCases/CAADriDimDressup.htm"
 converted: "2026-05-11T17:31:50.992103"
-```
-
 ---
 # Mechanical Design
 
@@ -70,7 +67,6 @@ Fig. 2: The Dimension After and Before Dress-Up ![](images/CAADrwDimDressup1.jpg
 
 To launch CAADrwDimDressupCmd, you will need to set up the build time environment, then compile CAADrwDimDressupCmd and CAADrwAddin along with its prerequisites, set up the run time environment, and then include the command in a workbench [1].
 
-To launch CAADrwDimDressupCmd, you will need to set up the build time environment, then compile CAADrwDimDressupCmd and CAADrwAddin along with its prerequisites, set up the run time environment, and then include the command in a workbench [1].
   1. Launch CATIA session.
   2. Right-click on Drafting workshop to activate CAAUseCaseCommands toolbar.
   3. Launch the DimDressup use case command, and select the annotation.
@@ -136,7 +132,7 @@ AddCSOClient(_pObjectAgent);
 CATDialogState* state1 = GetInitialState("Sel dimension");
 state1->AddDialogAgent(_pObjectAgent);
        AddTransition(state1, NULL, IsOutputSetCondition(_pObjectAgent),
-```vbscript
+```cpp
                      Action((ActionMethod)&CAADrwDimDressupCmd::DressUp, NULL, NULL));
 
 ```
@@ -165,7 +161,7 @@ boolean CAADrwDimDressupCmd::DressUp(void *)
        {
 
           // There is a selection, we will scan it from the beginning
-```vbscript
+```cpp
 if (pObjSO)
           pObjSO->InitElementList(#);
           while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement(#)))
@@ -173,7 +169,7 @@ if (pObjSO)
 
           {
              // Make sure the element is dimension
-```vbscript
+```cpp
              **CATIDrwDimDimension** *piDim = (CATIDrwDimDimension *)pElemPath->FindElement(IID_CATIDrwDimDimension);
 
 ```

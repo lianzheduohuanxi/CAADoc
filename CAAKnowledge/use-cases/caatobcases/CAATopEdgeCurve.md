@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Scanning an Edge Curve"
-category: use-case case"
+category: "use-case case"
 module: "CAATobUseCases"
-tags: ["CAAEdgeCurve", "CAATopEdgeCurve", "CATICGMContainer", "CATICGMObject", "CATIntCurve", "CAATopologicalObjects"]
-source_file: "Doc/online/CAATobUseCases/CAATopEdgeCurve.htmmd"
+tags: "["CAAEdgeCurve", "CAATopEdgeCurve", "CATICGMContainer", "CATICGMObject", "CATIntCurve", "CAATopologicalObjects"]"
+source_file: "Doc/online/CAATobUseCases/CAATopEdgeCurve.htm"
 converted: "2026-05-11T17:33:45.859498"
-```
-
 ---
 # Geometric Modeler
 
@@ -84,7 +81,6 @@ The CAATopEdgeCurve use case:
 
 To launch CAATopEdgeCurve , you will need to set up the build time environment, then compile CAATopEdgeCurve.m along with its prerequisites, set up the run time environment, and then execute the use case [1].
 
-To launch CAATopEdgeCurve , you will need to set up the build time environment, then compile CAATopEdgeCurve.m along with its prerequisites, set up the run time environment, and then execute the use case [1].
 With Windows CAATopEdgeCurve `e/edgeCurve1.NCGM`
 
 With UNIX  CAATopEdgeCurve `/u/``edgeCurve1.NCGM`
@@ -180,13 +176,13 @@ The edge curve which is scanned is itself made up of two edge curves. If you nee
 
      {
     #ifdef _WINDOWS_SOURCE
-```vbscript
+```cpp
 if(1==toStore)
        ofstream filetowrite(pfileName, ios::binary ) ;
 ```
 
     #else
-```vbscript
+```cpp
 if(1==toStore)
 ofstream filetowrite(pfileName, ios::binary ) ;
        ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;

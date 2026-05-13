@@ -1,23 +1,17 @@
 ---
 title: "CAAESysPlane"
-type: "interface"
+type: "LocalClass"
 module: "CAASystem"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAESysPlane → CATBaseUnknown"
 method_count: 4
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAASystem.edu/CAASysGeoModelImpl.m/LocalInterfaces/CAAESysPlane.h"
 ---
+
 # CAAESysPlane
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAESysPlane → CATBaseUnknown  
-**模块**: CAASystem  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 4
+> Data extension ofd the CAASysPlane component and implementing the CAAISysPlane interface. Main Method: SetOrigin/GetOrigin SetPlane/GetPlane
+
+**基类**: CATBaseUnknown | **模块**: CAASystem | **方法数**: 4
 
 ## 依赖
 
@@ -25,28 +19,58 @@ verified: true
 - `CATMathPoint.h`
 - `CATMathVector.h`
 
+## 虚方法
+
+### SetOrigin
+
+```cpp
+virtual HRESULT SetOrigin(const CATMathPoint & iOrigin) ;
+```
+
+The plane is defined by: ------------------------ It's origin  in the space -------------------------
+
+| 参数 | 类型 |
+|------|------|
+| iOrigin | `const CATMathPoint &` |
+
+
+### GetOrigin
+
+```cpp
+virtual HRESULT GetOrigin(CATMathPoint & oOrigin) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oOrigin | `CATMathPoint &` |
+
+
+### SetPlane
+
+```cpp
+virtual HRESULT SetPlane(const CATMathVector & iU, const CATMathVector & iV) ;
+```
+
+It's U and V axis -------------------------
+
+| 参数 | 类型 |
+|------|------|
+| iU | `const CATMathVector &` |
+| iV | `const CATMathVector &` |
+
+
+### GetPlane
+
+```cpp
+virtual HRESULT GetPlane(CATMathVector & oU, CATMathVector & oV) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oU | `CATMathVector &` |
+| oV | `CATMathVector &` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAASystem.edu/CAASysGeoModelImpl.m/LocalInterfaces/CAAESysPlane.h`

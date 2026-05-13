@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "VPMInterfaces Framework Modifications in V5R15"
-category: use-case
+category: "use-case"
 module: "CAACenAPIChangesR15"
-version: "V5R15"
-tags: ["CATIConfigurableObject_var", "CATICfgUEValidateEff", "CATICfgBasicEffectivity_var"]
-source_file: "Doc/online/CAACenAPIChangesR15/VPMInterfaces.htmmd"
+tags: "["CATIConfigurableObject_var", "CATICfgUEValidateEff", "CATICfgBasicEffectivity_var"]"
+source_file: "Doc/online/CAACenAPIChangesR15/VPMInterfaces.htm"
 converted: "2026-05-11T17:33:51.169792"
-```
-
 ---
 # CAA C++ API Modifications
 

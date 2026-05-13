@@ -1,52 +1,50 @@
 ---
 title: "CAAESysAccess"
-type: "interface"
+type: "LocalClass"
 module: "CAASystem"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAESysAccess → CATBaseUnknown"
 method_count: 2
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAASystem.edu/CAASysGeoModelImpl.m/LocalInterfaces/CAAESysAccess.h"
 ---
+
 # CAAESysAccess
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAESysAccess → CATBaseUnknown  
-**模块**: CAASystem  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 2
+> Data extension implementing the CAAISysAccess interface which associates a container with its objects in the CAAGeometry document. Every container's object implements this interface to know its container. Inheritance: CATBaseUnknown (System Framework) Main Method: SetContainer: Sets the container GetContainer: Retrieves the container
 
-> SetContainer: Sets the container
+**基类**: CATBaseUnknown | **模块**: CAASystem | **方法数**: 2
 
 ## 依赖
 
 - `CATBaseUnknown.h`
 
+## 虚方法
+
+### SetContainer
+
+```cpp
+virtual HRESULT SetContainer(CATBaseUnknown * iContainer) ;
+```
+
+Sets the container
+
+| 参数 | 类型 |
+|------|------|
+| iContainer | `CATBaseUnknown *` |
+
+
+### GetContainer
+
+```cpp
+virtual HRESULT GetContainer(CATBaseUnknown ** oContainer) ;
+```
+
+Retrieves the container
+
+| 参数 | 类型 |
+|------|------|
+| oContainer | `CATBaseUnknown **` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAASystem.edu/CAASysGeoModelImpl.m/LocalInterfaces/CAAESysAccess.h`

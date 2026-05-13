@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAAAniMeshTetraFiller.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CATIA", "CAAScdAniUseCases", "CAAAniMeshTetraFiller"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshTetraFillerSource.htmmd"
+tags: "["CATIA", "CAAScdAniUseCases", "CAAAniMeshTetraFiller"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshTetraFillerSource.htm"
 converted: "2026-05-11T17:31:51.726093"
-```
-
 ---
 ```vbscript
 ```vbscript
@@ -31,7 +28,7 @@ converted: "2026-05-11T17:31:51.726093"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -43,7 +40,7 @@ converted: "2026-05-11T17:31:51.726093"
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -72,10 +69,10 @@ converted: "2026-05-11T17:31:51.726093"
 ```vbscript
 End If
 ```vbscript
-```vbscript
+```cpp
 ' -----------------------------------------------------------
     ' Open the CATAnalysis Document
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Cube_R13_Freq.CATAnalysis")
 ```
 ```
@@ -86,7 +83,7 @@ End If
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ```
@@ -95,7 +92,7 @@ End If
 ```
 
 ```vbscript
-```vbscript
+```cpp
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```vbscript
 ```

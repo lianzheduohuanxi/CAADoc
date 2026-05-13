@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Dumping the Topological Journal"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMDumpJournal", "CAAGMOperatorsInterfaces", "CAAGMOperatorsCheckGnOK", "CAAGMTopDumpJournal", "CAAGMOperatorsClashIntersect", "CAAGMOperatorsBoundaryCreation", "CAAGMOperatorsCheckGnKO", "CAAGMOperatorsDumpJournal"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopDumpJournal.htmmd"
+tags: "["CAAGMDumpJournal", "CAAGMOperatorsInterfaces", "CAAGMOperatorsCheckGnOK", "CAAGMTopDumpJournal", "CAAGMOperatorsClashIntersect", "CAAGMOperatorsBoundaryCreation", "CAAGMOperatorsCheckGnKO", "CAAGMOperatorsDumpJournal"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopDumpJournal.htm"
 converted: "2026-05-11T17:33:49.148870"
-```
-
 ---
 tags: ["CAAGMDumpJournal", "CAAGMOperatorsInterfaces", "CAAGMOperatorsCheckGnOK", "CAAGMTopDumpJournal", "CAAGMOperatorsClashIntersect", "CAAGMOperatorsBoundaryCreation", "CAAGMOperatorsCheckGnKO", "CAAGMOperatorsDumpJournal"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcTopDumpJournal.htmmd"
@@ -67,7 +64,7 @@ which are all in the CAAGMOperatorsInterfaces.edu framework. Step-by-Step
 2. get the event type:
 CATCGMJournal::Type CGMEventType = pJournalItem->GetType(#);
 switch (CGMEventType)
-```vbscript
+```cpp
                    case CATCGMJournal::Creation:
 
 ```

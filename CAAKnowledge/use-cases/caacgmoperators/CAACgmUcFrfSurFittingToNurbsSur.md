@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Converting Surfaces into NURBS"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperatorsSurFittingToNurbsSur", "CAAGMOperatorsInterfaces", "CAADoc", "CATICGMSurFittingToNurbsSur", "CATICGMObject", "CAAGMModelGemBrowser", "CAASurFittingToNurbsSur", "CATIA", "CAAGMOperatorInterfaces"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcFrfSurFittingToNurbsSur.htmmd"
+tags: "["CAAGMOperatorsSurFittingToNurbsSur", "CAAGMOperatorsInterfaces", "CAADoc", "CATICGMSurFittingToNurbsSur", "CATICGMObject", "CAAGMModelGemBrowser", "CAASurFittingToNurbsSur", "CATIA", "CAAGMOperatorInterfaces"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcFrfSurFittingToNurbsSur.htm"
 converted: "2026-05-11T17:33:48.947040"
-```
-
 ---
 tags: ["CAAGMOperatorsSurFittingToNurbsSur", "CAAGMOperatorsInterfaces", "CAADoc", "CATICGMSurFittingToNurbsSur", "CATICGMObject", "CAAGMModelGemBrowser", "CAASurFittingToNurbsSur", "CATIA", "CAAGMOperatorInterfaces"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcFrfSurFittingToNurbsSur.htmmd"
@@ -122,7 +119,7 @@ if(1==toStore)
        ofstream filetowrite(pfileName, ios::binary ) ;
 
     #else
-```vbscript
+```cpp
 if(1==toStore)
 ofstream filetowrite(pfileName, ios::binary ) ;
        ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;

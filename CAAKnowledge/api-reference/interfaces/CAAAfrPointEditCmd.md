@@ -1,50 +1,62 @@
 ---
 title: "CAAAfrPointEditCmd"
-type: "interface"
+type: "LocalClass"
 module: "CAAApplicationFrame"
-category: api-reference
+base: "CATCommand"
 method_count: 3
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAApplicationFrame.edu/CAAAfrGeoEdition.m/LocalInterfaces/CAAAfrPointEditCmd.h"
 ---
+
 # CAAAfrPointEditCmd
 
-**模块**: CAAApplicationFrame  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 3
+> Command which edits a point (an CAASysPoint component). This command is returned by the CAASysPoint implementation of the CATIEdit interface. Illustrates: programming a command which edits an object. This command must manage its destruction itself. It must be deleted: when the end user closes the dialog box (Ok,Cancel,Close buttons). So the command must subscribe to the corresponding notifications and request the command destruction in the callbacks. when another command is launched. So the current command must take the focus in order to be called on the Cancel when it loses the focus. Cancel must request the command destruction as well. This command launches a dialog box to edit this object. It could have been the dialog object itself like the CAAAfrPlaneEditCmd in the same module. Inheritance: CATDlgDialog ( Dialog Framework) CATDlgWindow ( Dialog Framework) CATDialog   (Dialog Framework) CATCommand  (System Framework) CATBaseUnknown (System Framework). Main Method: constructor  -> requests the focus Cancel       -> Suicide of the command Desactivate  -> Dialog box is hidden. Activate     -> Creates and builds the dialog box if it doesn't exist and shows it. CloseBox     -> Suicide of the command System Framework
 
-> System Framework
+**基类**: CATCommand | **模块**: CAAApplicationFrame | **方法数**: 3
 
 ## 依赖
 
+- `CATCommand.h`
+
+## 虚方法
+
+### Cancel
+
+```cpp
+virtual CATStatusChangeRC Cancel(CATCommand *iPublisher, CATNotification *iNotification) ;
+```
+
+Methods called by the command selector to manage the focus
+
+| 参数 | 类型 |
+|------|------|
+| *iPublisher | `CATCommand` |
+| *iNotification | `CATNotification` |
+
+
+### Desactivate
+
+```cpp
+virtual CATStatusChangeRC Desactivate(CATCommand *iPublisher, CATNotification *iNotification) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iPublisher | `CATCommand` |
+| *iNotification | `CATNotification` |
+
+
+### Activate
+
+```cpp
+virtual CATStatusChangeRC Activate(CATCommand *iPublisher, CATNotification *iNotification) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iPublisher | `CATCommand` |
+| *iNotification | `CATNotification` |
+
+
 ---
 
-## Interface Overview
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-- [3D PLM Enterprise Architecture](../../use-cases/caaafrcases/CAAAfrSampleObjectEdit.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAApplicationFrame.edu/CAAAfrGeoEdition.m/LocalInterfaces/CAAAfrPointEditCmd.h`

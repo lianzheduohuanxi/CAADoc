@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "VPMPersistency Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR9"
-version: "V5R9"
-tags: ["CATIContainer_var"]
-source_file: "Doc/online/CAACenAPIChangesR9/VPMPersistency.htmmd"
+tags: "["CATIContainer_var"]"
+source_file: "Doc/online/CAACenAPIChangesR9/VPMPersistency.htm"
 converted: "2026-05-11T17:33:53.017379"
-```
-
 ---
 tags: ["CATIContainer_var"]
 source_file: "Doc/online/CAACenAPIChangesR9/VPMPersistency.htmmd"

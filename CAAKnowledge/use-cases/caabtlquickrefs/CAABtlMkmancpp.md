@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "mkmancpp"
 category: "use-case"
 module: "CAABtlQuickRefs"
-tags: ["CAA2Usage", "CAA2Level"]
-source_file: "Doc/online/CAABtlQuickRefs/CAABtlMkmancpp.htmmd"
+tags: "["CAA2Usage", "CAA2Level"]"
+source_file: "Doc/online/CAABtlQuickRefs/CAABtlMkmancpp.htm"
 converted: "2026-05-11T17:33:50.001870"
-```
-
 ---
 tags: ["CAA2Usage", "CAA2Level"]
 source_file: "Doc/online/CAABtlQuickRefs/CAABtlMkmancpp.htmmd"
@@ -57,7 +54,6 @@ Abstract **mkmancpp** is a tool that parses the declarations and documentation c
 
 All non tagged or wrongly tagged headers are not processed. Synopsis
 
-All non tagged or wrongly tagged headers are not processed. Synopsis
     mkmancppM [-h] [-W <path>] [-o <path>] [-private] [-level <level>] [-docPrivateMember] [-productID <name>] [-htmlfooter <path>] [-stylesheet <path>]
 
 Option | Description | `-h` | Command help.

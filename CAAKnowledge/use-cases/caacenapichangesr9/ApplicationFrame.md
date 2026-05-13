@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "ApplicationFrame Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR9"
-version: "V5R9"
-tags: ["CATISO"]
-source_file: "Doc/online/CAACenAPIChangesR9/ApplicationFrame.htmmd"
+tags: "["CATISO"]"
+source_file: "Doc/online/CAACenAPIChangesR9/ApplicationFrame.htm"
 converted: "2026-05-11T17:33:52.808996"
-```
-
 ---
 tags: ["CATISO"]
 source_file: "Doc/online/CAACenAPIChangesR9/ApplicationFrame.htmmd"

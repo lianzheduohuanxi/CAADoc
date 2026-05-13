@@ -30,7 +30,7 @@ This use case has shown how to get weld information set on SDD Split Stiffener.
 *Copyright  1999-2013, Dassault Syst&#232;mes. All rights reserved.*
 
 ```vbscript
-```vbscript
+```cpp
 Sub CATMain(#)
 
 Dim ObjPart As Part
@@ -77,12 +77,12 @@ Set SplitStiffener1 = SplitStiffeners.Item(1)
 ```
 
 ```vbscript
-```vbscript
+```cpp
 Set SelctionObj = CATIA.ActiveDocument.Selection
 'DECK STIFFENER
 ```
 SelctionObj.Add SplitStiffener1
-```vbscript
+```cpp
 Dim DeckStiffener1 As SfmStiffener
 Set DeckStiffener1 = SelctionObj.FindObject("CATIASfmStiffener")
 ```

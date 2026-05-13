@@ -1,29 +1,17 @@
 ---
 title: "CAAEAfrUIActivateRootObject"
-type: "interface"
+type: "LocalClass"
 module: "CAAApplicationFrame"
-category: api-reference
 base: "CATExtIUIActivate"
-inheritance_chain: "CAAEAfrUIActivateRootObject → CATExtIUIActivate"
 method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAApplicationFrame.edu/CAAAfrSampleDocument.m/LocalInterfaces/CAAEAfrUIActivateRootObject.h"
 ---
+
 # CAAEAfrUIActivateRootObject
 
-**基类**: CATExtIUIActivate  
-**继承链**: CAAEAfrUIActivateRootObject → CATExtIUIActivate  
-**模块**: CAAApplicationFrame  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> Data extension of the root object of the document. It implements the CATIUIActivate interface in order to associate a workshop with the document. It derives from the CATExtIUIActivate adapter which provides most of the implementation. Illustrates: implementation of the CATIUIActivate interface to associate a workshop with a document. Usage: Launch CATIA V5, File/New. Choose the Geometry document. The Geometry workshop is loaded. Inheritance: CATExtIUIActivate ( ApplicationFrame Framework ) CATBaseUnknown    (System Framework). Main Method: GetWorkshop : returns the workshop name GetDefaultCommand : returns the name of the default command.
 
-> GetDefaultCommand : returns the name of the default command.
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATExtIUIActivate | **模块**: CAAApplicationFrame | **方法数**: 0
 
 ## 依赖
 
@@ -32,26 +20,4 @@ verified: true
 
 ---
 
-## Interface Overview
-
-This interface inherits from **CATExtIUIActivate**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAApplicationFrame.edu/CAAAfrSampleDocument.m/LocalInterfaces/CAAEAfrUIActivateRootObject.h`

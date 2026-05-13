@@ -19,19 +19,19 @@ Option Explicit
 '   CATIA Level: V5R10 
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
     ' Set the CATIA popup file alerts to False
     ' It prevents to stop the macro at each alert during its execution
 ```
-```vbscript
+```cpp
     CATIA.DisplayFileAlerts = False
 
     ' Optional: allows to find the sample wherever it's installed
 ```
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,"No Doc Path Defined"
@@ -49,7 +49,7 @@ Sub CATMain(#)
     
     ' Create a new drawing document
 ```
-```vbscript
+```cpp
     Set oDrwDocument = CATIA.Documents.Add("Drawing")
 
     ' Set the drawing document standard
@@ -139,7 +139,7 @@ Sub CATMain(#)
     ' Update drawing table modifications
     oDrwTable.ComputeMode = CatTableComputeON
 
-```vbscript
+```cpp
     CATIA.ActiveWindow.ActiveViewer.Reframe 
 
 End Sub
@@ -159,19 +159,19 @@ Option Explicit
 '   CATIA Level: V5R10 
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
     ' Set the CATIA popup file alerts to False
     ' It prevents to stop the macro at each alert during its execution
 ```
-```vbscript
+```cpp
     CATIA.DisplayFileAlerts = False
 
     ' Optional: allows to find the sample wherever it's installed
 ```
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,&quot;No Doc Path Defined&quot;
@@ -189,7 +189,7 @@ Sub CATMain(#)
     
     ' Create a new drawing document
 ```
-```vbscript
+```cpp
     Set oDrwDocument = CATIA.Documents.Add(&quot;Drawing&quot;)
 
     ' Set the drawing document standard
@@ -279,7 +279,7 @@ Sub CATMain(#)
     ' Update drawing table modifications
     oDrwTable.ComputeMode = CatTableComputeON
 
-```vbscript
+```cpp
     CATIA.ActiveWindow.ActiveViewer.Reframe 
 
 End Sub

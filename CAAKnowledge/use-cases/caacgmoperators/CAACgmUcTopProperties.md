@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Computing the Area of a CATFace and the Length of a CATEdge"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CATICGMDynMassProperties3D", "CAAGMProperties", "CATICGMObject", "CATICGMDynCreateMassProperties3D", "CAAGMModelGemBrowser", "CAAGMOperatorsProperties", "CATICGMSolidSphere", "CAATopProperties"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopProperties.htmmd"
+tags: "["CAAGMOperatorsInterfaces", "CAADoc", "CATICGMDynMassProperties3D", "CAAGMProperties", "CATICGMObject", "CATICGMDynCreateMassProperties3D", "CAAGMModelGemBrowser", "CAAGMOperatorsProperties", "CATICGMSolidSphere", "CAATopProperties"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopProperties.htm"
 converted: "2026-05-11T17:33:49.289425"
-```
-
 ---
 tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CATICGMDynMassProperties3D", "CAAGMProperties", "CATICGMObject", "CATICGMDynCreateMassProperties3D", "CAAGMModelGemBrowser", "CAAGMOperatorsProperties", "CATICGMSolidSphere", "CAATopProperties"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcTopProperties.htmmd"
@@ -84,7 +81,7 @@ Computing the Area of a CATFace To retrieve a face area, you must:
 ```
 
     {
-```vbscript
+```cpp
 for (int i=1;(i <= nbFaces)  ;i++)
       CATFace * pFace = (CATFace *)listFaces[i];
       CATICGMDynMassProperties3D * pDynMassOpe0 =
@@ -127,7 +124,7 @@ Computing the Length of a CATEdge To retrieve a face area, you must:
 ```
 
     {
-```vbscript
+```cpp
 for (i=1;(i <= nbEdges)  ;i++)
       CATEdge * pEdge = (CATEdge *)listEdges[i];
       if (pEdge == NULL) return 1;
@@ -196,7 +193,7 @@ if(1==toStore)
        ofstream filetowrite(pfileName, ios::binary ) ;
 
     #else
-```vbscript
+```cpp
 if(1==toStore)
 ofstream filetowrite(pfileName, ios::binary ) ;
        ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;

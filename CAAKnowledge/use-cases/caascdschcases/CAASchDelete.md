@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Deleting Schematic Objects"
 category: "use-case"
 module: "CAAScdSchUseCases"
-tags: ["CAADoc", "CAASCH_Delete01", "CAAScdSchUseCases", "CAASchDelete", "CATIA", "CAASchAppBase", "CAASCHEDUApp", "CATIASchRoute", "CAASchPlatformModeler", "CATIASchAppConnectable", "CAASchAppUtilities"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchDelete.htmmd"
+tags: "["CAADoc", "CAASCH_Delete01", "CAAScdSchUseCases", "CAASchDelete", "CATIA", "CAASchAppBase", "CAASCHEDUApp", "CATIASchRoute", "CAASchPlatformModeler", "CATIASchAppConnectable", "CAASchAppUtilities"]"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchDelete.htm"
 converted: "2026-05-11T17:31:51.359152"
-```
-
 ---
 ## Schematics Platform Modeler
 
@@ -37,7 +34,6 @@ converted: "2026-05-11T17:31:51.359152"
 [ CAASchDelete.CATScript i](CAASchDeleteSource.md)s located in the CAAScdSchUseCases module. [Execute macro](macros/CAASchDelete.CATScript) (Windows only).
  CAASchDelete includes the following steps:
 
-CAASchDelete includes the following steps:
   1. Prolog
   2. Delete a Schematic component
   3. Delete a Schematic route
@@ -60,7 +56,7 @@ The macro first loads CAASCH_Delete01.CATProduct. |     ...
     Dim sFilePath
 ```vbscript
 ```
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
 ```
@@ -75,7 +71,7 @@ Dim sFilePath
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
@@ -281,7 +277,7 @@ Dim  objAppRCntr2 As SchAppConnector
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
              Set objRoute1 = objLRoutes.Item (1, "CATIASchRoute")
 
 ```
@@ -308,7 +304,7 @@ If ( Not ( objRoute1 Is Nothing ) ) Then
 Set objRCntbl1 = objSchRoot.GetInterface ( _
                 If ( Not ( objRCntbl1 Is Nothing ) ) Then
 ```
-```vbscript
+```cpp
                    Set objAppRCntr1 = FindOpenConnector (objSchRoot,objRCntbl1)
                    Set objRoute2 = objLRoutes.Item (2, "CATIASchRoute")
                 End If
@@ -356,7 +352,7 @@ Set objRCntbl2 = objSchRoot.GetInterface ( _
                    Not ( objAppRCntr1 Is Nothing ) And _
                    Not ( objAppRCntr2 Is Nothing ) ) Then
 ```vbscript
-```vbscript
+```cpp
                 Set objRoute2 = objLRoutes.Item (2, "CATIASchRoute")
                 If ( Not ( objRoute2 Is Nothing ) ) Then
 ```
@@ -370,7 +366,7 @@ Set objRCntbl2 = objSchRoot.GetInterface ( _
                     ...
 Not ( objAppRCntr2 Is Nothing ) ) Then
 ```vbscript
-```vbscript
+```cpp
 Set objRoute2 = objLRoutes.Item (2, "CATIASchRoute")
 ```
 ```

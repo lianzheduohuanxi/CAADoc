@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Infrastructure Automation Objects"
-category: tech-article
+category: "tech-article"
 module: "CAAScdInfTechArticles"
-tags: []
-source_file: "Doc/online/CAAScdInfTechArticles/CAAInfTocSettingCtrl.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfTocSettingCtrl.htm"
 converted: "2026-05-11T17:31:52.495651"
-```
-
 ---
 # Setting Controller Automation Objects
 

@@ -1,54 +1,31 @@
 ---
 title: "CAAAfrPointEditDlg"
-type: "interface"
+type: "LocalClass"
 module: "CAAApplicationFrame"
-category: api-reference
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+base: "CATDlgDialog"
+method_count: 1
+source_file: "CAAApplicationFrame.edu/CAAAfrGeoEdition.m/LocalInterfaces/CAAAfrPointEditDlg.h"
 ---
+
 # CAAAfrPointEditDlg
 
-**模块**: CAAApplicationFrame  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> Dialog box which edits a point (an CAASysPoint component). This dialog box is called by the CAAAfrPointEditCmd command which is the Edit command of the CAASysPoint component, that is to say the command returned by the CAASysPoint implementation of the CATIEdit interface. Illustrates: programming a dialog which edits an object. The dialog box does not manage its life cycle. The calling command must request its destruction. Inheritance: CATDlgDialog ( Dialog Framework) CATDlgWindow ( Dialog Framework) CATDialog   (Dialog Framework) CATCommand  (System Framework) CATBaseUnknown (System Framework). Main Method: Build        -> Construction of the dialog objects ClickPreview -> Modifies the object and sends a notification to update the display ClickOk      -> Modifies the object, sends a notification to update the display and closes the dialog box ClickCancel  -> Restores the initial values, sends a notification to update the display and closes the dialog box ClickClose   -> Closes the dialog box CloseBox     -> Hides the dialog box and sends a close notification. ****************************************************************************** Dialog Framework
 
-> Dialog Framework
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATDlgDialog | **模块**: CAAApplicationFrame | **方法数**: 1
 
 ## 依赖
 
----
+- `CATDlgDialog.h`
 
-## Interface Overview
+## 公共方法
 
-**Inherited Methods**: Please refer to the base interface documentation above.
+### Build
 
----
+```cpp
+void Build() ;
+```
 
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
 
 ---
 
-## Related Use Cases
-
-- [3D PLM Enterprise Architecture](../../use-cases/caaafrcases/CAAAfrSampleObjectEdit.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAApplicationFrame.edu/CAAAfrGeoEdition.m/LocalInterfaces/CAAAfrPointEditDlg.h`

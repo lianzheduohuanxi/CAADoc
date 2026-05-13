@@ -18,14 +18,14 @@ converted: "2026-05-11T11:27:02.524013"
 '   CATIA Level:  V5R16
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ' ----------------------------------------------------------- 
 ```
 ' Optional: allows to find the sample wherever it's installed
 
-```vbscript
+```cpp
   sDocPath=CATIA.SystemService.Environ("CATDocView")
   sOut = CATIA.SystemService.Environ("CATTemp")
 
@@ -36,7 +36,7 @@ Sub CATMain(#)
 ' ----------------------------------------------------------- 
 
 ' Open the CATAnalysis Document
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Cube_R13_Freq.CATAnalysis")
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
@@ -62,7 +62,7 @@ Set oAnalysisImage = oAnalysisImages.Add("Material_Fringe", False, False, True)
 
 ' Retrieve the folder stored in sOut
 ```
-```vbscript
+```cpp
 Set fileSystem1 = CATIA.FileSystem
 Set folder1 = fileSystem1.GetFolder(sout)
 
@@ -89,7 +89,7 @@ End Sub
 
 ```
 
-```vbscript
+```cpp
 &#39; COPYRIGHT DASSAULT SYSTEMES 2000
 
 &#39; ***********************************************************************
@@ -101,14 +101,14 @@ End Sub
 &#39;   CATIA Level:  V5R16
 &#39; ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 &#39; ----------------------------------------------------------- 
 ```
 &#39; Optional: allows to find the sample wherever it&#39;s installed
 
-```vbscript
+```cpp
   sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
   sOut = CATIA.SystemService.Environ(&quot;CATTemp&quot;)
 
@@ -119,7 +119,7 @@ Sub CATMain(#)
 &#39; ----------------------------------------------------------- 
 
 &#39; Open the CATAnalysis Document
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online/CAAScdAniUseCases/samples/Cube_R13_Freq.CATAnalysis&quot;)
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
@@ -145,7 +145,7 @@ Set oAnalysisImage = oAnalysisImages.Add(&quot;Material_Fringe&quot;, False, Fal
 
 &#39; Retrieve the folder stored in sOut
 ```
-```vbscript
+```cpp
 Set fileSystem1 = CATIA.FileSystem
 Set folder1 = fileSystem1.GetFolder(sout)
 ```

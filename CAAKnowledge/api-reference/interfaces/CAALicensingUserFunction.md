@@ -1,29 +1,17 @@
 ---
 title: "CAALicensingUserFunction"
-type: "interface"
+type: "LocalClass"
 module: "CAAKnowHow"
-category: api-reference
 base: "CATBaseUnknown"
-```vbscript
-inheritance_chain: "CAALicensingUserFunction → CATBaseUnknown"
-method_count: 2
-```
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 0
+source_file: "CAAKnowHow.edu/CAARuleBaseProtection.m/LocalInterfaces/CAALicensingUserFunction.h"
 ---
+
 # CAALicensingUserFunction
 
-**基类**: CATBaseUnknown  
-```vbscript
-**继承链**: CAALicensingUserFunction → CATBaseUnknown  
-**模块**: CAAKnowHow  
-```
-**分类**: framework  
-**可见性**: local  
-**方法数**: 2
+> CAALicensingUserFunction is an example of user function which test licensing and send an error if license is not ok (simulation) Usage: new CAALicensingUserFunction() Add(). Inheritance: Inherits from CATBaseUnknown. Return Codes: None
 
-> ==========================================================================
+**基类**: CATBaseUnknown | **模块**: CAAKnowHow | **方法数**: 0
 
 ## 依赖
 
@@ -31,26 +19,4 @@ verified: true
 
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAKnowHow.edu/CAARuleBaseProtection.m/LocalInterfaces/CAALicensingUserFunction.h`

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Using the Topological Journal"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperatorsInterfaces", "CAAErrorTopStifx", "CATICGMProjectionPtSur", "CAAErrorTopStif5", "CATICGMContainer", "CATICGMIntersectionCrvCrv", "CAADoc", "CAAGMModelGemBrowser", "CAAErrorTopStif7", "CAAGMOperatorsOverview", "CATICGMDynFillet", "CAAErrorTopStif3", "CATICGMTopPrism", "CATICGMTopSkin", "CAATopStiffener", "CATICGMTopOperator", "CAATopStifferner", "CAATopStiffner", "CAAErrorTopStif2", "CATICGMObject"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopJournal.htmmd"
+tags: "["CAAGMOperatorsInterfaces", "CAAErrorTopStifx", "CATICGMProjectionPtSur", "CAAErrorTopStif5", "CATICGMContainer", "CATICGMIntersectionCrvCrv", "CAADoc", "CAAGMModelGemBrowser", "CAAErrorTopStif7", "CAAGMOperatorsOverview", "CATICGMDynFillet", "CAAErrorTopStif3", "CATICGMTopPrism", "CATICGMTopSkin", "CAATopStiffener", "CATICGMTopOperator", "CAATopStifferner", "CAATopStiffner", "CAAErrorTopStif2", "CATICGMObject"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopJournal.htm"
 converted: "2026-05-11T17:33:49.202401"
-```
-
 ---
 Using the Topological Journal
 
@@ -106,7 +103,6 @@ have the general scheme of the topological operators and other use examples.
             * Delete.
 
     This operator defines a stiffener between two thin cylinder bodies ("wings")
-This operator defines a stiffener between two thin cylinder bodies ("wings")
     as displayed on Fig.1.
 
     	Fig. 1: The Resulting Body
@@ -375,7 +371,7 @@ if (NULL == piGeomFactory ) return (1);
       // ---------- Tests whether the input profile body has one domain, containing one face
       //
       // The skin body to extrude
-```vbscript
+```cpp
 if (piFirstLimitBody == piSecondLimitBody) return (3);
       CATBody * piSkinBody = _piSkinBody;
       if (NULL == piSkinBody ) return (1);
@@ -497,7 +493,7 @@ rc = 20;
 
              // --------- Gets the resulting body
              //
-```vbscript
+```cpp
 if (rc!=0) **CAAErrorTopStif1**(rc,pJournal)
              CATBody * piMainBody1=NULL;
 ```vbscript
@@ -564,7 +560,7 @@ if (NULL==piE1)
                CAAErrorTopStif3(...)
 
              }
-```vbscript
+```cpp
 if (NULL==piE1)
 rc =1;
 CAAErrorTopStif3(...)
@@ -573,7 +569,7 @@ CAAErrorTopStif3(...)
 ```
 
              // Computes the length of the next  edge
-```vbscript
+```cpp
 CAAErrorTopStif3(...)
 double l1= ((CATEdge * )piE1 )->**CalcLength**(#);
              CATCell*  piE2 = pBoundaryIt->Next(&side,NULL);
@@ -587,7 +583,7 @@ if (NULL==piE2)
                CAAErrorTopStif3(...)
 
              }
-```vbscript
+```cpp
 if (NULL==piE2)
 rc =1;
 CAAErrorTopStif3(...)
@@ -596,7 +592,7 @@ CAAErrorTopStif3(...)
 ```
 
              // Defines the width and the height according to l1 and l2 values.
-```vbscript
+```cpp
 CAAErrorTopStif3(...)
 double l2=((CATEdge * )piE2)->CalcLength(#);
              double height=0;
@@ -681,7 +677,7 @@ These methods can scan along a type of item, or several types (see the `ThroughC
     //  Retrieves all the objects created or modified from piHeight1
       //  first, in pJournal
       CATLISTP(CATGeometry) pFaces;
-```vbscript
+```cpp
 CATLISTP(CATGeometry) pFaces;
       pJournal->**FindLasts** (piHeight1,pFaces,**ThroughCreateAndModify**);
 
@@ -702,7 +698,7 @@ int nbresult = pFaces.Size(#);
 int nbresult = pFaces.Size(#);
 for (int i=1 ; (i <= nbresult) && (piFromHeight1 == NULL) ; i++)
 ```vbscript
-```vbscript
+```cpp
     	 if (pFaces[i]->IsATypeOf(CATFaceType)) { piFromHeight1=(CATFace *)pFaces[i];}
 
 ```
@@ -712,7 +708,7 @@ for (int i=1 ; (i <= nbresult) && (piFromHeight1 == NULL) ; i++)
       }
 
       //  now, in pBooleanJournal
-```vbscript
+```cpp
 if (pFaces[i]->IsATypeOf(CATFaceType)) { piFromHeight1=(CATFace *)pFaces[i];}
       pFaces.**RemoveAll**(#);                       // voids the list before a new use
       pBooleanJournal->**FindLasts** (piFromHeight1,pFaces,**ThroughModify**);
@@ -740,7 +736,7 @@ nbresult = pFaces.Size(#);
 ```vbscript
 nbresult = pFaces.Size(#);
 ```vbscript
-```vbscript
+```cpp
 for (i=1 ; (i <= nbresult) && (piBooleanFromHeight1 == NULL) ; i++)
     	 if (pFaces[i]->IsATypeOf(CATFaceType))	 { piBooleanFromHeight1=(CATFace *)pFaces[i];}
 ```
@@ -754,7 +750,7 @@ for (i=1 ; (i <= nbresult) && (piBooleanFromHeight1 == NULL) ; i++)
 ```vbscript
 for (i=1 ; (i <= nbresult) && (piBooleanFromHeight1 == NULL) ; i++)
 ```vbscript
-```vbscript
+```cpp
 if (pFaces[i]->IsATypeOf(CATFaceType))	 { piBooleanFromHeight1=(CATFace *)pFaces[i];}
       if (NULL==piBooleanFromHeight1)
 ```
@@ -764,7 +760,7 @@ if (pFaces[i]->IsATypeOf(CATFaceType))	 { piBooleanFromHeight1=(CATFace *)pFaces
 ```
 
       {
-```vbscript
+```cpp
 if (pFaces[i]->IsATypeOf(CATFaceType))	 { piBooleanFromHeight1=(CATFace *)pFaces[i];}
 ```vbscript
 if (NULL==piBooleanFromHeight1)
@@ -880,7 +876,7 @@ for (i=1;(i <= nbCells)  ;i++)
 pBooleanJournal -> **FindLasts** (listCells[i],pFaces,ThroughModify);
 nbresult = pFaces.Size(#);
 ```vbscript
-```vbscript
+```cpp
 for (int j=1; (j <= nbresult) && (piFromBody1 == NULL) ; j++)
                  if (pFaces[j]->IsATypeOf(CATFaceType)     // searches for a face
 
@@ -890,7 +886,7 @@ for (int j=1; (j <= nbresult) && (piFromBody1 == NULL) ; j++)
 
                      && **pFaces[j] != listCells[i]** )        // different from the initial one
                  {
-```vbscript
+```cpp
 if (pFaces[j]->IsATypeOf(CATFaceType)     // searches for a face
                    piFromBody1=(CATFace *)pFaces[j];
                    iok = iok + 1;
@@ -952,7 +948,7 @@ if (NULL==pRadius)
 
 rc=1;
 CAAErrorTopStif5(...)
-```vbscript
+```cpp
       CATLISTP(CATDynFilletRadius)	listRadius;
 ```
 
@@ -986,7 +982,7 @@ if (1!=listCells.Size(#) )
 if (1!=listCells.Size(#) )
 rc=10;
 CAAErrorTopStif6(...)
-```vbscript
+```cpp
       CATLISTP(CATEdge) listEdges;
 ```
 
@@ -995,7 +991,7 @@ CAAErrorTopStif6(...)
 ```
 
       //---- second edge to fillet
-```vbscript
+```cpp
 CATLISTP(CATEdge) listEdges;
 listEdges.Append((CATEdge *)(listCells[1]));
       listCells.RemoveAll(#);
@@ -1015,7 +1011,7 @@ if (1!=listCells.Size(#) )
         CAAErrorTopStif6(...)
 
       }
-```vbscript
+```cpp
 if (1!=listCells.Size(#) )
 rc=10;
 CAAErrorTopStif6(...)
@@ -1024,7 +1020,7 @@ CAAErrorTopStif6(...)
 ```
 
       //---- the ribbon
-```vbscript
+```cpp
 CAAErrorTopStif6(...)
 listEdges.Append((CATEdge *)(listCells[1]));
       CATDynEdgeFilletRibbon * pRibbon = new **CATDynEdgeFilletRibbon**(listEdges, listRadius);
@@ -1096,7 +1092,7 @@ CAAErrorTopStif7(...)
       CATEndTry
 
       //---- Gets the resulting body
-```vbscript
+```cpp
 CAAErrorTopStif7(...)
 CATEndTry
       CATBody * piMainBody2  = pFilletOp->**GetResult**(#);
@@ -1182,7 +1178,6 @@ CAATopJournal: Use of the New Class To use the new operator, one must go through
     * Writing the Model and Closes the Container
     1. Creating the Geometry Factory The geometry factory (`CATGeoFactory`) creates and manages all the `CATICGMObject`: it creates the points, curves, surfaces, and bodies, and removes them [7]. The `CATGeoFactory` creation itself is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
 
-1. Creating the Geometry Factory The geometry factory (`CATGeoFactory`) creates and manages all the `CATICGMObject`: it creates the points, curves, surfaces, and bodies, and removes them [7]. The `CATGeoFactory` creation itself is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
            CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**(#) ;
 ```vbscript
            if (NULL==piGeomFactory) return (1);
@@ -1402,7 +1397,6 @@ CATMathDirection mathU, mathV;
            // by construction
            CATSurParam p1, p2, p3, p4;
 
-CATSurParam p1, p2, p3, p4;
            piPlane->GetParam(mathOrigin - 20*mathU - 5*mathV , p1);
            piPlane->GetParam(mathOrigin + 20*mathU - 5*mathV , p2);
            piPlane->GetParam(mathOrigin + 20*mathU + 5*mathV , p3);
@@ -1474,7 +1468,7 @@ No assumption can be done on the parameterization of the geometric objects. The 
 
     // Creates the operator
 No assumption can be done on the parameterization of the geometric objects. The parameters on the plane are evaluated with the `CATSurface::GetParam` method, from 3D points that are known to be on the plane. This method can be called because the plane is a canonical object, and the points are already on it. If one of these conditions were not filled, it would be mandatory to call the `CATICGMProjectionPtSur` geometric operator. `CATICGMTopSkin` needs:
-```vbscript
+```cpp
     pSkinOp = **CATCGMCreateTopSkin** (piGeomFactory,
 
 ```
@@ -1627,7 +1621,7 @@ if(1==toStore)
               ofstream filetowrite(pfileName, ios::binary ) ;
 
            #else
-```vbscript
+```cpp
 if(1==toStore)
 ofstream filetowrite(pfileName, ios::binary ) ;
               ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAASchDelete.CATScript"
 category: "use-case"
 module: "CAAScdSchUseCases"
-tags: ["CATIAProduct", "CAASCH_Delete01", "CAAScdSchUseCases", "CAASchDelete", "CATIA", "CATIASchRoute", "CATIASchComponent", "CATIASchAppConnector", "CATIASchAppConnectable"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchDeleteSource.htmmd"
+tags: "["CATIAProduct", "CAASCH_Delete01", "CAAScdSchUseCases", "CAASchDelete", "CATIA", "CATIASchRoute", "CATIASchComponent", "CATIASchAppConnector", "CATIASchAppConnectable"]"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchDeleteSource.htm"
 converted: "2026-05-11T17:31:51.365141"
-```
-
 ---
 tags: ["CATIAProduct", "CAASCH_Delete01", "CAAScdSchUseCases", "CAASchDelete", "CATIA", "CATIASchRoute", "CATIASchComponent", "CATIASchAppConnector", "CATIASchAppConnectable"]
 source_file: "Doc/online/CAAScdSchUseCases/CAASchDeleteSource.htmmd"
@@ -16,7 +13,7 @@ converted: "2026-05-11T17:31:51.365141"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGHT DASSAULT SYSTEMES 2004
     ' *****************************************************************************
     '   Purpose:      Delete objects.
@@ -31,7 +28,7 @@ converted: "2026-05-11T17:31:51.365141"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -44,7 +41,7 @@ converted: "2026-05-11T17:31:51.365141"
         ' -------------------------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String
-```vbscript
+```cpp
         sDocPath=CATIA.SystemService.Environ("CATDocView")
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -70,7 +67,7 @@ converted: "2026-05-11T17:31:51.365141"
 ```vbscript
         ' -------------------------------------------------------------------------
         ' Open the schematic document
-```vbscript
+```cpp
         Dim sFilePath
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
@@ -83,12 +80,12 @@ converted: "2026-05-11T17:31:51.365141"
                 "online/CAAScdSchUseCases/samples/CAASCH_Delete01.CATProduct")
 
 ```vbscript
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
         Dim objSchDoc As Document
         Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
@@ -288,7 +285,7 @@ If ( Not ( objSchComp Is Nothing ) ) Then
               If ( intNbRouteAfter > 0 ) Then
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
                  Set objRoute1 = objLRoutes.Item (1, "CATIASchRoute")
 
 ```
@@ -317,7 +314,7 @@ If ( Not ( objRoute1 Is Nothing ) ) Then
 Set objRCntbl1 = objSchRoot.GetInterface ( _
                     If ( Not ( objRCntbl1 Is Nothing ) ) Then
 ```
-```vbscript
+```cpp
                        Set objAppRCntr1 = FindOpenConnector (objSchRoot,objRCntbl1)
                        Set objRoute2 = objLRoutes.Item (2, "CATIASchRoute")
                     End If
@@ -365,7 +362,7 @@ Set objRCntbl2 = objSchRoot.GetInterface ( _
                        Not ( objAppRCntr1 Is Nothing ) And _
                        Not ( objAppRCntr2 Is Nothing ) ) Then
 ```vbscript
-```vbscript
+```cpp
                     Set objRoute2 = objLRoutes.Item (2, "CATIASchRoute")
                     If ( Not ( objRoute2 Is Nothing ) ) Then
 ```
@@ -509,7 +506,7 @@ For intIndex = 1 To intNbComp
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
             Set objSchComp = objLCompInst.Item (intIndex,"CATIASchComponent")
 
 ```
@@ -698,7 +695,7 @@ Private Function FindOpenConnector (objSchRootArg As SchematicRootArg, _
 ```vbscript
           For intIndex = 1 To intNbCntr
 
-```vbscript
+```cpp
             Set objAppCntr = objLAppCntr.Item (intIndex,"CATIASchAppConnector")
 
 ```

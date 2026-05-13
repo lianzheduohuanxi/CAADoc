@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Using the Smart Duplicator"
 category: "use case"
 module: "CAACgmModel"
-tags: ["CATICGMContainer", "CAADoc", "CATICGMObject", "CATICGMSmartBodyDuplicator", "CAAGMModelInterfaces", "CAATopSmartDuplicator", "CAAGMModelSmartDuplicator"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcTobSmartDuplicator.htmmd"
+tags: "["CATICGMContainer", "CAADoc", "CATICGMObject", "CATICGMSmartBodyDuplicator", "CAAGMModelInterfaces", "CAATopSmartDuplicator", "CAAGMModelSmartDuplicator"]"
+source_file: "Doc/online/CAACgmModel/CAACgmUcTobSmartDuplicator.htm"
 converted: "2026-05-11T17:33:48.560636"
-```
-
 ---
 tags: ["CATICGMContainer", "CAADoc", "CATICGMObject", "CATICGMSmartBodyDuplicator", "CAAGMModelInterfaces", "CAATopSmartDuplicator", "CAAGMModelSmartDuplicator"]
 source_file: "Doc/online/CAACgmModel/CAACgmUcTobSmartDuplicator.htmmd"
@@ -68,7 +65,7 @@ for (int k = 1; k < faceList.Size(#)+1; k++)
 ```
 
       {
-```vbscript
+```cpp
 for (int k = 1; k < faceList.Size(#)+1; k++)
 CATCell * pLocalCell = faceList[k];
 if (pLocalCell && pLocalCell-gt;GetNbInternalDomains(#) > 0)
@@ -77,7 +74,7 @@ if (pLocalCell && pLocalCell-gt;GetNbInternalDomains(#) > 0)
 ```
 
         {
-```vbscript
+```cpp
 if (pLocalCell && pLocalCell-gt;GetNbInternalDomains(#) > 0)
 int NbDomains=pLocalCell->GetNbDomains(#);
 for(int j=1;j<=NbDomains;j++)
@@ -101,7 +98,6 @@ if (Location==CATLocationInner)
 
 Touching the Topology to Be Modified The CATTopology::Touch method is used to specify which topology is going to be modified.
 
-Touching the Topology to Be Modified The CATTopology::Touch method is used to specify which topology is going to be modified.
     holedFace->Touch(piBody);
 
 Creating a Smart Duplicated Body First, you must create an empty body from CATGeoFactory. The CATICGMSmartBodyDuplicator operator is created from this new body. It must be run.
@@ -147,7 +143,7 @@ if(1==toStore)
        ofstream filetowrite(pfileName, ios::binary ) ;
 
     #else
-```vbscript
+```cpp
 if(1==toStore)
 ofstream filetowrite(pfileName, ios::binary ) ;
        ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;

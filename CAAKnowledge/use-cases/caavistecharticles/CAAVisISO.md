@@ -1,15 +1,10 @@
 ---
-```vbscript
-```vbscript
 title: "Interactive Set of Objects"
-category: tech-article
-```
+category: "tech-article"
 module: "CAAVisTechArticles"
-tags: ["CATI3DGeoVisu", "CATIModelEvents", "CAAAfrBoundingElementCmd", "CATISO", "CATI2DGeoVisu", "CATICreateInstance", "CAADegClippingByBoxCmd"]
-source_file: "Doc/online/CAAVisTechArticles/CAAVisISO.htmmd"
+tags: "["CATI3DGeoVisu", "CATIModelEvents", "CAAAfrBoundingElementCmd", "CATISO", "CATI2DGeoVisu", "CATICreateInstance", "CAADegClippingByBoxCmd"]"
+source_file: "Doc/online/CAAVisTechArticles/CAAVisISO.htm"
 converted: "2026-05-11T17:31:52.295366"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -48,7 +43,7 @@ The Interactive Set of Objects is an interactive object used to visualize tempor
 * * *
 ### A CATISO Class Instance
 
-```vbscript
+```cpp
 The Interactive Set of Objects is a component [1] whose main class is the _CATISO_ class _._ It implements _CATI3DGeoVisu_ , _CATI2DGeoVisu_ , and _CATIModelEvents_ interfaces, as represented by the following UML diagram:
 
 ```
@@ -59,7 +54,7 @@ The Interactive Set of Objects is a component [1] whose main class is the _CATIS
 The implementation of the _CATI3DGeoVisu_ (or _CATI2DGeoVisu)_ interface builds a _CAT3DBagRep_ (or _CAT2DBagRep)_ class instance. This set (bag) of graphic representations contains the graphic representations of all components set in the ISO. The next section, A Bag of Components, details this notion of bag.
 
 ```vbscript
-```vbscript
+```cpp
 For the _CATIModelEvents_ interface, the How Does it Work ? section gives you explanations on the role of this interface.
 
 ```
@@ -120,12 +115,12 @@ In the C _ATFrmEditor_ class destructor, these three interactive sets of objects
 
 In a V5 document, Part features and the top Product are root components. You can you refer to the referenced article [9] for a brief notion of root object.You will also learn the main role of the unique _CATVisManager_ class instance.
 
-```vbscript
+```cpp
 The _CATISO_ instance class plays the same role. It means that when you want create a new window class [2] for a V5 document, if you want the elements of the ISO to be also drawn in this new window, you must do the relation between each viewer of the window and each Interactive Set of Objects. You can you refer to the use cases [4] [5] which detail the creation of a new window. In the new window class constructor you can have the following lines:
 
     ...
 ```
-```vbscript
+```cpp
 The _CATISO_ instance class plays the same role. It means that when you want create a new window class [2] for a V5 document, if you want the elements of the ISO to be also drawn in this new window, you must do the relation between each viewer of the window and each Interactive Set of Objects. You can you refer to the use cases [4] [5] which detail the creation of a new window. In the new window class constructor you can have the following lines:
       CATISO * pISO = pEditor->**GetISO**(#)  ;
 ```
@@ -307,7 +302,7 @@ You can refer to the CAADegClippingByBoxCmd use case [7] where these three kinds
 * * *
 ### In Short
 
-```vbscript
+```cpp
 The Interactive Set of Objects (ISO) is an interactive object handled by the _CATISO_ class. It enables you to display components which are not included in a V5 document. These components must only implement the _CATI3DGeoVisu_ (2D) interface.
 
 ```

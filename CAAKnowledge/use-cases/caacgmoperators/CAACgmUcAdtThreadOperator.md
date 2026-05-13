@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Threading a Rod"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMCheckForPart", "CAAGMOperatorsInterfaces", "CAAGMOperatorsJournalThreadOpMain", "CAADoc", "CAAGMModelGemBrowser", "CAASweepProfile", "CAAGMOperatorsJournalThreadUtility", "CAASweepCreate", "CATICGMFrFTopologicalSweep", "CAAAdtJournalThread", "CAAAdtJournalCreateThread"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtThreadOperator.htmmd"
+tags: "["CAAGMCheckForPart", "CAAGMOperatorsInterfaces", "CAAGMOperatorsJournalThreadOpMain", "CAADoc", "CAAGMModelGemBrowser", "CAASweepProfile", "CAAGMOperatorsJournalThreadUtility", "CAASweepCreate", "CATICGMFrFTopologicalSweep", "CAAAdtJournalThread", "CAAAdtJournalCreateThread"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtThreadOperator.htm"
 converted: "2026-05-11T17:33:48.868926"
-```
-
 ---
 tags: ["CAAGMCheckForPart", "CAAGMOperatorsInterfaces", "CAAGMOperatorsJournalThreadOpMain", "CAADoc", "CAAGMModelGemBrowser", "CAASweepProfile", "CAAGMOperatorsJournalThreadUtility", "CAASweepCreate", "CATICGMFrFTopologicalSweep", "CAAAdtJournalThread", "CAAAdtJournalCreateThread"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtThreadOperator.htmmd"
@@ -98,7 +95,7 @@ Other parameters are tuned by using the Setxxx methods. Specifying the Guide The
             1,                               // orientation
             piBPOrigin,                      // origin
             CATAngle (0),                    // start angle
-```vbscript
+```cpp
             CATAngle (helixAngleInt*CATPI),  // end angle
             CATLength (pitch),               // pitch
 ```

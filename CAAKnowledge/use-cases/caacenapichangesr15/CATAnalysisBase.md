@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "CATAnalysisBase Framework Modifications in V5R15"
-category: use-case
+category: "use-case"
 module: "CAACenAPIChangesR15"
-version: "V5R15"
-tags: ["CATICharacCollector", "CATISPMProcess", "CATISamGroup", "CATISPMProcessAccess"]
-source_file: "Doc/online/CAACenAPIChangesR15/CATAnalysisBase.htmmd"
+tags: "["CATICharacCollector", "CATISPMProcess", "CATISamGroup", "CATISPMProcessAccess"]"
+source_file: "Doc/online/CAACenAPIChangesR15/CATAnalysisBase.htm"
 converted: "2026-05-11T17:33:51.043914"
-```
-
 ---
 # CAA C++ API Modifications
 

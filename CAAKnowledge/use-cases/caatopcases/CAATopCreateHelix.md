@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Single Patch NURBS Surface"
-category: use-case case"
+category: "use-case case"
 module: "CAATopUseCases"
-tags: ["CAAGemBrowser", "CATICGMObject", "CAATopCreateHelix", "CAATopOverview", "CAATopologicalOperators"]
-source_file: "Doc/online/CAATopUseCases/CAATopCreateHelix.htmmd"
+tags: "["CAAGemBrowser", "CATICGMObject", "CAATopCreateHelix", "CAATopOverview", "CAATopologicalOperators"]"
+source_file: "Doc/online/CAATopUseCases/CAATopCreateHelix.htm"
 converted: "2026-05-11T17:31:50.697467"
-```
-
 ---
 # Geometric Modeler
 
@@ -61,7 +58,6 @@ The CAATopCreateHelix use case:
 
 To launch CAATopCreateHelix, you will need to set up the build time environment, then compile CAATopCreateHelix.m along with its prerequisites, set up the run time environment, and then execute the use case [1].
 
-To launch CAATopCreateHelix, you will need to set up the build time environment, then compile CAATopCreateHelix.m along with its prerequisites, set up the run time environment, and then execute the use case [1].
 ```vbscript
 If you simply type CAATopCreateHelix with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example:
 
@@ -93,7 +89,6 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
  The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
 
-The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
     CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**(#) ;
 ```vbscript
     if (NULL==piGeomFactory) return (1);
@@ -133,20 +128,19 @@ you get the helix below:
 [Top]
 #### Creating an Helix with a Variable Pitch and a Variable Radius
 
-```vbscript
+```cpp
 To create an helix with a variable pitch and a variable radius (with a linear or not linear variation), you must use the CATHelix::Set API which takes CATLaws as arguments. Prior to calling this method, you must:
 
-To create an helix with a variable pitch and a variable radius (with a linear or not linear variation), you must use the CATHelix::Set API which takes CATLaws as arguments. Prior to calling this method, you must:
   1. Initialize the data for the helix to be created. To do this, use the CATGeoFactory::CreateHelix method
 ```
-```vbscript
+```cpp
   2. Compute the length of the initial helix by using the CATDynMassProperties1D operator. A suitable length is required for the CATLaw creation. If you pass an inconsistent length to the CATLaw and CATHelix::Set method, you will get a throw.
 
 ##### Creating the Radius Law
 ```
 
 1. Initialize the data for the helix to be created. To do this, use the CATGeoFactory::CreateHelix method
-```vbscript
+```cpp
 2. Compute the length of the initial helix by using the CATDynMassProperties1D operator. A suitable length is required for the CATLaw creation. If you pass an inconsistent length to the CATLaw and CATHelix::Set method, you will get a throw.
 A linear radius law is used as it can be used both for a constant and a linear law.
 ```
@@ -236,7 +230,6 @@ no ratio applied to coordinates
 
 _What you get if you apply a ratio to the x coordinate_
 
-_What you get if you apply a ratio to the x coordinate_
 linear variation radius = 100.0 - 150.0
 Z = 0.02*CATCrvParam 2
 ThetaLaw = linear [0, 9 * 360deg]
@@ -260,13 +253,13 @@ The use case ends with the closure of the geometry factory, done by the `::CATCl
 
      {
     #ifdef _WINDOWS_SOURCE
-```vbscript
+```cpp
 if(1==toStore)
        ofstream filetowrite(pfileName, ios::binary ) ;
 ```
 
     #else
-```vbscript
+```cpp
 if(1==toStore)
 ofstream filetowrite(pfileName, ios::binary ) ;
        ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;

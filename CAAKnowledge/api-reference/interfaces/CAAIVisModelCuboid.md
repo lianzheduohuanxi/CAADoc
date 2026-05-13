@@ -1,64 +1,53 @@
 ---
 title: "CAAIVisModelCuboid"
-type: "interface"
+type: "ProtectedInterface"
 module: "CAAVisualization"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAIVisModelCuboid → CATBaseUnknown"
 method_count: 2
-visibility: "protected"
-has_tie_binding: true
-verified: true
+source_file: "CAAVisualization.edu/ProtectedInterfaces/CAAIVisModelCuboid.h"
 ---
-> **TIE实现**: unknown
 
 # CAAIVisModelCuboid
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAIVisModelCuboid → CATBaseUnknown  
-**模块**: CAAVisualization  
-**分类**: framework  
-**可见性**: protected  
-**方法数**: 2
+> Interface which characterizes a CAAVisModelCuboid object. The Cuboid is represented by 8 vertices, ie 8*3 float. Each vertices is placed like this: X4 --------------X7 /  .                   /  | /     .                 /    | /     X3 .............../........X2 X5 -------------X6      / |    .                 |       / |  .                   |    / X0--------------X1
 
-> System Framework
+**基类**: CATBaseUnknown | **模块**: CAAVisualization | **方法数**: 2
 
 ## 依赖
 
 - `CATBaseUnknown.h`
 - `CAAVisManagerInt.h`
 
-## TIE实现
+## 纯虚方法 (接口契约)
 
-**实现文件**:
-- `CAAIVis2DGraphVisu.cpp`
-- `CAAIVisModelCGRObject.cpp`
-- `CAAIVisModelCuboid.cpp`
-- `CAAIVisModelObject.cpp`
-- `CAAIVisModelSetOfObject.cpp`
+### GetVertices
+
+```cpp
+virtual HRESULT GetVertices(float ** oVertices) = 0 ;
+```
+
+Retrieves vertices of the cuboid. The length of the array is 24 = 8 vertices * 3 coordinates (x,y,z) don't delete the array after the call.
+
+| 参数 | 类型 |
+|------|------|
+| oVertices | `float **` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### SetVertices
+
+```cpp
+virtual HRESULT SetVertices(float * iVertices) = 0 ;
+```
+
+Sets vertices of the cuboid.
+
+| 参数 | 类型 |
+|------|------|
+| iVertices | `float *` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
 
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAVisualization.edu/ProtectedInterfaces/CAAIVisModelCuboid.h`

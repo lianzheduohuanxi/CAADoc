@@ -1,25 +1,15 @@
 ---
 title: "CAASysSprocketImpl"
-type: "interface"
+type: "LocalClass"
 module: "CAASystem"
-category: api-reference
 base: "CATBaseObject"
-inheritance_chain: "CAASysSprocketImpl → CATBaseObject"
-method_count: 1
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 2
+source_file: "CAASystem.edu/CAASysAutomationImpl.m/LocalInterfaces/CAASysSprocketImpl.h"
 ---
+
 # CAASysSprocketImpl
 
-**基类**: CATBaseObject  
-**继承链**: CAASysSprocketImpl → CATBaseObject  
-**模块**: CAASystem  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 1
-
-> COPYRIGHT DASSAULT SYSTEMES 2002
+**基类**: CATBaseObject | **模块**: CAASystem | **方法数**: 2
 
 ## 依赖
 
@@ -27,20 +17,35 @@ verified: true
 - `CATBSTR.h`
 - `CATUnicodeString.h`
 
+## 虚方法
+
+### get_Name
+
+```cpp
+virtual HRESULT get_Name(CATBSTR & oNameBSTR) ;
+```
+
+Implementation of the CAAIASysSprocket interface
+
+| 参数 | 类型 |
+|------|------|
+| oNameBSTR | `CATBSTR &` |
+
+
+## 静态方法
+
+### CreateSprocket
+
+```cpp
+static HRESULT __stdcall CreateSprocket(const CATUnicodeString& iName, CAAIASysSprocket*& oCAAIASysSprocket) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iName | `const CATUnicodeString&` |
+| oCAAIASysSprocket | `CAAIASysSprocket*&` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseObject**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAASystem.edu/CAASysAutomationImpl.m/LocalInterfaces/CAASysSprocketImpl.h`

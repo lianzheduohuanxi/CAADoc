@@ -1,51 +1,37 @@
 ---
 title: "CAAVisTextModel"
-type: "interface"
+type: "LocalClass"
 module: "CAAVisualization"
-category: api-reference
 base: "CATModelForRep3D"
-inheritance_chain: "CAAVisTextModel → CATModelForRep3D"
 method_count: 1
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAVisualization.edu/CAAVisModelForRep.m/LocalInterfaces/CAAVisTextModel.h"
 ---
+
 # CAAVisTextModel
 
-**基类**: CATModelForRep3D  
-**继承链**: CAAVisTextModel → CATModelForRep3D  
-**模块**: CAAVisualization  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 1
+> This class is a main component which C++ and OM derives of the CATModelForRep3D component. The CAAVisTextModel component implements: CATICreateInstance with the CAAEVisCreateInstanceForTextModel class CAAIVisTextModel   with the CAAVisTextModel class This component deriving from CATModelForRep3D already implements CATI3DGeoVisu.
+
+**基类**: CATModelForRep3D | **模块**: CAAVisualization | **方法数**: 1
 
 ## 依赖
 
 - `CATModelForRep3D.h`
 
+## 虚方法
+
+### SetGraphicRepresentation
+
+```cpp
+virtual HRESULT SetGraphicRepresentation(CATRep *iRep) ;
+```
+
+CAAIVisTextModel interface
+
+| 参数 | 类型 |
+|------|------|
+| *iRep | `CATRep` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATModelForRep3D**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-This interface is used in the following use cases:
-
-- [CAAVisSampleISO](../../use-cases/caaviscases/CAAVisSampleISO.md)
-- [CAAVisSampleTempObject](../../use-cases/caaviscases/CAAVisSampleTempObject.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAVisualization.edu/CAAVisModelForRep.m/LocalInterfaces/CAAVisTextModel.h`

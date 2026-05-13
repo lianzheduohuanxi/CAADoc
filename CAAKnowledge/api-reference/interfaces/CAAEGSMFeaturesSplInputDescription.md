@@ -1,56 +1,55 @@
 ---
 title: "CAAEGSMFeaturesSplInputDescription"
-type: "interface"
+type: "LocalClass"
 module: "CAAGSMInterfaces"
-category: api-reference
 base: "CATIniInputDescriptionAdaptor"
-inheritance_chain: "CAAEGSMFeaturesSplInputDescription → CATIniInputDescriptionAdaptor"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 3
+source_file: "CAAGSMInterfaces.edu/CAAGsiFeaturesSplModel.m/LocalInterfaces/CAAEGSMFeaturesSplInputDescription.h"
 ---
+
 # CAAEGSMFeaturesSplInputDescription
 
-**基类**: CATIniInputDescriptionAdaptor  
-**继承链**: CAAEGSMFeaturesSplInputDescription → CATIniInputDescriptionAdaptor  
-**模块**: CAAGSMInterfaces  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
-
-> ===================================================================
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATIniInputDescriptionAdaptor | **模块**: CAAGSMInterfaces | **方法数**: 3
 
 ## 依赖
 
 - `CATIniInputDescriptionAdaptor.h`
 
+## 公共方法
+
+### GetListOfModifiedFeatures
+
+```cpp
+HRESULT GetListOfModifiedFeatures(CATListValCATBaseUnknown_var& oListOfModifiedFeatures) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oListOfModifiedFeatures | `CATListValCATBaseUnknown_var&` |
+
+
+### GetMainInput
+
+```cpp
+HRESULT GetMainInput(CATBaseUnknown_var& oMainInput) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oMainInput | `CATBaseUnknown_var&` |
+
+
+### GetFeatureType
+
+```cpp
+HRESULT GetFeatureType(CATIInputDescription::FeatureType& oFeature_type) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oFeature_type | `CATIInputDescription::FeatureType&` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATIniInputDescriptionAdaptor**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAGSMInterfaces.edu/CAAGsiFeaturesSplModel.m/LocalInterfaces/CAAEGSMFeaturesSplInputDescription.h`

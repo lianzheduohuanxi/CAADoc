@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Schematic Component Instance (Placement)"
 category: "use-case"
 module: "CAAScdSchUseCases"
-tags: ["CAADoc", "CAASCH_Sample", "CAASCH_RouteForPlacement2", "CAAScdSchUseCases", "CATIA", "CAASchAppBase", "CAASCHEDUApp", "CAASchPlaceComponent", "CAASchPlatformModeler", "CATIASchComponent2", "CAASchAppUtilities"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchPlaceComponent.htmmd"
+tags: "["CAADoc", "CAASCH_Sample", "CAASCH_RouteForPlacement2", "CAAScdSchUseCases", "CATIA", "CAASchAppBase", "CAASCHEDUApp", "CAASchPlaceComponent", "CAASchPlatformModeler", "CATIASchComponent2", "CAASchAppUtilities"]"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchPlaceComponent.htm"
 converted: "2026-05-11T17:31:51.433971"
-```
-
 ---
 ## Schematics Platform Modeler
 
@@ -37,7 +34,6 @@ converted: "2026-05-11T17:31:51.433971"
 [CAASchPlaceComponent.CATScript ](CAASchPlaceComponentSource.md) is located in the CAAScdSchUseCases module. [Execute macro](macros/CAASchPlaceComponent.CATScript) (windows only).
  CAASchPlaceComponent includes the following steps:
 
-CAASchPlaceComponent includes the following steps:
   1. Prolog
   2. Place a Schematic component instance in free space (not connected to any other object).
   3. Place a Schematic component instance and connect it to instance created in previous step.
@@ -64,7 +60,7 @@ The macro first loads two documents: CAASCH_Sample.catalog and CAASCH_RouteForPl
         Dim sCtlgFilePath
 ```vbscript
 ```
-```vbscript
+```cpp
         sCtlgFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
 ```
@@ -79,7 +75,7 @@ Dim sCtlgFilePath
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
 sCtlgFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
         Dim objSchCtlgDoc As Document
         Set objSchCtlgDoc = CATIA.Documents.Open(sCtlgFilePath)
@@ -97,7 +93,7 @@ Dim objSchCtlgDoc As Document
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
 Set objSchCtlgDoc = CATIA.Documents.Open(sCtlgFilePath)
         ' Open main schematic P&ID design document (for new component instances created here)
 ```
@@ -112,7 +108,7 @@ Set objSchCtlgDoc = CATIA.Documents.Open(sCtlgFilePath)
         Dim sFilePath
 ```vbscript
 ```
-```vbscript
+```cpp
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
 ```
@@ -127,7 +123,7 @@ Dim sFilePath
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
         Dim objSchDoc As Document
         Set objSchDoc = CATIA.Documents.Open(sFilePath)
@@ -243,7 +239,7 @@ Method PlaceInSpace is then called to create a new instance of the "Blocking Val
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Dim db6Array(6) As CATSafeArrayVariant
 ```vbscript
 ```
@@ -265,7 +261,7 @@ Method PlaceInSpace is then called to create a new instance of the "Blocking Val
            ' the design document
            ' Note that the target document is an input to PlaceInSpace
            '-------------------------------------------------------------------
-```vbscript
+```cpp
            Set objSchComp2Ref = objSchRoot.GetInterface ("CATIASchComponent2",objSchCntblRef)
            If ( Not ( objSchComp2Ref Is Nothing ) ) Then
 ```
@@ -277,7 +273,7 @@ Method PlaceInSpace is then called to create a new instance of the "Blocking Val
 
     ...
 ```vbscript
-```vbscript
+```cpp
 Set objSchComp2Ref = objSchRoot.GetInterface ("CATIASchComponent2",objSchCntblRef)
 ```
 ```
@@ -385,7 +381,7 @@ In the comment section of the following code segments, instance A refers to "Blo
               objSchCompatInstA.IsTargetOKForPlace objSchGRRCompInstA, _
                 objCompRefPlaceInfo, objCompatInfo, bYesCompat
 
-```vbscript
+```cpp
               Dim db2Pt(2) As CATSafeArrayVariant
 ```vbscript
 ```

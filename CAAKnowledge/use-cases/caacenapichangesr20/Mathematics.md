@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "Mathematics Framework Modifications in V5R20"
-category: use-case
+category: "use-case"
 module: "CAACenAPIChangesR20"
-version: "V5R20"
-tags: []
-source_file: "Doc/online/CAACenAPIChangesR20/Mathematics.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAACenAPIChangesR20/Mathematics.htm"
 converted: "2026-05-11T17:33:51.636633"
-```
-
 ---
 # CAA C++ API Modifications
 

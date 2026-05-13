@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Topological Journal Methodology"
-category: tech-article
+category: "tech-article"
 module: "CAATopTechArticles"
-tags: ["CAACheckForPart", "CAATopCheckGnOK", "CATIBRepAccess", "CAATopJournal", "CAATopCheckForPart", "CATIA", "CAATopCheckGnKO", "CAATopDumpJournal", "CATIMfProcReport", "CAACheck", "CAATopologicalOperators"]
-source_file: "Doc/online/CAATopTechArticles/JournalMethodology.htmmd"
+tags: "["CAACheckForPart", "CAATopCheckGnOK", "CATIBRepAccess", "CAATopJournal", "CAATopCheckForPart", "CATIA", "CAATopCheckGnKO", "CAATopDumpJournal", "CATIMfProcReport", "CAACheck", "CAATopologicalOperators"]"
+source_file: "Doc/online/CAATopTechArticles/JournalMethodology.htm"
 converted: "2026-05-11T17:31:50.785311"
-```
-
 ---
 # Geometric Modeler
 
@@ -64,7 +61,6 @@ This article is intended for those of you who have to create a topological journ
 
 In CATIA Version 5, a feature cannot refer directly to the topology that is used to specify it. The reason for this, is that the topology as well as the geometry can be deleted and rebuilt during the Update operation. Suppose you create a prism by extruding a simple spline. The spline is assigned a tag as well as the resulting cells of the prism. Modify the spline and update the prism, the tags will all be modified. To sort out this problem, a stable way to refer to parent objects was to be found. The generic naming is a description of the history of a cell that gets rid of tags and is stable when a feature is updated.
 
-In CATIA Version 5, a feature cannot refer directly to the topology that is used to specify it. The reason for this, is that the topology as well as the geometry can be deleted and rebuilt during the Update operation. Suppose you create a prism by extruding a simple spline. The spline is assigned a tag as well as the resulting cells of the prism. Modify the spline and update the prism, the tags will all be modified. To sort out this problem, a stable way to refer to parent objects was to be found. The generic naming is a description of the history of a cell that gets rid of tags and is stable when a feature is updated.
 When you move the mouse cursor over a geometric object or select it interactively, CATIA creates a selection object (CATIBRepAccess). These CATIBRepAccess objects are not persistent, they are deleted whenever the document is updated. To keep trace of these objects, CATIA uses specific features called BRep features that store stable labels describing the topology. The generic name of a cell is constructed by reading the a "graph" that describes the Parent-Children links between the cells of different bodies. Building this graph requires information which is provided in the topological journal and is under the responsibility of CGM operators. For more information, take a look at the "Generic Naming Overview" article (Mechanical Modeler).
 
 In brief, a cell name looks something like this: "Cell dimension + Parent feature + Additional information". Keeping this in mind will help you understand the journal naming rules.
@@ -331,7 +327,6 @@ The remedy to this invalid default journal consists in creating a valid journal 
 
 Dump the default one (CAATopDumpJournal if you want to dump the journal on the standard output). Dumping the journal allows you retrieve all pieces of information to be re-injected in the journal to be created. Taking a look at the default journal above (the one invalid), the lateral faces appear in the journal and can be retrieved by scanning all the constructed objects with info=0.
 
-Dump the default one (CAATopDumpJournal if you want to dump the journal on the standard output). Dumping the journal allows you retrieve all pieces of information to be re-injected in the journal to be created. Taking a look at the default journal above (the one invalid), the lateral faces appear in the journal and can be retrieved by scanning all the constructed objects with info=0.
 Check the default journal - the verdict and warning file give clues about why your journal is invalid. In the example above, the default journal is obviously invalid for all events. In most cases you have to look for the non-backtracked cells as well as the cells that are not properly named. The data files resulting from the check help you find out the disorders in the journal and fix them if need be.
 
 Suppose you are mistaken and create a new journal with the skin edges as parents of the lateral faces instead of the sketch edges, the created journal will be invalid and the lateral faces will be non backtracked (the operand is the sketch and not the skin). In this case, you won't be able to differentiate the lateral faces at selection.
@@ -572,7 +567,6 @@ Provides you with the list of all the cells that are in Copy mode but not in the
 
 The rules to be checked are divided into four categories which are summarized below:
 
-The rules to be checked are divided into four categories which are summarized below:
 1 - Any cell belonging to the resulting body must be backtracked
 
 A cell is backtracked if its parents belong to the input bodies specified as the operator inputs. The check result depends on the Copy/NoCopy mode of the operands. This Copy/NoCopy mode must be specified prior to running the Check operation. For example: if a cell belonging to the resulting body does not appear as created/modified in the journal, it is expected to belong to an input body in Copy mode, otherwise, it is not backtracked and the resulting journal is invalid. If a cell belonging to an input body in Copy mode is not in the result it must be explicitly deleted in the journal.

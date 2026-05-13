@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Implementing the Statechart Diagram"
 category: "use case"
 module: "CAADegUseCases"
-tags: ["CAADegCreateRectangleCmd", "CAAISysPlane", "CAADialogEngine", "CAAGeometry", "CAACreateRectangleCmd", "CATIndicationAgent", "CAADegGeoCommands"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleGraph.htmmd"
+tags: "["CAADegCreateRectangleCmd", "CAAISysPlane", "CAADialogEngine", "CAAGeometry", "CAACreateRectangleCmd", "CATIndicationAgent", "CAADegGeoCommands"]"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleGraph.htm"
 converted: "2026-05-11T17:33:49.670669"
-```
-
 ---
 tags: ["CAADegCreateRectangleCmd", "CAAISysPlane", "CAADialogEngine", "CAAGeometry", "CAACreateRectangleCmd", "CATIndicationAgent", "CAADegGeoCommands"]
 source_file: "Doc/online/CAADegUseCases/CAADegSampleGraph.htmmd"
@@ -54,7 +51,6 @@ The Rectangle command statechart diagram comprises three states in addition to t
 [Top] Where to Find the Rectangle Command Code The Rectangle command is made of a single class named _CAADegCreateRectangleCmd_ located in the CAADegGeoCommands.m module of the CAADialogEngine.edu framework: Windows | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 ---|---
 Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
-Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed. [Top] Step-by-Step To create the CAACreateRectangleCmd BuildGraph method, there are three steps: # | Step | Where
 
 Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
@@ -95,7 +91,7 @@ This code portion has the following meaning:
     * Thanks to the `AddElementType` method, the selection agent is valued only when an object that implements the CAAISysPlane interface is selected. The selection agent remains impassive when any object that doesn't implement this interface is selected
     * Any dialog agent has a behavior assigned using the `SetBehavior` method. The global behavior is made of a concatenation of unit behaviors set using keywords separated with the "|" pipe character
       * `CATDlgEngWithPrevaluation` means that the selection agent is prevalued when an object is preselected, that is, as long as the mouse moves or is located above the object without left clicking. The object must of course match the type set by `AddElementType`, otherwise the dialog agent is not prevalued
-```vbscript
+```cpp
       * `CATDlgEngWithPSOHSO` means that any preselected object is prehighlighted, and thus put in the PSO (Prehighlighted Set of Objects), and that any selected object is highlighted, and thus put in the HSO (Highlighted Set of Objects)
       * `CATDlgEngWithUndo` means that no undo step is recorded for this dialog agent [x]
 ```
@@ -162,7 +158,7 @@ The first state is created using the `GetInitialState` method that also create a
         stPlaneState,
         stGetFirstPointState,
         IsOutputSetCondition(_daPathEltPlane),
-```vbscript
+```cpp
         Action((ActionMethod) & CAADegCreateRectangleCmd::CreateCamera)
 
 ```
@@ -184,7 +180,7 @@ The second transition links the two rectangle diagonal end point indication stat
         stGetFirstPointState,
         stGetLastPointState,
         AndCondition(IsOutputSetCondition(_daIndicationP1),
-```vbscript
+```cpp
                      Condition((ConditionMethod)& CAADegCreateRectangleCmd::TestPoint1)),
         Action((ActionMethod) & CAADegCreateRectangleCmd::CreatePoint)
 
@@ -194,7 +190,7 @@ The second transition links the two rectangle diagonal end point indication stat
     ...
 
 ---
-```vbscript
+```cpp
 Action((ActionMethod) & CAADegCreateRectangleCmd::CreatePoint)
 The two states are the first two arguments. A composite condition is used as the transition guard condition, and a member function is used as the transition action. The composite condition is a CATBoolean AND between two condition return values:
     1. The `IsOutputSetCondition` method that returns True if the indication agent is valued
@@ -211,7 +207,7 @@ The third transition is a self-transition that loops on the state that asks for 
         stGetLastPointState,
         stGetLastPointState,
         AndCondition(IsLastModifiedAgentCondition(_daIndicationP2),
-```vbscript
+```cpp
                      Condition((ConditionMethod)& CAADegCreateRectangleCmd::TestPoint2)),
         Action((ActionMethod) & CAADegCreateRectangleCmd::UpdateRectangle)
 
@@ -221,7 +217,7 @@ The third transition is a self-transition that loops on the state that asks for 
     ...
 
 ---
-```vbscript
+```cpp
 Action((ActionMethod) & CAADegCreateRectangleCmd::UpdateRectangle)
 The same state is used for both the transition source and target states. Note that the transition condition is a composite condition that is also a CATBoolean AND condition between:
     1. The `IsLastModifiedAgentCondition` method that returns True if the indication agent is prevalued.
@@ -238,7 +234,7 @@ The transition action is the state dialog class member function `UpdateRectangle
         stGetLastPointState,
         NULL,
         AndCondition(IsOutputSetCondition(_daIndicationP2),
-```vbscript
+```cpp
                      Condition((ConditionMethod)& CAADegCreateRectangleCmd::TestPoint2)),
         Action( (ActionMethod) & CAADegCreateRectangleCmd::NewRectangle)
 

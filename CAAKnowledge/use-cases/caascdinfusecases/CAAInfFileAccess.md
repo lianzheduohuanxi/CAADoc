@@ -129,14 +129,14 @@ This use case has shown how to access files and folder using CAA V5 *FileSystem*
 
     ' ------------------------------------------
     ' Get the file system object
-```vbscript
+```cpp
     Dim oFileSys as FileSystem
     Set oFileSys = CATIA.FileSystem
 
     ' ------------------------------------------
 ```
     ' Retrieve a folder for temporary files
-```vbscript
+```cpp
     Dim sTmpPath as String 
     sTmpPath=CATIA.SystemService.Environ(&quot;CATTemp&quot;)
     If (Not oFileSys.FolderExists(sTmpPath)) Then

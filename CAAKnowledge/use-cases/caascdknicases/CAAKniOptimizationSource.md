@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAAKniOptimization.CATScript"
 category: "use-case"
 module: "CAAScdKniUseCases"
-tags: ["CATIA", "CAAKniOptimization"]
-source_file: "Doc/online/CAAScdKniUseCases/CAAKniOptimizationSource.htmmd"
+tags: "["CATIA", "CAAKniOptimization"]"
+source_file: "Doc/online/CAAScdKniUseCases/CAAKniOptimizationSource.htm"
 converted: "2026-05-11T17:31:51.983820"
-```
-
 ---
 tags: ["CATIA", "CAAKniOptimization"]
 source_file: "Doc/online/CAAScdKniUseCases/CAAKniOptimizationSource.htmmd"
@@ -54,7 +51,7 @@ converted: "2026-05-11T17:31:51.983820"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -64,17 +61,17 @@ converted: "2026-05-11T17:31:51.983820"
 ```vbscript
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' Set the CATIA popup file alerts to False
     ' It prevents to stop the macro at each alert during its execution
 ```
-```vbscript
+```cpp
     CATIA.DisplayFileAlerts = False
     ' Retrieve your active document - CATIA is your application
 ```
     ' You get the active document by using the ActiveDocument property
     ' on your application object
-```vbscript
+```cpp
     Dim oActiveDoc As Document
     Set oActiveDoc = CATIA.ActiveDocument
     ' Check whether the document is a CATPart
@@ -314,7 +311,7 @@ oOptimization1.Run False
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
             CATIA.ActiveDocument.Part.Update
 
 ```
@@ -323,7 +320,7 @@ oOptimization1.Run False
 ```
 
     else
-```vbscript
+```cpp
        MsgBox "The active document must be a CATPart"
 ```vbscript
 ```

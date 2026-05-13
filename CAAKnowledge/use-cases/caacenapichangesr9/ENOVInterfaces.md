@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "ENOVInterfaces Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR9"
-version: "V5R9"
-tags: ["CATIEnovDDManager", "CATIEnovCMManager"]
-source_file: "Doc/online/CAACenAPIChangesR9/ENOVInterfaces.htmmd"
+tags: "["CATIEnovDDManager", "CATIEnovCMManager"]"
+source_file: "Doc/online/CAACenAPIChangesR9/ENOVInterfaces.htm"
 converted: "2026-05-11T17:33:52.893327"
-```
-
 ---
 tags: ["CATIEnovDDManager", "CATIEnovCMManager"]
 source_file: "Doc/online/CAACenAPIChangesR9/ENOVInterfaces.htmmd"

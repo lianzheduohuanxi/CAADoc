@@ -79,7 +79,7 @@ This use case has shown how to create and modify a pad using macros.
 ' ------------
 ' Get the part
 ' ------------
-```vbscript
+```cpp
 Dim oPart As Part
 Set oPart = CATIA.ActiveDocument.Part
 

@@ -1,52 +1,70 @@
 ---
 title: "CAAEMmrCombinedCurve"
-type: "interface"
+type: "LocalClass"
 module: "CAAMechanicalModeler"
-category: api-reference
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+base: "CATBaseUnknown"
+method_count: 4
+source_file: "CAAMechanicalModeler.edu/CAAMmrCombinedCurve.m/LocalInterfaces/CAAEMmrCombinedCurve.h"
 ---
+
 # CAAEMmrCombinedCurve
 
-**模块**: CAAMechanicalModeler  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATBaseUnknown | **模块**: CAAMechanicalModeler | **方法数**: 4
 
 ## 依赖
 
+- `CATBaseUnknown.h`
+
+## 公共方法
+
+### SetCurve
+
+```cpp
+HRESULT SetCurve(int iNum, CATISpecObject *ipiSpecOnCurve) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iNum | `int` |
+| *ipiSpecOnCurve | `CATISpecObject` |
+
+
+### GetCurve
+
+```cpp
+HRESULT GetCurve(int iNum, CATISpecObject **opiSpecOnCurve) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iNum | `int` |
+| **opiSpecOnCurve | `CATISpecObject` |
+
+
+### SetDirection
+
+```cpp
+HRESULT SetDirection(int iNum, CATISpecObject *ipiSpecOnDirection) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iNum | `int` |
+| *ipiSpecOnDirection | `CATISpecObject` |
+
+
+### GetDirection
+
+```cpp
+HRESULT GetDirection(int iNum, CATISpecObject **opiSpecOnDirection) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iNum | `int` |
+| **opiSpecOnDirection | `CATISpecObject` |
+
+
 ---
 
-## Interface Overview
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-- [3D PLM Enterprise Architecture](../../use-cases/caaafrcases/CAAAfrSampleContextualMenu.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAMechanicalModeler.edu/CAAMmrCombinedCurve.m/LocalInterfaces/CAAEMmrCombinedCurve.h`

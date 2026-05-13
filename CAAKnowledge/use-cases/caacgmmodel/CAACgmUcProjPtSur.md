@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Projecting a Point onto  a Surface"
 category: "use case"
 module: "CAACgmModel"
-tags: ["CAAGMModelInterfaces", "CATICGMProjectionPtSur", "CAAGMModelProjectionOpe"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcProjPtSur.htmmd"
+tags: "["CAAGMModelInterfaces", "CATICGMProjectionPtSur", "CAAGMModelProjectionOpe"]"
+source_file: "Doc/online/CAACgmModel/CAACgmUcProjPtSur.htm"
 converted: "2026-05-11T17:33:48.506138"
-```
-
 ---
 Projecting a Point onto a Surface
 
@@ -96,7 +93,6 @@ if (pPtSurOpe->GetNumberOfPoints(#)   >  0)
     ---
 
     you retrieve five resulting points (some of them cannot be distinguished as
-you retrieve five resulting points (some of them cannot be distinguished as
     they are quite close to others).
 
       Fig.2 Projected Points

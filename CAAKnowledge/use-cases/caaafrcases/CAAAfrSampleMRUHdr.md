@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Most Recent Used Command Header"
-category: use-case case"
+category: "use-case case"
 module: "CAAAfrUseCases"
-tags: ["CAAAfrGeneralWksAddinHeader", "CAAAfrMRUHeader", "CAAAfrMRUAddElementCmd", "CAAAfrComboColorHeader", "CAAAfrMRURep", "CAAAfrMRUManager", "CAAAfrGetMRUManager", "CAAEAfrCommandHeaderRepForMRU", "CATIAfrCommandHeaderRep", "CAAAfrMRUHdr", "CATIniCleanerSettingCtrl", "CATINT32ToPtr", "CATIWorkbenchAddin", "CAAAfrMRUSelElementHdr", "CAAAfrMRUNotification", "CATImplementHeaderResources", "CAAAfrGeoCommands", "CAAAfrGeneralWksAddin", "CAAAfrMRUManagerNotification"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleMRUHdr.htmmd"
+tags: "["CAAAfrGeneralWksAddinHeader", "CAAAfrMRUHeader", "CAAAfrMRUAddElementCmd", "CAAAfrComboColorHeader", "CAAAfrMRURep", "CAAAfrMRUManager", "CAAAfrGetMRUManager", "CAAEAfrCommandHeaderRepForMRU", "CATIAfrCommandHeaderRep", "CAAAfrMRUHdr", "CATIniCleanerSettingCtrl", "CATINT32ToPtr", "CATIWorkbenchAddin", "CAAAfrMRUSelElementHdr", "CAAAfrMRUNotification", "CATImplementHeaderResources", "CAAAfrGeoCommands", "CAAAfrGeneralWksAddin", "CAAAfrMRUManagerNotification"]"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleMRUHdr.htm"
 converted: "2026-05-11T17:17:55.774532"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -236,7 +233,6 @@ The `CAAAfrGeneralWksAddin.m` module contains an Add-in of the General workshop
 
 There are four logical steps in CAAAfrMRUHeader:
 
-There are four logical steps in CAAAfrMRUHeader:
   1. Creating the CAAAfrMRUManager Component
   2. Creating the Component Representing the MRU Command Header
   3. Creating the Class Instantiating the Graphic Representation
@@ -297,7 +293,6 @@ The source file of the _CAAAfrMRUManager_ class is as follows:
     #include <TIE_CAAIAfrMRUManagement.h>
     TIE_**CAAIAfrMRUManagement**(CAAAfrMRUManager);
 
-TIE_**CAAIAfrMRUManagement**(CAAAfrMRUManager);
     CAAAfrMRUManager::CAAAfrMRUManager(#) {}
     CAAAfrMRUManager::~CAAAfrMRUManager(#){}
 
@@ -617,7 +612,7 @@ Here the CAAEAfrCommandHeaderRepForMRU __ source file
                       CAAAfrMRUHeader);
 
     };
-```vbscript
+```cpp
 CATImplementClass(CAAEAfrCommandHeaderRepForMRU,
 DataExtension,
 CATBaseUnknown,
@@ -698,7 +693,7 @@ The MRU header has no representation in the menu bar or in a contextual menu, so
 
 This class is the _CAAAfrMRURep_ class. Its main roles are:
 
-```vbscript
+```cpp
   * Set a callback to be informed when the contents or the order of the MRU list change
   * Create _CATDlgPushItem_ instances depending on the MRU list
 ```
@@ -779,7 +774,7 @@ CATAfrCommandHeaderRep(iParent,iCommandName)
 ```
 
            {
-```vbscript
+```cpp
 CATAfrCommandHeaderRep(iParent,iCommandName)
 ```vbscript
 for ( int i = 0 ; i < MRU_MAX_SIZE ; i++ )
@@ -816,7 +811,7 @@ if ( SUCCEEDED(rc) )
 ```
 
         	           "CAAAfrMRUManagerNotification",
-```vbscript
+```cpp
 if ( SUCCEEDED(rc) )
 _pIAfrMRUManagement,
         	            (CATSubscriberMethod)&CAAAfrMRURep::ModifiedCB,
@@ -1002,7 +997,7 @@ if ( _pItemList[i] == NULL )
 
                 **ItemName += num** ;
 
-```vbscript
+```cpp
 if ( _pItemList[i] == NULL )
 CATUnicodeString ItemName("**MRUItem_** ");
                 _pItemList[i] = new **CATDlgPushItem**((CATDialog *)pParent,
@@ -1094,7 +1089,6 @@ void CAAAfrGeneralWksAdn::CreateCommands(#)
 
 The MRU command header is created using the constructor class. The most important thing in the usage of the `SetVisibility` method. This method of the _CATCommandHeader_ class allows us to hide the command header instance in the Tools/Customize command. This command displays a dialog box containing tab pages. One of them, the Command tab page, displays by category, all the "visible" command header instances. The two following pictures explains the difference when the `SetVisibility` method is used or not.
 
-The MRU command header is created using the constructor class. The most important thing in the usage of the `SetVisibility` method. This method of the _CATCommandHeader_ class allows us to hide the command header instance in the Tools/Customize command. This command displays a dialog box containing tab pages. One of them, the Command tab page, displays by category, all the "visible" command header instances. The two following pictures explains the difference when the `SetVisibility` method is used or not.
  This picture shows the Command tab page of the Tools/Customize command. In the All Commands category, you see that the CAAAfrMRUHdr appears. To do that we have set a comment before the `SetVisibility`  instruction. The MRU header is without NLS resources [10], so the displayed name is the internal name of the command header instance (the argument of the constructor class).
 
 The MRU command header is created using the constructor class. The most important thing in the usage of the `SetVisibility` method. This method of the _CATCommandHeader_ class allows us to hide the command header instance in the Tools/Customize command. This command displays a dialog box containing tab pages. One of them, the Command tab page, displays by category, all the "visible" command header instances. The two following pictures explains the difference when the `SetVisibility` method is used or not.

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Hole Object"
-category: tech-article
+category: "tech-article"
 module: "CAAScdPriTechArticles"
-tags: []
-source_file: "Doc/online/CAAScdPriTechArticles/CAAPriObjHole.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAAScdPriTechArticles/CAAPriObjHole.htm"
 converted: "2026-05-11T17:31:51.235946"
-```
-
 ---
 # Hole Object
 

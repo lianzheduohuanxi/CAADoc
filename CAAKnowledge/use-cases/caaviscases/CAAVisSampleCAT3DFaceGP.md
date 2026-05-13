@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Tessellating and Displaying a Torus"
-category: use-case case"
+category: "use-case case"
 module: "CAAVisUseCases"
-tags: ["CAAVisBaseView", "CAAVisBaseDocument", "CAAVisBaseDefaultDocument", "CAAVisBasics", "CAAVisBaseApplication", "CAAVisualization"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleCAT3DFaceGP.htmmd"
+tags: "["CAAVisBaseView", "CAAVisBaseDocument", "CAAVisBaseDefaultDocument", "CAAVisBasics", "CAAVisBaseApplication", "CAAVisualization"]"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleCAT3DFaceGP.htm"
 converted: "2026-05-11T17:31:52.036246"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -140,7 +137,6 @@ The torus is displayed when the CAAVisBasics application is launched. The torus 
 
 The 3D navigation viewer is an instance of the _CATNavigation3DViewer_ class. It is created in the `CreateViewer` method of the _CAAVisBaseView_ class that is called when the application is launched.
 
-The 3D navigation viewer is an instance of the _CATNavigation3DViewer_ class. It is created in the `CreateViewer` method of the _CAAVisBaseView_ class that is called when the application is launched.
     void CAAVisBaseView::CreateViewer(#)
 
     {
@@ -171,7 +167,6 @@ The `Attach4Sides` method attaches the four sides of the viewer to those of the 
 
 The _CAAVisBaseDefaultDocument_ constructor creates the representation bag to attach to the viewer, calls `CreateRep` to create the torus representation, adds it to the representation bag, and calls `AddRepToViewer` for display.
 
-The _CAAVisBaseDefaultDocument_ constructor creates the representation bag to attach to the viewer, calls `CreateRep` to create the torus representation, adds it to the representation bag, and calls `AddRepToViewer` for display.
     CAAVisBaseDefaultDocument::CAAVisBaseDefaultDocument(CATCommand * iParent,
                                                          CATDialog  * iDialogParent,
                                                          CATString  * const iDocumentName)
@@ -200,7 +195,6 @@ Let's examine what `CreateRep` does.
 
 First set the tessellation parameters.
 
-First set the tessellation parameters.
     void CAAVisBaseDefaultDocument::CreateRep(#)
 
     {
@@ -445,7 +439,7 @@ The graphic attribute set can be customized.
 
     ...
 The graphic attribute set can be customized.
-```vbscript
+```cpp
       CATGraphicAttributeSet pGraphicAttributes;
 
 ```
@@ -517,7 +511,6 @@ This bounding box is the sphere whose center is the torus center, and whose radi
 
 The `AddRepToViewer` method displays the created representation.
 
-The `AddRepToViewer` method displays the created representation.
     void CAAVisBaseDocument::AddRepToViewer(#)
 
     {

@@ -1,49 +1,108 @@
 ---
 title: "CAAxPDMDRMRightEditionFrame"
-type: "interface"
+type: "LocalClass"
 module: "CAAxPDMInterfaces"
-category: api-reference
 base: "CATDlgFrame"
-inheritance_chain: "CAAxPDMDRMRightEditionFrame → CATDlgFrame"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 9
+source_file: "CAAxPDMInterfaces.edu/CAAxPDMDRMILB.m/LocalInterfaces/CAAxPDMDRMRightEditionFrame.h"
 ---
+
 # CAAxPDMDRMRightEditionFrame
 
-**基类**: CATDlgFrame  
-**继承链**: CAAxPDMDRMRightEditionFrame → CATDlgFrame  
-**模块**: CAAxPDMInterfaces  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
-
-> ========================================================================
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATDlgFrame | **模块**: CAAxPDMInterfaces | **方法数**: 9
 
 ## 依赖
 
 - `CATDlgFrame.h`
 - `CATListOfCATString.h`
 
+## 公共方法
+
+### BuildPanel
+
+```cpp
+void BuildPanel() ;
+```
+
+
+### Init
+
+```cpp
+HRESULT Init(const void *iDRMAuthorization, size_t iDRMAuthorizationSize) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iDRMAuthorization | `const void` |
+| iDRMAuthorizationSize | `size_t` |
+
+
+### InitWithDefault
+
+```cpp
+HRESULT InitWithDefault() ;
+```
+
+
+### RefreshDisplay
+
+```cpp
+HRESULT RefreshDisplay(CATUnicodeString * DRMUser, DWORD* DRMRight, int DRMUserNb) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| DRMUser | `CATUnicodeString *` |
+| DRMRight | `DWORD*` |
+| DRMUserNb | `int` |
+
+
+### GetAuthorization
+
+```cpp
+HRESULT GetAuthorization(CATUnicodeString *&DRMUser, DWORD *&DRMRight, int& DRMUserNb) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *&DRMUser | `CATUnicodeString` |
+| *&DRMRight | `DWORD` |
+| DRMUserNb | `int&` |
+
+
+### GetAuthorizations
+
+```cpp
+HRESULT GetAuthorizations(void *& iDRMAuthorization, size_t& iDRMAuthorizationSize) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iDRMAuthorization | `void *&` |
+| iDRMAuthorizationSize | `size_t&` |
+
+
+### ValidateToDefault
+
+```cpp
+HRESULT ValidateToDefault() ;
+```
+
+
+### Refresh
+
+```cpp
+void Refresh() ;
+```
+
+
+### Validate
+
+```cpp
+void Validate() ;
+```
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATDlgFrame**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAxPDMInterfaces.edu/CAAxPDMDRMILB.m/LocalInterfaces/CAAxPDMDRMRightEditionFrame.h`

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating 1D Coating Mesh Part"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CATIA", "CAAAniMeshCoating1D", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshCoating1D.htmmd"
+tags: "["CATIA", "CAAAniMeshCoating1D", "CAAScdAniUseCases"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshCoating1D.htm"
 converted: "2026-05-11T17:31:51.621507"
-```
-
 ---
 ## Analysis Modeler
 
@@ -34,7 +31,7 @@ This use case shows you how to create coating 1D mesh part by extracting edge el
     ...
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -46,7 +43,7 @@ This use case shows you how to create coating 1D mesh part by extracting edge el
 ```vbscript
     '-----------------------------------------------------------
     'Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -72,7 +69,7 @@ This use case shows you how to create coating 1D mesh part by extracting edge el
 ```vbscript
     '-----------------------------------------------------------
     ' Open the Analysis document
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Surface.CATAnalysis")
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "The Declarative File Preprocessor"
 category: "use-case"
 module: "CAABtlTechArticles"
-tags: []
-source_file: "Doc/online/CAABtlTechArticles/CAABtlMANprepro.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAABtlTechArticles/CAABtlMANprepro.htm"
 converted: "2026-05-11T17:33:46.116441"
-```
-
 ---
 RADE
 
@@ -71,7 +68,6 @@ The preprocessor is an internal step which parse any lines that begin with a
         | are used to check flag(s) by analysing _**Expression**_.
 
     Expression consist of test flag clauses that can be mixed with booleans
-Expression consist of test flag clauses that can be mixed with booleans
     operators and grouped with parenthesis `**(**...**)** '.
 
     Only following operators are supported (comparison's are not) :

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Converting a Shape Design Feature into a Datum"
-category: use-case case"
+category: "use-case case"
 module: "CAAGsiUseCases"
-tags: ["CAAGsiNozzle", "CATIGSMProceduralView_var", "CATICkeParm_var", "CATIPrtContainer", "CATICkeParmFactory_var", "CAAGSMInterfaces", "CATIMf3DBehavior_var", "CATIGSMAssemble_var", "CATIGSMFactory", "CATIGSMProceduralView", "CATIPrtPart_var", "CAAGsiObjectUpdate", "CATIDescendants_var", "CATISpecObject_var", "CATIModelEvents_var", "CATInit", "CATIGSMFactory_var", "CATIDescendant", "CAAGsiDatum"]
-source_file: "Doc/online/CAAGsiUseCases/CAAGsiDatum.htmmd"
+tags: "["CAAGsiNozzle", "CATIGSMProceduralView_var", "CATICkeParm_var", "CATIPrtContainer", "CATICkeParmFactory_var", "CAAGSMInterfaces", "CATIMf3DBehavior_var", "CATIGSMAssemble_var", "CATIGSMFactory", "CATIGSMProceduralView", "CATIPrtPart_var", "CAAGsiObjectUpdate", "CATIDescendants_var", "CATISpecObject_var", "CATIModelEvents_var", "CATInit", "CATIGSMFactory_var", "CATIDescendant", "CAAGsiDatum"]"
+source_file: "Doc/online/CAAGsiUseCases/CAAGsiDatum.htm"
 converted: "2026-05-11T17:31:50.628699"
-```
-
 ---
 # Shape Design & Styling
 
@@ -85,7 +82,6 @@ where:
 
 The CAAGsiDatum use case is made of main program located in the CAAGsiDatum.m module of the CAAGSMInterfaces.edu framework:
 
-The CAAGsiDatum use case is made of main program located in the CAAGsiDatum.m module of the CAAGSMInterfaces.edu framework:
 Windows | `InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiDatum.m/`
 
 The CAAGsiDatum use case is made of main program located in the CAAGsiDatum.m module of the CAAGSMInterfaces.edu framework:
@@ -122,7 +118,6 @@ We will now comment each of those sections by looking at the code of the main me
 
 CAAGsiDatum sample first creates a session and opens the input CATPart.
 
-CAAGsiDatum sample first creates a session and opens the input CATPart.
 Note: The important feature of the following sequence of code consists in the required call to the GetPart(#) method of the CATPrtContainer interfaces. /
 
 This method allow to load in session the different containers of the part (feature container, geometric container,..)
@@ -147,7 +142,7 @@ cout << "(CAAGsiDatum) ERROR: Create_Session" << endl;
 TestCaseError = 1 ;
     cout << "The input document " << InputName << " is opened" << endl ;
     CATDocument *pDoc = NULL;
-```vbscript
+```cpp
     rc =CATDocumentServices::OpenDocument(InputName, pDoc) ;
 
     if (NULL == pDoc ) {
@@ -231,7 +226,7 @@ Using standard creation method for join (also named assemble),  sweep and loft 
     ...
     // Join
     // ------------------
-```vbscript
+```cpp
     CATLISTV(CATISpecObject_var) aObjectParametersAssemble;
     aObjectParametersAssemble.Append(spSweep1);
     aObjectParametersAssemble.Append(spLoft1);
@@ -434,7 +429,7 @@ Save part and close the session
 Save part and close the session
     if (NULL != OutputName )      {
 ```vbscript
-```vbscript
+```cpp
         rc = CATDocumentServices::SaveAs  (*pDoc, OutputName );
         if (SUCCEEDED(rc))   {
 ```
@@ -447,7 +442,7 @@ Save part and close the session
 ```vbscript
 if (NULL != OutputName )      {
 ```vbscript
-```vbscript
+```cpp
 rc = CATDocumentServices::SaveAs  (*pDoc, OutputName );
 if (SUCCEEDED(rc))   {
 ```

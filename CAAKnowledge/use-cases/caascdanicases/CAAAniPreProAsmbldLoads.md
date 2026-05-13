@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Assembled Loads"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CAAAniPreProAsmbldLoads", "CATIA", "CATIAAnalysisSet", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProAsmbldLoads.htmmd"
+tags: "["CAAAniPreProAsmbldLoads", "CATIA", "CATIAAnalysisSet", "CAAScdAniUseCases"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProAsmbldLoads.htm"
 converted: "2026-05-11T17:31:51.779974"
-```
-
 ---
 ## Analysis Modeler
 
@@ -39,7 +36,7 @@ This use case shows you how to create an assembled load. Here use of Edit/Search
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
 ```
@@ -49,7 +46,7 @@ This use case shows you how to create an assembled load. Here use of Edit/Search
 ```
 
 ```vbscript
-```vbscript
+```cpp
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 ```
@@ -69,7 +66,7 @@ This use case shows you how to create an assembled load. Here use of Edit/Search
 ```vbscript
     ' -----------------------------------------------------------
     ' Open the Analysis document
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/Assembled_Loads_Solutions.CATAnalysis")
     Set analysisDocument1 = CATIA.Documents.Open(sFilePath)
 ```
@@ -237,7 +234,7 @@ Set analysisCase1 = analysisCases1.Item(1)
 ```vbscript
 ```vbscript
     'Retrieve the analysis manager object from the analysis document
-```vbscript
+```cpp
     Set documents1 = CATIA.Documents
     Set analysisDocument2 = documents1.Item("Analysis1.CATAnalysis")
     Set analysisManager2 = analysisDocument2.Analysis
@@ -245,7 +242,7 @@ Set analysisCase1 = analysisCases1.Item(1)
 ```
     'create a reference from the analysis set and add it to the basic component
     For i =1 To selection1.Count
-```vbscript
+```cpp
     Set analysisSet = selection1.FindObject("CATIAAnalysisSet")
     Set entity =   analysisSet.AnalysisEntities.Item(1)
               IF ( entity.Type = "SAMLoadAssembly") Then 'DO NOTHING
@@ -257,7 +254,7 @@ Set analysisCase1 = analysisCases1.Item(1)
 ```
 
 ```vbscript
-```vbscript
+```cpp
 Set analysisSet = selection1.FindObject("CATIAAnalysisSet")
 ```vbscript
 ```

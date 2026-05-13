@@ -148,11 +148,11 @@ two parts. Specifically, it has illustrated using:
 
 *Copyright  2001, Dassault Systmes. All rights reserved.*
 
-```vbscript
+```cpp
 ...
       'Create a new product document by adding a document with the Product type
       'to the document collection of the CATIA application. 
-```vbscript
+```cpp
       Dim oProductDoc As Document
       Set oProductDoc = CATIA.Documents.Add(&quot;Product&quot;)
 
@@ -192,12 +192,12 @@ two parts. Specifically, it has illustrated using:
   ...
 ```
 
-```vbscript
+```cpp
 ...
     'Add a representation to this product using an existing part and reframe
     'the viewer to display the part completely.
     oChildProduct1.AddMasterShapeRepresentation sDocPath &amp; &quot;CAAPstPad1_1.CATPart&quot;
-```vbscript
+```cpp
     CATIA.ActiveWindow.ActiveViewer.Reframe
   ...
 ```
@@ -219,12 +219,12 @@ two parts. Specifically, it has illustrated using:
   ...
 ```
 
-```vbscript
+```cpp
 ...
     'Add a representation to this product using an existing part and reframe
     'the viewer to display the part completely.
     oChildProduct2.AddMasterShapeRepresentation sDocPath &amp; &quot;CAAPstPad1_2.CATPart&quot;
-```vbscript
+```cpp
     CATIA.ActiveWindow.ActiveViewer.Reframe(#)
   ...
 ```

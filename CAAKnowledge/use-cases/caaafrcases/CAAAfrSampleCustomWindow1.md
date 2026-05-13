@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Document's Window - Part 1"
-category: use-case case"
+category: "use-case case"
 module: "CAAAfrUseCases"
-tags: ["CATIDocumentEdit", "CAAGeometry", "CAAxx", "CATISO", "CAAIVisHistogramChartVisu", "CAADegGeoCommands", "CAAxxx", "CAADialogEngine", "CAAyyy", "CAADegHistogramChartWindowCmd", "CATIEditor", "CAAAfrHistogramChartWindow", "CAASysGeoModelInf", "CAAVisualization", "CAAISysDocumentChartWindow", "CAAVisGeoModelInt", "CATI3DGeoVisu", "CAASystem", "CAAApplicationFrame"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleCustomWindow1.htmmd"
+tags: "["CATIDocumentEdit", "CAAGeometry", "CAAxx", "CATISO", "CAAIVisHistogramChartVisu", "CAADegGeoCommands", "CAAxxx", "CAADialogEngine", "CAAyyy", "CAADegHistogramChartWindowCmd", "CATIEditor", "CAAAfrHistogramChartWindow", "CAASysGeoModelInf", "CAAVisualization", "CAAISysDocumentChartWindow", "CAAVisGeoModelInt", "CATI3DGeoVisu", "CAASystem", "CAAApplicationFrame"]"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleCustomWindow1.htm"
 converted: "2026-05-11T17:17:55.693605"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -42,7 +39,6 @@ This article shows how to create a new window class to display an existing docum
 
 A document, visualized in the V5 application frame, implements the _CATIDocumentEdit_ interface. This interface provides the default window to display it. This use case is intended to show how to create a new type of window for an existing document.
 
-A document, visualized in the V5 application frame, implements the _CATIDocumentEdit_ interface. This interface provides the default window to display it. This use case is intended to show how to create a new type of window for an existing document.
 You will learn all the steps to visualize a document with a none-standard way:
 
   1. How to create the window class deriving from the _CATFrmWindow_ ,
@@ -108,7 +104,6 @@ The CAAAfrHistogramChartWindow use case is made up of several classes and interf
 
 There are respectively located in the CAAAfrGeoWindows.m, CAASysGeoModelInf.m, CAAVisGeoModelInt.m and CAADegGeoCommands.m modules of the CAAApplicationFrame.edu, CAASystem.edu, CAAVisualization.edu and CAADialogEngine.edu frameworks:
 
-There are respectively located in the CAAAfrGeoWindows.m, CAASysGeoModelInf.m, CAAVisGeoModelInt.m and CAADegGeoCommands.m modules of the CAAApplicationFrame.edu, CAASystem.edu, CAAVisualization.edu and CAADialogEngine.edu frameworks:
 Windows | `InstallRootDirectory/CAAxxx.edu/CAAyyy.m/`
 
 There are respectively located in the CAAAfrGeoWindows.m, CAASysGeoModelInf.m, CAAVisGeoModelInt.m and CAADegGeoCommands.m modules of the CAAApplicationFrame.edu, CAASystem.edu, CAAVisualization.edu and CAADialogEngine.edu frameworks:
@@ -208,7 +203,6 @@ The dialog object behavior consists in:
 
 The `Build` method creates the viewer, arranges it in the window and sets it the current viewer.
 
-The `Build` method creates the viewer, arranges it in the window and sets it the current viewer.
   1. Instantiating the viewer to display
 
          void CAAAfrHistogramChartWindow :: Build(#)
@@ -303,7 +297,7 @@ CATDocument    * pDocument   =  pEditor ->**GetDocument**(#);
 CATBaseUnknown * pRootObject = NULL ;
 if ( NULL != pDocument )
                   CATPathElement path = pEditor ->**GetUIActiveObject**(#);
-```vbscript
+```cpp
                  _pRootObjectPath = new CATPathElement(path);
 
 ```
@@ -334,7 +328,7 @@ if ( NULL != _pRootObjectPath )
                   ListIVisu.fastadd(&visu);
 
                   CATViewpoint  * pViewPoint = NULL ;
-```vbscript
+```cpp
                   pViewPoint = (CATViewpoint*) &(_pViewer->**GetMain2DViewpoint**(#));
 
 ```
@@ -442,7 +436,7 @@ if ((NULL != GetEditor(#) ) && (NULL != _pViewer) )
 ```
 
           CATViewpoint  * pViewPoint = NULL ;
-```vbscript
+```cpp
           pViewPoint = (CATViewpoint*) &(_pViewer->**GetMain2DViewpoint**(#));
 
 ```
@@ -609,7 +603,7 @@ In the CNext/Resources/msgcatalog directory of the CAAApplicationFrame.edu frame
 ---
   * The `GetBaseName` method retrieves the name of the document without its complete path. The `SetBaseName` method enables to modify the title of the already existing windows. Refer to the Duplicate method.
 
-```vbscript
+```cpp
   * Set the current window has current in the V5 application. In other words, the new window has the focus. The windows management is the role of the unique _CATFrmLayout_ class instance [2].
 
 #### Using the _CAAISysDocumentChartWindow_ interface
@@ -643,7 +637,7 @@ if ( NULL != pEditor )
 
          {
             **CAAISysDocumentChartWindow** * pIDocumentChartWnd = NULL ;
-```vbscript
+```cpp
 if ( NULL != pDocument )
             HRESULT rc = pDocument->QueryInterface(IID_CAAISysDocumentChartWindow,
     			                        (void**)&pIDocumentChartWnd);

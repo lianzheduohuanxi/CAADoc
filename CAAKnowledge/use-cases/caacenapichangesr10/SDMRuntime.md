@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "SDMRuntime Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR10"
-version: "V5R10"
-tags: []
-source_file: "Doc/online/CAACenAPIChangesR10/SDMRuntime.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAACenAPIChangesR10/SDMRuntime.htm"
 converted: "2026-05-11T17:33:50.256503"
-```
-
 ---
 tags: []
 source_file: "Doc/online/CAACenAPIChangesR10/SDMRuntime.htmmd"

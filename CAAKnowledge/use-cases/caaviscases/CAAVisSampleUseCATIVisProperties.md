@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Modifying Object Graphical Properties"
-category: use-case case"
+category: "use-case case"
 module: "CAAVisUseCases"
-tags: ["CATIDescendants", "CAAPropertyWithNewProperties", "CATIPrtContainer", "CATIPartRequest", "CATIVisProperties", "CATIA", "CATIProperty", "CAAGeometryVisualization", "CAAProperty", "CATISpecObject_var", "CAAGviApplyProperties"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleUseCATIVisProperties.htmmd"
+tags: "["CATIDescendants", "CAAPropertyWithNewProperties", "CATIPrtContainer", "CATIPartRequest", "CATIVisProperties", "CATIA", "CATIProperty", "CAAGeometryVisualization", "CAAProperty", "CATISpecObject_var", "CAAGviApplyProperties"]"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleUseCATIVisProperties.htm"
 converted: "2026-05-11T17:31:52.198094"
-```
-
 ---
 # Portal
 
@@ -42,7 +39,6 @@ This article shows how to use the _CATIVisProperties_ interface to modify the gr
 
 This article shows how to use the _CATIVisProperties_ interface to retrieve or set the graphical properties for CATIA V5 features. This interface contains five main methods:
 
-This article shows how to use the _CATIVisProperties_ interface to retrieve or set the graphical properties for CATIA V5 features. This interface contains five main methods:
   1. `GetPropertiesAtt`, retrieves the properties
   2. `SetPropertiesAtt`, modifies the properties
 
@@ -123,7 +119,6 @@ For the Line.1feature, try going over on the line, it is not highlighted. For th
 
 To launch CAAGviApplyProperties , you will need to set up the build time environment, then compile CAAGviApplyProperties along with its prerequisites, set up the run time environment [1]. Then execute the following command:
 
-To launch CAAGviApplyProperties , you will need to set up the build time environment, then compile CAAGviApplyProperties along with its prerequisites, set up the run time environment [1]. Then execute the following command:
 mkrun -c CAAGviApplyProperties InputPath [OutputPath]
 
 where:
@@ -182,10 +177,10 @@ The five features are inside the same Open Body:
       CATLISTV(CATBaseUnknown_var) surfBodies;
 
       **CATIPartRequest** *pPartAsRequest = 0;
-```vbscript
+```cpp
 CATLISTV(CATBaseUnknown_var) surfBodies;
 ```vbscript
-```vbscript
+```cpp
       rc = spPart->**QueryInterface**(IID_CATIPartRequest, (void**)&pPartAsRequest) ;
 
       if ( SUCCEEDED(rc) )
@@ -233,7 +228,7 @@ The features inside the Open Body, pointed to by `surfBodies[1]`, are retrieved 
 
     ...
       **CATIDescendants** * pIDescendantOnOpenBody1 = NULL ;
-```vbscript
+```cpp
       rc = surfBodies[1]->QueryInterface(IID_CATIDescendants, (void**)&pIDescendantOnOpenBody1) ;
 
 ```
@@ -410,7 +405,7 @@ At first, it is interesting to check the type of geometry supported by a GSM Lin
     ...
 At first, it is interesting to check the type of geometry supported by a GSM Line feature:
       CATIVisProperties * pIPropertiesOnLine = NULL ;
-```vbscript
+```cpp
       rc = TheLine->QueryInterface(IID_CATIVisProperties, (void**)&pIPropertiesOnLine) ;
 
 ```
@@ -513,7 +508,7 @@ At first, all the geometry types supported by a GSM surface are tested:
 
     ...
       CATIVisProperties * pIPropertiesOnSurface2 = NULL ;
-```vbscript
+```cpp
       rc = TheSweep2Surface->QueryInterface(IID_CATIVisProperties, (void**)&pIPropertiesOnSurface2) ;
 
 ```
@@ -607,7 +602,7 @@ The surface, Extrude.1, is represented by the `TheExtrude1Surface` smart pointer
 
     ...
       **CATIVisProperties** * pIPropertiesOnSurface1 = NULL ;
-```vbscript
+```cpp
       rc = TheExtrude1Surface->QueryInterface(IID_CATIVisProperties, (void**)&pIPropertiesOnSurface1) ;
 
 ```
@@ -653,7 +648,7 @@ The surface, Extrude.2, is represented by the `TheExtrude2Surface` smart pointer
 
     ...
       **CATIVisProperties** * pIPropertiesOnSurface3 = NULL ;
-```vbscript
+```cpp
       rc = TheExtrude2Surface->QueryInterface(IID_CATIVisProperties, (void**)&pIPropertiesOnSurface3) ;
 
 ```

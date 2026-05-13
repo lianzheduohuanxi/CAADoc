@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Arranging Dialog Objects Using a Grid"
-category: tech-article
+category: "tech-article"
 module: "CAADlgTechArticles"
-tags: []
-source_file: "Doc/online/CAADlgTechArticles/CAADlgGridLayout.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAADlgTechArticles/CAADlgGridLayout.htm"
 converted: "2026-05-11T17:17:56.038135"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -40,7 +37,6 @@ Arranging dialog objects in a dialog window, a dialog box, a frame or a tab page
 
 The grid layout consists in designing a grid made of cells located at the intersection of rows and columns. A cell is defined using the intersecting row and column numbers. Each dialog object occupies a rectangular space spread in one or several cells. It's location is defined using the cell at its top left corner, and using the number of cells in which it horizontally and vertically spreads.
 
-The grid layout consists in designing a grid made of cells located at the intersection of rows and columns. A cell is defined using the intersecting row and column numbers. Each dialog object occupies a rectangular space spread in one or several cells. It's location is defined using the cell at its top left corner, and using the number of cells in which it horizontally and vertically spreads.
 This enables the container sizes to be defined by their contents. A given row has the width of the wider object it contains, and a column has the height of its higher object. A given object that spreads in several cells can have more room that it really needs. To overcome this, the object can define the way it is attached to the cell sides.
 
 The grid layout applies to CATDlgDocument, CATDlgDialog, CATDlgFrame, and CATDlgTabPage objects.
@@ -54,7 +50,6 @@ Assume you need to create the following window, as a class that derives from CAT
 
 It contains a spinner and two check buttons aligned on the first row, then a combo alone on the second row, and three push buttons aligned on the third row. The OK, Cancel, and Help push buttons are supplied with the CATDlgDialog derived class and are not to be arranged in the window. The window constructor must be as follows:
 
-It contains a spinner and two check buttons aligned on the first row, then a combo alone on the second row, and three push buttons aligned on the third row. The OK, Cancel, and Help push buttons are supplied with the CATDlgDialog derived class and are not to be arranged in the window. The window constructor must be as follows:
     GridLayoutWindow ::GridLayoutWindow (CATDialog * Parent,
                                          const CATString& Name,
     		           	     CATDlgStyle Style)
@@ -122,7 +117,6 @@ To use the grid layout, you need to do the following:
 
 The grid is not an object itself. You only need to define how each object is located in the grid using one or several CATDlgGridConstraints instances, and the grid is interpreted from these instances. As we see in the example, you can use the SetGridConstraints method on each object you want to arrange, either when this object is a control, or when it is a container contained in another container, such as a frame contained in another frame. The grid you refer to is set to the containment parent [2] of the dialog object, and must be consistently reffered to for any object having this containment parent. SetGridConstraints assigns to the object it applies an instance of the CATDlgGridConstraints class that holds the positionning parameters. You could do this in two ways:
 
-The grid is not an object itself. You only need to define how each object is located in the grid using one or several CATDlgGridConstraints instances, and the grid is interpreted from these instances. As we see in the example, you can use the SetGridConstraints method on each object you want to arrange, either when this object is a control, or when it is a container contained in another container, such as a frame contained in another frame. The grid you refer to is set to the containment parent [2] of the dialog object, and must be consistently reffered to for any object having this containment parent. SetGridConstraints assigns to the object it applies an instance of the CATDlgGridConstraints class that holds the positionning parameters. You could do this in two ways:
   1. Use the SetGridConstraints methods with five arguments as shown in the example. This method creates the CATDlgGridConstraints class instance and assigns it to the container or control
   2. Create a CATDlgGridConstraints class instance, set and modify its parameters before assigning it using SetGridConstraints to each control,  as follows:
 
@@ -134,7 +128,7 @@ The grid is not an object itself. You only need to define how each object is loc
          CB2    ->SetGridConstraints(GridCst);
          GridCst.Row=1;
 ```vbscript
-```vbscript
+```cpp
          GridCst.Column=0;
          GridCst.H_SPAN=3;
          GridCst.V_SPAN=1;
@@ -146,7 +140,7 @@ The grid is not an object itself. You only need to define how each object is loc
          Combo  ->SetGridConstraints(GridCst);
          GridCst.Row=2;
 ```vbscript
-```vbscript
+```cpp
          GridCst.Column=0;
          GridCst.H_SPAN=1;
          GridCst.V_SPAN=1;
@@ -157,13 +151,13 @@ The grid is not an object itself. You only need to define how each object is loc
 
          PB1    ->SetGridConstraints(GridCst);
          GridCst.Column=1;
-```vbscript
+```cpp
          GridCst.Justification=CATGRID_BOTTOM;
 ```
 
          PB2    ->SetGridConstraints(GridCst);
          GridCst.Column=3;
-```vbscript
+```cpp
          GridCst.Justification=CATGRID_LEFT;
 ```
 
@@ -231,7 +225,6 @@ When the containing window is resized, the controls or containers that are sprea
 
 The third row is resizable, as well as the first three columns. This is coded as follows:
 
-The third row is resizable, as well as the first three columns. This is coded as follows:
     SetGridRowResizable(2,1);
 ```vbscript
     SetGridColumnResizable(0,1);

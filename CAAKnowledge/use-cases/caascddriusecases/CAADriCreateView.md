@@ -72,14 +72,14 @@ This use case has shown how to create generative views in a drawing document.
 ```vbscript
 ...
     ' Open the Part document 
-```vbscript
+```cpp
     Dim oPartToDraw As PartDocument
     Set oPartToDraw = CATIA.Documents.Open(sDocPath &amp; _
              &quot;/online/CAAScdDriUseCases/samples/Cube.CATPart&quot;)
 ```
 
     ' Create a drawing document: it becomes the active document.
-```vbscript
+```cpp
     Dim oDrawing As DrawingDocument
     Set oDrawing = CATIA.Documents.Add(&quot;Drawing&quot;)
   ...

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating an Add-in"
-category: use-case case"
+category: "use-case case"
 module: "CAAAfrUseCases"
-tags: ["CAAAfrFilletHdr", "CAAAfrGeoCreationWkbAddin", "CAAGeometry", "CAAAfrOperationToolsMnu", "CAAAfrUnionHdr", "CAAAfrTFilletStr", "CAAAfrGeoOperationAdnHeader", "CAAAfrSubstractHdr", "CAAAfrGeoOperationAdn", "CAAAfrMFilletStr", "CAAAfrOperationMbr", "CAAAfrMSubstractStr", "CAAApplicationFrame", "CAAAfrTSubstractStr", "CAAAfrOperationTlb", "CAAAfrGeoOperationAddin", "CAAAfrOperationToolsSep", "CAAAfrTUnionStr", "CAAIAfrGeoCreationWkbAddin"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleAddin.htmmd"
+tags: "["CAAAfrFilletHdr", "CAAAfrGeoCreationWkbAddin", "CAAGeometry", "CAAAfrOperationToolsMnu", "CAAAfrUnionHdr", "CAAAfrTFilletStr", "CAAAfrGeoOperationAdnHeader", "CAAAfrSubstractHdr", "CAAAfrGeoOperationAdn", "CAAAfrMFilletStr", "CAAAfrOperationMbr", "CAAAfrMSubstractStr", "CAAApplicationFrame", "CAAAfrTSubstractStr", "CAAAfrOperationTlb", "CAAAfrGeoOperationAddin", "CAAAfrOperationToolsSep", "CAAAfrTUnionStr", "CAAIAfrGeoCreationWkbAddin"]"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleAddin.htm"
 converted: "2026-05-11T17:17:55.625620"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -80,7 +77,6 @@ Do not type the module name on the command line, but type CNEXT instead. When th
 
 The CAAAfrGeoOperationAdn use case is made of a single class named _CAAAfrGeoOperationAdn_ located in the CAAAfrGeoCreationWkbAddin.m module of the CAAApplicationFrame.edu framework:
 
-The CAAAfrGeoOperationAdn use case is made of a single class named _CAAAfrGeoOperationAdn_ located in the CAAAfrGeoCreationWkbAddin.m module of the CAAApplicationFrame.edu framework:
 Windows | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeoCreationWkbAddin.m/`
 
 The CAAAfrGeoOperationAdn use case is made of a single class named _CAAAfrGeoOperationAdn_ located in the CAAAfrGeoCreationWkbAddin.m module of the CAAApplicationFrame.edu framework:
@@ -162,7 +158,7 @@ CATCmdContainer * CreateToolbars(#);
 
 ```vbscript
 MacDeclareHeader(CAAAfrGeoOperationAdnHeader);
-```vbscript
+```cpp
          CATImplementClass(CAAAfrGeoOperationAdn, DataExtension,
 ```
 
@@ -172,7 +168,7 @@ MacDeclareHeader(CAAAfrGeoOperationAdnHeader);
          #include <TIE_CAAIAfrGeoCreationWkbAddin.h>
 ```vbscript
 MacDeclareHeader(CAAAfrGeoOperationAdnHeader);
-```vbscript
+```cpp
 CATImplementClass(CAAAfrGeoOperationAdn, DataExtension,
 ```
 
@@ -184,7 +180,7 @@ CATBaseUnknown, CAAAfrGeoOperationAddin);
 
          {}
 
-```vbscript
+```cpp
 TIE_CAAIAfrGeoCreationWkbAddin(CAAAfrGeoOperationAdn);
 CAAAfrGeoOperationAdn::CAAAfrGeoOperationAdn(#)
          CAAAfrGeoOperationAdn::~CAAAfrGeoOperationAdn(#)
@@ -206,7 +202,6 @@ CAAAfrGeoOperationAdn::CAAAfrGeoOperationAdn(#)
 
 The _CAAAfrGeoOperationAdn_ class states that it implements the _CAAIAfrGeoCreationWkbAddin_ interface thanks to the `TIE_CAAIAfrGeoCreationWkbAddin` macro. The `CATImplementClass` macro declares that the _CAAAfrGeoOperationAdn_ class is a data extension, thanks to the `DataExtension` keyword, that extends _CAAAfrGeoOperationAddin_. The third argument must always be set as _CATBaseUnknown_ or _CATNull_ for any kind of extension. The name of the latetype, the fourth argument of the CATImplementClass macro, mustn't be the same as an existing C++ class name or an existing latetype name.
 
-The _CAAAfrGeoOperationAdn_ class states that it implements the _CAAIAfrGeoCreationWkbAddin_ interface thanks to the `TIE_CAAIAfrGeoCreationWkbAddin` macro. The `CATImplementClass` macro declares that the _CAAAfrGeoOperationAdn_ class is a data extension, thanks to the `DataExtension` keyword, that extends _CAAAfrGeoOperationAddin_. The third argument must always be set as _CATBaseUnknown_ or _CATNull_ for any kind of extension. The name of the latetype, the fourth argument of the CATImplementClass macro, mustn't be the same as an existing C++ class name or an existing latetype name.
   3. Updating the Dictionary
 
 Update the interface dictionary, that is a file named, for example, CAAApplicationFrame.dico, whose directory's pathname is concatenated at run time in the CATDictionaryPath environment variable, and containing the following declaration to state that the _CAAAfrGeoOperationAddin_ component implements the _CAAIAfrGeoCreationWkbAddin_ interface, and whose code is located in the libCAAAfrGeoCreationWkbAddin shared library or DLL.
@@ -234,7 +229,7 @@ A command header class is created for the commands, named CAAAfrGeoOperationAdnH
 
 ---
 
-```vbscript
+```cpp
 MacDeclareHeader(CAAAfrGeoOperationAdnHeader);
 The `MacDeclareHeader` macro creates the header file and the source file for the CAAAfrGeoOperationAdnHeader class, and associates with this class the resource files CAAAfrGeoOperationAdnHeader.CATNls and CAAAfrGeoOperationAdnHeader.CATRsc. See Providing the Resources.
 
@@ -278,7 +273,7 @@ CATCmdContainer * CAAAfrGeoOperationAdn::CreateToolbars(#)
           NewAccess(CATCmdContainer,pCAAAfrOperationTlb,CAAAfrOperationTlb);
 
               NewAccess(CATCmdStarter,pCAAAfrTUnionStr,CAAAfrTUnionStr);
-```vbscript
+```cpp
               SetAccessCommand(pCAAAfrTUnionStr,"CAAAfrUnionHdr");
               SetAccessChild(pCAAAfrOperationTlb,pCAAAfrTUnionStr);
 
@@ -318,7 +313,7 @@ Proceed in the same way for the other commands, except that they are set as next
 
 CATCmdContainer * CAAAfrGeoOperationAdn::CreateToolbars(#)
                NewAccess(CATCmdContainer,pCAAAfrOperationToolsMnu,**CATAfrToolsMnu**);
-```vbscript
+```cpp
                SetAccessChild(pCAAAfrOperationMbr,pCAAAfrOperationToolsMnu);
 
                  NewAccess(**CATCmdSeparator** ,pCAAAfrOperationToolsSep,CAAAfrOperationToolsSep);

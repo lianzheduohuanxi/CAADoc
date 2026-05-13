@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Foreign Mathematical Functions"
-category: use-case case"
+category: "use-case case"
 module: "CAACgmModel"
-tags: ["CAAAmtForeign", "CAAGobForeign", "CAADoc", "CAAAmtFctMain", "CAAAdvancedMathematics", "CAAAmtForeignFunctionXY", "CAAAmtForeignFct", "CAAAmtForeignFctXY", "CAAAmtFct"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcAmtForeign.htmmd"
+tags: "["CAAAmtForeign", "CAAGobForeign", "CAADoc", "CAAAmtFctMain", "CAAAdvancedMathematics", "CAAAmtForeignFunctionXY", "CAAAmtForeignFct", "CAAAmtForeignFctXY", "CAAAmtFct"]"
+source_file: "Doc/online/CAACgmModel/CAACgmUcAmtForeign.htm"
 converted: "2026-05-11T17:33:48.152406"
-```
-
 ---
 # Foreign Mathematical Functions
 
@@ -30,7 +27,6 @@ The AdvancedMathematics framework mainly exposes the mathematical functions and 
 
 This use case explains the introduction of a new class of mathematical function by describing all the steps of its introduction on a concrete case: the new function to introduce is a function of two parameters (called _u_ and _v_) to _R_ , and defined by:
 
-This use case explains the introduction of a new class of mathematical function by describing all the steps of its introduction on a concrete case: the new function to introduce is a function of two parameters (called _u_ and _v_) to _R_ , and defined by:
 _(u,v) - > F(u,v) = a*u + b*v + c * cos(u)*cos(v) + d_
 
 where _a_ , _b_ , _c_ , _d_ are definition parameters. This function can be later used to defined the evaluators of a surface called "eggs box".
@@ -85,7 +81,6 @@ This use case:
 
 To launch CAAAmtForeign, you will need to set up the build time environment, compile CAAAmtForeignFct.m and CAAAmtFct.m along with their prerequisites, set up the run time environment, and then execute the use case by launching the executable CAAAmtFct.exe as described in [1]. The use case writes on the standard output the following line:
 
-To launch CAAAmtForeign, you will need to set up the build time environment, compile CAAAmtForeignFct.m and CAAAmtFct.m along with their prerequisites, set up the run time environment, and then execute the use case by launching the executable CAAAmtFct.exe as described in [1]. The use case writes on the standard output the following line:
     13.6762, 13.6762
 
 Remember that this use case only uses mathematical objects, so that nothing can be streamed. Fig.1 is a representation of the use of these mathematical functions to create new classes of geometric objects, as presented in the CAAGobForeign use case.
@@ -441,7 +436,7 @@ _//(u,v) - > F(u,v) = a*u + b*v + c * cos(u)*cos(v) + d_
     _// check the type_
     if (FALSE== f.**IsAKindOf**("CAAAmtForeignFctXY") ) return (1);
 ```vbscript
-```vbscript
+```cpp
     if (FALSE== f.IsAKindOf("CATMathFunctionXY") )    return (2);
 
 ```
@@ -452,7 +447,7 @@ _//(u,v) - > F(u,v) = a*u + b*v + c * cos(u)*cos(v) + d_
 
     // 2-Use the evaluators.
     //_
-```vbscript
+```cpp
 if (FALSE== f.IsAKindOf("CATMathFunctionXY") )    return (2);
 _//
     double u=0., v=0.;

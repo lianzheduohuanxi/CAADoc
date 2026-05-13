@@ -85,7 +85,7 @@ Thus we saw how to read a CATProduct document, retrieve the objects we are
 ```vbscript
 ...
    '//---------- Get Arrworkbench from current document
-```vbscript
+```cpp
    Dim objDocument0 As Object
    Set objDocument0 = CATIA.ActiveDocument  
    Dim objArrWorkbench1 As Workbench

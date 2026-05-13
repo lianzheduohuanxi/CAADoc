@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Detail Sheet"
 category: "use-case"
 module: "CAAScdDriUseCases"
-tags: ["CAADriDetailSheet", "CAAScdPriUseCases", "CAAPriPad", "CATIA", "CAADriSheet"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriDetailSheet.htmmd"
+tags: "["CAADriDetailSheet", "CAAScdPriUseCases", "CAAPriPad", "CATIA", "CAADriSheet"]"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriDetailSheet.htm"
 converted: "2026-05-11T17:31:51.047373"
-```
-
 ---
 |
 ## Drafting
@@ -18,7 +15,6 @@ converted: "2026-05-11T17:31:51.047373"
 * * *
 
   This macro shows you how to create a sheet in a drawing. This macro opens the CAADriSheet.CATDrawing document that contains a sheet only.
-This macro shows you how to create a sheet in a drawing. This macro opens the CAADriSheet.CATDrawing document that contains a sheet only.
 It creates _DrawingSheet_ object from the _DrawingSheets_ __ collection with the AddDetail method and a activate it.
 
 This macro shows you how to create a sheet in a drawing. This macro opens the CAADriSheet.CATDrawing document that contains a sheet only.

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Modifying the Geometry of a Face"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsFaceReplaceSurface", "CATICGMTopFaceReplaceSurface"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopReplaceFace.htmmd"
+tags: "["CAAGMOperatorsInterfaces", "CAAGMOperatorsFaceReplaceSurface", "CATICGMTopFaceReplaceSurface"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopReplaceFace.htm"
 converted: "2026-05-11T17:33:49.298443"
-```
-
 ---
 tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsFaceReplaceSurface", "CATICGMTopFaceReplaceSurface"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcTopReplaceFace.htmmd"

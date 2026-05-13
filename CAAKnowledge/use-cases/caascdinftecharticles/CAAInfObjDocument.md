@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Documents Object"
-category: tech-article
+category: "tech-article"
 module: "CAAScdInfTechArticles"
-tags: ["CATIA"]
-source_file: "Doc/online/CAAScdInfTechArticles/CAAInfObjDocument.htmmd"
+tags: "["CATIA"]"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfObjDocument.htm"
 converted: "2026-05-11T17:31:52.427065"
-```
-
 ---
 # Documents Object
 

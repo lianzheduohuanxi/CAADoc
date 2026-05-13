@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Multi Patch NURBS Surface"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperatorsOverview", "CAAGMOperatorsInterfaces", "CAATopNurbsSurfMultiPatch", "CAADoc", "CATICGMObject", "CAAGMModelGemBrowser", "CAAGMOperatortsNurbsSurfMultiPatch", "CATICGMTopSkin", "CATIA", "CAAGMOperatorsNurbsSurfMultiPatch"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopNurbsSurfMultiPatch.htmmd"
+tags: "["CAAGMOperatorsOverview", "CAAGMOperatorsInterfaces", "CAATopNurbsSurfMultiPatch", "CAADoc", "CATICGMObject", "CAAGMModelGemBrowser", "CAAGMOperatortsNurbsSurfMultiPatch", "CATICGMTopSkin", "CATIA", "CAAGMOperatorsNurbsSurfMultiPatch"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopNurbsSurfMultiPatch.htm"
 converted: "2026-05-11T17:33:49.224912"
-```
-
 ---
 tags: ["CAAGMOperatorsOverview", "CAAGMOperatorsInterfaces", "CAATopNurbsSurfMultiPatch", "CAADoc", "CATICGMObject", "CAAGMModelGemBrowser", "CAAGMOperatortsNurbsSurfMultiPatch", "CATICGMTopSkin", "CATIA", "CAAGMOperatorsNurbsSurfMultiPatch"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcTopNurbsSurfMultiPatch.htmmd"
@@ -202,13 +199,13 @@ The resulting skin looks something like this (the green bullets are the control 
     if(1==toStore)
      {
     #ifdef _WINDOWS_SOURCE
-```vbscript
+```cpp
 if(1==toStore)
        ofstream filetowrite(pfileName, ios::binary ) ;
 ```
 
     #else
-```vbscript
+```cpp
 if(1==toStore)
 ofstream filetowrite(pfileName, ios::binary ) ;
        ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;

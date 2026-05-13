@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Cylinder"
-category: use-case case"
+category: "use-case case"
 module: "CAACgmModel"
-tags: ["CAAGMModelCylinderCreation", "CAAGMModelInterfaces"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcCylinderCreation.htmmd"
+tags: "["CAAGMModelCylinderCreation", "CAAGMModelInterfaces"]"
+source_file: "Doc/online/CAACgmModel/CAACgmUcCylinderCreation.htm"
 converted: "2026-05-11T17:33:48.190455"
-```
-
 ---
 # Creating a Cylinder
 
@@ -24,7 +21,6 @@ A portion of a geometric cylinder can be created by specifying an axis, the star
 
 To create a cylinder or a piece of a cylinder, use the CATGeoFactory::CreateCylinder method in the GeometricObjects framework.  As surface periodicity is not supported, it is recommended to specify angles so that:
 
-To create a cylinder or a piece of a cylinder, use the CATGeoFactory::CreateCylinder method in the GeometricObjects framework.  As surface periodicity is not supported, it is recommended to specify angles so that:
     1. start angle < end angle
     2. end angle - start angle <= 2*Pi
 

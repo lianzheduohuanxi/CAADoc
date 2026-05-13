@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "Detail Of API Changes"
 category: "api-changes"
 module: "CAACenAPIChangesR7"
-version: "V5R7"
-tags: ["CAA2Usage", "CAA2Level"]
-source_file: "Doc/online/CAACenAPIChangesR7/CAACenAPIChangeDetail.htmmd"
+tags: "["CAA2Usage", "CAA2Level"]"
+source_file: "Doc/online/CAACenAPIChangesR7/CAACenAPIChangeDetail.htm"
 converted: "2026-05-11T17:33:51.920474"
-```
-
 ---
 |  |  Detail Of V5R7 API Changes _What changes in the API compared with CAA V5R6_
 ---|---|---
@@ -35,7 +31,6 @@ INDM | Method is no more documented. It does not break your code in any way but 
 INDM | Method is no more documented. It does not break your code in any way but means that you are not supposed to use it anymore. Check that you don't use it or look for replacement informations.
 AnalysisMeshingModel | [R7GA vs R6GA](AnalysisMeshingModel.md) | [R7SP vs R7GA](AnalysisMeshingModelSP.md)
 
-AnalysisMeshingModel | [R7GA vs R6GA](AnalysisMeshingModel.md) | [R7SP vs R7GA](AnalysisMeshingModelSP.md)
 ApplicationFrame | [R7GA vs R6GA](ApplicationFrame.md) | [R7SP vs R7GA](ApplicationFrameSP.md)
 BasicTopologicalOpe |  | [R7SP vs R7GA](BasicTopologicalOpeSP.md)
 CATAnalysisBase | [R7GA vs R6GA](CATAnalysisBase.md) | [R7SP vs R7GA](CATAnalysisBaseSP.md)

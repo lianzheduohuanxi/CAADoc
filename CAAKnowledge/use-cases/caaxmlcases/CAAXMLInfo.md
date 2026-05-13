@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Determining available parsers"
-category: use-case case"
+category: "use-case case"
 module: "CAAXmlUseCases"
-tags: ["CAAXMLInfo", "CAAXMLParser"]
-source_file: "Doc/online/CAAXmlUseCases/CAAXMLInfo.htmmd"
+tags: "["CAAXMLInfo", "CAAXMLParser"]"
+source_file: "Doc/online/CAAXmlUseCases/CAAXMLInfo.htm"
 converted: "2026-05-11T17:33:45.634065"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 

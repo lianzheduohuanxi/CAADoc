@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Computing the Area of a CATFace and the Length of a CATEdge"
-category: use-case case"
+category: "use-case case"
 module: "CAATopUseCases"
-tags: ["CAAGemBrowser", "CAATopologicalOperators", "CATICGMObject", "CAATopProperties"]
-source_file: "Doc/online/CAATopUseCases/CAATopProperties.htmmd"
+tags: "["CAAGemBrowser", "CAATopologicalOperators", "CATICGMObject", "CAATopProperties"]"
+source_file: "Doc/online/CAATopUseCases/CAATopProperties.htm"
 converted: "2026-05-11T17:31:50.757850"
-```
-
 ---
 # Geometric Modeler
 
@@ -81,7 +78,6 @@ This NCGM file can be displayed using the CAAGemBrowser use case.
 
 The CAATopProperties use case is made of a main named CAATopProperties.cpp located in the CAATopProperties.m module of the CAATopologicalOperators.edu framework:
 
-The CAATopProperties use case is made of a main named CAATopProperties.cpp located in the CAATopProperties.m module of the CAATopologicalOperators.edu framework:
 Windows | `InstallRootDirectory/CAATopologicalOperators.edu/CAATopProperties.m/`
 
 The CAATopProperties use case is made of a main named CAATopProperties.cpp located in the CAATopProperties.m module of the CAATopologicalOperators.edu framework:
@@ -125,7 +121,6 @@ Notice that the factory can be defined by reading a NCGM file that was previousl
 
 The CATSolidSphere creation follows the scheme of all topological operators. You must create the operator by using the CATCreateSolidSphere global function, then run it and get the resulting body.
 
-The CATSolidSphere creation follows the scheme of all topological operators. You must create the operator by using the CATCreateSolidSphere global function, then run it and get the resulting body.
     CATMathPoint p1(0,0,0);  // the sphere center
 
     CATSolidSphere * pSphereOpe = ::CATCreateSolidSphere(piGeomFactory,
@@ -160,7 +155,7 @@ To retrieve a face area, you must:
 
     for (int i=1;(i <= nbFaces)  ;i++)
      {
-```vbscript
+```cpp
 for (int i=1;(i <= nbFaces)  ;i++)
          CATFace * pFace = (CATFace *)listFaces[i];
          CATDynMassProperties3D * pDynMassOpe0 =
@@ -201,7 +196,7 @@ To retrieve a face area, you must:
 
     for (i=1;(i <= nbEdges)  ;i++)
      {
-```vbscript
+```cpp
 for (i=1;(i <= nbEdges)  ;i++)
          CATEdge * pEdge = (CATEdge *)listEdges[i];
          if (pEdge == NULL) return 1;
@@ -272,13 +267,13 @@ The use case ends with the closure of the geometry factory, done by the `::CATCl
 
      {
     #ifdef _WINDOWS_SOURCE
-```vbscript
+```cpp
 if(1==toStore)
        ofstream filetowrite(pfileName, ios::binary ) ;
 ```
 
     #else
-```vbscript
+```cpp
 if(1==toStore)
 ofstream filetowrite(pfileName, ios::binary ) ;
        ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;

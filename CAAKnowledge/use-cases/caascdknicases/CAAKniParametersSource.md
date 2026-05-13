@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAAKniParameters.CATScript"
 category: "use-case"
 module: "CAAScdKniUseCases"
-tags: ["CATIA", "CAAKniParameters", "CAAScdKniUseCases"]
-source_file: "Doc/online/CAAScdKniUseCases/CAAKniParametersSource.htmmd"
+tags: "["CATIA", "CAAKniParameters", "CAAScdKniUseCases"]"
+source_file: "Doc/online/CAAScdKniUseCases/CAAKniParametersSource.htm"
 converted: "2026-05-11T17:31:51.987316"
-```
-
 ---
 tags: ["CATIA", "CAAKniParameters", "CAAScdKniUseCases"]
 source_file: "Doc/online/CAAScdKniUseCases/CAAKniParametersSource.htmmd"
@@ -30,7 +27,7 @@ converted: "2026-05-11T17:31:51.987316"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' ***********************************************************************
     '   Purpose:      This macro:
     '                 1 - scans the list of parameters of a CATPart document
@@ -69,7 +66,7 @@ converted: "2026-05-11T17:31:51.987316"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -82,7 +79,7 @@ converted: "2026-05-11T17:31:51.987316"
         ' -----------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String
-```vbscript
+```cpp
         sDocPath=CATIA.SystemService.Environ("CATDocView")
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
           Err.Raise 9999,,"No Doc Path Defined"
@@ -90,7 +87,7 @@ converted: "2026-05-11T17:31:51.987316"
 ```
         ' -----------------------------------------------------------
         ' Open the Part document
-```vbscript
+```cpp
         Dim sFilePath
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
@@ -107,7 +104,7 @@ Dim sFilePath
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
         Dim oDoc As Document
         set oDoc = CATIA.Documents.Open(sFilePath)
@@ -121,17 +118,17 @@ sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```vbscript
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
      ' Set the CATIA popup file alerts to False
      ' It prevents to stop the macro at each alert during its execution
 ```
-```vbscript
+```cpp
      CATIA.DisplayFileAlerts = False
      ' Retrieve your active document - CATIA is your application
 ```
      ' You get the active document by using the ActiveDocument property
      ' on your application object
-```vbscript
+```cpp
      Dim oActiveDoc As Document
      Set oActiveDoc = CATIA.ActiveDocument
      ' Check whether the document is a CATPart
@@ -258,7 +255,7 @@ MsgBox "There are no hidden parameters in this document"
 ```
 End If
     Else
-```vbscript
+```cpp
        MsgBox "The active document must be a CATPart"
 ```vbscript
 ```

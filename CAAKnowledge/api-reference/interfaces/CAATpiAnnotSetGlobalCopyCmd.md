@@ -1,44 +1,31 @@
 ---
 title: "CAATpiAnnotSetGlobalCopyCmd"
-type: "interface"
+type: "LocalClass"
 module: "CAATPSInterfaces"
-category: api-reference
 base: "CATStateCommand"
-inheritance_chain: "CAATpiAnnotSetGlobalCopyCmd → CATStateCommand"
 method_count: 1
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAATPSInterfaces.edu/CAATpiAnnotationSetGlobalCopy.m/LocalInterfaces/CAATpiAnnotSetGlobalCopyCmd.h"
 ---
+
 # CAATpiAnnotSetGlobalCopyCmd
 
-**基类**: CATStateCommand  
-**继承链**: CAATpiAnnotSetGlobalCopyCmd → CATStateCommand  
-**模块**: CAATPSInterfaces  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 1
+> Interactive command Command to select a geometry and then create a 3D annotation text linked on selection. Illustrates: Using TPS (Technological Product Specifications) interfaces to create a 3D Text Annotation. The main API used here is CATITPSFactoryAdvanced. Usage: Build the fw containing that command and create run time view. Start CATIA V5 Menu Start + Mechanical Design + Functional Tolerancing & Annotations Menu : View + Toolbar + CAA Samples to make the toolbar appear. "Create Text" command can be launched from the toolbar. Notice that the toolbar CAA Samples is also available in the following workbenches : Mechanical Design + Product Fonctionnal Tolerancing & Annotation DPM Powertrain + Process Tolerancing & Annotation
 
-> -----------------------------------------------------------------------------
+**基类**: CATStateCommand | **模块**: CAATPSInterfaces | **方法数**: 1
 
 ## 依赖
 
 - `CATStateCommand.h`
 
+## 虚方法
+
+### BuildGraph
+
+```cpp
+virtual void BuildGraph() ;
+```
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATStateCommand**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAATPSInterfaces.edu/CAATpiAnnotationSetGlobalCopy.m/LocalInterfaces/CAATpiAnnotSetGlobalCopyCmd.h`

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Part Object"
-category: tech-article
+category: "tech-article"
 module: "CAAScdMmrTechArticles"
-tags: []
-source_file: "Doc/online/CAAScdMmrTechArticles/CAAMmrObjPart.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAAScdMmrTechArticles/CAAMmrObjPart.htm"
 converted: "2026-05-11T17:31:51.142657"
-```
-
 ---
 # Part Object
 

@@ -1,52 +1,77 @@
 ---
 title: "CAAXMLSAXCountDocHandler"
-type: "interface"
+type: "LocalClass"
 module: "CAAXMLParser"
-category: api-reference
 base: "CATSAXHandlerBase"
-inheritance_chain: "CAAXMLSAXCountDocHandler → CATSAXHandlerBase"
 method_count: 5
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAXMLParser.edu/CAAXMLSAXCount.m/LocalInterfaces/CAAXMLSAXCountDocHandler.h"
 ---
+
 # CAAXMLSAXCountDocHandler
 
-**基类**: CATSAXHandlerBase  
-**继承链**: CAAXMLSAXCountDocHandler → CATSAXHandlerBase  
-**模块**: CAAXMLParser  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 5
-
-> interfaces from which it is convenient to
+**基类**: CATSAXHandlerBase | **模块**: CAAXMLParser | **方法数**: 5
 
 ## 依赖
 
 - `CATSAXHandlerBase.h`
 
+## 虚方法
+
+### Characters
+
+```cpp
+virtual HRESULT Characters(const CATUnicodeString & iCharacters) ;
+```
+
+Override the default implementation of the CATISAXDocumentHandler methods we are interested in.
+
+| 参数 | 类型 |
+|------|------|
+| iCharacters | `const CATUnicodeString &` |
+
+
+### EndDocument
+
+```cpp
+virtual HRESULT EndDocument() ;
+```
+
+
+### IgnorableWhiteSpace
+
+```cpp
+virtual HRESULT IgnorableWhiteSpace(const CATUnicodeString & iCharacters) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iCharacters | `const CATUnicodeString &` |
+
+
+### ProcessingInstruction
+
+```cpp
+virtual HRESULT ProcessingInstruction(const CATUnicodeString & iTarget, const CATUnicodeString & iData) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iTarget | `const CATUnicodeString &` |
+| iData | `const CATUnicodeString &` |
+
+
+### StartElement
+
+```cpp
+virtual HRESULT StartElement(const CATUnicodeString & iName, const CATISAXAttributeList_var& iAttributes) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iName | `const CATUnicodeString &` |
+| iAttributes | `const CATISAXAttributeList_var&` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATSAXHandlerBase**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-This interface is used in the following use cases:
-
-- [CAAXMLSAXCount](../../use-cases/caaxmlcases/CAAXMLSAXCount.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAXMLParser.edu/CAAXMLSAXCount.m/LocalInterfaces/CAAXMLSAXCountDocHandler.h`

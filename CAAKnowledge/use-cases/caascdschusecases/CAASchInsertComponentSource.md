@@ -18,7 +18,7 @@ Option Explicit
 '   CATIA Level:  V5R15 
 ' *****************************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ```
@@ -26,7 +26,7 @@ Sub CATMain(#)
     ' ------------------------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -35,25 +35,25 @@ Sub CATMain(#)
 ```
     ' ------------------------------------------------------------------------- 
     ' Open the catalog document 
-```vbscript
+```cpp
     Dim sCtlgFilePath
     sCtlgFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
             "online/CAAScdSchUseCases/samples/CAASCH_Sample.catalog")
 ```
 
-```vbscript
+```cpp
     Dim objSchCtlgDoc As Document
     Set objSchCtlgDoc = CATIA.Documents.Open(sCtlgFilePath)
 
     ' Open main schematic design document (for new component instances created here)
 ```
-```vbscript
+```cpp
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
             "online/CAAScdSchUseCases/samples/CAASCH_RouteForPlacement.CATProduct")
 ```
 
-```vbscript
+```cpp
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
@@ -117,7 +117,7 @@ Sub CATMain(#)
 ```
            strMessage = strMessage &  "Got catalog connectable of the symbol" & vbCr
 
-```vbscript
+```cpp
            Dim objCompRefPlaceInfo As AnyObject  
            Dim objCompatInfo As AnyObject  
            Dim objFinalInsertInfo As AnyObject
@@ -176,7 +176,7 @@ Sub CATMain(#)
               objSchCompatRoute.IsTargetOKForInsert objCompRefPlaceInfo, _
                 objCompatInfo, bYesCompat
 
-```vbscript
+```cpp
               Dim db2Pt(2) As CATSafeArrayVariant
 
 ```
@@ -234,12 +234,12 @@ Sub CATMain(#)
               If ( Not ( IsEmpty (objSchRouteInst ) ) ) Then
 ```
 
-```vbscript
+```cpp
                 Set objSchCntblRouteInst = objSchRoot.GetInterface ( _
                   "CATIASchAppConnectable",objSchRouteInst)
 ```
 
-```vbscript
+```cpp
                 Set objSchRouteGraph = objSchRoot.GetInterface ( _
                   "CATIASchRouteGraphic",objSchRouteInst)
 ```
@@ -260,7 +260,7 @@ Sub CATMain(#)
                 strMessage = strMessage &  _
                   "Placement point for PlaceOnObject = (" & db2Pt(0) & "," & db2Pt(1) &")" & vbCr       
 
-```vbscript
+```cpp
                  Dim db6Matrix(6) As CATSafeArrayVariant
                  db6Matrix(0)=1.0
 ```
@@ -312,7 +312,7 @@ Private Function FindARouteInModel (objSchRootArg As SchematicRoot) As SchCompat
       Set objSchLSymbols = objSchRootArg.GetRoutes
       If ( Not ( IsEmpty (objSchLSymbols ) ) ) Then
 ```
-```vbscript
+```cpp
          Set FindARouteInModel = objSchLSymbols.Item (1,"CATIASchCompatible")
       End If
 ```
@@ -333,7 +333,7 @@ Private Function FindPlacementPoint (objSchRootArg As SchematicRoot, _
   objSchRouteGraphArg As SchRouteGraphic) As SchListOfDoubles
 ```
 
-```vbscript
+```cpp
    Dim objSchLGRR As SchListOfObjects
    Dim objSchLDb As SchListOfDoubles
    Dim objSchGRRRoute As SchGRRRoute
@@ -365,7 +365,7 @@ Private Function FindPlacementPoint (objSchRootArg As SchematicRoot, _
       If ( Not ( IsEmpty (objSchLGRR ) ) ) Then
 ```
 
-```vbscript
+```cpp
          Set objSchGRRRoute = objSchLGRR.Item (1,"CATIASchGRRRoute")
 
          If ( Not ( IsEmpty (objSchGRRRoute ) ) ) Then
@@ -403,7 +403,7 @@ End Function
 
 ```
 
-```vbscript
+```cpp
 Option Explicit
 ' COPYRIGHT DASSAULT SYSTEMES 2004
 
@@ -415,7 +415,7 @@ Option Explicit
 '   CATIA Level:  V5R15 
 ' *****************************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ```
@@ -423,7 +423,7 @@ Sub CATMain(#)
     ' ------------------------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -432,25 +432,25 @@ Sub CATMain(#)
 ```
     ' ------------------------------------------------------------------------- 
     ' Open the catalog document 
-```vbscript
+```cpp
     Dim sCtlgFilePath
     sCtlgFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
             "online/CAAScdSchUseCases/samples/CAASCH_Sample.catalog")
 ```
 
-```vbscript
+```cpp
     Dim objSchCtlgDoc As Document
     Set objSchCtlgDoc = CATIA.Documents.Open(sCtlgFilePath)
 
     ' Open main schematic design document (for new component instances created here)
 ```
-```vbscript
+```cpp
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
             "online/CAAScdSchUseCases/samples/CAASCH_RouteForPlacement.CATProduct")
 ```
 
-```vbscript
+```cpp
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
@@ -514,7 +514,7 @@ Sub CATMain(#)
 ```
            strMessage = strMessage &  "Got catalog connectable of the symbol" & vbCr
 
-```vbscript
+```cpp
            Dim objCompRefPlaceInfo As AnyObject  
            Dim objCompatInfo As AnyObject  
            Dim objFinalInsertInfo As AnyObject
@@ -573,7 +573,7 @@ Sub CATMain(#)
               objSchCompatRoute.IsTargetOKForInsert objCompRefPlaceInfo, _
                 objCompatInfo, bYesCompat
 
-```vbscript
+```cpp
               Dim db2Pt(2) As CATSafeArrayVariant
 
 ```
@@ -631,12 +631,12 @@ Sub CATMain(#)
               If ( Not ( IsEmpty (objSchRouteInst ) ) ) Then
 ```
 
-```vbscript
+```cpp
                 Set objSchCntblRouteInst = objSchRoot.GetInterface ( _
                   "CATIASchAppConnectable",objSchRouteInst)
 ```
 
-```vbscript
+```cpp
                 Set objSchRouteGraph = objSchRoot.GetInterface ( _
                   "CATIASchRouteGraphic",objSchRouteInst)
 ```
@@ -657,7 +657,7 @@ Sub CATMain(#)
                 strMessage = strMessage &  _
                   "Placement point for PlaceOnObject = (" & db2Pt(0) & "," & db2Pt(1) &")" & vbCr       
 
-```vbscript
+```cpp
                  Dim db6Matrix(6) As CATSafeArrayVariant
                  db6Matrix(0)=1.0
 ```
@@ -709,7 +709,7 @@ Private Function FindARouteInModel (objSchRootArg As SchematicRoot) As SchCompat
       Set objSchLSymbols = objSchRootArg.GetRoutes
       If ( Not ( IsEmpty (objSchLSymbols ) ) ) Then
 ```
-```vbscript
+```cpp
          Set FindARouteInModel = objSchLSymbols.Item (1,"CATIASchCompatible")
       End If
 ```
@@ -730,7 +730,7 @@ Private Function FindPlacementPoint (objSchRootArg As SchematicRoot, _
   objSchRouteGraphArg As SchRouteGraphic) As SchListOfDoubles
 ```
 
-```vbscript
+```cpp
    Dim objSchLGRR As SchListOfObjects
    Dim objSchLDb As SchListOfDoubles
    Dim objSchGRRRoute As SchGRRRoute
@@ -762,7 +762,7 @@ Private Function FindPlacementPoint (objSchRootArg As SchematicRoot, _
       If ( Not ( IsEmpty (objSchLGRR ) ) ) Then
 ```
 
-```vbscript
+```cpp
          Set objSchGRRRoute = objSchLGRR.Item (1,"CATIASchGRRRoute")
 
          If ( Not ( IsEmpty (objSchGRRRoute ) ) ) Then

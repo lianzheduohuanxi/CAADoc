@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "ObjectModelerBase Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR9"
-version: "V5R9"
-tags: ["CATICatalogManager"]
-source_file: "Doc/online/CAACenAPIChangesR9/ObjectModelerBase.htmmd"
+tags: "["CATICatalogManager"]"
+source_file: "Doc/online/CAACenAPIChangesR9/ObjectModelerBase.htm"
 converted: "2026-05-11T17:33:52.954496"
-```
-
 ---
 tags: ["CATICatalogManager"]
 source_file: "Doc/online/CAACenAPIChangesR9/ObjectModelerBase.htmmd"

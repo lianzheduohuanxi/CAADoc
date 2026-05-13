@@ -86,7 +86,7 @@ This use case has shown how to specify occurrences for images.
 ```vbscript
 &#39; ----------------------------------------------------------- 
 &#39; Optional: allows to find the sample wherever it&#39;s installed
-```vbscript
+```cpp
   sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -95,7 +95,7 @@ This use case has shown how to specify occurrences for images.
 ```
 &#39; ----------------------------------------------------------- 
 &#39; Open the Analysis document 
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online/CAAScdAniUseCases/samples/Cube_R13_Freq.CATAnalysis&quot;)
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ...

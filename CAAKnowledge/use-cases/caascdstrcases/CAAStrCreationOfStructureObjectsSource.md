@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAAStrCreationOfStructureObjects.CATScript"
 category: "use-case"
 module: "CAAScdStrUseCases"
-tags: ["CAAStrCreationOfStructureObjects", "CATIA"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfStructureObjectsSource.htmmd"
+tags: "["CAAStrCreationOfStructureObjects", "CATIA"]"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfStructureObjectsSource.htm"
 converted: "2026-05-11T17:31:50.888586"
-```
-
 ---
 tags: ["CAAStrCreationOfStructureObjects", "CATIA"]
 source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfStructureObjectsSource.htmmd"
@@ -16,7 +13,7 @@ converted: "2026-05-11T17:31:50.888586"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGTH DASSAULT SYSTEMES 2000
     ' ***********************************************************************
     '   Purpose:      Create structure objects
@@ -33,7 +30,7 @@ converted: "2026-05-11T17:31:50.888586"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -51,7 +48,7 @@ converted: "2026-05-11T17:31:50.888586"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
         Dim strFactory As StrObjectFactory
 
         Set doc = CATIA.ActiveDocument
@@ -136,7 +133,7 @@ converted: "2026-05-11T17:31:50.888586"
 ```vbscript
         dim sectionName as string
 ```vbscript
-```vbscript
+```cpp
         sectionName = InputBox("Section path","Parameters", "e/tmp/HEA120.CATPart")
         ' column 1
 ```

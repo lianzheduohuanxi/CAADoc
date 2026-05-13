@@ -165,7 +165,7 @@ a generative way.
 ```vbscript
 &#39; ----------------------------------------------------------- 
 &#39; Optional: allows to find the sample wherever it&#39;s installed
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
     If(Not CATIA.FileSystem.FolderExists(sDocPath)) Then
     Err.Raise 9999,,&quot;No Doc Path Defined&quot;
@@ -176,7 +176,7 @@ a generative way.
 
 ```vbscript
 &#39; Get the collection of documents in session
-```vbscript
+```cpp
     Set documents1 = CATIA.Documents
 
 ```
@@ -189,7 +189,7 @@ a generative way.
    
 &#39; if WB name already is &quot;GPSCfg&quot;, not to use StartWorkbench 
 ```
-```vbscript
+```cpp
    WBName = CATIA.GetWorkbenchId if (WBName &lt;&gt; &quot;GPSCfg&quot;) Then 
       CATIA.StartWorkbench(&quot;GPSCfg&quot;)
    End If
@@ -207,27 +207,27 @@ a generative way.
 ```
 
 ```vbscript
-```vbscript
+```cpp
 Dim arrayOfVariantOfShort1(0)
    analysisManager1.ImportDefineFile (sDocPath &amp; sSep &amp; &quot;online&quot; &amp; sSep &amp; &quot;CAAScdAniUseCases&quot; &amp; sSep &amp; &quot;samples&quot; &amp; sSep &amp; &quot;AnalysisMechfeat.CATPart&quot;),
 ```
 ```
 
-```vbscript
+```cpp
 &quot;CATAnalysisImport&quot;, arrayOfVariantOfShort1
 ```
 
 ```vbscript
 &#39; _____________________________________________________________________________________ 
 &#39; Reframe All. 
-```vbscript
+```cpp
    Set specsAndGeomWindow1 = CATIA.ActiveWindow 
    Set viewer3D1 = specsAndGeomWindow1.ActiveViewer 
    viewer3D1.Reframe 
 ```
 &#39; _____________________________________________________________________________________ 
 &#39; Scan the analysis document: Retrieve the Pointed documents to extract the reference for preprocessing 
-```vbscript
+```cpp
    Set analysisLinkedDocuments1 = analysisManager1.LinkedDocuments 
    CATIA.SystemService.Print analysisLinkedDocuments1.Name 
    If (analysisLinkedDocuments1.Count &lt;&gt; 1 ) Then 
@@ -238,7 +238,7 @@ Dim arrayOfVariantOfShort1(0)
 ```
 &#39; _____________________________________________________________________________________ 
 &#39; Retrieve the CATPart Document and associated publications for preprocessing. 
-```vbscript
+```cpp
    Set TheDoc = analysisLinkedDocuments1.Item(1) 
    CATIA.SystemService.Print TheDoc.FullName 
    Set product1 = TheDoc.Product 
@@ -319,7 +319,7 @@ Dim arrayOfVariantOfShort1(0)
    MyCase.Compute ...
   
 &#39; Extract the computed value of the sensor
-```vbscript
+```cpp
    CATIA.SystemService.Print &quot; Mises Max Computed &quot; &amp; dimension1.ValueAsString
 ...
 ```
@@ -343,7 +343,7 @@ Dim arrayOfVariantOfShort1(0)
 ...
 &#39; _____________________________________________________________________________________ 
 &#39; Export data from the created image.
-```vbscript
+```cpp
    Set fileSystem1 = CATIA.FileSystem 
    Set folder1 = fileSystem1.GetFolder(outputPath)
    analysisImage1.ExportData folder1, &quot;VonMises&quot;, &quot;txt&quot;

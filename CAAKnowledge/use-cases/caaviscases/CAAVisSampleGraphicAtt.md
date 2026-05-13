@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Using Graphic Attributes"
-category: use-case case"
+category: "use-case case"
 module: "CAAVisUseCases"
-tags: ["CAAVisBaseView", "CAAVisRepWindow", "CAAVisualization", "CAAVisRep", "CAAVisRepApplication"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleGraphicAtt.htmmd"
+tags: "["CAAVisBaseView", "CAAVisRepWindow", "CAAVisualization", "CAAVisRep", "CAAVisRepApplication"]"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleGraphicAtt.htm"
 converted: "2026-05-11T17:31:52.107319"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -95,13 +92,12 @@ To manage graphic attributes, there are four main steps:
 
 The 3D navigation viewer is an instance of the _CATNavigation3DViewer_ class. It is created in the `CreateViewer` method of the _CAAVisBaseView_ class that is called when the application is launched.
 
-The 3D navigation viewer is an instance of the _CATNavigation3DViewer_ class. It is created in the `CreateViewer` method of the _CAAVisBaseView_ class that is called when the application is launched.
     void CAAVisRepWindow::CreateViewer(#)
 
     {
 The 3D navigation viewer is an instance of the _CATNavigation3DViewer_ class. It is created in the `CreateViewer` method of the _CAAVisBaseView_ class that is called when the application is launched.
 void CAAVisRepWindow::CreateViewer(#)
-```vbscript
+```cpp
       _p3DViewer = new CATNavigation3DViewer(this,
 
 ```
@@ -146,7 +142,6 @@ This is done at the beginning of the `CreateModelRepresentation` method of _CAAV
     ...
       CAT3DCustomRep * pLineOnXAxis = NULL ;
 
-CAT3DCustomRep * pLineOnXAxis = NULL ;
       CATMathPoint PositionXPoint1(20.f,0.f,0.f ) ;
       CATMathPoint PositionXPoint2(200.f,0.f,0.f ) ;
 
@@ -174,7 +169,6 @@ if ( NULL != pLineOnXAxis )
 
 The first line is carried by the X axis. It begins at the abscissa 20 and ends at the abscissa 200. The `CreateLineEndedByTwoPoints` method of _CAAVisRepWindow_ creates the line and sets its graphic attributes. If the custom representation is successfully created, it is added to the representation bag. `CreateLineEndedByTwoPoints` is as follows:
 
-The first line is carried by the X axis. It begins at the abscissa 20 and ends at the abscissa 200. The `CreateLineEndedByTwoPoints` method of _CAAVisRepWindow_ creates the line and sets its graphic attributes. If the custom representation is successfully created, it is added to the representation bag. `CreateLineEndedByTwoPoints` is as follows:
     CAT3DCustomRep * CAAVisRepWindow::CreateLineEndedByTwoPoints(const CATMathPoint &iStartPoint,
                                                                  const CATMathPoint &iEndPoint,
                                                                  int                 iEdgeType)
@@ -184,7 +178,7 @@ CAT3DCustomRep * CAAVisRepWindow::CreateLineEndedByTwoPoints(const CATMathPoint 
 const CATMathPoint &iEndPoint,
 int                 iEdgeType)
       CAT3DCustomRep * pTheRepToReturn = NULL;
-```vbscript
+```cpp
       pTheRepToReturn = new **CAT3DCustomRep**(#);
 
 ```
@@ -324,7 +318,6 @@ if ( NULL != pRedCube )
 
 The first cube has its corner located at `RedCubePoint`. The `CreateOpenCube` method of _CAAVisRepWindow_ creates the cube and sets its graphic attributes. If the custom representation is successfully created, it is added to the representation bag. `CreateOpenCube` is as follows:
 
-The first cube has its corner located at `RedCubePoint`. The `CreateOpenCube` method of _CAAVisRepWindow_ creates the cube and sets its graphic attributes. If the custom representation is successfully created, it is added to the representation bag. `CreateOpenCube` is as follows:
     CAT3DCustomRep * CAAVisRepWindow::CreateOpenCube(const CATMathPoint &iStartPoint,
                                                      int iTypeFace)
 
@@ -372,7 +365,6 @@ As with the lines and points, the cube is created as a _CAT3DCustomRep_ instance
 
     ...
       CATMathPoint WhiteCubePosition(50.f,150.f,0.f );
-CATMathPoint WhiteCubePosition(50.f,150.f,0.f );
       CAT3DCustomRep * pWhiteCube = NULL ;
 
       int SKIN = 2 ;
@@ -404,7 +396,6 @@ The second cube is created with the default color, that is, white, and with its 
 
 The `AddRepToViewer` method displays the created representation.
 
-The `AddRepToViewer` method displays the created representation.
     void CAAVisRepWindow::VisualizeModel(#)
 
     {

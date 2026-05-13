@@ -1,46 +1,53 @@
 ---
 title: "CAAVisBaseApplicationFrame"
-type: "interface"
+type: "LocalClass"
 module: "CAAVisualization"
-category: api-reference
 base: "CATDlgDocument"
-inheritance_chain: "CAAVisBaseApplicationFrame → CATDlgDocument"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 3
+source_file: "CAAVisualization.edu/CAAVisBasics.m/LocalInterfaces/CAAVisBaseApplicationFrame.h"
 ---
+
 # CAAVisBaseApplicationFrame
 
-**基类**: CATDlgDocument  
-**继承链**: CAAVisBaseApplicationFrame → CATDlgDocument  
-**模块**: CAAVisualization  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> Frame of the application. This frame is made with a menu bar, itself made with a file menu, a render menu, a viewpoint menu, a manipulator menu. Inheritance: CAAVisBaseApplicationFrame CATDlgDocument (Dialog Framework) Main Method:
 
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATDlgDocument | **模块**: CAAVisualization | **方法数**: 3
 
 ## 依赖
 
 - `CATDlgDocument.h`
 
+## 公共方法
+
+### Build
+
+```cpp
+void Build() ;
+```
+
+
+### OnWindowActivated
+
+```cpp
+void OnWindowActivated(int iActiveDocIndex) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iActiveDocIndex | `int` |
+
+
+### OnDeleteWindow
+
+```cpp
+void OnDeleteWindow(int iActiveDocIndex) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iActiveDocIndex | `int` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATDlgDocument**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAVisualization.edu/CAAVisBasics.m/LocalInterfaces/CAAVisBaseApplicationFrame.h`

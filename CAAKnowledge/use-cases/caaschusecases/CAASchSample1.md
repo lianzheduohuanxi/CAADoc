@@ -258,13 +258,13 @@ application. Specifically, it has illustrated:
 
 *Copyright  2000, Dassault Systmes. All rights reserved.*
 
-```vbscript
+```cpp
 CAASchAppSample1::InitEnvironment
 CAASchAppSample1::GetDraftingObjects
 CreateCATProductEnv::CreateCATProductEnv
 ```
 
-```vbscript
+```cpp
 CATISchSession* piSchSession = NULL;
 if ( SUCCEEDED( pSession-&gt;QueryInterface (IID_CATISchSession,(void**)&amp;piSchSession) ) )
 {
@@ -275,7 +275,7 @@ if ( SUCCEEDED( pSession-&gt;QueryInterface (IID_CATISchSession,(void**)&amp;piS
 }
 ```
 
-```vbscript
+```cpp
 //---------------------------------------------------------------------------
 //  Find an application object in a container by a specific class type
 //---------------------------------------------------------------------------
@@ -318,7 +318,7 @@ CATISpecObject_var CAASchAppBaseServices::FindAppObjByClass (
 }
 ```
 
-```vbscript
+```cpp
 CATSchListServices SchList;
     rc = SchList.CreateCATIUnknownList(&amp;_piLUK);
 
@@ -334,7 +334,7 @@ CATSchListServices SchList;
     }
 ```
 
-```vbscript
+```cpp
 //-------------------------------------------------------------------------
     //  Create schematic object
     //-------------------------------------------------------------------------
@@ -352,7 +352,7 @@ CATSchListServices SchList;
     }
 ```
 
-```vbscript
+```cpp
 rc = piCompCtr-&gt;AddConnector (SCHEDUClass_Connector, piGrr, ctr1Loc, &amp;piAppCtr1);
     if ( !SUCCEEDED(rc) || !piAppCtr1 ) 
     {
@@ -369,7 +369,7 @@ rc = piCompCtr-&gt;AddConnector (SCHEDUClass_Connector, piGrr, ctr1Loc, &amp;piA
     }
 ```
 
-```vbscript
+```cpp
 rc = _piSchComp-&gt;QueryInterface (IID_CATISchCompFlow, (void **) &amp;piCompFlow);
     if ( !SUCCEEDED(rc) || !piCompFlow ) 
     {

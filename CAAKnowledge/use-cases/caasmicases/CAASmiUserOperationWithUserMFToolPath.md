@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Computing a Tool Path with User Machining Features"
-category: use-case case"
+category: "use-case case"
 module: "CAASmiUseCases"
-tags: ["CATIMfgCompoundTraject", "CAASmiUserOperationToolPathReplay", "CAAToolAngle", "CATISmgNcGeometryManager", "CATIMfgToolPathFactory", "CATIMfgComputeToolPathCustom", "CAAGuide", "CATISmgNcGeometryParameter", "CAASmgOperation", "CAAApproachDistance", "CAAISmiUserMachFeature", "CAASmiUserOperationpToolPathReplay", "CATIMfgToolPathComponents", "CATIMfgTPSaveData", "CAASmgMachiningFeature", "CATIMfgActivityParameters", "CAAESmiUserOperationTPComputation", "CAASmgGuide", "CAAESmiUserMachFeature", "CAASmiUserMachFeature"]
-source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationWithUserMFToolPath.htmmd"
+tags: "["CATIMfgCompoundTraject", "CAASmiUserOperationToolPathReplay", "CAAToolAngle", "CATISmgNcGeometryManager", "CATIMfgToolPathFactory", "CATIMfgComputeToolPathCustom", "CAAGuide", "CATISmgNcGeometryParameter", "CAASmgOperation", "CAAApproachDistance", "CAAISmiUserMachFeature", "CAASmiUserOperationpToolPathReplay", "CATIMfgToolPathComponents", "CATIMfgTPSaveData", "CAASmgMachiningFeature", "CATIMfgActivityParameters", "CAAESmiUserOperationTPComputation", "CAASmgGuide", "CAAESmiUserMachFeature", "CAASmiUserMachFeature"]"
+source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationWithUserMFToolPath.htm"
 converted: "2026-05-11T17:31:51.288324"
-```
-
 ---
 # Machining
 
@@ -69,7 +66,6 @@ The tool path is created from the first guide of CAASmgGuide and the CAAStep, CA
 
 This use case is a part of _Surface Machining Operation Sample_ [1]. You should build all the modules of this sample at a time to be able to launch it [2].
 
-This use case is a part of _Surface Machining Operation Sample_ [1]. You should build all the modules of this sample at a time to be able to launch it [2].
 Don't forget to edit the interface dictionary located in:
 
 Windows | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CNext/code/dictionary/`
@@ -189,7 +185,7 @@ CATBaseUnknown_var spBaseFeature = pActivity->GetFeature(#);
 ```
 
       {
-```vbscript
+```cpp
 CATLISTP(CATGeometry) ListOfGeometry;
 CAAISmiUserMachFeature * pUserMachFeature = NULL;
 RC = spBaseFeature->QueryInterface(IID_CAAISmiUserMachFeature, (void**) &pUserMachFeature);
@@ -229,7 +225,7 @@ In _GetGuides,_ we retrieve the CAASmgGuide attribute from GetNcGeometryParamete
 CATBaseUnknown_var spParameter = NULL_var;
 RC = GetGuideParameter(spParameter);
 ```vbscript
-```vbscript
+```cpp
 if (SUCCEEDED(RC))
         RC = spParameter->QueryInterface(IID_CATISmgNcGeometryParameter, (void**) &pSmgParameter);
         if (SUCCEEDED(RC))
@@ -264,7 +260,6 @@ pSmgParameter = NULL;
 
 The tool path is created and returned as a _CATIMfgCompoundTraject_ smart pointer using the CreateMfgCompoundTraject of the _CATIMfgToolPathFactory_ interface implemented by the Process document manufacturing container passed as input parameter. Then, a pointer to _CATIMfgToolPathComponents_ is retrieved from the tool path and the tool path is initialized from the activity using the Init method of _CATIMfgCompoundTraject_.
 
-The tool path is created and returned as a _CATIMfgCompoundTraject_ smart pointer using the CreateMfgCompoundTraject of the _CATIMfgToolPathFactory_ interface implemented by the Process document manufacturing container passed as input parameter. Then, a pointer to _CATIMfgToolPathComponents_ is retrieved from the tool path and the tool path is initialized from the activity using the Init method of _CATIMfgCompoundTraject_.
 The tool path data can now be created from parameters and geometry of the surface machining operation. Geometry tessellation is done by TessellateGeometry.
 
 The CreateMfgTPMultipleMotion method of _CATIMfgToolPathFactory_ creates the object which contains the motions. This object is added to the tool path thanks to the AddElement method of _CATIMfgToolPathComponents_.
@@ -278,7 +273,6 @@ With interface _CATIMfgTPSaveData_ on tool path, the tool path is saved in the m
 
 This article provides an example on how to implement tool path computation of a new surface machining operation with a user machining feature.
 
-This article provides an example on how to implement tool path computation of a new surface machining operation with a user machining feature.
 It shows also how to get geometry from a new surface machining geometry attribute, illustrating the use of _CATISmgNcGeometryParameter_ and _CATISmgNcGeometryManager_ interfaces.
 
 Now, let's have a look at the second scenario [4] of the _Surface Machining Operation Sample._

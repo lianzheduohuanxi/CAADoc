@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "The Boolean Operators"
-category: tech-article
+category: "tech-article"
 module: "CAATopTechArticles"
-tags: []
-source_file: "Doc/online/CAATopTechArticles/TopoBoolean.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAATopTechArticles/TopoBoolean.htm"
 converted: "2026-05-11T17:31:50.792795"
-```
-
 ---
 # Geometric Modeler
 
@@ -47,7 +44,6 @@ The Boolean operators are the base operations of a topological modeler: they all
 
 The Boolean operators add, subtract or intersect topological objects (called bodies, see [1]). Moreover, these basic operations can be combined to perform more complex one such a split, sewing or trim.
 
-The Boolean operators add, subtract or intersect topological objects (called bodies, see [1]). Moreover, these basic operations can be combined to perform more complex one such a split, sewing or trim.
 The Boolean operators proceed in three steps:
 
   1. Compute the intersection paths between all the boundaries of one body and the boundaries of the other body. This splits each body into parts that belong to only one body, or to the both;

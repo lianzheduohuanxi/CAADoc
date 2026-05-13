@@ -1,53 +1,69 @@
 ---
 title: "CAACafTexturePropertyPageEdt"
-type: "interface"
+type: "LocalClass"
 module: "CAACATIAApplicationFrm"
-category: api-reference
 base: "CATEditor"
-inheritance_chain: "CAACafTexturePropertyPageEdt → CATEditor"
 method_count: 4
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAACATIAApplicationFrm.edu/CAACafEditTextureProp.m/LocalInterfaces/CAACafTexturePropertyPageEdt.h"
 ---
+
 # CAACafTexturePropertyPageEdt
 
-**基类**: CATEditor  
-**继承链**: CAACafTexturePropertyPageEdt → CATEditor  
-**模块**: CAACATIAApplicationFrm  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 4
+> Class representing an Edit Properties Page Editor, and implementing the CATIEditProperties interface. Usage: Launch CATIA V5, click File/New, select CAAGeometry in the New dialog box. Create some elements (point, line, circle, ellipse, plane,...) Launch the Edit/Properties command and select any element: . The circle and the ellipse implement the Texture properties. . The line, the circle implement the Color properties. Inheritance: CATEditor          ( CATIAApplicationFrame Framework) CATImplementationAdapter ( ObjectModelerBase Framework) CATEventSubscriber      ( System Framework ) CATBaseUnknown          (System Framework). Main Methods : BuildEditor           -> Creates the property page ExtractFromSelection  -> Extracts from the CSO involved object in this page. GetEditorTitle        -> NLS title SetEditorSize         -> 1 (small) ,2(medium), 3(large) SetPropertyValue      -> Initializes the property page CommitModification    -> After OK/Apply, modifies extracted object CancelModification    -> After Cancel push button CloseWindowFromEditor -> When you leave this page for another
 
-> System framework
+**基类**: CATEditor | **模块**: CAACATIAApplicationFrm | **方法数**: 4
 
 ## 依赖
 
 - `CATEditor.h`
 - `CATLISTV_CATBaseUnknown.h`
 
+## 虚方法
+
+### GetEditorTitle
+
+```cpp
+virtual CATUnicodeString GetEditorTitle() ;
+```
+
+GetEditorTitle --------------- Returns the NLS title of the page. In the NLS file associated with the CAACafTexturePropertyPageDlg class you can customize it. This method is called if the extraction is not empty.
+
+
+### SetEditorSize
+
+```cpp
+virtual void SetEditorSize(int & oSize) ;
+```
+
+SetEditorSize --------------- Returns the size of the page. This method is called if the extraction is not empty. oSize can take the following values: 1 : small size 2 : medium size 3 : large size The Properties command analyzes the size returned by all Property pages and creates a box from the largest one.
+
+| 参数 | 类型 |
+|------|------|
+| oSize | `int &` |
+
+
+### BuildEditor
+
+```cpp
+virtual void BuildEditor(CATEditorPage * iEditor) ;
+```
+
+BuildEditor ------------ Creates the page Dialog (_pTextureFrame). This method is called at the first selection of the page. When the end user swaps between pages, this method is not called. iEditor is the parent of _pTextureFrame. It kills _pTextureFrame when the dialog box is closed.
+
+| 参数 | 类型 |
+|------|------|
+| iEditor | `CATEditorPage *` |
+
+
+### CloseWindowFromEditor
+
+```cpp
+virtual void CloseWindowFromEditor() ;
+```
+
+CloseWindowFromEditor() ----------------------- This method is called when the end user swaps between pages, but not when the Edit Properties Dialog box is closed.
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATEditor**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAACATIAApplicationFrm.edu/CAACafEditTextureProp.m/LocalInterfaces/CAACafTexturePropertyPageEdt.h`

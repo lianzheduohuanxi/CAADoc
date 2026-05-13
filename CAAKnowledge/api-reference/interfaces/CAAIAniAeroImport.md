@@ -1,63 +1,64 @@
 ---
 title: "CAAIAniAeroImport"
-type: "interface"
+type: "LocalClass"
 module: "CAAAnalysisInterfaces"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAIAniAeroImport → CATBaseUnknown"
 method_count: 3
-visibility: "local"
-has_tie_binding: true
-verified: true
+source_file: "CAAAnalysisInterfaces.edu/CAAAniAeroDTransition.m/LocalInterfaces/CAAIAniAeroImport.h"
 ---
-> **TIE实现**: unknown
 
 # CAAIAniAeroImport
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAIAniAeroImport → CATBaseUnknown  
-**模块**: CAAAnalysisInterfaces  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 3
-
-> ------------------------------------------------------------------
+**基类**: CATBaseUnknown | **模块**: CAAAnalysisInterfaces | **方法数**: 3
 
 ## 依赖
 
 - `CATBaseUnknown.h`
 
-## TIE实现
+## 纯虚方法 (接口契约)
 
-**实现文件**:
-- `CAAAniADCharacCollector.cpp`
-- `CAAAniADImport.cpp`
-- `CAAAniAeroDynamicTransition.cpp`
-- `CAAAniAeroMesher.cpp`
-- `CAAAniCCTools.cpp`
+### Import
+
+```cpp
+virtual HRESULT Import(CATDocument * ipAnalysisDoc) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| ipAnalysisDoc | `CATDocument *` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### ImportFif
+
+```cpp
+virtual HRESULT ImportFif(CATIMSHMeshPart * MeshPart, CATIMSHMesh * ipMesh) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| MeshPart | `CATIMSHMeshPart *` |
+| ipMesh | `CATIMSHMesh *` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### TranslateToFieldModel
+
+```cpp
+virtual HRESULT TranslateToFieldModel(CATISpecObject* iFeatToTranslate, CATISamAnalysisModel* iFEMModel, CATAnalysisExplicitListUsr& iOldExplObjects, CATAnalysisExplicitListUsr& oNewExplObjects) = 0 ;
+```
+
+Create the field model objects
+
+| 参数 | 类型 |
+|------|------|
+| iFeatToTranslate | `CATISpecObject*` |
+| iFEMModel | `CATISamAnalysisModel*` |
+| iOldExplObjects | `CATAnalysisExplicitListUsr&` |
+| oNewExplObjects | `CATAnalysisExplicitListUsr&` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
 
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAAnalysisInterfaces.edu/CAAAniAeroDTransition.m/LocalInterfaces/CAAIAniAeroImport.h`

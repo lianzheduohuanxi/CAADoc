@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Adding a Macro as a Command in a Toolbar"
 category: "use-case"
 module: "CAAScdInfUseCases"
-tags: []
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfAddingMacroInToolbar.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfAddingMacroInToolbar.htm"
 converted: "2026-05-11T17:31:52.346579"
-```
-
 ---
 ## Infrastructure
 

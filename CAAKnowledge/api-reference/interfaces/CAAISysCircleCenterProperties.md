@@ -1,64 +1,49 @@
 ---
 title: "CAAISysCircleCenterProperties"
-type: "interface"
+type: "PublicInterface"
 module: "CAASystem"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAISysCircleCenterProperties → CATBaseUnknown"
 method_count: 2
-visibility: "public"
-has_tie_binding: true
-verified: true
+source_file: "CAASystem.edu/PublicInterfaces/CAAISysCircleCenterProperties.h"
 ---
-> **TIE实现**: unknown
 
 # CAAISysCircleCenterProperties
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAISysCircleCenterProperties → CATBaseUnknown  
-**模块**: CAASystem  
-**分类**: framework  
-**可见性**: public  
-**方法数**: 2
+> Interface to modify the CircleCenter properties. Inheritance: CATBaseUnknown (System Framework). Main Methods: GetMarkerType SetMarkerType
 
-> System Framework
+**基类**: CATBaseUnknown | **模块**: CAASystem | **方法数**: 2
 
 ## 依赖
 
 - `CATBaseUnknown.h`
 - `CAASysGeoModelInf.h`
 
-## TIE实现
+## 纯虚方法 (接口契约)
 
-**实现文件**:
-- `CAAISysAccess.cpp`
-- `CAAISysCircle.cpp`
-- `CAAISysCircleCenterProperties.cpp`
-- `CAAISysCollection.cpp`
-- `CAAISysColorProperties.cpp`
+### GetMarkerType
+
+```cpp
+virtual HRESULT GetMarkerType(CAAISysCircleCenterProperties::MarkerType & oMarkerType) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oMarkerType | `CAAISysCircleCenterProperties::MarkerType &` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### SetMarkerType
+
+```cpp
+virtual HRESULT SetMarkerType(const CAAISysCircleCenterProperties::MarkerType iMarkerType) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iMarkerType | `const CAAISysCircleCenterProperties::MarkerType` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
 
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAASystem.edu/PublicInterfaces/CAAISysCircleCenterProperties.h`

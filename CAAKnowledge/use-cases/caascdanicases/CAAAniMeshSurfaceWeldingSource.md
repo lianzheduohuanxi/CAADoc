@@ -1,17 +1,14 @@
 ---
-```vbscript
 title: "CAAAniMeshSurfaceWelding.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CATIA", "CAAAniMeshSurfaceWelding", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSurfaceWeldingSource.htmmd"
+tags: "["CATIA", "CAAAniMeshSurfaceWelding", "CAAScdAniUseCases"]"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSurfaceWeldingSource.htm"
 converted: "2026-05-11T17:31:51.708641"
-```
-
 ---
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGHT DASSAULT SYSTEMES 2000
     ' ***********************************************************************
     '   Purpose:      Open an analysis document
@@ -31,7 +28,7 @@ converted: "2026-05-11T17:31:51.708641"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -43,7 +40,7 @@ converted: "2026-05-11T17:31:51.708641"
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
-```vbscript
+```cpp
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -71,10 +68,10 @@ converted: "2026-05-11T17:31:51.708641"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
 ' -----------------------------------------------------------
     ' Open the CATAnalysis Document
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online/CAAScdAniUseCases/samples/WeldConnections.CATAnalysis")
 ```
 ```
@@ -85,7 +82,7 @@ converted: "2026-05-11T17:31:51.708641"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ```
@@ -94,7 +91,7 @@ converted: "2026-05-11T17:31:51.708641"
 ```
 
 ```vbscript
-```vbscript
+```cpp
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```vbscript
 ```

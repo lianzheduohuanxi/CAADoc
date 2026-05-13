@@ -209,7 +209,7 @@ by the import tool.
 
 *Copyright  2001, Dassault Systmes. All rights reserved.*
 
-```vbscript
+```cpp
 #include &quot;CATBaseUnknown.h&quot;
 class CATUnicodeString;
 
@@ -231,7 +231,7 @@ class CAAEDkoUserExitOrderVersioning : public CATBaseUnknown
 };
 ```
 
-```vbscript
+```cpp
 // Local Framework 
 #include &quot;CAAEDkoUserExitOrderVersioning.h&quot;
 
@@ -264,7 +264,7 @@ HRESULT CAAEDkoUserExitOrderVersioning::IsBeforeThan(
 }
 ```
 
-```vbscript
+```cpp
 // System framework
 #include &quot;CATBaseUnknown.h&quot;
 class CATUnicodeString;
@@ -294,7 +294,7 @@ class CAAEDkoUserExitVersionToUpdate : public CATBaseUnknown
 };
 ```
 
-```vbscript
+```cpp
 // Local Framework 
 #include &quot;CAAEDkoUserExitVersionToUpdate.h&quot;
 
@@ -318,7 +318,7 @@ CAAEDkoUserExitVersionToUpdate::~CAAEDkoUserExitVersionToUpdate(#) {}
 ...
 ```
 
-```vbscript
+```cpp
 ...
 HRESULT CAAEDkoUserExitVersionToUpdate::RightToUpdate(const CATIAVPMObjectVersion * iObjectVersion)
 {
@@ -368,7 +368,7 @@ HRESULT CAAEDkoUserExitVersionToUpdate::RightToUpdate(const CATIAVPMObjectVersio
 ...
 ```
 
-```vbscript
+```cpp
 ...
 HRESULT CAAEDkoUserExitVersionToUpdate::GenerateTheNextV_Version(
                         const CATUnicodeString iCurrentV_Version,

@@ -1,29 +1,15 @@
 ---
 title: "CAAViolationTubeAttributes"
-type: "interface"
+type: "LocalClass"
 module: "CAAPlantShipInterfaces"
-category: api-reference
 base: "CATPspCheckViolation"
-inheritance_chain: "CAAViolationTubeAttributes → CATPspCheckViolation"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 2
+source_file: "CAAPlantShipInterfaces.edu/CAAPspDesignValidation.m/LocalInterfaces/CAAViolationTubeAttributes.h"
 ---
+
 # CAAViolationTubeAttributes
 
-**基类**: CATPspCheckViolation  
-**继承链**: CAAViolationTubeAttributes → CATPspCheckViolation  
-**模块**: CAAPlantShipInterfaces  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
-
-> System
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATPspCheckViolation | **模块**: CAAPlantShipInterfaces | **方法数**: 2
 
 ## 依赖
 
@@ -31,20 +17,34 @@ verified: true
 - `CATUnicodeString.h`
 - `CATListOfCATUnicodeString.h`
 
+## 公共方法
+
+### SetInfo
+
+```cpp
+void SetInfo(CATUnicodeString &iuPressure, CATUnicodeString &iuNominalSize, CATUnicodeString &iuMaterial, CATUnicodeString &iuAuthorizedValues) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| &iuPressure | `CATUnicodeString` |
+| &iuNominalSize | `CATUnicodeString` |
+| &iuMaterial | `CATUnicodeString` |
+| &iuAuthorizedValues | `CATUnicodeString` |
+
+
+### GetCheckViolationData
+
+```cpp
+HRESULT GetCheckViolationData(int& oRow, CATListValCATUnicodeString** oLValues) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oRow | `int&` |
+| oLValues | `CATListValCATUnicodeString**` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATPspCheckViolation**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAPlantShipInterfaces.edu/CAAPspDesignValidation.m/LocalInterfaces/CAAViolationTubeAttributes.h`

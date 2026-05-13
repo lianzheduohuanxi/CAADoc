@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "ENOVDDManager Framework Modifications in V5R14"
 category: "use-case"
 module: "CAACenAPIChangesR14"
-version: "V5R14"
-tags: []
-source_file: "Doc/online/CAACenAPIChangesR14/ENOVDDManager.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAACenAPIChangesR14/ENOVDDManager.htm"
 converted: "2026-05-11T17:33:50.903886"
-```
-
 ---
 tags: []
 source_file: "Doc/online/CAACenAPIChangesR14/ENOVDDManager.htmmd"

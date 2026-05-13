@@ -1,48 +1,38 @@
 ---
 title: "CAAAfrDumpCmd"
-type: "interface"
+type: "LocalClass"
 module: "CAAApplicationFrame"
-category: api-reference
+base: "CATCommand"
 method_count: 1
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAApplicationFrame.edu/CAAAfrGeoCommands.m/LocalInterfaces/CAAAfrDumpCmd.h"
 ---
+
 # CAAAfrDumpCmd
 
-**模块**: CAAApplicationFrame  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 1
+> Command which launches a dialog box which displays the composition of the current document, that is to say the number of objects of each types (points, lines, circles...) This command takes the focus in shared mode. Illustrates: creating a simple command derived from CATCommand creating a dialog box Subscribing to send/receive events Inheritance: CATCommand  (System Framework) CATBaseUnknown (System Framework) Main Method: Activate Creates the dialog box Subscribes to the dialog box events Calls a method to display the model contents DumpContainer Scans the container Displays its contents.
+
+**基类**: CATCommand | **模块**: CAAApplicationFrame | **方法数**: 1
 
 ## 依赖
 
+- `CATCommand.h`
+
+## 虚方法
+
+### Activate
+
+```cpp
+virtual CATStatusChangeRC Activate(CATCommand *iFromClient, CATNotification *iNotification) ;
+```
+
+Activate --------- Creates a CATDlgNotify to display the model's contain. This dialog box is created modal , so the end user cannot do anything before to close it. When it is done, the dump command is killed and the dialog box too. If the dialog box were not modal, you should override : - the Cancel method: to do the same thing that the CloseBox Method - the Desactivate method to hide the dialog box
+
+| 参数 | 类型 |
+|------|------|
+| *iFromClient | `CATCommand` |
+| *iNotification | `CATNotification` |
+
+
 ---
 
-## Interface Overview
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-- [3D PLM Enterprise Architecture](../../use-cases/caaafrcases/CAAAfrSampleCustomCommandHeader.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAApplicationFrame.edu/CAAAfrGeoCommands.m/LocalInterfaces/CAAAfrDumpCmd.h`

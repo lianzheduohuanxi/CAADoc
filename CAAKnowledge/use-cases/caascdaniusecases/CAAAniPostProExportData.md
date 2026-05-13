@@ -91,7 +91,7 @@ data in txt and xls format.
 &#39; ----------------------------------------------------------- 
 &#39; Optional: allows to find the sample wherever it&#39;s installed
 
-```vbscript
+```cpp
   sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
   sOut = CATIA.SystemService.Environ(&quot;CATTemp&quot;)
 
@@ -101,7 +101,7 @@ data in txt and xls format.
 ```
 &#39; ----------------------------------------------------------- 
 ' Open the Analysis document 
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online/CAAScdAniUseCases/samples/Cube_R13_Freq.CATAnalysis&quot;)
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```
@@ -117,7 +117,7 @@ Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ```vbscript
 ' Retrieve the folder stored in sOut
-```vbscript
+```cpp
 Set fileSystem1 = CATIA.FileSystem
 Set folder1 = fileSystem1.GetFolder(sOut)
 ```
@@ -162,7 +162,7 @@ Set oAnalysisImage = oAnalysisImages.Add("Material_Fringe", False, False, True)
 
 ```vbscript
 ' Retrieve the folder stored in sOut
-```vbscript
+```cpp
 Set fileSystem1 = CATIA.FileSystem
 Set folder1 = fileSystem1.GetFolder(sout)
 ```

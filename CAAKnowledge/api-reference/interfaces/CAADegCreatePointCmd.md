@@ -1,54 +1,67 @@
 ---
 title: "CAADegCreatePointCmd"
-type: "interface"
+type: "LocalClass"
 module: "CAADialogEngine"
-category: api-reference
-method_count: 1
-visibility: "local"
-has_tie_binding: false
-verified: true
+base: "CATStateCommand"
+method_count: 4
+source_file: "CAADialogEngine.edu/CAADegGeoCommands.m/LocalInterfaces/CAADegCreatePointCmd.h"
 ---
+
 # CAADegCreatePointCmd
 
-**模块**: CAADialogEngine  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 1
-
-> DialogEngine Framework
+**基类**: CATStateCommand | **模块**: CAADialogEngine | **方法数**: 4
 
 ## 依赖
 
+- `CATStateCommand.h`
 - `CATMathPoint.h`
 
+## 虚方法
+
+### BuildGraph
+
+```cpp
+virtual void BuildGraph() ;
+```
+
+BuildGraph ----------- Implements the statechart. It is called once, even if the command is in repeat mode 1- Creates the Indication Agent 2- Creates the dialog box to input xyz 3- Creates the State associated with the dialog box and containing the Indication Agent 4- Defines the transition triggered by the Indication Agent 5- Completes the Apply transition 6- Completes the Ok transition
+
+
+## 公共方法
+
+### CheckPoint
+
+```cpp
+CATBoolean CheckPoint(void * iBidon) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iBidon | `void *` |
+
+
+### CreatePointByIndication
+
+```cpp
+CATBoolean CreatePointByIndication(void * iDummy) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iDummy | `void *` |
+
+
+### CreatePointByBox
+
+```cpp
+CATBoolean CreatePointByBox(void * iDummy) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iDummy | `void *` |
+
+
 ---
 
-## Interface Overview
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-- [3D PLM Enterprise Architecture](../../use-cases/caaafrcases/CAAAfrSampleStdCommandHeader.md)
-- [CAADegSampleDialogWithAgent](../../use-cases/caadegcases/CAADegSampleDialogWithAgent.md)
-- [CAADegSampleDialogWithPanelState](../../use-cases/caadegcases/CAADegSampleDialogWithPanelState.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAADialogEngine.edu/CAADegGeoCommands.m/LocalInterfaces/CAADegCreatePointCmd.h`

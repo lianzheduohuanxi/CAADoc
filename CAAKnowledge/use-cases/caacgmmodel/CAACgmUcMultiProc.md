@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "How to Use MProc to Tessellate a Multi-Body Model"
 category: "use case"
 module: "CAACgmModel"
-tags: ["CAAGMModelInterfaces", "CAAGMModelTesMProcImpl", "CAAGMModelTesMProcMain"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcMultiProc.htmmd"
+tags: "["CAAGMModelInterfaces", "CAAGMModelTesMProcImpl", "CAAGMModelTesMProcMain"]"
+source_file: "Doc/online/CAACgmModel/CAACgmUcMultiProc.htm"
 converted: "2026-05-11T17:33:48.480630"
-```
-
 ---
 tags: ["CAAGMModelInterfaces", "CAAGMModelTesMProcImpl", "CAAGMModelTesMProcMain"]
 source_file: "Doc/online/CAACgmModel/CAACgmUcMultiProc.htmmd"

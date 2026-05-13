@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "MechanicalCommands Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR11"
-version: "V5R11"
-tags: ["CATICCPable", "CATInteractiveInterfaces"]
-source_file: "Doc/online/CAACenAPIChangesR11/MechanicalCommands.htmmd"
+tags: "["CATICCPable", "CATInteractiveInterfaces"]"
+source_file: "Doc/online/CAACenAPIChangesR11/MechanicalCommands.htm"
 converted: "2026-05-11T17:33:50.434681"
-```
-
 ---
 | CAA C++ API Modifications|  MechanicalCommands  |
 ---|---|---

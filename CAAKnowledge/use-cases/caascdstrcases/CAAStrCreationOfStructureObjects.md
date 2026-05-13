@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Structure Objects"
 category: "use-case"
 module: "CAAScdStrUseCases"
-tags: ["CAAStrCreationOfStructureObjects", "CATIA", "CAAScdStrUseCases"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfStructureObjects.htmmd"
+tags: "["CAAStrCreationOfStructureObjects", "CATIA", "CAAScdStrUseCases"]"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfStructureObjects.htm"
 converted: "2026-05-11T17:31:50.885094"
-```
-
 ---
 |
 ## Structure Design
@@ -27,7 +24,6 @@ converted: "2026-05-11T17:31:50.885094"
 
   CAAStrCreationOfStructureObjects includes five steps:
 
-CAAStrCreationOfStructureObjects includes five steps:
   1. Prolog
   2. Creating ends of members
   3. Creating members
@@ -50,7 +46,7 @@ CAAStrCreationOfStructureObjects includes five steps:
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
         Dim strFactory As StrObjectFactory
 
         Set doc = CATIA.ActiveDocument
@@ -164,7 +160,7 @@ We have to define all the ends we need to define the members. All  these ends a
 We have to define all the ends we need to define the members. All  these ends are on grid geometry.
         dim sectionName as string
 ```vbscript
-```vbscript
+```cpp
         sectionName = InputBox("Section path","Parameters", ".../HEA120.CATPart")
         ' column 1
 

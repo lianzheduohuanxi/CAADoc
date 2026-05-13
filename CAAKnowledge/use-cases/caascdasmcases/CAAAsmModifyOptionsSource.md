@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAAAsmModifyOptions.catvbs"
 category: "use-case"
 module: "CAAScdAsmUseCases"
-tags: ["CATIA", "CAAAsmModifyOptions"]
-source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmModifyOptionsSource.htmmd"
+tags: "["CATIA", "CAAAsmModifyOptions"]"
+source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmModifyOptionsSource.htm"
 converted: "2026-05-11T17:31:50.861645"
-```
-
 ---
 tags: ["CATIA", "CAAAsmModifyOptions"]
 source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmModifyOptionsSource.htmmd"
@@ -20,7 +17,7 @@ converted: "2026-05-11T17:31:50.861645"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' ***********************************************************************
     '   Purpose:      Gets and modifies Assembly Design options
     '   Assumtions:
@@ -36,7 +33,7 @@ converted: "2026-05-11T17:31:50.861645"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Sub CATMain(#)
 
 ```
@@ -56,7 +53,7 @@ converted: "2026-05-11T17:31:50.861645"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Set settingControllers1 = CATIA.SettingControllers
 ```
 ```
@@ -68,7 +65,7 @@ converted: "2026-05-11T17:31:50.861645"
     ' Assembly / General options
     ' ------------------------------
 
-```vbscript
+```cpp
     Set asmGeneralSetting = settingControllers1.Item("CATAsmGeneralSettingCtrl")
     ' ------------------------------
 ```
@@ -173,7 +170,7 @@ converted: "2026-05-11T17:31:50.861645"
 ```
 
 ```vbscript
-```vbscript
+```cpp
     Set asmConstraintSetting = settingControllers1.Item("CATAsmConstraintSettingCtrl")
 ```
 ```

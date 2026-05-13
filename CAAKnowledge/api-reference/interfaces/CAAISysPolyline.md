@@ -1,63 +1,79 @@
 ---
 title: "CAAISysPolyline"
-type: "interface"
+type: "PublicInterface"
 module: "CAASystem"
-category: api-reference
+base: "CATBaseUnknown"
 method_count: 4
-visibility: "public"
-has_tie_binding: true
-verified: true
+source_file: "CAASystem.edu/PublicInterfaces/CAAISysPolyline.h"
 ---
-> **TIE实现**: unknown
 
 # CAAISysPolyline
 
-**模块**: CAASystem  
-**分类**: framework  
-**可见性**: public  
-**方法数**: 4
+> Interface which characterizes a Polyline object. Inheritance: CATBaseUnknown (System Framework) Main Method: GetListPoint/SetListPoint GetCloseStatus/SetCloseStatus System Framework
 
-> Mathematics Framework
+**基类**: CATBaseUnknown | **模块**: CAASystem | **方法数**: 4
 
 ## 依赖
 
+- `CATBaseUnknown.h`
 - `CAASysGeoModelInf.h`
 
-## TIE实现
+## 纯虚方法 (接口契约)
 
-**实现文件**:
-- `CAAISysAccess.cpp`
-- `CAAISysCircle.cpp`
-- `CAAISysCircleCenterProperties.cpp`
-- `CAAISysCollection.cpp`
-- `CAAISysColorProperties.cpp`
+### SetListPoint
+
+```cpp
+virtual HRESULT SetListPoint(const int iPointCount, CATMathPoint * iList) = 0 ;
+```
+
+iList contains at least 3 points else error. This list is duplicated in the polyline data.
+
+| 参数 | 类型 |
+|------|------|
+| iPointCount | `const int` |
+| iList | `CATMathPoint *` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetListPoint
+
+```cpp
+virtual HRESULT GetListPoint(int * oPointCount, CATMathPoint ** oList) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oPointCount | `int *` |
+| oList | `CATMathPoint **` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### SetCloseStatus
+
+```cpp
+virtual HRESULT SetCloseStatus(const int iIsClosed) = 0 ;
+```
+
+1 - Closed : It's a polygone 0 - Open   : It's a polyline
+
+| 参数 | 类型 |
+|------|------|
+| iIsClosed | `const int` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
+
+### GetCloseStatus
+
+```cpp
+virtual HRESULT GetCloseStatus(int * oIsClosed) = 0 ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oIsClosed | `int *` |
+
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
 
 ---
 
-## Interface Overview
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-- [CAADegSampleCommandUndoRedo](../../use-cases/caadegcases/CAADegSampleCommandUndoRedo.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAASystem.edu/PublicInterfaces/CAAISysPolyline.h`

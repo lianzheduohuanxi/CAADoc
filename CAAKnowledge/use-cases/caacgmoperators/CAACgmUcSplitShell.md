@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Splitting a Wire"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsSplitShell", "CATICGMHybSplit"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcSplitShell.htmmd"
+tags: "["CAAGMOperatorsInterfaces", "CAAGMOperatorsSplitShell", "CATICGMHybSplit"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcSplitShell.htm"
 converted: "2026-05-11T17:33:49.047706"
-```
-
 ---
 tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsSplitShell", "CATICGMHybSplit"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcSplitShell.htmmd"
@@ -29,7 +26,6 @@ Abstract A shell can be split by another shell or a wire.
 ---
 Operator to be Used To split a shell, use the CATICGMHybSplit operator in GMOperatorsInterfaces. This operator is created by the CATCGMCreateTopSplitShell global function in which the last argument (CATHybSelectionMode) defines the partitions to be kept.  Use Case Description The CAAGMOperatorsSplitShell.m module in CAAGMOperatorsInterfaces.edu framework illustrates how split a shell. This use case is to be run with the splitShellInputs.NCGM input file which is delivered in CAAGMOperatorsInterfaces.edu/FunctionTests/InputData.  If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md). Case 1: Split a Shell by a Shell  The CATHybSelectionMode identifies which partitions of the split body are kept. For a shell cut by a shell:
 
-Operator to be Used To split a shell, use the CATICGMHybSplit operator in GMOperatorsInterfaces. This operator is created by the CATCGMCreateTopSplitShell global function in which the last argument (CATHybSelectionMode) defines the partitions to be kept.  Use Case Description The CAAGMOperatorsSplitShell.m module in CAAGMOperatorsInterfaces.edu framework illustrates how split a shell. This use case is to be run with the splitShellInputs.NCGM input file which is delivered in CAAGMOperatorsInterfaces.edu/FunctionTests/InputData.  If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md). Case 1: Split a Shell by a Shell  The CATHybSelectionMode identifies which partitions of the split body are kept. For a shell cut by a shell:
 POSITIVE_POSITIVE_SIDE or POSITIVE_NEGATIVE_SIDE
     The partitions to keep are pointed to by the orientation of the cutting shell.
 NEGATIVE_POSITIVE_SIDE or NEGATIVE_NEGATIVE_SIDE

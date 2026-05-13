@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Assigning Resources to a Dialog Box"
-category: tech-article
+category: "tech-article"
 module: "CAADlgTechArticles"
-tags: ["CATIconPath", "CAADegPointErrorBox", "CAADlgMoreButtonDlg", "CATIA"]
-source_file: "Doc/online/CAADlgTechArticles/CAADlgResources.htmmd"
+tags: "["CATIconPath", "CAADegPointErrorBox", "CAADlgMoreButtonDlg", "CATIA"]"
+source_file: "Doc/online/CAADlgTechArticles/CAADlgResources.htm"
 converted: "2026-05-11T17:17:56.085439"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -41,7 +38,6 @@ When you develop a client application, you need to deal with menus, dialog boxes
 
 Even if your don't know if your client application will be used abroad and by people of a different culture and speaking a language different from yours, it is always easier, safer, and cheaper to design and code it as if it should be. Internationalizing a client application means that no assumptions are made about the language, and more generally the locale, used to run your application when you design and code it. When such an application is presented in front of end users from different countries, the same look and feel, and the same functions, are expected whatever the language and locale used. The localized versions of the application should then behave as the version in the original language.
 
-Even if your don't know if your client application will be used abroad and by people of a different culture and speaking a language different from yours, it is always easier, safer, and cheaper to design and code it as if it should be. Internationalizing a client application means that no assumptions are made about the language, and more generally the locale, used to run your application when you design and code it. When such an application is presented in front of end users from different countries, the same look and feel, and the same functions, are expected whatever the language and locale used. The localized versions of the application should then behave as the version in the original language.
 Internationalizing an application is also called National Language enabling. This means that the application should be designed and coded in such a way that it could be afterwards localized. Localizing means translating the user interface into the target languages, and possibly do some additional customization. The key point is that localization never requires to recompile any part of the application. To enable for that, any character string displayed in front of the end user must be located in a external text file.
 
 CAA V5 is natively National Language enabled, that is includes all the necessary stuff for internationalization, and provides you with any tools and mechanisms to facilitate you internationalizing job.
@@ -148,7 +144,6 @@ This mechanism overrides the `SetTitle` method, and other methods such as `SetHe
 
 Character string are read from files when the application is executed to value help and short help messages, accelerators and mnemonics, and miscellaneous other texts used for window titles, labels, or displayed with the different controls.
 
-Character string are read from files when the application is executed to value help and short help messages, accelerators and mnemonics, and miscellaneous other texts used for window titles, labels, or displayed with the different controls.
 This allows for internationalization purposes, that is storing the character strings to display in a file separated from the application source code, and for localization purposes, that is translating these character strings to a given language without needing to rebuild the application. The Dialog framework relies on the objects and mechanisms provided by the Internationalization framework for character strings and for storing and retrieving them from external files.
 
 Common character strings external resources exist for all the Dialog framework objects. They are declared by the abstract class `CATDialog` and the other classes inherit these resources from this class. Some classes can have specific resources. They are described in the class reference information.
@@ -173,7 +168,7 @@ There is one resource file per class. The file name is the class name. The file 
 There is one resource file per class. The file name is the class name. The file contains character strings identified by keys according to the message catalog internationalization standards from the System framework. The keys for an object are built with the name assigned in the object constructor as second argument, possibly concatenated to its parent object, that is the object whose pointer is declared as first argument in the same constructor, except if this parent is the instance of the class itself. Assume you have a window containing a frame which contains a push button. The window `Build` method includes:
     _pFrame = new CATDlgFrame(this, "NiceFrame");
 ```vbscript
-```vbscript
+```cpp
     _pPB = new CATDlgPushButton(_Frame, "NicePushButton");
 
 ```
@@ -186,7 +181,6 @@ There is one resource file per class. The file name is the class name. The file 
 
 The frame is constructed with the window as parent, since `this` is used as first argument in its constructor. The push buttons has the frame as parent. The resource file to declare the titles for these objects and for the window could be:
 
-The frame is constructed with the window as parent, since `this` is used as first argument in its constructor. The push buttons has the frame as parent. The resource file to declare the titles for these objects and for the window could be:
     Title = "The Title of the window";
     NiceFrame.Title = "The frame title";
     NiceFrame.NicePushButton.Title = "Push Me";
@@ -218,7 +212,7 @@ where:
   * `MyWindow` is the class name of your class. The external resource files name are also prefixed by `MyWindow`. They are `MyWindow.CATNls` for text resources, and `MyWindow.CATRsc` for other resources, such as icons.
   * `CATDlgDocument` is the base class for `MyWindow`, that is the class from which `MyWindow` derives. If this base class has also an external resource file declared, this file is concatenated to the `ThisClass` file.
 
-```vbscript
+```cpp
 If the base class inherits from its own base class an external resource file, the `ThisClass` class also inherits from it, and so forth along the class inheritance tree.
 
 ```
@@ -256,7 +250,6 @@ Suppose now that the DerivedWindow.CATNls resource file itself redefines the Rar
 
 Character strings external resources are stored in message catalogs. The file which contains the message catalog is searched for in the directories declared in the `CATMsgCatalogPath `environment variable.
 
-Character strings external resources are stored in message catalogs. The file which contains the message catalog is searched for in the directories declared in the `CATMsgCatalogPath `environment variable.
 The occurrences of the same message catalog file translated in several languages should each be stored in the appropriate directory, such as French, German, Japanese, and so forth, in the `CATMsgCatalogPath` declared directories.
 
 Only the first file name occurrence is taken into account in this directory concatenation.
@@ -284,7 +277,7 @@ As for character strings, icons are declared in the resource files using a key a
 ### Internationalizing Text
 
 ```vbscript
-```vbscript
+```cpp
 For some Dialog objects, such as _CATDlgCombo, CATDlgSelectorList_ or _CATDlgMultiList_ , it is necessary to create NLS texts for their items. Have a look at this sample extracted from the Burger use case [2]
 
 ```
@@ -372,7 +365,7 @@ The "More" button becomes "Less". For the same _CATDlgPushButton_ class instance
 The "More" button becomes "Less". For the same _CATDlgPushButton_ class instance, the instance identifier cannot reference two NLS texts. In this case you can always use the `GetResourceValueFromKey` method as described above or use the _CATMsgCatalog_ class.
     CATDlgPushButton * pPushButtonMore = new CATDlgPushButton(pFrameLeftMore, "PushButtonMore");
     _MoreMsg = CATMsgCatalog::**BuildMessage**("CAADlgMoreButtonDlg","**ButtonMore** ",NULL,0,"More>>");
-```vbscript
+```cpp
     _LessMsg = CATMsgCatalog::**BuildMessage**("CAADlgMoreButtonDlg","**ButtonLess** ",NULL,0,"Less>>");
 ```
 
@@ -426,7 +419,7 @@ This _CATDlgNotify_ dialog box displays two wrong point indices. "Points 1 and 3
        CATUnicodeString Msg3(" are the same.");
        CATUnicodeString defaultMsg = Msg1 + param[0] + Msg2 + param[1] + Msg3;
 
-```vbscript
+```cpp
        Msg = **CATMsgCatalog::BuildMessage(** "CAADegPointErrorBox",
 
 ```
@@ -470,7 +463,6 @@ Each /p`i `will be replaced by the `i` value of the `param` array.
 
 Internationalizing your application implies to separate resources from the code to enable application localization, that is, for example, titles, prompts, and message translation. Translatable resources are stored in the CATNls-suffixed files, and non translatable resources, such as icon paths, are stored in CATRsc-suffixed files.
 
-Internationalizing your application implies to separate resources from the code to enable application localization, that is, for example, titles, prompts, and message translation. Translatable resources are stored in the CATNls-suffixed files, and non translatable resources, such as icon paths, are stored in CATRsc-suffixed files.
 The `DeclareResource` macro makes the link between your dialog main class and its resource files. Each dialog object or control has an identifier set as the constructor second parameter and used to retrieve the resources for this object using a key built thanks to this identifier.
 
 Resources can be inherited and concatenated to enable dialog subsets reuse.

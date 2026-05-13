@@ -24,13 +24,13 @@ Language="VBSCRIPT"
 '   CATIA Level:  V5R13
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 ' ----------------------------------------------------------- 
 ```
 ' Optional: allows to find the sample wherever it's installed
 
-```vbscript
+```cpp
   sDocPath=CATIA.SystemService.Environ("CATDocView")
   sSep=CATIA.SystemService.Environ("ADL_ODT_SLASH")
 
@@ -40,7 +40,7 @@ Sub CATMain(#)
 ```
 ' ----------------------------------------------------------- 
 ' Get the collection of documents in session
-```vbscript
+```cpp
     Set documents1 = CATIA.Documents
 
 ' Only one Analysis Document is required
@@ -51,11 +51,11 @@ Sub CATMain(#)
 
 ' if WB name already is "GPSCfg", not to use StartWorkbench
 ```
-```vbscript
+```cpp
     WBName = CATIA.GetWorkbenchId
     if (WBName <> "GPSCfg") Then
 ```
-```vbscript
+```cpp
 	CATIA.StartWorkbench("GPSCfg")
     End If
 ```
@@ -66,7 +66,7 @@ Sub CATMain(#)
 
 ' We call the Import on CATAnalysisImport which implements CATISamImportDefine
     
-```vbscript
+```cpp
     Set analysisManager1 = TheAnalysisDocument.Analysis
 
     Dim arrayOfVariantOfShort1(0)
@@ -77,7 +77,7 @@ Sub CATMain(#)
 
 ' _____________________________________________________________________________________
 ' Reframe All.
-```vbscript
+```cpp
   Set specsAndGeomWindow1 = CATIA.ActiveWindow
   Set viewer3D1 = specsAndGeomWindow1.ActiveViewer
   viewer3D1.Reframe 
@@ -85,7 +85,7 @@ Sub CATMain(#)
 
 ' _____________________________________________________________________________________
 ' Scan the analysis document:  Retrieve the Pointed documents to extract the reference for preprocessing
-```vbscript
+```cpp
     Set analysisLinkedDocuments1 = analysisManager1.LinkedDocuments
     CATIA.SystemService.Print analysisLinkedDocuments1.Name
 
@@ -98,7 +98,7 @@ Sub CATMain(#)
 
 ' _____________________________________________________________________________________
 ' Retrieve the CATPart Document and associated publications for preprocessing.
-```vbscript
+```cpp
    Set TheDoc = analysisLinkedDocuments1.Item(1)
    CATIA.SystemService.Print TheDoc.FullName
 
@@ -174,7 +174,7 @@ Sub CATMain(#)
 ' _____________________________________________________________________________________
 ' Define a global sensor measuring the maximum value of VonMises criterion.
 
-```vbscript
+```cpp
   Set dimension1 = analysisManager1.Parameters.CreateDimension("Maximum value of VonMises criterion", "PRESSURE", 0.000000)
   Set formula1 = analysisManager1.Relations.CreateFormula("Maximum value of VonMises criterion","",dimension1,"misesmax(`Finite Element Model.1/Static Case Solution.1` ) ")
   CATIA.SystemService.Print " Mises Max Computed " & dimension1.ValueAsString
@@ -185,7 +185,7 @@ Sub CATMain(#)
   viewer3D1.Reframe 
 
 '------------------------------- END   END   END   ----------------------------
-```vbscript
+```cpp
   CATIA.DisplayFileAlerts = False
 '  TheAnalysisDocument.Close
 ```
@@ -195,7 +195,7 @@ End Sub
 
 ```
 
-```vbscript
+```cpp
 Language=&quot;VBSCRIPT&quot;
 &#39; COPYRIGTH DASSAULT SYSTEMES 2000
 
@@ -213,13 +213,13 @@ Language=&quot;VBSCRIPT&quot;
 &#39;   CATIA Level:  V5R13
 &#39; ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 &#39; ----------------------------------------------------------- 
 ```
 &#39; Optional: allows to find the sample wherever it&#39;s installed
 
-```vbscript
+```cpp
   sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
   sSep=CATIA.SystemService.Environ(&quot;ADL_ODT_SLASH&quot;)
 
@@ -229,7 +229,7 @@ Sub CATMain(#)
 ```
 &#39; ----------------------------------------------------------- 
 &#39; Get the collection of documents in session
-```vbscript
+```cpp
     Set documents1 = CATIA.Documents
 
 &#39; Only one Analysis Document is required
@@ -240,11 +240,11 @@ Sub CATMain(#)
 
 &#39; if WB name already is &quot;GPSCfg&quot;, not to use StartWorkbench
 ```
-```vbscript
+```cpp
     WBName = CATIA.GetWorkbenchId
     if (WBName &lt;&gt; &quot;GPSCfg&quot;) Then
 ```
-```vbscript
+```cpp
 	CATIA.StartWorkbench(&quot;GPSCfg&quot;)
     End If
 ```
@@ -254,7 +254,7 @@ Sub CATMain(#)
 &#39; and link the analysis to a Part Document
 ```
 
-```vbscript
+```cpp
 &#39; We call the Import on CATAnalysisImport which implements CATISamImportDefine
     
 ```vbscript
@@ -263,18 +263,18 @@ Sub CATMain(#)
 ```
 
 ```vbscript
-```vbscript
+```cpp
 Dim arrayOfVariantOfShort1(0)
     analysisManager1.ImportDefineFile (sDocPath &amp; sSep  &amp; &quot;online&quot; &amp; sSep &amp; &quot;CAAScdAniUseCases&quot; &amp; sSep &amp; &quot;samples&quot; &amp; sSep  &amp; &quot;SimpleChrank.CATPart&quot;),
 ```
 ```
 
-```vbscript
+```cpp
 &quot;CATAnalysisImport&quot;, arrayOfVariantOfShort1
 
 &#39; _____________________________________________________________________________________
 &#39; Reframe All.
-```vbscript
+```cpp
   Set specsAndGeomWindow1 = CATIA.ActiveWindow
   Set viewer3D1 = specsAndGeomWindow1.ActiveViewer
   viewer3D1.Reframe 
@@ -282,7 +282,7 @@ Dim arrayOfVariantOfShort1(0)
 
 &#39; _____________________________________________________________________________________
 &#39; Scan the analysis document:  Retrieve the Pointed documents to extract the reference for preprocessing
-```vbscript
+```cpp
     Set analysisLinkedDocuments1 = analysisManager1.LinkedDocuments
     CATIA.SystemService.Print analysisLinkedDocuments1.Name
 
@@ -295,7 +295,7 @@ Dim arrayOfVariantOfShort1(0)
 
 &#39; _____________________________________________________________________________________
 &#39; Retrieve the CATPart Document and associated publications for preprocessing.
-```vbscript
+```cpp
    Set TheDoc = analysisLinkedDocuments1.Item(1)
    CATIA.SystemService.Print TheDoc.FullName
 
@@ -371,7 +371,7 @@ Dim arrayOfVariantOfShort1(0)
 &#39; _____________________________________________________________________________________
 &#39; Define a global sensor measuring the maximum value of VonMises criterion.
 
-```vbscript
+```cpp
   Set dimension1 = analysisManager1.Parameters.CreateDimension(&quot;Maximum value of VonMises criterion&quot;, &quot;PRESSURE&quot;, 0.000000)
   Set formula1 = analysisManager1.Relations.CreateFormula(&quot;Maximum value of VonMises criterion&quot;,&quot;&quot;,dimension1,&quot;misesmax(`Finite Element Model.1/Static Case Solution.1` ) &quot;)
   CATIA.SystemService.Print &quot; Mises Max Computed &quot; &amp; dimension1.ValueAsString
@@ -382,7 +382,7 @@ Dim arrayOfVariantOfShort1(0)
   viewer3D1.Reframe 
 
 &#39;------------------------------- END   END   END   ----------------------------
-```vbscript
+```cpp
   CATIA.DisplayFileAlerts = False
 &#39;  TheAnalysisDocument.Close
 ```

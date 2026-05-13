@@ -1,65 +1,49 @@
 ---
 title: "CAAPrtDialog"
-type: "interface"
+type: "LocalClass"
 module: "CAAPrint"
-category: api-reference
 base: "CATDlgDocument"
-inheritance_chain: "CAAPrtDialog → CATDlgDocument"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 3
+source_file: "CAAPrint.edu/CAAPrtApplication.m/LocalInterfaces/CAAPrtDialog.h"
 ---
+
 # CAAPrtDialog
 
-**基类**: CATDlgDocument  
-**继承链**: CAAPrtDialog → CATDlgDocument  
-**模块**: CAAPrint  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> Main window class. The window is composed of a menu bar and a 2D viewer. The menu bar contains only two menus: File with the items: Open... Print... Capture... Album... Printer Manager... Exit Printable objects with the items: Display a test image Print a test image Print a label The class creates the viewer and the menu bar in an Init method and subscribes to the menu items. File menu: The callbacks associated with the Print, Capture, Album, Printer Manager items only instantiate a dialog command provided by the Print framework. Only reading the image file is managed by the class itself, in the DisplayImage method. Printable objects mneu: Most of the code dealing with this menu is in another module: CAPrtPrintableObjects.m. Inheritance: CATDlgDocument (Dialog Framework) CATDlgWindow (Dialog Framework) CATDialog (Dialog Framework) CATCommand (System Framework) CATEventSubscriber (System Framework) CATBaseUnknown (System Framework) Main Method: Init: creates of the window contents DisplayImage: reads the input TIFF file and displays the image
 
-> Print Framework
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATDlgDocument | **模块**: CAAPrint | **方法数**: 3
 
 ## 依赖
 
 - `CATDlgDocument.h`
 
+## 公共方法
+
+### Clean
+
+```cpp
+void Clean() ;
+```
+
+
+### DisplayImage
+
+```cpp
+void DisplayImage(const char *iPath) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *iPath | `const char` |
+
+
+### Init
+
+```cpp
+void Init() ;
+```
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATDlgDocument**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-This interface is used in the following use cases:
-
-- [CAAPrtSampleOpenAndDisplay](../../use-cases/caaprtcases/CAAPrtSampleOpenAndDisplay.md)
-- [CAAPrtSamplePrint](../../use-cases/caaprtcases/CAAPrtSamplePrint.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAPrint.edu/CAAPrtApplication.m/LocalInterfaces/CAAPrtDialog.h`

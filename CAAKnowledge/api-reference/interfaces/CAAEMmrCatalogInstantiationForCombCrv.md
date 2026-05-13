@@ -1,50 +1,37 @@
 ---
 title: "CAAEMmrCatalogInstantiationForCombCrv"
-type: "interface"
+type: "LocalClass"
 module: "CAAMechanicalModeler"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAEMmrCatalogInstantiationForCombCrv → CATBaseUnknown"
 method_count: 1
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAMechanicalModeler.edu/CAAMmrCatalogCombCrv.m/LocalInterfaces/CAAEMmrCatalogInstantiationForCombCrv.h"
 ---
+
 # CAAEMmrCatalogInstantiationForCombCrv
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAEMmrCatalogInstantiationForCombCrv → CATBaseUnknown  
-**模块**: CAAMechanicalModeler  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 1
+**基类**: CATBaseUnknown | **模块**: CAAMechanicalModeler | **方法数**: 1
 
 ## 依赖
 
 - `CATBaseUnknown.h`
 
+## 虚方法
+
+### RunInstantiationCmd
+
+```cpp
+virtual HRESULT RunInstantiationCmd(const CATICatalogLink * ipCatalogLink, const CATICatalogBrowser * ipBrowser, int iInstantiateMode, int iRepeatMode, int & oNotDone) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| ipCatalogLink | `const CATICatalogLink *` |
+| ipBrowser | `const CATICatalogBrowser *` |
+| iInstantiateMode | `int` |
+| iRepeatMode | `int` |
+| oNotDone | `int &` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAMechanicalModeler.edu/CAAMmrCatalogCombCrv.m/LocalInterfaces/CAAEMmrCatalogInstantiationForCombCrv.h`

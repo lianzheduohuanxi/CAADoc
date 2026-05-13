@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Managing Internal Flow in a Schematic Reference Component"
 category: "use-case"
 module: "CAAScdSchUseCases"
-tags: ["CATIASchCompFlow", "CAADoc", "CAASchInternalFlow", "CATIASchComponent", "CAAScdSchUseCases", "CATIA", "CAASchAppBase", "CAASCHEDUApp", "CAASchPlatformModeler", "CATIASchAppConnector", "CAASCH_Detail02", "CAASchAppUtilities"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchInternalFlow.htmmd"
+tags: "["CATIASchCompFlow", "CAADoc", "CAASchInternalFlow", "CATIASchComponent", "CAAScdSchUseCases", "CATIA", "CAASchAppBase", "CAASCHEDUApp", "CAASchPlatformModeler", "CATIASchAppConnector", "CAASCH_Detail02", "CAASchAppUtilities"]"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchInternalFlow.htm"
 converted: "2026-05-11T17:31:51.390076"
-```
-
 ---
 ## Schematics Platform Modeler
 
@@ -18,7 +15,6 @@ converted: "2026-05-11T17:31:51.390076"
 
  This macro shows you how to manage internal flow objects aggregated under a Schematic reference component. This includes the following.
 
-This macro shows you how to manage internal flow objects aggregated under a Schematic reference component. This includes the following.
   1. Adding an internal flow object to the reference component.
   2. Querying for a list of existing internal flow objects.
   3. Removing an internal flow object from the reference component.
@@ -47,7 +43,6 @@ In order for the instance of a Schematic reference component to be capable of be
 [ CAASchInternalFlow.CATScript ](CAASchInternalFlowSource.md)is located in the CAAScdSchUseCases module. [Execute macro](macros/CAASchInternalFlow.CATScript) (Windows only).
  CAASchInternalFlow includes the following steps:
 
-CAASchInternalFlow includes the following steps:
   1. Prolog
   2. Add an internal flow object to the Schematic reference component
   3. Query for a list of existing internal flow objects of a Schematic reference component
@@ -71,7 +66,7 @@ The macro first loads CAASCH_Detail02.CATProduct. |     ...
     Dim sFilePath
 ```vbscript
 ```
-```vbscript
+```cpp
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
 ```
@@ -86,7 +81,7 @@ Dim sFilePath
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
@@ -171,7 +166,7 @@ The SchematicRoot interface provides the GetRefComponents method to find a list 
 ```vbscript
        If ( Not ( objLCompRefs Is Nothing ) ) Then
 
-```vbscript
+```cpp
           Set objCompRef = objLCompRefs.Item (1,"CATIASchComponent")
 ```
 ```
@@ -295,12 +290,12 @@ Dim objLFlow As SchListOfObjects
 ```
 
 ```vbscript
-```vbscript
+```cpp
              If ( intNbCntr > 0 ) Then Set objCntr1 = objLCntr.Item(1,"CATIASchAppConnector")
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
              If ( intNbCntr > 1 ) Then Set objCntr2 = objLCntr.Item(2,"CATIASchAppConnector")
              If ( intNbCntr > 2 ) Then Set objCntr3 = objLCntr.Item(3,"CATIASchAppConnector")
 

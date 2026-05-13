@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Understanding the Versioning of the Topological Operators"
 category: "use-case"
 module: "CAACgmOperators"
-tags: []
-source_file: "Doc/online/CAACgmOperators/CAACgmTaTopVersioning.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAACgmOperators/CAACgmTaTopVersioning.htm"
 converted: "2026-05-11T17:33:48.710152"
-```
-
 ---
 tags: []
 source_file: "Doc/online/CAACgmOperators/CAACgmTaTopVersioning.htmmd"
@@ -1140,7 +1137,7 @@ CATCGMJournalList* iJournal)
                                const CATMathVector* iCurvatures,
                                const long* iImposition)
 
-```vbscript
+```cpp
 Case of the Journal If you directly create a CATCGMJournalList, you must now give the software configuration that must be use. Deprecated Signature | New Signature
 
 ```

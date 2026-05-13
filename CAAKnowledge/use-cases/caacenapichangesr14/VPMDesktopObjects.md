@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "VPMDesktopObjects Framework Modifications in CXR14"
 category: "use-case"
 module: "CAACenAPIChangesR14"
-version: "V5R14"
-tags: ["CATIVpmFactoryObject_var"]
-source_file: "Doc/online/CAACenAPIChangesR14/VPMDesktopObjects.htmmd"
+tags: "["CATIVpmFactoryObject_var"]"
+source_file: "Doc/online/CAACenAPIChangesR14/VPMDesktopObjects.htm"
 converted: "2026-05-11T17:33:50.993057"
-```
-
 ---
 tags: ["CATIVpmFactoryObject_var"]
 source_file: "Doc/online/CAACenAPIChangesR14/VPMDesktopObjects.htmmd"

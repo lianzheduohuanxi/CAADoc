@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "CATSchPlatformInterfaces Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR12"
-version: "V5R12"
-tags: ["CATISchAppCompatible", "CATISchArrowDisplay", "CATISchCompatible", "CATISchCatalogComponent", "CATISchDisplay", "CATISchRoute", "CATISchCatalogRoute", "CATISchAppConnector", "CATISchAppComponent", "CATISchGRRZone", "CATISchGapDisplay", "CATISchAppRoute", "CATISchComponent", "CATISchSession"]
-source_file: "Doc/online/CAACenAPIChangesR12/CATSchPlatformInterfaces.htmmd"
+tags: "["CATISchAppCompatible", "CATISchArrowDisplay", "CATISchCompatible", "CATISchCatalogComponent", "CATISchDisplay", "CATISchRoute", "CATISchCatalogRoute", "CATISchAppConnector", "CATISchAppComponent", "CATISchGRRZone", "CATISchGapDisplay", "CATISchAppRoute", "CATISchComponent", "CATISchSession"]"
+source_file: "Doc/online/CAACenAPIChangesR12/CATSchPlatformInterfaces.htm"
 converted: "2026-05-11T17:33:50.537347"
-```
-
 ---
 tags: ["CATISchAppCompatible", "CATISchArrowDisplay", "CATISchCompatible", "CATISchCatalogComponent", "CATISchDisplay", "CATISchRoute", "CATISchCatalogRoute", "CATISchAppConnector", "CATISchAppComponent", "CATISchGRRZone", "CATISchGapDisplay", "CATISchAppRoute", "CATISchComponent", "CATISchSession"]
 source_file: "Doc/online/CAACenAPIChangesR12/CATSchPlatformInterfaces.htmmd"

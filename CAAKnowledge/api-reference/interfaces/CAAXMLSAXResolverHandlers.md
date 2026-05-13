@@ -1,53 +1,60 @@
 ---
 title: "CAAXMLSAXResolverHandlers"
-type: "interface"
+type: "LocalClass"
 module: "CAAXMLParser"
-category: api-reference
 base: "CATSAXHandlerBase"
-inheritance_chain: "CAAXMLSAXResolverHandlers → CATSAXHandlerBase"
 method_count: 3
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAXMLParser.edu/CAAXMLSAXResolver.m/LocalInterfaces/CAAXMLSAXResolverHandlers.h"
 ---
+
 # CAAXMLSAXResolverHandlers
 
-**基类**: CATSAXHandlerBase  
-**继承链**: CAAXMLSAXResolverHandlers → CATSAXHandlerBase  
-**模块**: CAAXMLParser  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 3
-
-> interfaces from which it is convenient to
+**基类**: CATSAXHandlerBase | **模块**: CAAXMLParser | **方法数**: 3
 
 ## 依赖
 
 - `CATUnicodeString.h`
 - `CATSAXHandlerBase.h`
 
+## 虚方法
+
+### ResolveEntity
+
+```cpp
+virtual HRESULT ResolveEntity(const CATUnicodeString & iPublicId, const CATUnicodeString & iSystemId, CATISAXInputSource_var& oInputSource) ;
+```
+
+Override the default implementation of the CATISAXErrorHandler methods we are interested in.
+
+| 参数 | 类型 |
+|------|------|
+| iPublicId | `const CATUnicodeString &` |
+| iSystemId | `const CATUnicodeString &` |
+| oInputSource | `CATISAXInputSource_var&` |
+
+
+### Error
+
+```cpp
+virtual HRESULT Error(CATSAXParseException* iException) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iException | `CATSAXParseException*` |
+
+
+### FatalError
+
+```cpp
+virtual HRESULT FatalError(CATSAXParseException* iException) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iException | `CATSAXParseException*` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATSAXHandlerBase**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-This interface is used in the following use cases:
-
-- [CAAXMLSAXResolver](../../use-cases/caaxmlcases/CAAXMLSAXResolver.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAXMLParser.edu/CAAXMLSAXResolver.m/LocalInterfaces/CAAXMLSAXResolverHandlers.h`

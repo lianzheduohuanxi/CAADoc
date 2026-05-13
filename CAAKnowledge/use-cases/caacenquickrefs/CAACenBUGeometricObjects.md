@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "GeometricObjects Changed Classes or Interfaces"
 category: "use-case"
 module: "CAACenQuickRefs"
-tags: []
-source_file: "Doc/online/CAACenQuickRefs/CAACenBUGeometricObjects.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAACenQuickRefs/CAACenBUGeometricObjects.htm"
 converted: "2026-05-11T17:33:46.290452"
-```
-
 ---
 tags: []
 source_file: "Doc/online/CAACenQuickRefs/CAACenBUGeometricObjects.htmmd"

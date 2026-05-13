@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Optimizations Automation Objects"
-category: tech-article
+category: "tech-article"
 module: "CAAScdKniTechArticles"
-tags: []
-source_file: "Doc/online/CAAScdKniTechArticles/CAAKniTocOptimizations.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAAScdKniTechArticles/CAAKniTocOptimizations.htm"
 converted: "2026-05-11T17:31:52.003484"
-```
-
 ---
 # Optimizations Automation Objects
 
@@ -36,7 +33,6 @@ converted: "2026-05-11T17:31:52.003484"
 
 The _Optimizations_ collection is aggregated by the _Relations_ collection. Each _Optimization_ object aims to minimize or maximize the value of an objective parameter by modifying the values other parameters, called _free parameters,_ with respect to constraints. A constraint is a relationship between parameters equivalent to one of the following expressions:
 
-The _Optimizations_ collection is aggregated by the _Relations_ collection. Each _Optimization_ object aims to minimize or maximize the value of an objective parameter by modifying the values other parameters, called _free parameters,_ with respect to constraints. A constraint is a relationship between parameters equivalent to one of the following expressions:
     foo(param1, param2, ...) < constantValue
 
     foo(param1, param2, ...) = constantValue

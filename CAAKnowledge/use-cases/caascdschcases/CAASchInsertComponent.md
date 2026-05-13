@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Inserting a Schematic Component into a Schematic Route"
 category: "use-case"
 module: "CAAScdSchUseCases"
-tags: ["CAASCH_Sample", "CAADoc", "CATIASchComponent", "CAAScdSchUseCases", "CAASCH_RouteForPlacement", "CATIA", "CAASchAppBase", "CAASchAppUtilities", "CAASCHEDUApp", "CAASchPlatformModeler", "CAASchInsertComponent"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchInsertComponent.htmmd"
+tags: "["CAASCH_Sample", "CAADoc", "CATIASchComponent", "CAAScdSchUseCases", "CAASCH_RouteForPlacement", "CATIA", "CAASchAppBase", "CAASchAppUtilities", "CAASCHEDUApp", "CAASchPlatformModeler", "CAASchInsertComponent"]"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchInsertComponent.htm"
 converted: "2026-05-11T17:31:51.373120"
-```
-
 ---
 ## Schematics Platform Modeler
 
@@ -37,7 +34,6 @@ converted: "2026-05-11T17:31:51.373120"
 [CAASchInsertComponent.CATScript i](CAASchInsertComponentSource.md)s located in the CAAScdSchUseCases module. [Execute macro](macros/CAASchInsertComponent.CATScript) (Windows only).
  CAASchInsertComponent includes the following steps:
 
-CAASchInsertComponent includes the following steps:
   1. Prolog
   2. Get the Schematic reference component from the catalog
   3. Insert an instance of the Schematic reference component - approach 1
@@ -65,7 +61,7 @@ The macro first loads two documents. CAASCH_Sample.catalog and CAASCH_RouteForPl
         Dim sCtlgFilePath
 ```vbscript
 ```
-```vbscript
+```cpp
         sCtlgFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
 ```
@@ -80,7 +76,7 @@ Dim sCtlgFilePath
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
 sCtlgFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
         Dim objSchCtlgDoc As Document
         Set objSchCtlgDoc = CATIA.Documents.Open(sCtlgFilePath)
@@ -93,7 +89,7 @@ sCtlgFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
 
 ```vbscript
-```vbscript
+```cpp
 Set objSchCtlgDoc = CATIA.Documents.Open(sCtlgFilePath)
 ```vbscript
 ```
@@ -107,7 +103,7 @@ Set objSchCtlgDoc = CATIA.Documents.Open(sCtlgFilePath)
         Dim sFilePath
 ```vbscript
 ```
-```vbscript
+```cpp
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
 ```
@@ -122,7 +118,7 @@ Dim sFilePath
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
         Dim objSchDoc As Document
         Set objSchDoc = CATIA.Documents.Open(sFilePath)
@@ -256,7 +252,7 @@ Through the GetInterface method, the macro obtains a handle on the SchComponent 
 ```
 
 ```vbscript
-```vbscript
+```cpp
            Set objSchCompCVRef = objSchRoot.GetInterface ("CATIASchComponent",objSchCntblCVRef)
 ```
 ```
@@ -337,7 +333,7 @@ The "insert" process includes the following.
                   objSchCompatRoute.IsTargetOKForInsert objCompRefPlaceInfo, _
                     objCompatInfo, bYesCompat
 
-```vbscript
+```cpp
                   Dim db2Pt(2) As CATSafeArrayVariant
 ```vbscript
 ```
@@ -383,7 +379,6 @@ If ( bYesCompat ) Then
     #### Insert an instance of the Schematic
          reference component - approach 2
 
-reference component - approach 2
     An client application which doesn't want to deal with the details of the
          compatibility checking should use approach 2. By calling the PlaceOnObject method, a Schematic component can be inserted into a route. All the
          compatibility methods are implicitly called in the implementation of the PlaceOnObject method and are kept transparent to the application. There are
@@ -392,7 +387,7 @@ reference component - approach 2
 
              ...
 ```vbscript
-```vbscript
+```cpp
                      Dim db6Matrix(6) As CATSafeArrayVariant
 ```vbscript
 ```

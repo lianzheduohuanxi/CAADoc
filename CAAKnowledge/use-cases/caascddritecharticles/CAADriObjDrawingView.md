@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "DrawingView Object"
-category: tech-article
+category: "tech-article"
 module: "CAAScdDriTechArticles"
-tags: ["CATIA"]
-source_file: "Doc/online/CAAScdDriTechArticles/CAADriObjDrawingView.htmmd"
+tags: "["CATIA"]"
+source_file: "Doc/online/CAAScdDriTechArticles/CAADriObjDrawingView.htm"
 converted: "2026-05-11T17:31:51.127693"
-```
-
 ---
 # DrawingView Object
 
@@ -88,7 +85,7 @@ Use x and y properties to set or retrieve the x and y coordinates of the view co
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
     Set myView = CATIA.Documents(2).ActiveSheet.ActiveView
     myView.x = 260
 ```

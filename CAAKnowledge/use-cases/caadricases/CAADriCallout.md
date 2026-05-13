@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Editing Callout in Generative Views"
-category: use-case case"
+category: "use-case case"
 module: "CAADriUseCases"
-tags: ["CATIDftDocumentServices", "CATIGenerSpec", "CATIDrwSimpleText", "CATIDrwAnnotationComponent", "CATIDftView", "CATIDftDrawing", "CATIDrwSubText_var", "CAADraftingInterfaces", "CATIA", "CATIDftText", "CAADrwCallout", "CATIUnknownList", "CATIDrwCalloutAccess"]
-source_file: "Doc/online/CAADriUseCases/CAADriCallout.htmmd"
+tags: "["CATIDftDocumentServices", "CATIGenerSpec", "CATIDrwSimpleText", "CATIDrwAnnotationComponent", "CATIDftView", "CATIDftDrawing", "CATIDrwSubText_var", "CAADraftingInterfaces", "CATIA", "CATIDftText", "CAADrwCallout", "CATIUnknownList", "CATIDrwCalloutAccess"]"
+source_file: "Doc/online/CAADriUseCases/CAADriCallout.htm"
 converted: "2026-05-11T17:31:50.931544"
-```
-
 ---
 # Mechanical Design
 
@@ -86,7 +83,6 @@ When you launch the use case, pass the full pathname of the Drawing file as argu
 
 The CAADrwCallout use case is made of a single source file named CAADrwCallout.cpp located in the CAADrwCallout.m module of the CAADraftingInterfaces.edu framework:
 
-The CAADrwCallout use case is made of a single source file named CAADrwCallout.cpp located in the CAADrwCallout.m module of the CAADraftingInterfaces.edu framework:
 Windows | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCallout.m/`
 
 The CAADrwCallout use case is made of a single source file named CAADrwCallout.cpp located in the CAADrwCallout.m module of the CAADraftingInterfaces.edu framework:
@@ -146,7 +142,7 @@ int rc =0;
     CATIDftDocumentServices *piDftDocServices = NULL;
     CATDocument* pDocDrawing = NULL;
 
-```vbscript
+```cpp
     if (FAILED(CATDocumentServices::OpenDocument(pfileNameDrawing, pDocDrawing)))
 
 ```
@@ -168,7 +164,7 @@ This section represents the usual sequence for loading a CATIA document [2].
     ...
     CATIDftDrawing *piDrawing = NULL;
     CATIDftDocumentServices *piDftDocServices = NULL;
-```vbscript
+```cpp
     if (SUCCEEDED(pDocDrawing->QueryInterface(IID_CATIDftDocumentServices,(void **)&piDftDocServices)))
 
 ```
@@ -178,7 +174,7 @@ CATIDftDrawing *piDrawing = NULL;
 CATIDftDocumentServices *piDftDocServices = NULL;
 if (SUCCEEDED(pDocDrawing->QueryInterface(IID_CATIDftDocumentServices,(void **)&piDftDocServices)))
 ```vbscript
-```vbscript
+```cpp
       if (SUCCEEDED(piDftDocServices->GetDrawing(IID_CATIDftDrawing, (void **)&piDrawing)))
 
 ```
@@ -188,7 +184,7 @@ if (SUCCEEDED(pDocDrawing->QueryInterface(IID_CATIDftDocumentServices,(void **)&
       {
 CATIDftDocumentServices *piDftDocServices = NULL;
 if (SUCCEEDED(pDocDrawing->QueryInterface(IID_CATIDftDocumentServices,(void **)&piDftDocServices)))
-```vbscript
+```cpp
 if (SUCCEEDED(piDftDocServices->GetDrawing(IID_CATIDftDrawing, (void **)&piDrawing)))
 ```
 
@@ -209,7 +205,6 @@ The root feature of a Drawing document is the Drawing itself, that is, the featu
     // LOOP ON ALL VIEWS IN DRAWING
     // ================================
     CATIUnknownList * piListOfView = NULL;
-CATIUnknownList * piListOfView = NULL;
 ```vbscript
     if (SUCCEEDED(piDrawing->GetViews(&piListOfView)))
 
@@ -253,7 +248,7 @@ if( SUCCEEDED( piListOfView->Item(numview, &itemView) ) )
 ```vbscript
 if( SUCCEEDED( piListOfView->Item(numview, &itemView) ) )
 ```vbscript
-```vbscript
+```cpp
 if (itemView)
             if (SUCCEEDED(itemView->QueryInterface(IID_CATIDftView,(void **)&piCurrentView)))
 ```
@@ -265,7 +260,7 @@ if (itemView)
             {
 ```vbscript
 if (itemView)
-```vbscript
+```cpp
 if (SUCCEEDED(itemView->QueryInterface(IID_CATIDftView,(void **)&piCurrentView)))
 ```
 
@@ -279,7 +274,7 @@ CATIUnknownList * piListOfCallout = NULL;
               if( SUCCEEDED( piCurrentView->GetComponents(IID_CATIDrwCalloutAccess, &piListOfCallout) ) )
 
               {
-```vbscript
+```cpp
 if( SUCCEEDED( piCurrentView->GetComponents(IID_CATIDrwCalloutAccess, &piListOfCallout) ) )
 ```vbscript
                 if (piListOfCallout)
@@ -288,7 +283,7 @@ if( SUCCEEDED( piCurrentView->GetComponents(IID_CATIDrwCalloutAccess, &piListOfC
 ```
 
                 {
-```vbscript
+```cpp
 if( SUCCEEDED( piCurrentView->GetComponents(IID_CATIDrwCalloutAccess, &piListOfCallout) ) )
 ```vbscript
 if (piListOfCallout)
@@ -320,7 +315,7 @@ for(unsigned int i=0 ; i<piListSize ; i++)
                     {
 ```vbscript
 for(unsigned int i=0 ; i<piListSize ; i++)
-```vbscript
+```cpp
 if( SUCCEEDED( piListOfCallout->Item(i, &item) ) )
                       if(SUCCEEDED( item->QueryInterface(IID_CATIDrwCalloutAccess, (void**) & piCallout) ) )
 ```
@@ -343,7 +338,6 @@ The GetViews method returns the list of all views in Drawing document. The GetCo
     // -------------------------------------------
     CATIDftView *piDefView=NULL;
 
-CATIDftView *piDefView=NULL;
 ```vbscript
     if (SUCCEEDED(piCallout->GetAssociatedView(&piDefView)))
 
@@ -374,10 +368,9 @@ GetAssociatedView method defined in CATIDrwCalloutAccess interface returns the V
       // Get callout type
       // -------------------
       CATIDrwCalloutAccess::CATDrwCalloutType calloutType;
-CATIDrwCalloutAccess::CATDrwCalloutType calloutType;
       piCallout->GetCalloutType(calloutType);
 
-```vbscript
+```cpp
       if (calloutType == CATIDrwCalloutAccess::SectionCallout)
 
 ```
@@ -407,7 +400,7 @@ if (SUCCEEDED(piGenerSpec->GetSectionProfile(ListOfPoints,depli,vecpro)))
 ```
 
           {
-```vbscript
+```cpp
 if (SUCCEEDED(piGenerSpec->GetSectionProfile(ListOfPoints,depli,vecpro)))
 int NbPt = ListOfPoints.Size(#);
 for (int numpt=1 ; numpt<=NbPt ; numpt++)
@@ -494,13 +487,13 @@ if (SUCCEEDED(rc))
           // Callout texts may be based on simple text instance until V5R13 CATIA level.
 CATIDrwSimpleText *piText=NULL;
 CATIDftText *piDftText = NULL;
-```vbscript
+```cpp
           if (SUCCEEDED(piAnnot->QueryInterface(IID_CATIDrwSimpleText,(void **)&piText)))
 
 ```
 
           {
-```vbscript
+```cpp
 if (SUCCEEDED(piAnnot->QueryInterface(IID_CATIDrwSimpleText,(void **)&piText)))
             CATIDrwSubText_var spSubText;
             spSubText = piText->GetSubText(1);
@@ -658,7 +651,7 @@ Note: Up to V5R13, associated texts to the Callout may be based on simple text i
       // Ends session and drops document
 rc = CATDocumentServices::**SaveAs**(*pDoc, (char *)fileName);
 ```vbscript
-```vbscript
+```cpp
 rc = CATDocumentServices::**Remove** (*pDoc);
       rc = ::**Delete_Session**("SampleSession");
 
@@ -682,7 +675,6 @@ This section represents the usual sequence for saving a newly created CATIA docu
 
 This use case shows the way to :
 
-This use case shows the way to :
   1. Open a Drawing document.
   2. Scan all Callout in the document
   3. Retrieve Associated View to the Callout.

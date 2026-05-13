@@ -199,11 +199,11 @@ Specifically, it has illustrated using:
 
 *Copyright  2001, Dassault Systmes. All rights reserved.*
 
-```vbscript
+```cpp
 ...
       'Create a new product document object by adding a document with the Product
       'type to the document collection of the CATIA application. 
-```vbscript
+```cpp
       Dim oProductDoc As Document
       Set oProductDoc = CATIA.Documents.Add(&quot;Product&quot;)
 
@@ -240,12 +240,12 @@ Specifically, it has illustrated using:
   ...
 ```
 
-```vbscript
+```cpp
 ...
       'Add a master shape representation to the hull using an existing part and
       'reframe the viewer.
       oHull.AddMasterShapeRepresentation sDocPath &amp; &quot;CAAPstHull.CATPart&quot;
-```vbscript
+```cpp
       CATIA.ActiveWindow.ActiveViewer.Reframe
   ...
 ```
@@ -264,7 +264,7 @@ Specifically, it has illustrated using:
   ...
 ```
 
-```vbscript
+```cpp
 ...
       'Add a master shape representation to the funnel using an existing part
       oFunnel1.AddMasterShapeRepresentation sDocPath &amp; &quot;CAAPstFunnel.CATPart&quot;

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "AdvancedTopologicalOpe Changed Classes or Interfaces"
 category: "use-case"
 module: "CAACenQuickRefs"
-tags: ["CATICGMThickenOp", "CATICGMTopologicalBlendCurve", "CATICGMTopSpine", "CATICGMTopBlend", "CATICGMTopMostContinuousGeoInWireOperator", "CATICGMTopSimilarCurve", "CATICGMTopCleanCrvOperator", "CATICGMTopShellOrientation", "CATICGMTopExtrapolWireOpe", "CATICGMTopologicalMatch", "CATICGMTopGeodesicPtPt", "CATICGMSkinExtrapolation", "CATICGMSketchGeodesic", "CATICGMTopologicalFill", "CATICGMGeometrySizeOptimization", "CATICGMFrFTopologicalSweep", "CATICGMSketchOperators", "CATICGMTopSweep"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenBUAdvancedTopologicalOpe.htmmd"
+tags: "["CATICGMThickenOp", "CATICGMTopologicalBlendCurve", "CATICGMTopSpine", "CATICGMTopBlend", "CATICGMTopMostContinuousGeoInWireOperator", "CATICGMTopSimilarCurve", "CATICGMTopCleanCrvOperator", "CATICGMTopShellOrientation", "CATICGMTopExtrapolWireOpe", "CATICGMTopologicalMatch", "CATICGMTopGeodesicPtPt", "CATICGMSkinExtrapolation", "CATICGMSketchGeodesic", "CATICGMTopologicalFill", "CATICGMGeometrySizeOptimization", "CATICGMFrFTopologicalSweep", "CATICGMSketchOperators", "CATICGMTopSweep"]"
+source_file: "Doc/online/CAACenQuickRefs/CAACenBUAdvancedTopologicalOpe.htm"
 converted: "2026-05-11T17:33:46.211376"
-```
-
 ---
 tags: ["CATICGMThickenOp", "CATICGMTopologicalBlendCurve", "CATICGMTopSpine", "CATICGMTopBlend", "CATICGMTopMostContinuousGeoInWireOperator", "CATICGMTopSimilarCurve", "CATICGMTopCleanCrvOperator", "CATICGMTopShellOrientation", "CATICGMTopExtrapolWireOpe", "CATICGMTopologicalMatch", "CATICGMTopGeodesicPtPt", "CATICGMSkinExtrapolation", "CATICGMSketchGeodesic", "CATICGMTopologicalFill", "CATICGMGeometrySizeOptimization", "CATICGMFrFTopologicalSweep", "CATICGMSketchOperators", "CATICGMTopSweep"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenBUAdvancedTopologicalOpe.htmmd"
@@ -295,8 +292,6 @@ CATCreateTopMostContinuousGeoInWireOperator | CATTopMostContinuousGeoInWireOpera
 CATTopData*iTopData,
 CATBody*iWireBody) |  Not supported any longer.
 GMOperatorsInterfaces | Global function | CATCGMCreateTopMostContinuousGeoInWireOperator
-GMOperatorsInterfaces | Global function | CATCGMCreateTopMostContinuousGeoInWireOperator
-GMOperatorsInterfaces | Global function | CATCGMCreateTopMostContinuousGeoInWireOperator
 CATCreateTopMostContinuousGeoInWireOperator | CATTopMostContinuousGeoInWireOperator* CATCreateTopMostContinuousGeoInWireOperator(CATGeoFactory*iFactory,
 CATTopData*iTopData,
 CATBody*iWireBody,
@@ -309,8 +304,6 @@ CATBody*iWireBody,
 CATBody*iShellBody1,
 CATBody*iShellBody2) |  Not supported any longer.
 GMOperatorsInterfaces | Global function | CATCGMCreateTopMostContinuousGeoInWireOperator
-GMOperatorsInterfaces | Global function | CATCGMCreateTopMostContinuousGeoInWireOperator
-GMOperatorsInterfaces | Global function | CATCGMCreateTopMostContinuousGeoInWireOperator
 CATCreateTopMostContinuousGeoInWireOperator | CATTopMostContinuousGeoInWireOperator* CATCreateTopMostContinuousGeoInWireOperator(CATGeoFactory*iFactory,
 CATTopData*iTopData,
 CATBody*iWireBody,
@@ -321,8 +314,6 @@ CATBody*iShellBody) |  Not supported any longer.
 CATTopData*iTopData,
 CATBody*iWireBody,
 CATBody*iShellBody) |  Not supported any longer.
-GMOperatorsInterfaces | Global function | CATCGMCreateTopMostContinuousGeoInWireOperator
-GMOperatorsInterfaces | Global function | CATCGMCreateTopMostContinuousGeoInWireOperator
 GMOperatorsInterfaces | Global function | CATCGMCreateTopMostContinuousGeoInWireOperator
 CATCreateTopologicalBlend | CATTopologicalBlend*CATCreateTopologicalBlend(CATGeoFactory*iFactory,
 CATTopData* iTopData,
@@ -372,7 +363,6 @@ CATTopData* iTopData,
 CATLONG32 iNumberOfWires,
 const CATBody**iArrayOfWires) |  Not supported any longer.
 GMOperatorsInterfaces | Global function | CATCGMCreateTopologicalFill
-GMOperatorsInterfaces | Global function | CATCGMCreateTopologicalFill
 CATCreateTopologicalFill | CATTopologicalFill* CATCreateTopologicalFill(CATGeoFactory*iFactory,
 CATTopData* iTopData,
 const ListPOfCATEdge*iListOfEdges,
@@ -385,7 +375,6 @@ const ListPOfCATEdge*iListOfEdges,
 const ListPOfCATFace*iListOfFaces,
 const CATBody*iBody) |  Not supported any longer.
 GMOperatorsInterfaces | Global function | CATCGMCreateTopologicalFill
-GMOperatorsInterfaces | Global function | CATCGMCreateTopologicalFill
 CATCreateTopologicalFill | CATTopologicalFill* CATCreateTopologicalFill(CATGeoFactory*iFactory,
 CATTopData* iTopData,
 CATLONG32 iNumberOfWires,
@@ -397,7 +386,6 @@ const CATBody**iArrayOfBodySupports) |  Not supported any longer.
 CATLONG32 iNumberOfWires,
 const CATBody**iArrayOfBodyWires,
 const CATBody**iArrayOfBodySupports) |  Not supported any longer.
-GMOperatorsInterfaces | Global function | CATCGMCreateTopologicalFill
 GMOperatorsInterfaces | Global function | CATCGMCreateTopologicalFill
 CATCreateTopologicalMatch | CATTopologicalMatch* CATCreateTopologicalMatch(CATGeoFactory* iFactory,
 CATTopData* iTopData,
@@ -491,7 +479,6 @@ CATLISTP_CATGeometry_* iGuides,
 CATLISTP_CATGeometry_* iProfiles,
 CATFrFTopologicalSweepType iSweepType =CATFrFTopologicalSweepType_Std) |  Not supported any longer.
 GMOperatorsInterfaces | Global function | CATCGMCreateFrFTopologicalSweep
-GMOperatorsInterfaces | Global function | CATCGMCreateFrFTopologicalSweep
 CATCreateFrFTopologicalSweep | CATFrFTopologicalSweep* CATCreateFrFTopologicalSweep(CATGeoFactory* iFactory,
 CATTopData* iTopData,
 CATBody* iGuide,
@@ -502,7 +489,6 @@ CATBody* iProfile) |  Not supported any longer.
 CATTopData* iTopData,
 CATBody* iGuide,
 CATBody* iProfile) |  Not supported any longer.
-GMOperatorsInterfaces | Global function | CATCGMCreateFrFTopologicalSweep
 GMOperatorsInterfaces | Global function | CATCGMCreateFrFTopologicalSweep
 CATCreateTopSweepWireSkinCircleVariable | CATTopSweepWireSkinCircle* CATCreateTopSweepWireSkinCircleVariable(CATGeoFactory* iFactory,
 CATTopData* iData,

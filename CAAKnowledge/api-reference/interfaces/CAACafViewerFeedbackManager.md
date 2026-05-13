@@ -1,56 +1,54 @@
 ---
 title: "CAACafViewerFeedbackManager"
-type: "interface"
+type: "LocalClass"
 module: "CAACATIAApplicationFrm"
-category: api-reference
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+base: "CATBaseUnknown"
+method_count: 3
+source_file: "CAACATIAApplicationFrm.edu/CAACafViewerFeedback.m/LocalInterfaces/CAACafViewerFeedbackManager.h"
 ---
+
 # CAACafViewerFeedbackManager
 
-**模块**: CAACATIAApplicationFrm  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> This class manages a visual feedback in the current viewer.
 
-> Visualization/VisualizationBase Frameworks
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATBaseUnknown | **模块**: CAACATIAApplicationFrm | **方法数**: 3
 
 ## 依赖
 
+- `CATBaseUnknown.h`
 - `CATEventSubscriber.h`
 
+## 静态方法
+
+### GetManager
+
+```cpp
+static void GetManager(CAACafViewerFeedbackManager ** opManager) ;
+```
+
+This class has only one instance during the session
+
+| 参数 | 类型 |
+|------|------|
+| opManager | `CAACafViewerFeedbackManager **` |
+
+
+## 公共方法
+
+### SetViewerFeedbackOn
+
+```cpp
+void SetViewerFeedbackOn() ;
+```
+
+
+### SetViewerFeedbackOff
+
+```cpp
+void SetViewerFeedbackOff() ;
+```
+
+
 ---
 
-## Interface Overview
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-- [3D PLM Enterprise Architecture](../../use-cases/caaafrcases/CAAAfrCheckHeader.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAACATIAApplicationFrm.edu/CAACafViewerFeedback.m/LocalInterfaces/CAACafViewerFeedbackManager.h`

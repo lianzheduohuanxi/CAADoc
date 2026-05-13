@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Workbench"
-category: use-case case"
+category: "use-case case"
 module: "CAAAfrUseCases"
-tags: ["CATIxxxConfiguration", "CAAAfrMSurfRevolStr", "CAACube", "CAAAfrGeoCreationMbr", "CAAAfrTSolidEltTorusStr", "CAAAfrCuboidHdr", "CAAAfrMSurfOffsetStr", "CAAGeometry", "CAAAfrTSolidEltCuboidStr", "CATIA", "CAAAfrCylinder2Hdr", "CAAAfrTSolidEltCylinder1Str", "CAAAfrMSolidSphereStr", "CAAAfrMSolidCuboidStr", "CAAAfrGeoCreationWkbFactory", "CAADegCreateCuboidCmd", "CAAAfrTorusHdr", "CAADegGeoCommands", "CAAAfrOffsetSurfHdr", "CAAAfrGeoCreationWkb"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleWorkbench.htmmd"
+tags: "["CATIxxxConfiguration", "CAAAfrMSurfRevolStr", "CAACube", "CAAAfrGeoCreationMbr", "CAAAfrTSolidEltTorusStr", "CAAAfrCuboidHdr", "CAAAfrMSurfOffsetStr", "CAAGeometry", "CAAAfrTSolidEltCuboidStr", "CATIA", "CAAAfrCylinder2Hdr", "CAAAfrTSolidEltCylinder1Str", "CAAAfrMSolidSphereStr", "CAAAfrMSolidCuboidStr", "CAAAfrGeoCreationWkbFactory", "CAADegCreateCuboidCmd", "CAAAfrTorusHdr", "CAADegGeoCommands", "CAAAfrOffsetSurfHdr", "CAAAfrGeoCreationWkb"]"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleWorkbench.htm"
 converted: "2026-05-11T17:17:55.841364"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -215,7 +212,6 @@ The Multi-Workspace Application Builder (mkmk) will generate the TIE for this in
 
 To create this class, create:
 
-To create this class, create:
   1. The header file, using the `CATDeclareConfigurationFactory` macro
   2. The source file, using the `CATImplementConfigurationFactory` macro
   3. Update the interface dictionary and the factory dictionary.
@@ -230,7 +226,7 @@ To create this class, create:
 
 ---
 
-```vbscript
+```cpp
 CATDeclareConfigurationFactory(CAAAfrGeoCreationWkb);
 The `CATDeclareConfigurationFactory` macro argument is the name of the workbench description class.
   2. Create the CAAAfrGeoCreationWkbFactory.cpp file.
@@ -246,7 +242,7 @@ The `CATDeclareConfigurationFactory` macro argument is the name of the workbench
 
 ---
 
-```vbscript
+```cpp
 CATImplementConfigurationFactory(CAAAfrGeoCreationWkb,
 CAAIAfrGeoCreationWkbFactory);
 The `CATImplementConfigurationFactory` arguments are the name of the workbench description class and the name of the workbench factory interface respectively. The `CATDeclareConfigurationFactory` and `CATImplementConfigurationFactory` macros create the workbench factory implementation class as a data extension of the _CATApplicationFrame_ component
@@ -312,7 +308,7 @@ class CAAAfrGeoCreationWkb : public CATBaseUnknown
 
 ---
 
-```vbscript
+```cpp
 CAAAfrGeoCreationWkb(const CAAAfrGeoCreationWkb &iObjectToCopy);
 The _CAAAfrGeoCreationWkb_ class C++-derives from _CATBaseUnknown_. The `CATDeclareClass` macro declares that the class _CAAAfrGeoCreationWkb_ belongs to a component. The class has a constructor, a destructor, the four methods of the _CATIWorkbench_ interface, and a copy constructor. Note that the copy constructor is set as private. This prevents the compiler from creating the copy constructor as public without you know. This copy constructor is not implemented in the source file.
   2. Create the CAAAfrGeoCreationWkb.cpp file. The file skeleton is shown below. The implementation of each method is described in separate sections.
@@ -328,7 +324,7 @@ The _CAAAfrGeoCreationWkb_ class C++-derives from _CATBaseUnknown_. The `CATDecl
 
 ```vbscript
 MacDeclareHeader(CAAAfrGeoCreationWkbHeader);
-```vbscript
+```cpp
          CATImplementClass(CAAAfrGeoCreationWkb, Implementation, CATBaseUnknown, CATNull);
 ```
 
@@ -337,7 +333,7 @@ MacDeclareHeader(CAAAfrGeoCreationWkbHeader);
          #include <TIE_CATICAAAfrGeometryWksConfiguration.h>
 ```vbscript
 MacDeclareHeader(CAAAfrGeoCreationWkbHeader);
-```vbscript
+```cpp
 CATImplementClass(CAAAfrGeoCreationWkb, Implementation, CATBaseUnknown, CATNull);
          TIE_CATICAAAfrGeometryWksConfiguration(CAAAfrGeoCreationWkb);
 
@@ -393,7 +389,6 @@ Update the interface dictionary, that is a file named, for example, CAAApplicati
 
 This is done by the `CreateCommands` method. Each command available in your workbench must have a command header. A command header is an instance of a command header class, and different commands can share the same command header class to create their command header. Refer to The Command Headers for more details.
 
-This is done by the `CreateCommands` method. Each command available in your workbench must have a command header. A command header is an instance of a command header class, and different commands can share the same command header class to create their command header. Refer to The Command Headers for more details.
 A single command header class is created for the commands, named CAAAfrGeoCreationWkbHeader using the `MacDeclareHeader` macro. You can also create the class more classically if the command may be sometimes unavailable. This is described in The Command Headers.
 
   1. Create the CAAAfrGeoCreationWkbHeader command header class. To do this, add the following in CAAAfrGeoCreationWkb.cpp:
@@ -405,7 +400,7 @@ A single command header class is created for the commands, named CAAAfrGeoCreati
 
 ---
 
-```vbscript
+```cpp
 MacDeclareHeader(CAAAfrGeoCreationWkbHeader);
 The `MacDeclareHeader` macro creates the header file and the source file for the CAAAfrGeoCreationWkbHeader class, and associates with this class the resource files CAAAfrGeoCreationWkbHeader.CATNls and CAAAfrGeoCreationWkbHeader.CATRsc. See Providing the Resources and Inserting the Workbench into the Start Menu.
   2. Create the code to instantiate your command headers in the empty ` CreateCommands` method. This method should contain one instantiation statement of the command header class per command. Each statement has the following form, for example for the Cuboid command.
@@ -452,7 +447,6 @@ You should create:
 
   1. Creating the Workbench
 
-1. Creating the Workbench
 The workbench contains its toolbars and its menu bar. Create the workbench as an instance of the _CATCmdWorkbench_ class using the `NewAccess` macro.
 
          CATCmdWorkbench * **CAAAfrGeoCreationWkb** ::CreateWorkbench(#)
@@ -490,9 +484,9 @@ The code to create the toolbars and the menu bar is the following:
 ```
 
              ...  // See Creating the Solids Toolbar Content
-```vbscript
+```cpp
 NewAccess(**CATCmdContainer** ,pCAAAfrSolidEltTlb,CAAAfrSolidEltTlb);
-```vbscript
+```cpp
 SetAccessChild(pCAAAfrGeoCreationWkb, pCAAAfrSolidEltTlb);
              AddToolbarView(pCAAAfrSolidEltTlb,1,Right);
 
@@ -505,7 +499,7 @@ SetAccessChild(pCAAAfrGeoCreationWkb, pCAAAfrSolidEltTlb);
              ...  // See Creating the Surfaces Toolbar Content
 ```vbscript
 AddToolbarView(pCAAAfrSolidEltTlb,1,Right);
-```vbscript
+```cpp
 NewAccess(**CATCmdContainer** ,pCAAAfrSurfacicEltTlb,CAAAfrSurfacicEltTlb);
 SetAccessNext(pCAAAfrSolidEltTlb,pCAAAfrSurfacicEltTlb);
              AddToolbarView(pCAAAfrSurfacicEltTlb,-1,Right);
@@ -518,7 +512,7 @@ SetAccessNext(pCAAAfrSolidEltTlb,pCAAAfrSurfacicEltTlb);
              ...  // See Creating the Menu Bar Content
 ```vbscript
 AddToolbarView(pCAAAfrSurfacicEltTlb,-1,Right);
-```vbscript
+```cpp
 NewAccess(**CATCmdContainer** ,pCAAAfrGeoCreationMbr,CAAAfrGeoCreationMbr);
              SetWorkbenchMenu(pCAAAfrGeoCreationWkb,pCAAAfrGeoCreationMbr);
 ```
@@ -552,7 +546,7 @@ This toolbar contains four commands: Cuboid, Sphere, Torus, and Cylinder. You sh
 2. Associate the command starter, using the `SetAccessCommand` macro, with the appropriate command header identifier defined in the ` CreateCommands` method
 3. Arrange the command starters in the toolbar using the ` SetAccessChild` and `SetAccessNext` macros
           NewAccess(CATCmdStarter,pCAAAfrTSolidEltCuboidStr,CAAAfrTSolidEltCuboidStr);
-```vbscript
+```cpp
           SetAccessCommand(pCAAAfrTSolidEltCuboidStr,"CAAAfrCuboidHdr");
           SetAccessChild(pCAAAfrSolidEltTlb,pCAAAfrTSolidEltCuboidStr);
 
@@ -578,7 +572,7 @@ This toolbar contains four commands: Cuboid, Sphere, Torus, and Cylinder. You sh
 
 ---
 
-```vbscript
+```cpp
 SetAccessNext(pCAAAfrTSolidEltCylinder1Str,pCAAAfrTSolidEltCylinder2Str);
 Three macros are required for each command. For example, the Cuboid command is processed as follows:
      1. First create the command starter as a _CATCmdStarter_ instance using the `NewAccess` macro. `pCAAAfrTSolidEltCuboidStr` is the variable used to handle a pointer to that instance, and ` CAAAfrTSolidEltCuboidStr` is its identifier.
@@ -604,7 +598,7 @@ This toolbar contains three commands: Revolution Surface, Nurbs Surface, and Off
 2. Associate the command starter, using the `SetAccessCommand` macro, with the appropriate command header identifier defined in the ` CreateCommands` method
 3. Arrange the command starters in the toolbar using the ` SetAccessChild` and `SetAccessNext` macros
         NewAccess(CATCmdStarter,pCAAAfrTSurfRevolStr,CAAAfrTSurfRevolStr);
-```vbscript
+```cpp
         SetAccessCommand(pCAAAfrTSurfRevolStr,"CAAAfrRevolSurfHdr");
         SetAccessChild(pCAAAfrSurfacicEltTlb,pCAAAfrTSurfRevolStr);
 
@@ -622,7 +616,7 @@ This toolbar contains three commands: Revolution Surface, Nurbs Surface, and Off
 
 ---
 
-```vbscript
+```cpp
 SetAccessNext(pCAAAfrTSurfNurbsStr,pCAAAfrTSurfOffsetStr);
 Three macros are required for each command. For example, the Revolution Surface command is processed as follows:
      1. First create the command starter as a _CATCmdStarter_ instance using the `NewAccess` macro. `pCAAAfrTSurfRevolStr` is the variable used to handle a pointer to that instance, and ` CAAAfrTSurfRevolStr` is its identifier.
@@ -650,7 +644,7 @@ You should:
     ...
 4. Arrange the command starters in the menu using the `SetAccessChild`, and `SetAccessNext` macros
         NewAccess(CATCmdContainer,pCATAfrInsertMnu,CATAfrInsertMnu);
-```vbscript
+```cpp
         SetAccessChild(pCAAAfrGeoCreationMbr,pCATAfrInsertMnu);
 
           NewAccess(CATCmdSeparator,pCAAAfrGeoCreationInsertSep,CAAAfrGeoCreationInsertSep);
@@ -692,7 +686,7 @@ The Insert menu command container is created, even if it already exists. Then th
     ...
 The Insert menu command container is created, even if it already exists. Then the Solids submenu command container is created and set as the child of the Insert menu command container. Since no other positioning information is given, it should lay below the last submenu or command of the workshop menu bar, that is the Plane command. Then the Cuboid command starter is created and set as the child of the Solids submenu command container, and the others are cretaed and set next of one another.
           NewAccess(CATCmdContainer,pCAAAfrSurfacicEltSnu,CAAAfrSurfacicEltSnu) ;
-```vbscript
+```cpp
           SetAccessNext(pCAAAfrSolidEltSnu,pCAAAfrSurfacicEltSnu);
 
             NewAccess(CATCmdStarter,pCAAAfrMSurfRevolStr,CAAAfrMSurfRevolStr);
@@ -941,7 +935,6 @@ I create a command starter for a command, and I arrange it in the menu bar or in
 
 A workbench gathers tools, that is commands you develop or pick-up among those existing to work on documents of a given type. A workbench is part of the workshop for that document type and can be selected from the Start menu.
 
-A workbench gathers tools, that is commands you develop or pick-up among those existing to work on documents of a given type. A workbench is part of the workshop for that document type and can be selected from the Start menu.
 Then you create the workbench files, declare the implemented interfaces _CATIxxxConfiguration_ and _pppIxxxWorkbenchFactory_ , where ppp is the prefix of your application (such as CAT for CATIA), and xxx is the name of your workbench, and the workbench factory, in the dictionary. You have to declare the headers of the commands you want to propose, arrange them in menus and toolbars, and create the necessary external resources. Your wokbench is ready to use.
 
 You can create different workbenches in a workshop. Each workbench shares with the other workbenches the ability to work on your document, and usually shares with them a set of common commands. Each workbench gathers commands dedicated for specific process and one workbench can be activated by the end user at a time using the Start menu.

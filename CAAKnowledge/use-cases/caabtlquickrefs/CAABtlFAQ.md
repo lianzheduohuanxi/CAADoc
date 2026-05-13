@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Frequently Asked Questions"
 category: "use-case"
 module: "CAABtlQuickRefs"
-tags: ["CATIA", "CATIAB12", "CAADrwCreateDim", "CATIUnknownList"]
-source_file: "Doc/online/CAABtlQuickRefs/CAABtlFAQ.htmmd"
+tags: "["CATIA", "CATIAB12", "CAADrwCreateDim", "CATIUnknownList"]"
+source_file: "Doc/online/CAABtlQuickRefs/CAABtlFAQ.htm"
 converted: "2026-05-11T17:33:49.934183"
-```
-
 ---
 tags: ["CATIA", "CATIAB12", "CAADrwCreateDim", "CATIUnknownList"]
 source_file: "Doc/online/CAABtlQuickRefs/CAABtlFAQ.htmmd"

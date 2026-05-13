@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Changes to ENOVIA LCA Metadata in V5R13 Compared with V5R12"
 category: "use-case"
 module: "CAACenQuickRefs"
-tags: []
-source_file: "Doc/online/CAACenQuickRefs/CAACenMetaExpR13vsR12.htmmd"
+tags: "[]"
+source_file: "Doc/online/CAACenQuickRefs/CAACenMetaExpR13vsR12.htm"
 converted: "2026-05-11T17:33:46.738859"
-```
-
 ---
 tags: []
 source_file: "Doc/online/CAACenQuickRefs/CAACenMetaExpR13vsR12.htmmd"
@@ -19,7 +16,6 @@ CAA V5 Encyclopedia |  Changes to ENOVIA LCA Metadata in V5R13 Compared with V5R
 CAA V5 Encyclopedia |  Changes to ENOVIA LCA Metadata in V5R13 Compared with V5R12
 Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Object Inheritance | Attribute | Type | Inherited | Alias | Short Role | Role
 
-Type | Owner | CAA | Message | Domain | Domain Inheritance | Object | Type | Object Inheritance | Attribute | Type | Inherited | Alias | Short Role | Role
 3 | 3 | 0 | New attribute | CONFIG |   | CFGABLE_OBJECT | Class |   | V_project | Simple of String |   | V_project | The product name |
 3 | 3 | 0 | New attribute | CONFIG |   | EFF_MOD | Class |   | V_project | Simple of String |   | V_project | The modification name |
 3 | 3 | 0 | New attribute | CONFIG |   | SPECIFICATION | Class |   | V_project | Simple of String |   | V_project | The specification name |

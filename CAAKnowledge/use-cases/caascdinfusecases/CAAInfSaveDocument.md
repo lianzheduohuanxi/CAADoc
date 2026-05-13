@@ -100,7 +100,7 @@ name.
 ```vbscript
 'Optional: allows to find the sample wherever it's installed
 
-```vbscript
+```cpp
       Dim sDocPath  As String
       sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
 
@@ -115,7 +115,7 @@ name.
     'Open the document and add it as the last item of the collection of documents.
     'Create and display a new window for the document.
     'Activate the document and its window.
-```vbscript
+```cpp
      Dim iPartDoc As Document
      Set iPartDoc = CATIA.Documents.Open(sDocPath &amp; _
        &quot;/online/CAAScdInfUseCases/samples/CAAInfReadDocument.CATPart&quot;)
@@ -123,7 +123,7 @@ name.
 
     'The document just opened is the active document.
     'Save the active document and then close it.
-```vbscript
+```cpp
      CATIA.ActiveDocument.Save(#)
      CATIA.ActiveDocument.Close(#)
 ```
@@ -139,7 +139,7 @@ name.
 
 ```vbscript
 'Open the same document again.
-```vbscript
+```cpp
      Set iPartDoc = CATIA.Documents.Open(sDocPath &amp; _
        &quot;/online/CAAScdInfUseCases/samples/CAAInfReadDocument.CATPart&quot;)
 ```
@@ -158,13 +158,13 @@ name.
 
 ```vbscript
 'Open the same document a third time.
-```vbscript
+```cpp
      Set iPartDoc = CATIA.Documents.Open(sDocPath &amp; _
        &quot;/online/CAAScdInfUseCases/samples/CAAInfReadDocument.CATPart&quot;)
 ```
 
     'Save the document by specifying its name and then close it in the same way.
-```vbscript
+```cpp
      CATIA.Documents.Item(&quot;CAAInfReadDocument.CATPart&quot;).Save(#)
      CATIA.Documents.Item(&quot;CAAInfReadDocument.CATPart&quot;).Close(#)
 

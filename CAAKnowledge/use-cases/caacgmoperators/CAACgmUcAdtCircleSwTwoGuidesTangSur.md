@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating a Circle Sweep with Two Guides and a Tangency Surface"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CAAGMOperatorsCircleSweepTwoEdgesTangSur", "CAAGMModelGemBrowser", "CAAAdtCircleSweepTwoEdgesTangSur", "CATICGMFrFTopologicalSweep", "CATIA", "CATICGMTopPrism"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtCircleSwTwoGuidesTangSur.htmmd"
+tags: "["CAAGMOperatorsInterfaces", "CAADoc", "CAAGMOperatorsCircleSweepTwoEdgesTangSur", "CAAGMModelGemBrowser", "CAAAdtCircleSweepTwoEdgesTangSur", "CATICGMFrFTopologicalSweep", "CATIA", "CATICGMTopPrism"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtCircleSwTwoGuidesTangSur.htm"
 converted: "2026-05-11T17:33:48.833466"
-```
-
 ---
 tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CAAGMOperatorsCircleSweepTwoEdgesTangSur", "CAAGMModelGemBrowser", "CAAAdtCircleSweepTwoEdgesTangSur", "CATICGMFrFTopologicalSweep", "CATIA", "CATICGMTopPrism"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtCircleSwTwoGuidesTangSur.htmmd"
@@ -48,7 +45,6 @@ What Does CAAGMOperatorsCircleSweepTwoEdgesTangSur Do ? The use case:
     * Running the operator and retrieving the resulting body (common to all operators - not discussed below).
 Creating the Two Guides and the Tangency Surface The curves to be used as guides are CATSpline that are simply created from the geometry factory. See [3] for information on how to create a spline. The tangency surface is created by extruding one of the spline (CATICGMTopPrism operator). Creating a CATICGMFrFTopologicalSweep Operator Instance The CATICGMFrFTopologicalSweep operator is created by the CATCGMCreateFrFTopologicalCircleSweep global function. The two guides are passed in the form of a list as the third argument of the function. IMPORTANT: referring to the interactive dialog, the first guide appended in the list below is the "Limit curve" (pGuideGeom2) - the second guide appended is the "Limit curve with tangency" (pGuideGeom1 in the code below). The "Limit curve with tangency" must result from a projection on the tangency surface even if the curve is geometrically lying on the tangency surface.
 
-Creating the Two Guides and the Tangency Surface The curves to be used as guides are CATSpline that are simply created from the geometry factory. See [3] for information on how to create a spline. The tangency surface is created by extruding one of the spline (CATICGMTopPrism operator). Creating a CATICGMFrFTopologicalSweep Operator Instance The CATICGMFrFTopologicalSweep operator is created by the CATCGMCreateFrFTopologicalCircleSweep global function. The two guides are passed in the form of a list as the third argument of the function. IMPORTANT: referring to the interactive dialog, the first guide appended in the list below is the "Limit curve" (pGuideGeom2) - the second guide appended is the "Limit curve with tangency" (pGuideGeom1 in the code below). The "Limit curve with tangency" must result from a projection on the tangency surface even if the curve is geometrically lying on the tangency surface.
     CATLISTP(CATGeometry) guides ;
     CATGeometry * pGuideGeom2 = (CATGeometry*)pWireBody2 ;
     CATGeometry * pGuideGeom1 = (CATGeometry*)pBodyProj ;

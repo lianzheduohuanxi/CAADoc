@@ -1,64 +1,35 @@
 ---
 title: "CAAIVisTextModel"
-type: "interface"
+type: "PublicInterface"
 module: "CAAVisualization"
-category: api-reference
+base: "CATBaseUnknown"
 method_count: 1
-visibility: "public"
-has_tie_binding: true
-verified: true
+source_file: "CAAVisualization.edu/PublicInterfaces/CAAIVisTextModel.h"
 ---
-> **TIE实现**: unknown
 
 # CAAIVisTextModel
 
-**模块**: CAAVisualization  
-**分类**: framework  
-**可见性**: public  
-**方法数**: 1
-
-> Local Framework
+**基类**: CATBaseUnknown | **模块**: CAAVisualization | **方法数**: 1
 
 ## 依赖
 
+- `CATBaseUnknown.h`
 - `CAAVisModelForRep.h`
 
-## TIE实现
+## 纯虚方法 (接口契约)
 
-**实现文件**:
-- `CAAEVisCreateInstanceForTextModel.cpp`
-- `CAAIVisTextModel.cpp`
-- `CAAVisTextModel.cpp`
+### SetGraphicRepresentation
 
----
+```cpp
+virtual HRESULT SetGraphicRepresentation(CATRep * iRep) = 0 ;
+```
 
-## Interface Overview
+| 参数 | 类型 |
+|------|------|
+| iRep | `CATRep *` |
 
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
+**返回值**: `S_OK` 成功, `E_FAIL` 失败
 
 ---
 
-## Related Use Cases
-
-This interface is used in the following use cases:
-
-- [CAAVisSampleISO](../../use-cases/caaviscases/CAAVisSampleISO.md)
-- [CAAVisSampleTempObject](../../use-cases/caaviscases/CAAVisSampleTempObject.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAVisualization.edu/PublicInterfaces/CAAIVisTextModel.h`

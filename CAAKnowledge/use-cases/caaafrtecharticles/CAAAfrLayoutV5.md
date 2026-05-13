@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Understanding the Application Frame Layout"
-category: tech-article
+category: "tech-article"
 module: "CAAAfrTechArticles"
-tags: ["CATIDocumentEdit", "CAAAfrHistogramChartWindow", "CAAEMyInterface", "CATIAfrGeneralWksAddin", "CATISO", "CATIVisu", "CATIAApplicationFrame", "CATIEditor"]
-source_file: "Doc/online/CAAAfrTechArticles/CAAAfrLayoutV5.htmmd"
+tags: "["CATIDocumentEdit", "CAAAfrHistogramChartWindow", "CAAEMyInterface", "CATIAfrGeneralWksAddin", "CATISO", "CATIVisu", "CATIAApplicationFrame", "CATIEditor"]"
+source_file: "Doc/online/CAAAfrTechArticles/CAAAfrLayoutV5.htm"
 converted: "2026-05-11T17:17:55.923668"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -163,7 +160,7 @@ The _CATFrmEditor_ class has other roles mentioned below but not detailed in thi
 
   * Managing the UI active object,
   * Managing the sets of objects like : PSO,HSO,SDO,CSO [1]
-```vbscript
+```cpp
   * Managing the Interactive Set of Objects [15]
   * Controlling the send/receive command tree through its _CATCommandSelector_ instance [5]
 ```
@@ -182,7 +179,6 @@ This class manages all the windows created. It enables you to:
 
     ...
     CATFrmLayout * **pLayout** = CATFrmLayout::**GetCurrentLayout**(#);
-CATFrmLayout * **pLayout** = CATFrmLayout::**GetCurrentLayout**(#);
 ```vbscript
     if ( NULL != pLayout )
 
@@ -191,7 +187,7 @@ CATFrmLayout * **pLayout** = CATFrmLayout::**GetCurrentLayout**(#);
     {
 CATFrmLayout * **pLayout** = CATFrmLayout::**GetCurrentLayout**(#);
 if ( NULL != pLayout )
-```vbscript
+```cpp
        CATLISTP(CATFrmWindow) WindowList ;
 ```vbscript
        WindowList = pLayout ->**GetWindowList**(#);
@@ -203,7 +199,7 @@ if ( NULL != pLayout )
 
        {
             **CATFrmWindow** * pCurrentWind = WindowList[i] ;
-```vbscript
+```cpp
 CATLISTP(CATFrmWindow) WindowList ;
 ```vbscript
 ```vbscript
@@ -362,7 +358,7 @@ The _CATFrmWindow_ class constructor is:
 
 ---
 
-```vbscript
+```cpp
 CATFrmWindow(const CATString & **iWindowTag** , CATFrmEditor * iEditor = NULL);
 The name of the window will be `iWindowTag.` If it is not a complete file name, otherwise the name will be the one of the file:
 
@@ -405,7 +401,6 @@ Depending on your window, other methods may be available. For example, you can h
 
 As usual the constructor of a dialog box is simple:
 
-As usual the constructor of a dialog box is simple:
     MyWindow :: MyWindow ( const CATString &iName, CATFrmEditor * iEditor )
 
                        : **CATFrmWindow**(iName,iEditor):_pViewer(NULL),
@@ -638,7 +633,6 @@ HRESULT CAAEMyInterface::CreateWindow(#)
     ...
        **CATIEditor** * pIEditor = NULL ;
        HRESULT rc = QueryInterface(IID_CATIEditor, (void**)&pIEditor);
-HRESULT rc = QueryInterface(IID_CATIEditor, (void**)&pIEditor);
 ```vbscript
        if (SUCCEEDED(rc))
 

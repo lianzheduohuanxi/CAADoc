@@ -1,65 +1,37 @@
 ---
 title: "CAAESmiUserOperationTPComputation"
-type: "interface"
+type: "LocalClass"
 module: "CAASurfaceMachiningItf"
-category: api-reference
 base: "CATIMfgComputeToolPathCustom"
-inheritance_chain: "CAAESmiUserOperationTPComputation → CATIMfgComputeToolPathCustom"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 1
+source_file: "CAASurfaceMachiningItf.edu/CAASmiUserOperationToolPathReplay.m/LocalInterfaces/CAAESmiUserOperationTPComputation.h"
 ---
+
 # CAAESmiUserOperationTPComputation
 
-**基类**: CATIMfgComputeToolPathCustom  
-**继承链**: CAAESmiUserOperationTPComputation → CATIMfgComputeToolPathCustom  
-**模块**: CAASurfaceMachiningItf  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
-
-> ===================================================================
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATIMfgComputeToolPathCustom | **模块**: CAASurfaceMachiningItf | **方法数**: 1
 
 ## 依赖
 
 - `CATIMfgComputeToolPathCustom.h`
 - `CATLISTV_CATMathPoint.h`
 
+## 公共方法
+
+### ComputeToolPath
+
+```cpp
+HRESULT ComputeToolPath(const CATIContainer_var& iContainer, CATIMfgToolPath_var& oTP) ;
+```
+
+Compute the tool path of the current operation.
+
+| 参数 | 类型 |
+|------|------|
+| iContainer | `const CATIContainer_var&` |
+| oTP | `CATIMfgToolPath_var&` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATIMfgComputeToolPathCustom**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-This interface is used in the following use cases:
-
-- [CAASmiUserOperationWithUserMFToolPath](../../use-cases/caasmicases/CAASmiUserOperationWithUserMFToolPath.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAASurfaceMachiningItf.edu/CAASmiUserOperationToolPathReplay.m/LocalInterfaces/CAAESmiUserOperationTPComputation.h`

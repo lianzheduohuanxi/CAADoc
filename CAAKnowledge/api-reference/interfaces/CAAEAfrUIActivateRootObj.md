@@ -1,51 +1,43 @@
 ---
 title: "CAAEAfrUIActivateRootObj"
-type: "interface"
+type: "LocalClass"
 module: "CAAApplicationFrame"
-category: api-reference
 base: "CATExtIUIActivate"
-inheritance_chain: "CAAEAfrUIActivateRootObj → CATExtIUIActivate"
 method_count: 2
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAApplicationFrame.edu/CAAAfrGeoDocument.m/LocalInterfaces/CAAEAfrUIActivateRootObj.h"
 ---
+
 # CAAEAfrUIActivateRootObj
 
-**基类**: CATExtIUIActivate  
-**继承链**: CAAEAfrUIActivateRootObj → CATExtIUIActivate  
-**模块**: CAAApplicationFrame  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 2
+> Data extension of the root object of the document. It implements the CATIUIActivate interface in order to associate a workshop with the document. It derives from the CATExtIUIActivate adapter which provides most of the implementation. Illustrates: implementation of the CATIUIActivate interface to associate a workshop with a document. Usage: Launch CATIA V5, File/New. Choose the CAAGeometry document. The CAAGeometryWks workshop is loaded. Inheritance: CATExtIUIActivate ( ApplicationFrame Framework ) CATBaseUnknown    (System Framework). Main Method: GetWorkshop       : returns the workshop name GetDefaultCommand : returns the name of the default command.
+
+**基类**: CATExtIUIActivate | **模块**: CAAApplicationFrame | **方法数**: 2
 
 ## 依赖
 
 - `CATExtIUIActivate.h`
 - `CATString.h`
 
+## 虚方法
+
+### GetWorkshop
+
+```cpp
+virtual CATString & GetWorkshop() ;
+```
+
+GetWorkshop ------------ Returns the workshop identifier. This identifier is the name of class which implements CATIWorkshop
+
+
+### GetDefaultCommand
+
+```cpp
+virtual CATString & GetDefaultCommand() ;
+```
+
+GetDefaultCommand ------------------ Returns the command header identifier of the default command. The default command is the one that is made active whenever the object which implements CATIUIActivate becomes UIActive.
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATExtIUIActivate**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAApplicationFrame.edu/CAAAfrGeoDocument.m/LocalInterfaces/CAAEAfrUIActivateRootObj.h`

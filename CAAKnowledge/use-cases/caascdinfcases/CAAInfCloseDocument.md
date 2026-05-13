@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Closing a CATIA Document"
 category: "use-case"
 module: "CAAScdInfUseCases"
-tags: ["CAAScdInfUseCases", "CAAInfReadDocument", "CAAInfOpenDocument", "CAAInfCloseDocument", "CATIA"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfCloseDocument.htmmd"
+tags: "["CAAScdInfUseCases", "CAAInfReadDocument", "CAAInfOpenDocument", "CAAInfCloseDocument", "CATIA"]"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfCloseDocument.htm"
 converted: "2026-05-11T17:31:52.350580"
-```
-
 ---
 ## Infrastructure
 
@@ -45,7 +42,7 @@ This macro shows you how to close an existing CATIA document that is currently i
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
           sDocPath=CATIA.SystemService.Environ("CATDocView")
 
           If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -83,7 +80,7 @@ Define the `sDocPath` variable to retrieve the CATDocView environment variable v
          Dim iPartDoc As Document
 ```vbscript
 ```
-```vbscript
+```cpp
          Set iPartDoc = CATIA.Documents.**Open**(sDocPath & _
 ```
 ```
@@ -95,7 +92,7 @@ Define the `sDocPath` variable to retrieve the CATDocView environment variable v
 ```vbscript
 ```vbscript
 'Open the document.
-```vbscript
+```cpp
 Dim iPartDoc As Document
 Set iPartDoc = CATIA.Documents.**Open**(sDocPath & _
         'Close the active document which is the document just opened.
@@ -106,7 +103,7 @@ Set iPartDoc = CATIA.Documents.**Open**(sDocPath & _
 
 ```
 
-```vbscript
+```cpp
          **CATIA.ActiveDocument.Close(#)**
 
       ...
@@ -130,7 +127,7 @@ An existing CATIA document is opened using the `Open` method of the _Documents_ 
 ```
 
 ```vbscript
-```vbscript
+```cpp
          Set iPartDoc = CATIA.Documents.**Open**(sDocPath & _
 ```
 ```
@@ -140,7 +137,7 @@ An existing CATIA document is opened using the `Open` method of the _Documents_ 
 ```vbscript
 ```vbscript
 'Open the same document again.
-```vbscript
+```cpp
 Set iPartDoc = CATIA.Documents.**Open**(sDocPath & _
         'Close the document using the variable defined for it.
 ```
@@ -172,7 +169,7 @@ A second way of closing an existing CATIA document is to execute the `Close` met
 ```
 
 ```vbscript
-```vbscript
+```cpp
           Set iPartDoc = CATIA.Documents.**Open**(sDocPath & _
 ```
 ```
@@ -182,7 +179,7 @@ A second way of closing an existing CATIA document is to execute the `Close` met
 ```vbscript
 ```vbscript
 'Open the same document a third time.
-```vbscript
+```cpp
 Set iPartDoc = CATIA.Documents.**Open**(sDocPath & _
          'Close the document by specifying its name.
 ```
@@ -192,7 +189,7 @@ Set iPartDoc = CATIA.Documents.**Open**(sDocPath & _
 
 ```
 
-```vbscript
+```cpp
           **CATIA.Documents.Item( "CAAInfReadDocument.CATPart").Close(#)**
       ...
 ```

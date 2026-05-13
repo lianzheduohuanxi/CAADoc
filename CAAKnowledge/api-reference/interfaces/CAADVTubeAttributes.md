@@ -1,54 +1,175 @@
 ---
 title: "CAADVTubeAttributes"
-type: "interface"
+type: "LocalClass"
 module: "CAAPlantShipInterfaces"
-category: api-reference
 base: "CATEAPspDesignValidation"
-inheritance_chain: "CAADVTubeAttributes → CATEAPspDesignValidation"
-method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+method_count: 12
+source_file: "CAAPlantShipInterfaces.edu/CAAPspDesignValidation.m/LocalInterfaces/CAADVTubeAttributes.h"
 ---
+
 # CAADVTubeAttributes
 
-**基类**: CATEAPspDesignValidation  
-**继承链**: CAADVTubeAttributes → CATEAPspDesignValidation  
-**模块**: CAAPlantShipInterfaces  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATEAPspDesignValidation | **模块**: CAAPlantShipInterfaces | **方法数**: 12
 
 ## 依赖
 
 - `CATEAPspDesignValidation.h`
 
+## 公共方法
+
+### GetValidationChecks
+
+```cpp
+HRESULT GetValidationChecks(CATListValCATUnicodeString& oChecks) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oChecks | `CATListValCATUnicodeString&` |
+
+
+### IsObjectAViolation
+
+```cpp
+HRESULT IsObjectAViolation(const CATBaseUnknown* iObject, const CATListValCATUnicodeString& iChecks, CATListPV** oViolation, const unsigned int& iErrorFile) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iObject | `const CATBaseUnknown*` |
+| iChecks | `const CATListValCATUnicodeString&` |
+| oViolation | `CATListPV**` |
+| iErrorFile | `const unsigned int&` |
+
+
+### GetClassification
+
+```cpp
+HRESULT GetClassification(CATUnicodeString& oClassification) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oClassification | `CATUnicodeString&` |
+
+
+### GetResource
+
+```cpp
+HRESULT GetResource(CATUnicodeString& oName) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oName | `CATUnicodeString&` |
+
+
+### GetColumnTitles
+
+```cpp
+HRESULT GetColumnTitles(CATListValCATUnicodeString& oTitles) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| oTitles | `CATListValCATUnicodeString&` |
+
+
+### CheckTubeSize
+
+```cpp
+HRESULT CheckTubeSize(const CATBaseUnknown* iObject, CATListPV** oViolation, const unsigned int& iErrorFile) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iObject | `const CATBaseUnknown*` |
+| oViolation | `CATListPV**` |
+| iErrorFile | `const unsigned int&` |
+
+
+### CheckTubeMaterial
+
+```cpp
+HRESULT CheckTubeMaterial(const CATBaseUnknown* iObject, CATListPV** oViolation, const unsigned int& iErrorFile) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| iObject | `const CATBaseUnknown*` |
+| oViolation | `CATListPV**` |
+| iErrorFile | `const unsigned int&` |
+
+
+### GetLogicalLine
+
+```cpp
+HRESULT GetLogicalLine(const IUnknown *ipiLogicalLineMember, CATIPspLogicalLine *&opiLogicalLine) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *ipiLogicalLineMember | `const IUnknown` |
+| *&opiLogicalLine | `CATIPspLogicalLine` |
+
+
+### GetObjectAttribute
+
+```cpp
+HRESULT GetObjectAttribute(const IUnknown *ipiObject, CATUnicodeString iuAttributeName, CATICkeParm *&opiAttributeParm) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *ipiObject | `const IUnknown` |
+| iuAttributeName | `CATUnicodeString` |
+| *&opiAttributeParm | `CATICkeParm` |
+
+
+### GetTestData
+
+```cpp
+HRESULT GetTestData(const CATICkeParm *ipiPressureParm, const CATICkeParm *ipiNominalSizeParm, const CATICkeParm *ipiMaterialParm, double &oPressure, CATUnicodeString &ouPressure, CATUnicodeString &ouNominalSize, CATUnicodeString &ouMaterial) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| *ipiPressureParm | `const CATICkeParm` |
+| *ipiNominalSizeParm | `const CATICkeParm` |
+| *ipiMaterialParm | `const CATICkeParm` |
+| &oPressure | `double` |
+| &ouPressure | `CATUnicodeString` |
+| &ouNominalSize | `CATUnicodeString` |
+| &ouMaterial | `CATUnicodeString` |
+
+
+### TestTubeSize
+
+```cpp
+HRESULT TestTubeSize(const double &iPressure, const CATUnicodeString &iuNominalSize, CATUnicodeString &ouAuthorizedSizes) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| &iPressure | `const double` |
+| &iuNominalSize | `const CATUnicodeString` |
+| &ouAuthorizedSizes | `CATUnicodeString` |
+
+
+### TestTubeMaterial
+
+```cpp
+HRESULT TestTubeMaterial(const double &iPressure, const CATUnicodeString &iuNominalSize, const CATUnicodeString &iuMaterial, CATUnicodeString &ouAuthorizedMaterialForSize) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| &iPressure | `const double` |
+| &iuNominalSize | `const CATUnicodeString` |
+| &iuMaterial | `const CATUnicodeString` |
+| &ouAuthorizedMaterialForSize | `CATUnicodeString` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATEAPspDesignValidation**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAPlantShipInterfaces.edu/CAAPspDesignValidation.m/LocalInterfaces/CAADVTubeAttributes.h`

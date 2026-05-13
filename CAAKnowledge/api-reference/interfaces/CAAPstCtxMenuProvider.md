@@ -1,29 +1,15 @@
 ---
 title: "CAAPstCtxMenuProvider"
-type: "interface"
+type: "ProtectedInterface"
 module: "CAAProductStructure"
-category: api-reference
 base: "CATBaseUnknown"
-inheritance_chain: "CAAPstCtxMenuProvider → CATBaseUnknown"
-method_count: 0
-visibility: "protected"
-has_tie_binding: false
-verified: true
+method_count: 1
+source_file: "CAAProductStructure.edu/ProtectedInterfaces/CAAPstCtxMenuProvider.h"
 ---
+
 # CAAPstCtxMenuProvider
 
-**基类**: CATBaseUnknown  
-**继承链**: CAAPstCtxMenuProvider → CATBaseUnknown  
-**模块**: CAAProductStructure  
-**分类**: framework  
-**可见性**: protected  
-**方法数**: 0
-
-> COPYRIGHT DASSAULT SYSTEMES 2004
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATBaseUnknown | **模块**: CAAProductStructure | **方法数**: 1
 
 ## 依赖
 
@@ -31,28 +17,20 @@ verified: true
 - `CATBaseUnknown.h`
 - `CAAPstEduCtxMenuProv.h`
 
+## 公共方法
+
+### GetContextualMenu
+
+```cpp
+HRESULT GetContextualMenu(CATBaseUnknown *, CATCmdContainer *) ;
+```
+
+| 参数 | 类型 |
+|------|------|
+| * | `CATBaseUnknown` |
+| * | `CATCmdContainer` |
+
+
 ---
 
-## Interface Overview
-
-This interface inherits from **CATBaseUnknown**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAProductStructure.edu/ProtectedInterfaces/CAAPstCtxMenuProvider.h`

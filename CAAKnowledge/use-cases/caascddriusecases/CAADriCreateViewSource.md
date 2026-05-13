@@ -19,7 +19,7 @@ Option Explicit
 '   CATIA Level:  V5R6 
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ```
@@ -27,7 +27,7 @@ Sub CATMain(#)
     ' ----------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,"No Doc Path Defined"
@@ -36,14 +36,14 @@ Sub CATMain(#)
     ' ----------------------------------------------------------- 
 
     ' Open the Part document 
-```vbscript
+```cpp
     Dim oPartToDraw As PartDocument
     Set oPartToDraw = CATIA.Documents.Open(sDocPath & _
              "/online/CAAScdDriUseCases/samples/Cube.CATPart")
 ```
 
     ' Create a drawing document: it becomes the active document.
-```vbscript
+```cpp
     Dim oDrawing As DrawingDocument
     Set oDrawing = CATIA.Documents.Add("Drawing")
 
@@ -85,7 +85,7 @@ End Sub
 
 ```
 
-```vbscript
+```cpp
 Option Explicit
 ' COPYRIGTH DASSAULT SYSTEMES 2000
 
@@ -98,7 +98,7 @@ Option Explicit
 '   CATIA Level:  V5R6 
 ' ***********************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ```
@@ -106,7 +106,7 @@ Sub CATMain(#)
     ' ----------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
       Err.Raise 9999,,"No Doc Path Defined"
@@ -115,14 +115,14 @@ Sub CATMain(#)
     ' ----------------------------------------------------------- 
 
     ' Open the Part document 
-```vbscript
+```cpp
     Dim oPartToDraw As PartDocument
     Set oPartToDraw = CATIA.Documents.Open(sDocPath & _
              "/online/CAAScdDriUseCases/samples/Cube.CATPart")
 ```
 
     ' Create a drawing document: it becomes the active document.
-```vbscript
+```cpp
     Dim oDrawing As DrawingDocument
     Set oDrawing = CATIA.Documents.Add("Drawing")
 

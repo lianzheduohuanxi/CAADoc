@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CAAPstAddComponent.CATScript"
 category: "use-case"
 module: "CAAScdPstUseCases"
-tags: ["CATIA", "CAAPstAddComponent", "CAAPstFunnel", "CAAPstHull"]
-source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddComponentSource.htmmd"
+tags: "["CATIA", "CAAPstAddComponent", "CAAPstFunnel", "CAAPstHull"]"
+source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddComponentSource.htm"
 converted: "2026-05-11T17:31:52.316299"
-```
-
 ---
 tags: ["CATIA", "CAAPstAddComponent", "CAAPstFunnel", "CAAPstHull"]
 source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddComponentSource.htmmd"
@@ -16,7 +13,7 @@ converted: "2026-05-11T17:31:52.316299"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
     ' COPYRIGHT DASSAULT SYSTEMES 2000
     ' *****************************************************************************
     '   Purpose:       Create A Product Structure document containing
@@ -36,7 +33,7 @@ converted: "2026-05-11T17:31:52.316299"
 
 ```
 
-```vbscript
+```cpp
     Sub CATMain(#)
 ```vbscript
 ```
@@ -54,7 +51,7 @@ converted: "2026-05-11T17:31:52.316299"
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
         sDocPath=CATIA.SystemService.Environ("CATDocView")
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
           Err.Raise 9999,,"No Doc Path Defined"
@@ -68,11 +65,11 @@ converted: "2026-05-11T17:31:52.316299"
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
         ' ------------------------------------------------------------------------------------------------
         'Create a new product document object by adding a document with the Product
         'type to the document collection of the CATIA application.
-```vbscript
+```cpp
         Dim oProductDoc As Document
         Set oProductDoc = CATIA.Documents.Add("Product")
         'Retrieve the Titanic as the root product.
@@ -143,7 +140,7 @@ Set  oHull = oTitanicProducts.AddNewProduct("Hull_Type")
 ```
 
         oHull.AddMasterShapeRepresentation sDocPath & "CAAPstHull.CATPart"
-```vbscript
+```cpp
         CATIA.ActiveWindow.ActiveViewer.Reframe
 ```
 ```

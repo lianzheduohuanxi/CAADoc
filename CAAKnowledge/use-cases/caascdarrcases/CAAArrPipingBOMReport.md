@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "CATIAV5ArrWorkbench, CATIAArrBOMReport Interfaces Use Case"
 category: "use-case"
 module: "CAAScdArrUseCases"
-tags: ["CAAArrPipingBOMReport", "CATIAArrBOMReport", "CATIA", "CATIAV5ArrWorkbench", "CATIAArrWorkbench"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrPipingBOMReport.htmmd"
+tags: "["CAAArrPipingBOMReport", "CATIAArrBOMReport", "CATIA", "CATIAV5ArrWorkbench", "CATIAArrWorkbench"]"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrPipingBOMReport.htm"
 converted: "2026-05-11T17:31:51.574542"
-```
-
 ---
 |
 ## Arrangement
@@ -44,12 +41,12 @@ Once the Product has been loaded, the macro is designed to read the relevant obj
 
     ...
 ```vbscript
-```vbscript
+```cpp
        Dim objCATIAV5Document As Document
 ```vbscript
 ```
 ```vbscript
-```vbscript
+```cpp
        Dim objCATIAV5ArrWorkbench As Workbench
        Dim objCATIAV5ArrBOMReport As ArrBOMReport
 ```
@@ -66,7 +63,7 @@ Once the Product has been loaded, the macro is designed to read the relevant obj
 
     ...
 ```vbscript
-```vbscript
+```cpp
        Set objCATIAV5Document = CATIA.ActiveDocument
 ```
 ```
@@ -75,11 +72,11 @@ Once the Product has been loaded, the macro is designed to read the relevant obj
 ```vbscript
 ```vbscript
        '//---------- Get ArrWorkbench from current document
-```vbscript
+```cpp
        Set objCATIAV5ArrWorkbench = objCATIAV5Document.GetWorkbench("ArrWorkbench")
        '//---------- Get CATIAArrBOMReport from ArrWorkbench
 ```
-```vbscript
+```cpp
        Set objCATIAV5ArrBOMReport = objCATIAV5ArrWorkbench.FindInterface ("CATIAArrBOMReport",objCATIAV5Document)
        '//---------- Generate the report
 ```
@@ -91,9 +88,9 @@ Once the Product has been loaded, the macro is designed to read the relevant obj
 
 ```vbscript
 ```vbscript
-```vbscript
+```cpp
 '//---------- Get CATIAArrBOMReport from ArrWorkbench
-```vbscript
+```cpp
 Set objCATIAV5ArrBOMReport = objCATIAV5ArrWorkbench.FindInterface ("CATIAArrBOMReport",objCATIAV5Document)
 '//---------- Generate the report
 ```

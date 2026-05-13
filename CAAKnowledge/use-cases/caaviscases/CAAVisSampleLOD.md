@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Levels of Details"
-category: use-case case"
+category: "use-case case"
 module: "CAAVisUseCases"
-tags: ["CAAVisBaseView", "CAAVisBaseDocument", "CAAVisBasics", "CAAVisBaseDefaultDocument", "CAAVisBaseApplication", "CATIA", "CAAVisBase", "CAAVisualization"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleLOD.htmmd"
+tags: "["CAAVisBaseView", "CAAVisBaseDocument", "CAAVisBasics", "CAAVisBaseDefaultDocument", "CAAVisBaseApplication", "CATIA", "CAAVisBase", "CAAVisualization"]"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleLOD.htm"
 converted: "2026-05-11T17:31:52.141771"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -112,7 +109,6 @@ The torus is displayed when the CAAVisBase application is launched. The torus le
 
 The _CAAVisBaseDefaultDocument_ constructor creates the representation bag to attach to the viewer, creates a _CAT3DLodRep_ instance for the torus, calls `CreateRep` as many time as there are sag values to the corresponding torus representations, adds the resulting 3D Lod representation to the representation bag, and calls `AddRepToViewer` for display.
 
-The _CAAVisBaseDefaultDocument_ constructor creates the representation bag to attach to the viewer, creates a _CAT3DLodRep_ instance for the torus, calls `CreateRep` as many time as there are sag values to the corresponding torus representations, adds the resulting 3D Lod representation to the representation bag, and calls `AddRepToViewer` for display.
     void CAAVisBaseDefaultDocument::CreateModel(#)
 
     {
@@ -143,7 +139,6 @@ This 3D representation to accommodate the different tessellations of the torus i
     ...
       int color[3] = {255, 255, 255}; //White color
 
-int color[3] = {255, 255, 255}; //White color
       int colors[] = {200, 200, 255, //bright blue
                       200, 0,   0,   //red
                       0,   0,   255, //blue
@@ -176,7 +171,6 @@ The sag values are computed and passed to the `AddLOD` method as well as the ass
 
 The `AddLOD` method is the same as the one explained in [2], except that it has the sag as argument, and computes the theta and phi angles from the sag value. It also update the 3D Lod representation with the created 3D custom representation.
 
-The `AddLOD` method is the same as the one explained in [2], except that it has the sag as argument, and computes the theta and phi angles from the sag value. It also update the 3D Lod representation with the created 3D custom representation.
     void CAAVisBaseDefaultDocument::AddLOD(float sag, int *iColor)
 
     {

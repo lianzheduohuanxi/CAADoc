@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "FreeFormOperators Changed Classes or Interfaces"
 category: "use-case"
 module: "CAACenQuickRefs"
-tags: ["CATICGMCrvDegreeModification", "CATICGMLiss", "CATICGMSurFittingToNurbsSur", "CATICGMCrvFittingToNurbsCrv", "CATICGMInterproxCrv", "CATICGMInterproxSur", "CATInterproxCrv", "CATICGMSurDegreeModification", "CATInterproxSur"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenBUFreeFormOperators.htmmd"
+tags: "["CATICGMCrvDegreeModification", "CATICGMLiss", "CATICGMSurFittingToNurbsSur", "CATICGMCrvFittingToNurbsCrv", "CATICGMInterproxCrv", "CATICGMInterproxSur", "CATInterproxCrv", "CATICGMSurDegreeModification", "CATInterproxSur"]"
+source_file: "Doc/online/CAACenQuickRefs/CAACenBUFreeFormOperators.htm"
 converted: "2026-05-11T17:33:46.278454"
-```
-
 ---
 tags: ["CATICGMCrvDegreeModification", "CATICGMLiss", "CATICGMSurFittingToNurbsSur", "CATICGMCrvFittingToNurbsCrv", "CATICGMInterproxCrv", "CATICGMInterproxSur", "CATInterproxCrv", "CATICGMSurDegreeModification", "CATInterproxSur"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenBUFreeFormOperators.htmmd"
@@ -164,7 +161,6 @@ double iMaxDeviation,
 CATLONG32 iRationalAllowed = 1,
 CATSkillValue iMode = BASIC) |  Not supported any longer.
 GMOperatorsInterfaces | Global function | CATCGMCreateCrvFittingToNurbsCrv
-GMOperatorsInterfaces | Global function | CATCGMCreateCrvFittingToNurbsCrv
 CATCreateSurFittingToNurbsSur | CATSurFittingToNurbsSur* CATCreateSurFittingToNurbsSur(CATGeoFactory*iFactory,
 const CATSurface* iSurface,
 const CATSurLimits & iLimits,
@@ -178,7 +174,6 @@ double iMaxDeviation,
 CATLONG32 iRationalAllowed = 1,
 CATSkillValue iMode = BASIC) |  Not supported any longer.
 GMOperatorsInterfaces | Global function | CATCGMCreateSurFittingToNurbsSur
-GMOperatorsInterfaces | Global function | CATCGMCreateSurFittingToNurbsSur
 CreateCrvDegreeModification | CATCrvDegreeModification* CreateCrvDegreeModification(CATGeoFactory*iFactory,
 CATCurve*iNurbsCurve,
 const CATLONG32 iTargetDegree,
@@ -191,7 +186,6 @@ const CATLONG32 iTargetDegree,
 const double iTolerance,
 CATSkillValue iMode = BASIC) |  Not supported any longer.
 GMOperatorsInterfaces | Global function | CATCGMCreateCrvDegreeModification
-GMOperatorsInterfaces | Global function | CATCGMCreateCrvDegreeModification
 CreateCrvDegreeModification | CATCrvDegreeModification* CreateCrvDegreeModification(CATGeoFactory*iFactory,
 CATCurve*iNurbsCurve,
 const CATLONG32 &iNewDegree;,
@@ -202,7 +196,6 @@ CATSkillValue iMode = BASIC) |  Not supported any longer.
 CATCurve*iNurbsCurve,
 const CATLONG32 &iNewDegree;,
 CATSkillValue iMode = BASIC) |  Not supported any longer.
-GMOperatorsInterfaces | Global function | CATCGMCreateCrvDegreeModification
 GMOperatorsInterfaces | Global function | CATCGMCreateCrvDegreeModification
 CreateInterproxCrv | CATInterproxCrv* CreateInterproxCrv(CATGeoFactory*iFactory,
 CATLISTP_CATCurve_ &iListe;,
@@ -261,7 +254,6 @@ const CATLONG32 &iTargetDegreeV;,
 const double iTolerance,
 CATSkillValue iMode = BASIC) |  Not supported any longer.
 GMOperatorsInterfaces | Global function | CATCGMCreateSurDegreeModification
-GMOperatorsInterfaces | Global function | CATCGMCreateSurDegreeModification
 CreateSurDegreeModification | CATSurDegreeModification* CreateSurDegreeModification(CATGeoFactory*iFactory,
 CATNurbsSurface*iNurbsSurface,
 const CATLONG32 &iNewDegreeU;,
@@ -273,5 +265,4 @@ CATSkillValue iMode = BASIC) |  Not supported any longer.
 const CATLONG32 &iNewDegreeU;,
 const CATLONG32 &iNewDegreeV;,
 CATSkillValue iMode = BASIC) |  Not supported any longer.
-GMOperatorsInterfaces | Global function | CATCGMCreateSurDegreeModification
 GMOperatorsInterfaces | Global function | CATCGMCreateSurDegreeModification

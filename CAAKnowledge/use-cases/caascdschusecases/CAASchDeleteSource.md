@@ -17,7 +17,7 @@ Option Explicit
 '   CATIA Level:  V5R15 
 ' *****************************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ```
@@ -25,7 +25,7 @@ Sub CATMain(#)
     ' ------------------------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -34,13 +34,13 @@ Sub CATMain(#)
 ```
     ' ------------------------------------------------------------------------- 
     ' Open the schematic document 
-```vbscript
+```cpp
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
             "online/CAAScdSchUseCases/samples/CAASCH_Delete01.CATProduct")
 ```
 
-```vbscript
+```cpp
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
@@ -145,24 +145,24 @@ Sub CATMain(#)
 
           If ( intNbRouteAfter > 0 ) Then
 ```
-```vbscript
+```cpp
              Set objRoute1 = objLRoutes.Item (1, "CATIASchRoute")
 
              If ( Not ( objRoute1 Is Nothing ) ) Then
 ```
-```vbscript
+```cpp
                 Set objRCntbl1 = objSchRoot.GetInterface ( _
                   "CATIASchAppConnectable", objRoute1)
 ```
                 If ( Not ( objRCntbl1 Is Nothing ) ) Then
-```vbscript
+```cpp
                    Set objAppRCntr1 = FindOpenConnector (objSchRoot,objRCntbl1)
                    Set objRoute2 = objLRoutes.Item (2, "CATIASchRoute")
                 End If
 ```
              End If
              If ( Not ( objRoute2 Is Nothing ) ) Then
-```vbscript
+```cpp
                 Set objRCntbl2 = objSchRoot.GetInterface ( _
                   "CATIASchAppConnectable", objRoute2)
 ```
@@ -176,7 +176,7 @@ Sub CATMain(#)
              If ( Not ( objRoute1 Is Nothing ) And _
                    Not ( objAppRCntr1 Is Nothing ) And _
                    Not ( objAppRCntr2 Is Nothing ) ) Then
-```vbscript
+```cpp
                 Set objRoute2 = objLRoutes.Item (2, "CATIASchRoute")
                 If ( Not ( objRoute2 Is Nothing ) ) Then
 ```
@@ -241,13 +241,13 @@ Private Function FindComponentInst (objSchRootArg As SchematicRoot) As SchCompon
         intFound = 0
         strInstName = ""
 
-```vbscript
+```cpp
         Set objSchComp = objLCompInst.Item (intIndex,"CATIASchComponent")
 
         If ( Not ( objSchComp Is Nothing ) ) Then
 ```
 
-```vbscript
+```cpp
            Set objPrd = objSchRootArg.GetInterface ( _
              "CATIAProduct", objSchComp)
 ```
@@ -259,7 +259,7 @@ Private Function FindComponentInst (objSchRootArg As SchematicRoot) As SchCompon
 
            If ( intFound > 0 ) Then
 
-```vbscript
+```cpp
               Set FindComponentInst = objSchRootArg.GetInterface ( _
                 "CATIASchComponent", objSchComp)
 ```
@@ -319,7 +319,7 @@ Private Function FindOpenConnector (objSchRootArg As SchematicRootArg, _
 
       For intIndex = 1 To intNbCntr
 
-```vbscript
+```cpp
         Set objAppCntr = objLAppCntr.Item (intIndex,"CATIASchAppConnector")
 
         If ( Not ( objAppCntr Is Nothing ) ) Then
@@ -329,7 +329,7 @@ Private Function FindOpenConnector (objSchRootArg As SchematicRootArg, _
 
            If ( Not ( bIsConnected ) )Then
 
-```vbscript
+```cpp
               Set FindOpenConnector = objSchRootArg.GetInterface ( _
                 "CATIASchAppConnector", objAppCntr)
 ```
@@ -347,7 +347,7 @@ End Function
 
 ```
 
-```vbscript
+```cpp
 Option Explicit
 ' COPYRIGHT DASSAULT SYSTEMES 2004
 
@@ -358,7 +358,7 @@ Option Explicit
 '   CATIA Level:  V5R15 
 ' *****************************************************************************
 
-```vbscript
+```cpp
 Sub CATMain(#)
 
 ```
@@ -366,7 +366,7 @@ Sub CATMain(#)
     ' ------------------------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     dim sDocPath As String 
-```vbscript
+```cpp
     sDocPath=CATIA.SystemService.Environ("CATDocView")
 
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
@@ -375,13 +375,13 @@ Sub CATMain(#)
 ```
     ' ------------------------------------------------------------------------- 
     ' Open the schematic document 
-```vbscript
+```cpp
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
             "online/CAAScdSchUseCases/samples/CAASCH_Delete01.CATProduct")
 ```
 
-```vbscript
+```cpp
     Dim objSchDoc As Document
     Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
@@ -486,24 +486,24 @@ Sub CATMain(#)
 
           If ( intNbRouteAfter &gt; 0 ) Then
 ```
-```vbscript
+```cpp
              Set objRoute1 = objLRoutes.Item (1, "CATIASchRoute")
 
              If ( Not ( objRoute1 Is Nothing ) ) Then
 ```
-```vbscript
+```cpp
                 Set objRCntbl1 = objSchRoot.GetInterface ( _
                   "CATIASchAppConnectable", objRoute1)
 ```
                 If ( Not ( objRCntbl1 Is Nothing ) ) Then
-```vbscript
+```cpp
                    Set objAppRCntr1 = FindOpenConnector (objSchRoot,objRCntbl1)
                    Set objRoute2 = objLRoutes.Item (2, "CATIASchRoute")
                 End If
 ```
              End If
              If ( Not ( objRoute2 Is Nothing ) ) Then
-```vbscript
+```cpp
                 Set objRCntbl2 = objSchRoot.GetInterface ( _
                   "CATIASchAppConnectable", objRoute2)
 ```
@@ -517,7 +517,7 @@ Sub CATMain(#)
              If ( Not ( objRoute1 Is Nothing ) And _
                    Not ( objAppRCntr1 Is Nothing ) And _
                    Not ( objAppRCntr2 Is Nothing ) ) Then
-```vbscript
+```cpp
                 Set objRoute2 = objLRoutes.Item (2, "CATIASchRoute")
                 If ( Not ( objRoute2 Is Nothing ) ) Then
 ```
@@ -582,13 +582,13 @@ Private Function FindComponentInst (objSchRootArg As SchematicRoot) As SchCompon
         intFound = 0
         strInstName = ""
 
-```vbscript
+```cpp
         Set objSchComp = objLCompInst.Item (intIndex,"CATIASchComponent")
 
         If ( Not ( objSchComp Is Nothing ) ) Then
 ```
 
-```vbscript
+```cpp
            Set objPrd = objSchRootArg.GetInterface ( _
              "CATIAProduct", objSchComp)
 ```
@@ -600,7 +600,7 @@ Private Function FindComponentInst (objSchRootArg As SchematicRoot) As SchCompon
 
            If ( intFound &gt; 0 ) Then
 
-```vbscript
+```cpp
               Set FindComponentInst = objSchRootArg.GetInterface ( _
                 "CATIASchComponent", objSchComp)
 ```
@@ -660,7 +660,7 @@ Private Function FindOpenConnector (objSchRootArg As SchematicRootArg, _
 
       For intIndex = 1 To intNbCntr
 
-```vbscript
+```cpp
         Set objAppCntr = objLAppCntr.Item (intIndex,"CATIASchAppConnector")
 
         If ( Not ( objAppCntr Is Nothing ) ) Then
@@ -670,7 +670,7 @@ Private Function FindOpenConnector (objSchRootArg As SchematicRootArg, _
 
            If ( Not ( bIsConnected ) )Then
 
-```vbscript
+```cpp
               Set FindOpenConnector = objSchRootArg.GetInterface ( _
                 "CATIASchAppConnector", objAppCntr)
 ```

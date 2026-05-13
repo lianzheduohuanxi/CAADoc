@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Part Selection"
 category: "use case"
 module: "CAACloUseCases"
-tags: ["CAACommonLayoutItf", "CAACloPartSelection", "CATICloPartSelection", "CATICatalogDescription", "CATIUnknownList", "CAAECloPartSelection", "CATICkeParm"]
-source_file: "Doc/online/CAACloUseCases/CAAECloPartSelection.htmmd"
+tags: "["CAACommonLayoutItf", "CAACloPartSelection", "CATICloPartSelection", "CATICatalogDescription", "CATIUnknownList", "CAAECloPartSelection", "CATICkeParm"]"
+source_file: "Doc/online/CAACloUseCases/CAAECloPartSelection.htm"
 converted: "2026-05-11T17:33:49.550794"
-```
-
 ---
 tags: ["CAACommonLayoutItf", "CAACloPartSelection", "CATICloPartSelection", "CATICatalogDescription", "CATIUnknownList", "CAAECloPartSelection", "CATICkeParm"]
 source_file: "Doc/online/CAACloUseCases/CAAECloPartSelection.htmmd"
@@ -45,7 +42,6 @@ What You Will Learn With This Use Case This use case is intended to show you how
        * CAAECloPartSelection should be invoked and a elbow should be created since there is only one elbow selected.
 [Top] Where to Find the CAAECloPartSelection Code CAAECloPartSelection code is located in the CAACloPartSelection.m use case module of the CAACommonLayoutItf.edu framework: Windows | `InstallRootDirectory/CAACommonLayoutItf.edu/CAACloPartSelection.m/src/CAAECloPartSelection.cpp`
 ---|---
-Unix | `InstallRootDirectory/CAACommonLayoutItf.edu/CAACloPartSelection.m/src/CAAECloPartSelection.cpp`
 Unix | `InstallRootDirectory/CAACommonLayoutItf.edu/CAACloPartSelection.m/src/CAAECloPartSelection.cpp`
 The following contains the dictionary file that references the implementation: Windows | `InstallRootDirectory/CAACommonLayoutItf.edu/CNext/code/dictionary/CAACommonLayoutItf.edu.dico`
 
@@ -191,7 +187,7 @@ Filtering the parts.  For this example, if the description has a keyword "Cente
 ```
 
       {
-```vbscript
+```cpp
 if ( iListDescription ) ((CATIUnknownList*)iListDescription)->Count(&nDescriptions);
 int selected = 0;
 cout << "list of descriptions:" << endl;

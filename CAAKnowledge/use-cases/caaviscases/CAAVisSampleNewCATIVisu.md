@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Making a Component Displayable With Your Own Interface"
-category: use-case case"
+category: "use-case case"
 module: "CAAVisUseCases"
-tags: ["CAAVisManagerDefaultDocument", "CATI3DGeoVisu", "CAAVisManagerAppli", "CAAVisModelEventsForObject", "CAAIVis2DGraphVisu", "CAAEVis2DGraphVisuForObject", "CAAVisualization", "CATI2GeoVisu", "CAAVisManager", "CATIA", "CAAVisModelObject", "CAAEVisModelEventsuForObject", "CAAVisManagerImpl", "CAAVisManagerComp", "CATIVisu", "CATIModelEvents", "CAAVisManagerInt", "CAAVis2DGraphBoxRep"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleNewCATIVisu.htmmd"
+tags: "["CAAVisManagerDefaultDocument", "CATI3DGeoVisu", "CAAVisManagerAppli", "CAAVisModelEventsForObject", "CAAIVis2DGraphVisu", "CAAEVis2DGraphVisuForObject", "CAAVisualization", "CATI2GeoVisu", "CAAVisManager", "CATIA", "CAAVisModelObject", "CAAEVisModelEventsuForObject", "CAAVisManagerImpl", "CAAVisManagerComp", "CATIVisu", "CATIModelEvents", "CAAVisManagerInt", "CAAVis2DGraphBoxRep"]"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleNewCATIVisu.htm"
 converted: "2026-05-11T17:31:52.156240"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -176,7 +173,7 @@ _CAAIVis2DGraphVisu_ derives from the _CATIVisu_ interface. As for any interface
 
 ---
 
-```vbscript
+```cpp
 CATImplementInterface(CAAIVis2DGraphVisu, **CATBaseUnknown**);
 The source file contains the interface IID [5], and the `CATImplementInterface` macro to state that _CAAIVis2DGraphVisu_ OM-derives [6] from _CATBaseUnknown_.
 
@@ -204,7 +201,7 @@ class CAAEVis2DGraphVisuForObject : public CAAVis2DGraphVisuAdapter
 
         **CATRep * BuildRep(#);**
 
-```vbscript
+```cpp
 CAAEVis2DGraphVisuForObject(#);
 virtual ~CAAEVis2DGraphVisuForObject(#);
       private:
@@ -252,7 +249,6 @@ The main points of this source file are:
 
 The `BuildRep` method is implemented using three sub steps.
 
-The `BuildRep` method is implemented using three sub steps.
   1. Declaring the representation to return
 
          CATRep * CAAEVis2DGraphVisuForObject::**BuildRep**(#)
@@ -329,7 +325,7 @@ class CAAEVisModelEventsForObject : public **CATExtIModelEvents**
 
 ---
 
-```vbscript
+```cpp
 CAAEVisModelEventsForObject(const CAAEVisModelEventsForObject &iObjectToCopy);
 As any class that makes up a component, its header file includes the `CATDeclareClass` macro. None of the _CATIModelEvents_ methods needs to be redefined. Note that the copy constructor is declared as private, and is not implemented. This prevents the compiler from creating a public one without you know. This is to prevent clients from creating instances from an existing one, that they normally should not handle, except using interface pointers.
 
@@ -345,9 +341,9 @@ As any class that makes up a component, its header file includes the `CATDeclare
          CATImplementClass(CAAEVisModelEventsForObject,
 
                            **DataExtension** ,
-```vbscript
+```cpp
 TIE_CATIModelEvents(CAAEVisModelEventsForObject);
-```vbscript
+```cpp
 CATImplementClass(CAAEVisModelEventsForObject,
 ```
 
@@ -356,7 +352,7 @@ CATImplementClass(CAAEVisModelEventsForObject,
 
                            **CAAVisModelObject**);
 
-```vbscript
+```cpp
 CATImplementClass(CAAEVisModelEventsForObject,
 CATBaseUnknown,
          CAAEVisModelEventsForObject::CAAEVisModelEventsForObject(#) {}

@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "CDMAInteroperability Modifications"
 category: "use-case"
 module: "CAACenAPIChangesR8"
-version: "V5R8"
-tags: ["CATIProductDatabase"]
-source_file: "Doc/online/CAACenAPIChangesR8/CDMAInteroperability.htmmd"
+tags: "["CATIProductDatabase"]"
+source_file: "Doc/online/CAACenAPIChangesR8/CDMAInteroperability.htm"
 converted: "2026-05-11T17:33:52.459106"
-```
-
 ---
 tags: ["CATIProductDatabase"]
 source_file: "Doc/online/CAACenAPIChangesR8/CDMAInteroperability.htmmd"

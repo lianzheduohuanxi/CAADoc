@@ -1,14 +1,10 @@
 ---
-```vbscript
 title: "Detail Of C++ API Changes"
 category: "api-changes"
 module: "CAACenAPIChangesR13"
-version: "V5R13"
-tags: ["CAA2Usage", "CATIAV4Interfaces", "CAA2Level"]
-source_file: "Doc/online/CAACenAPIChangesR13/CAACenAPIChangeDetail.htmmd"
+tags: "["CAA2Usage", "CATIAV4Interfaces", "CAA2Level"]"
+source_file: "Doc/online/CAACenAPIChangesR13/CAACenAPIChangeDetail.htm"
 converted: "2026-05-11T17:33:50.640808"
-```
-
 ---
 |  |  Detail Of V5R13 C++ API Changes _What changes in the API compared with CAA V5R12_
 ---|---|---
@@ -35,7 +31,6 @@ INDM | Method is no more documented. It does not break your code in any way but 
 INDM | Method is no more documented. It does not break your code in any way but means that you are not supposed to use it anymore. Check that you don't use it or look for replacement informations.
 CATAnalysisBase.md | [R13GA vs R12GA](CATAnalysisBase.md) |
 
-CATAnalysisBase.md | [R13GA vs R12GA](CATAnalysisBase.md) |
 CATAnalysisInterfaces.md | [R13GA vs R12GA](CATAnalysisInterfaces.md) |
 CATIAV4Interfaces.md | [R13GA vs R12GA](CATIAV4Interfaces.md) |
 DNBInspectInterfaces.md | [R13GA vs R12GA](DNBInspectInterfaces.md) |

@@ -7,7 +7,7 @@ source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfCopingSource.htmmd"
 converted: "2026-05-11T11:27:02.582889"
 ---
 
-```vbscript
+```cpp
 Sub CATMain(#)
 Dim StrWorkbench As StrWorkbench
 Dim strFactory As StrObjectFactory
@@ -27,7 +27,7 @@ Set strMembers = rootProduct.GetTechnologicalObject("StructureMembers")
 'Case1: When Plate is limited by other Plate and Surface
 ```
 'Get The Factory from Selection Method
-```vbscript
+```cpp
 Dim PlateToNibble As StrPlate
 Set PlateToNibble = strPlates.Item("Deck_014.2")
 
@@ -36,7 +36,7 @@ Set PlateSelection = CATIA.ActiveDocument.Selection
 PlateSelection.Add PlateToNibble
 ```
   
-```vbscript
+```cpp
 Dim FactoryForPlate As StrFeatureFactory
 Set FactoryForPlate = PlateSelection.FindObject("CATIAStrFeatureFactory")
 
@@ -72,7 +72,7 @@ NibblingFeature2.SubType = "CurrCurr"
 '*******************************************************************
 'Case2: When Member is limited by 2 Members and One Plate
 'Get The Factory from Selection Method
-```vbscript
+```cpp
 Dim MembertoNibble1 As StrMember
 Set MembertoNibble1 = strMembers.Item("BottShell_LStf_003.1")
 
@@ -81,7 +81,7 @@ Set MemberSelection = CATIA.ActiveDocument.Selection
 MemberSelection.Add MembertoNibble1
 ```
 
-```vbscript
+```cpp
 Dim FactoryForMember As StrFeatureFactory
 Set FactoryForMember = MemberSelection.FindObject("CATIAStrFeatureFactory")
 
@@ -122,7 +122,7 @@ Set NibblingFeature5 = FactoryForMember.AddNibbling(Listoflimits5, "Remove")
 '*******************************************************************
 'Case3: When Member is limited by Lateral Face of of Plate
 'Get The Factory from Selection Method
-```vbscript
+```cpp
 Dim MembertoNibble2 As StrMember
 Set MembertoNibble2 = strMembers.Item("Deck_TStf_005.1")
 
@@ -131,7 +131,7 @@ Set Member2Sel = CATIA.ActiveDocument.Selection
 Member2Sel.Add MembertoNibble2
 ```
 
-```vbscript
+```cpp
 Dim FactoryForMember2 As StrFeatureFactory
 Set FactoryForMember2 = Member2Sel.FindObject("CATIAStrFeatureFactory")
 
@@ -157,7 +157,7 @@ End Sub
 
 ```vbscript
 ```
-```vbscript
+```cpp
 Sub CATMain(#)
 Dim StrWorkbench As StrWorkbench
 Dim strFactory As StrObjectFactory
@@ -177,7 +177,7 @@ Set strMembers = rootProduct.GetTechnologicalObject(&quot;StructureMembers&quot;
 'Case1: When Plate is limited by other Plate and Surface
 ```
 'Get The Factory from Selection Method
-```vbscript
+```cpp
 Dim PlateToNibble As StrPlate
 Set PlateToNibble = strPlates.Item(&quot;Deck_014.2&quot;)
 
@@ -186,7 +186,7 @@ Set PlateSelection = CATIA.ActiveDocument.Selection
 PlateSelection.Add PlateToNibble
 ```
   
-```vbscript
+```cpp
 Dim FactoryForPlate As StrFeatureFactory
 Set FactoryForPlate = PlateSelection.FindObject(&quot;CATIAStrFeatureFactory&quot;)
 
@@ -222,7 +222,7 @@ NibblingFeature2.SubType = &quot;CurrCurr&quot;
 '*******************************************************************
 'Case2: When Member is limited by 2 Members and One Plate
 'Get The Factory from Selection Method
-```vbscript
+```cpp
 Dim MembertoNibble1 As StrMember
 Set MembertoNibble1 = strMembers.Item(&quot;BottShell_LStf_003.1&quot;)
 
@@ -231,7 +231,7 @@ Set MemberSelection = CATIA.ActiveDocument.Selection
 MemberSelection.Add MembertoNibble1
 ```
 
-```vbscript
+```cpp
 Dim FactoryForMember As StrFeatureFactory
 Set FactoryForMember = MemberSelection.FindObject(&quot;CATIAStrFeatureFactory&quot;)
 
@@ -272,7 +272,7 @@ Set NibblingFeature5 = FactoryForMember.AddNibbling(Listoflimits5, &quot;Remove&
 '*******************************************************************
 'Case3: When Member is limited by Lateral Face of of Plate
 'Get The Factory from Selection Method
-```vbscript
+```cpp
 Dim MembertoNibble2 As StrMember
 Set MembertoNibble2 = strMembers.Item(&quot;Deck_TStf_005.1&quot;)
 
@@ -281,7 +281,7 @@ Set Member2Sel = CATIA.ActiveDocument.Selection
 Member2Sel.Add MembertoNibble2
 ```
 
-```vbscript
+```cpp
 Dim FactoryForMember2 As StrFeatureFactory
 Set FactoryForMember2 = Member2Sel.FindObject(&quot;CATIAStrFeatureFactory&quot;)
 

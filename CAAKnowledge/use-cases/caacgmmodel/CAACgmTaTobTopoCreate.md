@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "How to Associate Topology with Geometry"
-category: use-case
+category: "use-case"
 module: "CAACgmModel"
-tags: ["CATIA", "CATIntCurve"]
-source_file: "Doc/online/CAACgmModel/CAACgmTaTobTopoCreate.htmmd"
+tags: "["CATIA", "CATIntCurve"]"
+source_file: "Doc/online/CAACgmModel/CAACgmTaTobTopoCreate.htm"
 converted: "2026-05-11T17:33:48.033778"
-```
-
 ---
 # How to Associate Topology with Geometry
 
@@ -43,7 +40,6 @@ The topology is a building set for limiting the space. Vertex bound edges, which
 
 Consider the intersection curve of two surfaces. From the topological point of view, its geometry is represented by a CATEdgeCurve. From a geometric point of view, this curve may be seen as a curve on the first surface or as a curve on the second surface.
 
-Consider the intersection curve of two surfaces. From the topological point of view, its geometry is represented by a CATEdgeCurve. From a geometric point of view, this curve may be seen as a curve on the first surface or as a curve on the second surface.
 Hence, _a CATEdgeCurve is the geometric representation of the topological edge, which may be seen under several representations_.
 
 When the curve is not the result of an intersection, the CATEdgeCurve may contain CATCurves that are not CATPCurves.
@@ -89,7 +85,6 @@ The geometric entity corresponding to a vertex is a CATMacroPoint. Imagine you w
 
 The following diagrams summarize the different configurations between the geometry and the topology.
 
-The following diagrams summarize the different configurations between the geometry and the topology.
 Fig. 1: Geometry Associated with Topology: the Case of the Shell Domain ![Shell Domain](images/CAACgmTobTopoGeom1.gif)
 
 ---

@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Corner"
 category: "use case"
 module: "CAACgmOperators"
-tags: ["CAAGMOperatorsInterfaces", "CATICGMHybIntersect", "CAAGMOperatorsIntersectShellShell"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopShellShell.htmmd"
+tags: "["CAAGMOperatorsInterfaces", "CATICGMHybIntersect", "CAAGMOperatorsIntersectShellShell"]"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopShellShell.htm"
 converted: "2026-05-11T17:33:49.305940"
-```
-
 ---
 Intersecting Shells
 
@@ -53,7 +50,6 @@ familiar with geometric modeler use cases, go to
     With the code below:
 
     CATICGMHybIntersect *pIntersectOpe = NULL;
-CATICGMHybIntersect *pIntersectOpe = NULL;
     CATBody *CurrentBody = NULL;
 
     pIntersectOpe = CATCGMCreateTopIntersect(piGeomFactory, &topdata, pBody1, pBody2);

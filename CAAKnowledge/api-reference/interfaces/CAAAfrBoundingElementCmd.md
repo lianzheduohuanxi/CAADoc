@@ -1,57 +1,23 @@
 ---
 title: "CAAAfrBoundingElementCmd"
-type: "interface"
+type: "LocalClass"
 module: "CAAApplicationFrame"
-category: api-reference
+base: "CATDlgDialog"
 method_count: 0
-visibility: "local"
-has_tie_binding: false
-verified: true
+source_file: "CAAApplicationFrame.edu/CAAAfrGeoCommands.m/LocalInterfaces/CAAAfrBoundingElementCmd.h"
 ---
+
 # CAAAfrBoundingElementCmd
 
-**模块**: CAAApplicationFrame  
-**分类**: framework  
-**可见性**: local  
-**方法数**: 0
+> Command which displays temporary bounding sheres around model objects. A dialog window enables the user to choose if the surrounding objects will the points, the lines or objects of both types. This command does not take the focus. Three spheres are created, one for each plane: x=0, y=0, z=0. Illustrates: creating a simple command derived from CATDlgDialog Arranging Dialog objects Subscribing to send/receive events Using a progress bar Using the Set of Interactive Objects (ISO) to display temporary objects Using cameras Inheritance: CATDlgDialog (Dialog Framework) CATDialog   (Dialog Framework) CATCommand  (System Framework) CATBaseUnknown (System Framework) Main Method: constructor Creates the dialog widgets Subscribes to the Apply and Close events Retrieves the Set of Interactive Objects and the model container Creates temporary circles to simulate bounding spheres ClickApply Updates the temporary bounding sphere Uses a progress bar to simulate a long task.
 
-> Visualization Framework
-
-## 说明
-
-该接口作为标记接口或配置接口使用，无自定义方法。
+**基类**: CATDlgDialog | **模块**: CAAApplicationFrame | **方法数**: 0
 
 ## 依赖
 
+- `CATDlgDialog.h`
 - `CATBoolean.h`
 
 ---
 
-## Interface Overview
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Interface Overview
-
-This interface inherits from **from**. 
-
-**Inherited Methods**: Please refer to the base interface documentation above.
-
----
-
-## Related Use Cases
-
-- [3D PLM Enterprise Architecture](../../use-cases/caaafrcases/CAAAfrSampleDialogOnly.md)
-- [3D PLM Enterprise Architecture](../../use-cases/caavistecharticles/CAAVisISO.md)
-
-## Interface Notes
-
-This interface is part of the **CAA** module.
-
-**Status**: This interface document is a template. Please refer to the official API documentation for more information.
-
-**Related Resources**:
-- [Quick References](../..//quick-refs/)
-- [Interface Hierarchy](../..//quick-refs/interface-hierarchy.md)
+**源文件**: `CAAApplicationFrame.edu/CAAAfrGeoCommands.m/LocalInterfaces/CAAAfrBoundingElementCmd.h`

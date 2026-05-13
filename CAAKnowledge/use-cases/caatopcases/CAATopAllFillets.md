@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Creating Fillets"
-category: use-case case"
+category: "use-case case"
 module: "CAATopUseCases"
-tags: ["CAAGemBrowser", "CATICGMObject", "CAAATopAllFillets", "CAATopConstantFillets", "CAATopAllFillet", "CAATopRollingEdges", "CAATopAllFillets", "CAATopologicalOperators", "CAATopFillet", "CAATopVariableFillets"]
-source_file: "Doc/online/CAATopUseCases/CAATopAllFillets.htmmd"
+tags: "["CAAGemBrowser", "CATICGMObject", "CAAATopAllFillets", "CAATopConstantFillets", "CAATopAllFillet", "CAATopRollingEdges", "CAATopAllFillets", "CAATopologicalOperators", "CAATopFillet", "CAATopVariableFillets"]"
+source_file: "Doc/online/CAATopUseCases/CAATopAllFillets.htm"
 converted: "2026-05-11T17:31:50.684779"
-```
-
 ---
 # Geometric Modeler
 
@@ -110,7 +107,6 @@ There are six steps in CAATopAllFillets.cpp:
 
 The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
 
-The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
     CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**(#) ;
 ```vbscript
     if (NULL==piGeomFactory) return (1);
@@ -155,7 +151,7 @@ The arguments two, three and four of the constructor are only to be specified wh
          CATDynEdgeFilletRibbon * pRibbon = new CATDynEdgeFilletRibbon(listEdges, listRadius);
 
 ---
-```vbscript
+```cpp
 CATLISTP(CATDynFilletRadius) listRadius;
 listRadius.Append(pRadius);
 CATDynEdgeFilletRibbon * pRibbon = new CATDynEdgeFilletRibbon(listEdges, listRadius);
@@ -186,7 +182,6 @@ CATDynFillet * pFilletOp1 = CATCreateDynFillet(iFactory,iTopData,iBody);
 
 To create a variable radius fillet, you must:
 
-To create a variable radius fillet, you must:
   1. proceed as you would do for a constant radius fillet.
   2. in the CATDynEdgeFilletRibbon constructor, specify the list of rolling edges as well as the fillet behavior (CATDynRolling).
 
@@ -280,13 +275,13 @@ The use case ends with the closure of the geometry factory, done by the `::CATCl
 
      {
     #ifdef _WINDOWS_SOURCE
-```vbscript
+```cpp
 if(1==toStore)
        ofstream filetowrite(pfileName, ios::binary ) ;
 ```
 
     #else
-```vbscript
+```cpp
 if(1==toStore)
 ofstream filetowrite(pfileName, ios::binary ) ;
        ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;

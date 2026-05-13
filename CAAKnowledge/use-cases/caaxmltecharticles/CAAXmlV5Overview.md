@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "Using XML in V5"
-category: tech-article
+category: "tech-article"
 module: "CAAXmlTechArticles"
-tags: ["CATIDOMElement", "CATIDOM", "CATIXMLSAXFactory_var", "CATISAXDocumentHandler", "CATIXML", "CATIDOMNode_var", "CATISAXAttributeList_var", "CATIDOMImplementation", "CATIDOMDocument_var", "CATISAXErrorHandler", "CATISAXInputSource_var", "CATIDOMXXX_var", "CATIXMLSAXFactory", "CATISAXYYY_var", "CATIXMLDOMDocumentBuilder", "CATISAXInputSource", "CATIDOMDocumentType_var", "CATIDOMElement_var", "CATIXMLDOMDocumentBuilder_var", "CATISAXEntityResolver"]
-source_file: "Doc/online/CAAXmlTechArticles/CAAXmlV5Overview.htmmd"
+tags: "["CATIDOMElement", "CATIDOM", "CATIXMLSAXFactory_var", "CATISAXDocumentHandler", "CATIXML", "CATIDOMNode_var", "CATISAXAttributeList_var", "CATIDOMImplementation", "CATIDOMDocument_var", "CATISAXErrorHandler", "CATISAXInputSource_var", "CATIDOMXXX_var", "CATIXMLSAXFactory", "CATISAXYYY_var", "CATIXMLDOMDocumentBuilder", "CATISAXInputSource", "CATIDOMDocumentType_var", "CATIDOMElement_var", "CATIXMLDOMDocumentBuilder_var", "CATISAXEntityResolver"]"
+source_file: "Doc/online/CAAXmlTechArticles/CAAXmlV5Overview.htm"
 converted: "2026-05-11T17:33:45.712135"
-```
-
 ---
 # 3D PLM Enterprise Architecture
 
@@ -178,7 +175,6 @@ in DOMString systemId) raises(DOMException);
 
 In V5, you will manipulate the following V5 interface
 
-In V5, you will manipulate the following V5 interface
     class CATIDOMImplementation : public CATBaseUnknown {
      virtual HRESULT HasFeature(
                        const CATUnicodeString& iFeature,
@@ -216,7 +212,6 @@ CATIDOMDocumentType_var& oDocumentType) = 0;
 
 The SAX specification uses Java to define its APIs. Platforms, which do not use Java as their programming language define a binding for their language, that is a version of the APIs using the language and data types native to the platform. The following table explains how this is done for V5 in C++.
 
-The SAX specification uses Java to define its APIs. Platforms, which do not use Java as their programming language define a binding for their language, that is a version of the APIs using the language and data types native to the platform. The following table explains how this is done for V5 in C++.
 Java SAX definition | V5 C++ | Comment
 
 The SAX specification uses Java to define its APIs. Platforms, which do not use Java as their programming language define a binding for their language, that is a version of the APIs using the language and data types native to the platform. The following table explains how this is done for V5 in C++.
@@ -248,7 +243,6 @@ As a concrete example of how the binding works, please consider the Java definit
 
 In V5, you will manipulate the following V5 interface
 
-In V5, you will manipulate the following V5 interface
     class CATISAXEntityResolver: public CATBaseUnknown {
      virtual HRESULT ResolveEntity(
                        const CATUnicodeString & iPublicId,
@@ -264,7 +258,6 @@ In V5, you will manipulate the following V5 interface
 
 The XML specification defines the XML syntax using the character model defined by the Unicode specification. XML contents however can be stored in text using any encoding (code page) provided that the underlying parsers support them. To use a given encoding for an XML file, you need to:
 
-The XML specification defines the XML syntax using the character model defined by the Unicode specification. XML contents however can be stored in text using any encoding (code page) provided that the underlying parsers support them. To use a given encoding for an XML file, you need to:
   1. Encode the file with this encoding.
   2. Indicate in the XML declaration the encoding you have used.
 
@@ -285,7 +278,6 @@ The XML specification mandates that XML parsers support UTF-8. Therefore, this e
 
 A few other encodings are also supported by the XMLParser framework.
 
-A few other encodings are also supported by the XMLParser framework.
 UTF-16
     Can sometimes be more compact that UTF-8 for eastern languages.
 ISO-8859-1

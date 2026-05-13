@@ -1,13 +1,10 @@
 ---
-```vbscript
 title: "New C++ Authorized APIs in CAA V5R16 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
-tags: ["CATITPSIDServices", "CATITrack", "CATIStmFlangeSurf", "CATIXMLInputStream", "CATITPSConstructedGeomServices", "CATIMfgVirtualActivity", "CATIShot", "CATIStrMaterialESSObjectSettingAtt", "CATIAVPMVDAReplace", "CATInstantCollabDesignCAAItf", "CATIAerospaceSheetMetalFactory", "CATIStmWeb", "CATIIniSearchSymbolCriterion", "CATIMfgActivityDefaultValuesMngt", "CATIStmJoggle", "CATIEwrFilter", "CATISamEditionControl", "CATIColMergeContextRole", "CATIVariableManagement", "CATIDftStandardMediator"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R16GANewCPPAPI.htmmd"
+tags: "["CATITPSIDServices", "CATITrack", "CATIStmFlangeSurf", "CATIXMLInputStream", "CATITPSConstructedGeomServices", "CATIMfgVirtualActivity", "CATIShot", "CATIStrMaterialESSObjectSettingAtt", "CATIAVPMVDAReplace", "CATInstantCollabDesignCAAItf", "CATIAerospaceSheetMetalFactory", "CATIStmWeb", "CATIIniSearchSymbolCriterion", "CATIMfgActivityDefaultValuesMngt", "CATIStmJoggle", "CATIEwrFilter", "CATISamEditionControl", "CATIColMergeContextRole", "CATIVariableManagement", "CATIDftStandardMediator"]"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R16GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.268959"
-```
-
 ---
 tags: ["CATITPSIDServices", "CATITrack", "CATIStmFlangeSurf", "CATIXMLInputStream", "CATITPSConstructedGeomServices", "CATIMfgVirtualActivity", "CATIShot", "CATIStrMaterialESSObjectSettingAtt", "CATIAVPMVDAReplace", "CATInstantCollabDesignCAAItf", "CATIAerospaceSheetMetalFactory", "CATIStmWeb", "CATIIniSearchSymbolCriterion", "CATIMfgActivityDefaultValuesMngt", "CATIStmJoggle", "CATIEwrFilter", "CATISamEditionControl", "CATIColMergeContextRole", "CATIVariableManagement", "CATIDftStandardMediator"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R16GANewCPPAPI.htmmd"
@@ -19,7 +16,7 @@ CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R16 GA
 The following are the new CAA V5R16 GA C++ Authorized APIs, compared with CAA V5R15 at GA level.
 
   * ApplicationFrame framework
-```vbscript
+```cpp
     * Global Function CATAfrCreateCommandHeader
     * Global Function CATCreateDefaultCamera
   * CATAnalysisInterfaces framework
@@ -41,7 +38,7 @@ The following are the new CAA V5R16 GA C++ Authorized APIs, compared with CAA V5
     * Macro or #define SizeCollabUUID
     * Enumeration CATIColMergeContextFlag
     * Enumeration CATIColMergeContextRole
-```vbscript
+```cpp
     * Global Function CATColAfterMerge
     * Global Function CATColBeforeMerge
     * Global Function CATColCanBeSharedAs
@@ -103,7 +100,7 @@ The following are the new CAA V5R16 GA C++ Authorized APIs, compared with CAA V5
   * DraftingInterfaces framework
     * Interface CATIDftStandardMediator
   * ENOVInterfaces framework
-```vbscript
+```cpp
     * Global Function GetCatalogManager
     * Interface CATIEnovCatalogManager
 ```
@@ -166,7 +163,7 @@ The following are the new CAA V5R16 GA C++ Authorized APIs, compared with CAA V5
     * Class CATMmrApplicativeAttributes
   * NewTopologicalObjects framework
     * Class CATPositionPtVolOperator
-```vbscript
+```cpp
     * Global Function CATCreatePositionPtVolOperator
   * ObjectModelerBase framework
 ```
@@ -195,7 +192,7 @@ The following are the new CAA V5R16 GA C++ Authorized APIs, compared with CAA V5
     * Interface CATIStrPathESSRessourcesSettingAtt
     * Interface CATIStrTypeESSObjectSettingAtt
   * System framework
-```vbscript
+```cpp
     * Global Function CATFChmod
     * Global Function CATFClose
     * Global Function CATFCopy
@@ -225,7 +222,7 @@ The following are the new CAA V5R16 GA C++ Authorized APIs, compared with CAA V5
     * Typedef CATSetOfCATString
     * Typedef CATSetOfCATUnicodeString
   * TopologicalOperators framework
-```vbscript
+```cpp
     * Global Function CATCreateNewTopAssemble
   * VPMDesktopObjects framework
 ```
@@ -236,7 +233,7 @@ The following are the new CAA V5R16 GA C++ Authorized APIs, compared with CAA V5
   * VisualizationBase framework
     * Enumeration CATCameraType
   * XMLParser framework
-```vbscript
+```cpp
     * Global Function DetectCATIXMLDOMDocumentBuilder
     * Global Function DetectCATIXMLSAXFactory
     * Interface CATIXMLInputStream
