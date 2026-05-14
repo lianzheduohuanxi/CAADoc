@@ -610,3 +610,13 @@ void CAADlgFrameReplaceDlg::OnComboSelectNotification(CATCommand* cmd, CATNotifi
 6. **进程间通信的核心链**：定义消息接口（如 `CAAIDlgDataRequest`）→ 实现消息组件 → 注册工厂（`CATICreateInstance`）→ 注册字典 → 接收端实现 `CATIMessageReceiver` → `HandleMessage` 处理。
 
 7. **BB Message 接收端有两层分发**：`HandleMessage` 接收 CATICommMsg → 通过 CATCallbackManager 进行二次分发到本地订阅者。
+
+---
+
+## 相关资源
+
+- 完整方法签名: [api-reference/interfaces/CATDlgDialog.htm](../api-reference/interfaces/CATDlgDialog.htm)
+- 完整方法签名: [api-reference/interfaces/CATCommand.htm](../api-reference/interfaces/CATCommand.htm)
+- 完整方法签名: [api-reference/interfaces/CATApplication.htm](../api-reference/interfaces/CATApplication.htm)
+- 结构化查询: [knowledge_base.json → method_index](../data/knowledge_base.json)
+- 使用案例: [use-cases/caadlgusecases/](../use-cases/caadlgusecases/)

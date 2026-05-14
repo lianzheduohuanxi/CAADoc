@@ -259,3 +259,14 @@ CATDeclareConfigurationFactory(CAAAfrGeoCreationWkb);
 5. **菜单布局**：NewAccess 创建节点 → SetAccessChild/Next 构建树 → SetWorkshopMenu 合并
 6. **命令参数**：同一个类不同参数通过不同 Header 名称区分，用 CATINT32ToPtr 传递
 7. **Addin 是 DataExtension**，不是独立组件——它扩展一个 late type，生命周期依附于该组件
+
+---
+
+## 相关资源
+
+- 完整方法签名: [api-reference/interfaces/CATIWorkshop.htm](../api-reference/interfaces/CATIWorkshop.htm)
+- 完整方法签名: [api-reference/interfaces/CATIEditModel.htm](../api-reference/interfaces/CATIEditModel.htm)
+- 完整方法签名: [api-reference/interfaces/CATIMmiWorkspace.htm](../api-reference/interfaces/CATIMmiWorkspace.htm)
+- 完整方法签名: [api-reference/interfaces/CATIMmiApplication.htm](../api-reference/interfaces/CATIMmiApplication.htm)
+- 结构化查询: [knowledge_base.json → method_index](../data/knowledge_base.json)
+- 使用案例: [use-cases/](../use-cases/)

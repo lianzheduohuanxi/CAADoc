@@ -240,3 +240,14 @@ CAAObjectModelerBase (本文档)
 5. **字典声明格式**：`ComponentName  InterfaceName  LibraryName`
 6. **_node 后缀**：表示组件的 NavigModify 扩展，如 `CAASysPoint_node CATINavigModify`
 7. **容器类型字符串**：GetRootContainer("CATIPrtContainer") 中的字符串对应文档类型
+
+---
+
+## 相关资源
+
+- 完整方法签名: [api-reference/interfaces/CATInit.htm](../api-reference/interfaces/CATInit.htm)
+- 完整方法签名: [api-reference/interfaces/CATIDocumentServices.htm](../api-reference/interfaces/CATIDocumentServices.htm)
+- 完整方法签名: [api-reference/interfaces/CATINavigateObject.htm](../api-reference/interfaces/CATINavigateObject.htm)
+- 完整方法签名: [api-reference/interfaces/CATINavigModify.htm](../api-reference/interfaces/CATINavigModify.htm)
+- 结构化查询: [knowledge_base.json → method_index](../data/knowledge_base.json)
+- 使用案例: [use-cases/caaombusecases/](../use-cases/caaombusecases/)
